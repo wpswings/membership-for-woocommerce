@@ -13,5 +13,4 @@
 
 ?>
 
-<!-- This file should primarily consist of HTML with a little bit of PHP. -->
-<p>This is the membership setting page.</p>
+<p>This is the page to be displayed on members submenu.</p>

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The admin-specific functionality of the plugin.
  *
@@ -44,13 +43,13 @@ class Membership_For_Woocommerce_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name  The name of this plugin.
+	 * @param      string $version      The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -100,4 +99,45 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
+	/**
+	 * Adding Membership menu page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_memberships_for_woo_admin_menu() {
+
+		add_menu_page(
+			esc_html__( 'Membership', 'membership-for-woocommerce' ),
+			esc_html__( 'Membership', 'membership-for-woocommerce' ),
+			'manage_woocommerce',
+			'membership-for-woocommerce-setting',
+			array( $this, 'mwb_membership_for_woo_add_backend' ),
+			'dashicons-businessperson',
+			57,
+		);
+
+		// Add submenu for membership settings.
+		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), 'manage_options', 'membership-for-woocommerce-setting' );
+
+		// Add submenu for members list.
+		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Members', 'membership-for-woocommerce' ), esc_html__( 'Members', 'membership-for-woocommerce' ), 'manage_options', 'membership-for-woocommerce-members', array( $this, 'add_submenu_page_members_callback' ) );
+	}
+
+	/**
+	 * Callback function for Membership menu page.
+	 */
+	public function mwb_membership_for_woo_add_backend() {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/membership-for-woocommerce-admin-display.php';
+
+	}
+
+	/**
+	 * Callback funtion for submenu members page.
+	 */
+	public function add_submenu_page_members_callback() {
+
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/members/membership-for-woocommerce-members.php';
+
+	}
 }

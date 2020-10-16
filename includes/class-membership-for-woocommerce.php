@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The file that defines the core plugin class
  *
@@ -156,6 +155,9 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		// Add admin menu.
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_memberships_for_woo_admin_menu' );
 
 	}
 
