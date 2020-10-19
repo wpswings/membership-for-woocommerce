@@ -183,6 +183,148 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			</tbody>
 		</table>
+
+		<div class="mwb_membership_plan_products">
+			<h1><?php esc_html_e( 'Membership Plan Offers', 'membership-for-woocommerce' ); ?></h1>
+		</div>
+
+		<!-- Membership product section starts -->
+		<div class="membership-offers">
+
+			<!-- Offer section html start -->
+			<div class="new_created_offers mwb_membership_offers" >
+
+				<h2 class="mwb_membership_offer_title" >
+					<?php esc_html_e( 'Offer Section', 'membership-for-woocommerce' ); ?>
+				</h2>
+
+				<table>
+					<!-- Offer Product section start -->
+					<tr>
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_offer_product_select"><?php esc_html_e( 'Offered Products', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<select id="mwb_memberhsip_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
+
+
+								<option value="" selected="selected"><?php echo '#'; ?></option>';
+
+
+							</select>
+
+							<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the products you want to offer in Membership Plan.', 'memberhsip-for-woocommerce' ); ?></span>
+
+						</td>	
+
+					</tr>
+					<!-- Offer product section End -->
+
+					<!-- Offer categories section start -->
+					<tr>
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_offer_category_select"><?php esc_html_e( 'Offered Categories', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td>
+							<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
+
+								<option value="" selected="selected"><?php echo '(#'; ?></option>';
+
+							</select>
+
+							<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the categories you want to offer in Membership Plan.', 'memberhsip-for-woocommerce' ); ?></span>
+
+						</td>
+
+					</tr>
+					<!-- Offer categories section end. -->
+
+					<!-- Accessibility type start-->
+					<tr>
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_offer_access_type"><?php esc_html_e( 'Accessibility Type', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td>
+							<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="">
+							<label for="mwb_membership_plan_immediate_type"><?php esc_html_e( 'Immediately', 'membership-for-woocommerce' ); ?></label>
+
+							<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="">
+							<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
+
+							<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="" min="1" max="31">
+							<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type">
+								<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+								<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+							</select>
+						</td>
+
+					</tr>
+					<!-- Accessibility type end -->
+				</table>
+
+			</div>
+
+			<div class="membership-features">
+
+				<!-- Membership features section start -->
+				<div class="new_created_offers mwb_membership_offers">
+
+					<h2 class="mwb_membership_offer_title" >
+						<?php esc_html_e( 'Mmebership Features Section', 'membership-for-woocommerce' ); ?>
+					</h2>
+
+					<table>
+						<!-- Discount section start -->
+						<tr>
+							<th scope="row" class="titledesc">
+								<label for="mwb_membership_plan_price_type_id"><?php esc_html_e( 'Offer Price/Discount', 'membership-for-woocommerce' ); ?></label>
+							</th>
+
+							<td class="forminp forminp-text">
+								<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
+
+									<option value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
+
+								</select>
+								<input type="text" class = "mwb_membership plan_offer_input_type" class="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount" value="">
+								<span class="mwb_membership_plan_description"><?php esc_html_e( 'Specify discount % offered with this plan.', 'membership-for-woocommerce' ); ?></span>
+
+							</td>
+						</tr>
+						<!-- Discount section End. -->
+
+						<!-- Fress shipping section start-->
+						<tr>
+							<th scope="row" class="titledesc">
+								<label for="mwb_membership_plan_free_shipping"><?php esc_html_e( 'Allow Free Shipping', 'membership-for-woocommerce' ); ?></label>
+							</th>
+
+							<td class="forminp forminp-text">
+
+								<input type="checkbox" class = "mwb_membership plan_offer_free_shipping" class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="">
+								<span class="mwb_membership_plan_description"><?php esc_html_e( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' ); ?></span>
+
+							</td>
+						</tr>
+						<!-- Free shiping section end. -->
+					</table>
+
+				</div>
+
+			</div>
+
+		</div>
+
+		<!-- Save Changes for whole membership plan -->
+		<p class="submit">
+			<input type="submit" value="<?php esc_html_e( 'Save Changes', 'upsell-order-bump-offer-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button" name="mwb_membership_plan_creation_setting_save" id="mwb_membership_plan_creation_setting_save" >
+		</p>
+
 	</div>
 
 </form>

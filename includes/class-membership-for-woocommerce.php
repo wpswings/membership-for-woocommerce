@@ -159,6 +159,10 @@ class Membership_For_Woocommerce {
 		// Add admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_memberships_for_woo_admin_menu' );
 
+		// Add custom post type.
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
+		// Keep parent menu active.
+		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_membership_for_woo_submenu_active' );
 	}
 
 	/**

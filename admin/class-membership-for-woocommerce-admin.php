@@ -120,7 +120,7 @@ class Membership_For_Woocommerce_Admin {
 		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), 'manage_options', 'membership-for-woocommerce-setting' );
 
 		// Add submenu for members list.
-		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Members', 'membership-for-woocommerce' ), esc_html__( 'Members', 'membership-for-woocommerce' ), 'manage_options', 'membership-for-woocommerce-members', array( $this, 'add_submenu_page_members_callback' ) );
+		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Members', 'membership-for-woocommerce' ), esc_html__( 'Members', 'membership-for-woocommerce' ), 'manage_options', 'edit.php?post_type=cpt_members' );
 	}
 
 	/**
@@ -132,12 +132,81 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-	/**
-	 * Callback funtion for submenu members page.
-	 */
-	public function add_submenu_page_members_callback() {
+	// /**
+	//  * Callback funtion for submenu members page.
+	//  */
+	// public function add_submenu_page_members_callback() {
 
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/members/membership-for-woocommerce-members.php';
+	// 	require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/members/membership-for-woocommerce-members.php';
+
+	// }
+
+	/**
+	 * Custom post type to display the list of all members.
+	 */
+	public function mwb_membership_for_woo_cpt_members() {
+
+		$labels = array(
+			'name'               => __( 'Members', 'membership-for-woocommerce' ),
+			'singular_name'      => __( 'Member', 'membership-for-woocommerce' ),
+			'add_new'            => __( 'Add Member', 'membership-for-woocommerce' ),
+			'all_items'          => __( 'All Members', 'membership-for-woocommerce' ),
+			'add_new_item'       => __( 'Add New Member', 'membership-for-woocommerce' ),
+			'edit_item'          => __( 'Edit Member', 'membership-for-woocommerce' ),
+			'new_item'           => __( 'New Member', 'membership-for-woocommerce' ),
+			'view_item'          => __( 'View Member', 'membership-for-woocommerce' ),
+			'search_item'        => __( 'Search Member', 'membership-for-woocommerce' ),
+			'not_found'          => __( 'No Members Found', 'membership-for-woocommerce' ),
+			'not_found_in_trash' => __( 'No Members Found In Trash', 'membership-for-woocommerce' ),
+		);
+
+		register_post_type(
+			'cpt_members',
+			array(
+				'labels'              => $labels,
+				'public'              => true,
+				'has_archive'         => true,
+				'publicly_queryable'  => true,
+				'query_var'           => true,
+				'capability_type'     => 'post',
+				'hierarchical'        => false,
+				//'show_in_rest'        => true,
+				'show_in_admin_bar'   => true,
+				'show_in_menu'        => false,
+				'menu_icon'           => 'dashicons-book-alt',
+				'description'         => __( 'Displays the list of all members.', 'membership-for-woocommerce' ),
+				'supports'            => array(
+					'title',
+					'comments',
+					'editor',
+					'excerpt',
+					'thumbnail',
+					'revisions',
+					'author',
+				),
+				'exclude_from_search' => false,
+				'rewrite'             => array(
+					'slug' => __( 'members', 'members-for-woocommerce' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Display Submenu "Members" as active when working with CPT.
+	 */
+	public function mwb_membership_for_woo_submenu_active() {
+
+		global $parent_file, $post_type;
+
+		if ( ! empty( $post_type ) && 'cpt_members' == $post_type ) {
+
+			$parent_file = 'membership-for-woocommerce-setting';
+
+		}
 
 	}
+
+	
+
 }
