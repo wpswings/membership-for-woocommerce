@@ -121,6 +121,11 @@ class Membership_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
 
+		/**
+		 * The class responsible for defining all global functions for the plugin.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-global-functions.php';
+
 		$this->loader = new Membership_For_Woocommerce_Loader();
 
 	}
@@ -159,10 +164,19 @@ class Membership_For_Woocommerce {
 		// Add admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_memberships_for_woo_admin_menu' );
 
+		// Admin side ajax.
+		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
+		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
+
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
 		// Keep parent menu active.
 		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_membership_for_woo_submenu_active' );
+		// Adding custom columns.
+		$this->loader->add_filter( 'manage_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns' );
+		// Populating columns.
+		$this->loader->add_action( 'manage_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns', 10, 2 );
+	
 	}
 
 	/**

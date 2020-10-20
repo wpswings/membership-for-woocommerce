@@ -61,7 +61,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'Provide the name of your Membership Plan', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
+
 
 						?>
 
@@ -82,7 +84,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'Provide the Access Type of your Membership Plan', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
 
 						?>
 
@@ -96,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<!-- Access Type End -->
 
 				<!-- Plan Duration start. -->
-				<tr valign="top">
+				<tr valign="top" id="mwb_membership_duration" style="display: none;">
 
 					<th scope="row" class="titledesc">
 						<label for="mwb_membership_plan_duration"><?php esc_html_e( 'Duration', 'membership-for-woocommerce' ); ?></label>
@@ -107,7 +110,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'Provide the number of days the plan will be active', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
 
 						?>
 
@@ -123,7 +127,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<!-- Plan Duration End. -->
 
 				<!-- Plan Date Range start -->
-				<tr valign="top">
+				<tr valign="top" id="mwb_membership_date_range_start" style="display: none;">
 
 					<th scope="row" class="titledesc">
 						<label for="mwb_membership_plan_start_date"><?php esc_html_e( 'Start Date', 'membership-for-woocommerce' ); ?></label>
@@ -134,14 +138,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'Provide the Start date of the plan.', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
 
 						?>
 
 						<input type="text" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="" class="hasDatepicker">
 					</td>
 				</tr>
-				<tr>
+				<tr id="mwb_membership_date_range_end" style="display: none;">
 					<th scope="row" class="titledesc">
 						<label for="mwb_membership_plan_end_date"><?php esc_html_e( 'End Date', 'membership-for-woocommerce' ); ?></label>
 					</th>
@@ -151,7 +156,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'Provide the End date of the plan.', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
 
 						?>
 
@@ -172,7 +178,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php
 
 						$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
-						echo $description;
+
+						mwb_membership_for_woo_tool_tip( $description );
 
 						?>
 
@@ -192,7 +199,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="membership-offers">
 
 			<!-- Offer section html start -->
-			<div class="new_created_offers mwb_membership_offers" >
+			<div class="new_created_offers mwb_membership_offers" id="new_created_offers" >
 
 				<h2 class="mwb_membership_offer_title" >
 					<?php esc_html_e( 'Offer Section', 'membership-for-woocommerce' ); ?>
@@ -225,11 +232,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					<!-- Offer categories section start -->
 					<tr>
+
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_offer_category_select"><?php esc_html_e( 'Offered Categories', 'membership-for-woocommerce' ); ?></label>
 						</th>
 
-						<td>
+						<td class="forminp forminp-text">
+
 							<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 
 								<option value="" selected="selected"><?php echo '(#'; ?></option>';
@@ -256,11 +265,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="">
 							<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
 
-							<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="" min="1" max="31">
-							<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type">
-								<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-								<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
-							</select>
+							<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
+								<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="" min="1" max="31" >
+								<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
+									<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+									<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+								</select>
+							</div>
 						</td>
 
 					</tr>

@@ -95,7 +95,24 @@ class Membership_For_Woocommerce_Admin {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+		$screen = get_current_screen();
+
+		if ( isset( $screen->id ) ) {
+
+			$pagescreen = $screen->id;
+
+			if ( 'toplevel_page_membership-for-woocommerce-setting' == $pagescreen ) {
+
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+
+				wp_enqueue_script( 'membership-for-woocommerce-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+
+				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
+
+				wp_localize_script( 'mwb_membership_for_woo_add_new_plan_script', 'ajax_url', admin_url( 'admin-ajax.php' ) );
+
+			}
+		}	
 
 	}
 
@@ -140,6 +157,96 @@ class Membership_For_Woocommerce_Admin {
 	// 	require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/members/membership-for-woocommerce-members.php';
 
 	// }
+
+	/**
+	 * Select2 search for membership target products.
+	 */
+	public function search_products_for_membership() {
+
+		$return         = array();
+		$search_results = new WP_Query(
+			array(
+				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+				'post_type'           => array( 'product', 'product_variation' ),
+				'post_status'         => array( 'publish' ),
+				'ignore_sticky_posts' => 1,
+				'posts_per_page'      => -1,
+			)
+		);
+
+		if ( $search_results->have_posts() ) {
+
+			while ( $search_results->have_posts() ) {
+
+				$search_results->the_post();
+
+				$title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
+
+				/**
+				 * Check for post type as query sometimes returns posts even after mentioning post_type.
+				 * As some plugins alter query which causes issues.
+				 */
+				$post_type = get_post_type( $search_results->post->ID );
+
+				if ( 'product' !== $post_type && 'product_variation' !== $post_type ) {
+
+					continue;
+				}
+
+				$product      = wc_get_product( $search_results->post->ID );
+				$downloadable = $product->is_downloadable();
+				$stock        = $product->get_stock_status();
+				$product_type = $product->get_type();
+
+				$unsupported_product_types = array(
+					'grouped',
+					'external',
+					'subscription',
+					'variable-subscription',
+					'subscription_variation',
+				);
+
+				if ( in_array( $product_type, $unsupported_product_types ) || 'outofstock' == $stock ) {
+
+					continue;
+				}
+
+				$return[] = array( $search_results->post->ID, $title );
+			}
+		}
+		echo json_encode( $return );
+
+		wp_die();
+	}
+
+	/**
+	 * Select2 search for membership target product categories.
+	 */
+	public function search_product_categories_for_membership() {
+
+		$return = array();
+		$args   = array(
+			'search'   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'taxonomy' => 'product_cat',
+			'orderby'  => 'name',
+		);
+
+		$product_categories = get_terms( $args );
+
+		if ( ! empty( $product_categories ) && is_array( $product_categories ) && count( $product_categories ) ) {
+
+			foreach ( $product_categories as $single_product_category ) {
+
+				$cat_name = ( mb_strlen( $single_product_category->name ) > 50 ) ? mb_substr( $single_product_category, 0, 49 ) . '...' : $single_product_category->name;
+
+				$return[] = array( $single_product_category->term_id, $single_product_category->name );
+
+			}
+		}
+		echo json_encode( $return );
+
+		wp_die();
+	}
 
 	/**
 	 * Custom post type to display the list of all members.
@@ -207,6 +314,59 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-	
+	/**
+	 * Adding custom columns to the custom post types.
+	 *
+	 * @param array $columns is an array of deafult columns in custom post type.
+	 */
+	public function mwb_membership_for_woo_cpt_columns( $columns ) {
+
+		// Removing author and comments column.
+		unset(
+			$columns['wpseo-score'],
+			$columns['wpseo-title'],
+			$columns['wpseo-metadesc'],
+			$columns['wpseo-focuskw'],
+		);
+
+		// Adding new columns.
+		$columns = array(
+			'cb'                => '<input type="checkbox" />',
+			'membership_id'     => __( 'Memberhsip ID', 'membership-for-woocommerce' ),
+			'membership_status' => __( 'Memberhsip Status', 'membership-for-woocommerce' ),
+			'membership_user'   => __( 'User', 'membership-for-woocommerce' ),
+			'expiration'        => __( 'Expiry Date', 'membership-for-woocommerce' ),
+		);
+
+		return $columns;
+
+	}
+
+	/**
+	 * Populating custom columns with content.
+	 */
+	public function mwb_membership_for_woo_fill_columns( $column, $post_id ) {
+
+		switch ( $column ) {
+
+			case 'membership_id':
+				echo get_the_title( $post_id );
+				break;
+
+			case 'membership_status':
+				echo 'status';
+				break;
+
+			case 'membership_user':
+				$author_id = get_post_field( 'post_author', $post_id );
+				$author_name = get_the_author_meta( 'user_nicename', $author_id );
+				echo $author_name;
+				break;
+
+			case 'expiration':
+				echo 'expiry date';
+				break;
+		}
+	}
 
 }

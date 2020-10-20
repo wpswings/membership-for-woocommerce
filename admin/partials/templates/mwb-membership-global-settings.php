@@ -46,7 +46,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td class="forminp forminp-text">
 							<?php
 								$attribute_description = esc_html__( 'Enable Membership for Woocommerce plugin.', 'membership-for-woocommerce' );
-								echo $attribute_description;
+
+								mwb_membership_for_woo_tool_tip( $attribute_description );
 							?>
 
 							<label for="mwb_membership_for_woo_enable_switch" class="mwb_membership_for_woo_enable_plugin_label mwb_membership_for_woo_plugin_support">
@@ -70,7 +71,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td class="forminp forminp-text">
 							<?php
 								$attribute_description = esc_html__( 'Manage content for non-membership members.', 'membership-for-woocommerce' );
-								echo $attribute_description;
+
+								mwb_membership_for_woo_tool_tip( $attribute_description );
 							?>
 
 							<select name="mwb_membership_manage_content" id="mwb_membership_manage_content" value="">
@@ -84,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<!-- Manage content for non-members end. -->
 
 					<!-- Custom message to display start. -->
-					<tr valign="top">
+					<tr valign="top" id="mwb_membership_manage_contnet_display" style="display: none;">
 
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_manage_contnet_display_message  "><?php esc_html_e( 'Enter message to display.', 'membership-for-woocommerce' ); ?></label>
@@ -93,7 +95,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<td class="forminp forminp-text">
 							<?php
 								$attribute_description = esc_html__( 'Display the custom message when non-membership members try to access the membership products.', 'membership-for-woocommerce' );
-								echo $attribute_description;
+
+								mwb_membership_for_woo_tool_tip( $attribute_description );
 							?>
 
 							<input type="text" id="mwb_membership_manage_content_display_msg" class="mwb_membership_manage_content_msg_input" vlaue="" name="mwb_membership_manage_content_display_msg" placeholder="<?php esc_html_e( 'Enter your message', 'membership-for-woocommerce' ); ?>">
