@@ -71,8 +71,19 @@ class Membership_For_Woocommerce_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+		$screen = get_current_screen();
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
+		if ( isset( $screen->id ) ) {
+
+			$pagescreen = $screen->id;
+
+			if ( 'toplevel_page_membership-for-woocommerce-setting' == $pagescreen ) {
+
+				wp_enqueue_style( 'mwb_membershi_for_woo_admin_style', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
+
+				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+			}
+		}
 
 	}
 

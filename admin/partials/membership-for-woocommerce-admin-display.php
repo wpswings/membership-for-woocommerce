@@ -18,6 +18,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $mwb_membership_active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'plans-list';
 
+if ( 'overview' == get_transient( 'mwb_membership_for_woo_default_settings_tab' ) ) {
+
+	$mwb_membership_active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'overview';
+}
+
 do_action( 'mwb_membership_for_woo_tab_active' );
 
 ?>
