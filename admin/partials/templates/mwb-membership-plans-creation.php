@@ -135,6 +135,10 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 // Get all bump.
 $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
+echo '<pre>';
+print_r($mwb_membership_plans_list);
+echo '</pre>';
+
 /**
  * This template is for Membership plans creation as well as Edit/Update plans
  */
@@ -355,9 +359,31 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
 							<select id="mwb_memberhsip_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 
+								<?php
 
-								<!-- <option value="" selected="selected"></option>'; -->
+								if ( ! empty( $mwb_membership_plans_list ) ) {
 
+									$mwb_membership_plan_target_products = isset( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_ids'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_ids'] : array();
+									// echo '<pre>';
+									// print_r($mwb_membership_plan_target_products);
+									// echo '</pre>';
+									$mwb_membership_plan_target_product_ids = ! empty( $mwb_membership_plan_target_products ) ? array_map( 'absint', $mwb_membership_plan_target_products ) : null;
+
+									if ( $mwb_membership_plan_target_product_ids ) {
+
+										foreach ( $mwb_membership_plan_target_product_ids as $mwb_membership_plan_single_target_product_ids ) {
+
+											$product_name = mwb_membership_for_woo_get_product_title( $mwb_membership_plan_single_target_product_ids );
+											?>
+
+											<option value="<?php echo esc_html( $mwb_membership_plan_single_target_product_ids ); ?>" selected="selected"><?php echo( esc_html( $product_name ) . '(#' . esc_html( $mwb_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+
+											<?php
+										}
+									}
+								}
+
+								?>
 
 							</select>
 
@@ -378,8 +404,29 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 						<td class="forminp forminp-text">
 
 							<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
+								<?php
 
-								<!-- <option value="" selected="selected"></option>'; -->
+								if ( ! empty( $mwb_membership_plans_list ) ) {
+
+									$mwb_membership_plan_target_categories = isset( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_categories'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_categories'] : array();
+
+									$mwb_membership_plan_target_categories = ! empty( $mwb_membership_plan_target_categories ) ? array_map( 'absint', $mwb_membership_plan_target_categories ) : null;
+
+									if ( $mwb_membership_plan_target_categories ) {
+
+										foreach ( $mwb_membership_plan_target_categories as $single_target_category_id ) {
+
+											$category_name = mwb_membership_for_woo_get_category_title( $single_target_category_id );
+											?>
+
+											<option value="<?php echo esc_html( $single_target_category_id ); ?>" selected="selected"><?php echo( esc_html( $category_name ) . '(#' . esc_html( $single_target_category_id ) . ')' ); ?></option>
+
+											<?php
+										}
+									}
+								}
+
+								?>
 
 							</select>
 
@@ -397,19 +444,31 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 						</th>
 
 						<td>
-							<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="immediate_type">
+
+						<?php
+
+						$mwb_membership_plan_access_type = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_access_type'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_access_type'] ) : '';
+
+						$mwb_membership_plan_time_duration = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_time_duration'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_time_duration'] ) : 1;
+
+						$mwb_membership_plan_time_duration_type = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_time_duration_type'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_time_duration_type'] ) : 'days';
+
+						?>
+							<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="immediate_type" <?php echo esc_html( 'immediate_type' == $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
 							<label for="mwb_membership_plan_immediate_type"><?php esc_html_e( 'Immediately', 'membership-for-woocommerce' ); ?></label>
 
-							<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type">
+							<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type" <?php echo esc_html( 'delay_type' == $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
 							<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
 
 							<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
-								<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="" min="1" max="31" >
+								<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="<?php echo esc_attr( $mwb_membership_plan_time_duration ); ?>" min="1" max="31" >
 								<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
-									<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-									<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+									<option <?php echo esc_html( 'days' == $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+									<option <?php echo esc_html( 'weeks' == $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
 								</select>
+								<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the delay duration in after which plan offers will be accessible.', 'memberhsip-for-woocommerce' ); ?></span>
 							</div>
+
 						</td>
 
 					</tr>
@@ -435,12 +494,20 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 							</th>
 
 							<td class="forminp forminp-text">
+
+								<?php
+
+								$mwb_membership_plan_offer_price_type = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_offer_price_type'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_offer_price_type'] ) : '';
+
+								$mwb_membership_plan_discount_price = ( ! empty( $mwb_membership_plans_list ) && '' != $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_memebership_plan_discount_price'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_memebership_plan_discount_price'] : '10';
+
+								?>
 								<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
 
 									<option value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
 
 								</select>
-								<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="">
+								<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
 								<span class="mwb_membership_plan_description"><?php esc_html_e( 'Specify discount % offered with this plan.', 'membership-for-woocommerce' ); ?></span>
 
 							</td>
@@ -455,7 +522,13 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
 							<td class="forminp forminp-text">
 
-								<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes">
+								<?php
+
+								$mwb_membership_plan_free_shipping = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_memebership_plan_free_shipping'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_memebership_plan_free_shipping'] ) : 'no';
+
+								?>
+
+								<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
 								<span class="mwb_membership_plan_description"><?php esc_html_e( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' ); ?></span>
 
 							</td>

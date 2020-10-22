@@ -60,7 +60,7 @@ jQuery(document).ready( function($) {
 				$('#mwb_membership_date_range_end').hide();
 
 		}
-	});
+	}).find(':selected');
 
 	// Display specify time form fields as per user selection.
 	$('#new_created_offers table tr:last td :radio').on( 'change', function() {
