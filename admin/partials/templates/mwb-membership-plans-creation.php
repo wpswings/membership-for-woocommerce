@@ -37,6 +37,8 @@ if ( ! empty( $mwb_membership_plans_list ) ) {
 // When save changes button is clicked.
 if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 
+	unset( $_POST['mwb_membership_plan_creation_setting_save'] );
+
 	// Nonce verification.
 	check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
 
@@ -79,6 +81,8 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 
 	$mwb_membership_new_plan['mwb_membership_plan_name'] = ! empty( $_POST['mwb_membership_plan_name'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_name'] ) ) : '';
 
+	$mwb_membership_new_plan['mwb_membership_plan_price'] = ! empty( $_POST['mwb_membership_plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_price'] ) ) : '';
+
 	$mwb_membership_new_plan['mwb_membership_plan_name_access_type'] = ! empty( $_POST['mwb_membership_plan_name_access_type'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_name_access_type'] ) ) : '';
 
 	$mwb_membership_new_plan['mwb_membership_plan_duration'] = ! empty( $_POST['mwb_membership_plan_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_duration'] ) ) : '';
@@ -115,9 +119,9 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 	// Post plan data as an array at it's respective id.
 	$mwb_membership_plan_series[ $mwb_membership_plan_id ] = $mwb_membership_new_plan;
 
-	echo '<pre>';
-	print_r($mwb_membership_plan_series);
-	echo '</pre>';
+	// echo '<pre>';
+	// print_r($mwb_membership_plan_series);
+	// echo '</pre>';
 
 	// Save the plan.
 	update_option( 'mwb_membership_plans_list', $mwb_membership_plan_series );
@@ -200,6 +204,29 @@ echo '</pre>';
 					</td>
 				</tr>
 				<!-- Membership Plan Name End. -->
+
+				<!-- Memberhship plan price start  -->
+				<tr valign="top">
+
+					<th scope="row" class="titledesc">
+						<label for="mwb_membership_plan_price"><?php esc_html_e( 'Membership Plan Amount', 'membership-for-woocommerce' ); ?></label>
+					</th>
+
+					<td class="forminp forminp-text">
+
+						<?php
+
+						$description = esc_html__( 'Provide the amount at which Membership Plan will be available for Users.', 'membership-for-woocommerce' );
+
+						mwb_membership_for_woo_tool_tip( $description );
+
+						$mwb_membership_plan_price = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_price'] ) ? sanitize_text_field( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_price'] ) : '0';
+						?>
+
+						<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $mwb_membership_plan_price ); ?>">
+					</td>
+				</tr>
+				<!-- Membership plan price end. -->
 
 				<!-- Access Type start -->
 				<tr valign="top">
@@ -534,6 +561,430 @@ echo '</pre>';
 							</td>
 						</tr>
 						<!-- Free shiping section end. -->
+					</table>
+
+				</div>
+
+			</div>
+
+			<!-- Membership Template section start -->
+
+			<div class="mwb_membership_plan_templates"><?php esc_html_e( 'Membership Cards Template', 'membership-for-woocommerce' ); ?></div>
+
+			<!-- Nav starts. -->
+			<nav class="nav-tab-wrapper mwb-membership-appearance-nav-tab">
+				<a class="nav-tab mwb-membership-appearance-card nav-tab-active" href="javascript:void(0);"><?php esc_html_e( 'Cards', 'membership-for-woocommerce' ); ?></a>
+				<a class="nav-tab mwb-ubo-membership-design" href="javascript:void(0);"><?php esc_html_e( 'Card Design', 'membership-for-woocommerce' ); ?></a>
+				<a class="nav-tab mwb-ubo-membership-text" href="javascript:void(0);"><?php esc_html_e( 'Card Content', 'membership-for-woocommerce' ); ?></a>
+			</nav>
+			<!-- Nav ends. -->
+
+			<!-- Cards appearance start. -->
+			<div class="mwb_membership_card_div_wrapper">
+
+				<!-- Card template start. -->
+				<div class="mwb_membership_card_template_section">
+
+					<!-- Card image wrapper. -->
+					<div class="mwb_membership_temp_class mwb_membership_plan_card_select-wrapper">
+
+						<!-- Card template one -->
+						<div class="mwb_membership_plan_card_select">
+
+							<input type="hidden" class="mwb_membership_card_template" name="mwb_membership_card_selected_template" value="">
+
+							<input type="hidden" class="mwb_membership_card_selected_template" name="mwb_membership_card_selected_template" value="">
+
+							<p class="mwb_membership_card_name"><?php esc_html_e( 'Plantinum', 'membership-for-woocommerce' ); ?></p>
+							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '1' >Platinum</a>
+						</div>
+
+						<!-- Card template two -->
+						<div class="mwb_membership_plan_card_select">
+
+							<p class="mwb_membership_card_name"><?php esc_html_e( 'Gold', 'membership-for-woocommerce' ); ?></p>
+							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '2' >Gold</a>
+						</div>
+
+						<!-- Card template three -->
+						<div class="mwb_membership_plan_card_select">
+
+							<p class="mwb_membership_card_name"><?php esc_html_e( 'Silver', 'membership-for-woocommerce' ); ?></p>
+							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '3' >Silver</a>
+						</div>
+
+					</div>
+
+				</div>
+				<!-- Card template end. -->
+
+				<!-- Card Design start -->
+				<div class="mwb_membership_card_table_column_wrapper mwb-membership-appearance-section-hidden">
+
+					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
+
+						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Card Box', 'membership-for-woocommerce' ); ?></div>
+						<table class="form-table mwb_membership_plan_creation_setting">
+
+							<tbody>
+								<!-- Border style start. -->
+								<tr valign="top">
+
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Border type', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select among different border types for Bump Offer.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+
+										?>
+
+										<label>
+
+											<!-- Select options for border. -->
+											<select name="parent_border_type" class="mwb_membership_preview_select_border_type" >
+
+												<?php
+
+												$border_type_array = array(
+													'none' => esc_html__( 'No Border', 'membership-for-woocommerce' ),
+													'solid' => esc_html__( 'Solid', 'membership-for-woocommerce' ),
+													'dashed' => esc_html__( 'Dashed', 'membership-for-woocommerce' ),
+													'double' => esc_html__( 'Double', 'membership-for-woocommerce' ),
+													'dotted' => esc_html__( 'Dotted', 'membership-for-woocommerce' ),
+
+												);
+
+												?>
+												<option value="" ><?php esc_html_e( '----Select Border Type----', 'membership-for-woocommerce' ); ?></option>
+
+												<option value="" ><?php echo esc_html( 'solid' ); ?></option>
+
+											</select>
+
+										</label>		
+									</td>
+								</tr>
+								<!-- Border style end. -->
+
+								<!-- Border color start. -->
+								<tr valign="top">
+
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Border Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+									<?php
+										$attribute_description = esc_html__( 'Select border color for Bump Offer.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+									?>
+										<label>
+											<!-- Color picker for description background. -->
+											<input type="text" name="parent_border_color" class="mwb_membership_colorpicker mwb_membership_preview_select_border_color" value="">
+										</label>			
+									</td>
+
+								</tr>
+							<!-- Border color end. -->
+
+							<!-- Top Vertical Spacing control start. -->
+							<tr valign="top">
+
+								<th scope="row" class="titledesc">
+									<label><?php esc_html_e( 'Select Top Vertical Spacing', 'membership-for-woocommerce' ); ?></label>
+								</th>
+
+								<td class="forminp forminp-text">
+									<?php
+										$attribute_description = esc_html__( 'Add top spacing to the Bump Offer Box.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+									?>
+
+									<label>
+										<!-- Slider for spacing. -->
+										<input type="range" min="0" value=""  max="40" value="" name='top_vertical_spacing' class="mwb_membership_top_vertical_spacing_slider" />
+										<span class="mwb_membership_top_spacing_slider_size" ></span>
+									</label>
+								</td>
+							</tr>
+							<!-- Top Vertical Spacing control ends. -->
+
+							<!-- Bottom Vertical Spacing control start. -->
+							<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Bottom Vertical Spacing', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+									<?php
+										$attribute_description = esc_html__( 'Add bottom spacing to the Bump Offer Box.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+									?>
+									<label>	
+										<!-- Slider for spacing. -->
+										<input type="range" value="" min="0" max="40" value="" name='bottom_vertical_spacing' class="mwb_membership_bottom_vertical_spacing_slider" />
+										<span class="mwb_membership_bottom_spacing_slider_size"></span>
+										</label>		
+									</td>
+								</tr>
+								<!-- Bottom Vertical Spacing control ends. -->
+
+
+							</tbody>
+
+						</table>
+
+					</div>
+
+					<!-- Membership Price. -->
+					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
+
+						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Price Section', 'membership-for-woocommerce' ); ?></div>
+						<table class="form-table mwb_membership_plan_creation_setting">
+							<tbody>
+
+								<!-- Background color start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Background Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+									<?php
+										$attribute_description = esc_html__( 'Select background color for Membership Plan Price.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+									?>
+										<label>
+											<!-- Color picker for description background. -->
+											<input type="text" name="discount_section_background_color" class="membership_colorpicker mwb_membership_select_price_bcolor" value="">
+
+										</label>	
+									</td>
+								</tr>
+								<!-- Background color end. -->
+
+								<!-- Text color start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select text color for Membershi Plan Price.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<label>
+											<!-- Color picker for description text. -->
+											<input type="text" name="discount_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_price_tcolor" value="">
+										</label>			
+									</td>
+
+								</tr>
+								<!-- Text color end. -->
+
+								<!-- Text size control start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select font size for Discount section.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<label>
+											<!-- Slider for spacing. -->
+											<input type="range" min="20" value=""  max="50" value="" name = 'discount_section_text_size' class="mwb_membership_text_slider mwb_ubo_price_slider" />
+
+											<span class="mwb_membership_slider_size mwb_ubo_price_slider_size" ></span>
+										</label>		
+									</td>
+								</tr>
+								<!-- Text size control ends. -->
+
+
+							</tbody>
+
+						</table>
+					</div>
+
+					<!-- Membership Plan buy now section -->
+					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
+
+						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Buy Now Button', 'membership-for-woocommerce' ); ?></div>
+
+						<table class="form-table mwb_membership_plan_creation_setting">
+							<tbody>
+								<!-- Background color start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Background Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select background color for Buy Now button.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<label>
+											<!-- Color picker for description background. -->
+											<input type="text" name="primary_section_background_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_bcolor" valu="">
+										</label>			
+									</td>
+								</tr>
+								<!-- Background color end. -->
+
+								<!-- Text color start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select text color for Buy Now button.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<label>	
+											<!-- Color picker for description text. -->
+											<input type="text" name="primary_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_tcolor" value="">
+										</label>			
+									</td>
+								</tr>
+								<!-- Text color end. -->
+
+								<!-- Text size control start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
+									</th>
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select font size for Buy Now button.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<label>
+											<!-- Slider for spacing. -->
+											<input type="range" min="10" value=""  max="30" value="" name = 'primary_section_text_size' class="mwb_membership_text_slider mwb_membership_buy_now_slider" />
+											<span class="mwb_membership_slider_size mwb_membership_buy_now_slider_size" ></span>
+										</label>	
+									</td>
+								</tr>
+								<!-- Text size control ends. -->
+							</tbody>
+
+						</table>
+
+					</div>
+
+					<!-- Membership Plan Description -->
+					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
+
+						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Description Section', 'membership-for-woocommerce' ); ?></div>
+						<table class="form-table mwb_membership_plan_creation_setting">
+
+							<tbody>
+								<!-- Text color start. -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
+									</th>
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select text color for Membership Plan Description section.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<!-- Color picker for description text. -->
+										<input type="text" name="secondary_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_membership_description_tcolor" value="">
+									</td>
+								</tr>
+								<!-- Text color end. -->
+
+								<!-- Text size control start -->
+								<tr valign="top">
+									<th scope="row" class="titledesc">
+										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
+									</th>
+									<td class="forminp forminp-text">
+										<?php
+											$attribute_description = esc_html__( 'Select font size for Membership Plan Description section.', 'membership-for-woocommerce' );
+
+											mwb_membership_for_woo_tool_tip( $attribute_description );
+										?>
+										<!-- Slider for spacing. -->
+										<input type="range" min="10" value=""  max="30" value="" name = 'secondary_section_text_size' class="mwb_membership_text_slider mwb_membership_description_slider" />
+
+										<span class="mwb_membership_slider_size mwb_membership_description_slider_size" ></span>
+									</td>
+								</tr>
+								<!-- Text size control ends. -->
+							</tbody>
+
+						</table>
+					</div>
+
+				</div>
+				<!-- Card Design End. -->
+
+				<div class="mwb-membership-text-section mwb_membership_card_table--border mwb-membership-card-appearance-section-hidden mwb_membership_card_table">
+					<table>
+						<tbody>
+							<!-- Plan Description start. -->
+							<tr valign="top">
+								<th scope="row" class="titledesc">
+									<label><?php esc_html_e( 'Membership Plan Description', 'membership-for-woocommerce' ); ?></label>
+								</th>
+
+								<td class="forminp forminp-text" >
+
+									<?php
+										$attribute_description = esc_html__( 'Membership Plan description content.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+
+									?>
+
+									<textarea class="mwb_textarea_class" text_id ="plan_desc" rows="4" cols="50" name="mwb_memberhsip_plan_decsription_text" ></textarea>
+
+								</td>
+							</tr>
+							<!-- Plan Description end. -->
+
+							<!-- Lead Title start. -->
+							<tr valign="top">
+								<th scope="row" class="titledesc">
+									<label><?php esc_html_e( 'Lead Title ', 'membership-for-woocommerce' ); ?></label>
+								</th>
+
+								<td class="forminp forminp-text">
+									<?php
+										$attribute_description = esc_html__( 'Bump offer Lead title content.', 'membership-for-woocommerce' );
+
+										mwb_membership_for_woo_tool_tip( $attribute_description );
+									?>
+
+									<input type="text" class="mwb_membership_plan_input_type" name="mwb_membership_plan_title" text_id ="lead" value ="">
+
+								</td>
+							</tr>
+							<!--Lead Title ends.-->
+						</tbody>
 					</table>
 
 				</div>
