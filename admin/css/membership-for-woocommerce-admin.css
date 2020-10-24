@@ -2,3 +2,13 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+
+/*Appearance Section start*/
+.mwb_membership_card_div_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+.mwb-membership-appearance-section-hidden {
+    display: none;
+}
+/*Appearance Section End*/

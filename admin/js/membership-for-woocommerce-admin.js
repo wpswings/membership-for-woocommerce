@@ -29,6 +29,55 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 
+	$(document).ready(function(){
+
+		// Appearance section JS start.
+		$('.mwb-membership-appearance-card').on( 'click', function(e) {
+
+			e.preventDefault();
+
+			$(this).addClass( 'nav-tab-active' );
+			$('.mwb-membership-design').removeClass( 'nav-tab-active' );
+			$('.mwb-membership-text').removeClass( 'nav-tab-active' );
+
+			$('.mwb-membership-card-template-section').removeClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb_membership_card_table_column_wrapper').addClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb-membership-text-section').addClass( 'mwb-membership-appearance-section-hidden' );
+		});
+
+		$('.mwb-membership-design').on( 'click', function(e) {
+
+			e.preventDefault();
+
+			$(this).addClass( 'nav-tab-active' );
+			$('.mwb-membership-text').removeClass( 'nav-tab-active' );
+			$('.mwb-membership-appearance-card').removeClass( 'nav-tab-active' );
+
+			$('.mwb-membership-card-template-section').addClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb_membership_card_table_column_wrapper').removeClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb-membership-text-section').addClass( 'mwb-membership-appearance-section-hidden' );
+		
+		});
+
+		$('.mwb-membership-text').on( 'click', function(e) {
+
+			e.preventDefault();
+
+			$(this).addClass( 'nav-tab-active' );
+			$('.mwb-membership-appearance-card').removeClass( 'nav-tab-active' );
+			$('.mwb-membership-design').removeClass( 'nav-tab-active' );
+
+			$('.mwb-membership-card-template-section').addClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb_membership_card_table_column_wrapper').addClass( 'mwb-membership-appearance-section-hidden' );
+			$('.mwb-membership-text-section').removeClass( 'mwb-membership-appearance-section-hidden' );
+			
+		});
+		// Appearance section JS end.
+
+	});
+
+		
+
 })( jQuery );
 
 // Basic JS.

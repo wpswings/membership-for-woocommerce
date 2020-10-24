@@ -122,6 +122,7 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_localize_script( 'mwb_membership_for_woo_add_new_plan_script', 'ajax_url', admin_url( 'admin-ajax.php' ) );
 
+				wp_enqueue_script( 'wp-color-picker' );
 			}
 		}	
 
