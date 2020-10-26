@@ -129,10 +129,10 @@ jQuery(document).ready( function($) {
 	$('#mwb_membership_manage_content').on( 'change', function() {
 
 		var selection = $(this).val();
-		//alert(selection);
+		alert(selection);
 
 		switch( selection ) {
-			case 'display_a message':
+			case 'display_a_message':
 				$('#mwb_membership_manage_contnet_display').show();
 				break;
 

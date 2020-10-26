@@ -289,7 +289,6 @@ class Membership_For_Woocommerce_Admin {
 				'query_var'           => true,
 				'capability_type'     => 'post',
 				'hierarchical'        => false,
-				//'show_in_rest'        => true,
 				'show_in_admin_bar'   => true,
 				'show_in_menu'        => false,
 				'menu_icon'           => 'dashicons-book-alt',
@@ -356,6 +355,9 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Populating custom columns with content.
+	 *
+	 * @param array   $column is an array of default columns in Custom post type.
+	 * @param integer $post_id is the post id.
 	 */
 	public function mwb_membership_for_woo_fill_columns( $column, $post_id ) {
 

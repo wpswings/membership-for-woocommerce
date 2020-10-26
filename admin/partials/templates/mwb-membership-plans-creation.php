@@ -107,61 +107,78 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 
 	$mwb_membership_new_plan['mwb_memebership_plan_free_shipping'] = ! empty( $_POST['mwb_memebership_plan_free_shipping'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_memebership_plan_free_shipping'] ) ) : '';
 
+	$mwb_membership_new_plan['mwb_membership_card_selected_template'] = ! empty( $_POST['mwb_membership_card_selected_template'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_card_selected_template'] ) ) : '';
+
+	$mwb_membership_new_plan['mwb_membership_selected_template'] = ! empty( $_POST['mwb_membership_selected_template'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_selected_template'] ) ) : '';
+
 	// Sanitize and strip slashes of all arrays.
 
 	$mwb_membership_new_plan['mwb_membership_plan_target_categories'] = ! empty( $_POST['mwb_membership_plan_target_categories'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_membership_plan_target_categories'] ) ) : '';
 
 	$mwb_membership_new_plan['mwb_membership_plan_target_ids'] = ! empty( $_POST['mwb_membership_plan_target_ids'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_membership_plan_target_ids'] ) ) : '';
 
-	// Card template design settings.
-	$card_design_settings_post['parent_border_type']      = ! empty( $_POST['parent_border_type'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_type'] ) ) : '';
-	$card_design_settings_post['parent_border_color']     = ! empty( $_POST['parent_border_color'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_color'] ) ) : '';
-	$card_design_settings_post['top_vertical_spacing']    = ! empty( $_POST['top_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['top_vertical_spacing'] ) ) : '';
-	$card_design_settings_post['bottom_vertical_spacing'] = ! empty( $_POST['bottom_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['bottom_vertical_spacing'] ) ) : '';
+	// When membership plan is saved for the first time so load default design settings.
+	if ( empty( $_POST['parent_border_type'] ) ) {
 
-	unset( $_POST['parent_border_type'] );
-	unset( $_POST['parent_border_color'] );
-	unset( $_POST['top_vertical_spacing'] );
-	unset( $_POST['bottom_vertical_spacing'] );
+		$design_settings = mwb_membership_plan_card_template_1();
 
-	// Price section design settings.
-	$card_design_settings_post['price_section_background_color'] = ! empty( $_POST['price_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_background_color'] ) ) : '';
-	$card_design_settings_post['price_section_text_color']       = ! empty( $_POST['price_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_color'] ) ) : '';
-	$card_design_settings_post['price_section_text_size']        = ! empty( $_POST['price_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_size'] ) ) : '';
+		$mwb_membership_new_plan['design_css'] = $design_settings;
 
-	unset( $_POST['price_section_background_color'] );
-	unset( $_POST['price_section_text_color'] );
-	unset( $_POST['price_section_text_size'] );
+		$mwb_membership_new_plan['design_text'] = mwb_membership_plan_card_default_text();
 
-	// Buy Now button design settings.
-	$card_design_settings_post['button_section_background_color'] = ! empty( $_POST['button_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_background_color'] ) ) : '';
-	$card_design_settings_post['button_section_text_color']       = ! empty( $_POST['button_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_color'] ) ) : '';
-	$card_design_settings_post['button_section_text_size']        = ! empty( $_POST['button_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_size'] ) ) : '';
+	} else {
 
-	unset( $_POST['button_section_background_color'] );
-	unset( $_POST['button_section_text_color'] );
-	unset( $_POST['button_section_text_size'] );
+		// Card template design settings.
+		$card_design_settings_post['parent_border_type']      = ! empty( $_POST['parent_border_type'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_type'] ) ) : '';
+		$card_design_settings_post['parent_border_color']     = ! empty( $_POST['parent_border_color'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_color'] ) ) : '';
+		$card_design_settings_post['top_vertical_spacing']    = ! empty( $_POST['top_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['top_vertical_spacing'] ) ) : '';
+		$card_design_settings_post['bottom_vertical_spacing'] = ! empty( $_POST['bottom_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['bottom_vertical_spacing'] ) ) : '';
 
-	// Plan description design settings.
-	$card_design_settings_post['description_section_text_color'] = ! empty( $_POST['description_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_color'] ) ) : '';
-	$card_design_settings_post['description_section_text_size']  = ! empty( $_POST['description_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_size'] ) ) : '';
+		unset( $_POST['parent_border_type'] );
+		unset( $_POST['parent_border_color'] );
+		unset( $_POST['top_vertical_spacing'] );
+		unset( $_POST['bottom_vertical_spacing'] );
 
-	unset( $_POST['description_section_text_color'] );
-	unset( $_POST['description_section_text_size'] );
+		// Price section design settings.
+		$card_design_settings_post['price_section_background_color'] = ! empty( $_POST['price_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_background_color'] ) ) : '';
+		$card_design_settings_post['price_section_text_color']       = ! empty( $_POST['price_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_color'] ) ) : '';
+		$card_design_settings_post['price_section_text_size']        = ! empty( $_POST['price_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_size'] ) ) : '';
 
-	$mwb_membership_new_plan['design_css'] = $card_design_settings_post;
+		unset( $_POST['price_section_background_color'] );
+		unset( $_POST['price_section_text_color'] );
+		unset( $_POST['price_section_text_size'] );
 
-	$card_text_settings_post = array(
+		// Buy Now button design settings.
+		$card_design_settings_post['button_section_background_color'] = ! empty( $_POST['button_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_background_color'] ) ) : '';
+		$card_design_settings_post['button_section_text_color']       = ! empty( $_POST['button_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_color'] ) ) : '';
+		$card_design_settings_post['button_section_text_size']        = ! empty( $_POST['button_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_size'] ) ) : '';
 
-		'mwb_membership_plan_decsription_text' => ! empty( $_POST['mwb_membership_plan_decsription_text'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_decsription_text'] ) ) : '',
+		unset( $_POST['button_section_background_color'] );
+		unset( $_POST['button_section_text_color'] );
+		unset( $_POST['button_section_text_size'] );
 
-		'mwb_membership_plan_title'            => ! empty( $_POST['mwb_membership_plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_title'] ) ) : '',
-	);
+		// Plan description design settings.
+		$card_design_settings_post['description_section_text_color'] = ! empty( $_POST['description_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_color'] ) ) : '';
+		$card_design_settings_post['description_section_text_size']  = ! empty( $_POST['description_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_size'] ) ) : '';
 
-	unset( $_POST['mwb_membership_plan_decsription_text'] );
-	unset( $_POST['mwb_membership_plan_title'] );
+		unset( $_POST['description_section_text_color'] );
+		unset( $_POST['description_section_text_size'] );
 
-	$mwb_membership_new_plan['design_text'] = $card_text_settings_post;
+		$mwb_membership_new_plan['design_css'] = $card_design_settings_post;
+
+		$card_text_settings_post = array(
+
+			'mwb_membership_plan_decsription_text' => ! empty( $_POST['mwb_membership_plan_decsription_text'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_decsription_text'] ) ) : '',
+
+			'mwb_membership_plan_title'            => ! empty( $_POST['mwb_membership_plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_title'] ) ) : '',
+		);
+
+		unset( $_POST['mwb_membership_plan_decsription_text'] );
+		unset( $_POST['mwb_membership_plan_title'] );
+
+		$mwb_membership_new_plan['design_text'] = $card_text_settings_post;
+
+	}
 
 	// Parent array of all plans.
 	$mwb_membership_plan_series = array();
@@ -186,7 +203,7 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 	<?php
 }
 
-// Get all bump.
+// Get all membership plans.
 $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
 echo '<pre>';
@@ -635,29 +652,37 @@ echo '</pre>';
 				<!-- Card template start. -->
 				<div class="mwb-membership-card-template-section">
 
+					<?php
+
+					$mwb_membership_card_selected_template = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_card_selected_template'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_card_selected_template'] : '';
+
+					$mwb_membership_selected_template = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_selected_template'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_selected_template'] : '1';
+
+					?>
+
 					<!-- Card image wrapper. -->
 					<div class="mwb_membership_temp_class mwb_membership_plan_card_select-wrapper">
 
 						<!-- Card template one -->
-						<div class="mwb_membership_plan_card_select">
+						<div class="mwb_membership_plan_card_select <?php echo esc_html( 1 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
 
-							<input type="hidden" class="mwb_membership_card_template" name="mwb_membership_card_selected_template" value="">
+							<input type="hidden" class="mwb_membership_card_template" name="mwb_membership_card_selected_template" value="<?php echo esc_html( $mwb_membership_card_selected_template ); ?>">
 
-							<input type="hidden" class="mwb_membership_card_selected_template" name="mwb_membership_card_selected_template" value="">
+							<input type="hidden" class="mwb_membership_selected_template" name="mwb_membership_selected_template" value="<?php echo esc_html( $mwb_membership_selected_template ); ?>">
 
 							<p class="mwb_membership_card_name"><?php esc_html_e( 'Plantinum', 'membership-for-woocommerce' ); ?></p>
 							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '1' >Platinum</a>
 						</div>
 
 						<!-- Card template two -->
-						<div class="mwb_membership_plan_card_select">
+						<div class="mwb_membership_plan_card_select <?php echo esc_html( 2 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
 
 							<p class="mwb_membership_card_name"><?php esc_html_e( 'Gold', 'membership-for-woocommerce' ); ?></p>
 							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '2' >Gold</a>
 						</div>
 
 						<!-- Card template three -->
-						<div class="mwb_membership_plan_card_select">
+						<div class="mwb_membership_plan_card_select <?php echo esc_html( 3 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
 
 							<p class="mwb_membership_card_name"><?php esc_html_e( 'Silver', 'membership-for-woocommerce' ); ?></p>
 							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '3' >Silver</a>
@@ -677,6 +702,21 @@ echo '</pre>';
 						<table class="form-table mwb_membership_plan_creation_setting">
 
 							<tbody>
+								<?php
+
+								if ( ! empty( $mwb_membership_card_selected_template ) ) {
+
+									// Load CSS of selected template.
+									$selected_template_callback = 'mwb_membership_plan_card_template_' . $mwb_membership_card_selected_template;
+
+									$mwb_membership_enable_selected_design = $selected_template_callback();
+
+									$mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css'] = $mwb_membership_enable_selected_design;
+								}
+
+								?>
+
+
 								<!-- Border style start. -->
 								<tr valign="top">
 
@@ -686,7 +726,7 @@ echo '</pre>';
 
 									<td class="forminp forminp-text">
 										<?php
-											$attribute_description = esc_html__( 'Select among different border types for Bump Offer.', 'membership-for-woocommerce' );
+											$attribute_description = esc_html__( 'Select among different border types for Membership Plan card.', 'membership-for-woocommerce' );
 
 											mwb_membership_for_woo_tool_tip( $attribute_description );
 
@@ -732,13 +772,13 @@ echo '</pre>';
 
 									<td class="forminp forminp-text">
 									<?php
-										$attribute_description = esc_html__( 'Select border color for Bump Offer.', 'membership-for-woocommerce' );
+										$attribute_description = esc_html__( 'Select border color for Membership plan cards.', 'membership-for-woocommerce' );
 
 										mwb_membership_for_woo_tool_tip( $attribute_description );
 									?>
 										<label>
 											<!-- Color picker for description background. -->
-											<input type="text" name="parent_border_color" class="mwb_membership_colorpicker mwb_membership_preview_select_border_color" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) : ''; ?>">
+											<input type="color" name="parent_border_color" class="mwb_membership_colorpicker mwb_membership_preview_select_border_color" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) : ''; ?>">
 										</label>			
 									</td>
 
@@ -754,7 +794,7 @@ echo '</pre>';
 
 									<td class="forminp forminp-text">
 										<?php
-											$attribute_description = esc_html__( 'Add top spacing to the Bump Offer Box.', 'membership-for-woocommerce' );
+											$attribute_description = esc_html__( 'Add top spacing to the Membership plan cards.', 'membership-for-woocommerce' );
 
 											mwb_membership_for_woo_tool_tip( $attribute_description );
 										?>
@@ -776,7 +816,7 @@ echo '</pre>';
 
 									<td class="forminp forminp-text">
 									<?php
-										$attribute_description = esc_html__( 'Add bottom spacing to the Bump Offer Box.', 'membership-for-woocommerce' );
+										$attribute_description = esc_html__( 'Add bottom spacing to the Membership plan cards.', 'membership-for-woocommerce' );
 
 										mwb_membership_for_woo_tool_tip( $attribute_description );
 									?>
@@ -817,7 +857,7 @@ echo '</pre>';
 									?>
 										<label>
 											<!-- Color picker for description background. -->
-											<input type="text" name="price_section_background_color" class="membership_colorpicker mwb_membership_select_price_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) : ''; ?>">
+											<input type="color" name="price_section_background_color" class="membership_colorpicker mwb_membership_select_price_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) : ''; ?>">
 
 										</label>	
 									</td>
@@ -838,7 +878,7 @@ echo '</pre>';
 										?>
 										<label>
 											<!-- Color picker for description text. -->
-											<input type="text" name="price_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_price_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) : ''; ?>">
+											<input type="color" name="price_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_price_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) : ''; ?>">
 										</label>			
 									</td>
 
@@ -859,9 +899,9 @@ echo '</pre>';
 										?>
 										<label>
 											<!-- Slider for spacing. -->
-											<input type="range" min="20" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] ); ?>"  max="50" value="" name = 'price_section_text_size' class="mwb_membership_text_slider mwb_ubo_price_slider" />
+											<input type="range" min="20" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] ); ?>"  max="50" value="" name = 'price_section_text_size' class="mwb_membership_text_slider mwb_membership_price_slider" />
 
-											<span class="mwb_membership_slider_size mwb_ubo_price_slider_size" ><?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] . 'px' ); ?></span>
+											<span class="mwb_membership_slider_size mwb_membership_price_slider_size" ><?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] . 'px' ); ?></span>
 										</label>		
 									</td>
 								</tr>
@@ -892,7 +932,7 @@ echo '</pre>';
 										?>
 										<label>
 											<!-- Color picker for description background. -->
-											<input type="text" name="button_section_background_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) : ''; ?>">
+											<input type="color" name="button_section_background_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) : ''; ?>">
 										</label>			
 									</td>
 								</tr>
@@ -912,7 +952,7 @@ echo '</pre>';
 										?>
 										<label>	
 											<!-- Color picker for description text. -->
-											<input type="text" name="button_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) : ''; ?>">
+											<input type="color" name="button_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) : ''; ?>">
 										</label>			
 									</td>
 								</tr>
@@ -962,7 +1002,7 @@ echo '</pre>';
 											mwb_membership_for_woo_tool_tip( $attribute_description );
 										?>
 										<!-- Color picker for description text. -->
-										<input type="text" name="description_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_membership_description_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) : ''; ?>">
+										<input type="color" name="description_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_membership_description_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) : ''; ?>">
 									</td>
 								</tr>
 								<!-- Text color end. -->
@@ -1026,7 +1066,7 @@ echo '</pre>';
 
 								<td class="forminp forminp-text">
 									<?php
-										$attribute_description = esc_html__( 'Bump offer Lead title content.', 'membership-for-woocommerce' );
+										$attribute_description = esc_html__( 'Membership Plan Card Lead title content.', 'membership-for-woocommerce' );
 
 										mwb_membership_for_woo_tool_tip( $attribute_description );
 									?>
@@ -1042,7 +1082,20 @@ echo '</pre>';
 				</div>
 				<!-- Text section end. -->
 
+				<!-- Preview start -->
+				<div class="mwb_membership_plan_card_preview" >
+
+					<?php
+					echo 'Card';
+					?>
+					<h3 class="mwb_membership_plan_card_preview_heading"><?php esc_html_e( 'Card Preview', 'membership-for-woocommerce' ); ?></h3>
+
+					<!-- Generate a live preview. -->
+				</div>
+				<!-- Preview end -->
+
 			</div>
+			<!-- Card appearance end. -->
 
 		</div>
 

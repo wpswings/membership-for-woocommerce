@@ -59,7 +59,7 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list' );
 
 	<?php } ?>
 
-
+	<?php if ( ! empty( $mwb_membership_plans_list ) ) { ?>
 
 		<table>
 			<tr>
@@ -167,6 +167,7 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list' );
 				</tr>
 			<?php } ?>
 		</table>
+	<?php } ?>
 
 </div>
 
