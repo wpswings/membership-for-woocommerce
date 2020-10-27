@@ -45,6 +45,8 @@ do_action( 'mwb_membership_for_woo_tab_active' );
 
 		<a class="nav-tab <?php echo esc_html( 'global-setting' === $mwb_membership_active_tab ? 'nav-tab-active' : '' ); ?>" href="?page=membership-for-woocommerce-setting&tab=global-setting"><?php esc_html_e( 'Global Settings', 'membership-for-woocommerce' ); ?></a>
 
+		<a class="nav-tab <?php echo esc_html( 'shortcodes' === $mwb_membership_active_tab ? 'nav-tab-active' : '' ); ?>" href="?page=membership-for-woocommerce-setting&tab=shortcodes"><?php esc_html_e( 'Shortcodes', 'membership-for-woocommerce' ); ?></a>
+
 		<a class="nav-tab <?php echo esc_html( 'overview' === $mwb_membership_active_tab ? 'nav-tab-active' : '' ); ?>" href="?page=membership-for-woocommerce-setting&tab=overview"><?php esc_html_e( 'Overview', 'membership-for-woocommerce' ); ?></a>
 
 		<?php do_action( 'mwb_membership_for_woo_setting_tab' ); ?>
@@ -68,6 +70,10 @@ do_action( 'mwb_membership_for_woo_tab_active' );
 	} elseif ( 'overview' === $mwb_membership_active_tab ) {
 
 		include_once 'templates/mwb-membership-overview.php';
+
+	} elseif ( 'shortcodes' === $mwb_membership_active_tab ) {
+
+		include_once 'templates/mwb-membership-shortcodes.php';
 
 	}
 

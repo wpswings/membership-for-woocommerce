@@ -343,8 +343,8 @@ class Membership_For_Woocommerce_Admin {
 		// Adding new columns.
 		$columns = array(
 			'cb'                => '<input type="checkbox" />',
-			'membership_id'     => __( 'Memberhsip ID', 'membership-for-woocommerce' ),
-			'membership_status' => __( 'Memberhsip Status', 'membership-for-woocommerce' ),
+			'membership_id'     => __( 'Membership ID', 'membership-for-woocommerce' ),
+			'membership_status' => __( 'Membership Status', 'membership-for-woocommerce' ),
 			'membership_user'   => __( 'User', 'membership-for-woocommerce' ),
 			'expiration'        => __( 'Expiry Date', 'membership-for-woocommerce' ),
 		);
@@ -382,5 +382,6 @@ class Membership_For_Woocommerce_Admin {
 				break;
 		}
 	}
+
 
 }

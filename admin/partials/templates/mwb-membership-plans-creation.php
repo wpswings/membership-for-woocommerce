@@ -18,21 +18,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// Get all plans list.
-$mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
+if ( ! isset( $_GET['plan_id'] ) ) {
 
-if ( ! empty( $mwb_membership_plans_list ) ) {
+	// Get all plans list.
+	$mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
-	reset( $mwb_membership_plans_list );
+	if ( ! empty( $mwb_membership_plans_list ) ) {
 
-	$mwb_membership_plan_id = key( $mwb_membership_plans_list );
+		// Temp plan varibale.
+		$mwb_membership_plans_list_temp = $mwb_membership_plans_list;
 
+		// Set the pointer to the end of the array.
+		end( $mwb_membership_plans_list_temp );
+
+		// Returns the last index of the array.
+		$mwb_membership_plan_number = key( $mwb_membership_plans_list_temp );
+
+		// New plan will be last_key+1.
+		$mwb_membership_plan_id = $mwb_membership_plan_number + 1;
+
+	} else {
+
+		// First plan id.
+		$mwb_membership_plan_id = 1;
+	}
 } else {
 
-	// New plan id.
-	$mwb_membership_plan_id = 1;
+	// Get the value of th eplan_id from the query.
+	$mwb_membership_plan_id = sanitize_text_field( wp_unslash( $_GET['plan_id'] ) );
 }
-
 
 // When save changes button is clicked.
 if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
@@ -107,9 +121,7 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 
 	$mwb_membership_new_plan['mwb_memebership_plan_free_shipping'] = ! empty( $_POST['mwb_memebership_plan_free_shipping'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_memebership_plan_free_shipping'] ) ) : '';
 
-	$mwb_membership_new_plan['mwb_membership_card_selected_template'] = ! empty( $_POST['mwb_membership_card_selected_template'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_card_selected_template'] ) ) : '';
-
-	$mwb_membership_new_plan['mwb_membership_selected_template'] = ! empty( $_POST['mwb_membership_selected_template'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_selected_template'] ) ) : '';
+	$mwb_membership_new_plan['mwb_membership_plan_desc'] = ! empty( $_POST['mwb_membership_plan_desc'] ) ? sanitize_textarea_field( wp_unslash( $_POST['mwb_membership_plan_desc'] ) ) : '';
 
 	// Sanitize and strip slashes of all arrays.
 
@@ -117,78 +129,11 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 
 	$mwb_membership_new_plan['mwb_membership_plan_target_ids'] = ! empty( $_POST['mwb_membership_plan_target_ids'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['mwb_membership_plan_target_ids'] ) ) : '';
 
-	// When membership plan is saved for the first time so load default design settings.
-	if ( empty( $_POST['parent_border_type'] ) ) {
-
-		$design_settings = mwb_membership_plan_card_template_1();
-
-		$mwb_membership_new_plan['design_css'] = $design_settings;
-
-		$mwb_membership_new_plan['design_text'] = mwb_membership_plan_card_default_text();
-
-	} else {
-
-		// Card template design settings.
-		$card_design_settings_post['parent_border_type']      = ! empty( $_POST['parent_border_type'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_type'] ) ) : '';
-		$card_design_settings_post['parent_border_color']     = ! empty( $_POST['parent_border_color'] ) ? sanitize_text_field( wp_unslash( $_POST['parent_border_color'] ) ) : '';
-		$card_design_settings_post['top_vertical_spacing']    = ! empty( $_POST['top_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['top_vertical_spacing'] ) ) : '';
-		$card_design_settings_post['bottom_vertical_spacing'] = ! empty( $_POST['bottom_vertical_spacing'] ) ? sanitize_text_field( wp_unslash( $_POST['bottom_vertical_spacing'] ) ) : '';
-
-		unset( $_POST['parent_border_type'] );
-		unset( $_POST['parent_border_color'] );
-		unset( $_POST['top_vertical_spacing'] );
-		unset( $_POST['bottom_vertical_spacing'] );
-
-		// Price section design settings.
-		$card_design_settings_post['price_section_background_color'] = ! empty( $_POST['price_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_background_color'] ) ) : '';
-		$card_design_settings_post['price_section_text_color']       = ! empty( $_POST['price_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_color'] ) ) : '';
-		$card_design_settings_post['price_section_text_size']        = ! empty( $_POST['price_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['price_section_text_size'] ) ) : '';
-
-		unset( $_POST['price_section_background_color'] );
-		unset( $_POST['price_section_text_color'] );
-		unset( $_POST['price_section_text_size'] );
-
-		// Buy Now button design settings.
-		$card_design_settings_post['button_section_background_color'] = ! empty( $_POST['button_section_background_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_background_color'] ) ) : '';
-		$card_design_settings_post['button_section_text_color']       = ! empty( $_POST['button_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_color'] ) ) : '';
-		$card_design_settings_post['button_section_text_size']        = ! empty( $_POST['button_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['button_section_text_size'] ) ) : '';
-
-		unset( $_POST['button_section_background_color'] );
-		unset( $_POST['button_section_text_color'] );
-		unset( $_POST['button_section_text_size'] );
-
-		// Plan description design settings.
-		$card_design_settings_post['description_section_text_color'] = ! empty( $_POST['description_section_text_color'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_color'] ) ) : '';
-		$card_design_settings_post['description_section_text_size']  = ! empty( $_POST['description_section_text_size'] ) ? sanitize_text_field( wp_unslash( $_POST['description_section_text_size'] ) ) : '';
-
-		unset( $_POST['description_section_text_color'] );
-		unset( $_POST['description_section_text_size'] );
-
-		$mwb_membership_new_plan['design_css'] = $card_design_settings_post;
-
-		$card_text_settings_post = array(
-
-			'mwb_membership_plan_decsription_text' => ! empty( $_POST['mwb_membership_plan_decsription_text'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_decsription_text'] ) ) : '',
-
-			'mwb_membership_plan_title'            => ! empty( $_POST['mwb_membership_plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_plan_title'] ) ) : '',
-		);
-
-		unset( $_POST['mwb_membership_plan_decsription_text'] );
-		unset( $_POST['mwb_membership_plan_title'] );
-
-		$mwb_membership_new_plan['design_text'] = $card_text_settings_post;
-
-	}
-
 	// Parent array of all plans.
 	$mwb_membership_plan_series = array();
 
 	// Post plan data as an array at it's respective id.
 	$mwb_membership_plan_series[ $mwb_membership_plan_id ] = $mwb_membership_new_plan;
-
-	// echo '<pre>';
-	// print_r($mwb_membership_plan_series);
-	// echo '</pre>';
 
 	// Save the plan.
 	update_option( 'mwb_membership_plans_list', $mwb_membership_plan_series );
@@ -207,7 +152,7 @@ if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
 $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
 echo '<pre>';
-print_r($mwb_membership_plans_list);
+print_r( $mwb_membership_plans_list );
 echo '</pre>';
 
 /**
@@ -458,9 +403,7 @@ echo '</pre>';
 								if ( ! empty( $mwb_membership_plans_list ) ) {
 
 									$mwb_membership_plan_target_products = isset( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_ids'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_target_ids'] : array();
-									// echo '<pre>';
-									// print_r($mwb_membership_plan_target_products);
-									// echo '</pre>';
+
 									$mwb_membership_plan_target_product_ids = ! empty( $mwb_membership_plan_target_products ) ? array_map( 'absint', $mwb_membership_plan_target_products ) : null;
 
 									if ( $mwb_membership_plan_target_product_ids ) {
@@ -572,7 +515,6 @@ echo '</pre>';
 			</div>
 
 			<div class="membership-features">
-
 				<!-- Membership features section start -->
 				<div class="new_created_offers mwb_membership_offers">
 
@@ -628,476 +570,30 @@ echo '</pre>';
 							</td>
 						</tr>
 						<!-- Free shiping section end. -->
-					</table>
 
-				</div>
+						<!-- Membership Plan Description start. -->
+						<tr>
+							<th scope="row" class="titledesc">
+								<label for="mwb_membership_plan_description"><?php esc_html_e( 'Membership Plan Description', 'membership-for-woocommerce' ); ?></label>
+							</th>
 
-			</div>
+							<td class="forminp forminp-text">
 
-			<!-- Membership Template section start -->
-
-			<div class="mwb_membership_plan_templates"><?php esc_html_e( 'Membership Cards Template', 'membership-for-woocommerce' ); ?></div>
-
-			<!-- Nav starts. -->
-			<nav class="nav-tab-wrapper mwb-membership-appearance-nav-tab">
-				<a class="nav-tab mwb-membership-appearance-card nav-tab-active" href="javascript:void(0);"><?php esc_html_e( 'Cards', 'membership-for-woocommerce' ); ?></a>
-				<a class="nav-tab mwb-membership-design" href="javascript:void(0);"><?php esc_html_e( 'Card Design', 'membership-for-woocommerce' ); ?></a>
-				<a class="nav-tab mwb-membership-text" href="javascript:void(0);"><?php esc_html_e( 'Card Content', 'membership-for-woocommerce' ); ?></a>
-			</nav>
-			<!-- Nav ends. -->
-
-			<!-- Cards appearance start. -->
-			<div class="mwb_membership_card_div_wrapper">
-
-				<!-- Card template start. -->
-				<div class="mwb-membership-card-template-section">
-
-					<?php
-
-					$mwb_membership_card_selected_template = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_card_selected_template'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_card_selected_template'] : '';
-
-					$mwb_membership_selected_template = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_selected_template'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_selected_template'] : '1';
-
-					?>
-
-					<!-- Card image wrapper. -->
-					<div class="mwb_membership_temp_class mwb_membership_plan_card_select-wrapper">
-
-						<!-- Card template one -->
-						<div class="mwb_membership_plan_card_select <?php echo esc_html( 1 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
-
-							<input type="hidden" class="mwb_membership_card_template" name="mwb_membership_card_selected_template" value="<?php echo esc_html( $mwb_membership_card_selected_template ); ?>">
-
-							<input type="hidden" class="mwb_membership_selected_template" name="mwb_membership_selected_template" value="<?php echo esc_html( $mwb_membership_selected_template ); ?>">
-
-							<p class="mwb_membership_card_name"><?php esc_html_e( 'Plantinum', 'membership-for-woocommerce' ); ?></p>
-							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '1' >Platinum</a>
-						</div>
-
-						<!-- Card template two -->
-						<div class="mwb_membership_plan_card_select <?php echo esc_html( 2 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
-
-							<p class="mwb_membership_card_name"><?php esc_html_e( 'Gold', 'membership-for-woocommerce' ); ?></p>
-							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '2' >Gold</a>
-						</div>
-
-						<!-- Card template three -->
-						<div class="mwb_membership_plan_card_select <?php echo esc_html( 3 == $mwb_membership_selected_template ? 'mwb_membership_selected_class' : '' ); ?>">
-
-							<p class="mwb_membership_card_name"><?php esc_html_e( 'Silver', 'membership-for-woocommerce' ); ?></p>
-							<a href="javascript:void" class="mwb_membership_card_template_link" data_link = '3' >Silver</a>
-						</div>
-
-					</div>
-
-				</div>
-				<!-- Card template end. -->
-
-				<!-- Card Design start -->
-				<div class="mwb_membership_card_table_column_wrapper mwb-membership-appearance-section-hidden">
-
-					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
-
-						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Card Box', 'membership-for-woocommerce' ); ?></div>
-						<table class="form-table mwb_membership_plan_creation_setting">
-
-							<tbody>
 								<?php
 
-								if ( ! empty( $mwb_membership_card_selected_template ) ) {
-
-									// Load CSS of selected template.
-									$selected_template_callback = 'mwb_membership_plan_card_template_' . $mwb_membership_card_selected_template;
-
-									$mwb_membership_enable_selected_design = $selected_template_callback();
-
-									$mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css'] = $mwb_membership_enable_selected_design;
-								}
+								$mwb_membership_plan_description = ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_desc'] ) ? $mwb_membership_plans_list[ $mwb_membership_plan_id ]['mwb_membership_plan_desc'] : '';
 
 								?>
 
+								<textarea name="mwb_membership_plan_desc" id="mwb_membership_plan_description" cols="50" rows="10"><?php echo esc_html( $mwb_membership_plan_description ); ?></textarea>
+							</td>
+						</tr>
+						<!-- Membership Plan Description End. -->
 
-								<!-- Border style start. -->
-								<tr valign="top">
-
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Border type', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select among different border types for Membership Plan card.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-
-										?>
-
-										<label>
-
-											<!-- Select options for border. -->
-											<select name="parent_border_type" class="mwb_membership_preview_select_border_type" >
-
-												<?php
-
-												$border_type_array = array(
-													'none' => esc_html__( 'No Border', 'membership-for-woocommerce' ),
-													'solid' => esc_html__( 'Solid', 'membership-for-woocommerce' ),
-													'dashed' => esc_html__( 'Dashed', 'membership-for-woocommerce' ),
-													'double' => esc_html__( 'Double', 'membership-for-woocommerce' ),
-													'dotted' => esc_html__( 'Dotted', 'membership-for-woocommerce' ),
-
-												);
-
-												?>
-												<option value="" ><?php esc_html_e( '----Select Border Type----', 'membership-for-woocommerce' ); ?></option>
-
-												<?php
-												foreach ( $border_type_array as $value => $name ) {
-													?>
-													<option <?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_type'] == $value ? 'selected' : '' ); ?> value="<?php echo esc_html( $value ); ?>" ><?php echo esc_html( $name ); ?></option>
-												<?php } ?>
-											</select>
-
-										</label>		
-									</td>
-								</tr>
-								<!-- Border style end. -->
-
-								<!-- Border color start. -->
-								<tr valign="top">
-
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Border Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-									<?php
-										$attribute_description = esc_html__( 'Select border color for Membership plan cards.', 'membership-for-woocommerce' );
-
-										mwb_membership_for_woo_tool_tip( $attribute_description );
-									?>
-										<label>
-											<!-- Color picker for description background. -->
-											<input type="color" name="parent_border_color" class="mwb_membership_colorpicker mwb_membership_preview_select_border_color" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['parent_border_color'] ) : ''; ?>">
-										</label>			
-									</td>
-
-								</tr>
-								<!-- Border color end. -->
-
-								<!-- Top Vertical Spacing control start. -->
-								<tr valign="top">
-
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Top Vertical Spacing', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Add top spacing to the Membership plan cards.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-
-										<label>
-											<!-- Slider for spacing. -->
-											<input type="range" min="0" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['top_vertical_spacing'] ); ?>"  max="40" value="" name='top_vertical_spacing' class="mwb_membership_top_vertical_spacing_slider" />
-											<span class="mwb_membership_top_spacing_slider_size" ><?php echo esc_html( ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['top_vertical_spacing'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['top_vertical_spacing'] . 'px' ) : '0px' ); ?></span>
-										</label>
-									</td>
-								</tr>
-								<!-- Top Vertical Spacing control ends. -->
-
-								<!-- Bottom Vertical Spacing control start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Bottom Vertical Spacing', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-									<?php
-										$attribute_description = esc_html__( 'Add bottom spacing to the Membership plan cards.', 'membership-for-woocommerce' );
-
-										mwb_membership_for_woo_tool_tip( $attribute_description );
-									?>
-									<label>	
-										<!-- Slider for spacing. -->
-										<input type="range" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['bottom_vertical_spacing'] ); ?>" min="0" max="40" value="" name='bottom_vertical_spacing' class="mwb_membership_bottom_vertical_spacing_slider" />
-										<span class="mwb_membership_bottom_spacing_slider_size"><?php echo esc_html( ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['bottom_vertical_spacing'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['bottom_vertical_spacing'] . 'px' ) : '0px' ); ?></span>
-										</label>		
-									</td>
-								</tr>
-								<!-- Bottom Vertical Spacing control ends. -->
-
-
-							</tbody>
-
-						</table>
-
-					</div>
-
-					<!-- Membership Price. -->
-					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
-
-						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Price Section', 'membership-for-woocommerce' ); ?></div>
-						<table class="form-table mwb_membership_plan_creation_setting">
-							<tbody>
-
-								<!-- Background color start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Background Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-									<?php
-										$attribute_description = esc_html__( 'Select background color for Membership Plan Price.', 'membership-for-woocommerce' );
-
-										mwb_membership_for_woo_tool_tip( $attribute_description );
-									?>
-										<label>
-											<!-- Color picker for description background. -->
-											<input type="color" name="price_section_background_color" class="membership_colorpicker mwb_membership_select_price_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_background_color'] ) : ''; ?>">
-
-										</label>	
-									</td>
-								</tr>
-								<!-- Background color end. -->
-
-								<!-- Text color start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select text color for Membershi Plan Price.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<label>
-											<!-- Color picker for description text. -->
-											<input type="color" name="price_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_price_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_color'] ) : ''; ?>">
-										</label>			
-									</td>
-
-								</tr>
-								<!-- Text color end. -->
-
-								<!-- Text size control start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select font size for Discount section.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<label>
-											<!-- Slider for spacing. -->
-											<input type="range" min="20" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] ); ?>"  max="50" value="" name = 'price_section_text_size' class="mwb_membership_text_slider mwb_membership_price_slider" />
-
-											<span class="mwb_membership_slider_size mwb_membership_price_slider_size" ><?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['price_section_text_size'] . 'px' ); ?></span>
-										</label>		
-									</td>
-								</tr>
-								<!-- Text size control ends. -->
-							</tbody>
-
-						</table>
-					</div>
-
-					<!-- Membership Plan buy now section -->
-					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
-
-						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Buy Now Button', 'membership-for-woocommerce' ); ?></div>
-
-						<table class="form-table mwb_membership_plan_creation_setting">
-							<tbody>
-								<!-- Background color start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Background Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select background color for Buy Now button.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<label>
-											<!-- Color picker for description background. -->
-											<input type="color" name="button_section_background_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_bcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_background_color'] ) : ''; ?>">
-										</label>			
-									</td>
-								</tr>
-								<!-- Background color end. -->
-
-								<!-- Text color start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select text color for Buy Now button.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<label>	
-											<!-- Color picker for description text. -->
-											<input type="color" name="button_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_buy_now_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_color'] ) : ''; ?>">
-										</label>			
-									</td>
-								</tr>
-								<!-- Text color end. -->
-
-								<!-- Text size control start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
-									</th>
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select font size for Buy Now button.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<label>
-											<!-- Slider for spacing. -->
-											<input type="range" min="10" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_size'] ); ?>"  max="30" value="" name = 'button_section_text_size' class="mwb_membership_text_slider mwb_membership_buy_now_slider" />
-											<span class="mwb_membership_slider_size mwb_membership_buy_now_slider_size" ><?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['button_section_text_size'] ) . 'px'; ?></span>
-										</label>	
-									</td>
-								</tr>
-								<!-- Text size control ends. -->
-							</tbody>
-
-						</table>
-
-					</div>
-
-					<!-- Membership Plan Description -->
-					<div class="mwb_memberhsip_card_table mwb_membership_card_table--border mwb_membership_card_custom_template_settings ">
-
-						<div class="mwb_membership_offer_sections"><?php esc_html_e( 'Membership Plan Description Section', 'membership-for-woocommerce' ); ?></div>
-						<table class="form-table mwb_membership_plan_creation_setting">
-
-							<tbody>
-								<!-- Text color start. -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Color', 'membership-for-woocommerce' ); ?></label>
-									</th>
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select text color for Membership Plan Description section.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<!-- Color picker for description text. -->
-										<input type="color" name="description_section_text_color" class="mwb_membership_colorpicker mwb_membership_select_membership_description_tcolor" value="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_color'] ) : ''; ?>">
-									</td>
-								</tr>
-								<!-- Text color end. -->
-
-								<!-- Text size control start -->
-								<tr valign="top">
-									<th scope="row" class="titledesc">
-										<label><?php esc_html_e( 'Select Text Size', 'membership-for-woocommerce' ); ?></label>
-									</th>
-									<td class="forminp forminp-text">
-										<?php
-											$attribute_description = esc_html__( 'Select font size for Membership Plan Description section.', 'membership-for-woocommerce' );
-
-											mwb_membership_for_woo_tool_tip( $attribute_description );
-										?>
-										<!-- Slider for spacing. -->
-										<input type="range" min="10" value="<?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_size'] ); ?>"  max="30" value="" name = 'description_section_text_size' class="mwb_membership_text_slider mwb_membership_description_slider" />
-
-										<span class="mwb_membership_slider_size mwb_membership_description_slider_size" ><?php echo esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_css']['description_section_text_size'] ) . 'px'; ?></span>
-									</td>
-								</tr>
-								<!-- Text size control ends. -->
-							</tbody>
-
-						</table>
-					</div>
-
-				</div>
-				<!-- Card Design End. -->
-
-				<!-- Text Section start -->
-				<div class="mwb-membership-text-section mwb_membership_card_table--border mwb-membership-appearance-section-hidden mwb_membership_card_table">
-					<table>
-						<tbody>
-							<!-- Plan Description start. -->
-							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<label><?php esc_html_e( 'Membership Plan Description', 'membership-for-woocommerce' ); ?></label>
-								</th>
-
-								<td class="forminp forminp-text" >
-
-									<?php
-										$attribute_description = esc_html__( 'Membership Plan description content.', 'membership-for-woocommerce' );
-
-										mwb_membership_for_woo_tool_tip( $attribute_description );
-
-									?>
-
-									<textarea class="mwb_textarea_class" text_id ="plan_desc" rows="4" cols="50" name="mwb_membership_plan_decsription_text" ><?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_text']['mwb_membership_plan_decsription_text'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_text']['mwb_membership_plan_decsription_text'] ) : ''; ?></textarea>
-
-								</td>
-							</tr>
-							<!-- Plan Description end. -->
-
-							<!-- Lead Title start. -->
-							<tr valign="top">
-								<th scope="row" class="titledesc">
-									<label><?php esc_html_e( 'Lead Title ', 'membership-for-woocommerce' ); ?></label>
-								</th>
-
-								<td class="forminp forminp-text">
-									<?php
-										$attribute_description = esc_html__( 'Membership Plan Card Lead title content.', 'membership-for-woocommerce' );
-
-										mwb_membership_for_woo_tool_tip( $attribute_description );
-									?>
-
-									<input type="text" class="mwb_membership_plan_input_type" name="mwb_membership_plan_title" text_id ="lead" value ="<?php echo ! empty( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_text']['mwb_membership_plan_title'] ) ? esc_html( $mwb_membership_plans_list[ $mwb_membership_plan_id ]['design_text']['mwb_membership_plan_title'] ) : ''; ?>">
-
-								</td>
-							</tr>
-							<!--Lead Title ends.-->
-						</tbody>
 					</table>
 
 				</div>
-				<!-- Text section end. -->
-
-				<!-- Preview start -->
-				<div class="mwb_membership_plan_card_preview" >
-
-					<?php
-					echo 'Card';
-					?>
-					<h3 class="mwb_membership_plan_card_preview_heading"><?php esc_html_e( 'Card Preview', 'membership-for-woocommerce' ); ?></h3>
-
-					<!-- Generate a live preview. -->
-				</div>
-				<!-- Preview end -->
-
 			</div>
-			<!-- Card appearance end. -->
-
-		</div>
 
 		<!-- Save Changes for whole membership plan -->
 		<p class="submit">

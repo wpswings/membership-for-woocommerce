@@ -100,4 +100,43 @@ class Membership_For_Woocommerce_Public {
 
 	}
 
+	/**
+	 * Register Endpoint for Membership plans.
+	 */
+	public function mwb_membership_register_endpoint() {
+
+		add_rewrite_endpoint( 'mwb-membership-tab', EP_PERMALINK | EP_PAGES );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Membership Shortcodes for plan Action and plan Attributes.
+	 */
+	public function mwb_membership_shortcodes() {
+
+		// Buy now button shortcode.
+		add_shortcode( 'mwb_membership_yes', array( $this, 'buy_now_shortcode_content' ) );
+
+		// No thanks button shortcode.
+		add_shortcode( 'mwb_membership_no', array( $this, 'reject_shortcode_content' ) );
+
+		// Membership Plan title shortcode.
+		add_shortcode( 'mwb_membership_title', array( $this, 'membership_plan_title_content' ) );
+
+		// Membership Plan price shortcode.
+		add_shortcode( 'mwb_membership_price', array( $this, 'membership_plan_price_content' ) );
+
+		// Membership Plan Description shortcode.
+		add_shortcode( 'mwb_membership_desc', array( $this, 'membership_plan_description_content') );
+
+	}
+
+	/**
+	 * Shortcode for offer - Buy now button.
+	 * Returns : Link :)
+	 */
+	public function buy_now_shortcode_content( $atts, $content ) {
+		
+	}
 }
+

@@ -176,7 +176,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'manage_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns' );
 		// Populating columns.
 		$this->loader->add_action( 'manage_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns', 10, 2 );
-	
+
 	}
 
 	/**
@@ -193,6 +193,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		// Register Endpoint.
+		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_register_endpoint' );
+
+		// Load all defined shortcodes.
+		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
 	}
 
 	/**
