@@ -170,10 +170,14 @@ class Membership_For_Woocommerce {
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
-		// Keep parent menu active.
-		$this->loader->add_action( 'admin_head', $plugin_admin, 'mwb_membership_for_woo_submenu_active' );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_membership' );
+		
 		// Adding custom columns.
-		$this->loader->add_filter( 'manage_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns' );
+		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
+		
+		// Adding custom meta box.
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
+
 		// Populating columns.
 		$this->loader->add_action( 'manage_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns', 10, 2 );
 

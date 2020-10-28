@@ -18,35 +18,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-if ( ! isset( $_GET['plan_id'] ) ) {
+// if ( ! isset( $_GET['plan_id'] ) ) {
 
-	// Get all plans list.
-	$mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
+// 	// Get all plans list.
+// 	$mwb_membership_plans_list = get_option( 'mwb_membership_plans_list', array() );
 
-	if ( ! empty( $mwb_membership_plans_list ) ) {
+// 	if ( ! empty( $mwb_membership_plans_list ) ) {
 
-		// Temp plan varibale.
-		$mwb_membership_plans_list_temp = $mwb_membership_plans_list;
+// 		// Temp plan varibale.
+// 		$mwb_membership_plans_list_temp = $mwb_membership_plans_list;
 
-		// Set the pointer to the end of the array.
-		end( $mwb_membership_plans_list_temp );
+// 		// Set the pointer to the end of the array.
+// 		end( $mwb_membership_plans_list_temp );
 
-		// Returns the last index of the array.
-		$mwb_membership_plan_number = key( $mwb_membership_plans_list_temp );
+// 		// Returns the last index of the array.
+// 		$mwb_membership_plan_number = key( $mwb_membership_plans_list_temp );
 
-		// New plan will be last_key+1.
-		$mwb_membership_plan_id = $mwb_membership_plan_number + 1;
+// 		// New plan will be last_key+1.
+// 		$mwb_membership_plan_id = $mwb_membership_plan_number + 1;
 
-	} else {
+// 	} else {
 
-		// First plan id.
-		$mwb_membership_plan_id = 1;
-	}
-} else {
+// 		// First plan id.
+// 		$mwb_membership_plan_id = 1;
+// 	}
+// } else {
 
-	// Get the value of th eplan_id from the query.
-	$mwb_membership_plan_id = sanitize_text_field( wp_unslash( $_GET['plan_id'] ) );
-}
+// 	// Get the value of th eplan_id from the query.
+// 	$mwb_membership_plan_id = sanitize_text_field( wp_unslash( $_GET['plan_id'] ) );
+// }
 
 // When save changes button is clicked.
 if ( isset( $_POST['mwb_membership_plan_creation_setting_save'] ) ) {
@@ -519,7 +519,7 @@ echo '</pre>';
 				<div class="new_created_offers mwb_membership_offers">
 
 					<h2 class="mwb_membership_offer_title" >
-						<?php esc_html_e( 'Mmebership Features Section', 'membership-for-woocommerce' ); ?>
+						<?php esc_html_e( 'Membership Features Section', 'membership-for-woocommerce' ); ?>
 					</h2>
 
 					<table>
