@@ -50,6 +50,7 @@ class Membership_For_Woocommerce_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->free_shipping();
 
 	}
 
@@ -142,7 +143,7 @@ class Membership_For_Woocommerce_Admin {
 			'membership-for-woocommerce-setting',
 			array( $this, 'mwb_membership_for_woo_add_backend' ),
 			'dashicons-businessperson',
-			57,
+			57
 		);
 
 		// Add submenu for membership settings.
@@ -337,7 +338,7 @@ class Membership_For_Woocommerce_Admin {
 			$columns['wpseo-score'],
 			$columns['wpseo-title'],
 			$columns['wpseo-metadesc'],
-			$columns['wpseo-focuskw'],
+			$columns['wpseo-focuskw']
 		);
 
 		// Adding new columns.
@@ -383,5 +384,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-
+	public function free_shipping() {
+		include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
+	}
 }
