@@ -171,15 +171,20 @@ class Membership_For_Woocommerce {
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_membership' );
-		
+
 		// Adding custom columns.
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
-		
+		$this->loader->add_action( 'manage_mwb_cpt_membership_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
+
 		// Adding custom meta box.
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
 
+		// Save meta box fields.
+		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
+
 		// Populating columns.
-		$this->loader->add_action( 'manage_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns', 10, 2 );
+		$this->loader->add_action( 'manage_mwb_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_members', 10, 2 );
+		$this->loader->add_action( 'manage_mwb_cpt_membership_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_membership', 10, 2 );
 
 	}
 

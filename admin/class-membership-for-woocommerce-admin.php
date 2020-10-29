@@ -40,6 +40,13 @@ class Membership_For_Woocommerce_Admin {
 	private $version;
 
 	/**
+	 * Mwb Memberhsip Plans field.
+	 *
+	 * @var array
+	 */
+	public $settings_fields = array();
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -112,7 +119,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$pagescreen = $screen->id;
 
-			if ( 'toplevel_page_membership-for-woocommerce-setting' == $pagescreen ) {
+			if ( 'mwb_cpt_membership' == $pagescreen ) {
 
 				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
@@ -124,54 +131,350 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'wp-color-picker' );
 			}
-		}	
+		}
 
 	}
 
 	/**
-	 * Adding Membership menu page.
+	 * Custom post type for membership plans creation and settings.
+	 */
+	public function mwb_membership_for_woo_cpt_membership() {
+
+		$labels = array(
+			'name'               => __( 'Memberships', 'membership-for-woocommerce' ),
+			'singular_name'      => __( 'Membership', 'membership-for-woocommerce' ),
+			'add_new'            => __( 'Add Plans', 'membership-for-woocommerce' ),
+			'all_items'          => __( 'All Plans', 'membership-for-woocommerce' ),
+			'add_new_item'       => __( 'Add New Plan', 'membership-for-woocommerce' ),
+			'edit_item'          => __( 'Edit Plan', 'membership-for-woocommerce' ),
+			'new_item'           => __( 'New Plan', 'membership-for-woocommerce' ),
+			'view_item'          => __( 'View Plan', 'membership-for-woocommerce' ),
+			'search_item'        => __( 'Search Plan', 'membership-for-woocommerce' ),
+			'not_found'          => __( 'No Plans Found', 'membership-for-woocommerce' ),
+			'not_found_in_trash' => __( 'No Plans Found In Trash', 'membership-for-woocommerce' ),
+		);
+
+		register_post_type(
+			'mwb_cpt_membership',
+			array(
+				'labels'              => $labels,
+				'public'              => true,
+				'has_archive'         => true,
+				'publicly_queryable'  => true,
+				'query_var'           => true,
+				'capability_type'     => 'post',
+				'hierarchical'        => false,
+				'show_in_admin_bar'   => true,
+				'show_in_menu'        => true,
+				'menu_icon'           => 'dashicons-businessperson',
+				'description'         => __( 'Here all the Membership Plans will be created.', 'membership-for-woocommerce' ),
+				'supports'            => array(
+					'title',
+					'editor',
+					'excerpt',
+					'revisions',
+				),
+				'exclude_from_search' => false,
+				'rewrite'             => array(
+					'slug' => __( 'membership', 'membership-for-woocommerce' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Adding sub-menu pages to Membership menu.
 	 *
 	 * @since 1.0.0
 	 */
 	public function mwb_memberships_for_woo_admin_menu() {
 
-		add_menu_page(
-			esc_html__( 'Membership', 'membership-for-woocommerce' ),
-			esc_html__( 'Membership', 'membership-for-woocommerce' ),
-			'manage_woocommerce',
-			'membership-for-woocommerce-setting',
-			array( $this, 'mwb_membership_for_woo_add_backend' ),
-			'dashicons-businessperson',
-			57
-		);
+		// Add submenu for Global Settings.
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Global Settings', 'membership-for-woocommerce' ), esc_html__( 'Global Settings', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-global-settings', array( $this, 'mwb_membership_for_woo_global_settings' ) );
 
-		// Add submenu for membership settings.
-		add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), esc_html__( 'Membership Settings', 'membership-for-woocommerce' ), 'manage_options', 'membership-for-woocommerce-setting' );
+		// Add submenu for shortcodes.
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-shortcodes', array( $this, 'mwb_membership_for_woo_shortcodes' ) );
 
-		// Add submenu for membership settings.
-		//add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Members', 'membership-for-woocommerce' ), esc_html__( 'Membership Plans', 'membership-for-woocommerce' ), 'manage_options', 'edit.php?post_type=cpt_membership' );
-		
-		// Add submenu for members list.
-		//add_submenu_page( 'membership-for-woocommerce-setting', esc_html__( 'Members', 'membership-for-woocommerce' ), esc_html__( 'Members', 'membership-for-woocommerce' ), 'manage_options', 'edit.php?post_type=cpt_members' );
+		// Add submenu for overview.
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Overview', 'membership-for-woocommerce' ), esc_html__( 'Overview', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-overview', array( $this, 'mwb_membership_for_woo_overview' ) );
 	}
 
 	/**
-	 * Callback function for Membership menu page.
+	 * Callback function for Global settings sub-menu page.
 	 */
-	public function mwb_membership_for_woo_add_backend() {
+	public function mwb_membership_for_woo_global_settings() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/membership-for-woocommerce-admin-display.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-global-settings.php';
 
 	}
 
-	// /**
-	//  * Callback funtion for submenu members page.
-	//  */
-	// public function add_submenu_page_members_callback() {
+	/**
+	 * Callback function for shortcodes sub-menu page.
+	 */
+	public function mwb_membership_for_woo_overview() {
 
-	// 	require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/members/membership-for-woocommerce-members.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-overview.php';
 
-	// }
+	}
+
+	/**
+	 * Callback function for shortcodes sub-menu page.
+	 */
+	public function mwb_membership_for_woo_shortcodes() {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-shortcodes.php';
+
+	}
+
+	/**
+	 * Adding custom column to the custom post type "Membership"
+	 *
+	 * @param array $columns is an array of deafult columns in custom post type.
+	 */
+	public function mwb_membership_for_woo_cpt_columns_membership( $columns ) {
+
+		$columns['membership_status'] = __( 'Membership Plan Status', 'membership-for-woocommerce' );
+		$columns['membership_cost']   = __( 'Membership Plan Cost', 'membership-for-woocommerce' );
+
+		return $columns;
+	}
+
+	/**
+	 * Populating custom columns with content.
+	 *
+	 * @param array   $column is an array of default columns in Custom post type.
+	 * @param integer $post_id is the post id.
+	 */
+	public function mwb_membership_for_woo_fill_columns_membership( $column, $post_id ) {
+
+		switch ( $column ) {
+
+			case 'membership_status':
+				$plan_status = get_post_status( $post_id );
+
+				if ( ! empty( $plan_status ) ) {
+					// Display Sandbox mode if status is draft or pending else display live.
+					if ( 'draft' == $plan_status || 'pending' == $plan_status ) {
+
+						echo esc_html__( 'Sandbox', 'membership-for-woocommerce' );
+
+					} else {
+
+						echo esc_html__( 'Live', 'membership-for-woocommerce' );
+					}
+				}
+
+				break;
+
+			case 'membership_cost':
+				$plan_cost = get_post_meta( $post_id, 'mwb_membership_plan_price', true );
+				$currency  = get_woocommerce_currency();
+
+				if ( ! empty( $currency ) && ! empty( $plan_cost ) ) {
+
+					echo esc_html( $currency . ' ' . $plan_cost );
+
+				}
+
+				break;
+		}
+
+	}
+
+	/**
+	 * Register Custom Meta box for Membership plans creation.
+	 */
+	public function mwb_membership_for_woo_meta_box() {
+
+		add_meta_box( 'membership_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), 'mwb_cpt_membership' );
+	}
+
+	/**
+	 * Callback funtion for custom meta boxes.
+	 *
+	 * @param string $post Current post object.
+	 */
+	public function mwb_membership_meta_box_callback( $post ) {
+
+		$this->set_plan_creation_fields( get_the_ID() );
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-plans-creation.php';
+
+	}
+
+	/**
+	 * Save meta box fields value.
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public function mwb_membership_for_woo_save_fields( $post_id ) {
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+
+			return;
+		}
+
+		foreach ( $this->get_plans_default_value() as $field => $value ) {
+
+			if ( is_array( $_POST[ $field ] ) ) {
+
+				$post_data = ! empty( $_POST[ $field ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) ) : $value['default'];
+
+			} else {
+
+				$post_data = ! empty( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : $value['default'];
+
+			}
+
+			update_post_meta( $post_id, $field, $post_data );
+		}
+
+	}
+
+	/**
+	 * Define Membership default settings fields.
+	 *
+	 * @return array
+	 */
+	public function get_plans_default_value() {
+
+		return array(
+			'mwb_membership_plan_price'              => array( 'default' => '0' ),
+			'mwb_membership_plan_name_access_type'   => array( 'default' => 'lifetime' ),
+			'mwb_membership_plan_duration'           => array( 'default' => '0' ),
+			'mwb_membership_plan_duration_type'      => array( 'default' => '' ),
+			'mwb_membership_plan_start'              => array( 'default' => '' ),
+			'mwb_membership_plan_end'                => array( 'default' => '' ),
+			'mwb_membership_plan_user_access'        => array( 'defualt' => '' ),
+			'mwb_membership_plan_access_type'        => array( 'default' => '' ),
+			'mwb_membership_plan_time_duration'      => array( 'default' => '0' ),
+			'mwb_membership_plan_time_duration_type' => array( 'default' => '' ),
+			'mwb_membership_plan_offer_price_type'   => array( 'default' => '' ),
+			'mwb_memebership_plan_discount_price'    => array( 'default' => '' ),
+			'mwb_memebership_plan_free_shipping'     => array( 'default' => '' ),
+			'mwb_membership_plan_target_categories'  => array( 'default' => '' ),
+			'mwb_membership_plan_target_ids'         => array( 'default' => '' ),
+		);
+	}
+
+	/**
+	 * Set default fields  of membership plans
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public function set_plan_creation_fields( $post_id ) {
+
+		foreach ( $this->get_plans_default_value() as $key => $value ) {
+
+			$data                          = get_post_meta( $post_id, $key, true );
+			$this->settings_fields[ $key ] = ! empty( $data ) ? $data : $value['default'];
+		}
+	}
+
+	/**
+	 * Custom post type to display the list of all members.
+	 */
+	public function mwb_membership_for_woo_cpt_members() {
+
+		$labels = array(
+			'name'               => __( 'Members', 'membership-for-woocommerce' ),
+			'singular_name'      => __( 'Member', 'membership-for-woocommerce' ),
+			'add_new'            => __( 'Add Member', 'membership-for-woocommerce' ),
+			'all_items'          => __( 'All Members', 'membership-for-woocommerce' ),
+			'add_new_item'       => __( 'Add New Member', 'membership-for-woocommerce' ),
+			'edit_item'          => __( 'Edit Member', 'membership-for-woocommerce' ),
+			'new_item'           => __( 'New Member', 'membership-for-woocommerce' ),
+			'view_item'          => __( 'View Member', 'membership-for-woocommerce' ),
+			'search_item'        => __( 'Search Member', 'membership-for-woocommerce' ),
+			'not_found'          => __( 'No Members Found', 'membership-for-woocommerce' ),
+			'not_found_in_trash' => __( 'No Members Found In Trash', 'membership-for-woocommerce' ),
+		);
+
+		register_post_type(
+			'mwb_cpt_members',
+			array(
+				'labels'              => $labels,
+				'public'              => true,
+				'has_archive'         => true,
+				'publicly_queryable'  => true,
+				'query_var'           => true,
+				'capability_type'     => 'post',
+				'hierarchical'        => false,
+				'show_in_admin_bar'   => true,
+				'show_in_menu'        => 'edit.php?post_type=mwb_cpt_membership',
+				'menu_icon'           => 'dashicons-businessperson',
+				'description'         => __( 'Displays the list of all members.', 'membership-for-woocommerce' ),
+				'supports'            => array(
+					'title',
+					'editor',
+					'excerpt',
+					'revisions',
+				),
+				'exclude_from_search' => false,
+				'rewrite'             => array(
+					'slug' => __( 'members', 'membership-for-woocommerce' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Adding custom columns to the custom post type "Members".
+	 *
+	 * @param array $columns is an array of deafult columns in custom post type.
+	 */
+	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
+
+		// Removing author and comments column.
+		unset(
+			$columns['wpseo-score'],
+			$columns['wpseo-title'],
+			$columns['wpseo-metadesc'],
+			$columns['wpseo-focuskw']
+		);
+
+		// Adding new columns.
+		$columns = array(
+			'cb'                => '<input type="checkbox" />',
+			'membership_id'     => __( 'Membership ID', 'membership-for-woocommerce' ),
+			'membership_status' => __( 'Membership Status', 'membership-for-woocommerce' ),
+			'membership_user'   => __( 'User', 'membership-for-woocommerce' ),
+			'expiration'        => __( 'Expiry Date', 'membership-for-woocommerce' ),
+		);
+
+		return $columns;
+
+	}
+
+
+	/**
+	 * Populating custom columns with content.
+	 *
+	 * @param array   $column is an array of default columns in Custom post type.
+	 * @param integer $post_id is the post id.
+	 */
+	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
+
+		switch ( $column ) {
+
+			case 'membership_id':
+				echo get_the_title( $post_id );
+				break;
+
+			case 'membership_status':
+				echo 'status';
+				break;
+
+			case 'membership_user':
+				$author_id = get_post_field( 'post_author', $post_id );
+				$author_name = get_the_author_meta( 'user_nicename', $author_id );
+				echo $author_name;
+				break;
+
+			case 'expiration':
+				echo 'expiry date';
+				break;
+		}
+	}
 
 	/**
 	 * Select2 search for membership target products.
@@ -263,181 +566,10 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-	/**
-	 * Custom post type for membership plans creation and settings.
-	 */
-	public function mwb_membership_for_woo_cpt_membership() {
-
-		$labels = array(
-			'name'               => __( 'Memberships', 'membership-for-woocommerce' ),
-			'singular_name'      => __( 'Membership', 'membership-for-woocommerce' ),
-			'add_new'            => __( 'Add Plans', 'membership-for-woocommerce' ),
-			'all_items'          => __( 'All Plans', 'membership-for-woocommerce' ),
-			'add_new_item'       => __( 'Add New Plan', 'membership-for-woocommerce' ),
-			'edit_item'          => __( 'Edit Plan', 'membership-for-woocommerce' ),
-			'new_item'           => __( 'New Plan', 'membership-for-woocommerce' ),
-			'view_item'          => __( 'View Plan', 'membership-for-woocommerce' ),
-			'search_item'        => __( 'Search Plan', 'membership-for-woocommerce' ),
-			'not_found'          => __( 'No Plans Found', 'membership-for-woocommerce' ),
-			'not_found_in_trash' => __( 'No Plans Found In Trash', 'membership-for-woocommerce' ),
-		);
-
-		register_post_type(
-			'mwb_cpt_membership',
-			array(
-				'labels'              => $labels,
-				'public'              => true,
-				'has_archive'         => true,
-				'publicly_queryable'  => true,
-				'query_var'           => true,
-				'capability_type'     => 'post',
-				'hierarchical'        => false,
-				'show_in_admin_bar'   => true,
-				'show_in_menu'        => true,
-				'menu_icon'           => 'dashicons-businessperson',
-				'description'         => __( 'Here all the Membership Plans will be created.', 'membership-for-woocommerce' ),
-				'supports'            => array(
-					'title',
-					'editor',
-					'excerpt',
-					'revisions',
-				),
-				'exclude_from_search' => false,
-				'rewrite'             => array(
-					'slug' => __( 'membership', 'members-for-woocommerce' ),
-				),
-			)
-		);
-	}
-
-	/**
-	 * Custom post type to display the list of all members.
-	 */
-	public function mwb_membership_for_woo_cpt_members() {
-
-		$labels = array(
-			'name'               => __( 'Members', 'membership-for-woocommerce' ),
-			'singular_name'      => __( 'Member', 'membership-for-woocommerce' ),
-			'add_new'            => __( 'Add Member', 'membership-for-woocommerce' ),
-			'all_items'          => __( 'All Members', 'membership-for-woocommerce' ),
-			'add_new_item'       => __( 'Add New Member', 'membership-for-woocommerce' ),
-			'edit_item'          => __( 'Edit Member', 'membership-for-woocommerce' ),
-			'new_item'           => __( 'New Member', 'membership-for-woocommerce' ),
-			'view_item'          => __( 'View Member', 'membership-for-woocommerce' ),
-			'search_item'        => __( 'Search Member', 'membership-for-woocommerce' ),
-			'not_found'          => __( 'No Members Found', 'membership-for-woocommerce' ),
-			'not_found_in_trash' => __( 'No Members Found In Trash', 'membership-for-woocommerce' ),
-		);
-
-		register_post_type(
-			'mwb_cpt_members',
-			array(
-				'labels'              => $labels,
-				'public'              => true,
-				'has_archive'         => true,
-				'publicly_queryable'  => true,
-				'query_var'           => true,
-				'capability_type'     => 'post',
-				'hierarchical'        => false,
-				'show_in_admin_bar'   => true,
-				'show_in_menu'        => 'edit.php?post_type=mwb_cpt_membership',
-				'menu_icon'           => 'dashicons-businessperson',
-				'description'         => __( 'Displays the list of all members.', 'membership-for-woocommerce' ),
-				'supports'            => array(
-					'title',
-					'editor',
-					'excerpt',
-					'revisions',
-				),
-				'exclude_from_search' => false,
-				'rewrite'             => array(
-					'slug' => __( 'members', 'membership-for-woocommerce' ),
-				),
-			)
-		);
-	}
-
-
-	/**
-	 * Adding custom columns to the custom post type "Members".
-	 *
-	 * @param array $columns is an array of deafult columns in custom post type.
-	 */
-	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
-
-		// Removing author and comments column.
-		unset(
-			$columns['wpseo-score'],
-			$columns['wpseo-title'],
-			$columns['wpseo-metadesc'],
-			$columns['wpseo-focuskw']
-		);
-
-		// Adding new columns.
-		$columns = array(
-			'cb'                => '<input type="checkbox" />',
-			'membership_id'     => __( 'Membership ID', 'membership-for-woocommerce' ),
-			'membership_status' => __( 'Membership Status', 'membership-for-woocommerce' ),
-			'membership_user'   => __( 'User', 'membership-for-woocommerce' ),
-			'expiration'        => __( 'Expiry Date', 'membership-for-woocommerce' ),
-		);
-
-		return $columns;
-
-	}
-
-
-	/**
-	 * Populating custom columns with content.
-	 *
-	 * @param array   $column is an array of default columns in Custom post type.
-	 * @param integer $post_id is the post id.
-	 */
-	public function mwb_membership_for_woo_fill_columns( $column, $post_id ) {
-
-		switch ( $column ) {
-
-			case 'membership_id':
-				echo get_the_title( $post_id );
-				break;
-
-			case 'membership_status':
-				echo 'status';
-				break;
-
-			case 'membership_user':
-				$author_id = get_post_field( 'post_author', $post_id );
-				$author_name = get_the_author_meta( 'user_nicename', $author_id );
-				echo $author_name;
-				break;
-
-			case 'expiration':
-				echo 'expiry date';
-				break;
-		}
-	}
 
 	// public function free_shipping() {
 	// 	include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
 	// }
 
-	/**
-	 * Register Custom Meta box for Membership plans creation.
-	 */
-	public function mwb_membership_for_woo_meta_box() {
-
-		add_meta_box( 'membership_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), 'mwb_cpt_membership' );
-	}
-
-	/**
-	 * Callback funtion for custom meta boxes.
-	 *
-	 * @param string $post Current post object.
-	 */
-	public function mwb_membership_meta_box_callback( $post ) {
-
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-plans-creation.php';
-
-	}
 
 }

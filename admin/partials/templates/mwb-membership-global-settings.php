@@ -47,9 +47,6 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 // Saved global settings.
 $mwb_membership_global_settings = get_option( 'mwb_membership_global_options', mwb_membership_default_global_options() );
-echo '<pre>';
-print_r($mwb_membership_global_settings);
-echo '</pre>';
 
 // By default plugin will be enabled.
 $mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : '';
