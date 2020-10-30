@@ -186,6 +186,13 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'manage_mwb_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_members', 10, 2 );
 		$this->loader->add_action( 'manage_mwb_cpt_membership_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_membership', 10, 2 );
 
+		// Add CSV export button.
+		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'mwb_membership_for_woo_export_members', 10 );
+		$this->loader->add_action( 'restrict_manage_posts', $plugin_admin, 'mwb_membership_for_woo_export_membership', 10 );
+
+		// Download CSV.
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
 	}
 
 	/**

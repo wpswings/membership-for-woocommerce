@@ -99,3 +99,28 @@ function mwb_membership_default_global_options() {
 
 }
 
+/**
+ * Membership product title for Csv.
+ *
+ * @param array $products An array of product ids.
+ */
+function mwb_membership_csv_get_title( $products ) {
+
+	$product_ids = ! empty( $products ) ? array_map( 'absint', $products ) : null;
+
+	$output = '';
+
+	if ( $product_ids ) {
+
+		foreach ( $product_ids as $single_id ) {
+
+			$single_name = mwb_membership_for_woo_get_product_title( $single_id );
+			//echo( esc_html( $single_name ) . '(#' . esc_html( $single_id ) . ')' );
+			$output = $single_name;
+
+		}
+	}
+
+	return $output;
+
+}

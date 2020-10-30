@@ -118,7 +118,7 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	function mwb_membership_for_woo_plugin_settings_link( $links ) {
 
 		$plugin_links = array(
-			'<a href="' . admin_url( 'admin.php?page=membership-for-woocommerce-setting' ) . '">' . esc_html__( 'Settings', 'membership-for-woocommerce' ) . '</a>',
+			'<a href="' . admin_url( 'edit.php?post_type=mwb_cpt_membership' ) . '">' . esc_html__( 'Settings', 'membership-for-woocommerce' ) . '</a>',
 		);
 
 		return array_merge( $plugin_links, $links );

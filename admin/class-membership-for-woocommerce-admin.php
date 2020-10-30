@@ -253,12 +253,17 @@ class Membership_For_Woocommerce_Admin {
 				$plan_status = get_post_status( $post_id );
 
 				if ( ! empty( $plan_status ) ) {
-					// Display Sandbox mode if status is draft or pending else display live.
-					if ( 'draft' == $plan_status || 'pending' == $plan_status ) {
+
+					// Display Sandbox mode if visibility is private.
+					if ( 'private' == $plan_status ) {
 
 						echo esc_html__( 'Sandbox', 'membership-for-woocommerce' );
 
-					} else {
+					} elseif ( 'draft' == $plan_status || 'pending' == $plan_status ) { // Display sandbox mode if status is draft or pending.
+
+						echo esc_html__( 'Sandbox', 'membership-for-woocommerce' );
+
+					} else { // Display live mode.
 
 						echo esc_html__( 'Live', 'membership-for-woocommerce' );
 					}
@@ -367,6 +372,95 @@ class Membership_For_Woocommerce_Admin {
 
 			$data                          = get_post_meta( $post_id, $key, true );
 			$this->settings_fields[ $key ] = ! empty( $data ) ? $data : $value['default'];
+
+		}
+	}
+
+	/**
+	 * Add export to csv button on Membership CPT
+	 */
+	public function mwb_membership_for_woo_export_membership() {
+
+		$screen = get_current_screen();
+		// print_r( $screen );
+		// die;
+
+		if ( isset( $screen->id ) && ( 'edit-mwb_cpt_membership' == $screen->id ) ) {
+
+			?>
+			<input type="submit" name="export_all_membership" id="export_all_membership" class="button button-primary" value="Export All Plans">
+			<script type="text/javascript">
+				jQuery(function($) {
+					$('#export_all_membership').insertAfter('#post-query-submit');
+				});
+			</script>
+			<?php
+		}
+	}
+
+	/**
+	 * Export all Members data as CSV from Memberships.
+	 */
+	public function mwb_membership_for_woo_export_csv_membership() {
+
+		if ( isset( $_GET['export_all_membership'] ) ) {
+
+			global $post;
+
+			$args = array(
+				'post_type'     => 'mwb_cpt_membership',
+				'post_status'   => array( 'private', 'draft', 'pending', 'publish' ),
+				'post_per_page' => -1,
+			);
+
+			$all_posts = get_posts( $args );
+			// echo '<pre>';
+			// print_r($all_posts);
+			// echo '</pre>';
+			//die('here');
+
+			if ( ! empty( $all_posts ) ) {
+
+				header( 'Content-type: text/csv' );
+				header( 'Content-Disposition: attachment; filename="mwb_membership.csv"' );
+				header( 'Pragma: no-cache' );
+				header( 'Expires: 0' );
+
+				$file = fopen( 'php://output', 'w' );
+
+				fputcsv(
+					$file,
+					array(
+						'Plan_id',
+						'Plan_title',
+						'Plan_price',
+						'Plan_status',
+						'Plan_products',
+						'Plan_categories',
+						'Plan_description',
+					),
+				);
+
+				foreach ( $all_posts as $post ) {
+
+					setup_postdata( $post );
+					fputcsv(
+						$file,
+						array(
+							get_the_ID(),
+							get_post_field( 'post_title', get_post() ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_price', true ),
+							get_post_field( 'post_status', get_post() ),
+							mwb_membership_csv_get_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_ids', true ) ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_target_categories', true ),
+							get_post_field( 'post_content', get_post() ),
+						),
+					);
+				}
+
+				exit();
+
+			}
 		}
 	}
 
@@ -571,5 +665,57 @@ class Membership_For_Woocommerce_Admin {
 	// 	include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
 	// }
 
+	/**
+	 * Add export to csv button on Members CPT
+	 */
+	public function mwb_membership_for_woo_export_members() {
+
+		$screen = get_current_screen();
+		// print_r( $screen );
+		// die;
+
+		if ( isset( $screen->id ) && ( 'edit-mwb_cpt_members' == $screen->id ) ) {
+
+			?>
+			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="Export All Members">
+			<script type="text/javascript">
+				jQuery(function($) {
+					$('#export_all_members').insertAfter('#post-query-submit');
+				});
+			</script>
+			<?php
+		}
+	}
+
+	/**
+	 * Export all Members data as CSV from members.
+	 */
+	public function mwb_membership_for_woo_export_csv_members() {
+
+		if ( isset( $_GET['export_all_members'] ) ) {
+
+			global $post;
+
+			$args = array(
+				'post_type'     => 'mwb_cpt_members',
+				'post_per_page' => -1,
+			);
+
+			$all_posts = get_posts( $args );
+			//print_r($all_posts);
+			//die('here');
+
+			if ( ! empty( $all_posts ) ) {
+
+				header( 'Content-type: text/csv' );
+				header( 'Content-Disposition: attachment; filename="mwb_members.csv"' );
+				header( 'Pragma: no-cache' );
+				header( 'Expires: 0' );
+
+				$file = fopen( 'php://output', 'w' );
+
+			}
+		}
+	}
 
 }
