@@ -42,10 +42,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_price = ! empty( $this->settings_fields['mwb_membership_plan_price'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_price'] ) : '0';
 				?>
 
-				<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $mwb_membership_plan_price ); ?>">
+				<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
 		<!-- Membership plan price end. -->
@@ -65,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_access_type = ! empty( $this->settings_fields['mwb_membership_plan_name_access_type'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_name_access_type'] ) : 'lifetime';
+				$mwb_membership_plan_access_type = $this->settings_fields['mwb_membership_plan_name_access_type'];
 
 				?>
 
@@ -95,12 +94,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_duration = ! empty( $this->settings_fields['mwb_membership_plan_duration'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_duration'] ) : 0;
-
-				$mwb_membership_plan_duration_type = ! empty( $this->settings_fields['mwb_membership_plan_duration_type'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_duration_type'] ) : 'days';
+				$mwb_membership_plan_duration_type = $this->settings_fields['mwb_membership_plan_duration_type'];
 				?>
 
-				<input type="number" id="mwb_membership_plan_duration" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $mwb_membership_plan_duration ); ?>" min="1" max="31">
+				<input type="number" id="mwb_membership_plan_duration" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_duration'] ); ?>" min="1" max="31">
 				<select name="mwb_membership_plan_duration_type" id="mwb_membership_plan_duration_type">
 					<option <?php echo esc_html( 'days' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 					<option <?php echo esc_html( 'weeks' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
@@ -126,11 +123,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_start = ! empty( $this->settings_fields['mwb_membership_plan_start'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_start'] ) : '';
-
 				?>
 
-				<input type="date" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="<?php echo esc_attr( $mwb_membership_plan_start ); ?>" >
+				<input type="date" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_start'] ); ?>" >
 			</td>
 		</tr>
 		<tr id="mwb_membership_date_range_end" style="display: none;">
@@ -146,11 +141,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_end = ! empty( $this->settings_fields['mwb_membership_plan_end'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_end'] ) : '';
-
 				?>
 
-				<input type="date" id="mwb_membership_plan_end" name="mwb_membership_plan_end" value="<?php echo esc_attr( $mwb_membership_plan_end ); ?>" >
+				<input type="date" id="mwb_membership_plan_end" name="mwb_membership_plan_end" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_end'] ); ?>" >
 			</td>
 		</tr>
 		<!-- Plan Date Range End. -->
@@ -170,11 +163,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				mwb_membership_for_woo_tool_tip( $description );
 
-				$mwb_membership_plan_user_access = ! empty( $this->settings_fields['mwb_membership_plan_user_access'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_user_access'] ) : 'no';
-
 				?>
 
-				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $mwb_membership_plan_user_access ); ?>>
+				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
 			</td>
 		</tr>
 		<!-- Show history to user end -->
@@ -210,11 +201,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<?php
 
-						if ( ! empty( $this->settings_fields['mwb_membership_plan_target_ids'] ) ) {
+						if ( ! empty( $this->settings_fields ) ) {
 
-							$mwb_membership_plan_target_products = null !== $this->settings_fields['mwb_membership_plan_target_ids'] ? $this->settings_fields['mwb_membership_plan_target_ids'] : array();
-
-							$mwb_membership_plan_target_product_ids = ! empty( $mwb_membership_plan_target_products ) ? array_map( 'absint', $mwb_membership_plan_target_products ) : null;
+							$mwb_membership_plan_target_product_ids = is_array( $this->settings_fields['mwb_membership_plan_target_ids'] ) ? array_map( 'absint', $this->settings_fields['mwb_membership_plan_target_ids'] ) : array();
 
 							if ( $mwb_membership_plan_target_product_ids ) {
 
@@ -223,7 +212,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									$product_name = mwb_membership_for_woo_get_product_title( $mwb_membership_plan_single_target_product_ids );
 									?>
 
-									<option value="<?php echo esc_html( $mwb_membership_plan_single_target_product_ids ); ?>" selected="selected"><?php echo( esc_html( $product_name ) . '(#' . esc_html( $mwb_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+									<option value="<?php echo esc_html( $mwb_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $mwb_membership_plan_single_target_product_ids, $mwb_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $mwb_membership_plan_single_target_product_ids ) . ')' ); ?></option>
 
 									<?php
 								}
@@ -253,11 +242,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 
-						if ( ! empty( $this->settings_fields['mwb_membership_plan_target_categories'] ) ) {
+						if ( ! empty( $this->settings_fields ) ) {
 
-							$mwb_membership_plan_target_categories = null !== $this->settings_fields['mwb_membership_plan_target_categories'] ? $this->settings_fields['mwb_membership_plan_target_categories'] : array();
-
-							$mwb_membership_plan_target_categories = ! empty( $mwb_membership_plan_target_categories ) ? array_map( 'absint', $mwb_membership_plan_target_categories ) : null;
+							$mwb_membership_plan_target_categories = is_array( $this->settings_fields['mwb_membership_plan_target_categories'] ) ? array_map( 'absint', $this->settings_fields['mwb_membership_plan_target_categories'] ) : array();
 
 							if ( $mwb_membership_plan_target_categories ) {
 
@@ -277,7 +264,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					</select>
 
-					<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the categories you want to offer in Membership Plan.', 'memberhsip-for-woocommerce' ); ?></span>
+					<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the categories you want to offer in Membership Plan.', 'membership-for-woocommerce' ); ?></span>
 
 				</td>
 
@@ -294,11 +281,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<?php
 
-				$mwb_membership_plan_access_type = ! empty( $this->settings_fields['mwb_membership_plan_access_type'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_access_type'] ) : '';
+				$mwb_membership_plan_access_type = $this->settings_fields['mwb_membership_plan_access_type'];
 
-				$mwb_membership_plan_time_duration = ! empty( $this->settings_fields['mwb_membership_plan_time_duration'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_time_duration'] ) : '';
+				$mwb_membership_plan_time_duration = $this->settings_fields['mwb_membership_plan_time_duration'];
 
-				$mwb_membership_plan_time_duration_type = ! empty( $this->settings_fields['mwb_membership_plan_time_duration_type'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_time_duration_type'] ) : 'days';
+				$mwb_membership_plan_time_duration_type = $this->settings_fields['mwb_membership_plan_time_duration_type'];
 
 				?>
 					<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="immediate_type" <?php echo esc_html( 'immediate_type' == $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
@@ -343,9 +330,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<?php
 
-						$mwb_membership_plan_offer_price_type = ! empty( $this->settings_fields['mwb_membership_plan_offer_price_type'] ) ? sanitize_text_field( $this->settings_fields['mwb_membership_plan_offer_price_type'] ) : '';
+						$mwb_membership_plan_offer_price_type = $this->settings_fields['mwb_membership_plan_offer_price_type'];
 
-						$mwb_membership_plan_discount_price = ! empty( $this->settings_fields['mwb_memebership_plan_discount_price'] ) ? sanitize_text_field( $this->settings_fields['mwb_memebership_plan_discount_price'] ) : '10';
+						$mwb_membership_plan_discount_price = $this->settings_fields['mwb_memebership_plan_discount_price'];
 
 						?>
 						<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
@@ -370,7 +357,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						<?php
 
-						$mwb_membership_plan_free_shipping = ! empty( $this->settings_fields['mwb_memebership_plan_free_shipping'] ) ? sanitize_text_field( $this->settings_fields['mwb_memebership_plan_free_shipping'] ) : 'no';
+						$mwb_membership_plan_free_shipping = $this->settings_fields['mwb_memebership_plan_free_shipping'];
 
 						?>
 

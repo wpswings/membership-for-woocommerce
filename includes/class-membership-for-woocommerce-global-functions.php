@@ -100,7 +100,7 @@ function mwb_membership_default_global_options() {
 }
 
 /**
- * Membership product title for Csv.
+ * Membership product title for CSV.
  *
  * @param array $products An array of product ids.
  */
@@ -115,12 +115,36 @@ function mwb_membership_csv_get_title( $products ) {
 		foreach ( $product_ids as $single_id ) {
 
 			$single_name = mwb_membership_for_woo_get_product_title( $single_id );
-			//echo( esc_html( $single_name ) . '(#' . esc_html( $single_id ) . ')' );
-			$output = $single_name;
+			$output     .= esc_html( $single_name ) . '(#' . esc_html( $single_id ) . '),';
 
 		}
 	}
 
+	$output = preg_replace( '/,[^,]*$/', '', $output );
 	return $output;
 
+}
+
+/**
+ * Membership category title for CSV.
+ *
+ * @param array $categories An array of cataegory ids.
+ */
+function mwb_membership_csv_get_cat_title( $categories ) {
+
+	$category_ids = ! empty( $categories ) ? array_map( 'absint', $categories ) : null;
+
+	$output = '';
+
+	if ( $category_ids ) {
+
+		foreach ( $category_ids as $cat_id ) {
+
+			$single_cat = mwb_membership_for_woo_get_category_title( $cat_id );
+			$output    .= esc_html( $single_cat ) . '(#' . esc_html( $cat_id ) . '),';
+		}
+	}
+
+	$output = preg_replace( '/,[^,]*$/', '', $output );
+	return $output;
 }
