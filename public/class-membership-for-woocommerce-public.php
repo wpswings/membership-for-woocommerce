@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -44,13 +43,13 @@ class Membership_For_Woocommerce_Public {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of the plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param      string $plugin_name       The name of the plugin.
+	 * @param      string $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->version     = $version;
 
 	}
 
@@ -110,6 +109,36 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Adding a query variable for the Endpoint.
+	 *
+	 * @param array $vars An array of query variables.
+	 */
+	public function mwb_membership_endpoint_query_var( $vars ) {
+
+		$vars[] = 'mwb-membership-tab';
+
+		return $vars;
+	}
+
+	/**
+	 * Inserting custom membership endpoint.
+	 *
+	 * @param array $items An array of all menu items on My Account page.
+	 */
+	public function mwb_membership_add_membership_tab( $items ) {
+
+		$logout = $items['customer-logout'];
+		unset( $items['customer-logout'] );
+
+		// Placing the custom tab just above logout tab.
+		$items['mwb-membership-tab'] = __( 'Membership Details', 'membership-for-woocommerce' );
+
+		$items['customer-logout'] = $logout;
+
+		return $items;
+	}
+
+	/**
 	 * Membership Shortcodes for plan Action and plan Attributes.
 	 */
 	public function mwb_membership_shortcodes() {
@@ -133,7 +162,7 @@ class Membership_For_Woocommerce_Public {
 
 	/**
 	 * Shortcode for offer - Buy now button.
-	 * Returns : Link :)
+	 * Returns : Link :
 	 */
 	public function buy_now_shortcode_content( $atts, $content ) {
 		

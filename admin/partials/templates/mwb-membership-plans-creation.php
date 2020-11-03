@@ -323,7 +323,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<!-- Discount section start -->
 				<tr>
 					<th scope="row" class="titledesc">
-						<label for="mwb_membership_plan_price_type_id"><?php esc_html_e( 'Offer Price/Discount', 'membership-for-woocommerce' ); ?></label>
+						<label for="mwb_membership_plan_price_type_id"><?php esc_html_e( 'Discount', 'membership-for-woocommerce' ); ?></label>
 					</th>
 
 					<td class="forminp forminp-text">
@@ -341,7 +341,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						</select>
 						<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
-						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Specify discount % offered with this plan.', 'membership-for-woocommerce' ); ?></span>
+						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Specify discount % applied to orders with this plan.', 'membership-for-woocommerce' ); ?></span>
 
 					</td>
 				</tr>

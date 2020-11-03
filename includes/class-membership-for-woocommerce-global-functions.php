@@ -39,7 +39,7 @@ function mwb_membership_for_woo_get_product_title( $product_id = '' ) {
 
 	if ( ! empty( $product_id ) ) {
 
-		$result = esc_html__( 'Product not found', 'memberhsip-for-woocommerce' );
+		$result = esc_html__( 'Product not found', 'membership-for-woocommerce' );
 
 		$product = wc_get_product( $product_id );
 

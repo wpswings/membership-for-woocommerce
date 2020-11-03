@@ -193,6 +193,11 @@ class Membership_For_Woocommerce {
 		// Download CSV.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
+
+		// Creating membership method.
+		$this->loader->add_action( 'woocommerce_shipping_init', $plugin_admin, 'mwb_memberhsip_for_woo_create_shipping_method' );
+		$this->loader->add_filter( 'woocommerce_shipping_methods', $plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
+
 	}
 
 	/**
@@ -211,6 +216,10 @@ class Membership_For_Woocommerce {
 
 		// Register Endpoint.
 		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_register_endpoint' );
+		// Add query variable.
+		$this->loader->add_action( 'query_vars', $plugin_public, 'mwb_membership_endpoint_query_var', 0 );
+		// Inserting custom Membership tab.
+		$this->loader->add_action( 'woocommerce_account_menu_items', $plugin_public, 'mwb_membership_add_membership_tab' );
 
 		// Load all defined shortcodes.
 		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
