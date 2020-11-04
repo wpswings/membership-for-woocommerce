@@ -164,8 +164,54 @@ class Membership_For_Woocommerce_Public {
 	 * Shortcode for offer - Buy now button.
 	 * Returns : Link :
 	 */
-	public function buy_now_shortcode_content( $atts, $content ) {
+// 	public function buy_now_shortcode_content( $atts, $content ) {
 		
+// 	}
+
+	/**
+	 * Display category products for Member user role.
+	 *
+	 * @param query $q Query variable.
+	 * @return void
+	 */
+	public function mwb_membership_role_member_category( $q ) {
+
+		// Get the current user.
+		$current_user = wp_get_current_user();
+
+		// Displaying only "selected" category products to "member" user role.
+		if ( ! in_array( 'member', $current_user->roles ) ) {
+
+			$q->set(
+				'tax_query',
+				array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'term_id',
+						'terms'    => '20', // your category ID.
+						'operator' => 'IN',
+					),
+				)
+			);
+
+			// Displaying All products.
+			// to all other users roles.
+			// and to non logged user.
+		} else {
+
+			$q->set(
+				'tax_query',
+				array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'term_id',
+						'terms'    => '20', // your category ID.
+					),
+				)
+			);
+
+		}
 	}
+
 }
 

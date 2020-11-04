@@ -32,6 +32,14 @@ class Membership_For_Woocommerce_Activator {
 
 		// Set default settings tab to Overview for five minutes.
 		set_transient( 'mwb_membership_for_woo_default_settings_tab', 'overview', 300 );
+
+		add_role(
+			'member',
+			__( 'Member', 'membership-for-woocommerce' ),
+			array(
+				'read' => true,
+			)
+		);
 	}
 
 }

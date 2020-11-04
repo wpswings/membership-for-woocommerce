@@ -223,6 +223,10 @@ class Membership_For_Woocommerce {
 
 		// Load all defined shortcodes.
 		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
+
+		$this->loader->add_action( 'woocommerce_product_query', $plugin_public, 'mwb_membership_role_member_category' );
+
+
 	}
 
 	/**
