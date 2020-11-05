@@ -80,15 +80,16 @@ class Membership_For_Woocommerce_Admin {
 		 */
 		$screen = get_current_screen();
 
-		if ( isset( $screen->id ) ) {
+		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
-			$pagescreen = $screen->id;
+			$pagescreen_id   = $screen->id;
+			$pagescreen_post = $screen->post_type;
 
-			if ( 'toplevel_page_membership-for-woocommerce-setting' == $pagescreen ) {
+			if ( 'mwb_cpt_membership' == $pagescreen_post || 'mwb_cpt_membership' == $pagescreen_id ) {
 
-				wp_enqueue_style( 'mwb_membershi_for_woo_admin_style', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
+				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
 
-				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 			}
 		}
 
@@ -118,7 +119,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
 			$pagescreen_post = $screen->post_type;
-			$pagescreen_id     = $screen->id;
+			$pagescreen_id   = $screen->id;
 
 			if ( 'mwb_cpt_membership' == $pagescreen_post || 'mwb_cpt_membership' == $pagescreen_id ) {
 
@@ -154,9 +155,9 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
 
-				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
-				wp_enqueue_script( 'membership-for-woocommerce-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 
 				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
 
