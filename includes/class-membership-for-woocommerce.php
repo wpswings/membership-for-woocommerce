@@ -198,6 +198,17 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_shipping_init', $plugin_admin, 'mwb_memberhsip_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
 
+		// Supported Gateways column.
+		$this->loader->add_filter( 'woocommerce_payment_gateways_setting_columns', $plugin_admin, 'mwb_membership_for_woo_gateway_support_column' );
+
+		// Supported gateways content.
+		$this->loader->add_action( 'woocommerce_payment_gateways_setting_column_mwb_membership_gateways', $plugin_admin, 'mwb_membership_for_woo_gateway_column_content' );
+
+		// Add Membership gateways.
+		$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_admin, 'mwb_membership_for_supported_gateways' );
+	
+		// Include supported gateway classes.
+		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
 	}
 
 	/**

@@ -200,6 +200,7 @@ class Membership_For_Woocommerce_Admin {
 				'hierarchical'        => false,
 				'show_in_admin_bar'   => true,
 				'show_in_menu'        => true,
+				'menu_position'       => 56,
 				'menu_icon'           => 'dashicons-businessperson',
 				'description'         => __( 'Here all the Membership Plans will be created.', 'membership-for-woocommerce' ),
 				'supports'            => array(
@@ -228,8 +229,12 @@ class Membership_For_Woocommerce_Admin {
 		// Add submenu for shortcodes.
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-shortcodes', array( $this, 'mwb_membership_for_woo_shortcodes' ) );
 
+		// Add submenu fro supported gateways.
+		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Supported Gateways', 'membership-for-woocommerce' ), esc_html__( 'Supported Gateways', 'membership-for-woocommerce' ), 'manage_options', 'mwb_membership-for-woo-gateways', array( $this, 'mwb_membership_for_woo_gateways' ) );
+
 		// Add submenu for overview.
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Overview', 'membership-for-woocommerce' ), esc_html__( 'Overview', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-overview', array( $this, 'mwb_membership_for_woo_overview' ) );
+
 	}
 
 	/**
@@ -257,6 +262,14 @@ class Membership_For_Woocommerce_Admin {
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-shortcodes.php';
 
+	}
+
+	/**
+	 * Callback function for supported gateways sub-menu page.
+	 */
+	public function mwb_membership_for_woo_gateways() {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-supported-gateway.php';
 	}
 
 	/**
@@ -788,4 +801,78 @@ class Membership_For_Woocommerce_Admin {
 		return $methods;
 	}
 
+	/**
+	 * Add Membership Support Column on payment gateway page.
+	 *
+	 * @param array $columns An array of default columns.
+	 */
+	public function mwb_membership_for_woo_gateway_support_column( $columns ) {
+
+		$add_column['mwb_membership_gateways'] = esc_html__( 'Membership Support', 'membership-for-woocommerce' );
+
+		// Position of new column.
+		$position = count( $columns ) - 1;
+
+		$columns = array_slice( $columns, 0, $position, true ) + $add_column + array_slice( $columns, $position, count( $columns ) - $position, true );
+
+		return $columns;
+	}
+
+	/**
+	 * Populating 'Membership support' column on payment gateway page.
+	 *
+	 * @param object $gateways Object of all payment gateways.
+	 */
+	public function mwb_membership_for_woo_gateway_column_content( $gateways ) {
+
+		$supported_gateways = mwb_membership_for_woo_supported_gateways();
+
+		echo '<td class="mwb_membership_gateways">';
+
+		if ( in_array( $gateways->id, $supported_gateways ) ) {
+
+			echo '<span class="status-enabled">' . esc_html__( 'Yes', 'membership-for-woocommerce' ) . '</span>';
+		} else {
+
+			echo '<span class="status-disabled">' . esc_html__( 'No', 'membership-for-woocommerce' ) . '</span>';
+		}
+
+		echo '</td>';
+
+	}
+
+	/**
+	 * Add membership supported gateways.
+	 *
+	 * @param array $gateways An array of wooommerce default gateway classes.
+	 * @return array $gateways An array of woocommerce gateway classes along with membership gateways.
+	 */
+	public function mwb_membership_for_supported_gateways( $gateways ) {
+
+		if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
+
+			$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
+		}
+
+		if ( class_exists( 'Mwb_Membership_For_Woo_Stripe_Gateway' ) ) {
+
+			$gateways[] = 'Mwb_Membership_For_Woo_Stripe_Gateway';
+		}
+
+		return $gateways;
+	}
+
+	/**
+	 * Include Membership supported payment gateway classes after plugins are loaded.
+	 *
+	 * @since       1.0.0
+	 */
+	public function mwb_membership_for_woo_plugins_loaded() {
+
+		/**
+		 * The class responsible for defining all methods of PayPal payment gateway.
+		 */
+		require_once plugin_dir_path( __FILE__ ) . '/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
+
+	}
 }

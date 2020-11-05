@@ -148,3 +148,20 @@ function mwb_membership_csv_get_cat_title( $categories ) {
 	$output = preg_replace( '/,[^,]*$/', '', $output );
 	return $output;
 }
+
+/**
+ * Membership supported gateways.
+ */
+function mwb_membership_for_woo_supported_gateways() {
+
+	$supported_gateways = array(
+		'bacs', // Direct bank transfer.
+		'cheque', // Cheque payment.
+		'cod', // Cash on delivery.
+		'paypal', // Wocommmerce paypal (standard).
+		'stripe_ideal', // Official stripe.
+		'membership_for_woo_paypal_gateway', // Membership Paypal.
+	);
+
+	return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
+}
