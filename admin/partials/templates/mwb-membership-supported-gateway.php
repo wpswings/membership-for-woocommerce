@@ -18,23 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// $wc_gateways      = new WC_Payment_Gateways();
-// $payment_gateways = $wc_gateways->get_available_payment_gateways();
-// //print_r(mwb_membership_for_woo_supported_gateways());
-
-// if ( ! empty( mwb_membership_for_woo_supported_gateways() ) ) {
-
-// 	//$payment_gateways = mwb_membership_for_woo_supported_gateways();
-
-// 	// Loop through Woocommerce available payment gateways.
-// 	foreach ( $payment_gateways as $gateway => $id ) {
-
-// 		echo $id->get_title();
-// 	}
-// }
-
 ?>
+<!-- Heading start-->
+<div class="mwb_membership_supported_gateways">
+	<h2><?php esc_html_e( 'Membership Supported Gateways', 'membership-for-woocommerce' ); ?></h2>
+</div>
+<!-- Heading end. -->
 
+<!-- Gateway start. -->
+<div class="mwb_membership_manage_gateways">
+	<a href="<?php echo esc_html( admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ); ?>"><?php esc_html_e( 'Setup Membership Supported Gateways->', 'membership-for-woocommerce' ); ?></a>
+</div>
 <div class="mwb_membership_table mwb_membership_gateways">
 	<table class="form-table mwb_membership_plan_gateways">
 		<tbody>
@@ -42,27 +36,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			if ( ! empty( mwb_membership_for_woo_supported_gateways() ) ) {
 
-				$payment_gateways = mwb_membership_for_woo_supported_gateways();
+				$payment_gateways   = mwb_membership_for_woo_supported_gateways();
+				$available_gateways = mwb_membership_for_woo_available_gateways();
 
 				// Loop through Woocommerce available payment gateways.
 				foreach ( $payment_gateways as $gateway ) {
 
-					//echo $gateway;
-			?>
-					<!-- Membership supported  start. -->
+					?>
+
+					<!-- Membership supported gateway start. -->
 					<tr valign="top">
 						<th scope="row" class="titledesc">
 							<label><?php echo esc_html( ucfirst( $gateway ) ); ?></label>
 						</th>
 
 						<td class="forminp forminp-text">
-							<div class="mwb_membership_gateway_div">
-								<p class="mwb_membership_shortcode">
 
-									<a class="button" href="<?php echo admin_url( 'admin.php' ) . '?page=wc-settings&tab=checkout&section=' . $gateway; ?>"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
+						<?php
+
+						if ( in_array( $gateway, $available_gateways ) ) {
+
+							?>
+							<div class="mwb_membership_gateway_div">
+								<p class="mwb_membership_gateway">
+
+									<a class="button" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=checkout&section=' . $gateway ); ?>"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
 								</p>
 
 							</div>
+
+							<?php
+						} else {
+							?>
+							<div class="mwb_membership_gateway_div">
+								<p class="mwb_membership_gateway">
+
+									<a class="button disabled" href="javascript:void(0)"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
+								</p>
+
+							</div>
+							<?php
+						}
+						?>
 						</td>
 
 					</tr>
@@ -70,10 +85,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				}
 			}
 			?>
-			<!-- Membership Action Shortcodes End. -->
+			<!-- Membership Gateway End. -->
 
 		</tbody>
 
 	</table>
 
 </div>
+<!-- Gateway End. -->

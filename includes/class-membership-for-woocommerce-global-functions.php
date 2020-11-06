@@ -165,3 +165,26 @@ function mwb_membership_for_woo_supported_gateways() {
 
 	return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
 }
+
+/**
+ * Available payment gateways.
+ */
+function mwb_membership_for_woo_available_gateways() {
+
+	$wc_gateways      = new WC_Payment_Gateways();
+	$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+	$woo_gateways = array();
+
+	if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+
+		// Loop through Woocommerce available payment gateways.
+		foreach ( $payment_gateways as $gateway_id ) {
+
+			$woo_gateways[] = $gateway_id->id;
+		}
+	}
+
+	return $woo_gateways;
+
+}

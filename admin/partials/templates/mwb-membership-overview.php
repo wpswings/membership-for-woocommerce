@@ -20,4 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<h2>Overview tab</h2>
+<!-- Heading start -->
+<div class="mwb_membership_Overview">
+	<h2><?php esc_html_e( 'Membership Overview', 'membership-for-woocommerce' ); ?></h2>
+</div>
+<!-- Heading end. -->

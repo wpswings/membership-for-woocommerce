@@ -18,6 +18,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
+<!-- Heading start -->
+<div class="mwb_membership_shortcodes">
+	<h2><?php esc_html_e( 'Membership Shortcodes', 'membership-for-woocommerce' ); ?></h2>
+</div>
+<!-- Heading end. -->
+
+<!-- Shortcodes start -->
 <div class="mwb_membership_table mwb_membership_shortcodes">
 	<table class="form-table mwb_membership_plan_shortcodes">
 		<tbody>
@@ -133,3 +140,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</table>
 
 </div>
+<!-- Shortcodes end. -->

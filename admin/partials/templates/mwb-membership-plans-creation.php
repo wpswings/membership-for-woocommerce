@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-
+<!-- Plans creation start. -->
 <table class="form-table mwb_membership_plans_creation_setting">
 	<tbody>
 
@@ -372,4 +372,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 </div>
+<!-- Plans creation end. -->
 

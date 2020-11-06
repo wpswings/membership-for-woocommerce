@@ -63,6 +63,13 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 
 ?>
 
+<!-- Heading start -->
+<div class="mwb_membership_global_settings">
+	<h2><?php esc_html_e( 'Membership Global Settings', 'membership-for-woocommerce' ); ?></h2>
+</div>
+<!-- Heading End -->
+
+<!-- Global Setting start -->
 <form action="" method="POST">
 
 	<!-- Settings start -->
@@ -158,3 +165,4 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 	</p>
 
 </form>
+<!-- Global settig end. -->
