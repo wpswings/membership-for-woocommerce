@@ -167,8 +167,13 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 
-			if ( isset( $_GET['section'] ) && 'membership_for_woo_paypal_gateway' == $_GET['section'] ) {
+			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
+				//die();
 				wp_enqueue_script( 'mwb-membership-paypal-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-paypal.js', array( 'jquery' ), $this->version, false );
+
+			} elseif ( isset( $_GET['section'] ) && 'membership-for-woo-stripe-gateway' == $_GET['section'] ) {
+				
+				wp_enqueue_script( 'mwb-membership-stripe-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-stripe.js', array( 'jquery' ), $this->version, false );
 			}
 		}
 
@@ -879,5 +884,9 @@ class Membership_For_Woocommerce_Admin {
 		 */
 		require_once plugin_dir_path( __FILE__ ) . '/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
 
+		/**
+		 * The class responsible for defining all methods of Stripe payment gateway.
+		 */
+		require_once plugin_dir_path( __FILE__ ) . '/gateways/stripe/class-mwb-membership-for-woo-stripe-gateway.php';
 	}
 }

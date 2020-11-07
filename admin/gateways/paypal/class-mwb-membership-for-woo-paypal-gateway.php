@@ -19,7 +19,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->id                 = 'membership_for_woo_paypal_gateway';
+		$this->id                 = 'membership-for-woo-paypal-gateway';
 		$this->method_title       = __( 'Paypal ( Membership )', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Safe and Secure method for making payments with Paypal.', 'membership-for-woocommerce' );
 		$this->has_fields         = true;
@@ -33,6 +33,52 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 
 		// Load settings.
 		$this->init_settings();
+
+		// Get settings values.
+		$this->title               = $this->get_option( 'title' );
+		$this->enabled             = $this->get_option( 'enabled' );
+		$this->description         = $this->get_option( 'description' );
+		$this->testmode            = $this->get_option( 'testmode' );
+		$this->order_button_text   = __( 'Proceed to Paypal', 'membership-for-woocommerce' );
+		$this->order_number_prefix = $this->get_option( 'invoice_prefix' );
+		$this->billing_desc        = $this->get_option( 'billing_description' );
+		$this->copy_address        = $this->get_option( 'copy_address' );
+		$this->logging             = $this->get_option( 'logging' );
+
+		if ( ! $this->is_valid_for_use() ) {
+			$this->enabled = 'no';
+		}
+
+		if ( 'yes' == $this->testmode ) {
+
+			$this->api_username  = $this->get_option( 'sandbox_api_username' );
+			$this->api_password  = $this->get_option( 'sandbox_api_password' );
+			$this->api_signature = $this->get_option( 'sandbox_api_signature' );
+			$this->description   = __( 'TESTMODE ENABLED. In test mode, you can use the credentials of your Paypal sandbox account to make a payment.', 'membership-for-woocommerce' );
+
+		} else {
+
+			$this->api_username  = $this->get_option( 'api_username' );
+			$this->api_password  = $this->get_option( 'api_password' );
+			$this->api_signature = $this->get_option( 'api_signature' );
+
+		}
+
+		if ( empty( $this->api_username ) || empty( $this->api_password ) || empty( $this->api_signature ) ) {
+
+			$this->enabled = 'no';
+		}
+
+		$this->base_url = 'https://api-3t.paypal.com/nvp';
+
+		$this->redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=';
+
+		if ( 'yes' == $this->testmode ) {
+
+			$this->base_url = 'https://api-3t.sandbox.paypal.com/nvp';
+
+			$this->redirect_url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=';
+		}
 
 		// This action hook save settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -48,6 +94,18 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	 * Displaying admin notices and checking availability of membership paypal gateway.
 	 */
 	public function mwb_membership_for_woo_admin_notices() {
+
+		if ( 'no' == $this->get_option( 'enabled' ) ) {
+
+			return false;
+		}
+
+		if ( empty( $this->api_username ) || empty( $this->api_password ) || empty( $this->api_signature ) ) {
+
+			echo '<div class="error"><p>' . __( 'PayPal needs API credentials to work, please find your PayPal API credentials at ', 'membership-for-woocommerce' ) .
+			'<a href="https://developer.paypal.com/" target="_blank">' . __( 'PayPal Developer', 'membership-for-woocommerce' ) . '</a></p></div>';
+
+		}
 
 	}
 
@@ -81,19 +139,19 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 				'id'          => 'woocommerce_mwb-membership-paypal-gateway_description',
 				'css'         => 'max-width:400px',
 			),
-			'charge_type'           => array(
-				'type'        => 'select',
-				'title'       => __( 'Charge type', 'membership-for-woocommerce' ),
-				'description' => __( 'Choose to capture payment at checkout, or authorize only to capture later (when order status is switched to "completed").', 'membership-for-woocommerce' ),
-				'options'     => array(
-					'SALE'          => __( 'Authorize & Capture', 'membership-for-woocommerce' ),
-					'AUTHORIZATION' => __( 'Authorize only', 'membership-for-woocommerce' ),
-				),
-				'default'     => 'SALE',
-				'class'       => 'select',
-				'css'         => 'height:40px',
-				'desc_tip'    => true,
-			),
+			// 'charge_type'           => array(
+			// 	'type'        => 'select',
+			// 	'title'       => __( 'Charge type', 'membership-for-woocommerce' ),
+			// 	'description' => __( 'Choose to capture payment at checkout, or authorize only to capture later (when order status is switched to "completed").', 'membership-for-woocommerce' ),
+			// 	'options'     => array(
+			// 		'SALE'          => __( 'Authorize & Capture', 'membership-for-woocommerce' ),
+			// 		'AUTHORIZATION' => __( 'Authorize only', 'membership-for-woocommerce' ),
+			// 	),
+			// 	'default'     => 'SALE',
+			// 	'class'       => 'select',
+			// 	'css'         => 'height:40px',
+			// 	'desc_tip'    => true,
+			// ),
 			'billing_description'   => array(
 				'type'        => 'text',
 				'title'       => __( 'Billing Description', 'membership-for-woocommerce' ),
@@ -348,8 +406,114 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 		}
 	}
 
+	/**
+	 * Authorizes the Paypal request.
+	 *
+	 * @param object $order Order object.
+	 */
+	public function mwb_membership_for_woo_paypal_get_response( $order ) {
 
+		if ( ! empty( $order ) ) {
 
+			$mwb_membership_paypal_request = array(
+				'METHOD'                         => 'SetExpressCheckout',
+				'VERSION'                        => 98,
+				'PAYMENTREQUEST_0_INVNUM'        => $this->order_number_prefix . $order->get_id(),
+				'PAYMENTREQUEST_0_AMT'           => $order->get_total(),
+				'PAYMENTREQUEST_0_CURRENCYCODE'  => $order->get_currency(),
+				'PAYMENTREQUEST_0_PAYMENTACTION' => mb_strtoupper( $this->charge_type ),
+				'L_BILLINGTYPE0'                 => 'MerchantInitiatedBilling',
+				'L_BILLINGAGREEMENTDESCRIPTION0' => $this->billing_desc,
+				'CANCELURL'                      => urlencode( wc_get_cart_url() . '?mwb_membership_paypal=cancel' ),
+				'RETURNURL'                      => urlencode( $this->get_return_url( $order ) ),
+			);
+		}
 
+		$response = $this->mwb_membership_for_woo_make_paypal_request( 'SetExpressCheckout', $order->get_id(), $this->base_url, $mwb_membership_paypal_request );
+
+		return $response;
+	}
+
+	/**
+	 * Initiating main api call with account credentials.
+	 */
+	public function mwb_membership_for_woo_make_paypal_request( $step, $order_id, $url = '', $payload = array() ) {
+		$result = false;
+
+		$mwb_membership_auth_data = array(
+			'USER'      => $this->api_username,
+			'PWD'       => $this->api_password,
+			'SIGNATURE' => $this->api_signature,
+		);
+
+		$payload = array_merge( $mwb_membership_auth_data, $payload );
+
+		$payload = array( 'body' => $payload );
+
+		$remote_args = array(
+			'method'  => 'POST',
+			'timeout' => 300,
+		);
+
+		$remote_args = array_merge( $remote_args, $payload );
+
+		$remote_args['body'] = build_query( $remote_args['body'] );
+
+		$response = wp_remote_request( $url, $remote_args );
+
+		$this->mwb_membership_for_woo_create_paypal_log( $step, $order_id, $response );
+
+		if ( is_array( $response ) ) {
+			$response_data = wp_remote_retrieve_body( $response );
+
+			$status = wp_remote_retrieve_response_code( $response );
+
+			if ( 200 == $status ) {
+				$result = $response_data;
+			}
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Writes error and response to the logs
+	 */
+	public function mwb_membership_for_woo_create_paypal_log( $step, $order_id, $final_response ) {
+
+		if ( 'yes' == $this->logging ) {
+
+			if ( ! defined( 'WC_LOG_DIR' ) ) {
+
+				return;
+			}
+
+			$log_dir      = WC_LOG_DIR;
+			$log_dir_file = WC_LOG_DIR . 'membership-for-woocommerce-paypal.log';
+
+			// As sometimes when dir is not present, and fopen cannot create directories.
+			if ( ! is_dir( $log_dir ) ) {
+
+				mkdir( $log_dir, 0755, true );
+			}
+
+			if ( ! file_exists( $log_dir_file ) || ! is_writable( $log_dir_file ) ) {
+
+				@fopen( $log_dir_file, 'a' );
+			}
+
+			if ( file_exists( $log_dir_file ) && is_writable( $log_dir_file ) ) {
+
+				$log = 'Website: ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL .
+						'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
+						'Order ID ' . $order_id . PHP_EOL .
+						'Step: ' . $step . PHP_EOL .
+						'Response: ' . json_encode( $final_response ) . PHP_EOL .
+						'----------------------------------------------------------------------------' . PHP_EOL;
+
+				file_put_contents( $log_dir_file, $log, FILE_APPEND );
+			}
+		}
+	}
 
 }
