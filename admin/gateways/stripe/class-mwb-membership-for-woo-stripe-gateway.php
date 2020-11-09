@@ -103,7 +103,7 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 		}
 
 		// Set secret key for stripe library.
-//\Stripe\Stripe::setApiKey( $this->secret_key );
+		\Stripe\Stripe::setApiKey( $this->secret_key );
 
 		// Save hook for gateway settings.
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -343,6 +343,22 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 		}
 
 		return $icons_str;
+
+	}
+
+	/**
+	 * Validate form fields.
+	 *
+	 * @return boolean
+	 */
+	public function validate_fields() {
+
+		if ( empty( $_POST[ $this->id . '-card-number' ] ) || empty( $_POST[ $this->id . '-card-expiry' ] ) || empty( $_POST[ $this->id . '-card-cvc' ] ) ) {
+
+			wc_add_notice( __( 'Please fill all the necessary card details.', 'membership-for-woocommerce' ) );
+
+			return false;
+		}
 
 	}
 

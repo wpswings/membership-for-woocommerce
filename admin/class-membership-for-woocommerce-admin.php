@@ -90,6 +90,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
 
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+
 			}
 		}
 
@@ -165,14 +166,23 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'wp-color-picker' );
 
+				wp_enqueue_script(
+					'backbone-modal',
+					get_site_url() . '/wp-content/plugins/woocommerce/assets/js/admin/backbone-modal.js',
+					array( 'wp-util', 'backbone' ),
+					$this->version,
+					false
+				);
+
+				wp_enqueue_script( 'membership-for-woocommerce-modal', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_thickbox.js', array( 'jquery' ), $this->version, false );
 			}
 
 			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
-				//die();
+
 				wp_enqueue_script( 'mwb-membership-paypal-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-paypal.js', array( 'jquery' ), $this->version, false );
 
 			} elseif ( isset( $_GET['section'] ) && 'membership-for-woo-stripe-gateway' == $_GET['section'] ) {
-				
+
 				wp_enqueue_script( 'mwb-membership-stripe-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-stripe.js', array( 'jquery' ), $this->version, false );
 			}
 		}
@@ -289,6 +299,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_cpt_columns_membership( $columns ) {
 
+		$columns['membership_view']   = '';
 		$columns['membership_status'] = __( 'Membership Plan Status', 'membership-for-woocommerce' );
 		$columns['membership_cost']   = __( 'Membership Plan Cost', 'membership-for-woocommerce' );
 
@@ -304,6 +315,26 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_fill_columns_membership( $column, $post_id ) {
 
 		switch ( $column ) {
+
+			case 'membership_view':
+				?>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title">Modal title</h4>
+						</div>
+						<div class="modal-body">
+						...
+						</div>
+						<div class="modal-footer">
+						<a href="#" class="btn">Close</a>
+						<a href="#" class="btn btn-primary">Save changes</a>
+						</div>
+					</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				<?php
+				break;
 
 			case 'membership_status':
 				$plan_status = get_post_status( $post_id );
@@ -340,6 +371,13 @@ class Membership_For_Woocommerce_Admin {
 				break;
 		}
 
+	}
+
+	
+	public function getTheContent() {
+
+	echo 'weqwtegeqgr'; // <- this should be displayed in the TB
+	die();
 	}
 
 	/**
@@ -394,8 +432,7 @@ class Membership_For_Woocommerce_Admin {
 						$post_data = ! empty( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : $default;
 
 					}
-
-				} 
+				}
 				update_post_meta( $post_id, $field, $post_data );
 
 			}
@@ -596,11 +633,12 @@ class Membership_For_Woocommerce_Admin {
 
 		// Adding new columns.
 		$columns = array(
-			'cb'                => '<input type="checkbox" />',
-			'membership_id'     => __( 'Membership ID', 'membership-for-woocommerce' ),
-			'membership_status' => __( 'Membership Status', 'membership-for-woocommerce' ),
-			'membership_user'   => __( 'User', 'membership-for-woocommerce' ),
-			'expiration'        => __( 'Expiry Date', 'membership-for-woocommerce' ),
+			'cb'                   => '<input type="checkbox" />',
+			'membership_id'        => __( 'Membership ID', 'membership-for-woocommerce' ),
+			'membership_status'    => __( 'Membership Status', 'membership-for-woocommerce' ),
+			'membership_user'      => __( 'User', 'membership-for-woocommerce' ),
+			'membership_user_view' => '',
+			'expiration'           => __( 'Expiry Date', 'membership-for-woocommerce' ),
 		);
 
 		return $columns;
@@ -619,7 +657,7 @@ class Membership_For_Woocommerce_Admin {
 		switch ( $column ) {
 
 			case 'membership_id':
-				echo get_the_title( $post_id );
+				echo esc_html( get_the_title( $post_id ) );
 				break;
 
 			case 'membership_status':
@@ -627,9 +665,22 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'membership_user':
-				$author_id = get_post_field( 'post_author', $post_id );
+				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', $author_id );
-				echo $author_name;
+				echo esc_html( $author_name );
+				break;
+
+			case 'membership_user_view':
+				add_thickbox();
+				?>
+				<a title="Your Modal Title" href="#TB_inline?width=600&height=550&inlineId=modal-window-member" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+
+				<div id="modal-window-member" style="display:none;">
+					<p>Lorem Ipsum sit dolla amet.</p>
+				</div>
+
+				<?php
+
 				break;
 
 			case 'expiration':
@@ -730,7 +781,7 @@ class Membership_For_Woocommerce_Admin {
 
 
 	// public function free_shipping() {
-	// 	include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
+	// include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
 	// }
 
 	/**
@@ -882,11 +933,17 @@ class Membership_For_Woocommerce_Admin {
 		/**
 		 * The class responsible for defining all methods of PayPal payment gateway.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . '/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
 
 		/**
 		 * The class responsible for defining all methods of Stripe payment gateway.
 		 */
-		require_once plugin_dir_path( __FILE__ ) . '/gateways/stripe/class-mwb-membership-for-woo-stripe-gateway.php';
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/class-mwb-membership-for-woo-stripe-gateway.php';
+
+		// Stripe library with composer.
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/vendor/autoload.php';
+
+		// Stripe Library.
+		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'gateways/stripe/stripe-php-6.6.0/init.php';
 	}
 }

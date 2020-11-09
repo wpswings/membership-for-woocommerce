@@ -206,9 +206,13 @@ class Membership_For_Woocommerce {
 
 		// Add Membership gateways.
 		$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_admin, 'mwb_membership_for_supported_gateways' );
-	
+
 		// Include supported gateway classes.
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
+
+		// ajax.
+		$this->loader->add_action( 'wp_ajax_getTheContent', $plugin_admin, 'getTheContent' );
+
 	}
 
 	/**
