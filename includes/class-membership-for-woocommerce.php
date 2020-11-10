@@ -211,7 +211,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
 
 		// ajax.
-		$this->loader->add_action( 'wp_ajax_getTheContent', $plugin_admin, 'getTheContent' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
 
 	}
 

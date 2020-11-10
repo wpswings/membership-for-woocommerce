@@ -166,15 +166,9 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'wp-color-picker' );
 
-				wp_enqueue_script(
-					'backbone-modal',
-					get_site_url() . '/wp-content/plugins/woocommerce/assets/js/admin/backbone-modal.js',
-					array( 'wp-util', 'backbone' ),
-					$this->version,
-					false
-				);
-
 				wp_enqueue_script( 'membership-for-woocommerce-modal', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_thickbox.js', array( 'jquery' ), $this->version, false );
+
+				add_thickbox();
 			}
 
 			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
@@ -318,21 +312,9 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'membership_view':
 				?>
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-						<h4 class="modal-title">Modal title</h4>
-						</div>
-						<div class="modal-body">
-						...
-						</div>
-						<div class="modal-footer">
-						<a href="#" class="btn">Close</a>
-						<a href="#" class="btn btn-primary">Save changes</a>
-						</div>
-					</div><!-- /.modal-content -->
-					</div><!-- /.modal-dialog -->
+
+				<a title="<?php echo esc_html( 'Membership Id #' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_for_woo_get_content&post_id=<?php echo $post_id; ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+
 				<?php
 				break;
 
@@ -373,11 +355,94 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-	
-	public function getTheContent() {
+	/**
+	 * Get post data ( Ajax handler)
+	 *
+	 * @return void
+	 */
+	public function mwb_membership_for_woo_get_content() {
 
-	echo 'weqwtegeqgr'; // <- this should be displayed in the TB
-	die();
+		$plan_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+
+		$output = '';
+
+		if ( ! empty( $plan_id ) ) {
+
+			$plan_title       = get_the_title( $plan_id );
+			$plan_price       = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
+			$plan_products    = mwb_membership_csv_get_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true ) );
+			$plan_categories  = mwb_membership_csv_get_cat_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true ) );
+			$plan_description = get_post_field( 'post_content', $plan_id );
+			$plan_access_type = get_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', true );
+			$plan_user_access = get_post_meta( $plan_id, 'mwb_membership_plan_access_type', true );
+
+			// Html for preview mode.
+			$output .= '<h2>' . esc_html( $plan_title ) . '</h2>';
+			$output .= '<div class="mwb_membership_preview_table">';
+			$output .= '<table class="form-table mwb_membership_preview>"';
+			$output .= '<tbody>';
+
+			// Plan Price section.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan Price', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_price ) . '</td>
+						</tr>';
+
+			// Plan access type section.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan Access Type', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_access_type ) . '</td>
+						</tr>';
+
+			// Plan user access type.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan User Access Type', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_user_access ) . '</td>
+						</tr>';
+
+			// Plan offered categories.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan Offered Categories', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_categories ) . '</td>
+						</tr>';
+
+			// Plan offered products.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan Offered Products', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_products ) . '</td>
+						</tr>';
+
+			// Plan description.
+			$output .= '<tr>
+							<th>
+								<label>' . __( 'Plan Description', 'membership-for-woocommerce' ) . ' </label>
+							</th>
+
+							<td>' . esc_html( $plan_description ) . '</td>
+						</tr>';
+
+			$output .= '</tbody>
+						</table>
+						</div>';
+		}
+
+		echo $output;
+		wp_die();
 	}
 
 	/**
@@ -516,9 +581,9 @@ class Membership_For_Woocommerce_Admin {
 			global $post;
 
 			$args = array(
-				'post_type'     => 'mwb_cpt_membership',
-				'post_status'   => array( 'private', 'draft', 'pending', 'publish' ),
-				'post_per_page' => -1,
+				'post_type'   => 'mwb_cpt_membership',
+				'post_status' => array( 'private', 'draft', 'pending', 'publish' ),
+				'numberposts' => -1,
 			);
 
 			$all_posts = get_posts( $args );
@@ -542,8 +607,7 @@ class Membership_For_Woocommerce_Admin {
 						'Plan_products',
 						'Plan_categories',
 						'Plan_description',
-					),
-					','
+					)
 				);
 
 				foreach ( $all_posts as $post ) {
@@ -559,8 +623,7 @@ class Membership_For_Woocommerce_Admin {
 							mwb_membership_csv_get_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_ids', true ) ),
 							mwb_membership_csv_get_cat_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_categories', true ) ),
 							get_post_field( 'post_content', get_post() ),
-						),
-						','
+						)
 					);
 				}
 
@@ -779,11 +842,6 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-
-	// public function free_shipping() {
-	// include MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/class-mwb-free-shipping.php';
-	// }
-
 	/**
 	 * Add export to csv button on Members CPT
 	 */
@@ -814,8 +872,8 @@ class Membership_For_Woocommerce_Admin {
 			global $post;
 
 			$args = array(
-				'post_type'     => 'mwb_cpt_members',
-				'post_per_page' => -1,
+				'post_type'   => 'mwb_cpt_members',
+				'numberposts' => -1,
 			);
 
 			$all_posts = get_posts( $args );

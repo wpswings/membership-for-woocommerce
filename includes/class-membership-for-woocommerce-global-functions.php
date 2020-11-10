@@ -106,22 +106,25 @@ function mwb_membership_default_global_options() {
  */
 function mwb_membership_csv_get_title( $products ) {
 
-	$product_ids = ! empty( $products ) ? array_map( 'absint', $products ) : null;
+	if ( ! empty( $products ) && is_array( $products ) ) {
 
-	$output = '';
+		$product_ids = ! empty( $products ) ? array_map( 'absint', $products ) : null;
 
-	if ( $product_ids ) {
+		$output = '';
 
-		foreach ( $product_ids as $single_id ) {
+		if ( $product_ids ) {
 
-			$single_name = mwb_membership_for_woo_get_product_title( $single_id );
-			$output     .= esc_html( $single_name ) . '(#' . esc_html( $single_id ) . '),';
+			foreach ( $product_ids as $single_id ) {
 
+				$single_name = mwb_membership_for_woo_get_product_title( $single_id );
+				$output     .= esc_html( $single_name ) . '(#' . esc_html( $single_id ) . '),';
+
+			}
 		}
-	}
 
-	$output = preg_replace( '/,[^,]*$/', '', $output );
-	return $output;
+		$output = preg_replace( '/,[^,]*$/', '', $output );
+		return $output;
+	}
 
 }
 
@@ -132,21 +135,24 @@ function mwb_membership_csv_get_title( $products ) {
  */
 function mwb_membership_csv_get_cat_title( $categories ) {
 
-	$category_ids = ! empty( $categories ) ? array_map( 'absint', $categories ) : null;
+	if ( ! empty( $categories ) && is_array( $categories ) ) {
 
-	$output = '';
+		$category_ids = ! empty( $categories ) ? array_map( 'absint', $categories ) : null;
 
-	if ( $category_ids ) {
+		$output = '';
 
-		foreach ( $category_ids as $cat_id ) {
+		if ( $category_ids ) {
 
-			$single_cat = mwb_membership_for_woo_get_category_title( $cat_id );
-			$output    .= esc_html( $single_cat ) . '(#' . esc_html( $cat_id ) . '),';
+			foreach ( $category_ids as $cat_id ) {
+
+				$single_cat = mwb_membership_for_woo_get_category_title( $cat_id );
+				$output    .= esc_html( $single_cat ) . '(#' . esc_html( $cat_id ) . '),';
+			}
 		}
-	}
 
-	$output = preg_replace( '/,[^,]*$/', '', $output );
-	return $output;
+		$output = preg_replace( '/,[^,]*$/', '', $output );
+		return $output;
+	}
 }
 
 /**
