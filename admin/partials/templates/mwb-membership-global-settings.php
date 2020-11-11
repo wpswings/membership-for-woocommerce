@@ -52,7 +52,7 @@ $mwb_membership_global_settings = get_option( 'mwb_membership_global_options', m
 $mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : '';
 
 // Manage Content.
-$mwb_memberhsip_manage_content = ! empty( $mwb_membership_global_settings['mwb_membership_manage_content'] ) ? $mwb_membership_global_settings['mwb_membership_manage_content'] : '';
+$mwb_membership_manage_content = ! empty( $mwb_membership_global_settings['mwb_membership_manage_content'] ) ? $mwb_membership_global_settings['mwb_membership_manage_content'] : '';
 
 // Display message.
 $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_membership_manage_content_display_msg'] ) ? $mwb_membership_global_settings['mwb_membership_manage_content_display_msg'] : '';
@@ -122,9 +122,9 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 							?>
 
 							<select name="mwb_membership_manage_content" id="mwb_membership_manage_content" value="">
-								<option <?php echo esc_html( 'hide_for_non_members' == $mwb_memberhsip_manage_content ? 'selected' : '' ); ?> value="hide_for_non_members"><?php esc_html_e( 'Hide Content for Non-memberhsip user.', 'membership-for-woocommerce' ); ?></option>
-								<option <?php echo esc_html( 'redirect_to_404' == $mwb_memberhsip_manage_content ? 'selected' : '' ); ?> value="redirect_to_404"><?php esc_html_e( 'Redirect to 404 page.', 'membership-for-woocommerce' ); ?></option>
-								<option <?php echo esc_html( 'display_a_message' == $mwb_memberhsip_manage_content ? 'selected' : '' ); ?> value="display_a_message"><?php esc_html_e( 'Display a message', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'hide_for_non_members' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="hide_for_non_members"><?php esc_html_e( 'Hide Content for Non-membership user.', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'redirect_to_404' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="redirect_to_404"><?php esc_html_e( 'Redirect to 404 page.', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'display_a_message' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="display_a_message"><?php esc_html_e( 'Display a message', 'membership-for-woocommerce' ); ?></option>
 							</select>
 						</td>
 
@@ -161,7 +161,7 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 
 	<!-- Save Settings -->
 	<p class="submit">
-		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'membership-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button" name="mwb_membership_global_settings_save" id="mwb_memberhsip_global_setting_save" >
+		<input type="submit" value="<?php esc_html_e( 'Save Changes', 'membership-for-woocommerce' ); ?>" class="button-primary woocommerce-save-button" name="mwb_membership_global_settings_save" id="mwb_membership_global_setting_save" >
 	</p>
 
 </form>

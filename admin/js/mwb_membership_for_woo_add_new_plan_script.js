@@ -66,4 +66,37 @@ jQuery(document).ready(function($){
         minimumInputLength: 3 // The minimum number of characters to input to perform a search.
     });
 
+    jQuery('.mwb-membership-shipping-method').select2({
+        //alert('hi');
+
+        ajax:{
+
+            url: ajaxurl,
+            dataType: 'json',
+            delay: 200,
+            data: function( params ) {
+                return {
+                    q: params.term,
+                    action: 'mwb_membership_available_plans',
+                };
+            },
+            processResults: function( data ) {
+                var options = [];
+                if ( data ) {
+
+                    $.each( data, function( index, text ) {
+                        text[1]+='( #'+text[0]+')';
+                        options.push( { id: text[0], text: text[1] } );
+                    });
+                }
+                return {
+                    results:options
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 3
+
+    });
+
 });

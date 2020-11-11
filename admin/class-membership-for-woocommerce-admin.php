@@ -40,7 +40,7 @@ class Membership_For_Woocommerce_Admin {
 	private $version;
 
 	/**
-	 * Mwb Memberhsip Plans field.
+	 * Mwb Membership Plans field.
 	 *
 	 * @var array
 	 */
@@ -91,6 +91,10 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
+			}
+
+			if ( isset( $_GET['tab'] ) && 'shipping' == $_GET['tab'] ) {
+				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 			}
 		}
 
@@ -169,6 +173,13 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_script( 'membership-for-woocommerce-modal', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_thickbox.js', array( 'jquery' ), $this->version, false );
 
 				add_thickbox();
+			}
+
+			if ( isset( $_GET['tab'] ) && 'shipping' == $_GET['tab'] ) {
+				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
+
+				wp_localize_script( 'mwb_membership_for_woo_add_new_plan_script', 'ajax_url', admin_url( 'admin-ajax.php' ) );
 			}
 
 			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
@@ -896,7 +907,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array $methods an array of shipping methods.
 	 */
-	public function mwb_memberhsip_for_woo_create_shipping_method( $methods ) {
+	public function mwb_membership_for_woo_create_shipping_method( $methods ) {
 
 		if ( ! class_exists( 'Mwb_Membership_free_shipping_method' ) ) {
 			/**

@@ -167,7 +167,7 @@ function mwb_membership_for_woo_supported_gateways() {
 		'paypal', // Wocommmerce paypal (standard).
 		'stripe_ideal', // Official stripe.
 		'membership-for-woo-paypal-gateway', // Membership Paypal.
-		'membership-for-woo-stripe-gateway', // Memberhsip stripe.
+		'membership-for-woo-stripe-gateway', // Membership stripe.
 	);
 
 	return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );

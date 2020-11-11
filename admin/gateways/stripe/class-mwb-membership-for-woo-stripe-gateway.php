@@ -228,7 +228,7 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 			'enabled'              => array(
 				'type'        => 'checkbox',
 				'title'       => __( 'Enable/Disable', 'membership-for-woocommerce' ),
-				'description' => __( 'Enable Stripe for Memberhsip For Woocommerce', 'membership-for-woocommerce' ),
+				'description' => __( 'Enable Stripe for Membership For Woocommerce', 'membership-for-woocommerce' ),
 				'label'       => __( 'Enable Stripe ( Membership )', 'membership-for-woocommerce' ),
 				'default'     => 'no',
 				'desc_tip'    => true,
@@ -251,7 +251,7 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 			),
 			'gateway_description'  => array(
 				'type'        => 'text',
-				'title'       => __( 'Gateway Description', 'memberhsip-for-woocommerce' ),
+				'title'       => __( 'Gateway Description', 'membership-for-woocommerce' ),
 				'description' => __( 'This may be up to 22 characters. The statement description must contain at least one letter, may not include ><"\' characters, and will appear on your customer\'s statement in capital letters.', 'membership-for-woocommerce' ),
 				'default'     => __( 'Upsell Stripe', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,

@@ -56,7 +56,7 @@ $mwb_membership_plans_list = get_option( 'mwb_membership_plans_list' );
 
 	<?php if ( empty( $mwb_membership_plans_list ) ) { ?>
 
-		<p class="mwb_membership_no_plans"><?php esc_html_e( 'No Memberhsip plans created', 'membership-for-woocommerce' ); ?></p>
+		<p class="mwb_membership_no_plans"><?php esc_html_e( 'No Membership plans created', 'membership-for-woocommerce' ); ?></p>
 
 	<?php } ?>
 
