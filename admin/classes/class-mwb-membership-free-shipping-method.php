@@ -106,8 +106,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'class'       => 'wc-enhanced-select',
 				'default'     => '',
 				'options'     => array(
-					''              => __( 'N/A', 'membership-for-woocommerce' ),
-					'active_member' => __( 'An Active Membership', 'memberhsip-for-woocommerce' ),
+					''            => __( 'N/A', 'membership-for-woocommerce' ),
+					'active_plan' => __( 'An Active Membership', 'memberhsip-for-woocommerce' ),
 				),
 				'description' => __( 'Enter cost for mmebership shipping method', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
@@ -132,6 +132,80 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		);
 
+	}
+
+	/**
+	 * Get setting form fields for instances of this shipping method within zones.
+	 *
+	 * @return array
+	 */
+	public function get_instance_form_fields() {
+		return parent::get_instance_form_fields();
+	}
+
+	/**
+	 * See if free shipping is available based on the package and cart.
+	 *
+	 * @param array $package Shipping package.
+	 * @return bool
+	 */
+	public function is_available( $package ) {
+
+		$plan_active = false;
+
+		if ( in_array( $this->requires, array( 'active_plan' ), true ) ) {
+
+			$plan_ids = $this->get_option( 'requires' );
+
+			if ( ! empty( $plan_ids ) && is_array( $plan_ids ) ) {
+
+				foreach ( $plan_ids as $plan_id ) {
+
+					$product_ids       = get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true );
+					$cat_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true );
+					$cart_items_ids    = mwb_memberhsip_for_woo_cart_item_ids();
+					$cart_item_cat_ids = mwb_membership_for_woo_cart_item_cat_ids();
+
+					if ( ! empty( $product_ids ) && is_array( $product_ids ) && ! empty( $cart_items_ids ) && is_array( $cart_items_ids ) ) {
+
+						foreach ( $product_ids as $product_id ) {
+
+							if ( in_array( $product_id, $cart_items_ids ) ) {
+
+								$plan_active = true;
+								break;
+							}
+						}
+					}
+
+					if ( ! empty( $cat_ids ) && is_array( $cat_ids ) && ! empty( $cart_item_cat_ids ) && is_array( $cart_item_cat_ids ) ) {
+
+						foreach ( $cat_ids as $cat_id ) {
+
+							if ( in_array( $cat_id, $cart_item_cat_ids ) ) {
+
+								$plan_active = true;
+								break;
+
+							}
+						}
+					}
+				}
+			}
+		}
+
+		switch ( $this->requires ) {
+
+			case 'active_plan':
+				$is_available = $plan_active;
+				break;
+
+			default:
+				$is_available = true;
+				break;
+		}
+
+		return apply_filters( 'mwb_memberhsip_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
 	}
 
 	/**
@@ -163,6 +237,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		}
 
 		echo json_encode( $result );
+
 		wp_die();
 	}
 
@@ -176,10 +251,10 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	public function calculate_shipping( $package = array() ) {
 
 		$rate = array(
-			'id'       => $this->id,
-			'label'    => $this->title,
-			'cost'     => $this->cost,
-			'calc_tax' => 'per_item',
+			'label'   => $this->title,
+			'cost'    => 0,
+			'taxes'   => false,
+			'package' => $package,
 		);
 
 		// Register the rate.
@@ -193,40 +268,6 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 */
 	public static function mwb_enqueue_admin_js() {
 
-		// wc_enqueue_js(
-		// 	"jQuery('.mwb-membership-shipping-method').select2({
-		// 		//alert('hi');
-
-		// 		ajax:{
-
-		// 			url: ajaxurl,
-		// 			dataType: 'json',
-		// 			delay: 200,
-		// 			data: function( params ) {
-		// 				return {
-		// 					q: params.term,
-		// 					action: 'mwb_membership_available_plans',
-		// 				};
-		// 			},
-		// 			processResults: function( data ) {
-		// 				var options = [];
-		// 				if ( data ) {
-		
-		// 					$.each( data, function( index, text ) {
-		// 						text[1]+='( #'+text[0]+')';
-		// 						options.push( { id: text[0], text: text[1] } );
-		// 					});
-		// 				}
-		// 				return {
-		// 					results:options
-		// 				};
-		// 			},
-		// 			cache: true
-		// 		},
-		// 		minimumInputLength: 3
-
-		// 	});"
-		// );
 		wc_enqueue_js(
 			"jQuery( function( $ ) {
 				function wcFreeShippingShowHideAllowedMembershipField( el ) {
@@ -252,9 +293,42 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 						wcFreeShippingShowHideAllowedMembershipField( $( '#wc-backbone-modal-dialog #woocommerce_mwb_membership_shipping_requires', evt.currentTarget ) );
 					}
 				});
+			});
+			
+			jQuery( function( $ ) {
+				
+				jQuery('.mwb-membership-shipping-method').select2({
+							
+					ajax:{
+
+						url: ajaxurl,
+						dataType: 'json',
+						delay: 200,
+						data: function( params ) {
+							return {
+								q: params.term,
+								action: 'mwb_membership_available_plans',
+							};
+						},
+						processResults: function( data ) {
+							var options = [];
+							if ( data ) {
+			
+								$.each( data, function( index, text ) {
+									text[1]+='( #'+text[0]+')';
+									options.push( { id: text[0], text: text[1] } );
+								});
+							}
+							return {
+								results:options
+							};
+						},
+						cache: true
+					},
+					minimumInputLength: 3
+
+				});
 			});"
-			
-			
 		);
 	}
 }

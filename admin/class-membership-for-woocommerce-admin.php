@@ -453,6 +453,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		echo $output;
+
 		wp_die();
 	}
 
@@ -1012,7 +1013,5 @@ class Membership_For_Woocommerce_Admin {
 		// Stripe library with composer.
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/vendor/autoload.php';
 
-		// Stripe Library.
-		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'gateways/stripe/stripe-php-6.6.0/init.php';
 	}
 }

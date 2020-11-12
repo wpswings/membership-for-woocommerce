@@ -195,3 +195,43 @@ function mwb_membership_for_woo_available_gateways() {
 	return $woo_gateways;
 
 }
+
+/**
+ * Cart item Ids
+ */
+function mwb_memberhsip_for_woo_cart_item_ids() {
+
+	$cart_items = WC()->cart->get_cart();
+
+	$prod_ids = array();
+
+	if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
+
+		foreach ( $cart_items as $item ) {
+
+			$prod_ids[] = $item['product_id'];
+		}
+	}
+
+	return $prod_ids;
+}
+
+/**
+ * Cart item category IDS.
+ */
+function mwb_membership_for_woo_cart_item_cat_ids() {
+
+	$cart_items = WC()->cart->get_cart();
+
+	$cat_ids = array();
+
+	if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
+
+		foreach ( $cart_items as $cart_item_key => $cart_item ) {
+
+			$cat_ids = array_merge( $cat_ids, $cart_item['data']->get_category_ids() );
+		}
+	}
+
+	return $cat_ids;
+}
