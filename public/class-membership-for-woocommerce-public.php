@@ -169,49 +169,73 @@ class Membership_For_Woocommerce_Public {
 // 	}
 
 	/**
-	 * Display category products for Member user role.
+	 * Restrict purchase of product to non-members.
 	 *
-	 * @param query $q Query variable.
+	 * @param bool   $is_purchasable Whether the product is purchasable or not.
+	 * @param object $product Product object.
+	 * @return bool
+	 */
+	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
+
+		// echo '<pre>';
+		// print_r( mwb_membership_for_woo_plans_products_ids() );
+		// echo '</pre>';
+		//die();
+
+		return ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) ? false : $is_purchasable );
+
+	}
+
+	/**
+	 * Hide price of selected product on shop page.
+	 *
+	 * @param string $price_html Price html.
+	 * @param object $product Product object.
+	 */
+	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
+
+		if ( in_array( $product->id, array( 73, 32 ) ) ) {
+
+			return '';
+		}
+
+		return $price_html;
+	}
+
+	/**
+	 * Membership template for all membership products.
+	 *
 	 * @return void
 	 */
-	public function mwb_membership_role_member_category( $q ) {
+	public function mwb_membership_product_membership_purchase_html() {
 
-		// Get the current user.
-		$current_user = wp_get_current_user();
+		global $product;
 
-		// Displaying only "selected" category products to "member" user role.
-		if ( ! in_array( 'member', $current_user->roles ) ) {
+		if ( is_product() && in_array( $product->id, array( 73, 32 ) ) ) {
 
-			$q->set(
-				'tax_query',
-				array(
-					array(
-						'taxonomy' => 'product_cat',
-						'field'    => 'term_id',
-						'terms'    => '20', // your category ID.
-						'operator' => 'IN',
-					),
-				)
-			);
+			echo '<div style="clear: both">
+					<div style="margin-top: 50px; background-color: #96588a">
+						<a href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a Member and buy this product', 'membership-for-woocommerce' ) . '</a>
+					</div>
+				</div>';
+		}
 
-			// Displaying All products.
-			// to all other users roles.
-			// and to non logged user.
-		} else {
+	}
 
-			$q->set(
-				'tax_query',
-				array(
-					array(
-						'taxonomy' => 'product_cat',
-						'field'    => 'term_id',
-						'terms'    => '20', // your category ID.
-					),
-				)
-			);
+	/**
+	 * Display membership products on shop page.
+	 */
+	public function mwb_membership_products_on_shop_page() {
+
+		global $product;
+
+		if ( in_array( $product->id, array( 73, 32, 61 ) ) ) {
+
+			echo '<div class="product-meta>"
+					<span><b>' . esc_html__( 'Membership', 'membership-for-woocommerce' ) . '</b></span>
+				</div>';
 
 		}
 	}
 
 }
-

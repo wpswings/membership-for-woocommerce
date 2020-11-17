@@ -3,6 +3,8 @@ jQuery(document).ready(function($){
     // Target products search.
     jQuery('.wc-membership-product-search').select2({
 
+        
+
         ajax:{
 
             url: ajaxurl,
@@ -15,6 +17,7 @@ jQuery(document).ready(function($){
                 };
             },
             processResults: function( data ) {
+
                 var options = [];
                 if ( data ) {
 

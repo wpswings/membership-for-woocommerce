@@ -235,3 +235,38 @@ function mwb_membership_for_woo_cart_item_cat_ids() {
 
 	return $cat_ids;
 }
+
+/**
+ * Get all plans offered products ids.
+ */
+function mwb_membership_for_woo_plans_products_ids() {
+
+	$args = array(
+		'post_type'   => 'mwb_cpt_membership',
+		'post_status' => array( 'publish' ),
+		'numberposts' => -1,
+	);
+
+	$products = array();
+
+	$all_posts = get_posts( $args );
+
+	if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
+
+		foreach ( $all_posts as $post ) {
+
+			$products = get_post_meta( $post->ID, 'mwb_membership_plan_target_ids', true );
+
+			if ( is_array( $products ) ) {
+
+				foreach ( $products as $id ) {
+					$ids[] = $id;
+				}
+			}
+		}
+	}
+
+	return $ids;
+
+
+}
