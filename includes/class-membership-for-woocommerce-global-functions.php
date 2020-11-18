@@ -267,6 +267,38 @@ function mwb_membership_for_woo_plans_products_ids() {
 	}
 
 	return $ids;
+}
 
+/**
+ * Get all plans offered categories ids.
+ */
+function mwb_membership_for_woo_plans_cat_ids() {
 
+	$args = array(
+		'post_type'   => 'mwb_cpt_membership',
+		'post_status' => array( 'publish' ),
+		'numberposts' => -1,
+	);
+
+	$categories = array();
+
+	$all_posts = get_posts( $args );
+
+	if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
+
+		foreach ( $all_posts as $post ) {
+
+			$categories = get_post_meta( $post->ID, 'mwb_membership_plan_target_categories', true );
+
+			if ( is_array( $categories ) ) {
+
+				foreach ( $categories as $id ) {
+
+					$cat_ids[] = $id;
+				}
+			}
+		}
+	}
+
+	return $cat_ids;
 }

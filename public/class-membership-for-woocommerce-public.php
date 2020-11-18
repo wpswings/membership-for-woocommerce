@@ -178,12 +178,16 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
 
 		// echo '<pre>';
-		// print_r( mwb_membership_for_woo_plans_products_ids() );
+		// print_r( mwb_membership_for_woo_plans_cat_ids() );
 		// echo '</pre>';
-		//die();
-
-		return ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) ? false : $is_purchasable );
-
+		// die();
+		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
+			$is_purchasable = false;
+		} else {
+			$is_purchasable = true;
+		}
+		//return ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) ? false : $is_purchasable );
+		return $is_purchasable;
 	}
 
 	/**
@@ -194,7 +198,7 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
 
-		if ( in_array( $product->id, array( 73, 32 ) ) ) {
+		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
 
 			return '';
 		}
@@ -211,25 +215,68 @@ class Membership_For_Woocommerce_Public {
 
 		global $product;
 
-		if ( is_product() && in_array( $product->id, array( 73, 32 ) ) ) {
+		if ( function_exists( 'is_product' ) && is_product() ) {
 
-			echo '<div style="clear: both">
-					<div style="margin-top: 50px; background-color: #96588a">
-						<a href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a Member and buy this product', 'membership-for-woocommerce' ) . '</a>
-					</div>
-				</div>';
+			global $post;
+			global $wpdb;
+
+			// $cpt = new WP_Query(
+			// 	array(
+			// 		'post_type'      => 'mwb_cpt_membership',
+			// 		'posts_per_page' => -1,
+			// 		'meta_key'       => 'mwb_membership_plan_target_ids',
+			// 	)
+			// );
+
+			// $query = "SELECT * FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  AND ( 
+			// 		wp_postmeta.meta_key = 'mwb_membership_plan_target_ids'
+			// 		) AND wp_posts.post_type = 'mwb_cpt_membership' AND (wp_posts.post_status = 'publish' OR wp_posts.post_status = 'private') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC '";
+
+			// $data = $wpdb->get_results( $query, ARRAY_A );
+
+			$posts = $wpdb->get_results("SELECT * FROM $wpdb->postmeta
+					WHERE meta_key = 'mwb_membership_plan_target_ids'", ARRAY_A);
+
+			
+			// echo "<pre>";
+			// print_r($posts);
+			// echo "</pre>";
+
+			// die('hllo');
+			
+			foreach ( $posts as $post ) {
+				// echo '<pre>';
+				// print_r( maybe_unserialize($post['meta_value']));
+				// echo '</pre>';
+				if ( ! empty( maybe_unserialize($post['meta_value']) ) ) {
+				foreach ( maybe_unserialize($post['meta_value']) as $id ) {
+					echo '<pre>';
+					print_r($id);
+					echo '</pre>';
+				}
+			}
+
+			// if ( in_array( $product->id, maybe_unserialize( $post['meta_value'] ) ) ) {
+
+			// 	echo '<div style="clear: both">
+			// 			<div style="margin-top: 50px; background-color: #96588a">
+			// 				<a href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a ' . get_the_title( $post['post_id'] ) . 'Member and buy this product', 'membership-for-woocommerce' ) . '</a>
+			// 			</div>
+			// 		</div>';
+			// }
+			}
 		}
 
 	}
 
 	/**
-	 * Display membership products on shop page.
+	 * Display membership tag on products which are offered in any membership on shop page.
 	 */
 	public function mwb_membership_products_on_shop_page() {
 
 		global $product;
 
-		if ( in_array( $product->id, array( 73, 32, 61 ) ) ) {
+		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
 
 			echo '<div class="product-meta>"
 					<span><b>' . esc_html__( 'Membership', 'membership-for-woocommerce' ) . '</b></span>

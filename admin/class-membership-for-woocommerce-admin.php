@@ -504,21 +504,21 @@ class Membership_For_Woocommerce_Admin {
 
 						$post_data = ! empty( $_POST[ $field ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) ) : $default;
 
-						// Adding Membership plan name as post meta to products.
-						if ( 'mwb_membership_plan_target_ids' == $field) {
+						// // Adding Membership plan name as post meta to products.
+						// if ( 'mwb_membership_plan_target_ids' == $field) {
 
-							foreach( $_POST[ $field ] as $prod_id ) {
-								update_post_meta( $prod_id, get_the_title( $post_id ), 'yes' );
-							}
-						}
+						// 	foreach( $_POST[ $field ] as $prod_id ) {
+						// 		update_post_meta( $prod_id, 'membership', array( get_the_title( $post_id ) ) );
+						// 	}
+						// }
 
-						// Adding membership plan name term meta to categories.
-						if ( 'mwb_membership_plan_target_categories' == $field ) {
+						// // Adding membership plan name term meta to categories.
+						// if ( 'mwb_membership_plan_target_categories' == $field ) {
 
-							foreach( $_POST[ $field ] as $cat_id ) {
-								update_term_meta( $cat_id, get_the_title( $post_id ), 'yes' );
-							}
-						}
+						// 	foreach( $_POST[ $field ] as $cat_id ) {
+						// 		update_term_meta( $cat_id, 'membership', array( get_the_title( $post_id ) ) );
+						// 	}
+						// }
 
 					} else {
 
