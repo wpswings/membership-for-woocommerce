@@ -165,7 +165,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				?>
 
-				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
+				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
 			</td>
 		</tr>
 		<!-- Show history to user end -->
