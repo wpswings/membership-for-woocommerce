@@ -196,6 +196,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Custom post type for membership plans creation and settings.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_cpt_membership() {
 
@@ -242,6 +244,19 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * Remove "Add Plans" submenu from Membership CPT.
+	 */
+	public function mwb_membership_remove_submenu() {
+
+		if ( post_type_exists( 'mwb_cpt_membership' ) ) {
+
+			remove_submenu_page( 'edit.php?post_type=mwb_cpt_membership', 'post-new.php?post_type=mwb_cpt_membership' );
+
+		}
+
+	}
+
+	/**
 	 * Adding sub-menu pages to Membership menu.
 	 *
 	 * @since 1.0.0
@@ -264,6 +279,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Callback function for Global settings sub-menu page.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_global_settings() {
 
@@ -273,6 +290,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Callback function for shortcodes sub-menu page.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_overview() {
 
@@ -282,6 +301,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Callback function for shortcodes sub-menu page.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_shortcodes() {
 
@@ -291,6 +312,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Callback function for supported gateways sub-menu page.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_gateways() {
 
@@ -301,6 +324,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Adding custom column to the custom post type "Membership"
 	 *
 	 * @param array $columns is an array of deafult columns in custom post type.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_cpt_columns_membership( $columns ) {
 
@@ -316,6 +341,8 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array   $column is an array of default columns in Custom post type.
 	 * @param integer $post_id is the post id.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_membership( $column, $post_id ) {
 
@@ -370,6 +397,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Get post data ( Ajax handler)
 	 *
 	 * @return void
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_get_content() {
 
@@ -459,6 +488,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Register Custom Meta box for Membership plans creation.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_meta_box() {
 
@@ -469,6 +500,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Callback funtion for custom meta boxes.
 	 *
 	 * @param string $post Current post object.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_meta_box_callback( $post ) {
 
@@ -482,6 +515,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Save meta box fields value.
 	 *
 	 * @param int $post_id Post ID.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_save_fields( $post_id ) {
 
@@ -504,22 +539,6 @@ class Membership_For_Woocommerce_Admin {
 
 						$post_data = ! empty( $_POST[ $field ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) ) : $default;
 
-						// // Adding Membership plan name as post meta to products.
-						// if ( 'mwb_membership_plan_target_ids' == $field) {
-
-						// 	foreach( $_POST[ $field ] as $prod_id ) {
-						// 		update_post_meta( $prod_id, 'membership', array( get_the_title( $post_id ) ) );
-						// 	}
-						// }
-
-						// // Adding membership plan name term meta to categories.
-						// if ( 'mwb_membership_plan_target_categories' == $field ) {
-
-						// 	foreach( $_POST[ $field ] as $cat_id ) {
-						// 		update_term_meta( $cat_id, 'membership', array( get_the_title( $post_id ) ) );
-						// 	}
-						// }
-
 					} else {
 
 						$post_data = ! empty( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : $default;
@@ -537,6 +556,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Define Membership default settings fields.
 	 *
 	 * @return array
+	 *
+	 * @since 1.0.0
 	 */
 	public function get_plans_default_value() {
 
@@ -563,6 +584,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Set default fields  of membership plans
 	 *
 	 * @param int $post_id Post ID.
+	 *
+	 * @since 1.0.0
 	 */
 	public function set_plan_creation_fields( $post_id ) {
 
@@ -581,6 +604,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Add export to csv button on Membership CPT
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_export_membership() {
 
@@ -601,6 +626,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Export all Members data as CSV from Memberships.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_export_csv_membership() {
 
@@ -663,6 +690,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Custom post type to display the list of all members.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_cpt_members() {
 
@@ -711,6 +740,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Adding custom columns to the custom post type "Members".
 	 *
 	 * @param array $columns is an array of deafult columns in custom post type.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
 
@@ -742,6 +773,8 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array   $column is an array of default columns in Custom post type.
 	 * @param integer $post_id is the post id.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
 
@@ -782,6 +815,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Select2 search for membership target products.
+	 *
+	 * @since 1.0.0
 	 */
 	public function search_products_for_membership() {
 
@@ -844,6 +879,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Select2 search for membership target product categories.
+	 *
+	 * @since 1.0.0
 	 */
 	public function search_product_categories_for_membership() {
 
@@ -873,6 +910,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Add export to csv button on Members CPT
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_export_members() {
 
@@ -893,6 +932,8 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Export all Members data as CSV from members.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_export_csv_members() {
 
@@ -924,6 +965,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Creating shipping method for membership.
 	 *
 	 * @param array $methods an array of shipping methods.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_create_shipping_method( $methods ) {
 
@@ -941,6 +984,8 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array $methods an array of shipping methods.
 	 * @return array
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_add_shipping_method( $methods ) {
 
@@ -953,6 +998,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Add Membership Support Column on payment gateway page.
 	 *
 	 * @param array $columns An array of default columns.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_gateway_support_column( $columns ) {
 
@@ -970,6 +1017,8 @@ class Membership_For_Woocommerce_Admin {
 	 * Populating 'Membership support' column on payment gateway page.
 	 *
 	 * @param object $gateways Object of all payment gateways.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_gateway_column_content( $gateways ) {
 
@@ -994,6 +1043,8 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array $gateways An array of wooommerce default gateway classes.
 	 * @return array $gateways An array of woocommerce gateway classes along with membership gateways.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_supported_gateways( $gateways ) {
 
@@ -1029,6 +1080,25 @@ class Membership_For_Woocommerce_Admin {
 
 		// Stripe library with composer.
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/vendor/autoload.php';
+
+	}
+
+	/**
+	 * Add post stats to Membership default offer page.
+	 *
+	 * @param array  $states An array of post display states.
+	 * @param object $post Current post object.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_default_page_states( $states, $post ) {
+
+		if ( 'membership-plans' == get_post_field( 'post_name', $post->ID ) ) {
+
+			$states[] = __( 'Membership Default Page', 'membership-for-woocommerce' );
+		}
+
+		return $states;
 
 	}
 }

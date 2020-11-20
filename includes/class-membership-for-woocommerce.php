@@ -167,6 +167,7 @@ class Membership_For_Woocommerce {
 		// Admin side ajax.
 		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
@@ -210,9 +211,11 @@ class Membership_For_Woocommerce {
 		// Include supported gateway classes.
 		$this->loader->add_action( 'plugins_loaded', $plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
 
-		// ajax.
-		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
+		// Display page states of membership default page.
+		$this->loader->add_filter( 'display_post_states', $plugin_admin, 'mwb_membership_default_page_states', 10, 2 );
 
+		// Remove submenu page.
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_membership_remove_submenu' );
 	}
 
 	/**

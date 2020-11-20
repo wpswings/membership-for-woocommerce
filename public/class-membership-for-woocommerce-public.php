@@ -178,8 +178,11 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
 
 		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
+
 			$is_purchasable = false;
+
 		} else {
+
 			$is_purchasable = true;
 		}
 
@@ -224,6 +227,8 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
 
+				$output = '';
+
 				foreach ( $data as $plan ) {
 
 					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
@@ -234,8 +239,8 @@ class Membership_For_Woocommerce_Public {
 						if ( in_array( $product->id, $target_ids ) ) {
 
 							echo '<div style="clear: both">
-									<div style="margin-top: 10px; background-color: #96588a">
-										<a href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  Member and buy this product', 'membership-for-woocommerce' ) . '</a>
+									<div style="margin-top: 10px;">
+										<a class="button alt" href="http://development.local/membership-plans/" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 									</div>
 								</div>';
 						}
@@ -253,8 +258,8 @@ class Membership_For_Woocommerce_Public {
 							if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
 
 								echo '<div style="clear: both">
-										<div style="margin-top: 10px; background-color: #96588a">
-											<a href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  Member and buy this product', 'membership-for-woocommerce' ) . '</a>
+										<div style="margin-top: 10px;">
+											<a class="button alt" href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 										</div>
 									</div>';
 							}
@@ -329,13 +334,6 @@ class Membership_For_Woocommerce_Public {
 			echo $output;
 		}
 
-		// if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
-
-		// 	echo '<div class="product-meta>"
-		// 			<span><b>' . esc_html__( 'Membership Product', 'membership-for-woocommerce' ) . '</b></span>
-		// 		</div>';
-
-		// }
 	}
 
 }

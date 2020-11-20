@@ -13,6 +13,8 @@
  * Allowed html for description on admin side
  *
  * @param string $description tooltip message.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_tool_tip( $description = '' ) {
 
@@ -34,6 +36,8 @@ function mwb_membership_for_woo_tool_tip( $description = '' ) {
  * Returns product name and status.
  *
  * @param string $product_id Product id of a particular product.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_get_product_title( $product_id = '' ) {
 
@@ -64,6 +68,8 @@ function mwb_membership_for_woo_get_product_title( $product_id = '' ) {
  * Return category name and its existance
  *
  * @param string $cat_id Category ID of a particular category.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_get_category_title( $cat_id = '' ) {
 
@@ -84,7 +90,9 @@ function mwb_membership_for_woo_get_category_title( $cat_id = '' ) {
 }
 
 /**
- * Membership default global options
+ * Membership default global options.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_default_global_options() {
 
@@ -103,6 +111,8 @@ function mwb_membership_default_global_options() {
  * Membership product title for CSV.
  *
  * @param array $products An array of product ids.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_csv_get_title( $products ) {
 
@@ -132,6 +142,8 @@ function mwb_membership_csv_get_title( $products ) {
  * Membership category title for CSV.
  *
  * @param array $categories An array of cataegory ids.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_csv_get_cat_title( $categories ) {
 
@@ -157,6 +169,8 @@ function mwb_membership_csv_get_cat_title( $categories ) {
 
 /**
  * Membership supported gateways.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_supported_gateways() {
 
@@ -175,6 +189,8 @@ function mwb_membership_for_woo_supported_gateways() {
 
 /**
  * Available payment gateways.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_available_gateways() {
 
@@ -197,7 +213,9 @@ function mwb_membership_for_woo_available_gateways() {
 }
 
 /**
- * Cart item Ids
+ * Cart item Ids.
+ *
+ * @since 1.0.0
  */
 function mwb_memberhsip_for_woo_cart_item_ids() {
 
@@ -217,7 +235,9 @@ function mwb_memberhsip_for_woo_cart_item_ids() {
 }
 
 /**
- * Cart item category IDS.
+ * Cart item category Ids.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_cart_item_cat_ids() {
 
@@ -238,6 +258,8 @@ function mwb_membership_for_woo_cart_item_cat_ids() {
 
 /**
  * Get all plans offered products ids.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_plans_products_ids() {
 
@@ -271,6 +293,8 @@ function mwb_membership_for_woo_plans_products_ids() {
 
 /**
  * Get all plans offered categories ids.
+ *
+ * @since 1.0.0
  */
 function mwb_membership_for_woo_plans_cat_ids() {
 
@@ -301,4 +325,58 @@ function mwb_membership_for_woo_plans_cat_ids() {
 	}
 
 	return $cat_ids;
+}
+
+/**
+ * Gutenberg offer plan content.
+ *
+ * @since 1.0.0
+ */
+function mwb_membership_for_woo_gutenberg_content() {
+
+	$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)"} -->
+					<div class="wp-block-cover has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"align":"center","textColor":"white"} -->
+					<h2 class="has-text-align-center has-white-color has-text-color"><strong><em>One Membership, Many Benefits</em></strong></h2>
+					<!-- /wp:heading -->
+					
+					<!-- wp:spacer {"height":58} -->
+					<div style="height:58px" aria-hidden="true" class="wp-block-spacer"></div>
+					<!-- /wp:spacer -->
+					
+					<!-- wp:group -->
+					<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:group -->
+					<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
+					<div class="mwb_membership_plan_content_title">Membership</div>
+					<!-- /wp:html --></div></div>
+					<!-- /wp:group -->
+					
+					<!-- wp:html -->
+					<div class="mwb_membership_plan_content_price">Rs.700</div>
+					<!-- /wp:html -->
+					
+					<!-- wp:html -->
+					<div class="mwb_membership_plan_content_desc">Description</div>
+					<!-- /wp:html --></div></div>
+					<!-- /wp:group -->
+					
+					<!-- wp:columns {"align":"full"} -->
+					<div class="wp-block-columns alignfull"><!-- wp:column -->
+					<div class="wp-block-column"><!-- wp:buttons {"align":"right"} -->
+					<div class="wp-block-buttons alignright"><!-- wp:button {"borderRadius":48,"style":{"color":{"gradient":"linear-gradient(138deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 65%)"}},"textColor":"white"} -->
+					<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-text-color has-background" style="border-radius:48px;background:linear-gradient(138deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 65%)" rel=" [mwb_membership_yes]">Buy Now!</a></div>
+					<!-- /wp:button --></div>
+					<!-- /wp:buttons --></div>
+					<!-- /wp:column -->
+					
+					<!-- wp:column -->
+					<div class="wp-block-column"><!-- wp:buttons {"align":"left"} -->
+					<div class="wp-block-buttons alignleft"><!-- wp:button {"borderRadius":50,"style":{"color":{"gradient":"linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 56%,rgb(107,0,62) 100%)"}},"textColor":"white"} -->
+					<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-text-color has-background" style="border-radius:50px;background:linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 56%,rgb(107,0,62) 100%)">No Thanks!</a></div>
+					<!-- /wp:button --></div>
+					<!-- /wp:buttons --></div>
+					<!-- /wp:column --></div>
+					<!-- /wp:columns --></div></div>
+					<!-- /wp:cover -->';
+
+	return $page_content;
 }
