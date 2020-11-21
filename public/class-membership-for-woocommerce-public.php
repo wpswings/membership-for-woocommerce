@@ -150,23 +150,21 @@ class Membership_For_Woocommerce_Public {
 		add_shortcode( 'mwb_membership_no', array( $this, 'reject_shortcode_content' ) );
 
 		// Membership Plan title shortcode.
-		add_shortcode( 'mwb_membership_title', array( $this, 'membership_plan_title_content' ) );
+		add_shortcode( 'mwb_membership_title', array( $this, 'membership_plan_title_shortcode' ) );
 
 		// Membership Plan price shortcode.
-		add_shortcode( 'mwb_membership_price', array( $this, 'membership_plan_price_content' ) );
+		add_shortcode( 'mwb_membership_price', array( $this, 'membership_plan_price_shortcode' ) );
 
 		// Membership Plan Description shortcode.
-		add_shortcode( 'mwb_membership_desc', array( $this, 'membership_plan_description_content') );
+		add_shortcode( 'mwb_membership_desc', array( $this, 'membership_plan_description_shortcode' ) );
 
+		// Membership default plan name content shortcode.
+		add_shortcode( 'mwb_membership_default_plans_page', array( $this, 'mmbership_offers_default_shortcode' ) );
+
+		// Default Gutenberg offer.
+		add_shortcode( 'mwb_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
 	}
 
-	/**
-	 * Shortcode for offer - Buy now button.
-	 * Returns : Link :
-	 */
-// 	public function buy_now_shortcode_content( $atts, $content ) {
-		
-// 	}
 
 	/**
 	 * Restrict purchase of product to non-members.
@@ -227,7 +225,12 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
 
-				$output = '';
+				$mwb_membership_nonce                 = wp_create_nonce( 'membership_plan' );
+				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
+
+				if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
+					$page_link = get_page_link( $mwb_membership_default_plans_page_id );
+				}
 
 				foreach ( $data as $plan ) {
 
@@ -238,9 +241,18 @@ class Membership_For_Woocommerce_Public {
 
 						if ( in_array( $product->id, $target_ids ) ) {
 
+							$page_link = add_query_arg(
+								array(
+									'plan_nonce' => $mwb_membership_nonce,
+									'plan_id'    => $plan['ID'],
+									'prod_id'    => $product->id,
+								),
+								$page_link
+							);
+
 							echo '<div style="clear: both">
 									<div style="margin-top: 10px;">
-										<a class="button alt" href="http://development.local/membership-plans/" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+										<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 									</div>
 								</div>';
 						}
@@ -257,9 +269,18 @@ class Membership_For_Woocommerce_Public {
 
 							if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
 
+								$page_link = add_query_arg(
+									array(
+										'plan_nonce' => $mwb_membership_nonce,
+										'plan_id'    => $plan['ID'],
+										'prod_id'    => $product->id,
+									),
+									$page_link
+								);
+
 								echo '<div style="clear: both">
 										<div style="margin-top: 10px;">
-											<a class="button alt" href="#" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+											<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 										</div>
 									</div>';
 							}
@@ -309,7 +330,6 @@ class Membership_For_Woocommerce_Public {
 					if ( in_array( $product->id, $target_ids ) ) {
 
 						$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
-						//echo preg_replace( '/,[^|]*$/', '', $output );
 					}
 				}
 
@@ -333,6 +353,134 @@ class Membership_For_Woocommerce_Public {
 			$output = substr( $output, 0, -2 );
 			echo $output;
 		}
+
+	}
+
+	/**
+	 * Shortcode for offer - Buy now button.
+	 * Returns : Link :
+	 */
+	// public function buy_now_shortcode_content( $atts, $content ) {
+		
+	// }
+
+	/**
+	 * Default plan page shortcode.
+	 * Returns : html :
+	 *
+	 * @since 1.0.0
+	 */
+	public function mmbership_offers_default_shortcode() {
+
+		$output = '';
+
+		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
+
+			$plan_id = sanitize_text_field( wp_unslash( $_GET['plan_id'] ) );
+			$prod_id = sanitize_text_field( wp_unslash( $_GET['prod_id'] ) );
+
+			if ( isset( $_GET['plan_nonce'] ) ) {
+
+				$plan_nonce = sanitize_text_field( wp_unslash( $_GET['plan_nonce'] ) );
+
+				wp_verify_nonce( $plan_nonce, 'membership_plan' );
+
+				// Get plan details.
+				$plan_title    = get_the_title( $plan_id );
+				$plan_price    = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
+				$plan_currency = get_woocommerce_currency();
+				$plan_desc     = get_post_field( 'post_content', $plan_id );
+
+				// Plans default text.
+				$offer_banner_text  = esc_html__( 'One Membership, Many Benefits', 'membership-for-woocommerce' );
+				$offer_buy_now_txt  = esc_html__( 'Buy Now!', 'membership-for-woocommerce' );
+				$offer_no_thnks_txt = esc_html__( 'No thanks!', 'membership-for-woocommerce' );
+
+				// Button colours.
+				$buynow_btn_color   = '#83e620';
+				$nothanks_btn_color = '#ed2913';
+
+				$output .= '<div class="mwb_membership_plan_banner">
+								<h2><b><i>' . trim( $offer_banner_text ) . '</i></b></h2>
+							</div>';
+
+				$output .= '<div class="mwb_membership_plan_offer_wrapper">';
+
+				$output .= '<div class="mwb_membership_plan_content_title">
+								<h3>' . $plan_title . '</h3>			
+							</div>';
+
+				$output .= '<div class="mwb_membership_plan_content_price">
+								<h2>' . $plan_currency . ' ' . $plan_price . '</h2>			
+							</div>';
+
+				$output .= '<div class="mwb_membership_plan_content_desc">
+								<h2>' . $plan_desc . '</h2>			
+							</div>';
+
+				$output .= '</div>';
+
+				$output .= '<div class="mwb_membership_offer_action">
+								<form class="mwb_membership_offer_form" method="post">
+									<input type="hidden" name="membership_nonce" value="' . $plan_nonce . '">
+									<input type="hidden" name="membership_id" value="' . $plan_id . '">
+									<button data-id="' . $plan_id . '" style="background-color:' . $buynow_btn_color . '" class="mwb_membership_buy_now" type="submit" name="mwb_membership_buy_now">' . $offer_buy_now_txt . '</button>
+								</form>
+								<a style="color:' . $nothanks_btn_color . '" class="mwb_membership_no_thanks" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
+
+				$output .= '</div>';
+
+			} else {
+
+				$error_msg = esc_html__( 'You ran out of session.', 'membership-for-woocommerce' );
+
+				$link_text = esc_html__( 'Go back to Shop page.', 'membership-for-woocommerce' );
+
+				$error_msg = apply_filters( 'mwb_membership_error_message', $error_msg );
+
+				$link_text = apply_filters( 'mwb_membership_go_back_link_text', $link_text );
+
+				$shop_page_url = wc_get_page_permalink( 'shop' );
+
+				$output .= $error_msg . '<a href="' . $shop_page_url . '" class="button">' . $link_text . '</a>';
+			}
+		} else {
+
+			$error_msg = esc_html__( 'You ran out of session.', 'membership-for-woocommerce' );
+
+			$link_text = esc_html__( 'Go back to Shop page.', 'membership-for-woocommerce' );
+
+			$error_msg = apply_filters( 'mwb_membership_error_message', $error_msg );
+
+			$link_text = apply_filters( 'mwb_membership_go_back_link_text', $link_text );
+
+			$shop_page_url = wc_get_page_permalink( 'shop' );
+
+			$output .= $error_msg . '<a href="' . $shop_page_url . '" class="button">' . $link_text . '</a>';
+
+		}
+
+		if ( ! isset( $_GET['plan_nonce'] ) || ! isset( $_GET['plan_id'] ) ) {
+			$mwb_membership_no_offer_text = esc_html__( 'Sorry, you have no offers', 'membership-for-woocommerce' );
+
+			$output .= '<div class="mwb_membership_no_offer"><h2>' . trim( $mwb_membership_no_offer_text, '"' ) . '</h2>';
+
+			$output .= '<a class="button wc-backward" href="' . esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Return to Shop', 'membership-for-woocommerce' ) . '</a></div>';
+
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Shortcode for Default Gutenberg offer identification.
+	 * Returns : empty string.
+	 *
+	 * @since 1.0.0
+	 */
+	public function default_offer_identification_shortcode() {
+
+		return '';
 
 	}
 

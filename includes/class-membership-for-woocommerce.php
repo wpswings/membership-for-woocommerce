@@ -216,6 +216,9 @@ class Membership_For_Woocommerce {
 
 		// Remove submenu page.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_membership_remove_submenu' );
+
+		// Distraction free page for membership plans page.
+		$this->loader->add_filter( 'page_template', $plugin_admin, 'mwb_membership_plan_page_template' );
 	}
 
 	/**

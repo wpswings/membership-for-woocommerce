@@ -10,7 +10,7 @@
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin/partials
  */
-die('admin display');
+die();
 
 if ( ! defined( 'ABSPATH' ) ) {
 

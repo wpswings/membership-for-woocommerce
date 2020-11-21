@@ -1101,4 +1101,49 @@ class Membership_For_Woocommerce_Admin {
 		return $states;
 
 	}
+
+	/**
+	 *  Adding distraction free mode to the offers page.
+	 *
+	 * @param mixed $page_template Default template for the page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_plan_page_template( $page_template ) {
+
+		$pages_available = get_posts(
+			array(
+				'post_type'      => 'any',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				's'              => '[mwb_membership_default_plans_page]',
+				'order'          => 'ASC',
+				'orderby'        => 'ID',
+			)
+		);
+
+		$pages_available = array_merge(
+			get_posts(
+				array(
+					'post_type'      => 'any',
+					'post_status'    => 'publish',
+					'posts_per_page' => -1,
+					's'              => '[mwb_membership_default_page_identification]',
+					'order'          => 'ASC',
+					'orderby'        => 'ID',
+				)
+			),
+			$pages_available
+		);
+
+		foreach ( $pages_available as $single_page ) {
+
+			if ( is_page( $single_page->ID ) ) {
+
+				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-template.php';
+			}
+		}
+
+		return $page_template;
+	}
 }
