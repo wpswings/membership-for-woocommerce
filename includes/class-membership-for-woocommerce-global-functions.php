@@ -380,3 +380,4 @@ function mwb_membership_for_woo_gutenberg_content() {
 
 	return $page_content;
 }
+
