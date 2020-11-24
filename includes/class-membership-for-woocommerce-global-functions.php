@@ -334,8 +334,8 @@ function mwb_membership_for_woo_plans_cat_ids() {
  */
 function mwb_membership_for_woo_gutenberg_content() {
 
-	$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)"} -->
-					<div class="wp-block-cover has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"align":"center","textColor":"white"} -->
+	$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)","align":"wide"} -->
+					<div class="wp-block-cover alignwide has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"align":"center","textColor":"white"} -->
 					<h2 class="has-text-align-center has-white-color has-text-color"><strong><em>One Membership, Many Benefits</em></strong></h2>
 					<!-- /wp:heading -->
 					
@@ -343,37 +343,29 @@ function mwb_membership_for_woo_gutenberg_content() {
 					<div style="height:58px" aria-hidden="true" class="wp-block-spacer"></div>
 					<!-- /wp:spacer -->
 					
-					<!-- wp:group -->
-					<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:group -->
-					<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
-					<div class="mwb_membership_plan_content_title">Membership</div>
-					<!-- /wp:html --></div></div>
-					<!-- /wp:group -->
-					
 					<!-- wp:html -->
-					<div class="mwb_membership_plan_content_price">Rs.700</div>
+					<div class="mwb_membership_plan_content_title">[mwb_membership_title]</div>
 					<!-- /wp:html -->
 					
 					<!-- wp:html -->
-					<div class="mwb_membership_plan_content_desc">Description</div>
-					<!-- /wp:html --></div></div>
-					<!-- /wp:group -->
+					<div class="mwb_membership_plan_content_price">[mwb_membership_price]</div>
+					<!-- /wp:html -->
 					
-					<!-- wp:columns {"align":"full"} -->
-					<div class="wp-block-columns alignfull"><!-- wp:column -->
-					<div class="wp-block-column"><!-- wp:buttons {"align":"right"} -->
-					<div class="wp-block-buttons alignright"><!-- wp:button {"borderRadius":48,"style":{"color":{"gradient":"linear-gradient(138deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 65%)"}},"textColor":"white"} -->
-					<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-text-color has-background" style="border-radius:48px;background:linear-gradient(138deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 65%)" rel=" [mwb_membership_yes]">Buy Now!</a></div>
-					<!-- /wp:button --></div>
-					<!-- /wp:buttons --></div>
+					<!-- wp:html -->
+					<div class="mwb_membership_plan_content_desc">[mwb_membership_desc]</div>
+					<!-- /wp:html -->
+					
+					<!-- wp:columns -->
+					<div class="wp-block-columns"><!-- wp:column -->
+					<div class="wp-block-column"><!-- wp:shortcode -->
+					[mwb_membership_yes]
+					<!-- /wp:shortcode --></div>
 					<!-- /wp:column -->
 					
 					<!-- wp:column -->
-					<div class="wp-block-column"><!-- wp:buttons {"align":"left"} -->
-					<div class="wp-block-buttons alignleft"><!-- wp:button {"borderRadius":50,"style":{"color":{"gradient":"linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 56%,rgb(107,0,62) 100%)"}},"textColor":"white"} -->
-					<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-text-color has-background" style="border-radius:50px;background:linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 56%,rgb(107,0,62) 100%)">No Thanks!</a></div>
-					<!-- /wp:button --></div>
-					<!-- /wp:buttons --></div>
+					<div class="wp-block-column"><!-- wp:shortcode -->
+					[mwb_membership_no]
+					<!-- /wp:shortcode --></div>
 					<!-- /wp:column --></div>
 					<!-- /wp:columns --></div></div>
 					<!-- /wp:cover -->';

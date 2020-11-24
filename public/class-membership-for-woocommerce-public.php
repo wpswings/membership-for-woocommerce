@@ -97,6 +97,9 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 
+		add_thickbox();
+
+		wp_enqueue_script( 'bootstrap_modal', plugin_dir_url( __FILE__ ) . 'js/bootstrap-modal.min.js', array( 'jquery' ), '2.2.6', true );
 	}
 
 	/**
@@ -354,6 +357,28 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Validate shortcode for rendering content according to user( live offer )
+	 * and admin ( for viewing purpose ).
+	 *
+	 * @since    3.0.0
+	 */
+	public function mwb_membership_validate_mode() {
+
+		// If user is customer.
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return 'live_plan';
+
+		} elseif ( current_user_can( 'manage_options' ) ) { // Else if user is admin.
+
+			return 'admin_view';
+		}
+
+		return false;
+	}
+
+
+	/**
 	 * Default plan page shortcode.
 	 * Returns : html :
 	 *
@@ -363,6 +388,9 @@ class Membership_For_Woocommerce_Public {
 
 		$output = '';
 
+		$mode = $this->mwb_membership_validate_mode();
+
+		// If on default page, plan_id and prod_id are set.
 		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
 
 			$plan_id = sanitize_text_field( wp_unslash( $_GET['plan_id'] ) );
@@ -375,13 +403,9 @@ class Membership_For_Woocommerce_Public {
 			$plan_desc     = get_post_field( 'post_content', $plan_id );
 
 			// Plans default text.
-			$offer_banner_text  = esc_html__( 'One Membership, Many Benefits', 'membership-for-woocommerce' );
-			$offer_buy_now_txt  = esc_html__( 'Buy Now!', 'membership-for-woocommerce' );
-			$offer_no_thnks_txt = esc_html__( 'No thanks!', 'membership-for-woocommerce' );
-
-			// Button colours.
-			$buynow_btn_color   = '#83e620';
-			$nothanks_btn_color = '#ed2913';
+			$offer_banner_text  = apply_filters( 'mwb_membership_plan_default_banner_txt', esc_html__( 'One Membership, Many Benefits', 'membership-for-woocommerce' ) );
+			$offer_buy_now_txt  = apply_filters( 'mwb_membership_plan_default_buy_now_txt', esc_html__( 'Buy Now!', 'membership-for-woocommerce' ) );
+			$offer_no_thnks_txt = apply_filters( 'mwb_membership_plan_default_no_thanks_txt', esc_html__( 'No thanks!', 'membership-for-woocommerce' ) );
 
 			$output .= '<div class="mwb_membership_plan_banner">
 							<h2><b><i>' . trim( $offer_banner_text ) . '</i></b></h2>
@@ -389,51 +413,32 @@ class Membership_For_Woocommerce_Public {
 
 			$output .= '<div class="mwb_membership_plan_offer_wrapper">';
 
-			$output .= '<div class="mwb_membership_plan_content_title">
-							<h3>' . ucwords( $plan_title ) . '</h3>			
-						</div>';
+			$output .= '<div class="mwb_membership_plan_content_title">' . ucwords( $plan_title ) . '</div>';
 
-			$output .= '<div class="mwb_membership_plan_content_price">
-							<h2>' . $plan_currency . ' ' . $plan_price . '</h2>			
-						</div>';
+			$output .= '<div class="mwb_membership_plan_content_price">' . $plan_currency . ' ' . $plan_price . '</div>';
 
-			$output .= '<div class="mwb_membership_plan_content_desc">
-							<h2>' . $plan_desc . '</h2>			
-						</div>';
+			$output .= '<div class="mwb_membership_plan_content_desc">' . $plan_desc . '</div>';
 
 			$output .= '</div>';
 
 			$output .= '<div class="mwb_membership_offer_action">
-							<form class="mwb_membership_offer_form" method="post">
+							<form class="mwb_membership_buy_now_btn" method="post">
 								<input type="hidden" name="membership_id" value="' . $plan_id . '">
-								<button data-id="' . $plan_id . '" style="background-color:' . $buynow_btn_color . '" class="mwb_membership_buy_now" type="submit" name="mwb_membership_buy_now">' . $offer_buy_now_txt . '</button>
+								<input type="submit" data-mode="' . $mode . '" class="mwb_membership_buynow" name="mwb_membership_buynow" value="' . $offer_buy_now_txt . '">
 							</form>
-							<a style="color:' . $nothanks_btn_color . '" class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
+							<a class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
 
 			$output .= '</div>';
 
-		} else {
+		} else { // If plan_id and prod_id on default page are not set.
 
-			$error_msg = esc_html__( 'You ran out of session.', 'membership-for-woocommerce' );
+			$error_msg = apply_filters( 'mwb_membership_error_message', esc_html__( 'You ran out of session.', 'membership-for-woocommerce' ) );
 
-			$link_text = esc_html__( 'Go back to Shop page.', 'membership-for-woocommerce' );
-
-			$error_msg = apply_filters( 'mwb_membership_error_message', $error_msg );
-
-			$link_text = apply_filters( 'mwb_membership_go_back_link_text', $link_text );
+			$link_text = apply_filters( 'mwb_membership_go_back_link_text', esc_html__( 'Go back to Shop page.', 'membership-for-woocommerce' ) );
 
 			$shop_page_url = wc_get_page_permalink( 'shop' );
 
 			$output .= $error_msg . '<a href="' . $shop_page_url . '" class="button">' . $link_text . '</a>';
-
-		}
-
-		if ( ! isset( $_GET['plan_id'] ) || ! isset( $_GET['prod_id'] ) ) {
-			$mwb_membership_no_offer_text = esc_html__( 'Sorry, you have no offers', 'membership-for-woocommerce' );
-
-			$output .= '<div class="mwb_membership_no_offer"><h2>' . trim( $mwb_membership_no_offer_text, '"' ) . '</h2>';
-
-			$output .= '<a class="button wc-backward" href="' . esc_url( apply_filters( 'woocommerce_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ) . '">' . esc_html__( 'Return to Shop', 'membership-for-woocommerce' ) . '</a></div>';
 
 		}
 
@@ -465,39 +470,29 @@ class Membership_For_Woocommerce_Public {
 
 		$price = '';
 
-		// If shortcode is on custom page and attribute id is set.
-		if ( isset( $atts['plan_id'] ) ) {
+		/**
+		 * If shortcode attribute is set then get the plan_id from attribute else
+		 * if on default page get the plan_id from query.
+		 */
 
-			$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
 
-			if ( ! empty( $plan_id ) ) {
+		if ( empty( $plan_id ) ) {
 
-				$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
-
-				if ( ! empty( $plan_price ) ) {
-
-					$price .= '<div class="mwb_membership_plan_price_customer">' . get_woocommerce_currency() . ' ' . $plan_price . '</div>';
-				} else {
-
-					$price .= '<div class="mwb_membership_plan_price_customer">' . $content . '</div>';
-				}
-			}
-		} elseif ( is_page( 'membership-plans' ) ) {
-
-			// If shortcode is on default page.
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
-			if ( ! empty( $plan_id ) ) {
+		}
 
-				$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
+		if ( ! empty( $plan_id ) ) {
 
-				if ( ! empty( $plan_price ) ) {
+			$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
 
-					$price .= '<div class="mwb_membership_plan_price_customer">' . get_woocommerce_currency() . ' ' . $plan_price . '</div>';
-				} else {
+			if ( ! empty( $plan_price ) ) {
 
-					$price .= '<div class="mwb_membership_plan_price_customer">' . $content . '</div>';
-				}
+				$price .= '<div class="mwb_membership_plan_content_price">' . get_woocommerce_currency() . ' ' . $plan_price . '</div>';
+			} else {
+
+				$price .= '<div class="mwb_membership_plan_content_price">' . $content . '</div>';
 			}
 		}
 
@@ -519,39 +514,29 @@ class Membership_For_Woocommerce_Public {
 
 		$title = '';
 
-		// If shortcode is on custom page and attribute id is set.
-		if ( isset( $atts['plan_id'] ) ) {
+		/**
+		 * If shortcode attribute is set then get the plan_id from attribute else
+		 * if on default page get the plan_id from query.
+		 */
 
-			$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
 
-			if ( ! empty( $plan_id ) ) {
+		if ( empty( $plan_id ) ) {
 
-				$plan_title = get_the_title( $plan_id );
-
-				if ( ! empty( $plan_title ) ) {
-
-					$title .= '<div class"mwb_membership_plan_title_customer">' . ucwords( $plan_title ) . '</div>';
-				} else {
-
-					$title .= '<div class"mwb_membership_plan_title_customer">' . $content . '</div>';
-				}
-			}
-		} elseif ( is_page( 'membership-plans' ) ) {
-
-			// If shortcode is on default page.
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
-			if ( ! empty( $plan_id ) ) {
+		}
 
-				$plan_title = get_the_title( $plan_id );
+		if ( ! empty( $plan_id ) ) {
 
-				if ( ! empty( $plan_title ) ) {
+			$plan_title = get_the_title( $plan_id );
 
-					$title .= '<div class"mwb_membership_plan_title_customer">' . ucwords( $plan_title ) . '</div>';
-				} else {
+			if ( ! empty( $plan_title ) ) {
 
-					$title .= '<div class"mwb_membership_plan_title_customer">' . $content . '</div>';
-				}
+				$title .= '<div class"mwb_membership_plan_content_title">' . ucwords( $plan_title ) . '</div>';
+			} else {
+
+				$title .= '<div class"mwb_membership_plan_content_title">' . $content . '</div>';
 			}
 		}
 
@@ -569,38 +554,29 @@ class Membership_For_Woocommerce_Public {
 
 		$description = '';
 
-		// If shortcode is on custom page and id attribute is set.
-		if ( isset( $atts['plan_id'] ) ) {
+		/**
+		 * If shortcode attribute is set then get the plan_id from attribute else
+		 * if on default page get the plan_id from query.
+		 */
 
-			$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
 
-			if ( ! empty( $plan_id ) ) {
-
-				$plan_desc = get_post_field( 'post_content', $plan_id );
-
-				if ( ! empty( $plan_desc ) ) {
-
-					$description .= '<div class="mwb_membership_plan_desc_customer">' . $plan_desc . '</div>';
-				} else {
-
-					$description .= '<div class="mwb_membership_plan_desc_customer">' . $content . '</div>';
-				}
-			}
-		} elseif ( is_page( 'membership-plans' ) ) {
+		if ( empty( $plan_id ) ) {
 
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
-			if ( ! empty( $plan_id ) ) {
+		}
 
-				$plan_desc = get_post_field( 'post_content', $plan_id );
+		if ( ! empty( $plan_id ) ) {
 
-				if ( ! empty( $plan_desc ) ) {
+			$plan_desc = get_post_field( 'post_content', $plan_id );
 
-					$description .= '<div class="mwb_membership_plan_desc_customer">' . $plan_desc . '</div>';
-				} else {
+			if ( ! empty( $plan_desc ) ) {
 
-					$description .= '<div class="mwb_membership_plan_desc_customer">' . $plan_desc . '</div>';
-				}
+				$description .= '<div class="mwb_membership_plan_content_desc">' . $plan_desc . '</div>';
+			} else {
+
+				$description .= '<div class="mwb_membership_plan_content_desc">' . $content . '</div>';
 			}
 		}
 
@@ -611,12 +587,86 @@ class Membership_For_Woocommerce_Public {
 	 * Shortcode for plan - Buy now button.
 	 * Returns : Link :
 	 *
+	 * @param array  $atts    An array of shortcode attributes.
+	 * @param string $content Content of the shortcode.
+	 *
 	 * @since 1.0.0
 	 */
-	// public function buy_now_shortcode_content( $atts, $content ) {
-		
+	public function buy_now_shortcode_content( $atts, $content ) {
 
-	// }
+		$buy_button = '';
+
+		/**
+		 * If shortcode attribute is set then get the plan_id from attribute else
+		 * if on default page get the plan_id from query.
+		 */
+
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
+
+		$mode = $this->mwb_membership_validate_mode();
+
+		if ( empty( $plan_id ) ) {
+
+			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
+
+		}
+
+		if ( empty( $content ) ) {
+
+			$content = apply_filters( 'mwb_mebership_buy_now_btn_txt', esc_html__( 'Buy Now!', 'membership-for-woocommerce' ) );
+
+		}
+
+		$buy_button .= '<form method="post" class="mwb_membership_buy_now_btn">
+							<input type="hidden" name="plan_id" value="' . $plan_id . '">
+							<input type="submit" data-mode="' . $mode . '" class="mwb_membership_buynow" name="mwb_membership_buynow" value="' . $content . '">
+						</form>';
+
+		return $buy_button;
+
+	}
+
+	/**
+	 * Shortcode for plan - No thanks button
+	 * Returns : link :
+	 *
+	 * @param array  $atts    An array of shortcode attributes.
+	 * @param string $content Content of the shortcode.
+	 *
+	 * @since 1.0.0
+	 */
+	public function reject_shortcode_content( $atts, $content ) {
+
+		$no_thanks_button = '';
+
+		$mode = $this->mwb_membership_validate_mode();
+
+		/**
+		 * If shortcode attribute is set then get the plan_id from attribute else
+		 * if on default page get the plan_id from query.
+		 */
+
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
+
+		if ( empty( $plan_id ) ) {
+
+			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
+
+			$prod_id = isset( $_GET['prod_id'] ) ? sanitize_text_field( wp_unslash( $_GET['prod_id'] ) ) : '';
+		}
+
+		if ( empty( $content ) ) {
+
+			$content = apply_filters( 'mwb_mebership_no_thanks_btn_txt', esc_html__( 'No Thanks!', 'membership-for-woocommerce' ) );
+
+		}
+
+		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
+
+		return $no_thanks_button;
+	}
+
+
 
 }
 

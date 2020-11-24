@@ -1116,7 +1116,7 @@ class Membership_For_Woocommerce_Admin {
 				'post_type'      => 'any',
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
-				's'              => '[mwb_membership_default_plans_page]',
+				//'s'              => '[mwb_membership_default_plans_page]',
 				'order'          => 'ASC',
 				'orderby'        => 'ID',
 			)
