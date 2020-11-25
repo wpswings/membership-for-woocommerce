@@ -407,9 +407,6 @@ class Membership_For_Woocommerce_Public {
 			$offer_buy_now_txt  = apply_filters( 'mwb_membership_plan_default_buy_now_txt', esc_html__( 'Buy Now!', 'membership-for-woocommerce' ) );
 			$offer_no_thnks_txt = apply_filters( 'mwb_membership_plan_default_no_thanks_txt', esc_html__( 'No thanks!', 'membership-for-woocommerce' ) );
 
-			$wc_gateways      = new WC_Payment_Gateways();
-			$payment_gateways = $wc_gateways->get_available_payment_gateways();
-
 			$output .= '<div class="mwb_membership_plan_banner">
 							<h2><b><i>' . trim( $offer_banner_text ) . '</i></b></h2>
 						</div>';
@@ -432,15 +429,7 @@ class Membership_For_Woocommerce_Public {
 							<a class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
 			$output .= '</div>';
 
-			?>
-				<div class="mwb_membership_payment_modal">
-					<?php
-					foreach ( $payment_gateways as $gateway ) {
-						mwb_membership_gateway_modal_content( $gateway );
-					}
-					?>
-				</div>
-			<?php
+			mwb_membership_payment_html(); // Modal div wrapper.
 
 		} else { // If plan_id and prod_id on default page are not set.
 
@@ -629,18 +618,7 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
-		$wc_gateways      = new WC_Payment_Gateways();
-		$payment_gateways = $wc_gateways->get_available_payment_gateways();
-
-		?>
-			<div class="mwb_membership_payment_modal">
-				<?php
-				foreach ( $payment_gateways as $gateway ) {
-					mwb_membership_gateway_modal_content( $gateway );
-				}
-				?>
-			</div>
-		<?php
+		mwb_membership_payment_html();
 
 		$buy_button .= '<form method="post" class="mwb_membership_buy_now_btn">
 							<input type="hidden" name="plan_id" value="' . $plan_id . '">

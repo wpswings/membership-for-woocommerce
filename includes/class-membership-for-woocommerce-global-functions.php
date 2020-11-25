@@ -397,3 +397,22 @@ function mwb_membership_gateway_modal_content( $gateway ) {
 	<?php
 }
 
+/**
+ * Returns modal payment div wrapper.
+ */
+function mwb_membership_payment_html() {
+
+	$wc_gateways      = new WC_Payment_Gateways();
+	$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+	?>
+		<div class="mwb_membership_payment_modal">
+			<?php
+			foreach ( $payment_gateways as $gateway ) {
+				mwb_membership_gateway_modal_content( $gateway );
+			}
+			?>
+		</div>
+	<?php
+
+}
