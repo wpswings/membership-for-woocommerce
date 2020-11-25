@@ -1095,7 +1095,7 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( 'membership-plans' == get_post_field( 'post_name', $post->ID ) ) {
 
-			$states[] = __( 'Membership Default Page', 'membership-for-woocommerce' );
+			$states[] = esc_html__( 'Membership Default Page', 'membership-for-woocommerce' );
 		}
 
 		return $states;
@@ -1117,6 +1117,7 @@ class Membership_For_Woocommerce_Admin {
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
 				//'s'              => '[mwb_membership_default_plans_page]',
+				'pagename'       => 'membership-plans',
 				'order'          => 'ASC',
 				'orderby'        => 'ID',
 			)

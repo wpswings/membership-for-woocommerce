@@ -33,16 +33,17 @@
 
 jQuery(document).ready( function($) {
 
-	// $('.mwb_membership_buynow').on( 'click', function(e) {
-	// 	e.preventDefault();
-	// 	alert('hi');
+	$('.mwb_membership_buynow').on( 'click', function(e) {
+		e.preventDefault();
+		//alert('hi');
 
-	// 	$('.mwb_membership_buy_now_btn').dialog('open');
-	// });
+		$('.mwb_membership_payment_modal').dialog('open');
+	});
 
-	// $(".mwb_membership_buy_now_btn").dialog({
-    //     modal: true,
-    //     autoOpen: true,
-    //     show: {effect: "blind", duration: 800}
-    // });  
+	$(".mwb_membership_payment_modal").dialog({
+        modal: true,
+        autoOpen: false,
+		show: {effect: "blind", duration: 800},
+		width : 600,
+    });  
 });

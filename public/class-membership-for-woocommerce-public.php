@@ -98,8 +98,8 @@ class Membership_For_Woocommerce_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 
 		add_thickbox();
-
-		wp_enqueue_script( 'bootstrap_modal', plugin_dir_url( __FILE__ ) . 'js/bootstrap-modal.min.js', array( 'jquery' ), '2.2.6', true );
+		wp_enqueue_script( 'jquery-ui-dialog' );
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	}
 
 	/**
@@ -407,6 +407,9 @@ class Membership_For_Woocommerce_Public {
 			$offer_buy_now_txt  = apply_filters( 'mwb_membership_plan_default_buy_now_txt', esc_html__( 'Buy Now!', 'membership-for-woocommerce' ) );
 			$offer_no_thnks_txt = apply_filters( 'mwb_membership_plan_default_no_thanks_txt', esc_html__( 'No thanks!', 'membership-for-woocommerce' ) );
 
+			$wc_gateways      = new WC_Payment_Gateways();
+			$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
 			$output .= '<div class="mwb_membership_plan_banner">
 							<h2><b><i>' . trim( $offer_banner_text ) . '</i></b></h2>
 						</div>';
@@ -422,13 +425,22 @@ class Membership_For_Woocommerce_Public {
 			$output .= '</div>';
 
 			$output .= '<div class="mwb_membership_offer_action">
-							<form class="mwb_membership_buy_now_btn" method="post">
+							<form class="mwb_membership_buy_now_btn thickbox" method="post">
 								<input type="hidden" name="membership_id" value="' . $plan_id . '">
 								<input type="submit" data-mode="' . $mode . '" class="mwb_membership_buynow" name="mwb_membership_buynow" value="' . $offer_buy_now_txt . '">
 							</form>
 							<a class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
-
 			$output .= '</div>';
+
+			?>
+				<div class="mwb_membership_payment_modal">
+					<?php
+					foreach ( $payment_gateways as $gateway ) {
+						mwb_membership_gateway_modal_content( $gateway );
+					}
+					?>
+				</div>
+			<?php
 
 		} else { // If plan_id and prod_id on default page are not set.
 
@@ -617,6 +629,19 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
+		$wc_gateways      = new WC_Payment_Gateways();
+		$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+		?>
+			<div class="mwb_membership_payment_modal">
+				<?php
+				foreach ( $payment_gateways as $gateway ) {
+					mwb_membership_gateway_modal_content( $gateway );
+				}
+				?>
+			</div>
+		<?php
+
 		$buy_button .= '<form method="post" class="mwb_membership_buy_now_btn">
 							<input type="hidden" name="plan_id" value="' . $plan_id . '">
 							<input type="submit" data-mode="' . $mode . '" class="mwb_membership_buynow" name="mwb_membership_buynow" value="' . $content . '">
@@ -661,7 +686,7 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
-		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
+		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt thickbox" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
 
 		return $no_thanks_button;
 	}

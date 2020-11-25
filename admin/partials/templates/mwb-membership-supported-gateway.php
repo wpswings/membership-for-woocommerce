@@ -38,7 +38,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$payment_gateways   = mwb_membership_for_woo_supported_gateways();
 				$available_gateways = mwb_membership_for_woo_available_gateways();
-
 				// Loop through Woocommerce available payment gateways.
 				foreach ( $payment_gateways as $gateway ) {
 
