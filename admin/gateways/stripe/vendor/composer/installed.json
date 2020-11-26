@@ -1,17 +1,17 @@
 [
     {
         "name": "stripe/stripe-php",
-        "version": "v7.0.0",
-        "version_normalized": "7.0.0.0",
+        "version": "v7.66.0",
+        "version_normalized": "7.66.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/stripe/stripe-php.git",
-            "reference": "03ee2eeb7b5d711bf7d0f3b3d0f6dfd08d3cb466"
+            "reference": "0dc50f42b06be83fe7029410616bda6e89c6d2be"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/03ee2eeb7b5d711bf7d0f3b3d0f6dfd08d3cb466",
-            "reference": "03ee2eeb7b5d711bf7d0f3b3d0f6dfd08d3cb466",
+            "url": "https://api.github.com/repos/stripe/stripe-php/zipball/0dc50f42b06be83fe7029410616bda6e89c6d2be",
+            "reference": "0dc50f42b06be83fe7029410616bda6e89c6d2be",
             "shasum": ""
         },
         "require": {
@@ -21,13 +21,13 @@
             "php": ">=5.6.0"
         },
         "require-dev": {
-            "friendsofphp/php-cs-fixer": "^2.15",
+            "friendsofphp/php-cs-fixer": "2.16.5",
             "php-coveralls/php-coveralls": "^2.1",
             "phpunit/phpunit": "^5.7",
             "squizlabs/php_codesniffer": "^3.3",
             "symfony/process": "~3.4"
         },
-        "time": "2019-09-03T18:03:06+00:00",
+        "time": "2020-11-24T16:33:56+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
