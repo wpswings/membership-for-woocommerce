@@ -47,6 +47,13 @@ class Membership_For_Woocommerce_Admin {
 	public $settings_fields = array();
 
 	/**
+	 * Creating Instance of the global functions class.
+	 *
+	 * @var object
+	 */
+	public $global_class;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -57,6 +64,8 @@ class Membership_For_Woocommerce_Admin {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 	}
 
@@ -233,7 +242,6 @@ class Membership_For_Woocommerce_Admin {
 				'supports'            => array(
 					'title',
 					'editor',
-					'excerpt',
 				),
 				'exclude_from_search' => false,
 				'rewrite'             => array(
@@ -351,7 +359,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_view':
 				?>
 
-				<a title="<?php echo esc_html__( 'Membership Id #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_for_woo_get_content&post_id=<?php echo $post_id; ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+				<a title="<?php echo esc_html__( 'Membership Id #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_for_woo_get_content&post_id=<?php echo esc_html( $post_id ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
 
 				<?php
 				break;
@@ -384,7 +392,7 @@ class Membership_For_Woocommerce_Admin {
 
 				if ( ! empty( $currency ) && ! empty( $plan_cost ) ) {
 
-					echo esc_html( $currency . ' ' . $plan_cost );
+					echo sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_cost ) );
 
 				}
 
@@ -410,11 +418,12 @@ class Membership_For_Woocommerce_Admin {
 
 			$plan_title       = get_the_title( $plan_id );
 			$plan_price       = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
-			$plan_products    = mwb_membership_csv_get_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true ) );
-			$plan_categories  = mwb_membership_csv_get_cat_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true ) );
+			$plan_products    = $this->global_class->csv_get_prod_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true ) );
+			$plan_categories  = $this->global_class->csv_get_cat_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true ) );
 			$plan_description = get_post_field( 'post_content', $plan_id );
 			$plan_access_type = get_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', true );
 			$plan_user_access = get_post_meta( $plan_id, 'mwb_membership_plan_access_type', true );
+			$currency         = get_woocommerce_currency();
 
 			// Html for preview mode.
 			$output .= '<h2>' . esc_html( $plan_title ) . '</h2>';
@@ -428,7 +437,7 @@ class Membership_For_Woocommerce_Admin {
 								<label>' . __( 'Plan Price', 'membership-for-woocommerce' ) . ' </label>
 							</th>
 
-							<td>' . esc_html( $plan_price ) . '</td>
+							<td>' . sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_price ) ) . '</td>
 						</tr>';
 
 			// Plan access type section.
@@ -675,8 +684,8 @@ class Membership_For_Woocommerce_Admin {
 							get_post_field( 'post_title', get_post() ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_price', true ),
 							get_post_field( 'post_status', get_post() ),
-							mwb_membership_csv_get_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_ids', true ) ),
-							mwb_membership_csv_get_cat_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_categories', true ) ),
+							$this->global_class->csv_get_prod_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_ids', true ) ),
+							$this->global_class->csv_get_cat_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_categories', true ) ),
 							get_post_field( 'post_content', get_post() ),
 						)
 					);
@@ -726,7 +735,6 @@ class Membership_For_Woocommerce_Admin {
 				'supports'            => array(
 					'title',
 					'editor',
-					'excerpt',
 				),
 				'exclude_from_search' => false,
 				'rewrite'             => array(
@@ -1022,7 +1030,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_gateway_column_content( $gateways ) {
 
-		$supported_gateways = mwb_membership_for_woo_supported_gateways();
+		$supported_gateways = $this->global_class->supported_gateways();
 
 		echo '<td class="mwb_membership_gateways">';
 
@@ -1147,4 +1155,5 @@ class Membership_For_Woocommerce_Admin {
 
 		return $page_template;
 	}
+
 }

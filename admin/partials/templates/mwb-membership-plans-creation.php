@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+// Creating Instance of the global functions class.
+$global_class = Membership_For_Woocommerce_Global_Functions::get();
+
 ?>
 
 <!-- Plans creation start. -->
@@ -40,7 +43,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'Provide the amount at which Membership Plan will be available for Users.', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				?>
 
@@ -62,7 +65,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'Provide the Access Type of your Membership Plan', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				$mwb_membership_plan_access_type = $this->settings_fields['mwb_membership_plan_name_access_type'];
 
@@ -92,7 +95,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'Provide the number of days the plan will be active', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				$mwb_membership_plan_duration_type = $this->settings_fields['mwb_membership_plan_duration_type'];
 				?>
@@ -121,7 +124,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'Provide the Start date of the plan.', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				?>
 
@@ -139,7 +142,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'Provide the End date of the plan.', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				?>
 
@@ -161,7 +164,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
 
-				mwb_membership_for_woo_tool_tip( $description );
+				$global_class->tool_tip( $description );
 
 				?>
 
@@ -209,7 +212,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 								foreach ( $mwb_membership_plan_target_product_ids as $mwb_membership_plan_single_target_product_ids ) {
 
-									$product_name = mwb_membership_for_woo_get_product_title( $mwb_membership_plan_single_target_product_ids );
+									$product_name = $global_class->get_product_title( $mwb_membership_plan_single_target_product_ids );
 									?>
 
 									<option value="<?php echo esc_html( $mwb_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $mwb_membership_plan_single_target_product_ids, $mwb_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $mwb_membership_plan_single_target_product_ids ) . ')' ); ?></option>
@@ -250,7 +253,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 								foreach ( $mwb_membership_plan_target_categories as $single_target_category_id ) {
 
-									$category_name = mwb_membership_for_woo_get_category_title( $single_target_category_id );
+									$category_name = $global_class->get_category_title( $single_target_category_id );
 									?>
 
 									<option value="<?php echo esc_html( $single_target_category_id ); ?>" selected="selected"><?php echo( esc_html( $category_name ) . '(#' . esc_html( $single_target_category_id ) . ')' ); ?></option>

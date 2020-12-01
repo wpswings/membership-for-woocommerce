@@ -29,6 +29,13 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	public $requires = '';
 
 	/**
+	 * Creating Instance of the global functions class.
+	 *
+	 * @var object
+	 */
+	public $global_class;
+
+	/**
 	 * Constructor for your shipping class
 	 *
 	 * @param mixed $instance_id used to store instance.
@@ -50,6 +57,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		);
 
 		$this->init();
+
+		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 	}
 
 	/**
@@ -163,8 +172,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 					$product_ids       = get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true );
 					$cat_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true );
-					$cart_items_ids    = mwb_memberhsip_for_woo_cart_item_ids();
-					$cart_item_cat_ids = mwb_membership_for_woo_cart_item_cat_ids();
+					$cart_items_ids    = $this->global_class->cart_item_ids();
+					$cart_item_cat_ids = $this->global_class->cart_item_cat_ids();
 
 					if ( ! empty( $product_ids ) && is_array( $product_ids ) && ! empty( $cart_items_ids ) && is_array( $cart_items_ids ) ) {
 

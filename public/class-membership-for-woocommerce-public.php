@@ -40,6 +40,13 @@ class Membership_For_Woocommerce_Public {
 	private $version;
 
 	/**
+	 * Creating Instance of the global functions class.
+	 *
+	 * @var object
+	 */
+	public $global_class;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -50,6 +57,8 @@ class Membership_For_Woocommerce_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+
+		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 	}
 
@@ -162,7 +171,7 @@ class Membership_For_Woocommerce_Public {
 		add_shortcode( 'mwb_membership_desc', array( $this, 'membership_plan_desc_shortcode' ) );
 
 		// Membership default plan name content shortcode.
-		add_shortcode( 'mwb_membership_default_plans_page', array( $this, 'mmbership_offers_default_shortcode' ) );
+		add_shortcode( 'mwb_membership_default_plans_page', array( $this, 'membership_offers_default_shortcode' ) );
 
 		// Default Gutenberg offer.
 		add_shortcode( 'mwb_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
@@ -178,7 +187,7 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
 
-		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
+		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 			$is_purchasable = false;
 
@@ -198,7 +207,7 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
 
-		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
+		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 			return '';
 		}
@@ -217,7 +226,6 @@ class Membership_For_Woocommerce_Public {
 
 		if ( function_exists( 'is_product' ) && is_product() ) {
 
-			global $post;
 			global $wpdb;
 
 			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
@@ -299,7 +307,7 @@ class Membership_For_Woocommerce_Public {
 
 		global $product;
 
-		if ( in_array( $product->id, mwb_membership_for_woo_plans_products_ids() ) || has_term( mwb_membership_for_woo_plans_cat_ids(), 'product_cat' ) ) {
+		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 			echo '<div class="product-meta>"
 					<span><b>' . esc_html__( 'Membership Product', 'membership-for-woocommerce' ) . '</b></span>
@@ -384,7 +392,7 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mmbership_offers_default_shortcode() {
+	public function membership_offers_default_shortcode() {
 
 		$output = '';
 
@@ -415,7 +423,7 @@ class Membership_For_Woocommerce_Public {
 
 			$output .= '<div class="mwb_membership_plan_content_title">' . ucwords( $plan_title ) . '</div>';
 
-			$output .= '<div class="mwb_membership_plan_content_price">' . $plan_currency . ' ' . $plan_price . '</div>';
+			$output .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
 
 			$output .= '<div class="mwb_membership_plan_content_desc">' . $plan_desc . '</div>';
 
@@ -429,7 +437,7 @@ class Membership_For_Woocommerce_Public {
 							<a class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
 			$output .= '</div>';
 
-			mwb_membership_payment_html(); // Modal div wrapper.
+			$this->global_class->payment_gateways_html(); // Modal div wrapper.
 
 		} else { // If plan_id and prod_id on default page are not set.
 
@@ -490,7 +498,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_price ) ) {
 
-				$price .= '<div class="mwb_membership_plan_content_price">' . get_woocommerce_currency() . ' ' . $plan_price . '</div>';
+				$price .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_price ) ) . '</div>';
 			} else {
 
 				$price .= '<div class="mwb_membership_plan_content_price">' . $content . '</div>';
@@ -618,7 +626,7 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
-		mwb_membership_payment_html();
+		$this->global_class->payment_gateways_html();
 
 		$buy_button .= '<form method="post" class="mwb_membership_buy_now_btn">
 							<input type="hidden" name="plan_id" value="' . $plan_id . '">
@@ -668,8 +676,6 @@ class Membership_For_Woocommerce_Public {
 
 		return $no_thanks_button;
 	}
-
-
 
 }
 

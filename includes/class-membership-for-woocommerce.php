@@ -175,7 +175,7 @@ class Membership_For_Woocommerce {
 
 		// Adding custom columns.
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
-		$this->loader->add_action( 'manage_mwb_cpt_membership_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
+		$this->loader->add_filter( 'manage_mwb_cpt_membership_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
 
 		// Adding custom meta box.
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
@@ -219,6 +219,7 @@ class Membership_For_Woocommerce {
 
 		// Distraction free page for membership plans page.
 		$this->loader->add_filter( 'page_template', $plugin_admin, 'mwb_membership_plan_page_template' );
+
 	}
 
 	/**
@@ -254,6 +255,7 @@ class Membership_For_Woocommerce {
 		// Display "Membership" tag for membership products on shop page.
 		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
 
+		
 	}
 
 	/**

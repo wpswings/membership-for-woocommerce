@@ -16,6 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+// Creating Instance of the global functions class.
+$global_class = Membership_For_Woocommerce_Global_Functions::get();
+
 ?>
 
 <!-- Heading start -->
@@ -43,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$shortcode_desc = esc_html__( 'This shortcode only returns the link so it has to be used in the link section. In html use it as href="[mwb_membership_yes]" of anchor tag.', 'membership-for-woocommerce' );
 
-							mwb_membership_for_woo_tool_tip( $shortcode_desc );
+							$global_class->tool_tip( $shortcode_desc );
 
 							?>
 
@@ -61,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$shortcode_desc = esc_html__( 'This shortcode only returns the link so it has to be used in the link section. In html use it as href="[mwb_membership_no]" of anchor tag.', 'membership-for-woocommerce' );
 
-							mwb_membership_for_woo_tool_tip( $shortcode_desc );
+							$global_class->tool_tip( $shortcode_desc );
 
 							?>
 
@@ -90,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$shortcode_desc = esc_html__( 'This shortcode returns the title of Membership Plan.', 'membership-for-woocommerce' );
 
-							mwb_membership_for_woo_tool_tip( $shortcode_desc );
+							$global_class->tool_tip( $shortcode_desc );
 
 							?>
 
@@ -106,7 +109,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$shortcode_desc = esc_html__( 'This shortcode returns the Price of Membership Plan.', 'membership-for-woocommerce' );
 
-							mwb_membership_for_woo_tool_tip( $shortcode_desc );
+							$global_class->tool_tip( $shortcode_desc );
 
 							?>
 
@@ -122,7 +125,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 							$shortcode_desc = esc_html__( 'This shortcode returns the description of Membership Plan.', 'membership-for-woocommerce' );
 
-							mwb_membership_for_woo_tool_tip( $shortcode_desc );
+							$global_class->tool_tip( $shortcode_desc );
 
 							?>
 

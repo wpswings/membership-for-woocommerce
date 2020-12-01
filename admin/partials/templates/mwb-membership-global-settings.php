@@ -32,6 +32,8 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 	$mwb_membership_global_options['mwb_membership_manage_content_display_msg'] = ! empty( $_POST['mwb_membership_manage_content_display_msg'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_manage_content_display_msg'] ) ) : '';
 
+	$mwb_membership_global_options['mwb_membership_delete_data'] = ! empty( $_POST['mwb_membership_delete_data'] ) ? 'on' : 'off';
+
 	// Save values.
 	update_option( 'mwb_membership_global_options', $mwb_membership_global_options );
 
@@ -45,8 +47,11 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 }
 
+// Creating Instance of the global functions class.
+$global_class = Membership_For_Woocommerce_Global_Functions::get();
+
 // Saved global settings.
-$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', mwb_membership_default_global_options() );
+$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $global_class->default_global_options() );
 
 // By default plugin will be enabled.
 $mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : '';
@@ -56,6 +61,9 @@ $mwb_membership_manage_content = ! empty( $mwb_membership_global_settings['mwb_m
 
 // Display message.
 $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_membership_manage_content_display_msg'] ) ? $mwb_membership_global_settings['mwb_membership_manage_content_display_msg'] : '';
+
+// Data delete setting.
+$mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) ? $mwb_membership_global_settings['mwb_membership_delete_data'] : '';
 
 /**
  * This template is for Membership plans global settings.
@@ -93,7 +101,7 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 							<?php
 								$attribute_description = esc_html__( 'Enable Membership for Woocommerce plugin.', 'membership-for-woocommerce' );
 
-								mwb_membership_for_woo_tool_tip( $attribute_description );
+								$global_class->tool_tip( $attribute_description );
 							?>
 
 							<label for="mwb_membership_for_woo_enable_switch" class="mwb_membership_for_woo_enable_plugin_label mwb_membership_for_woo_plugin_support">
@@ -118,7 +126,7 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 							<?php
 								$attribute_description = esc_html__( 'Manage content for non-membership members.', 'membership-for-woocommerce' );
 
-								mwb_membership_for_woo_tool_tip( $attribute_description );
+								$global_class->tool_tip( $attribute_description );
 							?>
 
 							<select name="mwb_membership_manage_content" id="mwb_membership_manage_content" value="">
@@ -142,7 +150,7 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 							<?php
 								$attribute_description = esc_html__( 'Display the custom message when non-membership members try to access the membership products.', 'membership-for-woocommerce' );
 
-								mwb_membership_for_woo_tool_tip( $attribute_description );
+								$global_class->tool_tip( $attribute_description );
 							?>
 
 							<input type="text" id="mwb_membership_manage_content_display_msg" class="mwb_membership_manage_content_msg_input" value="<?php echo esc_html( $mwb_membership_display_message ); ?>" name="mwb_membership_manage_content_display_msg" placeholder="<?php esc_html_e( 'Enter your message', 'membership-for-woocommerce' ); ?>">
@@ -151,7 +159,30 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 					</tr>
 					<!-- Custom message to display end. -->
 
-					<!--  -->
+					<!-- Delete data at uninstall start -->
+					<tr valign="top" id="mwb_membership_delete_data">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_delete_data"><?php esc_html_e( 'Delete data at Uninstall', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+							<?php
+								$attribute_description = esc_html__( 'If enabled, this will delete all data at plugin unistall', 'membership-for-woocommerce' );
+
+								$global_class->tool_tip( $attribute_description );
+							?>
+
+							<label for="mwb_membership_for_woo_delete_data" class="mwb_membership_for_woo_delete_data">
+
+								<input type="checkbox" <?php echo ( 'on' == $mwb_membership_delete_data ) ? "checked='checked'" : ''; ?> id="mwb_membership_for_woo_delete_data" class="mwb_membership_for_woo_plugin_input" name="mwb_membership_delete_data" >	
+								<span class="mwb_memebrship_for_woo_delete_data_span"></span>
+
+							</label>
+						</td>
+
+					</tr>
+					<!-- Delete data at uninstall end -->
 
 			</tbody>
 

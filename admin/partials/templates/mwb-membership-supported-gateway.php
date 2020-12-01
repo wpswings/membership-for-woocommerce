@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+// Creating Instance of the global functions class.
+$global_class = Membership_For_Woocommerce_Global_Functions::get();
+
 ?>
 <!-- Heading start-->
 <div class="mwb_membership_supported_gateways">
@@ -34,10 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<tbody>
 			<?php
 
-			if ( ! empty( mwb_membership_for_woo_supported_gateways() ) ) {
+			if ( ! empty( $global_class->supported_gateways() ) ) {
 
-				$payment_gateways   = mwb_membership_for_woo_supported_gateways();
-				$available_gateways = mwb_membership_for_woo_available_gateways();
+				$payment_gateways   = $global_class->supported_gateways();
+				$available_gateways = $global_class->available_gateways();
 				// Loop through Woocommerce available payment gateways.
 				foreach ( $payment_gateways as $gateway ) {
 

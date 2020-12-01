@@ -30,8 +30,8 @@ class Membership_For_Woocommerce_Activator {
 	 */
 	public static function activate() {
 
-		// Set default settings tab to Overview for five minutes.
-		set_transient( 'mwb_membership_for_woo_default_settings_tab', 'overview', 300 );
+		// Creating Instance of the global functions class.
+		$global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 		add_role(
 			'member',
@@ -46,7 +46,7 @@ class Membership_For_Woocommerce_Activator {
 		 */
 		$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
-		$page_content = '5' <= get_bloginfo( 'version' ) ? mwb_membership_for_woo_gutenberg_content() : '[mwb_membership_default_plans_page]';
+		$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
 
 		if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' != get_post_status( $mwb_membership_default_plans_page_id ) ) {
 
