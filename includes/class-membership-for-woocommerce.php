@@ -255,7 +255,6 @@ class Membership_For_Woocommerce {
 		// Display "Membership" tag for membership products on shop page.
 		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
 
-		
 	}
 
 	/**

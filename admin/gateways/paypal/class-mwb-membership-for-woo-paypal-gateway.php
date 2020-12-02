@@ -140,17 +140,17 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 				'css'         => 'max-width:400px',
 			),
 			// 'charge_type'           => array(
-			// 	'type'        => 'select',
-			// 	'title'       => __( 'Charge type', 'membership-for-woocommerce' ),
-			// 	'description' => __( 'Choose to capture payment at checkout, or authorize only to capture later (when order status is switched to "completed").', 'membership-for-woocommerce' ),
-			// 	'options'     => array(
-			// 		'SALE'          => __( 'Authorize & Capture', 'membership-for-woocommerce' ),
-			// 		'AUTHORIZATION' => __( 'Authorize only', 'membership-for-woocommerce' ),
-			// 	),
-			// 	'default'     => 'SALE',
-			// 	'class'       => 'select',
-			// 	'css'         => 'height:40px',
-			// 	'desc_tip'    => true,
+			// 'type'        => 'select',
+			// 'title'       => __( 'Charge type', 'membership-for-woocommerce' ),
+			// 'description' => __( 'Choose to capture payment at checkout, or authorize only to capture later (when order status is switched to "completed").', 'membership-for-woocommerce' ),
+			// 'options'     => array(
+			// 'SALE'          => __( 'Authorize & Capture', 'membership-for-woocommerce' ),
+			// 'AUTHORIZATION' => __( 'Authorize only', 'membership-for-woocommerce' ),
+			// ),
+			// 'default'     => 'SALE',
+			// 'class'       => 'select',
+			// 'css'         => 'height:40px',
+			// 'desc_tip'    => true,
 			// ),
 			'billing_description'   => array(
 				'type'        => 'text',

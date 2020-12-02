@@ -263,12 +263,12 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 				'default' => 'no',
 			),
 			// 'capture'              => array(
-			// 	'title'       => __( 'Capture', 'membership-for-woocommerce' ),
-			// 	'label'       => __( 'Capture charge immediately', 'membership-for-woocommerce' ),
-			// 	'type'        => 'checkbox',
-			// 	'description' => __( 'Whether or not to immediately capture the charge. When unchecked, the charge issues an authorization and will need to be captured later. Uncaptured charges expire in 7 days.', 'membership-for-woocommerce' ),
-			// 	'default'     => 'yes',
-			// 	'desc_tip'    => true,
+			// 'title'       => __( 'Capture', 'membership-for-woocommerce' ),
+			// 'label'       => __( 'Capture charge immediately', 'membership-for-woocommerce' ),
+			// 'type'        => 'checkbox',
+			// 'description' => __( 'Whether or not to immediately capture the charge. When unchecked, the charge issues an authorization and will need to be captured later. Uncaptured charges expire in 7 days.', 'membership-for-woocommerce' ),
+			// 'default'     => 'yes',
+			// 'desc_tip'    => true,
 			// ),
 			'testmode'             => array(
 				'type'        => 'checkbox',

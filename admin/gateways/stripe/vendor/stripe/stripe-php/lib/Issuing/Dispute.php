@@ -25,29 +25,28 @@ namespace Stripe\Issuing;
  * @property string $status Current status of the dispute.
  * @property string|\Stripe\Issuing\Transaction $transaction The transaction being disputed.
  */
-class Dispute extends \Stripe\ApiResource
-{
-    const OBJECT_NAME = 'issuing.dispute';
+class Dispute extends \Stripe\ApiResource {
 
-    use \Stripe\ApiOperations\All;
-    use \Stripe\ApiOperations\Create;
-    use \Stripe\ApiOperations\Retrieve;
-    use \Stripe\ApiOperations\Update;
+	const OBJECT_NAME = 'issuing.dispute';
 
-    /**
-     * @param null|array $params
-     * @param null|array|string $opts
-     *
-     * @throws \Stripe\Exception\ApiErrorException if the request fails
-     *
-     * @return Dispute the submited dispute
-     */
-    public function submit($params = null, $opts = null)
-    {
-        $url = $this->instanceUrl() . '/submit';
-        list($response, $opts) = $this->_request('post', $url, $params, $opts);
-        $this->refreshFrom($response, $opts);
+	use \Stripe\ApiOperations\All;
+	use \Stripe\ApiOperations\Create;
+	use \Stripe\ApiOperations\Retrieve;
+	use \Stripe\ApiOperations\Update;
 
-        return $this;
-    }
+	/**
+	 * @param null|array        $params
+	 * @param null|array|string $opts
+	 *
+	 * @throws \Stripe\Exception\ApiErrorException if the request fails
+	 *
+	 * @return Dispute the submited dispute
+	 */
+	public function submit( $params = null, $opts = null ) {
+		$url = $this->instanceUrl() . '/submit';
+		list($response, $opts) = $this->_request( 'post', $url, $params, $opts );
+		$this->refreshFrom( $response, $opts );
+
+		return $this;
+	}
 }

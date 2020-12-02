@@ -428,7 +428,7 @@ class Membership_For_Woocommerce_Admin {
 			// Html for preview mode.
 			$output .= '<h2>' . esc_html( $plan_title ) . '</h2>';
 			$output .= '<div class="mwb_membership_preview_table">';
-			$output .= '<table class="form-table mwb_membership_preview>"';
+			$output .= '<table class="form-table mwb_membership_preview">';
 			$output .= '<tbody>';
 
 			// Plan Price section.
@@ -490,7 +490,7 @@ class Membership_For_Woocommerce_Admin {
 						</div>';
 		}
 
-		echo $output;
+		echo wp_kses_post( wpautop( wptexturize( $output ) ) . PHP_EOL );
 
 		wp_die();
 	}
@@ -533,6 +533,8 @@ class Membership_For_Woocommerce_Admin {
 
 			return;
 		}
+
+		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
 
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
@@ -1124,7 +1126,7 @@ class Membership_For_Woocommerce_Admin {
 				'post_type'      => 'any',
 				'post_status'    => 'publish',
 				'posts_per_page' => -1,
-				//'s'              => '[mwb_membership_default_plans_page]',
+				// 's'              => '[mwb_membership_default_plans_page]',
 				'pagename'       => 'membership-plans',
 				'order'          => 'ASC',
 				'orderby'        => 'ID',

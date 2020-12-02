@@ -359,7 +359,7 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 			$output = substr( $output, 0, -2 );
-			echo $output;
+			echo esc_html( $output );
 		}
 
 	}

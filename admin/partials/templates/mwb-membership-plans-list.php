@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
-die('pln list');
+die( 'pln list' );
 
 /**
  * This template is for Membership plans list as well as Edit/Update and Delete options.

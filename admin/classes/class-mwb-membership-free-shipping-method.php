@@ -48,7 +48,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		$this->method_title       = __( 'Membership Shipping', 'membership-for-woocommerce' );  // Title shown in admin.
 		$this->method_description = __( 'Membership shipping allows free shipping to active members.', 'membership-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
-		//$this->enabled          = 'yes';
+		// $this->enabled          = 'yes';
 		$this->title              = __( 'Membership Shipping', 'membership-for-woocommerce' );
 		$this->supports           = array(
 			'shipping-zones',

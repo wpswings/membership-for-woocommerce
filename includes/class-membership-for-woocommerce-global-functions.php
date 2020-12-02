@@ -431,7 +431,12 @@ class Membership_For_Woocommerce_Global_Functions {
 				<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
 			</label>
 			<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
-				<div class="mwb_membership_payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" <?php if ( ! $gateway->chosen ) : /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
+				<div class="mwb_membership_payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
+																				<?php
+																					if ( ! $gateway->chosen ) :
+																						/* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */
+																					?>
+					style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
 					<?php $gateway->payment_fields(); ?>
 				</div>
 			<?php endif; ?>
