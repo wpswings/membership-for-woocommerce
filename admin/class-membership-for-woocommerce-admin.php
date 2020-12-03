@@ -137,7 +137,7 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( 'mwb_cpt_membership' == $pagescreen_post || 'mwb_cpt_membership' == $pagescreen_id ) {
 
-				wp_enqueue_script( 'woocommerce_admin' );
+				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ), WC_VERSION );
 
 				$locale  = localeconv();
 				$decimal = isset( $locale['decimal_point'] ) ? $locale['decimal_point'] : '.';
@@ -168,6 +168,8 @@ class Membership_For_Woocommerce_Admin {
 				);
 
 				wp_localize_script( 'woocommerce_admin', 'woocommerce_admin', $params );
+
+				wp_enqueue_script( 'woocommerce_admin' );
 
 				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
