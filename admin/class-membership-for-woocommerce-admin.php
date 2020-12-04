@@ -1160,4 +1160,38 @@ class Membership_For_Woocommerce_Admin {
 		return $page_template;
 	}
 
+	/**
+	 * Available membershi plans.
+	 */
+	public function mwb_membership_available_plans() {
+
+		$result = array();
+
+		$args = array(
+			's'           => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'post_type'   => array( 'mwb_cpt_membership' ),
+			'post_status' => array( 'publish' ),
+			'ignore_sticky_posts' => 1,
+			'posts_per_page'      => -1,
+		);
+
+		$query = new WP_Query( $args );
+
+		if ( $query->have_posts() ) {
+
+			while ( $query->have_posts() ) {
+
+				$query->the_post();
+
+				$title = ( mb_strlen( $query->post->post_title ) > 50 ) ? mb_substr( $query->post->post_title, 0, 49 ) . '...' : $query->post->post_title;
+
+				$result[] = array( $query->post->ID, $title );
+			}
+		}
+
+		echo json_encode( $result );
+
+		wp_die();
+	}
+
 }

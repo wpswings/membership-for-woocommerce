@@ -118,7 +118,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 					''            => __( 'N/A', 'membership-for-woocommerce' ),
 					'active_plan' => __( 'An Active Membership', 'memberhsip-for-woocommerce' ),
 				),
-				'description' => __( 'Enter cost for mmebership shipping method', 'membership-for-woocommerce' ),
+				'description' => __( 'Enter cost for membership shipping method', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
 			),
 
@@ -129,14 +129,13 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'default'           => '',
 				'description'       => __( 'Select the active membership plans on which you want to offer free shipping', 'membership-for-woocommerce' ),
 				'desc_tip'          => true,
-				'options'           => array(
-					'Hello',
-					'world',
-				),
+				// 'options'           => array(
+				// 	'Hello',
+				// 	'world',
+				// ),
 				'custom_attributes' => array(
 					'data-placeholder' => __( 'Select Membership Plans', 'woocommerce' ),
 				),
-
 			),
 
 		);
@@ -164,7 +163,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		if ( in_array( $this->requires, array( 'active_plan' ), true ) ) {
 
-			$plan_ids = $this->get_option( 'requires' );
+			$plan_ids = $this->get_option( 'allowed_membership' );
 
 			if ( ! empty( $plan_ids ) && is_array( $plan_ids ) ) {
 
@@ -215,39 +214,6 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		}
 
 		return apply_filters( 'mwb_memberhsip_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
-	}
-
-	/**
-	 * Available membershi plans.
-	 */
-	public function mwb_membership_available_plans() {
-
-		$result = array();
-
-		$args = array(
-			's'           => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-			'post_type'   => 'mwb_cpt_membership',
-			'post_status' => 'publish',
-			'numberposts' => -1,
-		);
-
-		$query = new WP_Query( $args );
-
-		if ( $query->have_posts() ) {
-
-			while ( $query->have_posts() ) {
-
-				$query->the_post();
-
-				$title = ( mb_strlen( $query->post->post_title ) > 50 ) ? mb_substr( $query->post->post_title, 0, 49 ) . '...' : $query->post->post_title;
-
-				$result[] = array( $query->post->ID, $title );
-			}
-		}
-
-		echo json_encode( $result );
-
-		wp_die();
 	}
 
 	/**
@@ -305,6 +271,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 			});
 			
 			jQuery( function( $ ) {
+
+				function wcFreeShippingselect2() {
 				
 				jQuery('.mwb-membership-shipping-method').select2({
 							
@@ -336,6 +304,12 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 					},
 					minimumInputLength: 3
 
+				});
+				}
+
+				$( document.body ).on( 'click', '.wc-shipping-zone-method-settings', function () {
+					alert('hi');
+					wcFreeShippingselect2();
 				});
 			});"
 		);

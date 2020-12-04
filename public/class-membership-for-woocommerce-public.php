@@ -83,6 +83,7 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-public.css', array(), $this->version, 'all' );
 
+		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 	}
 
 	/**
@@ -106,9 +107,8 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 
-		add_thickbox();
 		wp_enqueue_script( 'jquery-ui-dialog' );
-		wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
 	}
 
 	/**
@@ -177,7 +177,6 @@ class Membership_For_Woocommerce_Public {
 		add_shortcode( 'mwb_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
 	}
 
-
 	/**
 	 * Restrict purchase of product to non-members.
 	 *
@@ -187,16 +186,22 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
 
-		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+		$user = wp_get_current_user();
 
-			$is_purchasable = false;
+		if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-		} else {
+			if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
-			$is_purchasable = true;
+				$is_purchasable = false;
+
+			} else {
+
+				$is_purchasable = true;
+			}
 		}
 
 		return $is_purchasable;
+
 	}
 
 	/**
@@ -207,9 +212,14 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
 
-		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+		$user = wp_get_current_user();
 
-			return '';
+		if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
+
+			if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+
+				return '';
+			}
 		}
 
 		return $price_html;
@@ -224,59 +234,36 @@ class Membership_For_Woocommerce_Public {
 
 		global $product;
 
-		if ( function_exists( 'is_product' ) && is_product() ) {
+		$user = wp_get_current_user();
 
-			global $wpdb;
+		if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
-					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
-					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
+			if ( function_exists( 'is_product' ) && is_product() ) {
 
-			$data = $wpdb->get_results( $query, ARRAY_A );
+				global $wpdb;
 
-			if ( ! empty( $data ) && is_array( $data ) ) {
+				$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
+						AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
+						AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
-				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
+				$data = $wpdb->get_results( $query, ARRAY_A );
 
-				if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
-					$page_link = get_page_link( $mwb_membership_default_plans_page_id );
-				}
+				if ( ! empty( $data ) && is_array( $data ) ) {
 
-				foreach ( $data as $plan ) {
+					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
-					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
-					$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
-
-					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
-
-						if ( in_array( $product->id, $target_ids ) ) {
-
-							$page_link = add_query_arg(
-								array(
-									'plan_id' => $plan['ID'],
-									'prod_id' => $product->id,
-								),
-								$page_link
-							);
-
-							echo '<div style="clear: both">
-									<div style="margin-top: 10px;">
-										<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
-									</div>
-								</div>';
-						}
+					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
+						$page_link = get_page_link( $mwb_membership_default_plans_page_id );
 					}
 
-					if ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
+					foreach ( $data as $plan ) {
 
-						if ( has_term( $target_cat_ids, 'product_cat' ) ) {
+						$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
+						$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
 
-							if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
+						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-								$target_ids = array();
-							}
-
-							if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+							if ( in_array( $product->id, $target_ids ) ) {
 
 								$page_link = add_query_arg(
 									array(
@@ -293,6 +280,34 @@ class Membership_For_Woocommerce_Public {
 									</div>';
 							}
 						}
+
+						if ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
+
+							if ( has_term( $target_cat_ids, 'product_cat' ) ) {
+
+								if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
+
+									$target_ids = array();
+								}
+
+								if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+
+									$page_link = add_query_arg(
+										array(
+											'plan_id' => $plan['ID'],
+											'prod_id' => $product->id,
+										),
+										$page_link
+									);
+
+									echo '<div style="clear: both">
+											<div style="margin-top: 10px;">
+												<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+											</div>
+										</div>';
+								}
+							}
+						}
 					}
 				}
 			}
@@ -307,61 +322,64 @@ class Membership_For_Woocommerce_Public {
 
 		global $product;
 
-		if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+		$user = wp_get_current_user();
 
-			echo '<div class="product-meta>"
-					<span><b>' . esc_html__( 'Membership Product', 'membership-for-woocommerce' ) . '</b></span>
-				</div>';
+		if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-		}
+			if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
-		global $post;
-		global $wpdb;
+				echo '<div class="product-meta>"
+						<span><b>' . esc_html__( 'Membership Product', 'membership-for-woocommerce' ) . '</b></span>
+					</div>';
 
-		$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
-				AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
-				AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
+			}
 
-		$data = $wpdb->get_results( $query, ARRAY_A );
+			global $wpdb;
 
-		if ( ! empty( $data ) && is_array( $data ) ) {
+			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
+					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
+					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
-			$output = '';
+			$data = $wpdb->get_results( $query, ARRAY_A );
 
-			foreach ( $data as $plan ) {
+			if ( ! empty( $data ) && is_array( $data ) ) {
 
-				$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
-				$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
+				$output = '';
 
-				if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
+				foreach ( $data as $plan ) {
 
-					if ( in_array( $product->id, $target_ids ) ) {
+					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
+					$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
 
-						$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
-					}
-				}
+					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-				if ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
-
-					if ( has_term( $target_cat_ids, 'product_cat' ) ) {
-
-						if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
-
-							$target_ids = array();
-						}
-
-						if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+						if ( in_array( $product->id, $target_ids ) ) {
 
 							$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
+						}
+					}
 
+					if ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
+
+						if ( has_term( $target_cat_ids, 'product_cat' ) ) {
+
+							if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
+
+								$target_ids = array();
+							}
+
+							if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+
+								$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
+
+							}
 						}
 					}
 				}
+				$output = substr( $output, 0, -2 );
+				echo esc_html( $output );
 			}
-			$output = substr( $output, 0, -2 );
-			echo esc_html( $output );
 		}
-
 	}
 
 	/**
