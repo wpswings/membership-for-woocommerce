@@ -48,17 +48,14 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		$this->method_title       = __( 'Membership Shipping', 'membership-for-woocommerce' );  // Title shown in admin.
 		$this->method_description = __( 'Membership shipping allows free shipping to active members.', 'membership-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
-		// $this->enabled          = 'yes';
 		$this->title              = __( 'Membership Shipping', 'membership-for-woocommerce' );
 		$this->supports           = array(
 			'shipping-zones',
 			'instance-settings',
 			'instance-settings-modal',
 		);
-
-		$this->init();
-
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
+		$this->init();
 	}
 
 	/**
@@ -73,15 +70,15 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		$this->init_form_fields(); // Override the method to add your own settings.
 		$this->init_settings(); // Loads settings you previously init.
 
+		// Save settings in admin if you have any defined.
+		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'admin_footer', array( 'Mwb_Membership_Free_Shipping_Method', 'mwb_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
+
 		// Define user set variables.
 		$this->enabled            = ! empty( $this->get_option( 'enabled' ) ) ? $this->get_option( 'enabled' ) : 'no';
 		$this->title              = $this->get_option( 'title' );
 		$this->requires           = $this->get_option( 'requires' );
 		$this->allowed_membership = $this->get_option( 'allowed_membership' );
-
-		// Save settings in admin if you have any defined.
-		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'admin_footer', array( 'Mwb_Membership_Free_Shipping_Method', 'mwb_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
 	}
 
 	/**
@@ -90,6 +87,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 * @return void
 	 */
 	public function init_form_fields() {
+
+		$all_memberships = $this->global_class->format_all_membership();
 
 		$this->instance_form_fields = array(
 
@@ -129,10 +128,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'default'           => '',
 				'description'       => __( 'Select the active membership plans on which you want to offer free shipping', 'membership-for-woocommerce' ),
 				'desc_tip'          => true,
-				// 'options'           => array(
-				// 	'Hello',
-				// 	'world',
-				// ),
+				'options'           => $all_memberships,
 				'custom_attributes' => array(
 					'data-placeholder' => __( 'Select Membership Plans', 'woocommerce' ),
 				),
@@ -271,45 +267,8 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 			});
 			
 			jQuery( function( $ ) {
-
-				function wcFreeShippingselect2() {
-				
-				jQuery('.mwb-membership-shipping-method').select2({
-							
-					ajax:{
-
-						url: ajaxurl,
-						dataType: 'json',
-						delay: 200,
-						data: function( params ) {
-							return {
-								q: params.term,
-								action: 'mwb_membership_available_plans',
-							};
-						},
-						processResults: function( data ) {
-							var options = [];
-							if ( data ) {
-			
-								$.each( data, function( index, text ) {
-									text[1]+='( #'+text[0]+')';
-									options.push( { id: text[0], text: text[1] } );
-								});
-							}
-							return {
-								results:options
-							};
-						},
-						cache: true
-					},
-					minimumInputLength: 3
-
-				});
-				}
-
-				$( document.body ).on( 'click', '.wc-shipping-zone-method-settings', function () {
-					alert('hi');
-					wcFreeShippingselect2();
+				jQuery( document.body ).on( 'click', '.wc-shipping-zone-method-settings', function () {
+					jQuery('.mwb-membership-shipping-method').select2();
 				});
 			});"
 		);

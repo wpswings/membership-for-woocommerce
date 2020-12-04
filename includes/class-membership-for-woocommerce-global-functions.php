@@ -142,7 +142,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			'mwb_membership_enable_plugin'              => 'on',
 			'mwb_membership_manage_content'             => 'hide_for_non_members',
 			'mwb_membership_manage_content_display_msg' => '',
-			'mwb_membership_delete_data'                => 'on',
+			'mwb_membership_delete_data'                => 'off',
 		);
 
 		return $default_global_settings;
@@ -455,12 +455,57 @@ class Membership_For_Woocommerce_Global_Functions {
 		?>
 			<div class="mwb_membership_payment_modal">
 				<?php
-				foreach ( $payment_gateways as $gateway ) {
-					$this->gateway_modal_content( $gateway );
-				}
+				// foreach ( $payment_gateways as $gateway ) {
+				// 	$this->gateway_modal_content( $gateway );
+				// }
 				?>
 			</div>
 		<?php
 
+	}
+
+	/**
+	 * Return all memberships in membership free shipping.
+	 *
+	 * @since 1.0.0
+	 */
+	public function format_all_membership() {
+
+		$formatted_all_membership = array();
+
+		// Query run for all memberships for free shipping.
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+			'fields'      => 'ids',
+		);
+
+		$all_membership = get_posts( $args );
+
+		if ( ! empty( $all_membership ) &&  is_array( $all_membership ) ) {
+
+			foreach ( $all_membership as $key => $id ) {
+
+				$formatted_all_membership[ $id ] = get_the_title( $id );
+			}
+		}
+
+		return $formatted_all_membership;
+	}
+
+	/**
+	 * Function to run query.
+	 *
+	 * @param string $query Is the query.
+	 * @return mixed
+	 *
+	 * @since 1.0.0
+	 */
+	public function run_query( $query='' ) {
+
+		global $wpdb;
+
+		return ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false;
 	}
 }

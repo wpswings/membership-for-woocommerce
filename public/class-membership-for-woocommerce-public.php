@@ -240,13 +240,11 @@ class Membership_For_Woocommerce_Public {
 
 			if ( function_exists( 'is_product' ) && is_product() ) {
 
-				global $wpdb;
-
 				$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
 						AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
 						AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
-				$data = $wpdb->get_results( $query, ARRAY_A );
+				$data = $this->global_class->run_query( $query );
 
 				if ( ! empty( $data ) && is_array( $data ) ) {
 
@@ -334,13 +332,11 @@ class Membership_For_Woocommerce_Public {
 
 			}
 
-			global $wpdb;
-
 			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
 					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
 					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
-			$data = $wpdb->get_results( $query, ARRAY_A );
+			$data = $this->global_class->run_query( $query );
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
 
@@ -693,6 +689,35 @@ class Membership_For_Woocommerce_Public {
 		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt thickbox" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
 
 		return $no_thanks_button;
+	}
+
+	/**
+	 * Hide all other shiiping methods, if free membership shipping available.
+	 *
+	 * @param array  $rates An array of shipping method rates.
+	 * @param [type] $package Package of the shipping method.
+	 * @return string
+	 */
+	public function mwb_membership_unset_shipping_if_membership_available( $rates, $package ) {
+
+		$all_methods = array();
+
+		foreach ( $rates as $rate_id => $rate ) {
+
+			if ( 'mwb_membership_shipping' === $rate->method_id ) {
+
+				$all_methods[ $rate_id ] = $rate;
+				break;
+			}
+		}
+
+		if ( empty( $all_methods ) ) {
+
+			return $rates;
+		} else {
+
+			return $all_methods;
+		}
 	}
 
 }

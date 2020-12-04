@@ -168,7 +168,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
-		$this->loader->add_action( 'wp_ajax_mwb_membership_available_plans', $plugin_admin, 'mwb_membership_available_plans' );
+
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_membership' );
@@ -246,17 +246,17 @@ class Membership_For_Woocommerce {
 		// Load all defined shortcodes.
 		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
 
-		//$user = wp_get_current_user();
-		//if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
-			// Make all memberhsip products non-purchasable for non-members.
-			$this->loader->add_filter( 'woocommerce_is_purchasable', $plugin_public, 'mwb_membership_for_woo_membership_purchasable', 10, 2 );
-			// Display "Buy membership" message for products on detail page.
-			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_membership_product_membership_purchase_html', 50 );
-			// Hide price of membership products on shop page.
-			$this->loader->add_action( 'woocommerce_get_price_html', $plugin_public, 'mwb_membership_for_woo_hide_price_shop_page', 10, 2 );
-			// Display "Membership" tag for membership products on shop page.
-			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
-		//}
+		// Make all memberhsip products non-purchasable for non-members.
+		$this->loader->add_filter( 'woocommerce_is_purchasable', $plugin_public, 'mwb_membership_for_woo_membership_purchasable', 10, 2 );
+		// Display "Buy membership" message for products on detail page.
+		$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_membership_product_membership_purchase_html', 50 );
+		// Hide price of membership products on shop page.
+		$this->loader->add_action( 'woocommerce_get_price_html', $plugin_public, 'mwb_membership_for_woo_hide_price_shop_page', 10, 2 );
+		// Display "Membership" tag for membership products on shop page.
+		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
+
+		// Hide other shipping methods, if membership free shipping available.
+		$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
 	}
 
 	/**
