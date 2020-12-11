@@ -487,6 +487,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param array  $atts    An array of shortcode attributes.
 	 * @param string $content Output of the shortcode.
 	 *
+	 * @return string
 	 * @since 1.0.0
 	 */
 	public function membership_plan_price_shortcode( $atts, $content ) {
@@ -704,7 +705,7 @@ class Membership_For_Woocommerce_Public {
 
 		foreach ( $rates as $rate_id => $rate ) {
 
-			if ( 'mwb_membership_shipping' === $rate->method_id ) {
+			if ( 'mwb_membership_shipping' == $rate->method_id ) {
 
 				$all_methods[ $rate_id ] = $rate;
 				break;
@@ -719,6 +720,30 @@ class Membership_For_Woocommerce_Public {
 			return $all_methods;
 		}
 	}
+
+
+	// public function royal_woocommerce_filter_checkout_for_coupons( $subtotal, $compound, $cart ) {
+
+	// 	// Your logic to get store credit value for a user will go here
+	// 	$store_credit = 20;
+
+	// 	// We only need to add a store credit coupon if they have store credit
+	// 	//if($store_credit > 0){
+
+	// 		// Setup our virtual coupon
+	// 		$coupon_name = 'store-credit';
+	// 		$coupon      = array( $coupon_name => $store_credit );
+
+	// 		// Apply the store credit coupon to the cart & update totals
+	// 		$cart->applied_coupons = array( $coupon_name );
+	// 		$cart->set_discount_total( $store_credit );
+	// 		$cart->set_total( $cart->get_subtotal() - $store_credit );
+	// 		$cart->coupon_discount_totals = $coupon;
+	// 	//}
+
+	// 	return $subtotal;
+	// }
+
 
 }
 

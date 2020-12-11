@@ -136,13 +136,25 @@ jQuery(document).ready( function($) {
 			$('#mwb_membership_plan_time_duratin_display').show();
 
 		} else {
-			//alert('chnge');
+			//alert('change');
 			$('#mwb_membership_plan_time_duratin_display').hide();
 			$('#mwb_membership_plan_time_duration').val("");
 			$('#mwb_membership_plan_time_duration_type').prop('selectedIndex',0);
 
 		}
 
+	});
+
+	// Display free shipping link as per user selection.
+	$('input[name="mwb_memebership_plan_free_shipping"]').on('change', function(){
+
+		if ( $(this).is(":checked")) {
+			$('.mwb_membership_free_shipping_link').show();
+
+		} else {
+
+			$('.mwb_membership_free_shipping_link').hide();
+		}
 	});
 
 	// Display custom message field as per user selection.
@@ -161,6 +173,54 @@ jQuery(document).ready( function($) {
 				$('#mwb_membership_manage_content_display_msg').val("");
 
 		}
+
+	});
+
+	// Import CSV modal.
+	$('#import_all_membership').on( 'click', function(e) {
+		e.preventDefault();
+		//alert('hi');
+
+		$('.import_csv_field_wrapper').dialog('open');
+	});
+
+	$(".import_csv_field_wrapper").dialog({
+        modal: true,
+        autoOpen: false,
+		show: {effect: "blind", duration: 800},
+		width : 600,
+	});  
+	
+	// Ajax call for import CSV.
+	$('#upload_csv_file').on( 'click', function(e) {
+		e.preventDefault();
+		//alert('hey');
+
+		var form = new FormData();
+		var file = jQuery(document).find('#csv_file_upload');
+		var single_file = file[0].files[0];
+
+		form.append("file", single_file);
+		form.append("action", 'csv_file_upload');
+		console.log(file);
+
+		$.ajax({
+			url  : ajaxurl,
+			type : 'POST',
+			data : form,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+
+			success : function(response) {
+				console.log(response);
+			},
+
+			error: function(MLHttpRequest, textStatus, errorThrown) {
+				alert(errorThrown);
+			}
+	
+		});
 
 	});
 

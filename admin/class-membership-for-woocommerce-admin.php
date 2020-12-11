@@ -100,6 +100,7 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
+				wp_enqueue_style( 'wp-jquery-ui-dialog' );
 			}
 
 			if ( isset( $_GET['tab'] ) && 'shipping' == $_GET['tab'] ) {
@@ -181,9 +182,9 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'wp-color-picker' );
 
-				//wp_enqueue_script( 'membership-for-woocommerce-modal', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_thickbox.js', array( 'jquery' ), $this->version, false );
-
 				add_thickbox();
+
+				wp_enqueue_script( 'jquery-ui-dialog' );
 			}
 
 			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
@@ -618,12 +619,14 @@ class Membership_For_Woocommerce_Admin {
 		$screen = get_current_screen();
 
 		if ( isset( $screen->id ) && ( 'edit-mwb_cpt_membership' == $screen->id ) ) {
-
+			$this->global_class->import_csv_modal_content();
 			?>
 			<input type="submit" name="export_all_membership" id="export_all_membership" class="button button-primary" value="Export All Plans">
+			<input type="submit" name="import_all_membership" id="import_all_membership" class="button button-primary" value="Import Plans">
 			<script type="text/javascript">
 				jQuery(function($) {
 					$('#export_all_membership').insertAfter('#post-query-submit');
+					$('#import_all_membership').insertAfter('#export_all_membership');
 				});
 			</script>
 			<?php
@@ -631,7 +634,7 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Export all Members data as CSV from Memberships.
+	 * Export all Plans data as CSV from Memberships.
 	 *
 	 * @since 1.0.0
 	 */
@@ -663,8 +666,20 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'Plan_id',
 						'Plan_title',
-						'Plan_price',
 						'Plan_status',
+						'Plan_price',
+						'Plan_access_type',
+						'Plan_duration',
+						'Plan_duration_type',
+						'Plan_start_date',
+						'Plan_end_date',
+						'Plan_user_history',
+						'Plan_access_type',
+						'Plan_access_duration',
+						'Plan_access_duration_type',
+						'Plan_discount_type',
+						'Plan_discount_price',
+						'Plan_allow_free_shipping',
 						'Plan_products',
 						'Plan_categories',
 						'Plan_description',
@@ -679,8 +694,20 @@ class Membership_For_Woocommerce_Admin {
 						array(
 							get_the_ID(),
 							get_post_field( 'post_title', get_post() ),
-							get_post_meta( get_the_ID(), 'mwb_membership_plan_price', true ),
 							get_post_field( 'post_status', get_post() ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_price', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_name_access_type', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_duration', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_duration_type', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_start', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_end', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_user_access', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_access_type', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration_type', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_offer_price_type', true ),
+							get_post_meta( get_the_ID(), 'mwb_memebership_plan_discount_price', true ),
+							get_post_meta( get_the_ID(), 'mwb_memebership_plan_free_shipping', true ),
 							$this->global_class->csv_get_prod_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_ids', true ) ),
 							$this->global_class->csv_get_cat_title( get_post_meta( get_the_ID(), 'mwb_membership_plan_target_categories', true ) ),
 							get_post_field( 'post_content', get_post() ),
@@ -692,6 +719,29 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
+	}
+
+	/**
+	 * Import Plans as CSV in Memberships.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_import_csv_membership() {
+
+		global $wpdb;
+
+		// Making sure plans creation only happens when button is clicked.
+		if ( ! isset( $_GET['import_all_membership'] ) ) {
+
+			return;
+		}
+
+		//die('all');
+
+
+
+
+
 	}
 
 	/**
@@ -1150,5 +1200,54 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		return $page_template;
+	}
+
+	/**
+	 * Callback function for file Upload.
+	 */
+	public function csv_file_upload(){
+
+		if ( ! function_exists( 'wp_handle_upload' ) ) {
+
+			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		}
+
+		$csv_file      = $_FILES['file'];
+		$upload_overrides = array( 'test_form' => false );
+		$upload_file         = wp_handle_upload( $csv_file, $upload_overrides );
+
+		if ( $upload_file && ! isset( $upload_file['error'] ) ) {
+
+			//echo 'File Upload Successfully';
+			echo wp_json_encode( $upload_file['url'] );
+			$file = $upload_file['url'];
+			//$csv = glob( $$upload_file['url'] );
+
+			//echo wp_json_encode($csv);
+			// Attempt to change permissions if not readable
+			// if ( ! is_readable( $file ) ) {
+			// 	chmod( $file, 0744 );
+			// }
+
+			// // Check if file is writable, then open it in 'read only' mode
+			// if ( is_readable( $file ) && $_file = fopen( $file, "r" ) ) {
+			// 	echo $file;
+			// }
+
+			echo stream_get_contents( fopen( $upload_file['url'], 'rb' ) );
+
+		} else {
+
+			/**
+			 * Error generated by _wp_handle_upload()
+			 *
+			 * @see _wp_handle_upload() in wp-admin/includes/file.php
+			*/
+			echo esc_html( $movefile['error'] );
+		}
+
+		
+
+		wp_die();
 	}
 }

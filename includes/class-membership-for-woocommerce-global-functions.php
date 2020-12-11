@@ -416,6 +416,23 @@ class Membership_For_Woocommerce_Global_Functions {
 	}
 
 	/**
+	 * Returns Import CSV modal.
+	 *
+	 * @since 1.0.0
+	 */
+	public function import_csv_modal_content() {
+
+		?>
+		<div class="import_csv_field_wrapper">
+			<input type="file" name="csv_to_import" id="csv_file_upload">
+			<input type="submit" value="Upload FIle" name="upload_csv_file" id="upload_csv_file" >
+		</div>
+		<?php
+
+	}
+
+
+	/**
 	 * Returns payment modal content
 	 *
 	 * @param object $gateway An object of payment gateway.
@@ -446,6 +463,8 @@ class Membership_For_Woocommerce_Global_Functions {
 
 	/**
 	 * Returns modal payment div wrapper.
+	 *
+	 * @since 1.0.0
 	 */
 	public function payment_gateways_html() {
 
@@ -483,7 +502,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$all_membership = get_posts( $args );
 
-		if ( ! empty( $all_membership ) &&  is_array( $all_membership ) ) {
+		if ( ! empty( $all_membership ) && is_array( $all_membership ) ) {
 
 			foreach ( $all_membership as $key => $id ) {
 

@@ -57,6 +57,13 @@ class Membership_For_Woocommerce {
 	protected $version;
 
 	/**
+	 * Creating Instance of the global functions class.
+	 *
+	 * @var object
+	 */
+	//public $global_class;
+
+	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -78,6 +85,7 @@ class Membership_For_Woocommerce {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
+		//$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 	}
 
 	/**
@@ -168,6 +176,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
+		$this->loader->add_action( 'wp_ajax_csv_file_upload', $plugin_admin, 'csv_file_upload' );
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
@@ -194,6 +203,9 @@ class Membership_For_Woocommerce {
 		// Download CSV.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
+
+		// Import CSV.
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_membership_for_woo_import_csv_membership' );
 
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
@@ -231,32 +243,44 @@ class Membership_For_Woocommerce {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Membership_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
+		// Creating Instance of the global functions class.
+		$global_class = Membership_For_Woocommerce_Global_Functions::get();
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		// Getting global options.
+		$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $global_class->default_global_options() );
 
-		// Register Endpoint.
-		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_register_endpoint' );
-		// Add query variable.
-		$this->loader->add_action( 'query_vars', $plugin_public, 'mwb_membership_endpoint_query_var', 0 );
-		// Inserting custom Membership tab.
-		$this->loader->add_action( 'woocommerce_account_menu_items', $plugin_public, 'mwb_membership_add_membership_tab' );
+		// By default plugin will be enabled.
+		$mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : 'on';
 
-		// Load all defined shortcodes.
-		$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
+		if ( 'on' == $mwb_membership_enable_plugin ) {
 
-		// Make all memberhsip products non-purchasable for non-members.
-		$this->loader->add_filter( 'woocommerce_is_purchasable', $plugin_public, 'mwb_membership_for_woo_membership_purchasable', 10, 2 );
-		// Display "Buy membership" message for products on detail page.
-		$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_membership_product_membership_purchase_html', 50 );
-		// Hide price of membership products on shop page.
-		$this->loader->add_action( 'woocommerce_get_price_html', $plugin_public, 'mwb_membership_for_woo_hide_price_shop_page', 10, 2 );
-		// Display "Membership" tag for membership products on shop page.
-		$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
+			$plugin_public = new Membership_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
 
-		// Hide other shipping methods, if membership free shipping available.
-		$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+
+			// Register Endpoint.
+			$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_register_endpoint' );
+			// Add query variable.
+			$this->loader->add_action( 'query_vars', $plugin_public, 'mwb_membership_endpoint_query_var', 0 );
+			// Inserting custom Membership tab.
+			$this->loader->add_action( 'woocommerce_account_menu_items', $plugin_public, 'mwb_membership_add_membership_tab' );
+
+			// Load all defined shortcodes.
+			$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
+
+			// Make all memberhsip products non-purchasable for non-members.
+			$this->loader->add_filter( 'woocommerce_is_purchasable', $plugin_public, 'mwb_membership_for_woo_membership_purchasable', 10, 2 );
+			// Display "Buy membership" message for products on detail page.
+			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_membership_product_membership_purchase_html', 50 );
+			// Hide price of membership products on shop page.
+			$this->loader->add_action( 'woocommerce_get_price_html', $plugin_public, 'mwb_membership_for_woo_hide_price_shop_page', 10, 2 );
+			// Display "Membership" tag for membership products on shop page.
+			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $plugin_public, 'mwb_membership_products_on_shop_page', 10 );
+
+			// Hide other shipping methods, if membership free shipping available.
+			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
+		}
 	}
 
 	/**

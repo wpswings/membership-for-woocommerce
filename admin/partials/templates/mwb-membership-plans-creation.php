@@ -340,7 +340,9 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 						?>
 						<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
 
-							<option value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
+							<option <?php echo esc_html( '%' == $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
+
+							<option <?php echo esc_html( 'fixed' == $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 						</select>
 						<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
@@ -367,6 +369,13 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 						<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
 						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' ); ?></span>
 
+						<!-- manage free shipping link start. -->
+						<div class="mwb_membership_free_shipping_link">
+							<p class="mwb_membership_free_shipping">
+								<a class="button" target="_blank" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=shipping' ); ?>"><?php esc_html_e( 'Manage Free shipping', 'membership-for-woocommerce' ); ?></a>
+							</p>
+						</div>
+						<!-- Manage free shipping link end. -->
 					</td>
 				</tr>
 				<!-- Free shiping section end. -->
