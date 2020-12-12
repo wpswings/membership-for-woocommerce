@@ -205,7 +205,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
 
 		// Import CSV.
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_membership_for_woo_import_csv_membership' );
+		//$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_membership_for_woo_import_csv_membership' );
 
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
