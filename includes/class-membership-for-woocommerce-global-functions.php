@@ -313,6 +313,8 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$products = array();
 
+		$ids = array();
+
 		$all_posts = get_posts( $args );
 
 		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
@@ -347,6 +349,8 @@ class Membership_For_Woocommerce_Global_Functions {
 		);
 
 		$categories = array();
+
+		$cat_ids = array();
 
 		$all_posts = get_posts( $args );
 
@@ -426,6 +430,9 @@ class Membership_For_Woocommerce_Global_Functions {
 		<div class="import_csv_field_wrapper">
 			<input type="file" name="csv_to_import" id="csv_file_upload">
 			<input type="submit" value="Upload FIle" name="upload_csv_file" id="upload_csv_file" >
+
+			<div class="csv_import_response">
+			</div>
 		</div>
 		<?php
 
@@ -526,5 +533,110 @@ class Membership_For_Woocommerce_Global_Functions {
 		global $wpdb;
 
 		return ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false;
+	}
+
+	/**
+	 * Maps the CSV data.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function csv_data_map( $csv_data ) {
+
+		$formatted_data = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				$formatted_data[] = array(
+					'post_id'                              => ! empty( $value[0] ) ? $value[0] : '',
+					'post_title'                           => ! empty( $value[1] ) ? $value[1] : '',
+					'post_status'                          => ! empty( $value[2] ) ? $value[2] : '',
+					'mwb_membership_plan_price'            => ! empty( $value[3] ) ? $value[3] : '',
+					'mwb_membership_plan_name_access_type' => ! empty( $value[4] ) ? $value[4] : '',
+					'mwb_membership_plan_duration'         => ! empty( $value[5] ) ? $value[5] : '',
+					'mwb_membership_plan_duration_type'    => ! empty( $value[6] ) ? $value[6] : '',
+					'mwb_membership_plan_start'            => ! empty( $value[7] ) ? $value[7] : '',
+					'mwb_membership_plan_end'              => ! empty( $value[8] ) ? $value[8] : '',
+					'mwb_membership_plan_user_access'      => ! empty( $value[9] ) ? $value[9] : '',
+					'mwb_membership_plan_access_type'      => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_time_duration'    => ! empty( $value[11] ) ? $value[11] : '',
+					'mwb_membership_plan_time_duration_type' => ! empty( $value[12] ) ? $value[12] : '',
+					'mwb_membership_plan_offer_price_type' => ! empty( $value[13] ) ? $value[13] : '',
+					'mwb_memebership_plan_discount_price'  => ! empty( $value[14] ) ? $value[15] : '',
+					'mwb_memebership_plan_free_shipping'   => ! empty( $value[15] ) ? $value[15] : '',
+					'mwb_membership_plan_target_ids'       => ! empty( $value[16] ) ? $this->import_csv_ids( $value[16] ) : '',
+					'mwb_membership_plan_target_categories' => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
+					'post_content'                         => ! empty( $value[18] ) ? $value[18] : '',
+
+				);
+			}
+		}
+
+		return $formatted_data;
+
+	}
+
+	/**
+	 * String to array conversion of pro ids.
+	 *
+	 * @param string $csv_string A string of CSV Products and Category ids.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function import_csv_ids( $csv_string ) {
+
+		$ids = array();
+
+		if ( ! empty( $csv_string ) ) {
+
+			$ids_array = explode( ',', $csv_string );
+
+			foreach ( $ids_array as $key => $id ) {
+
+				$matches = array();
+
+				$check = preg_match( '/(#[0-9][0-9])+/', $id, $matches );
+
+				if ( $check ) {
+
+					$ids[] = str_replace( '#', '', $matches[0] );
+				}
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Check for prod IDs during CSV import.
+	 *
+	 * @param array $csv_prod_ids an array of prod_ids in csv.
+	 * @param array $all_prod_ids an array of all available prod_ids.
+	 *
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function csv_import_check( $csv_prod_ids, $all_prod_ids ) {
+
+		$present_ids = array();
+
+		if ( ! empty( $csv_prod_ids ) && ! empty( $all_prod_ids ) && is_array( $csv_prod_ids ) && is_array( $all_prod_ids ) ) {
+
+			foreach ( $csv_prod_ids as $key => $value ) {
+
+				if ( in_array( $value, $all_prod_ids ) ) {
+
+					$present_ids[] = $value;
+				}
+			}
+		}
+
+		return $present_ids;
 	}
 }

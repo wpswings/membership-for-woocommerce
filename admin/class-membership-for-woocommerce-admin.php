@@ -176,6 +176,15 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 
+				wp_localize_script(
+					$this->plugin_name,
+					'admin_ajax_obj',
+					array(
+						'ajaxurl' => admin_url( 'admin-ajax.php' ),
+						'nonce'   => wp_create_nonce( 'plan-import-nonce' ),
+					),
+				);
+
 				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
 
 				wp_localize_script( 'mwb_membership_for_woo_add_new_plan_script', 'ajax_url', admin_url( 'admin-ajax.php' ) );
@@ -530,7 +539,7 @@ class Membership_For_Woocommerce_Admin {
 			return;
 		}
 
-		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
+		//check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
 
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
@@ -724,7 +733,11 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Callback function for file Upload.
 	 */
-	public function csv_file_upload(){
+	public function csv_file_upload() {
+
+		if ( ! wp_verify_nonce( $_POST['nonce'], 'plan-import-nonce' ) ) {
+			die( 'nonce not verified' );
+		}
 
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
 
@@ -735,33 +748,140 @@ class Membership_For_Woocommerce_Admin {
 		$upload_overrides = array( 'test_form' => false );
 		$upload_file      = wp_handle_upload( $csv_file, $upload_overrides );
 
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			exit;
+		}
+
+		// // Gather post data.
+		// $my_post = array(
+		// 	'post_title'    => 'My post',
+		// 	'post_content'  => 'This is my post.',
+		// 	'post_status'   => 'publish',
+		// 	'post_author'   => 1,
+		// );
+
+		// // Insert the post into the database.
+		// wp_insert_post( $my_post );
+
 		if ( $upload_file && ! isset( $upload_file['error'] ) ) {
 
-			//echo 'File Upload Successfully';
-			echo wp_json_encode( $upload_file['url'] );
+			echo 'File Upload Successfully';
+
 			$file_url = $upload_file['url'];
-			//$csv = glob( $$upload_file['url'] );
+			$csv      = array_map( 'str_getcsv', file( $file_url ) );
+			unset( $csv[0] );
 
-			// $row = 1;
-			// if ( ( $handle = fopen( $file_url, 'r' ) ) !== false ) {
+			$formatted_csv_data = $this->global_class->csv_data_map( $csv );
 
-			// 	while ( ( $data = fgetcsv( $handle, 1000, ',' ) ) !== false ) {
-			// 		$num = count( $data );
-			// 		echo "<p> $num fields in line $row: <br /></p>\n";
-			// 		$row++;
-			// 		for ( $c=0; $c < $num; $c++ ) {
-			// 			echo $data[$c] . "<br />\n";
-			// 		}
-			// 	}
-			// 	fclose( $handle );
-			// }
+			$all_prod_ids = get_posts(
+				array(
+					'posts_per_page' => -1,
+					'post_type'      => array( 'product', 'product_variation' ),
+					'fields'         => 'ids',
+				)
+			);
 
-			//echo wp_json_encode( $handle );
+			$all_cat_ids = get_terms(
+				array(
+					'taxonomy' => 'product_cat',
+					'fields'   => 'ids',
+				)
+			);
 
-			$csv = array_map( 'str_getcsv', file( $file_url ) );
-			print_r($csv);
+			foreach ( $formatted_csv_data as $key => $value ) {
 
-		} else {
+				//print_r( $value['mwb_membership_plan_target_ids'] );
+
+				if ( is_array( $value['mwb_membership_plan_target_ids'] ) || is_array( $value['mwb_membership_plan_target_categories'] ) ) {
+
+					$prod_check = (array) $this->global_class->csv_import_check( $value['mwb_membership_plan_target_ids'], $all_prod_ids );
+
+					$cat_check = (array) $this->global_class->csv_import_check( $value['mwb_membership_plan_target_categories'], $all_cat_ids );
+
+					if ( $prod_check || $cat_check ) {
+
+						if ( count( $prod_check ) == count( (array) $value['mwb_membership_plan_target_ids'] ) && count( $cat_check ) == count( (array) $value['mwb_membership_plan_target_categories'] ) ) {
+
+							$post_id = wp_insert_post(
+								array(
+									//'ID'           => $value['post_id'],
+									'post_type'    => 'mwb_cpt_membership',
+									'post_title'   => $value['post_title'],
+									'post_status'  => $value['post_status'],
+									'post_content' => $value['post_content'],
+									'meta_input'   => array(
+										'mwb_membership_plan_price' => $value['mwb_membership_plan_price'],
+										'mwb_membership_plan_name_access_type' => $value['mwb_membership_plan_name_access_type'],
+										'mwb_membership_plan_duration' => $value['mwb_membership_plan_duration'],
+										'mwb_membership_plan_duration_type' => $value['mwb_membership_plan_duration_type'],
+										'mwb_membership_plan_start' => $value['mwb_membership_plan_start'],
+										'mwb_membership_plan_end'   => $value['mwb_membership_plan_end'],
+										'mwb_membership_plan_user_access' => $value['mwb_membership_plan_user_access'],
+										'mwb_membership_plan_access_type' => $value['mwb_membership_plan_access_type'],
+										'mwb_membership_plan_time_duration' => $value['mwb_membership_plan_time_duration'],
+										'mwb_membership_plan_time_duration_type' => $value['mwb_membership_plan_time_duration_type'],
+										'mwb_membership_plan_offer_price_type' => $value['mwb_membership_plan_offer_price_type'],
+										'mwb_memebership_plan_discount_price'  => $value['mwb_memebership_plan_discount_price'],
+										'mwb_memebership_plan_free_shipping'  => $value['mwb_memebership_plan_free_shipping'],
+										'mwb_membership_plan_target_ids'  => $value['mwb_membership_plan_target_ids'],
+										'mwb_membership_plan_target_categories' => $value['mwb_membership_plan_target_categories'],
+									),
+								),
+								true,
+							);
+
+							//echo $post_id;
+							//die();
+
+							echo esc_html( 'File Imported Succesfully' );
+
+						} else {
+
+							if ( count( $prod_check ) != count( (array) $value['mwb_membership_plan_target_ids'] ) ) {
+
+								echo esc_html( 'Some Products are not available' );
+
+							} else if ( count( $cat_check ) != count( (array) $value['mwb_membership_plan_target_categories'] ) ) {
+
+								echo esc_html( 'Some Categories are not available' );
+							}
+
+							$post_id = wp_insert_post(
+								array(
+									//'ID'           => $value['post_id'],
+									'post_type'    => 'mwb_cpt_membership',
+									'post_title'   => $value['post_title'],
+									'post_status'  => $value['post_status'],
+									'post_content' => $value['post_content'],
+									'meta_input'   => array(
+										'mwb_membership_plan_price' => $value['mwb_membership_plan_price'],
+										'mwb_membership_plan_name_access_type' => $value['mwb_membership_plan_name_access_type'],
+										'mwb_membership_plan_duration' => $value['mwb_membership_plan_duration'],
+										'mwb_membership_plan_duration_type' => $value['mwb_membership_plan_duration_type'],
+										'mwb_membership_plan_start' => $value['mwb_membership_plan_start'],
+										'mwb_membership_plan_end'   => $value['mwb_membership_plan_end'],
+										'mwb_membership_plan_user_access' => $value['mwb_membership_plan_user_access'],
+										'mwb_membership_plan_access_type' => $value['mwb_membership_plan_access_type'],
+										'mwb_membership_plan_time_duration' => $value['mwb_membership_plan_time_duration'],
+										'mwb_membership_plan_time_duration_type' => $value['mwb_membership_plan_time_duration_type'],
+										'mwb_membership_plan_offer_price_type' => $value['mwb_membership_plan_offer_price_type'],
+										'mwb_memebership_plan_discount_price'  => $value['mwb_memebership_plan_discount_price'],
+										'mwb_memebership_plan_free_shipping'  => $value['mwb_memebership_plan_free_shipping'],
+										'mwb_membership_plan_target_ids'  => $value['mwb_membership_plan_target_ids'],
+										'mwb_membership_plan_target_categories' => $value['mwb_membership_plan_target_categories'],
+									),
+								),
+								true,
+							);
+
+							//echo $post_id;
+							//die();
+						}
+					}
+				}
+			}
+		} 
+		else {
 
 			/**
 			 * Error generated by _wp_handle_upload()

@@ -182,6 +182,45 @@ jQuery(document).ready( function($) {
 		//alert('hi');
 
 		$('.import_csv_field_wrapper').dialog('open');
+
+		// Ajax call for import CSV.
+		$('#upload_csv_file').on( 'click', function(e) {
+			e.preventDefault();
+			alert('hey');
+
+			var form = new FormData();
+			var file = jQuery(document).find('#csv_file_upload');
+			var single_file = file[0].files[0];
+
+			form.append("file", single_file);
+			form.append("action", 'csv_file_upload');
+			form.append("nonce", admin_ajax_obj.nonce )
+			//console.log(file);
+
+			$.ajax({
+				url  : admin_ajax_obj.ajaxurl,
+				type : 'POST',
+				data : form,
+				//dataType : 'json',
+				contentType : false,
+				processData : false,
+
+				success : function(response) {
+				
+					console.log(response);
+					alert(response);
+					$('.csv_import_response').text(response);
+				},
+
+				// error: function(errorThrown) {
+				// 	console.log(errorThrown);
+				// 	alert(errorThrown);
+				// 	//$('.csv_import_response').text(errorThrown);
+				// }
+		
+			});
+
+		});
 	});
 
 	$(".import_csv_field_wrapper").dialog({
@@ -191,37 +230,6 @@ jQuery(document).ready( function($) {
 		width : 600,
 	});  
 	
-	// Ajax call for import CSV.
-	$('#upload_csv_file').on( 'click', function(e) {
-		e.preventDefault();
-		//alert('hey');
-
-		var form = new FormData();
-		var file = jQuery(document).find('#csv_file_upload');
-		var single_file = file[0].files[0];
-
-		form.append("file", single_file);
-		form.append("action", 'csv_file_upload');
-		console.log(file);
-
-		$.ajax({
-			url  : ajaxurl,
-			type : 'POST',
-			data : form,
-			dataType : 'json',
-			contentType : false,
-			processData : false,
-
-			success : function(response) {
-				console.log(response);
-			},
-
-			error: function(MLHttpRequest, textStatus, errorThrown) {
-				alert(errorThrown);
-			}
 	
-		});
-
-	});
 
 });
