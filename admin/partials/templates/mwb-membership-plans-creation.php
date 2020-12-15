@@ -23,6 +23,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 ?>
 
+
 <!-- Plans creation start. -->
 <table class="form-table mwb_membership_plans_creation_setting">
 	<tbody>

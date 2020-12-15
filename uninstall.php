@@ -29,34 +29,28 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// Creating Instance of the global functions class.
-$global_class = Membership_For_Woocommerce_Global_Functions::get();
-
 // Getting global options.
-$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $global_class->default_global_options() );
+$mwb_membership_global_settings = get_option( 'mwb_membership_global_options' );
 
 // Delete only if "Delete data at unistall" in Global settings set to true.
 if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) && 'on' == $mwb_membership_global_settings['mwb_membership_delete_data'] ) {
 
 	// Deleting membership default page at plugin unistall.
-	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page', array() );
+	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page' );
 
-	if ( is_array( $mwb_membership_default_page ) && ! empty( $mwb_membership_default_page ) ) {
-
-		foreach ( $mwb_membership_default_page as $default_page ) {
+	if ( ! empty( $mwb_membership_default_page ) ) {
 
 			wp_delete_post( $default_page );
-		}
 	}
 
 	// Deleting member role at plugin uninstall.
-	$user_roles = get_option( 'wp_user_roles', array() );
+	$user_roles = get_option( 'wp_user_roles' );
 
 	if ( is_array( $user_roles ) && ! empty( $user_roles ) ) {
 
 		foreach ( $user_roles as $user_role ) {
 
-			if ( 'member' == $user_role ) {
+			if ( 'Member' == $user_role['name'] ) {
 
 				remove_role( 'member' );
 			}

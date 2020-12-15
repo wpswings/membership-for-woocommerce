@@ -752,17 +752,6 @@ class Membership_For_Woocommerce_Admin {
 			exit;
 		}
 
-		// // Gather post data.
-		// $my_post = array(
-		// 	'post_title'    => 'My post',
-		// 	'post_content'  => 'This is my post.',
-		// 	'post_status'   => 'publish',
-		// 	'post_author'   => 1,
-		// );
-
-		// // Insert the post into the database.
-		// wp_insert_post( $my_post );
-
 		if ( $upload_file && ! isset( $upload_file['error'] ) ) {
 
 			echo 'File Upload Successfully';
@@ -789,8 +778,6 @@ class Membership_For_Woocommerce_Admin {
 			);
 
 			foreach ( $formatted_csv_data as $key => $value ) {
-
-				//print_r( $value['mwb_membership_plan_target_ids'] );
 
 				if ( is_array( $value['mwb_membership_plan_target_ids'] ) || is_array( $value['mwb_membership_plan_target_categories'] ) ) {
 
@@ -1263,6 +1250,11 @@ class Membership_For_Woocommerce_Admin {
 			$gateways[] = 'Mwb_Membership_For_Woo_Stripe_Gateway';
 		}
 
+		if ( class_exists( 'Mwb_Membership_Adv_Bank_Transfer' ) ) {
+
+			$gateways[] = 'Mwb_Membership_Adv_Bank_Transfer';
+		}
+
 		return $gateways;
 	}
 
@@ -1286,6 +1278,10 @@ class Membership_For_Woocommerce_Admin {
 		// Stripe library with composer.
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/vendor/autoload.php';
 
+		/**
+		 * The class responsible for defining all methods of advance bank transfer gateway.
+		 */
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';
 	}
 
 	/**
@@ -1352,5 +1348,48 @@ class Membership_For_Woocommerce_Admin {
 		return $page_template;
 	}
 
+	/**
+	 * Remove add-on payment gateways from checkout page.
+	 */
+	public function mwb_membership_hide_payment_gateway( $available_gateways ) {
 
+		if ( is_checkout() ) {
+
+			$supported_gateways = $this->global_class->supported_gateways();
+
+			foreach ( $available_gateways as $gateway ) {
+
+				if ( in_array( $gateway->id, $supported_gateways ) ) {
+
+					unset( $available_gateways[ $gateway->id ] );
+				}
+			}
+		}
+
+		return $available_gateways;
+	}
+
+	// public function filter_woocommerce_payment_gateways_settings( $array ) { 
+	// 	// make filter magic happen here... 
+	// 		echo '<pre>'; print_r( $array ); echo '</pre>';
+
+	// 	return $array; 
+	// }
+
+	function misha_remove_default_gateway( $load_gateways ) {
+
+		echo '<pre>'; print_r( $load_gateways ); echo '</pre>';
+ 
+		//unset( $load_gateways[0] ); // WC_Gateway_BACS
+		//unset( $load_gateways[1] ); // WC_Gateway_Cheque
+		//unset( $load_gateways[2] ); // WC_Gateway_COD (Cash on Delivery)
+		//unset( $load_gateways[3] ); // WC_Gateway_Paypal
+		unset( $load_gateways[4] );
+		unset( $load_gateways[5] );
+		unset( $load_gateways[6] );
+	 
+		return $load_gateways;
+	}
+	 
+	
 }

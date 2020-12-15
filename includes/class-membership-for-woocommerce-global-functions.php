@@ -217,13 +217,9 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function supported_gateways() {
 
 		$supported_gateways = array(
-			'bacs', // Direct bank transfer.
-			'cheque', // Cheque payment.
-			'cod', // Cash on delivery.
-			'paypal', // Wocommmerce paypal (standard).
-			'stripe_ideal', // Official stripe.
 			'membership-for-woo-paypal-gateway', // Membership Paypal.
 			'membership-for-woo-stripe-gateway', // Membership stripe.
+			'mwb_membership_ad_bank_transfer', // Mwb Advance abnk transfer.
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -487,6 +483,36 @@ class Membership_For_Woocommerce_Global_Functions {
 				?>
 			</div>
 		<?php
+
+	}
+
+	/**
+	 * Check if any plan exist or not.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 */
+	public function plans_exist_check() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$check = '';
+
+		$all_plans = get_posts( $args );
+
+		if ( ! empty( $all_plans ) && is_array( $all_plans ) ) {
+
+			$check = true;
+		} else {
+
+			$check = false;
+		}
+
+		return $check;
 
 	}
 
