@@ -234,9 +234,7 @@ class Membership_For_Woocommerce {
 
 		// Hide payment gateways.
 		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
-		
-		//$this->loader->add_filter( 'woocommerce_payment_gateways_settings', $plugin_admin, 'filter_woocommerce_payment_gateways_settings', 10, 1 );
-		//$this->loader->add_filter( 'woocommerce_payment_gateways', $plugin_admin, 'misha_remove_default_gateway', 10, 1 );
+
 	}
 
 	/**
@@ -285,6 +283,13 @@ class Membership_For_Woocommerce {
 
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
+
+			// AJAX Calls.
+			$this->loader->add_action( 'wp_ajax_upload_receipt', $plugin_public, 'upload_receipt' );
+			$this->loader->add_action( 'wp_ajax_nopriv_upload_receipt', $plugin_public, 'upload_receipt' );
+			$this->loader->add_action( 'wp_ajax_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
+			$this->loader->add_action( 'w[_ajax_nopriv_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
+
 		}
 	}
 

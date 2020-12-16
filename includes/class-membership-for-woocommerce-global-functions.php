@@ -219,7 +219,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = array(
 			'membership-for-woo-paypal-gateway', // Membership Paypal.
 			'membership-for-woo-stripe-gateway', // Membership stripe.
-			'mwb_membership_ad_bank_transfer', // Mwb Advance abnk transfer.
+			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -250,6 +250,33 @@ class Membership_For_Woocommerce_Global_Functions {
 
 	}
 
+	/**
+	 * Returns the method title.
+	 *
+	 * @param string $method_id Id of the payment method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_payment_method_title( $method_id ) {
+
+		$title = '';
+
+		$wc_gateways      = new WC_Payment_Gateways();
+		$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+
+			// Loop through Woocommerce available payment gateways.
+			foreach ( $payment_gateways as $gateway ) {
+
+				if ( $method_id == $gateway->id ) {
+
+					$title = $gateway->method_title;
+				}
+			}
+		}
+		return $title;
+	}
 	/**
 	 * Cart item Ids.
 	 *
@@ -474,12 +501,18 @@ class Membership_For_Woocommerce_Global_Functions {
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
 
+		$supported_gateways = $this->supported_gateways();
+
 		?>
 			<div class="mwb_membership_payment_modal">
 				<?php
-				// foreach ( $payment_gateways as $gateway ) {
-				// 	$this->gateway_modal_content( $gateway );
-				// }
+				foreach ( $payment_gateways as $gateway ) {
+
+					if ( in_array( $gateway->id, $supported_gateways ) ) {
+
+						$this->gateway_modal_content( $gateway );
+					}
+				}
 				?>
 			</div>
 		<?php
@@ -664,5 +697,54 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		return $present_ids;
+	}
+
+	/**
+	 * Returns all Products ids offered from CSV.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function csv_prod_ids( $csv_data ) {
+
+		$csv_prod_ids = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				if ( is_array( $value['mwb_membership_plan_target_ids'] ) ) {
+
+					$csv_prod_ids = array_merge( $csv_prod_ids, $value['mwb_membership_plan_target_ids'] );
+				}
+			}
+		}
+
+		return $csv_prod_ids;
+	}
+
+	/**
+	 * Return all Category ids offered from CSV.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function csv_cat_ids( $csv_data ) {
+
+		$csv_cat_ids = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				if ( is_array( $value['mwb_membership_plan_target_categories'] ) ) {
+
+					$csv_cat_ids = array_merge( $csv_cat_ids, $value['mwb_membership_plan_target_categories'] );
+				}
+			}
+		}
+		return $csv_cat_ids;
 	}
 }

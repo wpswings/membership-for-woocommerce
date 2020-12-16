@@ -736,7 +736,7 @@ class Membership_For_Woocommerce_Admin {
 	public function csv_file_upload() {
 
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'plan-import-nonce' ) ) {
-			die( 'nonce not verified' );
+			die( 'Nonce not verified' );
 		}
 
 		if ( ! function_exists( 'wp_handle_upload' ) ) {
@@ -744,6 +744,7 @@ class Membership_For_Woocommerce_Admin {
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		}
 
+		// Handling file upload.
 		$csv_file         = $_FILES['file'];
 		$upload_overrides = array( 'test_form' => false );
 		$upload_file      = wp_handle_upload( $csv_file, $upload_overrides );
@@ -754,14 +755,14 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( $upload_file && ! isset( $upload_file['error'] ) ) {
 
-			echo 'File Upload Successfully';
-
 			$file_url = $upload_file['url'];
 			$csv      = array_map( 'str_getcsv', file( $file_url ) );
-			unset( $csv[0] );
+			unset( $csv[0] ); // Removing first key after CSV data is converted to array.
 
+			// Getting a formatted CSV data.
 			$formatted_csv_data = $this->global_class->csv_data_map( $csv );
 
+			// Getting all Product ids from woocommerce.
 			$all_prod_ids = get_posts(
 				array(
 					'posts_per_page' => -1,
@@ -770,6 +771,7 @@ class Membership_For_Woocommerce_Admin {
 				)
 			);
 
+			// Getting all Category ids from woocommerce.
 			$all_cat_ids = get_terms(
 				array(
 					'taxonomy' => 'product_cat',
@@ -777,98 +779,70 @@ class Membership_For_Woocommerce_Admin {
 				)
 			);
 
-			foreach ( $formatted_csv_data as $key => $value ) {
+			$prd_check = '';
+			$cat_check = '';
 
-				if ( is_array( $value['mwb_membership_plan_target_ids'] ) || is_array( $value['mwb_membership_plan_target_categories'] ) ) {
+			$csv_prod_ids = $this->global_class->csv_prod_ids( $formatted_csv_data ); // Getting all product ids from csv.
+			$csv_cate_ids = $this->global_class->csv_cat_ids( $formatted_csv_data ); // Getting all category ids from csv.
 
-					$prod_check = (array) $this->global_class->csv_import_check( $value['mwb_membership_plan_target_ids'], $all_prod_ids );
+			if ( is_array( $csv_cate_ids ) && is_array( $csv_prod_ids ) ) {
 
-					$cat_check = (array) $this->global_class->csv_import_check( $value['mwb_membership_plan_target_categories'], $all_cat_ids );
+				foreach ( $csv_prod_ids as $key => $value ) {
 
-					if ( $prod_check || $cat_check ) {
+					if ( in_array( $value, $all_prod_ids ) ) {
 
-						if ( count( $prod_check ) == count( (array) $value['mwb_membership_plan_target_ids'] ) && count( $cat_check ) == count( (array) $value['mwb_membership_plan_target_categories'] ) ) {
+						$prd_check = true;
+					}
+				}
 
-							$post_id = wp_insert_post(
-								array(
-									//'ID'           => $value['post_id'],
-									'post_type'    => 'mwb_cpt_membership',
-									'post_title'   => $value['post_title'],
-									'post_status'  => $value['post_status'],
-									'post_content' => $value['post_content'],
-									'meta_input'   => array(
-										'mwb_membership_plan_price' => $value['mwb_membership_plan_price'],
-										'mwb_membership_plan_name_access_type' => $value['mwb_membership_plan_name_access_type'],
-										'mwb_membership_plan_duration' => $value['mwb_membership_plan_duration'],
-										'mwb_membership_plan_duration_type' => $value['mwb_membership_plan_duration_type'],
-										'mwb_membership_plan_start' => $value['mwb_membership_plan_start'],
-										'mwb_membership_plan_end'   => $value['mwb_membership_plan_end'],
-										'mwb_membership_plan_user_access' => $value['mwb_membership_plan_user_access'],
-										'mwb_membership_plan_access_type' => $value['mwb_membership_plan_access_type'],
-										'mwb_membership_plan_time_duration' => $value['mwb_membership_plan_time_duration'],
-										'mwb_membership_plan_time_duration_type' => $value['mwb_membership_plan_time_duration_type'],
-										'mwb_membership_plan_offer_price_type' => $value['mwb_membership_plan_offer_price_type'],
-										'mwb_memebership_plan_discount_price'  => $value['mwb_memebership_plan_discount_price'],
-										'mwb_memebership_plan_free_shipping'  => $value['mwb_memebership_plan_free_shipping'],
-										'mwb_membership_plan_target_ids'  => $value['mwb_membership_plan_target_ids'],
-										'mwb_membership_plan_target_categories' => $value['mwb_membership_plan_target_categories'],
-									),
-								),
-								true,
-							);
+				foreach ( $csv_cate_ids as $key => $value ) {
 
-							//echo $post_id;
-							//die();
+					if ( in_array( $value, $all_cat_ids ) ) {
 
-							echo esc_html( 'File Imported Succesfully' );
-
-						} else {
-
-							if ( count( $prod_check ) != count( (array) $value['mwb_membership_plan_target_ids'] ) ) {
-
-								echo esc_html( 'Some Products are not available' );
-
-							} else if ( count( $cat_check ) != count( (array) $value['mwb_membership_plan_target_categories'] ) ) {
-
-								echo esc_html( 'Some Categories are not available' );
-							}
-
-							$post_id = wp_insert_post(
-								array(
-									//'ID'           => $value['post_id'],
-									'post_type'    => 'mwb_cpt_membership',
-									'post_title'   => $value['post_title'],
-									'post_status'  => $value['post_status'],
-									'post_content' => $value['post_content'],
-									'meta_input'   => array(
-										'mwb_membership_plan_price' => $value['mwb_membership_plan_price'],
-										'mwb_membership_plan_name_access_type' => $value['mwb_membership_plan_name_access_type'],
-										'mwb_membership_plan_duration' => $value['mwb_membership_plan_duration'],
-										'mwb_membership_plan_duration_type' => $value['mwb_membership_plan_duration_type'],
-										'mwb_membership_plan_start' => $value['mwb_membership_plan_start'],
-										'mwb_membership_plan_end'   => $value['mwb_membership_plan_end'],
-										'mwb_membership_plan_user_access' => $value['mwb_membership_plan_user_access'],
-										'mwb_membership_plan_access_type' => $value['mwb_membership_plan_access_type'],
-										'mwb_membership_plan_time_duration' => $value['mwb_membership_plan_time_duration'],
-										'mwb_membership_plan_time_duration_type' => $value['mwb_membership_plan_time_duration_type'],
-										'mwb_membership_plan_offer_price_type' => $value['mwb_membership_plan_offer_price_type'],
-										'mwb_memebership_plan_discount_price'  => $value['mwb_memebership_plan_discount_price'],
-										'mwb_memebership_plan_free_shipping'  => $value['mwb_memebership_plan_free_shipping'],
-										'mwb_membership_plan_target_ids'  => $value['mwb_membership_plan_target_ids'],
-										'mwb_membership_plan_target_categories' => $value['mwb_membership_plan_target_categories'],
-									),
-								),
-								true,
-							);
-
-							//echo $post_id;
-							//die();
-						}
+						$cat_check = true;
 					}
 				}
 			}
-		} 
-		else {
+
+			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
+			if ( true == $prd_check && true == $cat_check ) {
+
+				foreach ( $formatted_csv_data as $key => $value ) {
+
+					$plan_id = wp_insert_post(
+						array(
+							'post_type'    => 'mwb_cpt_membership',
+							'post_title'   => $value['post_title'],
+							'post_status'  => $value['post_status'],
+							'post_content' => $value['post_content'],
+						),
+						true,
+					);
+
+					update_post_meta( $plan_id, 'mwb_membership_plan_price', $value['mwb_membership_plan_price'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', $value['mwb_membership_plan_name_access_type'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_duration', $value['mwb_membership_plan_duration'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_duration_type', $value['mwb_membership_plan_duration_type'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_start', $value['mwb_membership_plan_start'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_end', $value['mwb_membership_plan_end'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_user_access', $value['mwb_membership_plan_user_access'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_access_type', $value['mwb_membership_plan_access_type'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration', $value['mwb_membership_plan_time_duration'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration_type', $value['mwb_membership_plan_time_duration_type'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_offer_price_type', $value['mwb_membership_plan_offer_price_type'] );
+					update_post_meta( $plan_id, 'mwb_memebership_plan_discount_price', $value['mwb_memebership_plan_discount_price'] );
+					update_post_meta( $plan_id, 'mwb_memebership_plan_free_shipping', $value['mwb_memebership_plan_free_shipping'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_target_ids', $value['mwb_membership_plan_target_ids'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_target_categories', $value['mwb_membership_plan_target_categories'] );
+				}
+
+				echo ' File Imported Successfully';
+
+			} else {
+
+				echo 'Something Went Wrong. Either Products or Categories are not available!';
+			}
+		} else {
 
 			/**
 			 * Error generated by _wp_handle_upload()
@@ -1350,6 +1324,10 @@ class Membership_For_Woocommerce_Admin {
 
 	/**
 	 * Remove add-on payment gateways from checkout page.
+	 *
+	 * @param object $available_gateways Object of all woocommerce availabe gateways.
+	 *
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_hide_payment_gateway( $available_gateways ) {
 
@@ -1369,27 +1347,4 @@ class Membership_For_Woocommerce_Admin {
 		return $available_gateways;
 	}
 
-	// public function filter_woocommerce_payment_gateways_settings( $array ) { 
-	// 	// make filter magic happen here... 
-	// 		echo '<pre>'; print_r( $array ); echo '</pre>';
-
-	// 	return $array; 
-	// }
-
-	function misha_remove_default_gateway( $load_gateways ) {
-
-		echo '<pre>'; print_r( $load_gateways ); echo '</pre>';
- 
-		//unset( $load_gateways[0] ); // WC_Gateway_BACS
-		//unset( $load_gateways[1] ); // WC_Gateway_Cheque
-		//unset( $load_gateways[2] ); // WC_Gateway_COD (Cash on Delivery)
-		//unset( $load_gateways[3] ); // WC_Gateway_Paypal
-		unset( $load_gateways[4] );
-		unset( $load_gateways[5] );
-		unset( $load_gateways[6] );
-	 
-		return $load_gateways;
-	}
-	 
-	
 }

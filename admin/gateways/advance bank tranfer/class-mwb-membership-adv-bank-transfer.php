@@ -27,7 +27,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 
-		$this->id                 = 'mwb_membership_ad_bank_transfer';
+		$this->id                 = 'membership-adv-bank-transfer';
 		$this->has_fields         = false;
 		$this->method_title       = __( 'Advance Direct Bank Transfer', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Take Payments in person via BACS.', 'membership-for-woocommerce' ); 
@@ -61,6 +61,8 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'save_account_details' ) );
 
+		// Show Reciept.
+		add_filter( 'woocommerce_gateway_description', array( $this, 'add_receipt_fields_html' ), 10, 2 );
 	}
 
 	/**
@@ -271,6 +273,46 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	// 	// 	return true;
 	// 	// }
 	// }
+
+	/**
+	 * Output for the receipt fields.
+	 *
+	 * @param int $desc    Description.
+	 * @param int $gate_id Gateway ID.
+	 */
+	public function add_receipt_fields_html( $desc = '', $gate_id = '' ) {
+
+		if ( ! empty( $gate_id ) && $gate_id == $this->id ) {
+
+			return $desc . $this->return_receipt_fields_html();
+		}
+	}
+
+	/**
+	 * Returns html of receipt fields.
+	 */
+	public function return_receipt_fields_html() {
+
+		ob_start();
+		?>
+
+		<div class="bacs_receipt_wrapper">
+			<div class="bacs_receipt_field">
+				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
+				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached">
+			</div>
+			<div id="progress-wrapper" class="is_hidden">
+				<div class="progress-bar"></div>
+				<div class="status"><?php esc_html_e( 'Processing', 'membership-for-woocommerce' ); ?></div>
+			</div>
+			<div class="bacs_receipt_field is_hidden">
+				<a href="javascript:void(0);" class="bacs_receipt_remove_file"><?php esc_html_e( 'Remove File', 'membership-for-woocommerce' ); ?></a>
+			</div>
+		</div>
+
+		<?php
+		return ob_get_clean();
+	}
 
 	/**
 	 * Get country locale if localized.

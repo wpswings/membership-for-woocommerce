@@ -41,6 +41,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$payment_gateways   = $global_class->supported_gateways();
 				$available_gateways = $global_class->available_gateways();
+
 				// Loop through Woocommerce available payment gateways.
 				foreach ( $payment_gateways as $gateway ) {
 
@@ -49,7 +50,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 					<!-- Membership supported gateway start. -->
 					<tr valign="top">
 						<th scope="row" class="titledesc">
-							<label><?php echo esc_html( ucfirst( $gateway ) ); ?></label>
+							<label><?php echo esc_html( $global_class->get_payment_method_title( $gateway ) ? $global_class->get_payment_method_title( $gateway ) : ucfirst( str_replace( '-', ' ', $gateway ) ) ); ?></label>
 						</th>
 
 						<td class="forminp forminp-text">

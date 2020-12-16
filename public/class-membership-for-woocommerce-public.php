@@ -107,6 +107,15 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
 
+		wp_localize_script(
+			$this->plugin_name,
+			'membership_bank_transfer',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
+			)
+		);
+
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
 	}
@@ -755,6 +764,113 @@ class Membership_For_Woocommerce_Public {
 	// 	return $subtotal;
 	// }
 
+	/**
+	 * Register the AJAX Callback for file upload.
+	 *
+	 * @since 1.0.0
+	 */
+	public function upload_receipt() {
+
+		// Verify nonce.
+		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
+
+		if ( ! empty( $_FILES['receipt']['name'] ) ) {
+
+			$errors = array();
+
+			$file_name = $_FILES['receipt']['name'];
+			$file_tmp  = $_FILES['receipt']['tmp_name'];
+
+			$file_data = explode( '.', $file_name );
+			$file_ext  = end( $file_data );
+			$file_ext  = strtolower( $file_ext );
+
+			$gateway_opt = new Mwb_Membership_Adv_Bank_Transfer();
+			$settings    = ! empty( $gateway_opt->settings ) ? $gateway_opt->settings : array();
+			$extensions  = ! empty( $settings['support_formats'] ) ? $settings['support_formats'] : array();
+
+			if ( ! empty( $file_ext ) ) {
+
+				if ( ! in_array( $file_ext, $extensions ) ) {
+
+					$errors[] = 'Extension not supported.';
+				}
+			}
+
+			if ( empty( $errors ) ) {
+
+				$receipt_dir     = '/mwb-membership-receipt-submissions/';
+				$upload_dir_data = wp_upload_dir();
+				$base_dir        = ! empty( $upload_dir_data['basedir'] ) ? $upload_dir_data['basedir'] : '';
+				$base_url        = ! empty( $upload_dir_data['baseurl'] ) ? $upload_dir_data['baseurl'] : '';
+
+				if ( ! is_dir( $base_dir . $receipt_dir ) ) {
+
+					mkdir( $base_dir . $receipt_dir, 0755, true );
+				}
+
+				move_uploaded_file( $file_tmp, $base_dir . $receipt_dir . $file_name );
+				echo json_encode(
+					array(
+						'result' => 'success',
+						'path'   => $base_dir . $receipt_dir . $file_name,
+						'url'    => $base_url . $receipt_dir . $file_name,
+					)
+				);
+
+			} else {
+
+				echo json_encode(
+					array(
+						'result' => 'failure',
+						'errors' => $errors,
+					)
+				);
+			}
+
+			wp_die();
+		}
+
+	}
+
+	/**
+	 * Register the AJAX Callback for file removal.
+	 *
+	 * @since 1.0.0
+	 */
+	public function remove_current_receipt() {
+
+		// Verify nonce.
+		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
+
+		$file_path = ! empty( $_POST['path'] ) ? $_POST['path'] : '';
+
+		if ( ! empty( $file_path ) ) {
+
+			// Check file or not.
+			if ( file_exists( $file_path ) ) {
+
+				// Remove file.
+				unlink( $file_path );
+
+				echo json_encode(
+					array(
+						'result' => 'success',
+					)
+				);
+
+			} else {
+
+				echo json_encode(
+					array(
+						'result' => 'failure',
+					)
+				);
+			}
+
+			wp_die();
+		}
+	}
 
 }
 

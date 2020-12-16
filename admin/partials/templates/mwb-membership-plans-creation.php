@@ -371,7 +371,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' ); ?></span>
 
 						<!-- manage free shipping link start. -->
-						<div class="mwb_membership_free_shipping_link">
+						<div class="mwb_membership_free_shipping_link" style="display: none;">
 							<p class="mwb_membership_free_shipping">
 								<a class="button" target="_blank" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=shipping' ); ?>"><?php esc_html_e( 'Manage Free shipping', 'membership-for-woocommerce' ); ?></a>
 							</p>

@@ -43,7 +43,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 			wp_delete_post( $default_page );
 	}
 
-	// Deleting member role at plugin uninstall.
+	// Deleting "member" user role at plugin uninstall.
 	$user_roles = get_option( 'wp_user_roles' );
 
 	if ( is_array( $user_roles ) && ! empty( $user_roles ) ) {
@@ -57,21 +57,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 		}
 	}
 
-	// Delete options at plugin uninstall.
-	$plugin_options = array(
-		'mwb_membership_default_plans_page',
-		'mwb_membership_global_options',
-	);
-
-	foreach ( $plugin_options as $option ) {
-
-		if ( get_option( $option ) ) {
-
-			delete_option( $option );
-		}
-	}
-
-	// Delete all membership plans at plugin uninstall.
+	// Delete all membership plans(post) & unregister post type at plugin uninstall.
 	$mwb_membership_cpt = array(
 		'post_type'      => 'mwb_cpt_membership',
 		'posts_per_page' => -1,
@@ -88,7 +74,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 	}
 	unregister_post_type( 'mwb_cpt_membership' );
 
-	// Delete all members at plugin uninstall.
+	// Delete all members (post) & unregister post type at plugin uninstall.
 	$mwb_members_cpt = array(
 		'post_type'      => 'mwb_cpt_members',
 		'posts_per_page' => -1,
@@ -104,4 +90,18 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 		}
 	}
 	unregister_post_type( 'mwb_cpt_members' );
+
+	// Deleting options at last during plugin uninstall.
+	$plugin_options = array(
+		'mwb_membership_default_plans_page',
+		'mwb_membership_global_options',
+	);
+
+	foreach ( $plugin_options as $option ) {
+
+		if ( get_option( $option ) ) {
+
+			delete_option( $option );
+		}
+	}
 }

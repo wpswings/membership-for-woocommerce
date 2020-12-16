@@ -228,7 +228,12 @@ jQuery(document).ready( function($) {
         autoOpen: false,
 		show: {effect: "blind", duration: 800},
 		width : 600,
-	});  
+	}); 
+
+	// Hide mmebership payment gateways from payment page woocommerce.
+	$('.wc_gateways tbody tr ').each( function() {
+		alert($(this).text());
+	});
 	
 	
 
