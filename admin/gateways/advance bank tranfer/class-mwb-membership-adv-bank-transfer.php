@@ -262,16 +262,16 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	// public function is_available() {
 
-	// 	// $current_user    = WC()->session->get( 'customer' );
-	// 	// $billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
+	// 	$current_user    = WC()->session->get( 'customer' );
+	// 	$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
 
-	// 	// if ( in_array( $billing_country, $this->settings['exclude_countries'] ) ) {
+	// 	if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
 
-	// 	// 	return false;
-	// 	// } else {
+	// 		return false;
+	// 	} else {
 
-	// 	// 	return true;
-	// 	// }
+	// 		return true;
+	// 	}
 	// }
 
 	/**
@@ -313,6 +313,12 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		<?php
 		return ob_get_clean();
 	}
+
+	/**
+	 * Process payment and return the result.
+	 * 
+	 * @param int 
+	 */
 
 	/**
 	 * Get country locale if localized.

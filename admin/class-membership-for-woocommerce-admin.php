@@ -771,8 +771,8 @@ class Membership_For_Woocommerce_Admin {
 			$prd_check = '';
 			$cat_check = '';
 
-			$csv_prod_title = $this->global_class->csv_prod_title( $formatted_csv_data ); // Getting all product ids from csv.
-			$csv_cate_title = $this->global_class->csv_cat_title( $formatted_csv_data ); // Getting all category ids from csv.
+			$csv_prod_title = $this->global_class->csv_prod_title( $csv ); // Getting all product titles from csv.
+			$csv_cate_title = $this->global_class->csv_cat_title( $csv ); // Getting all category titles from csv.
 
 			if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
 
@@ -793,7 +793,7 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 
-			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
+			// // If product ids and category ids from csv match from those of woocommerce, then only import the file.
 			if ( true == $prd_check && true == $cat_check ) {
 
 				foreach ( $formatted_csv_data as $key => $value ) {

@@ -233,7 +233,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'page_template', $plugin_admin, 'mwb_membership_plan_page_template' );
 
 		// Hide payment gateways.
-		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
+		//$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
 
 	}
 

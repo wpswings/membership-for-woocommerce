@@ -118,6 +118,11 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
+		wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ), WC_VERSION );
+
+		wp_enqueue_script( 'woocommerce_admin' );
+
+
 	}
 
 	/**

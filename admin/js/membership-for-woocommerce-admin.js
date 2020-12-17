@@ -179,14 +179,12 @@ jQuery(document).ready( function($) {
 	// Import CSV modal.
 	$('#import_all_membership').on( 'click', function(e) {
 		e.preventDefault();
-		//alert('hi');
 
 		$('.import_csv_field_wrapper').dialog('open');
 
 		// Ajax call for import CSV.
 		$('#upload_csv_file').on( 'click', function(e) {
 			e.preventDefault();
-			alert('hey');
 
 			var form = new FormData();
 			var file = jQuery(document).find('#csv_file_upload');
@@ -195,7 +193,6 @@ jQuery(document).ready( function($) {
 			form.append("file", single_file);
 			form.append("action", 'csv_file_upload');
 			form.append("nonce", admin_ajax_obj.nonce )
-			//console.log(file);
 
 			$.ajax({
 				url  : admin_ajax_obj.ajaxurl,
@@ -212,12 +209,6 @@ jQuery(document).ready( function($) {
 					$('.csv_import_response').text(response);
 				},
 
-				// error: function(errorThrown) {
-				// 	console.log(errorThrown);
-				// 	alert(errorThrown);
-				// 	//$('.csv_import_response').text(errorThrown);
-				// }
-		
 			});
 
 		});
@@ -230,10 +221,7 @@ jQuery(document).ready( function($) {
 		width : 600,
 	}); 
 
-	// Hide mmebership payment gateways from payment page woocommerce.
-	$('.wc_gateways tbody tr ').each( function() {
-		alert($(this).text());
-	});
+	
 	
 	
 

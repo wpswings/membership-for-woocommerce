@@ -33,9 +33,9 @@
 
 jQuery(document).ready( function($) {
 
+	// Opens modal when clicked on membership "buy now" button.
 	$('.mwb_membership_buynow').on( 'click', function(e) {
 		e.preventDefault();
-		//alert('hi');
 
 		$('.mwb_membership_payment_modal').dialog('open');
 	});
@@ -46,9 +46,19 @@ jQuery(document).ready( function($) {
 		show: {effect: "blind", duration: 800},
 		width : 600,
 	}); 
-	
+
+	// Opens payment fields in modal when selected.
+	$(document).on('change', '.wc_payment_method', function() {
+		
+		//if( $this.class == 'payment_box' ) {
+			alert('hi');
+			$('.payment_box').show();
+		//}
+	});
+
+	// Advancnce bank transfer receipt upload.
 	$(document).on( 'change', '.bacs_receipt_file', function() {
-		alert('hi');
+		//alert('hi');
 		var file = $('.bacs_receipt_file').prop( 'files' );
 
 		$('.bacs_receipt_attached').val('');
@@ -120,4 +130,6 @@ jQuery(document).ready( function($) {
 		});
 
 	});
+
+
 });

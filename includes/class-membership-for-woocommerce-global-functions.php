@@ -217,6 +217,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function supported_gateways() {
 
 		$supported_gateways = array(
+			'paypal',
+			'cod',
 			'membership-for-woo-paypal-gateway', // Membership Paypal.
 			'membership-for-woo-stripe-gateway', // Membership stripe.
 			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
@@ -470,19 +472,20 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function gateway_modal_content( $gateway ) {
 
+		//echo '<pre>'; print_r( $gateway ); echo '</pre>';
 		?>
-		<li class="mwb_membership_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>">
+		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
 			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
 
 			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 				<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
 			</label>
 			<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
-				<div class="mwb_membership_payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
-																				<?php
-																					if ( ! $gateway->chosen ) :
-																						/* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */
-																					?>
+				<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
+				<?php
+				if ( ! $gateway->chosen ) :
+						/* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */
+					?>
 					style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
 					<?php $gateway->payment_fields(); ?>
 				</div>
@@ -680,23 +683,39 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function csv_prod_title( $csv_data ) {
 
-		$csv_prod_ids = array();
+		$csv_prod_title = array();
+		$prod_array     = array();
 
 		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( is_array( $value['mwb_membership_plan_target_ids'] ) ) {
+				if ( ! empty( $value[16] ) ) {
 
-					foreach ( $value['mwb_membership_plan_target_ids'] as $index => $id ) {
+					$prod_array[] = explode( ',', $value[16] );
+				}
+			}
+		}
 
-						$csv_prod_ids[] = get_the_title( $id );
+		if ( ! empty( $prod_array ) && is_array( $prod_array ) ) {
+
+			foreach ( $prod_array as $key ) {
+
+				foreach ( $key as $index => $title ) {
+
+					$matches = array();
+
+					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
+
+					if ( $check ) {
+
+						$csv_prod_title[] = $matches[0];
 					}
 				}
 			}
 		}
 
-		return $csv_prod_ids;
+		return $csv_prod_title;
 	}
 
 	/**
@@ -708,28 +727,38 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function csv_cat_title( $csv_data ) {
 
-		$csv_cat_ids = array();
+		$csv_cat_title = array();
+		$cat_array     = array();
 
 		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( is_array( $value['mwb_membership_plan_target_categories'] ) ) {
+				if ( ! empty( $value[17] ) ) {
 
-					foreach ( $value['mwb_membership_plan_target_categories'] as $index => $id ) {
+					$cat_array[] = explode( ',', $value[17] );
+				}
+			}
+		}
 
-					//$csv_cat_ids = array_merge( $csv_cat_ids, $value['mwb_membership_plan_target_categories'] );
-						$term = get_term_by( 'id', $id, 'product_cat' );
+		if ( ! empty( $cat_array ) && is_array( $cat_array ) ) {
 
-						if ( $term ) {
+			foreach ( $cat_array as $key ) {
 
-							$csv_cat_ids[] = $term->name;
-						}
+				foreach ( $key as $index => $title ) {
+
+					$matches = array();
+
+					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
+
+					if ( $check ) {
+
+						$csv_cat_title[] = $matches[0];
 					}
 				}
 			}
 		}
-		return $csv_cat_ids;
+		return $csv_cat_title;
 	}
 
 	/**
