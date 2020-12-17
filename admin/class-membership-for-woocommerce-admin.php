@@ -762,42 +762,31 @@ class Membership_For_Woocommerce_Admin {
 			// Getting a formatted CSV data.
 			$formatted_csv_data = $this->global_class->csv_data_map( $csv );
 
-			// Getting all Product ids from woocommerce.
-			$all_prod_ids = get_posts(
-				array(
-					'posts_per_page' => -1,
-					'post_type'      => array( 'product', 'product_variation' ),
-					'fields'         => 'ids',
-				)
-			);
+			// Getting all Product titles from woocommerce store.
+			$all_prod_title = $this->global_class->all_prod_title();
 
-			// Getting all Category ids from woocommerce.
-			$all_cat_ids = get_terms(
-				array(
-					'taxonomy' => 'product_cat',
-					'fields'   => 'ids',
-				)
-			);
+			// Getting all Category titles from woocommerce store.
+			$all_cat_title = $this->global_class->all_cat_title();
 
 			$prd_check = '';
 			$cat_check = '';
 
-			$csv_prod_ids = $this->global_class->csv_prod_ids( $formatted_csv_data ); // Getting all product ids from csv.
-			$csv_cate_ids = $this->global_class->csv_cat_ids( $formatted_csv_data ); // Getting all category ids from csv.
+			$csv_prod_title = $this->global_class->csv_prod_title( $formatted_csv_data ); // Getting all product ids from csv.
+			$csv_cate_title = $this->global_class->csv_cat_title( $formatted_csv_data ); // Getting all category ids from csv.
 
-			if ( is_array( $csv_cate_ids ) && is_array( $csv_prod_ids ) ) {
+			if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
 
-				foreach ( $csv_prod_ids as $key => $value ) {
+				foreach ( $csv_prod_title as $key => $value ) {
 
-					if ( in_array( $value, $all_prod_ids ) ) {
+					if ( in_array( $value, $all_prod_title ) ) {
 
 						$prd_check = true;
 					}
 				}
 
-				foreach ( $csv_cate_ids as $key => $value ) {
+				foreach ( $csv_cate_title as $key => $value ) {
 
-					if ( in_array( $value, $all_cat_ids ) ) {
+					if ( in_array( $value, $all_cat_title ) ) {
 
 						$cat_check = true;
 					}

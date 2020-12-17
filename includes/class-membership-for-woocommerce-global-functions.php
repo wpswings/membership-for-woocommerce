@@ -672,41 +672,13 @@ class Membership_For_Woocommerce_Global_Functions {
 	}
 
 	/**
-	 * Check for prod IDs during CSV import.
-	 *
-	 * @param array $csv_prod_ids an array of prod_ids in csv.
-	 * @param array $all_prod_ids an array of all available prod_ids.
-	 *
-	 * @return array
-	 *
-	 * @since 1.0.0
-	 */
-	public function csv_import_check( $csv_prod_ids, $all_prod_ids ) {
-
-		$present_ids = array();
-
-		if ( ! empty( $csv_prod_ids ) && ! empty( $all_prod_ids ) && is_array( $csv_prod_ids ) && is_array( $all_prod_ids ) ) {
-
-			foreach ( $csv_prod_ids as $key => $value ) {
-
-				if ( in_array( $value, $all_prod_ids ) ) {
-
-					$present_ids[] = $value;
-				}
-			}
-		}
-
-		return $present_ids;
-	}
-
-	/**
 	 * Returns all Products ids offered from CSV.
 	 *
 	 * @param array $csv_data An array of CSV data.
 	 * @return array
 	 * @since 1.0.0
 	 */
-	public function csv_prod_ids( $csv_data ) {
+	public function csv_prod_title( $csv_data ) {
 
 		$csv_prod_ids = array();
 
@@ -716,7 +688,10 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				if ( is_array( $value['mwb_membership_plan_target_ids'] ) ) {
 
-					$csv_prod_ids = array_merge( $csv_prod_ids, $value['mwb_membership_plan_target_ids'] );
+					foreach ( $value['mwb_membership_plan_target_ids'] as $index => $id ) {
+
+						$csv_prod_ids[] = get_the_title( $id );
+					}
 				}
 			}
 		}
@@ -731,7 +706,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 * @return array
 	 * @since 1.0.0
 	 */
-	public function csv_cat_ids( $csv_data ) {
+	public function csv_cat_title( $csv_data ) {
 
 		$csv_cat_ids = array();
 
@@ -741,10 +716,84 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				if ( is_array( $value['mwb_membership_plan_target_categories'] ) ) {
 
-					$csv_cat_ids = array_merge( $csv_cat_ids, $value['mwb_membership_plan_target_categories'] );
+					foreach ( $value['mwb_membership_plan_target_categories'] as $index => $id ) {
+
+					//$csv_cat_ids = array_merge( $csv_cat_ids, $value['mwb_membership_plan_target_categories'] );
+						$term = get_term_by( 'id', $id, 'product_cat' );
+
+						if ( $term ) {
+
+							$csv_cat_ids[] = $term->name;
+						}
+					}
 				}
 			}
 		}
 		return $csv_cat_ids;
+	}
+
+	/**
+	 * Returns an aray of all products title available in woocommerce store.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function all_prod_title() {
+
+		$product_titles = array();
+
+		// Getting all Product ids from woocommerce.
+		$all_prod_ids = get_posts(
+			array(
+				'posts_per_page' => -1,
+				'post_type'      => array( 'product', 'product_variation' ),
+				'fields'         => 'ids',
+			)
+		);
+
+		if ( ! empty( $all_prod_ids ) && is_array( $all_prod_ids ) ) {
+
+			foreach ( $all_prod_ids as $id ) {
+
+				$product_titles[] = get_the_title( $id );
+			}
+		}
+
+		return $product_titles;
+	}
+
+	/**
+	 * Returns an array of all category title available in woocommerce store.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function all_cat_title() {
+
+		$cate_titles = array();
+
+		// Getting all Category ids from woocommerce.
+		$all_cat_ids = get_terms(
+			array(
+				'taxonomy' => 'product_cat',
+				'fields'   => 'ids',
+			)
+		);
+
+		if ( ! empty( $all_cat_ids ) && is_array( $all_cat_ids ) ) {
+
+			foreach ( $all_cat_ids as $id ) {
+
+				$term = get_term_by( 'id', $id, 'product_cat' );
+
+				if ( $term ) {
+
+					$cate_titles[] = $term->name;
+				}
+			}
+		}
+
+		return $cate_titles;
+
 	}
 }
