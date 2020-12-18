@@ -40,7 +40,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 
 	if ( ! empty( $mwb_membership_default_page ) ) {
 
-			wp_delete_post( $default_page );
+			wp_delete_post( $mwb_membership_default_page );
 	}
 
 	// Deleting "member" user role at plugin uninstall.

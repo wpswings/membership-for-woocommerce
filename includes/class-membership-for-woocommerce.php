@@ -134,6 +134,11 @@ class Membership_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-global-functions.php';
 
+		/**
+		 * The file responsible for defining all function for Country and state.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/membership-country-functions.php';
+
 		$this->loader = new Membership_For_Woocommerce_Loader();
 
 	}
@@ -233,7 +238,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'page_template', $plugin_admin, 'mwb_membership_plan_page_template' );
 
 		// Hide payment gateways.
-		//$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
+		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
 
 	}
 
@@ -288,8 +293,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_upload_receipt', $plugin_public, 'upload_receipt' );
 			$this->loader->add_action( 'wp_ajax_nopriv_upload_receipt', $plugin_public, 'upload_receipt' );
 			$this->loader->add_action( 'wp_ajax_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
-			$this->loader->add_action( 'w[_ajax_nopriv_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
-
+			$this->loader->add_action( 'wp_ajax_nopriv_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
+			$this->loader->add_action( 'wp_ajax_membership_get_states', $plugin_public, 'membership_get_states' );
+			$this->loader->add_action( 'wp_ajax_nopriv_membership_get_states', $plugin_public, 'membership_get_states' );
 		}
 	}
 

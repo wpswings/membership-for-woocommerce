@@ -84,6 +84,8 @@ class Membership_For_Woocommerce_Public {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-public.css', array(), $this->version, 'all' );
 
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+		wp_enqueue_style( 'membership_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -109,7 +111,7 @@ class Membership_For_Woocommerce_Public {
 
 		wp_localize_script(
 			$this->plugin_name,
-			'membership_bank_transfer',
+			'membership_public_obj',
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
@@ -122,7 +124,7 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'woocommerce_admin' );
 
-
+		wp_enqueue_script( 'membership_select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -875,6 +877,33 @@ class Membership_For_Woocommerce_Public {
 
 			wp_die();
 		}
+	}
+
+	/**
+	 * Ajax callback for getting states.
+	 */
+	public function membership_get_states() {
+
+		// Nonce verify.
+		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
+
+		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
+
+		$states = get_country_states( $country_code );
+
+		$result = '';
+
+		if ( ! empty( $states ) && is_array( $states ) ) {
+
+			foreach ( $states as $code => $name ) {
+
+				$result .= '<option value="' . $code . '">' . $name . '</option>';
+			}
+
+			echo $result;
+		}
+
+		wp_die();
 	}
 
 }

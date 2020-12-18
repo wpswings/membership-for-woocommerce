@@ -260,19 +260,24 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	/**
 	 * Unset the gateway according to the country.
 	 */
-	// public function is_available() {
+	public function is_available() {
 
-	// 	$current_user    = WC()->session->get( 'customer' );
-	// 	$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
+		// Return if admin, as no session is created for admin.
+		if ( is_admin() ) {
+			return;
+		}
 
-	// 	if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
+		$current_user    = WC()->session->get( 'customer' );
+		$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
 
-	// 		return false;
-	// 	} else {
+		if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
 
-	// 		return true;
-	// 	}
-	// }
+			return false;
+		} else {
+
+			return true;
+		}
+	}
 
 	/**
 	 * Output for the receipt fields.
@@ -316,7 +321,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 	/**
 	 * Process payment and return the result.
-	 * 
+	 *
 	 * @param int 
 	 */
 

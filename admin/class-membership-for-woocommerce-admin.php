@@ -736,6 +736,7 @@ class Membership_For_Woocommerce_Admin {
 	public function csv_file_upload() {
 
 		if ( ! wp_verify_nonce( $_POST['nonce'], 'plan-import-nonce' ) ) {
+
 			die( 'Nonce not verified' );
 		}
 
