@@ -292,7 +292,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 			return $desc . $this->return_receipt_fields_html();
 		}
 	}
-
+	
 	/**
 	 * Returns html of receipt fields.
 	 */
@@ -320,10 +320,34 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Process payment and return the result.
-	 *
-	 * @param int 
+	 * Process payment.
 	 */
+	public function process_payment ( $order_id ) {
+
+		$order = wc_get_order( $order_id );
+
+		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : $_POST['bacs_receipt_attached'];
+
+		// update order receipt.
+		update_post_meta( $order_id, 'bacs_receipt_attached', $_POST['bacs_receipt_attached'] );
+
+		if ( $order->get_total() > 0 ) {
+			// Mark it as on-hold.
+			$order->update_status( apply_filters( 'membership_bacs_process_payment_status', 'on-hold', $order ), __( 'Awaiting BACS payment', 'membrship-for-woocommerce' ) );
+
+		} else {
+			$order->payment_complete();
+		}
+
+		// Remove cart.
+		WC()->cart->empty_cart();
+
+		// Return thankyou redirect.
+		return array(
+			'result'   => 'success',
+			'redirect' => $this->get_return_url( $order ),
+		);
+	}
 
 	/**
 	 * Get country locale if localized.

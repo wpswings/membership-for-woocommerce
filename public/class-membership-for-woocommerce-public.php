@@ -47,6 +47,13 @@ class Membership_For_Woocommerce_Public {
 	public $global_class;
 
 	/**
+	 * Creating Instance of the country functions class.
+	 *
+	 * @var object
+	 */
+	public $country_class;
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -59,6 +66,8 @@ class Membership_For_Woocommerce_Public {
 		$this->version     = $version;
 
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
+
+		$this->country_class = Membership_For_Woocommerce_Country_Functions::get();
 
 	}
 
@@ -889,7 +898,7 @@ class Membership_For_Woocommerce_Public {
 
 		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
 
-		$states = get_country_states( $country_code );
+		$states = $this->country_class->get_country_states( $country_code );
 
 		$result = '';
 

@@ -205,8 +205,8 @@ jQuery(document).ready( function($) {
 				success : function(response) {
 				
 					console.log(response);
-					alert(response);
-					$('.csv_import_response').text(response);
+					console.log(response);
+					//$('.csv_import_response').text(response);
 				},
 
 			});

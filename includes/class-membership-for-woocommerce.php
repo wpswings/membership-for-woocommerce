@@ -135,9 +135,9 @@ class Membership_For_Woocommerce {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-global-functions.php';
 
 		/**
-		 * The file responsible for defining all function for Country and state.
+		 * The class responsible for defining all function for Country and state.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/membership-country-functions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-country-functions.php';
 
 		$this->loader = new Membership_For_Woocommerce_Loader();
 

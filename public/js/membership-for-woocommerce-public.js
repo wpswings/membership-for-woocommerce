@@ -31,19 +31,6 @@
 
 })( jQuery );
 
-// $.fn.modal.Constructor.prototype.enforceFocus = function () {
-// 	var that = this;
-// 	$(document).on('focusin.modal', function (e) {
-// 	   if ($(e.target).hasClass('select2-input')) {
-// 		  return true;
-// 	   }
-
-// 	   if (that.$element[0] !== e.target && !that.$element.has(e.target).length) {
-// 		  that.$element.focus();
-// 	   }
-// 	});
-//  };
-
 jQuery(document).ready( function($) {
 
 	// Opens modal when clicked on membership "buy now" button.
@@ -56,7 +43,7 @@ jQuery(document).ready( function($) {
 		$('#membership_billing_country').on( 'change', function() {
 
 			var country_code = $(this).val();
-			console.log(country_code);
+			//console.log(country_code);
 
 			$.ajax({
 				url : membership_public_obj.ajaxurl,
@@ -81,44 +68,15 @@ jQuery(document).ready( function($) {
 		width : 700,
 	}); 
 
-	
-
 	// Opens payment fields in modal when selected.
-	$(document).on('change', '.wc_payment_method', function() {
+	$(".mwb_membership_payment_modal").on("change", ".payment_method_select", function() {
 		
-		//var $payment_methods = $( '.mwb_membership_payment_modal li' ).find( 'input[name="payment_method"]' );
-		$( '.mwb_membership_payment_modal li :checked' ).each(function(){
+			var $payment_methods = $(this).val();
 			
-			var $payment_methods = this;
-			alert($payment_methods.value);
-		});
+			$(".payment_box").hide();
+			$( 'div.payment_method_' + $payment_methods ).show();
 
-			// If there is one method, we can hide the radio input
-			// if ( 1 === $payment_methods.length ) {
-			// 	$payment_methods.eq(0).hide();
-			// }
-
-			// // // If there was a previously selected method, check that one.
-			// // if ( wc_checkout_form.selectedPaymentMethod ) {
-			// // 	$( '#' + wc_checkout_form.selectedPaymentMethod ).prop( 'checked', true );
-			// // }
-
-			// // If there are none selected, select the first.
-			// if ( 0 === $payment_methods.filter( ':checked' ).length ) {
-			// 	$payment_methods.eq(0).prop( 'checked', true );
-			// }
-
-			// // Get name of new selected method.
-			// var checkedPaymentMethod = $payment_methods.filter( ':checked' ).eq(0).prop( 'id' );
-
-			// if ( $payment_methods.length > 1 ) {
-			// 	// Hide open descriptions.
-			// 	$( 'div.payment_box:not(".' + checkedPaymentMethod + '")' ).filter( ':visible' ).slideUp( 0 );
-			// }
-
-			// // Trigger click event for selected method
-			// $payment_methods.filter( ':checked' ).eq(0).trigger( 'click' );
-	
+		
 	});
 
 	// Advancnce bank transfer receipt upload.
