@@ -115,7 +115,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'default'     => '',
 				'options'     => array(
 					''            => __( 'N/A', 'membership-for-woocommerce' ),
-					'active_plan' => __( 'An Active Membership', 'memberhsip-for-woocommerce' ),
+					'active_plan' => __( 'An Active Membership', 'membership-for-woocommerce' ),
 				),
 				'description' => __( 'Enter cost for membership shipping method', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
@@ -209,7 +209,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				break;
 		}
 
-		return apply_filters( 'mwb_memberhsip_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
+		return apply_filters( 'mwb_membership_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
 	}
 
 	/**

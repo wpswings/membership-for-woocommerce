@@ -139,6 +139,11 @@ class Membership_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-country-functions.php';
 
+		/**
+		 * The calss responsible for defining all function for membership checkout validations.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
+
 		$this->loader = new Membership_For_Woocommerce_Loader();
 
 	}
@@ -181,7 +186,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
-		$this->loader->add_action( 'wp_ajax_csv_file_upload', $plugin_admin, 'csv_file_upload' );
+		$this->loader->add_action( 'wp_ajax_csv_file_upload', $plugin_admin, 'csv_file_upload' ); // Import CSV.
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
@@ -208,9 +213,6 @@ class Membership_For_Woocommerce {
 		// Download CSV.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
-
-		// Import CSV.
-		//$this->loader->add_action( 'admin_init', $plugin_admin, 'mwb_membership_for_woo_import_csv_membership' );
 
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
@@ -277,7 +279,7 @@ class Membership_For_Woocommerce {
 			// Load all defined shortcodes.
 			$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
 
-			// Make all memberhsip products non-purchasable for non-members.
+			// Make all membership products non-purchasable for non-members.
 			$this->loader->add_filter( 'woocommerce_is_purchasable', $plugin_public, 'mwb_membership_for_woo_membership_purchasable', 10, 2 );
 			// Display "Buy membership" message for products on detail page.
 			$this->loader->add_action( 'woocommerce_single_product_summary', $plugin_public, 'mwb_membership_product_membership_purchase_html', 50 );

@@ -326,10 +326,10 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		$order = wc_get_order( $order_id );
 
-		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : $_POST['bacs_receipt_attached'];
+		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
 
 		// update order receipt.
-		update_post_meta( $order_id, 'bacs_receipt_attached', $_POST['bacs_receipt_attached'] );
+		update_post_meta( $order_id, 'bacs_receipt_attached', $receipt );
 
 		if ( $order->get_total() > 0 ) {
 			// Mark it as on-hold.

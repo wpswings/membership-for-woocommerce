@@ -31,64 +31,77 @@
 
 })( jQuery );
 
-jQuery(document).ready( function($) {
+jQuery( document ).ready( function( $ ) {
 
 	// Opens modal when clicked on membership "buy now" button.
-	$('.mwb_membership_buynow').on( 'click', function(e) {
+	$( ".mwb_membership_buynow" ).on( "click", function( e ) {
 		e.preventDefault();
 
-		$('.mwb_membership_buy_now_modal').dialog('open');
+		$( ".mwb_membership_buy_now_modal" ).dialog( "open" );
 
 		// Ajax call for states as per country.
-		$('#membership_billing_country').on( 'change', function() {
+		$( "#membership_billing_country" ).on( "change", function() {
 
-			var country_code = $(this).val();
-			//console.log(country_code);
+			var country_code = $( this ).val();
 
 			$.ajax({
-				url : membership_public_obj.ajaxurl,
-				type : 'POST',
+				url  : membership_public_obj.ajaxurl,
+				type : "POST",
 				data : {
-					action : 'membership_get_states',
+					action  : "membership_get_states",
 					country : country_code,
-					nonce : membership_public_obj.nonce,
+					nonce   : membership_public_obj.nonce,
 				},
 
-				success: function(response) {
-					$('#membership_billing_state').append(response);
+				success: function( response ) {
+
+					if ( response.length > 1 ) {
+						$( "#mwb_billing_state_field" ).show();
+						$( "#membership_billing_state" ).html( response );
+
+					} else {
+
+						$( "#mwb_billing_state_field" ).hide();
+					}
 				}
 			});
 		});
+
+		// Modal form submission
+		$( "#membership_proceed_payment" ).on( "click", function( e ) {
+
+			e.preventDefault();
+		});
 	});
 
-	$(".mwb_membership_buy_now_modal").dialog({
-        modal: true,
-        autoOpen: false,
-		show: {effect: "blind", duration: 800},
-		width : 700,
+	$( ".mwb_membership_buy_now_modal" ).dialog({
+        modal    : true,
+        autoOpen : false,
+		show     : {effect: "blind", duration: 800},
+		width    : 700,
 	}); 
 
 	// Opens payment fields in modal when selected.
-	$(".mwb_membership_payment_modal").on("change", ".payment_method_select", function() {
+	$( ".mwb_membership_payment_modal" ).on( "change", ".payment_method_select", function() {
 		
 			var $payment_methods = $(this).val();
 			
-			$(".payment_box").hide();
-			$( 'div.payment_method_' + $payment_methods ).show();
+			$( ".payment_box" ).hide();
+			$( "div.payment_method_" + $payment_methods ).show();
 
 		
 	});
 
 	// Advancnce bank transfer receipt upload.
-	$(document).on( 'change', '.bacs_receipt_file', function() {
-		//alert('hi');
-		var file = $('.bacs_receipt_file').prop( 'files' );
+	$( document ).on( "change", ".bacs_receipt_file", function() {
 
-		$('.bacs_receipt_attached').val('');
-		$('#progress-wrapper').removeClass("progress-complete");
-		$('#progress-wrapper').removeClass("progress-failed");
-		$('#progress-wrapper .status').text("Processing");
-		$('#progress-wrapper').show();
+		var file = $( ".bacs_receipt_file" ).prop( "files" );
+
+		$( ".bacs_receipt_attached" ).val( "" );
+		$( "#progress-wrapper" ).removeClass( "progress-complete" );
+		$( "#progress-wrapper" ).removeClass( "progress-failed" );
+		$( "#progress-wrapper .status" ).text( "Processing" );
+		$( "#progress-wrapper" ).show();
 
 		var upload = new FormData();
 
@@ -97,24 +110,24 @@ jQuery(document).ready( function($) {
 		upload.append( "action", "upload_receipt" );
 
 		$.ajax({
-			url : membership_public_obj.ajaxurl,
-			type : 'POST',
-			dataType : 'json',
-			data : upload,
+			url         : membership_public_obj.ajaxurl,
+			type        : "POST",
+			dataType    : "json",
+			data        : upload,
 			processData : false,
 			contentType : false,
 
 			success: function( response ) {
 
-				if( 'success' == response['result'] ) {
-					$('.bacs_receipt_remove_file').show();
-					$('.bacs_receipt_attached').val( response.url );
-					$('#progress-wrapper').addClass( "progress-complete" );
-					$('.bacs_receipt_field').removeClass( "is_hidden" );
-					$('#progress-wrapper .status').text( "Completed" );
+				if ( "success" == response["result"] ) {
+					$( ".bacs_receipt_remove_file" ).show();
+					$( ".bacs_receipt_attached" ).val( response.url );
+					$( "#progress-wrapper" ).addClass( "progress-complete" );
+					$( ".bacs_receipt_field" ).removeClass( "is_hidden" );
+					$( "#progress-wrapper .status" ).text( "Completed" );
 
 					// Add file removal script.
-					$(document).on( 'click', '.bacs_receipt_remove_file', function() {
+					$( document ).on( "click", ".bacs_receipt_remove_file", function() {
 
 						var removal = new FormData();
 
@@ -123,20 +136,20 @@ jQuery(document).ready( function($) {
 						removal.append( "action", "remove_current_receipt" );
 
 						$.ajax({
-							url : membership_bank_transfer.ajaxurl,
-							type : 'POST',
-							dataType : 'json',
-							data : removal,
+							url         : membership_bank_transfer.ajaxurl,
+							type        : "POST",
+							dataType    : "json",
+							data        : removal,
 							processData : false,
 							contentType : false,
 
 							success : function( response ) {
 
-								if( 'success' == response['result'] ) {
-									$('.bacs_receipt_remove_file').hide();
-									$('#progress-wrapper').removeClass( "progress-complete" );
-									$('#progress-wrapper').addClass( "progress-failed" );
-									$('#progress-wrapper .status').text( "SOmething Went Wrong. Please refresh!" );
+								if( "success" == response["result"] ) {
+									$( ".bacs_receipt_remove_file" ).hide();
+									$( "#progress-wrapper" ).removeClass( "progress-complete" );
+									$( "#progress-wrapper" ).addClass( "progress-failed" );
+									$( "#progress-wrapper .status" ).text( "Something Went Wrong. Please refresh!" );
 								}
 							}
 						});
@@ -144,10 +157,10 @@ jQuery(document).ready( function($) {
 					});
 				}
 
-				else if( 'failure' == response['result'] ) {
+				else if ( "failure" == response["result"] ) {
 
-					$('#progress-wrapper').addClass( "progress-failed" );
-					$('#progress-wrapper .status').text( response['errors'][0] );
+					$( "#progress-wrapper" ).addClass( "progress-failed" );
+					$( "#progress-wrapper .status" ).text( response["errors"][0] );
 				}
 			}
 		});

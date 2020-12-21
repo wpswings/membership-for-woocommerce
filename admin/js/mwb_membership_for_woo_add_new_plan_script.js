@@ -1,19 +1,17 @@
-jQuery(document).ready(function($){
+jQuery( document ).ready( function( $ ){
 
     // Target products search.
-    jQuery('.wc-membership-product-search').select2({
-
-        
+    jQuery( ".wc-membership-product-search" ).select2({
 
         ajax:{
 
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 200,
+            url:      ajaxurl,
+            dataType: "json",
+            delay:    200,
             data: function( params ) {
                 return {
                     q: params.term,
-                    action: 'search_products_for_membership',
+                    action: "search_products_for_membership",
                 };
             },
             processResults: function( data ) {
@@ -36,17 +34,17 @@ jQuery(document).ready(function($){
     });
 
     // Target category search.
-    jQuery('.wc-membership-product-category-search').select2({
+    jQuery( ".wc-membership-product-category-search" ).select2({
 
         ajax:{
 
             url: ajaxurl,
-            dataType: 'json',
+            dataType: "json",
             delay: 200,
             data: function( params ) {
                 return {
                     q: params.term,
-                    action: 'search_product_categories_for_membership',
+                    action: "search_product_categories_for_membership",
                 };
             },
             processResults: function( data ) {

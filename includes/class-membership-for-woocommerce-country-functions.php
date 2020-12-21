@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * The global helper class of the plugin.
+ * The Country functions class of the plugin.
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
