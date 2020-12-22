@@ -33,6 +33,8 @@
 
 jQuery( document ).ready( function( $ ) {
 
+	var payment_methods;
+
 	// Opens modal when clicked on membership "buy now" button.
 	$( ".mwb_membership_buynow" ).on( "click", function( e ) {
 		e.preventDefault();
@@ -67,11 +69,80 @@ jQuery( document ).ready( function( $ ) {
 			});
 		});
 
-		// Modal form submission
-		$( "#membership_proceed_payment" ).on( "click", function( e ) {
+		// Opens payment fields in modal when selected.
+		$( ".mwb_membership_payment_modal" ).on( "change", ".payment_method_select", function() {
+		
+			$payment_methods = $(this).val();
+			
+			$( ".payment_box" ).hide();
+			$( "div.payment_method_" + $payment_methods ).show();
+
+		});
+
+		// Process checkout here.
+		$( document ).on( "click", "#membership_proceed_payment", function( e ) {
 
 			e.preventDefault();
+		    //alert('hey');
+			
+			var first_name = $( "#membership_billing_first_name" ).val();
+			console.log( first_name );
+			var last_name  = $( "#membership_billing_last_name" ).val();
+			console.log( last_name );
+			var company    = $( "#membership_billing_company" ).val();
+			console.log( company );
+			var country    = $( "#membership_billing_country" ).val(); 
+			console.log( country );  
+			var address_1  = $( "#membership_billing_address_1" ).val();
+			console.log( address_1 );
+			var address_2  = $( "#membership_billing_address_2" ).val();
+			console.log( address_2 );
+			var city       = $( "#membership_billing_city" ).val();
+			console.log( city );
+			var state      = $( "#membership_billing_state" ).val();
+			console.log( state );
+			var postcode   = $( "#membership_billing_postcode" ).val();
+			console.log( postcode );
+			var phone      = $( "#membership_billing_phone" ).val();
+			console.log( phone );
+			var email      = $( "#membership_billing_email" ).val();
+			console.log( email );
+			var method_id  = $payment_methods;
+			console.log( method_id );
+			var plan_id = $( "#membership_plan_id" ).val();
+
+			$.ajax({
+				url  : membership_public_obj.ajaxurl,
+				type : "POST",
+				//dataType : "json",
+				data : {
+					action  : "membership_process_payment",
+					nonce   : membership_public_obj.nonce,
+					f_name  : first_name,
+					l_name  : last_name,
+					company : company,
+					country : country,
+					add_1   : address_1,
+					add_2   : address_2,
+					city    : city,
+					state   : state,
+					zip     : postcode,
+					phone   : phone,
+					email   : email,
+					gateway : method_id,
+					plan    : plan_id
+				},
+
+				success : function( response ) {
+
+					console.log( response );
+				}
+
+			});
+		 	 
 		});
+
+		
 	});
 
 	$( ".mwb_membership_buy_now_modal" ).dialog({
@@ -81,16 +152,7 @@ jQuery( document ).ready( function( $ ) {
 		width    : 700,
 	}); 
 
-	// Opens payment fields in modal when selected.
-	$( ".mwb_membership_payment_modal" ).on( "change", ".payment_method_select", function() {
-		
-			var $payment_methods = $(this).val();
-			
-			$( ".payment_box" ).hide();
-			$( "div.payment_method_" + $payment_methods ).show();
-
-		
-	});
+	
 
 	// Advancnce bank transfer receipt upload.
 	$( document ).on( "change", ".bacs_receipt_file", function() {

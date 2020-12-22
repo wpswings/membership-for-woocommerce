@@ -94,7 +94,6 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
-		wp_enqueue_style( 'membership_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 	}
 
 	/**
@@ -129,11 +128,17 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
-		wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ), WC_VERSION );
+		//( 'membership_manual_checkout', plugin_dir_url( __FILE__ ) . 'js/membership-manual-checkout.js', array( 'jquery' ), $this->version, false );
 
-		wp_enqueue_script( 'woocommerce_admin' );
+		// wp_localize_script(
+		// 	'membership_manual_checkout',
+		// 	'membership_checkout_obj',
+		// 	array(
+		// 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
+		// 		'nonce'   => wp_create_nonce( 'auth_checkout_nonce' ),
+		// 	)
+		// );
 
-		wp_enqueue_script( 'membership_select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 	}
 
 	/**
@@ -487,7 +492,7 @@ class Membership_For_Woocommerce_Public {
 							<a class="mwb_membership_no_thanks button alt" href="' . get_permalink( $prod_id ) . '">' . $offer_no_thnks_txt . '</a>';
 			$output .= '</div>';
 
-			$this->global_class->payment_gateways_html(); // Modal div wrapper.
+			$this->global_class->payment_gateways_html( $plan_id ); // Modal div wrapper.
 
 		} else { // If plan_id and prod_id on default page are not set.
 
@@ -677,7 +682,7 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
-		$this->global_class->payment_gateways_html();
+		$this->global_class->payment_gateways_html( $plan_id );
 
 		$buy_button .= '<form method="post" class="mwb_membership_buy_now_btn">
 							<input type="hidden" name="plan_id" value="' . $plan_id . '">
@@ -890,6 +895,128 @@ class Membership_For_Woocommerce_Public {
 			echo $result;
 		}
 
+		wp_die();
+	}
+
+	/**
+	 * Ajax call for membership process payment.
+	 */
+	public function membership_process_payment() {
+
+		// Nonce verify.
+		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
+
+		$validation = new Membership_Checkout_Validation();
+
+		if ( empty( $_POST['f_name'] ) ) {
+
+			echo esc_html__( 'First name cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$firstname = $validation->validate_input_name( sanitize_text_field( wp_unslash( $_POST['f_name'] ) ) );
+
+		}
+
+		if ( empty( $_POST['l_name'] ) ) {
+
+			echo esc_html__( 'Last name cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$lastname = $validation->validate_input_name( sanitize_text_field( wp_unslash( $_POST['l_name'] ) ) );
+		}
+
+		if ( ! empty( $_POST['company'] ) ) {
+
+			$company = sanitize_text_field( wp_unslash( $_POST['company'] ) );
+		}
+
+		if ( empty( $_POST['country'] ) ) {
+
+			echo esc_html__( 'Country cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
+		}
+
+		if ( empty( $_POST['add_1'] ) ) {
+
+			echo esc_html__( 'Street address cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$address_1 = $validation->validate_input_stname( sanitize_text_field( wp_unslash( $_POST['add_1'] ) ) );
+		}
+
+		if ( ! empty( $_POST['add_2'] ) ) {
+
+			$address_2 = sanitize_text_field( wp_unslash( $_POST['add_2'] ) );
+		}
+
+		if ( empty( $_POST['city'] ) ) {
+
+			echo esc_html__( 'City cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$city = $validation->validate_input_city( sanitize_text_field( wp_unslash( $_POST['city'] ) ) );
+		}
+
+		if ( empty( $_POST['state'] ) ) {
+
+			echo esc_html__( 'State cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$state = sanitize_text_field( wp_unslash( $_POST['state'] ) );
+		}
+
+		if ( empty( $_POST['zip'] ) ) {
+
+			echo esc_html__( 'Pin code cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$zip = $validation->validate_input_pin( sanitize_text_field( wp_unslash( $_POST['zip'] ) ), $country );
+
+			if ( $zip ) {
+				$zip = sanitize_text_field( wp_unslash( $_POST['zip'] ) );
+			}
+		}
+
+		if ( empty( $_POST['phone'] ) ) {
+
+			echo esc_html__( 'Phone cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$phone = $validation->validate_input_phone( sanitize_text_field( wp_unslash( $_POST['phone'] ) ) );
+
+			if ( $phone ) {
+
+				$phone = sanitize_text_field( wp_unslash( $_POST['phone'] ) );
+			}
+		}
+
+		if ( empty( $_POST['email'] ) ) {
+
+			echo esc_html__( 'Email cannot be empty!', 'membership-for-woocommerce' );
+		} else {
+
+			$email = $validation->validate_input_email( sanitize_text_field( wp_unslash( $_POST['email'] ) ) );
+
+			if ( $email ) {
+
+				$email = sanitize_text_field( wp_unslash( $_POST['email'] ) );
+			}
+		}
+
+		$method_id = ! empty( $_POST['gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['gateway'] ) ) : '';
+
+		$plan_id = ! empty( $_POST['plan'] ) ? sanitize_text_field( wp_unslash( $_POST['plan'] ) ) : '';
+
+		// Calling payment gateway classes.
+		// $payment_process = call_user_func( array( ucwords( str_replace( '-', '_', $method_id ) ), 'process_payment' ) );
+		// print_r($payment_process);
+		$classname = ucwords( str_replace( '-', '_', $method_id ) );
+
+		$instance = new $classname();
+		
+		$instance->process_payment( $plan_id );
 		wp_die();
 	}
 

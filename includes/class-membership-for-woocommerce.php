@@ -291,13 +291,18 @@ class Membership_For_Woocommerce {
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
 
-			// AJAX Calls.
+			// AJAX handlers for receipt upload.
 			$this->loader->add_action( 'wp_ajax_upload_receipt', $plugin_public, 'upload_receipt' );
 			$this->loader->add_action( 'wp_ajax_nopriv_upload_receipt', $plugin_public, 'upload_receipt' );
+			// AJAX handlers for receipt removal.
 			$this->loader->add_action( 'wp_ajax_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
 			$this->loader->add_action( 'wp_ajax_nopriv_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
+			// AJAX handlers for get states.
 			$this->loader->add_action( 'wp_ajax_membership_get_states', $plugin_public, 'membership_get_states' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_get_states', $plugin_public, 'membership_get_states' );
+			// AJAX handlers for process payment.
+			$this->loader->add_action( 'wp_ajax_membership_process_payment', $plugin_public, 'membership_process_payment' );
+			$this->loader->add_action( 'wp_ajax_nopriv_membership_process_payment', $plugin_public, 'membership_process_payment' );
 		}
 	}
 

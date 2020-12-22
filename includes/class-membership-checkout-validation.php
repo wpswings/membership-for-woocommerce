@@ -50,7 +50,7 @@ class Membership_Checkout_Validation {
 	 *
 	 * @since 1.0.0
 	 */
-	public function validate_input_firstname( $name ) {
+	public function validate_input_name( $name ) {
 
 		if ( ! empty( $name ) ) {
 
@@ -58,7 +58,7 @@ class Membership_Checkout_Validation {
 
 			$match = array();
 
-			$check = preg_match( '/^([a-zA-ZÀ-ÿ-\' ]+)$/', $name, $match );
+			$check = preg_match( '/^([a-zA-Z\' ]+)$/', $name, $match );
 
 			// Name only contains letters and whitespaces.
 			if ( $check ) {

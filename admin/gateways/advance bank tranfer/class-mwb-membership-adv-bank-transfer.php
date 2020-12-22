@@ -27,7 +27,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 
-		$this->id                 = 'membership-adv-bank-transfer';
+		$this->id                 = 'mwb-membership-adv-bank-transfer';
 		$this->has_fields         = false;
 		$this->method_title       = __( 'Advance Direct Bank Transfer', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Take Payments in person via BACS.', 'membership-for-woocommerce' ); 
@@ -52,7 +52,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 					'bank_name'      => $this->get_option( 'bank_name' ),
 					'iban'           => $this->get_option( 'iban' ),
 					'bic'            => $this->get_option( 'bic' ),
-
 				),
 			)
 		);
@@ -292,7 +291,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 			return $desc . $this->return_receipt_fields_html();
 		}
 	}
-	
+
 	/**
 	 * Returns html of receipt fields.
 	 */

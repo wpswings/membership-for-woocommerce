@@ -44,6 +44,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 			<div class="membership_billing_fields">
 				<h3><?php esc_html_e( 'Billing details', 'membership-for-woocommerce' ); ?></h3>
 				<div class="membership_billing_fields_wrapper">
+					<input type="hidden" name="plan_id" id="membership_plan_id" value="<?php echo esc_html( $plan_id ); ?>">
 					<p class="form-row validate-required" id="mwb_billing_first_name_field">
 						<label for="membership_billing_first_name"><?php esc_html_e( 'First name&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
@@ -95,7 +96,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 						<label for="membership_billing_state"><?php esc_html_e( 'State&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
 							<select name="membership_billing_state" id="membership_billing_state" class="meb_state_select">
-								<option value=""></option>
+								<option selected value="<?php echo esc_html( $state ); ?>"><?php echo $state ?></option>
 							</select>
 						</span>
 					</p>

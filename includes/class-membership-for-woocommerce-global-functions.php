@@ -227,7 +227,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			'cod',
 			'membership-for-woo-paypal-gateway', // Membership Paypal.
 			'membership-for-woo-stripe-gateway', // Membership stripe.
-			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
+			'mwb-membership-adv-bank-transfer', // Mwb Advance abnk transfer.
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -460,7 +460,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		?>
 		<div class="import_csv_field_wrapper">
 			<input type="file" name="csv_to_import" id="csv_file_upload">
-			<input type="submit" value="Upload FIle" name="upload_csv_file" id="upload_csv_file" >
+			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
 
 			<div class="csv_import_response">
 			</div>
@@ -504,7 +504,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function payment_gateways_html() {
+	public function payment_gateways_html( $plan_id ) {
 
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
@@ -512,6 +512,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = $this->supported_gateways();
 
 		?>
+
 		<div class="mwb_membership_buy_now_modal">
 			<!-- Modal payment content start -->
 			<div class="mwb_membership_payment_modal" style="float: right;">
@@ -527,9 +528,13 @@ class Membership_For_Woocommerce_Global_Functions {
 			</div>
 			<!-- Modal payment content end. -->
 
+			<?php
+			// Modal billing fields.
+			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
+			?>
+		</div>
 		<?php
-		// Modal billing fields.
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
+
 	}
 
 	/**
