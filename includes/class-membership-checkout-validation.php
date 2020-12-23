@@ -25,6 +25,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Membership_Checkout_Validation {
 
 	/**
+	 * Error message.
+	 *
+	 * @param string $field Field name.
+	 * @since 1.0.0
+	 */
+	public function error_triggered( $field ) {
+
+		echo wp_json_encode(
+			array(
+				'status'  => false,
+				'message' => 'Not a valid ' . $field,
+			)
+		);
+
+		wp_die();
+	}
+
+	/**
 	 * Strip slashes, html special chars.
 	 *
 	 * @param mixed $data Contains in put data.
@@ -43,14 +61,14 @@ class Membership_Checkout_Validation {
 
 
 	/**
-	 * Validate names
+	 * Validate firstname
 	 *
 	 * @param string $name Stores the first name.
 	 * @return string
 	 *
 	 * @since 1.0.0
 	 */
-	public function validate_input_name( $name ) {
+	public function validate_input_fname( $name ) {
 
 		if ( ! empty( $name ) ) {
 
@@ -58,18 +76,49 @@ class Membership_Checkout_Validation {
 
 			$match = array();
 
-			$check = preg_match( '/^([a-zA-Z\' ]+)$/', $name, $match );
+			$check = preg_match( "/^([a-zA-Z\' ]+)$/", $name, $match );
 
 			// Name only contains letters and whitespaces.
 			if ( $check ) {
 
 				$name = $match[0];
+				return $name;
 			} else {
 
-				$name = esc_html__( 'Not a valid Firstname', 'membership-for-woocommerce' );
+				$this->error_triggered( 'firstname' );
 			}
 		}
-		return $name;
+
+	}
+
+	/**
+	 * Validate lastname
+	 *
+	 * @param string $name Stores the last name.
+	 * @return string
+	 *
+	 * @since 1.0.0
+	 */
+	public function validate_input_lname( $name ) {
+
+		if ( ! empty( $name ) ) {
+
+			$name = $this->clean_input_data( $name );
+
+			$match = array();
+
+			$check = preg_match( "/^([a-zA-Z\' ]+)$/", $name, $match );
+
+			// Name only contains letters and whitespaces.
+			if ( $check ) {
+
+				$name = $match[0];
+				return $name;
+			} else {
+
+				$this->error_triggered( 'lastname' );
+			}
+		}
 	}
 
 	/**
@@ -88,18 +137,17 @@ class Membership_Checkout_Validation {
 
 			$match = array();
 
-			$check = preg_match( '/^(?:\\d+ [a-zA-Z ]+, ){2}[a-zA-Z ]+$/', $st_name, $match );
+			$check = preg_match( '/[^?<>=;@$%^*! ]/', $st_name, $match );
 
 			if ( $check ) {
 
 				$st_name = $match[0];
+				return $st_name;
 			} else {
 
-				$st_name = esc_html__( 'Not a valid Address', 'membership-for-woocommerce' );
+				$this->error_triggered( 'address' );
 			}
 		}
-
-		return $st_name;
 	}
 
 	/**
@@ -123,12 +171,12 @@ class Membership_Checkout_Validation {
 			if ( $check ) {
 
 				$city = $match[0];
+				return $city;
 			} else {
 
-				$city = esc_html__( 'Not a valid city', 'membership-for-woocommerce' );
+				$this->error_triggered( 'city' );
 			}
 		}
-		return $city;
 	}
 
 	/**
@@ -307,7 +355,9 @@ class Membership_Checkout_Validation {
 
 		// Check the string against the six types of postcodes.
 		foreach ( $pcexp as $regexp ) {
+
 			if ( preg_match( $regexp, $postcode, $matches ) ) {
+
 				// Remember that we have found that the code is valid and break from loop.
 				$valid = true;
 				break;

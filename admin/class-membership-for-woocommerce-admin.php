@@ -203,6 +203,10 @@ class Membership_For_Woocommerce_Admin {
 			} elseif ( isset( $_GET['section'] ) && 'membership-for-woo-stripe-gateway' == $_GET['section'] ) {
 
 				wp_enqueue_script( 'mwb-membership-stripe-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-stripe.js', array( 'jquery' ), $this->version, false );
+
+			} elseif ( isset($_GET['section'] ) && 'membership-adv-bank-transfer' == $_GET['section'] ) {
+
+				wp_enqueue_script( 'mwb-membership-ad-bacs-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-ad-bacs.js', array( 'jquery' ), $this->version, false );
 			}
 		}
 
@@ -1204,15 +1208,15 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_supported_gateways( $gateways ) {
 
-		if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
+		// if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
 
-			$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
-		}
+		// 	$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
+		// }
 
-		if ( class_exists( 'Mwb_Membership_For_Woo_Stripe_Gateway' ) ) {
+		// if ( class_exists( 'Mwb_Membership_For_Woo_Stripe_Gateway' ) ) {
 
-			$gateways[] = 'Mwb_Membership_For_Woo_Stripe_Gateway';
-		}
+		// 	$gateways[] = 'Mwb_Membership_For_Woo_Stripe_Gateway';
+		// }
 
 		if ( class_exists( 'Mwb_Membership_Adv_Bank_Transfer' ) ) {
 

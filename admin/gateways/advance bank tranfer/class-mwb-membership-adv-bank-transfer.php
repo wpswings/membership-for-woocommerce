@@ -27,7 +27,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 
-		$this->id                 = 'mwb-membership-adv-bank-transfer';
+		$this->id                 = 'membership-adv-bank-transfer';
 		$this->has_fields         = false;
 		$this->method_title       = __( 'Advance Direct Bank Transfer', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Take Payments in person via BACS.', 'membership-for-woocommerce' ); 
@@ -259,24 +259,26 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	/**
 	 * Unset the gateway according to the country.
 	 */
-	public function is_available() {
+	// public function is_available() {
 
-		// Return if admin, as no session is created for admin.
-		if ( is_admin() ) {
-			return;
-		}
+	// 	// // Return if admin, as no session is created for admin.
+	// 	// if ( is_admin() ) {
+	// 	// 	return;
+	// 	// }
 
-		$current_user    = WC()->session->get( 'customer' );
-		$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
+	// 	// $current_user    = WC()->session->get( 'customer' );
+	// 	// $billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
 
-		if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
+	// 	// echo '<pre>'; print_r( $billing_country ); echo '</pre>'; die();
 
-			return false;
-		} else {
+	// 	// if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
 
-			return true;
-		}
-	}
+	// 	// 	return false;
+	// 	// } else {
+
+	// 	// 	return true;
+	// 	// }
+	// }
 
 	/**
 	 * Output for the receipt fields.
@@ -321,31 +323,31 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	/**
 	 * Process payment.
 	 */
-	public function process_payment ( $order_id ) {
+	public function process_payment ( $plan_id ) {
 
-		$order = wc_get_order( $order_id );
+		// $order = wc_get_order( $order_id );
 
-		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
+		// $receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
 
-		// update order receipt.
-		update_post_meta( $order_id, 'bacs_receipt_attached', $receipt );
+		// // update order receipt.
+		// update_post_meta( $order_id, 'bacs_receipt_attached', $receipt );
 
-		if ( $order->get_total() > 0 ) {
-			// Mark it as on-hold.
-			$order->update_status( apply_filters( 'membership_bacs_process_payment_status', 'on-hold', $order ), __( 'Awaiting BACS payment', 'membrship-for-woocommerce' ) );
+		// if ( $order->get_total() > 0 ) {
+		// 	// Mark it as on-hold.
+		// 	$order->update_status( apply_filters( 'membership_bacs_process_payment_status', 'on-hold', $order ), __( 'Awaiting BACS payment', 'membrship-for-woocommerce' ) );
 
-		} else {
-			$order->payment_complete();
-		}
+		// } else {
+		// 	$order->payment_complete();
+		// }
 
-		// Remove cart.
-		WC()->cart->empty_cart();
+		// // Remove cart.
+		// WC()->cart->empty_cart();
 
-		// Return thankyou redirect.
-		return array(
-			'result'   => 'success',
-			'redirect' => $this->get_return_url( $order ),
-		);
+		// // Return thankyou redirect.
+		// return array(
+		// 	'result'   => 'success',
+		// 	'redirect' => $this->get_return_url( $order ),
+		// );
 	}
 
 	/**

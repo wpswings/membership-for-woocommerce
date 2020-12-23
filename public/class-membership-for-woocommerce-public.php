@@ -809,7 +809,7 @@ class Membership_For_Woocommerce_Public {
 
 				move_uploaded_file( $file_tmp, $base_dir . $receipt_dir . $file_name );
 
-				echo json_encode(
+				echo wp_json_encode(
 					array(
 						'result' => 'success',
 						'path'   => $base_dir . $receipt_dir . $file_name,
@@ -819,7 +819,7 @@ class Membership_For_Woocommerce_Public {
 
 			} else {
 
-				echo json_encode(
+				echo wp_json_encode(
 					array(
 						'result' => 'failure',
 						'errors' => $errors,
@@ -852,7 +852,7 @@ class Membership_For_Woocommerce_Public {
 				// Remove file.
 				unlink( $file_path );
 
-				echo json_encode(
+				echo wp_json_encode(
 					array(
 						'result' => 'success',
 					)
@@ -860,7 +860,7 @@ class Membership_For_Woocommerce_Public {
 
 			} else {
 
-				echo json_encode(
+				echo wp_json_encode(
 					array(
 						'result' => 'failure',
 					)
@@ -908,115 +908,74 @@ class Membership_For_Woocommerce_Public {
 
 		$validation = new Membership_Checkout_Validation();
 
-		if ( empty( $_POST['f_name'] ) ) {
+		$fields = array();
 
-			echo esc_html__( 'First name cannot be empty!', 'membership-for-woocommerce' );
+		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
+
+		//print_r( $fields );
+
+		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
+
+		switch ( $method_id ) {
+
+			case 'membership-adv-bank-transfer':
+				$recpt_att = isset( $feilds['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
+				break;
+
+			case 'membership-paypal-gateway':
+				// add fields here.
+				break;
+
+			case 'membership-stripe-gateway':
+				// add fields here.
+				break;
+
+			default:
+				esc_html__( 'payment method not selected', 'membership-for-woocommerce' );
+				break;
+		}
+
+		$plan_id   = isset( $feilds['plan_id'] ) ? $fields['plan_id'] : '';
+		$recpt_att = isset( $feilds['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
+		$firstname = isset( $fields['membership_billing_first_name'] ) ? $validation->validate_input_fname( $fields['membership_billing_first_name'] ) : '';
+		$lastname  = isset( $fields['membership_billing_last_name'] ) ? $validation->validate_input_lname( $fields['membership_billing_last_name'] ) : '';
+		$company   = isset( $fields['membership_billing_company'] ) ? $fields['membership_billing_company'] : '';
+		$country   = isset( $fields['membership_billing_country'][0] ) ? $fields['membership_billing_country'][0] : '';
+		$addr_1    = isset( $fields['membership_billing_address_1'] ) ? $validation->validate_input_stname( $fields['membership_billing_address_1'] ) : '';
+		$addr_2    = isset( $fields['membership_billing_address_2'] ) ? $validation->validate_input_stname( $fields['membership_billing_address_2'] ) : '';
+		$city      = isset( $fields['membership_billing_city'] ) ? $validation->validate_input_city( $fields['membership_billing_city'] ) : '';
+		$state     = isset( $fields['membership_billing_state'] ) ? $fields['membership_billing_state'] : '';
+		$zip       = isset( $fields['membership_billing_postcode'] ) ? $validation->validate_input_pin( $fields['membership_billing_postcode'], $country ) : '';
+
+		if ( $zip ) {
+			$zip = $fields['membership_billing_postcode'];
 		} else {
-
-			$firstname = $validation->validate_input_name( sanitize_text_field( wp_unslash( $_POST['f_name'] ) ) );
-
+			$validation->error_triggered( 'postcode' );
 		}
 
-		if ( empty( $_POST['l_name'] ) ) {
+		$phone = isset( $fields['membership_billing_phone'] ) ? $validation->validate_input_phone( $fields['membership_billing_phone'] ) : '';
 
-			echo esc_html__( 'Last name cannot be empty!', 'membership-for-woocommerce' );
+		if ( $phone ) {
+			$phone = $fields['membership_billing_phone'];
 		} else {
-
-			$lastname = $validation->validate_input_name( sanitize_text_field( wp_unslash( $_POST['l_name'] ) ) );
+			$validation->error_triggered( 'phone number' );
 		}
 
-		if ( ! empty( $_POST['company'] ) ) {
+		$email = isset( $fields['membership_billing_email'] ) ? $validation->validate_input_email( $fields['membership_billing_email'] ) : '';
 
-			$company = sanitize_text_field( wp_unslash( $_POST['company'] ) );
-		}
-
-		if ( empty( $_POST['country'] ) ) {
-
-			echo esc_html__( 'Country cannot be empty!', 'membership-for-woocommerce' );
+		if ( $email ) {
+			$email = $fields['membership_billing_email'];
 		} else {
-
-			$country = sanitize_text_field( wp_unslash( $_POST['country'] ) );
+			$validation->error_triggered( 'email address' );
 		}
 
-		if ( empty( $_POST['add_1'] ) ) {
+		global $woocommerce;
+		$gateways = $woocommerce->payment_gateways->get_available_payment_gateways();
 
-			echo esc_html__( 'Street address cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$address_1 = $validation->validate_input_stname( sanitize_text_field( wp_unslash( $_POST['add_1'] ) ) );
+		if ( in_array( $method_id, $this->global_class->supported_gateways() ) ) {
+			$gateways[ $method_id ]->process_payment( $plan_id );
 		}
 
-		if ( ! empty( $_POST['add_2'] ) ) {
-
-			$address_2 = sanitize_text_field( wp_unslash( $_POST['add_2'] ) );
-		}
-
-		if ( empty( $_POST['city'] ) ) {
-
-			echo esc_html__( 'City cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$city = $validation->validate_input_city( sanitize_text_field( wp_unslash( $_POST['city'] ) ) );
-		}
-
-		if ( empty( $_POST['state'] ) ) {
-
-			echo esc_html__( 'State cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$state = sanitize_text_field( wp_unslash( $_POST['state'] ) );
-		}
-
-		if ( empty( $_POST['zip'] ) ) {
-
-			echo esc_html__( 'Pin code cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$zip = $validation->validate_input_pin( sanitize_text_field( wp_unslash( $_POST['zip'] ) ), $country );
-
-			if ( $zip ) {
-				$zip = sanitize_text_field( wp_unslash( $_POST['zip'] ) );
-			}
-		}
-
-		if ( empty( $_POST['phone'] ) ) {
-
-			echo esc_html__( 'Phone cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$phone = $validation->validate_input_phone( sanitize_text_field( wp_unslash( $_POST['phone'] ) ) );
-
-			if ( $phone ) {
-
-				$phone = sanitize_text_field( wp_unslash( $_POST['phone'] ) );
-			}
-		}
-
-		if ( empty( $_POST['email'] ) ) {
-
-			echo esc_html__( 'Email cannot be empty!', 'membership-for-woocommerce' );
-		} else {
-
-			$email = $validation->validate_input_email( sanitize_text_field( wp_unslash( $_POST['email'] ) ) );
-
-			if ( $email ) {
-
-				$email = sanitize_text_field( wp_unslash( $_POST['email'] ) );
-			}
-		}
-
-		$method_id = ! empty( $_POST['gateway'] ) ? sanitize_text_field( wp_unslash( $_POST['gateway'] ) ) : '';
-
-		$plan_id = ! empty( $_POST['plan'] ) ? sanitize_text_field( wp_unslash( $_POST['plan'] ) ) : '';
-
-		// Calling payment gateway classes.
-		// $payment_process = call_user_func( array( ucwords( str_replace( '-', '_', $method_id ) ), 'process_payment' ) );
-		// print_r($payment_process);
-		$classname = ucwords( str_replace( '-', '_', $method_id ) );
-
-		$instance = new $classname();
-		
-		$instance->process_payment( $plan_id );
 		wp_die();
 	}
 

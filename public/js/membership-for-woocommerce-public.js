@@ -33,25 +33,24 @@
 
 jQuery( document ).ready( function( $ ) {
 
-	var payment_methods;
+	var $payment_methods;
 
 	// Opens modal when clicked on membership "buy now" button.
 	$( ".mwb_membership_buynow" ).on( "click", function( e ) {
 		e.preventDefault();
 
-		$( ".mwb_membership_buy_now_modal" ).dialog( "open" );
+		// Ajax cal for states as per country on page ready.
+		get_states_for_country();
 
-		// Ajax call for states as per country.
-		$( "#membership_billing_country" ).on( "change", function() {
-
-			var country_code = $( this ).val();
+		// Ajax call function for states as per country.
+		function get_states_for_country() {
 
 			$.ajax({
 				url  : membership_public_obj.ajaxurl,
 				type : "POST",
 				data : {
 					action  : "membership_get_states",
-					country : country_code,
+					country : $( "#membership_billing_country" ).val(),
 					nonce   : membership_public_obj.nonce,
 				},
 
@@ -67,6 +66,14 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 			});
+		}
+
+		$( "#mwb_membership_buy_now_modal_form" ).dialog( "open" );
+
+		// Ajax call for states as per country change.
+		$( "#membership_billing_country" ).on( "change", function() {
+
+			get_states_for_country();
 		});
 
 		// Opens payment fields in modal when selected.
@@ -80,57 +87,20 @@ jQuery( document ).ready( function( $ ) {
 		});
 
 		// Process checkout here.
-		$( document ).on( "click", "#membership_proceed_payment", function( e ) {
+		$( document ).on( "submit", "#mwb_membership_buy_now_modal_form", function( e ) {
 
 			e.preventDefault();
-		    //alert('hey');
 			
-			var first_name = $( "#membership_billing_first_name" ).val();
-			console.log( first_name );
-			var last_name  = $( "#membership_billing_last_name" ).val();
-			console.log( last_name );
-			var company    = $( "#membership_billing_company" ).val();
-			console.log( company );
-			var country    = $( "#membership_billing_country" ).val(); 
-			console.log( country );  
-			var address_1  = $( "#membership_billing_address_1" ).val();
-			console.log( address_1 );
-			var address_2  = $( "#membership_billing_address_2" ).val();
-			console.log( address_2 );
-			var city       = $( "#membership_billing_city" ).val();
-			console.log( city );
-			var state      = $( "#membership_billing_state" ).val();
-			console.log( state );
-			var postcode   = $( "#membership_billing_postcode" ).val();
-			console.log( postcode );
-			var phone      = $( "#membership_billing_phone" ).val();
-			console.log( phone );
-			var email      = $( "#membership_billing_email" ).val();
-			console.log( email );
-			var method_id  = $payment_methods;
-			console.log( method_id );
-			var plan_id = $( "#membership_plan_id" ).val();
+			var form = $( "#mwb_membership_buy_now_modal_form" );
 
 			$.ajax({
 				url  : membership_public_obj.ajaxurl,
-				type : "POST",
-				//dataType : "json",
+				type : form.attr( "method" ),
+				dataType : "json",
 				data : {
-					action  : "membership_process_payment",
-					nonce   : membership_public_obj.nonce,
-					f_name  : first_name,
-					l_name  : last_name,
-					company : company,
-					country : country,
-					add_1   : address_1,
-					add_2   : address_2,
-					city    : city,
-					state   : state,
-					zip     : postcode,
-					phone   : phone,
-					email   : email,
-					gateway : method_id,
-					plan    : plan_id
+					action    : "membership_process_payment",
+					nonce     : membership_public_obj.nonce,
+					form_data : form.serialize()
 				},
 
 				success : function( response ) {
@@ -142,10 +112,10 @@ jQuery( document ).ready( function( $ ) {
 		 	 
 		});
 
-		
 	});
 
-	$( ".mwb_membership_buy_now_modal" ).dialog({
+	// Payment modal definition.
+	$( "#mwb_membership_buy_now_modal_form" ).dialog({
         modal    : true,
         autoOpen : false,
 		show     : {effect: "blind", duration: 800},
@@ -194,11 +164,11 @@ jQuery( document ).ready( function( $ ) {
 						var removal = new FormData();
 
 						removal.append( "path", response.path );
-						removal.append( "auth_nonce", membership_bank_transfer.nonce );
+						removal.append( "auth_nonce", membership_public_obj.nonce );
 						removal.append( "action", "remove_current_receipt" );
 
 						$.ajax({
-							url         : membership_bank_transfer.ajaxurl,
+							url         : membership_public_obj.ajaxurl,
 							type        : "POST",
 							dataType    : "json",
 							data        : removal,
@@ -228,6 +198,5 @@ jQuery( document ).ready( function( $ ) {
 		});
 
 	});
-
 
 });

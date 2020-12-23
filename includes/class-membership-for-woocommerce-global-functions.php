@@ -225,9 +225,9 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = array(
 			'paypal',
 			'cod',
-			'membership-for-woo-paypal-gateway', // Membership Paypal.
-			'membership-for-woo-stripe-gateway', // Membership stripe.
-			'mwb-membership-adv-bank-transfer', // Mwb Advance abnk transfer.
+			'membership-paypal-gateway', // Membership Paypal.
+			'membership-stripe-gateway', // Membership stripe.
+			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -480,7 +480,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		?>
 		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
-			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" />
+			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" required />
 
 			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 				<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
@@ -512,7 +512,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = $this->supported_gateways();
 
 		?>
-
+	<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data">
 		<div class="mwb_membership_buy_now_modal">
 			<!-- Modal payment content start -->
 			<div class="mwb_membership_payment_modal" style="float: right;">
@@ -533,6 +533,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
 			?>
 		</div>
+	</form>
 		<?php
 
 	}

@@ -19,7 +19,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->id                 = 'membership-for-woo-paypal-gateway';
+		$this->id                 = 'membership-paypal-gateway';
 		$this->method_title       = __( 'Paypal ( Membership )', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Safe and Secure method for making payments with Paypal.', 'membership-for-woocommerce' );
 		$this->has_fields         = true;

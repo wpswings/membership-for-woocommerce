@@ -42,7 +42,7 @@ class Mwb_Membership_For_Woo_Stripe_Gateway extends WC_Payment_Gateway_CC {
 	 */
 	public function __construct() {
 
-		$this->id                 = 'membership-for-woo-stripe-gateway';
+		$this->id                 = 'membership-stripe-gateway';
 		$this->method_title       = __( 'Stripe ( Membership )', 'membership-for-woocommerce' );
 		$this->method_title_short = $this->method_title;
 		$this->method_description = __( 'Stripe works by adding payment fields on the checkout and then sending the details to Stripe for verification.', 'membership-for-woocommerce' );
