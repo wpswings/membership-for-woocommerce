@@ -26,21 +26,12 @@ class Membership_For_Woocommerce_Global_Functions {
 	public static $instance;
 
 	/**
-	 * Creating Instance of the country functions class.
-	 *
-	 * @var object
-	 */
-	public $country_class;
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
 	 */
 	public function __construct() {
 		self::$instance = $this;
-
-		$this->country_class = Membership_For_Woocommerce_Country_Functions::get();
 	}
 
 	/**
@@ -840,6 +831,44 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		return $cate_titles;
 
+	}
+
+	/**
+	 * Create pending membership for customer.
+	 *
+	 * @param int $plan_id Is the membership plan ID.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_membership_for_customer( $plan_id ) {
+
+		if ( ! empty( $plan_id ) ) {
+
+			$plan_title = get_the_title( $plan_id );
+
+			$current_user = wp_get_current_user();
+			$user_name    = $current_user->display_name;
+
+			$member_id = wp_insert_post(
+				array(
+					'post_type'   => 'mwb_cpt_members',
+					'post_title'  => $plan_title,
+					'post_status' => 'pending',
+					'post_author' => $user_name,
+					'meta_input'  => array(
+						'plan_id'   => $plan_id,
+						'plan_name' => $plan_title,
+					),
+				)
+			);
+
+			return array(
+				'status'    => true,
+				'member_id' => $member_id,
+			);
+
+		}
 	}
 
 }

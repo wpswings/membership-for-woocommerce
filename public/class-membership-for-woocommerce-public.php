@@ -881,15 +881,19 @@ class Membership_For_Woocommerce_Public {
 
 		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
 
-		$states = $this->country_class->get_country_states( $country_code );
+		$country_class = new WC_Countries();
+		$states        = $country_class->__get( 'states' );
+		$states        = ! empty( $states[ $country_code ] ) ? $states[ $country_code ] : array();
 
 		$result = '';
 
+		//print_r($states);
+
 		if ( ! empty( $states ) && is_array( $states ) ) {
 
-			foreach ( $states as $code => $name ) {
+			foreach ( $states as $state_code => $name ) {
 
-				$result .= '<option value="' . $code . '">' . $name . '</option>';
+				$result .= '<option value="' . $state_code . '">' . $name . '</option>';
 			}
 
 			echo $result;
@@ -912,14 +916,12 @@ class Membership_For_Woocommerce_Public {
 
 		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
 
-		//print_r( $fields );
-
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
 
 		switch ( $method_id ) {
 
 			case 'membership-adv-bank-transfer':
-				$recpt_att = isset( $feilds['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
+				$recpt_att = isset( $fields['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
 				break;
 
 			case 'membership-paypal-gateway':
@@ -935,8 +937,8 @@ class Membership_For_Woocommerce_Public {
 				break;
 		}
 
-		$plan_id   = isset( $feilds['plan_id'] ) ? $fields['plan_id'] : '';
-		$recpt_att = isset( $feilds['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
+		$plan_id   = isset( $fields['plan_id'] ) ? $fields['plan_id'] : '';
+		$recpt_att = isset( $fields['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
 		$firstname = isset( $fields['membership_billing_first_name'] ) ? $validation->validate_input_fname( $fields['membership_billing_first_name'] ) : '';
 		$lastname  = isset( $fields['membership_billing_last_name'] ) ? $validation->validate_input_lname( $fields['membership_billing_last_name'] ) : '';
 		$company   = isset( $fields['membership_billing_company'] ) ? $fields['membership_billing_company'] : '';
@@ -969,11 +971,17 @@ class Membership_For_Woocommerce_Public {
 			$validation->error_triggered( 'email address' );
 		}
 
+		// If all goes well membership for customer will be created.
+		$member_data = $this->global_class->create_membership_for_customer( $plan_id );
+
+		//print_r( $member_data );
+
 		global $woocommerce;
 		$gateways = $woocommerce->payment_gateways->get_available_payment_gateways();
 
-		if ( in_array( $method_id, $this->global_class->supported_gateways() ) ) {
-			$gateways[ $method_id ]->process_payment( $plan_id );
+		if ( in_array( $method_id, $gateways ) ) {
+
+			$gateways[ $method_id ]->process_payment( $plan_id, $member_data['member_id'] );
 		}
 
 		wp_die();

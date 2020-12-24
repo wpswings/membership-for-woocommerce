@@ -305,7 +305,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		<div class="bacs_receipt_wrapper">
 			<div class="bacs_receipt_field">
 				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
-				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached">
+				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="">
 			</div>
 			<div id="progress-wrapper" class="is_hidden">
 				<div class="progress-bar"></div>
@@ -323,14 +323,18 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	/**
 	 * Process payment.
 	 */
-	public function process_payment ( $plan_id ) {
+	public function process_payment ( $plan_id, $member_id = '' ) {
 
-		// $order = wc_get_order( $order_id );
+		if ( ! empty( $plan_id ) && ! empty( $member_id ) ) {
 
-		// $receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
+			$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
 
-		// // update order receipt.
-		// update_post_meta( $order_id, 'bacs_receipt_attached', $receipt );
+		}
+
+		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
+
+		// update order receipt.
+		update_post_meta( $member_id, 'bacs_receipt_attached', $receipt );
 
 		// if ( $order->get_total() > 0 ) {
 		// 	// Mark it as on-hold.

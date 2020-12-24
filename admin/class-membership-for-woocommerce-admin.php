@@ -511,7 +511,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_meta_box() {
 
-		add_meta_box( 'membership_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), 'mwb_cpt_membership' );
+		add_meta_box( 'membership_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), array( 'mwb_cpt_membership', 'mwb_cpt_members' ) );
 	}
 
 	/**

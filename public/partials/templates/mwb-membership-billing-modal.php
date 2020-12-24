@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Creating Instance of the global functions class.
-$country_class = Membership_For_Woocommerce_Country_Functions::get();
+$country_class = new WC_Countries();
 
 // Getting user id.
 $user_id = get_current_user_id();
@@ -67,9 +67,10 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 					<p class="form-row" id="mwb_billing_country_field">
 						<label for="membership_billing_country"><?php esc_html_e( 'Country/Region&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
-							<select name="membership_billing_country[]" id="membership_billing_country" class="wc-enhanced-select mwb_country_select" required>
+							<select name="membership_billing_country" id="membership_billing_country" class="wc-enhanced-select mwb_country_select" required>
+								<option value=""><?php esc_html_e( 'Select a Country', 'membership-for-woocommerce' ); ?></option>
 								<?php
-								foreach ( $country_class->get_country_list() as $code => $name ) {
+								foreach ( $country_class->__get( 'countries' ) as $code => $name ) {
 									?>
 									<option <?php echo esc_html( $code == $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
 								<?php } ?>
@@ -97,7 +98,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 						<label for="membership_billing_state"><?php esc_html_e( 'State&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
 							<select name="membership_billing_state" id="membership_billing_state" class="meb_state_select" required>
-
+									<option value=""><?php esc_html_e( 'Select a state', 'membership-for-woocommerce' ); ?></option>
 							</select>
 						</span>
 					</p>
