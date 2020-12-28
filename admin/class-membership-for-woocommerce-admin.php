@@ -511,7 +511,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_meta_box() {
 
-		add_meta_box( 'membership_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), array( 'mwb_cpt_membership', 'mwb_cpt_members' ) );
+		add_meta_box( 'members_meta_box', __( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'mwb_membership_meta_box_callback' ), 'mwb_cpt_membership' );
 	}
 
 	/**
@@ -885,7 +885,6 @@ class Membership_For_Woocommerce_Admin {
 				'menu_icon'           => 'dashicons-businessperson',
 				'description'         => __( 'Displays the list of all members.', 'membership-for-woocommerce' ),
 				'supports'            => array(
-					'title',
 					'editor',
 				),
 				'exclude_from_search' => false,
@@ -894,6 +893,60 @@ class Membership_For_Woocommerce_Admin {
 				),
 			)
 		);
+	}
+
+	/**
+	 * Remove post type title support from Members post type
+	 */
+	public function membership_for_woo_remove_fields() {
+
+		remove_post_type_support( 'mwb_cpt_members', 'title' );
+		remove_post_type_support( 'mwb_cpt_members', 'editor' );
+
+	}
+
+	/**
+	 * Register custom meta box for members custom post type.
+	 *
+	 * @since 1.0.0
+	 */
+	public function membership_for_woo_members_metabox() {
+
+		add_meta_box( 'members_meta_box', __( 'Membership Details', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_callback' ), 'mwb_cpt_members' );
+		add_meta_box( 'members_metabox_billing', __( 'Billing details', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_billing' ), 'mwb_cpt_members', 'normal', 'high' );
+		add_meta_box( 'members_metabox_schedule', __( 'Schedule', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_schedule' ), 'mwb_cpt_members', 'side', 'high' );
+	}
+
+	/**
+	 * Members metabox callback.
+	 *
+	 * @param object $post is the post object.
+	 * @since 1.0.0
+	 */
+	public function mwb_members_metabox_callback( $post ) {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-details.php';
+	}
+
+	/**
+	 * Members billing metabox callback.
+	 *
+	 * @param object $post is the post object.
+	 * @since 1.0.0
+	 */
+	public function mwb_members_metabox_billing( $post ) {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-billing.php';
+	}
+
+	/**
+	 * Members schedule metabox callback.
+	 *
+	 * @param object $post is the post object.
+	 * @since 1.0.0
+	 */
+	public function mwb_members_metabox_schedule( $post ) {
+		
 	}
 
 	/**

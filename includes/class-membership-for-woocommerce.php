@@ -193,6 +193,7 @@ class Membership_For_Woocommerce {
 
 		// Adding custom meta box.
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'membership_for_woo_members_metabox' );
 
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
@@ -237,6 +238,8 @@ class Membership_For_Woocommerce {
 		// Hide payment gateways.
 		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
 
+		// Remove title & editor field.
+		$this->loader->add_action( 'init', $plugin_admin, 'membership_for_woo_remove_fields' );
 	}
 
 	/**

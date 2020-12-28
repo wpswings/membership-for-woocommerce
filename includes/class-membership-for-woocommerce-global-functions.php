@@ -836,16 +836,18 @@ class Membership_For_Woocommerce_Global_Functions {
 	/**
 	 * Create pending membership for customer.
 	 *
-	 * @param int $plan_id Is the membership plan ID.
+	 * @param array $fields an array of member billing details.
+	 * @param int   $plan_id Is the membership plan ID.
 	 * @return array
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_membership_for_customer( $plan_id ) {
+	public function create_membership_for_customer( $fields , $plan_id ) {
 
-		if ( ! empty( $plan_id ) ) {
+		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
-			$plan_title = get_the_title( $plan_id );
+			$plan_obj  = get_post( $plan_id, ARRAY_A );
+			$plan_meta = array_merge( $plan_obj, get_post_meta( $plan_id ) );
 
 			$current_user = wp_get_current_user();
 			$user_name    = $current_user->display_name;
@@ -853,12 +855,13 @@ class Membership_For_Woocommerce_Global_Functions {
 			$member_id = wp_insert_post(
 				array(
 					'post_type'   => 'mwb_cpt_members',
-					'post_title'  => $plan_title,
+					//'post_title'  => $title,
 					'post_status' => 'pending',
 					'post_author' => $user_name,
 					'meta_input'  => array(
-						'plan_id'   => $plan_id,
-						'plan_name' => $plan_title,
+						'plan_id'         => $plan_id,
+						'plan_obj'        => $plan_meta,
+						'billing_details' => $fields,
 					),
 				)
 			);

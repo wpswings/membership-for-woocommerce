@@ -40,13 +40,6 @@ class Membership_For_Woocommerce_Public {
 	private $version;
 
 	/**
-	 * Creating Instance of the global functions class.
-	 *
-	 * @var object
-	 */
-	public $global_class;
-
-	/**
 	 * Creating Instance of the country functions class.
 	 *
 	 * @var object
@@ -66,8 +59,6 @@ class Membership_For_Woocommerce_Public {
 		$this->version     = $version;
 
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
-
-		$this->country_class = Membership_For_Woocommerce_Country_Functions::get();
 
 	}
 
@@ -971,8 +962,8 @@ class Membership_For_Woocommerce_Public {
 			$validation->error_triggered( 'email address' );
 		}
 
-		// If all goes well membership for customer will be created.
-		$member_data = $this->global_class->create_membership_for_customer( $plan_id );
+		// If all goes well, a membership for customer will be created.
+		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id );
 
 		//print_r( $member_data );
 
