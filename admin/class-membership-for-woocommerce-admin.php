@@ -106,6 +106,11 @@ class Membership_For_Woocommerce_Admin {
 			if ( isset( $_GET['tab'] ) && 'shipping' == $_GET['tab'] ) {
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 			}
+
+			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
+
+				wp_enqueue_style( 'members-admin-css', plugin_dir_url( __FILE__ ) . 'css/membership-for-woo-members-admin.css', array(), $this->version, 'all' );
+			}
 		}
 
 	}
@@ -207,6 +212,11 @@ class Membership_For_Woocommerce_Admin {
 			} elseif ( isset($_GET['section'] ) && 'membership-adv-bank-transfer' == $_GET['section'] ) {
 
 				wp_enqueue_script( 'mwb-membership-ad-bacs-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-ad-bacs.js', array( 'jquery' ), $this->version, false );
+			}
+
+			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
+
+				wp_enqueue_script( 'members-admin-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woo-member-admin.js', array( 'jquery' ), $this->version, false );
 			}
 		}
 
@@ -946,7 +956,8 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_members_metabox_schedule( $post ) {
-		
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-schedule.php';
 	}
 
 	/**
@@ -994,11 +1005,17 @@ class Membership_For_Woocommerce_Admin {
 		switch ( $column ) {
 
 			case 'membership_id':
-				echo esc_html( get_the_title( $post_id ) );
+				$author_id    = get_post_field( 'post_author', $post_id );
+				$display_name = get_the_author_meta( 'display_name', $author_id );
+				?>
+				<strong><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
+				<?php
 				break;
 
 			case 'membership_status':
-				echo 'status';
+				?>
+				<strong><?php echo esc_html( get_post_status( $post_id ) ); ?></strong>
+				<?php
 				break;
 
 			case 'membership_user':

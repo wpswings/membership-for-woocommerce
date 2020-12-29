@@ -218,6 +218,6 @@ jQuery( document ).ready( function( $ ) {
         autoOpen: false,
 		show: {effect: "blind", duration: 800},
 		width : 600,
-	}); 
+	});
 
 });

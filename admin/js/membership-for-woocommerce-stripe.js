@@ -1,5 +1,5 @@
 jQuery( document ).ready( function( $ ){
-
+	
 	$( "#woocommerce_membership-for-woo-stripe-gateway_testmode" ).on( "change", function( e ){
 		e.preventDefault();
 

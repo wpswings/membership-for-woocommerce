@@ -302,7 +302,7 @@ class Membership_For_Woocommerce_Public {
 
 									echo '<div style="clear: both">
 											<div style="margin-top: 10px;">
-												<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+												<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 											</div>
 										</div>';
 								}
@@ -329,7 +329,7 @@ class Membership_For_Woocommerce_Public {
 
 										echo '<div style="clear: both">
 												<div style="margin-top: 10px;">
-													<a class="button alt" href="' . esc_html( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+													<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 												</div>
 											</div>';
 									}
