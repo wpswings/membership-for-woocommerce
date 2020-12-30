@@ -630,16 +630,17 @@ class Membership_For_Woocommerce_Global_Functions {
 					'mwb_membership_plan_duration_type'    => ! empty( $value[6] ) ? $value[6] : '',
 					'mwb_membership_plan_start'            => ! empty( $value[7] ) ? $value[7] : '',
 					'mwb_membership_plan_end'              => ! empty( $value[8] ) ? $value[8] : '',
-					'mwb_membership_plan_user_access'      => ! empty( $value[9] ) ? $value[9] : '',
-					'mwb_membership_plan_access_type'      => ! empty( $value[10] ) ? $value[10] : '',
-					'mwb_membership_plan_time_duration'    => ! empty( $value[11] ) ? $value[11] : '',
-					'mwb_membership_plan_time_duration_type' => ! empty( $value[12] ) ? $value[12] : '',
-					'mwb_membership_plan_offer_price_type' => ! empty( $value[13] ) ? $value[13] : '',
-					'mwb_memebership_plan_discount_price'  => ! empty( $value[14] ) ? $value[15] : '',
-					'mwb_memebership_plan_free_shipping'   => ! empty( $value[15] ) ? $value[15] : '',
-					'mwb_membership_plan_target_ids'       => ! empty( $value[16] ) ? $this->import_csv_ids( $value[16] ) : '',
-					'mwb_membership_plan_target_categories' => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
-					'post_content'                         => ! empty( $value[18] ) ? $value[18] : '',
+					'mwb_membership_plan_recurring'        => ! empty( $value[9] ) ? $value[9] : '',
+					'mwb_membership_plan_user_access'      => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_access_type'      => ! empty( $value[11] ) ? $value[11] : '',
+					'mwb_membership_plan_time_duration'    => ! empty( $value[12] ) ? $value[12] : '',
+					'mwb_membership_plan_time_duration_type' => ! empty( $value[13] ) ? $value[13] : '',
+					'mwb_membership_plan_offer_price_type' => ! empty( $value[14] ) ? $value[14] : '',
+					'mwb_memebership_plan_discount_price'  => ! empty( $value[15] ) ? $value[15] : '',
+					'mwb_memebership_plan_free_shipping'   => ! empty( $value[16] ) ? $value[16] : '',
+					'mwb_membership_plan_target_ids'       => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
+					'mwb_membership_plan_target_categories' => ! empty( $value[18] ) ? $this->import_csv_ids( $value[18] ) : '',
+					'post_content'                         => ! empty( $value[19] ) ? $value[19] : '',
 
 				);
 			}
@@ -697,9 +698,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[16] ) ) {
+				if ( ! empty( $value[17] ) ) {
 
-					$prod_array[] = explode( ',', $value[16] );
+					$prod_array[] = explode( ',', $value[17] );
 				}
 			}
 		}
@@ -741,9 +742,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[17] ) ) {
+				if ( ! empty( $value[18] ) ) {
 
-					$cat_array[] = explode( ',', $value[17] );
+					$cat_array[] = explode( ',', $value[18] );
 				}
 			}
 		}

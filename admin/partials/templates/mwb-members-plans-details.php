@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $plan = get_post_meta( $post->ID, 'plan_obj', true );
-echo '<pre>'; print_r( $plan ); echo '</pre>';
+//echo '<pre>'; print_r( $plan ); echo '</pre>';
 ?>
 <!-- Members metabox start -->
 <div class="members_plans_details">

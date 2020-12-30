@@ -104,12 +104,15 @@ class Membership_For_Woocommerce_Admin {
 			}
 
 			if ( isset( $_GET['tab'] ) && 'shipping' == $_GET['tab'] ) {
+
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 			}
 
 			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
 
 				wp_enqueue_style( 'members-admin-css', plugin_dir_url( __FILE__ ) . 'css/membership-for-woo-members-admin.css', array(), $this->version, 'all' );
+
+				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 			}
 		}
 
@@ -217,6 +220,17 @@ class Membership_For_Woocommerce_Admin {
 			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
 
 				wp_enqueue_script( 'members-admin-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woo-member-admin.js', array( 'jquery' ), $this->version, false );
+
+				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+
+				wp_localize_script(
+					'members-admin-script',
+					'members_admin_obj',
+					array(
+						'ajaxurl' => admin_url( 'admin-ajax.php' ),
+						'nonce'   => wp_create_nonce( 'members-nonce' ),
+					),
+				);
 			}
 		}
 
@@ -598,6 +612,7 @@ class Membership_For_Woocommerce_Admin {
 			'mwb_membership_plan_duration_type'      => array( 'default' => 'days' ),
 			'mwb_membership_plan_start'              => array( 'default' => '' ),
 			'mwb_membership_plan_end'                => array( 'default' => '' ),
+			'mwb_membership_plan_recurring'          => array( 'default' => '' ),
 			'mwb_membership_plan_user_access'        => array( 'default' => 'no' ),
 			'mwb_membership_plan_access_type'        => array( 'default' => 'immediate_type' ),
 			'mwb_membership_plan_time_duration'      => array( 'default' => '0' ),
@@ -696,6 +711,7 @@ class Membership_For_Woocommerce_Admin {
 						'Plan_duration_type',
 						'Plan_start_date',
 						'Plan_end_date',
+						'Plan_recurring',
 						'Plan_user_history',
 						'Plan_access_type',
 						'Plan_access_duration',
@@ -724,6 +740,7 @@ class Membership_For_Woocommerce_Admin {
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_duration_type', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_start', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_end', true ),
+							get_post_meta( get_the_ID(), 'mwb_membership_plan_recurring', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_user_access', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_access_type', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration', true ),
@@ -829,6 +846,7 @@ class Membership_For_Woocommerce_Admin {
 					update_post_meta( $plan_id, 'mwb_membership_plan_duration_type', $value['mwb_membership_plan_duration_type'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_start', $value['mwb_membership_plan_start'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_end', $value['mwb_membership_plan_end'] );
+					update_post_meta( $plan_id, 'mwb_membership_plan_recurring', $value['mwb_membership_plan_recurring'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_user_access', $value['mwb_membership_plan_user_access'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_access_type', $value['mwb_membership_plan_access_type'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration', $value['mwb_membership_plan_time_duration'] );
@@ -947,6 +965,41 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_members_metabox_billing( $post ) {
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-billing.php';
+	}
+
+	/**
+	 * Members billing metabox save.
+	 *
+	 * @param int $post_id is the post ID.
+	 * @since 1.0.0
+	 */
+	public function mwb_members_save_billing_fields( $post_id ) {
+
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+
+			return;
+		}
+
+		$fields = array(
+			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
+			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
+			'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
+			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( $_POST['billing_address_1'] ) : '',
+			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( $_POST['billing_address_2'] ) : '',
+			'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
+			'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
+			'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
+			'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
+			'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
+			'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
+			'payment_method'                => ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '',
+		);
+
+		if ( ! empty( $fields ) && is_array( $fields ) ) {
+
+			update_post_meta( $post_id, 'billing_details', $fields );
+		}
+
 	}
 
 	/**
@@ -1409,6 +1462,35 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		return $available_gateways;
+	}
+
+	/**
+	 * Ajax callback for getting states.
+	 */
+	public function membership_get_states() {
+
+		// Nonce verify.
+		check_ajax_referer( 'members-nonce', 'nonce' );
+
+		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
+
+		$country_class = new WC_Countries();
+		$states        = $country_class->__get( 'states' );
+		$states        = ! empty( $states[ $country_code ] ) ? $states[ $country_code ] : array();
+
+		$result = '';
+
+		if ( ! empty( $states ) && is_array( $states ) ) {
+
+			foreach ( $states as $state_code => $name ) {
+
+				$result .= '<option value="' . $state_code . '">' . $name . '</option>';
+			}
+
+			echo $result;
+		}
+
+		wp_die();
 	}
 
 }

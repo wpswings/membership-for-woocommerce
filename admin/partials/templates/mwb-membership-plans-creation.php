@@ -152,6 +152,28 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 		</tr>
 		<!-- Plan Date Range End. -->
 
+		<!-- Recurring plan start -->
+		<tr id="mwb_membership_recurring_plan" style="display: none" valign="top">
+
+			<th scope="row" class="titledesc">
+				<label for="mwb_membership_plan_recurring"><?php esc_html_e( 'Enable Recurring Plan', 'membership-for-woocommerce' ); ?></label>
+			</th>
+
+			<td class="forminp forminp-text">
+
+				<?php
+
+				$description = esc_html__( 'This will Enable Recurring membership plan.', 'membership-for-woocommerce' );
+
+				$global_class->tool_tip( $description );
+
+				?>
+
+				<input type="checkbox" id="mwb_membership_plan_recurring" name="mwb_membership_plan_recurring" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_recurring'] ); ?>>
+			</td>
+		</tr>
+		<!-- Recurring plan start -->
+
 		<!-- Show history to user start -->
 		<tr valign="top">
 
@@ -169,7 +191,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				?>
 
-				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
+				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
 			</td>
 		</tr>
 		<!-- Show history to user end -->

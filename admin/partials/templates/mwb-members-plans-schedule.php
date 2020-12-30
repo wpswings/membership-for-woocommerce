@@ -41,7 +41,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</select>
 			</p>
 
-
 		</div>
 	</div>
 
@@ -49,11 +48,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<strong><?php esc_html_e( 'Start date', 'membership-for-woocommerce' ); ?></strong>
 		<input type="hidden" class="start_timestamp_utc" name="start_timestamp_utc" id="start_timestamp_utc" value=""> 
 		<?php echo esc_html( get_the_date( 'F j, Y', $post ) ); ?>
-	</div>
-
-	<div id="members-trail_end_date" class="date-fields">
-		<strong><?php esc_html_e( 'Trail End:', 'membership-for-woocommerce' ); ?></strong>
-		<input type="hidden" class="trail-end_timestamp_utc" name="trail-end_timestamp_utc" id="trail-end_timestamp_utc" value=""> 
 	</div>
 
 	<div id="members_next_payment" class="date-fields">

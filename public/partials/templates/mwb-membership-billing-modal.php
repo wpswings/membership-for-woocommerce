@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// Creating Instance of the global functions class.
+// Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
 
 // Getting user id.

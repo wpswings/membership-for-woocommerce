@@ -119,17 +119,6 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
-		//( 'membership_manual_checkout', plugin_dir_url( __FILE__ ) . 'js/membership-manual-checkout.js', array( 'jquery' ), $this->version, false );
-
-		// wp_localize_script(
-		// 	'membership_manual_checkout',
-		// 	'membership_checkout_obj',
-		// 	array(
-		// 		'ajaxurl' => admin_url( 'admin-ajax.php' ),
-		// 		'nonce'   => wp_create_nonce( 'auth_checkout_nonce' ),
-		// 	)
-		// );
-
 	}
 
 	/**
@@ -865,7 +854,7 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Ajax callback for getting states.
 	 */
-	public function membership_get_states() {
+	public function membership_get_states_public() {
 
 		// Nonce verify.
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );

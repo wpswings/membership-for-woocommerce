@@ -49,7 +49,7 @@ jQuery( document ).ready( function( $ ) {
 				url  : membership_public_obj.ajaxurl,
 				type : "POST",
 				data : {
-					action  : "membership_get_states",
+					action  : "membership_get_states_public",
 					country : $( "#membership_billing_country" ).val(),
 					nonce   : membership_public_obj.nonce,
 				},

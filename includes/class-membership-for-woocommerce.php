@@ -182,6 +182,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
 		$this->loader->add_action( 'wp_ajax_csv_file_upload', $plugin_admin, 'csv_file_upload' ); // Import CSV.
+		$this->loader->add_action( 'wp_ajax_membership_get_states', $plugin_admin, 'membership_get_states' );
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );
@@ -197,6 +198,7 @@ class Membership_For_Woocommerce {
 
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
+		$this->loader->add_action( 'edit_post', $plugin_admin, 'mwb_members_save_billing_fields' );
 
 		// Populating columns.
 		$this->loader->add_action( 'manage_mwb_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_members', 10, 2 );
@@ -296,8 +298,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
 			$this->loader->add_action( 'wp_ajax_nopriv_remove_current_receipt', $plugin_public, 'remove_current_receipt' );
 			// AJAX handlers for get states.
-			$this->loader->add_action( 'wp_ajax_membership_get_states', $plugin_public, 'membership_get_states' );
-			$this->loader->add_action( 'wp_ajax_nopriv_membership_get_states', $plugin_public, 'membership_get_states' );
+			$this->loader->add_action( 'wp_ajax_membership_get_states_public', $plugin_public, 'membership_get_states_public' );
+			$this->loader->add_action( 'wp_ajax_nopriv_membership_get_states_public', $plugin_public, 'membership_get_states_public' );
 			// AJAX handlers for process payment.
 			$this->loader->add_action( 'wp_ajax_membership_process_payment', $plugin_public, 'membership_process_payment' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_process_payment', $plugin_public, 'membership_process_payment' );
