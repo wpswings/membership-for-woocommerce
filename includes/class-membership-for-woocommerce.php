@@ -180,9 +180,10 @@ class Membership_For_Woocommerce {
 		// Admin side ajax.
 		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $plugin_admin, 'search_products_for_membership' );
 		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $plugin_admin, 'search_product_categories_for_membership' );
-		$this->loader->add_action( 'wp_ajax_mwb_membership_for_woo_get_content', $plugin_admin, 'mwb_membership_for_woo_get_content' );
+		$this->loader->add_action( 'wp_ajax_mwb_get_membership_content', $plugin_admin, 'mwb_get_membership_content' );
 		$this->loader->add_action( 'wp_ajax_csv_file_upload', $plugin_admin, 'csv_file_upload' ); // Import CSV.
 		$this->loader->add_action( 'wp_ajax_membership_get_states', $plugin_admin, 'membership_get_states' );
+		$this->loader->add_action( 'wp_ajax_mwb_get_member_content', $plugin_admin, 'mwb_get_member_content' );
 
 		// Add custom post type.
 		$this->loader->add_action( 'init', $plugin_admin, 'mwb_membership_for_woo_cpt_members' );

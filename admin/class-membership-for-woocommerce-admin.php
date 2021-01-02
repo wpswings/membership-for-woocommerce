@@ -392,7 +392,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_view':
 				?>
 
-				<a title="<?php echo esc_html__( 'Membership Id #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_for_woo_get_content&post_id=<?php echo esc_html( $post_id ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+				<a title="<?php echo esc_html__( 'Membership ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_membership_content&post_id=<?php echo esc_html( $post_id ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
 
 				<?php
 				break;
@@ -435,13 +435,13 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Get post data ( Ajax handler)
+	 * Get mmebership post data ( Ajax handler)
 	 *
 	 * @return void
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_membership_for_woo_get_content() {
+	public function mwb_get_membership_content() {
 
 		$plan_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
 
@@ -1080,11 +1080,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_user_view':
 				add_thickbox();
 				?>
-				<a title="Your Modal Title" href="#TB_inline?width=600&height=550&inlineId=modal-window-member" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
-
-				<div id="modal-window-member" style="display:none;">
-					<p>Lorem Ipsum sit dolla amet.</p>
-				</div>
+				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
 
 				<?php
 
@@ -1094,6 +1090,73 @@ class Membership_For_Woocommerce_Admin {
 				echo 'expiry date';
 				break;
 		}
+	}
+
+	/**
+	 * Get members post data (Ajax handler).
+	 *
+	 * @return void
+	 * @since 1.0.0
+	 */
+	public function mwb_get_member_content() {
+
+		$member_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+
+		$output = '';
+
+		$output .= '<div class="members_preview_content">';
+
+		if ( ! empty( $member_id ) ) {
+
+			$billing_info = get_post_meta( $member_id, 'billing_details', true );
+			$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
+
+			$output .= '<div class="members_billing_preview">
+							<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>
+							' . esc_html( $billing_info['membership_billing_company'] ) . '
+							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_first_name'] ), esc_html( $billing_info['membership_billing_last_name'] ) ) . '
+							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_address_1'] ), esc_html( $billing_info['membership_billing_address_2'] ) ) . '
+							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_city'] ), esc_html( $billing_info['membership_billing_postcode'] ) ) . '
+							' . sprintf( ' %s, %s ', esc_html( $billing_info['membership_billing_state'] ), esc_html( $billing_info['membership_billing_country'] ) ) . '</br>
+							<strong>' . esc_html__( 'Email address :', 'membership-for-woocommerce' ) . '</strong>
+							<a href="mailto:' . esc_html( $billing_info['membership_billing_email'] ) . '">' . esc_html( $billing_info['membership_billing_email'] ) . '</a></br>
+							<strong>' . esc_html__( 'Phone :', 'membership-for-woocommerce' ) . '</strong>
+							' . esc_html( $billing_info['membership_billing_phone'] ) . '</br>
+							<strong>' . esc_html__( 'Payment Method', 'membership-for-woocommerce' ) . '</strong>
+							' . esc_html( $billing_info['payment_method'] );
+
+			$output .= '</div>';
+
+			$output .= '<div class="members_plan_preview" >
+							<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
+							' . esc_html( $plan_info['post_title'] ) . '
+							' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '
+							' . esc_html( $plan_info['post_content'] );
+
+			$output .= '</div>';
+
+			$output .= '<div class="members_plan_preview_table_wrapper">
+							<table class="plan_preview_table">
+								<thead>
+									<tr>
+										<th class="plan_preview_table_product">' . esc_html__( 'Product', 'membership-for-woocommerce' ) . '</th>
+										<th class="plan_preview_table_price">' . esc_html__( 'Total', 'membership-for-woocommerce' ) . '</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>' . esc_html( $plan_info['post_title'] ) . '</td>
+										<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '</td>
+									</tr>
+								</tbody>';
+			$output .= '</div>';
+		}
+
+		$output .= '</div>';
+
+		echo wp_kses_post( wpautop( wptexturize( $output ) ) . PHP_EOL );
+
+		wp_die();
 	}
 
 	/**
