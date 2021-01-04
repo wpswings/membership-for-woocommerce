@@ -847,8 +847,22 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
+			// OLD
+			// $plan_obj  = get_post( $plan_id, ARRAY_A );
+			// $plan_meta = array_merge( $plan_obj, get_post_meta( $plan_id ) );
+
+			// New
 			$plan_obj  = get_post( $plan_id, ARRAY_A );
-			$plan_meta = array_merge( $plan_obj, get_post_meta( $plan_id ) );
+
+			$post_meta = get_post_meta( $plan_id );
+
+			// Formatting array.
+			foreach ( $post_meta as $key => $value ) {
+
+				$post_meta[ $key ] = reset( $value );
+			}
+
+			$plan_meta = array_merge( $plan_obj, $post_meta );
 
 			$_user = get_user_by( 'email', $fields['membership_billing_email'] );
 
@@ -873,7 +887,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				array(
 					'post_type'   => 'mwb_cpt_members',
 					'post_title'  => $user_name,
-					'post_status' => 'pending',
+					'post_status' => 'publish',
 					'post_author' => $user_id,
 					'meta_input'  => array(
 						'plan_id'         => $plan_id,

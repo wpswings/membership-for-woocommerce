@@ -940,9 +940,21 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function membership_for_woo_members_metabox() {
 
+		// Add membership details metabox.
 		add_meta_box( 'members_meta_box', __( 'Membership Details', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_callback' ), 'mwb_cpt_members' );
+
+		// Add billing details metabox.
 		add_meta_box( 'members_metabox_billing', __( 'Billing details', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_billing' ), 'mwb_cpt_members', 'normal', 'high' );
+
+		// Add schedule metabox.
 		add_meta_box( 'members_metabox_schedule', __( 'Schedule', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_schedule' ), 'mwb_cpt_members', 'side', 'high' );
+
+		// Remove sumitdiv metabox for mwb_cpt_members.
+		remove_meta_box( 'submitdiv', 'mwb_cpt_members', 'side' );
+
+		// Add custom member actions metabox.
+		add_meta_box( '_submitdiv', __( 'Member actions', 'membership-for-woocommerce' ), array( $this, 'member_actions_callback' ), 'mwb_cpt_members', 'side', 'core' );
+
 	}
 
 	/**
@@ -980,6 +992,16 @@ class Membership_For_Woocommerce_Admin {
 			return;
 		}
 
+		//echo '<pre>'; print_r( $_POST ); echo '</pre>';
+
+		$status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';
+
+		if ( ! empty( $status ) ) {
+
+			update_post_meta( $post_id, 'plan_status', $status );
+
+		}
+
 		$fields = array(
 			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
 			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
@@ -1000,6 +1022,29 @@ class Membership_For_Woocommerce_Admin {
 			update_post_meta( $post_id, 'billing_details', $fields );
 		}
 
+		// When plans are assigned manually.
+		if ( isset( $_POST['members_plan_assign'] ) ) {
+
+			$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
+
+			if ( ! empty( $plan_id ) ) {
+
+				$plan_obj  = get_post( $plan_id, ARRAY_A );
+
+				$post_meta = get_post_meta( $plan_id );
+
+				// Formatting array.
+				foreach ( $post_meta as $key => $value ) {
+
+					$post_meta[ $key ] = reset( $value );
+				}
+
+				$plan_meta = array_merge( $plan_obj, $post_meta );
+
+				update_post_meta( $post_id, 'plan_obj', $plan_meta );
+			}
+		}
+
 	}
 
 	/**
@@ -1011,6 +1056,17 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_members_metabox_schedule( $post ) {
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-schedule.php';
+	}
+
+	/**
+	 * Members publish metabox callback.
+	 *
+	 * @param object $post Post object.
+	 * @since 1.0.0
+	 */
+	public function member_actions_callback( $post ) {
+
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-status.php';
 	}
 
 	/**
@@ -1067,7 +1123,7 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'membership_status':
 				?>
-				<strong><?php echo esc_html( get_post_status( $post_id ) ); ?></strong>
+				<strong><?php echo esc_html( get_post_meta( $post_id, 'plan_status', true ) ); ?></strong>
 				<?php
 				break;
 
@@ -1110,6 +1166,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$billing_info = get_post_meta( $member_id, 'billing_details', true );
 			$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
+			$plan_status  = get_post_meta( $member_id, 'plan_status', true );
 
 			$output .= '<div class="members_billing_preview">
 							<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>
@@ -1134,6 +1191,10 @@ class Membership_For_Woocommerce_Admin {
 							' . esc_html( $plan_info['post_content'] );
 
 			$output .= '</div>';
+
+			$output .= '<div class="member_plan_status">
+						 ' . esc_html( $plan_status ) . '
+						</div>';
 
 			$output .= '<div class="members_plan_preview_table_wrapper">
 							<table class="plan_preview_table">

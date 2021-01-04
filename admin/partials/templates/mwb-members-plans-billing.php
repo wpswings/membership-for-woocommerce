@@ -18,9 +18,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+// Getting member's billing details.
 $member_details = get_post_meta( $post->ID, 'billing_details', true );
 
-//echo '<pre>'; print_r( $member_details ); echo '</pre>';
+$first_name = ! empty( $member_details['membership_billing_first_name'] ) ? $member_details['membership_billing_first_name'] : '';
+$last_name  = ! empty( $member_details['membership_billing_last_name'] ) ? $member_details['membership_billing_last_name'] : '';
+$company    = ! empty( $member_details['membership_billing_company'] ) ? $member_details['membership_billing_company'] : '';
+$address_1  = ! empty( $member_details['membership_billing_address_1'] ) ? $member_details['membership_billing_address_1'] : '';
+$address_2  = ! empty( $member_details['membership_billing_address_2'] ) ? $member_details['membership_billing_address_2'] : '';
+$city       = ! empty( $member_details['membership_billing_city'] ) ? $member_details['membership_billing_city'] : '';
+$postcode   = ! empty( $member_details['membership_billing_postcode'] ) ? $member_details['membership_billing_postcode'] : '';
+$state      = ! empty( $member_details['membership_billing_state'] ) ? $member_details['membership_billing_state'] : '';
+$country    = ! empty( $member_details['membership_billing_country'] ) ? $member_details['membership_billing_country'] : '';
+$email      = ! empty( $member_details['membership_billing_email'] ) ? $member_details['membership_billing_email'] : '';
+$phone      = ! empty( $member_details['membership_billing_phone'] ) ? $member_details['membership_billing_phone'] : '';
+$payment    = ! empty( $member_details['payment_method'] ) ? $member_details['payment_method'] : '';
 
 // Getting all user ID's.
 $all_users = get_users(
@@ -75,26 +87,26 @@ $country_class = new WC_Countries();
 			<div class="member_address">
 				<p>
 					<strong><?php esc_html_e( 'Address :', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $member_details['membership_billing_first_name'] ), esc_html( $member_details['membership_billing_last_name'] ) ); ?></br>
-					<?php echo esc_html( $member_details['membership_billing_company'] ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $member_details['membership_billing_address_1'] ), esc_html( $member_details['membership_billing_address_2'] ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $member_details['membership_billing_city'] ), esc_html( $member_details['membership_billing_postcode'] ) ); ?></br>
-					<?php echo sprintf( ' %s, %s ', esc_html( $member_details['membership_billing_state'] ), esc_html( $member_details['membership_billing_country'] ) ); ?>
+					<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
+					<?php echo esc_html( $company ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
+					<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
 				</p>
 
 				<p>
 					<strong><?php esc_html_e( 'Email address :', 'membership-for-woocommerce' ); ?></strong></br>
-					<a href="mailto:<?php echo esc_html( $member_details['membership_billing_email'] ); ?>"><?php echo esc_html( $member_details['membership_billing_email'] ); ?></a>
+					<a href="mailto:<?php echo esc_html( $email ); ?>"><?php echo esc_html( $email ); ?></a>
 				</p>
 
 				<p>
 					<strong><?php esc_html_e( 'Phone :', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo esc_html( $member_details['membership_billing_phone'] ); ?>
+					<?php echo esc_html( $phone ); ?>
 				</p>
 
 				<p>
 					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo esc_html( $member_details['payment_method'] ); ?>
+					<?php echo esc_html( $payment ); ?>
 				</p>
 
 			</div>
@@ -103,37 +115,37 @@ $country_class = new WC_Countries();
 
 				<p class="form-field billing_first_name_field">
 					<label for="billing_first_name"><?php esc_html_e( 'First name', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_first_name" id="billing_first_name" value="<?php echo esc_html( $member_details['membership_billing_first_name'] ); ?>" >
+					<input type="text" class="short" name="billing_first_name" id="billing_first_name" value="<?php echo esc_html( $first_name ); ?>" >
 				</p>
 
 				<p class="form-field billing_last_name_field">
 					<label for="billing_last_name"><?php esc_html_e( 'Last name', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_last_name" id="billing_last_name" value="<?php echo esc_html( $member_details['membership_billing_last_name'] ); ?>" >
+					<input type="text" class="short" name="billing_last_name" id="billing_last_name" value="<?php echo esc_html( $last_name ); ?>" >
 				</p>
 
 				<p class="form-field billing_company_field">
 					<label for="billing_company"><?php esc_html_e( 'Company', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_company" id="billing_company" value="<?php echo esc_html( $member_details['membership_billing_company'] ); ?>" >
+					<input type="text" class="short" name="billing_company" id="billing_company" value="<?php echo esc_html( $company ); ?>" >
 				</p>
 
 				<p class="form-field billing_address_1_field">
 					<label for="billing_address_1"><?php esc_html_e( 'Address line 1', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_address_1" id="billing_address_1" value="<?php echo esc_html( $member_details['membership_billing_address_1'] ); ?>" >
+					<input type="text" class="short" name="billing_address_1" id="billing_address_1" value="<?php echo esc_html( $address_1 ); ?>" >
 				</p>
 
 				<p class="form-field billing_address_2_field">
 					<label for="billing_address_2"><?php esc_html_e( 'Address line 2', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_address_2" id="billing_address_2" value="<?php echo esc_html( $member_details['membership_billing_address_2'] ); ?>" >
+					<input type="text" class="short" name="billing_address_2" id="billing_address_2" value="<?php echo esc_html( $address_2 ); ?>" >
 				</p>
 
 				<p class="form-field billing_city_field">
 					<label for="billing_city"><?php esc_html_e( 'City', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_city" id="billing_city" value="<?php echo esc_html( $member_details['membership_billing_city'] ); ?>" >
+					<input type="text" class="short" name="billing_city" id="billing_city" value="<?php echo esc_html( $city ); ?>" >
 				</p>
 
 				<p class="form-field billing_postcode_field">
 					<label for="billing_postcode"><?php esc_html_e( 'Postcode/ZIP', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_postcode" id="billing_postcode" value="<?php echo esc_html( $member_details['membership_billing_postcode'] ); ?>">
+					<input type="text" class="short" name="billing_postcode" id="billing_postcode" value="<?php echo esc_html( $postcode ); ?>">
 				</p>
 
 				<p class="form-field billing_country_field">
@@ -142,7 +154,7 @@ $country_class = new WC_Countries();
 						<?php
 						foreach ( $country_class->__get( 'countries' ) as $code => $name ) {
 							?>
-							<option <?php echo esc_html( $code == $member_details['membership_billing_country'] ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
+							<option <?php echo esc_html( $code == $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
 						<?php } ?>
 					</select>
 				</p>
@@ -156,18 +168,18 @@ $country_class = new WC_Countries();
 
 				<p class="form-field billing_email_field">
 					<label for="billing_email"><?php esc_html_e( 'Email address', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" class="short" name="billing_email" id="billing_email" value="<?php echo esc_html( $member_details['membership_billing_email'] ); ?>">
+					<input type="text" class="short" name="billing_email" id="billing_email" value="<?php echo esc_html( $email ); ?>">
 				</p>
 
 				<p class="form-field billing_phone_field">
 					<label for="billing_phone"><?php esc_html_e( 'Phone', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" name="billing_phone" id="billing_phone" value="<?php echo esc_html( $member_details['membership_billing_phone'] ); ?>">
+					<input type="text" name="billing_phone" id="billing_phone" value="<?php echo esc_html( $phone ); ?>">
 				</p>
 
 				<p class="form-field payment_method_field">
 					<strong><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></strong></br>
-					<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $member_details['payment_method'] ); ?>" >
-					<?php echo esc_html( $member_details['payment_method'] ); ?><span><?php $this->global_class->tool_tip( 'Manual' ); ?></span>	
+					<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $payment ); ?>" >
+					<?php echo esc_html( $payment ); ?><span><?php $this->global_class->tool_tip( 'Manual' ); ?></span>	
 				</p>
 			</div>
 		</div>

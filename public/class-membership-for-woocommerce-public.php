@@ -202,7 +202,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-				if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 					$is_purchasable = false;
 
@@ -231,7 +231,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-				if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 					return '';
 				}
@@ -279,12 +279,12 @@ class Membership_For_Woocommerce_Public {
 
 							if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-								if ( in_array( $product->id, $target_ids ) ) {
+								if ( in_array( $product->get_id(), $target_ids ) ) {
 
 									$page_link = add_query_arg(
 										array(
 											'plan_id' => $plan['ID'],
-											'prod_id' => $product->id,
+											'prod_id' => $product->get_id(),
 										),
 										$page_link
 									);
@@ -306,12 +306,12 @@ class Membership_For_Woocommerce_Public {
 										$target_ids = array();
 									}
 
-									if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+									if ( ! in_array( $product->get_id(), $target_ids ) ) { // checking if the product does not exist in target id of a plan.
 
 										$page_link = add_query_arg(
 											array(
 												'plan_id' => $plan['ID'],
-												'prod_id' => $product->id,
+												'prod_id' => $product->get_id(),
 											),
 											$page_link
 										);
@@ -344,7 +344,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-				if ( in_array( $product->id, $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 					echo '<div class="product-meta>"
 							<span><b>' . esc_html__( 'Membership Product', 'membership-for-woocommerce' ) . '</b></span>
@@ -369,7 +369,7 @@ class Membership_For_Woocommerce_Public {
 
 						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-							if ( in_array( $product->id, $target_ids ) ) {
+							if ( in_array( $product->get_id(), $target_ids ) ) {
 
 								$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 							}
@@ -384,7 +384,7 @@ class Membership_For_Woocommerce_Public {
 									$target_ids = array();
 								}
 
-								if ( ! in_array( $product->id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+								if ( ! in_array( $product->get_id(), $target_ids ) ) { // checking if the product does not exist in target id of a plan.
 
 									$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 
