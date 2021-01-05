@@ -43,6 +43,12 @@ $all_users = get_users(
 	)
 );
 
+$wc_gateways      = new WC_Payment_Gateways();
+$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+$supported_gateways = $this->global_class->supported_gateways();
+
+
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
 ?>
@@ -60,7 +66,7 @@ $country_class = new WC_Countries();
 			<p class="form-field membership-customer">
 `				<label for="member-user">
 					<?php esc_html_e( 'Customer:', 'membership-for-woocommerce' ); ?>
-					<a href="<?php echo esc_url( admin_url( 'admin.php?edit.php?post_status=all&post_type=mwb_cpt_members&post_author=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'View other memberships', 'membership-for-woocommerce' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'edit.php?post_status=all&post_type=mwb_cpt_members&post_author=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'View other memberships', 'membership-for-woocommerce' ); ?></a>
 					<a href="<?php echo esc_url( admin_url( 'user-edit.php?user_id=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'Profile', 'membership-for-woocommerce' ); ?></a>
 				</label><br>
 				<select name="mwb_member_user" id="mwb_member_user">
@@ -178,8 +184,27 @@ $country_class = new WC_Countries();
 
 				<p class="form-field payment_method_field">
 					<strong><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></strong></br>
-					<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $payment ); ?>" >
-					<?php echo esc_html( $payment ); ?><span><?php $this->global_class->tool_tip( 'Manual' ); ?></span>	
+					<?php if ( ! empty( $payment ) ) { ?>
+						<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $payment ); ?>" >
+						<?php echo esc_html( $payment ); ?><span><?php $this->global_class->tool_tip( 'Manual' ); ?></span>	
+						<?php
+					} else {
+						?>
+						<select name="payment_gateway_select" id="payment_gateway_select">
+							<option value=""><?php esc_html_e( 'Select a payment method', 'membership-for-woocommerce' ); ?></option>
+							<?php
+							foreach ( $payment_gateways as $gateway ) {
+
+								if ( in_array( $gateway->id, $supported_gateways ) ) {
+									?>
+								<option value="<?php echo esc_html( $gateway->id ); ?>"><?php echo esc_html( $gateway->id ); ?></option>
+									<?php
+								}
+							}
+							?>
+						</select>
+					<?php } ?>
+
 				</p>
 			</div>
 		</div>

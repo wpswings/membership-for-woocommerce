@@ -18,6 +18,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+// $a = array();
+
+// var_dump( isset($a) );
+// var_dump( empty($a) );
 // Save form fields when save changes is clicked.
 if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 

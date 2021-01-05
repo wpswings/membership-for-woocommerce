@@ -58,5 +58,6 @@ jQuery( document ).ready( function( $ ) {
     $( "#billing_state" ).select2();
     $( "#mwb_member_user" ).select2();
     $( "#members_plan_assign" ).select2();
+    $( "#payment_gateway_select" ).select2();
 
 });

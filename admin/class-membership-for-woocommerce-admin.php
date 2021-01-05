@@ -161,7 +161,7 @@ class Membership_For_Woocommerce_Admin {
 					'i18n_delete_product_notice'        => __( 'This product has produced sales and may be linked to existing orders. Are you sure you want to delete it?', 'woocommerce' ),
 					'i18n_remove_personal_data_notice'  => __( 'This action cannot be reversed. Are you sure you wish to erase personal data from the selected orders?', 'woocommerce' ),
 					'decimal_point'                     => $decimal,
-					'mon_decimal_point'                 => wc_get_price_decimal_separator(),
+					'non_decimal_point'                 => wc_get_price_decimal_separator(),
 					'ajax_url'                          => admin_url( 'admin-ajax.php' ),
 					'strings'                           => array(
 						'import_products' => __( 'Import', 'woocommerce' ),
@@ -325,8 +325,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_global_settings() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-global-settings.php';
-
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-global-settings.php';
+		//wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -336,8 +336,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_overview() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-overview.php';
-
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-overview.php';
+		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-overview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -347,8 +347,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_shortcodes() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-shortcodes.php';
-
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-shortcodes.php';
+		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-shortcodes.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -358,7 +358,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_gateways() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-supported-gateway.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-supported-gateway.php';
+		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -443,88 +444,9 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_get_membership_content() {
 
-		$plan_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
-
-		$output = '';
-
-		if ( ! empty( $plan_id ) ) {
-
-			$plan_title       = get_the_title( $plan_id );
-			$plan_price       = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
-			$plan_products    = $this->global_class->csv_get_prod_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true ) );
-			$plan_categories  = $this->global_class->csv_get_cat_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true ) );
-			$plan_description = get_post_field( 'post_content', $plan_id );
-			$plan_access_type = get_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', true );
-			$plan_user_access = get_post_meta( $plan_id, 'mwb_membership_plan_access_type', true );
-			$currency         = get_woocommerce_currency();
-
-			// Html for preview mode.
-			$output .= '<h2>' . esc_html( $plan_title ) . '</h2>';
-			$output .= '<div class="mwb_membership_preview_table">';
-			$output .= '<table class="form-table mwb_membership_preview">';
-			$output .= '<tbody>';
-
-			// Plan Price section.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan Price', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_price ) ) . '</td>
-						</tr>';
-
-			// Plan access type section.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan Access Type', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . esc_html( $plan_access_type ) . '</td>
-						</tr>';
-
-			// Plan user access type.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan User Access Type', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . esc_html( $plan_user_access ) . '</td>
-						</tr>';
-
-			// Plan offered categories.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan Offered Categories', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . esc_html( $plan_categories ) . '</td>
-						</tr>';
-
-			// Plan offered products.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan Offered Products', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . esc_html( $plan_products ) . '</td>
-						</tr>';
-
-			// Plan description.
-			$output .= '<tr>
-							<th>
-								<label>' . __( 'Plan Description', 'membership-for-woocommerce' ) . ' </label>
-							</th>
-
-							<td>' . esc_html( $plan_description ) . '</td>
-						</tr>';
-
-			$output .= '</tbody>
-						</table>
-						</div>';
-		}
-
-		echo wp_kses_post( wpautop( wptexturize( $output ) ) . PHP_EOL );
-
+		// echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN ); echo '</pre>';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/admin-ajax-templates/membership-plan-preview.php';
+		// wc_get_template( 'templates/admin-ajax-templates/membership-plan-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 		wp_die();
 	}
 
@@ -548,9 +470,9 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_meta_box_callback( $post ) {
 
 		$this->set_plan_creation_fields( get_the_ID() );
-
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-plans-creation.php';
-
+		//echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN . 'templates/membership-templates/mwb-membership-plans-creation.php' ); echo '</pre>';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-plans-creation.php';
+		// wc_get_template( 'templates/membership-templates/mwb-membership-plans-creation.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**
@@ -566,8 +488,6 @@ class Membership_For_Woocommerce_Admin {
 
 			return;
 		}
-
-		//check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
 
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
@@ -965,7 +885,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_members_metabox_callback( $post ) {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-details.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-plans-details.php';
+		// wc_get_template( 'admin/partials/templates/members-templates/mwb-members-plans-details.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -976,7 +897,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_members_metabox_billing( $post ) {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-billing.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-plans-billing.php';
+		// wc_get_template( 'admin/partials/templates/members-templates/mwb-members-plans-billing.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -985,21 +907,35 @@ class Membership_For_Woocommerce_Admin {
 	 * @param int $post_id is the post ID.
 	 * @since 1.0.0
 	 */
-	public function mwb_members_save_billing_fields( $post_id ) {
+	public function mwb_membership_save_member_fields( $post_id ) {
 
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 
 			return;
 		}
 
-		//echo '<pre>'; print_r( $_POST ); echo '</pre>';
+		// check_admin_referer();
+		// check_ajax_referer( 'inlineeditnonce', '_inline_edit' );
 
-		$status = ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '';
+		// Saving member actions metabox fields.
+		$actions = array(
+			'member_status'  => ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '',
+			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
+		);
 
-		if ( ! empty( $status ) ) {
+		if ( ! empty( $actions ) && is_array( $actions ) ) {
 
-			update_post_meta( $post_id, 'plan_status', $status );
+			update_post_meta( $post_id, 'member_actions', $actions );
+		}
 
+		// Saving member billing details metabox fields.
+		if ( isset( $_POST['payment_gateway_select'] ) ) {
+
+			$payment = ! empty( $_POST['payment_gateway_select'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_gateway_select'] ) ) : '';
+
+		} else {
+
+			$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
 		}
 
 		$fields = array(
@@ -1014,13 +950,10 @@ class Membership_For_Woocommerce_Admin {
 			'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
 			'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
 			'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
-			'payment_method'                => ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '',
+			'payment_method'                => $payment,
 		);
 
-		if ( ! empty( $fields ) && is_array( $fields ) ) {
-
-			update_post_meta( $post_id, 'billing_details', $fields );
-		}
+		update_post_meta( $post_id, 'billing_details', $fields );
 
 		// When plans are assigned manually.
 		if ( isset( $_POST['members_plan_assign'] ) ) {
@@ -1055,7 +988,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_members_metabox_schedule( $post ) {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-plans-schedule.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-plans-schedule.php';
+		// wc_get_template( 'admin/partials/templates/members-templates/mwb-members-plans-schedule.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -1066,7 +1000,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function member_actions_callback( $post ) {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-members-status.php';
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-actions.php';
+		// wc_get_template( 'admin/partials/templates/members-templates/mwb-members-actions.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -1156,67 +1091,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_get_member_content() {
 
-		$member_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
-
-		$output = '';
-
-		$output .= '<div class="members_preview_content">';
-
-		if ( ! empty( $member_id ) ) {
-
-			$billing_info = get_post_meta( $member_id, 'billing_details', true );
-			$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
-			$plan_status  = get_post_meta( $member_id, 'plan_status', true );
-
-			$output .= '<div class="members_billing_preview">
-							<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>
-							' . esc_html( $billing_info['membership_billing_company'] ) . '
-							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_first_name'] ), esc_html( $billing_info['membership_billing_last_name'] ) ) . '
-							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_address_1'] ), esc_html( $billing_info['membership_billing_address_2'] ) ) . '
-							' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_city'] ), esc_html( $billing_info['membership_billing_postcode'] ) ) . '
-							' . sprintf( ' %s, %s ', esc_html( $billing_info['membership_billing_state'] ), esc_html( $billing_info['membership_billing_country'] ) ) . '</br>
-							<strong>' . esc_html__( 'Email address :', 'membership-for-woocommerce' ) . '</strong>
-							<a href="mailto:' . esc_html( $billing_info['membership_billing_email'] ) . '">' . esc_html( $billing_info['membership_billing_email'] ) . '</a></br>
-							<strong>' . esc_html__( 'Phone :', 'membership-for-woocommerce' ) . '</strong>
-							' . esc_html( $billing_info['membership_billing_phone'] ) . '</br>
-							<strong>' . esc_html__( 'Payment Method', 'membership-for-woocommerce' ) . '</strong>
-							' . esc_html( $billing_info['payment_method'] );
-
-			$output .= '</div>';
-
-			$output .= '<div class="members_plan_preview" >
-							<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
-							' . esc_html( $plan_info['post_title'] ) . '
-							' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '
-							' . esc_html( $plan_info['post_content'] );
-
-			$output .= '</div>';
-
-			$output .= '<div class="member_plan_status">
-						 ' . esc_html( $plan_status ) . '
-						</div>';
-
-			$output .= '<div class="members_plan_preview_table_wrapper">
-							<table class="plan_preview_table">
-								<thead>
-									<tr>
-										<th class="plan_preview_table_product">' . esc_html__( 'Product', 'membership-for-woocommerce' ) . '</th>
-										<th class="plan_preview_table_price">' . esc_html__( 'Total', 'membership-for-woocommerce' ) . '</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td>' . esc_html( $plan_info['post_title'] ) . '</td>
-										<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '</td>
-									</tr>
-								</tbody>';
-			$output .= '</div>';
-		}
-
-		$output .= '</div>';
-
-		echo wp_kses_post( wpautop( wptexturize( $output ) ) . PHP_EOL );
-
+		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/admin-ajax-templates/members-plans-preview.php';
+		// wc_get_template( 'admin/partials/templates/admin-ajax-templates/members-plans-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 		wp_die();
 	}
 
@@ -1556,7 +1432,7 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( is_page( $single_page->ID ) ) {
 
-				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/mwb-membership-template.php';
+				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-template.php';
 			}
 		}
 

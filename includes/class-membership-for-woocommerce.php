@@ -198,8 +198,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'membership_for_woo_members_metabox' );
 
 		// Save meta box fields.
-		$this->loader->add_action( 'save_post', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
-		$this->loader->add_action( 'edit_post', $plugin_admin, 'mwb_members_save_billing_fields' );
+		$this->loader->add_action( 'save_post_mwb_cpt_membership', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
+		$this->loader->add_action( 'edit_post_mwb_cpt_members', $plugin_admin, 'mwb_membership_save_member_fields' );
 
 		// Populating columns.
 		$this->loader->add_action( 'manage_mwb_cpt_members_posts_custom_column', $plugin_admin, 'mwb_membership_for_woo_fill_columns_members', 10, 2 );

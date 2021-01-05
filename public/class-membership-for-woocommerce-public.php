@@ -954,8 +954,6 @@ class Membership_For_Woocommerce_Public {
 		// If all goes well, a membership for customer will be created.
 		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id );
 
-		//print_r( $member_data );
-
 		global $woocommerce;
 		$gateways = $woocommerce->payment_gateways->get_available_payment_gateways();
 
