@@ -44,6 +44,7 @@ jQuery( document ).ready( function( $ ) {
                 } else {
 
                     $( ".billing_state_field" ).hide();
+                    $( ".billing_state_field" ).empty();
                 }
             }
         });

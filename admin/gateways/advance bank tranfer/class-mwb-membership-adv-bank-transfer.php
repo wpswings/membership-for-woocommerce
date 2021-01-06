@@ -23,6 +23,11 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	public $locale;
 
 	/**
+	 * Inastance of global functions class file.
+	 */
+	public $global_class;
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -40,6 +45,9 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
 		$this->instructions = $this->get_option( 'instructions' );
+
+		// Instance of global class.
+		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 		// BACS account fields shown on purchase completion and emails.
 		$this->account_details = get_option(
@@ -305,7 +313,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		<div class="bacs_receipt_wrapper">
 			<div class="bacs_receipt_field">
 				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
-				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="">
+				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="true">
 			</div>
 			<div id="progress-wrapper" class="is_hidden">
 				<div class="progress-bar"></div>
@@ -325,6 +333,10 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function process_payment ( $plan_id, $member_id = '' ) {
 
+		if ( empty( $plan_id ) ) {
+			return; // there must be a plan id.
+		}
+
 		if ( ! empty( $plan_id ) && ! empty( $member_id ) ) {
 
 			$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
@@ -336,22 +348,35 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		// update order receipt.
 		update_post_meta( $member_id, 'bacs_receipt_attached', $receipt );
 
-		// if ( $order->get_total() > 0 ) {
-		// 	// Mark it as on-hold.
-		// 	$order->update_status( apply_filters( 'membership_bacs_process_payment_status', 'on-hold', $order ), __( 'Awaiting BACS payment', 'membrship-for-woocommerce' ) );
+		if ( $plan_price > 0 ) {
 
-		// } else {
-		// 	$order->payment_complete();
-		// }
+			try {
 
-		// // Remove cart.
-		// WC()->cart->empty_cart();
+				if ( ! empty( $transaction_id ) ) {
+					update_post_meta( $member_id, '_membership_trans_id', $transaction_id );
+				}
 
-		// // Return thankyou redirect.
-		// return array(
-		// 	'result'   => 'success',
-		// 	'redirect' => $this->get_return_url( $order ),
-		// );
+				// if ( ! empty( time() ) ) {
+				// 	update_post_meta( $member_id, 'schedule_time', time() );
+				// }
+
+				// Updating status to hold, admin will change it to 'completed'    after amount is reflected in his account.
+				update_post_meta( $member_id, 'member_status', 'hold' );
+
+			} catch ( \Throwable $e ) {
+				/**
+				 * If there was an error completing the payment, log to a file and add an order note so the admin can take action.
+				 */
+
+				$error  = sprintf( 'Error completing payment for order #%d', $member_id );
+				$error .= sprintf( 'Errors caused due to: %s', $e->getMessage() );
+
+				$this->global_class->create_log( $member_id, $error, $this->id );
+
+				return false;
+			}
+			return true;
+		}
 	}
 
 	/**

@@ -325,8 +325,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_global_settings() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-global-settings.php';
-		//wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		//require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-global-settings.php';
+		wc_get_template( 'templates/membership-templates/mwb-membership-global-settings.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**
@@ -336,8 +336,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_overview() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-overview.php';
-		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-overview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		//require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-overview.php';
+		wc_get_template( 'templates/membership-templates/mwb-membership-overview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**
@@ -347,8 +347,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_shortcodes() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-shortcodes.php';
-		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-shortcodes.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		// require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-shortcodes.php';
+		wc_get_template( 'templates/membership-templates/mwb-membership-shortcodes.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**
@@ -358,8 +358,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_gateways() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-supported-gateway.php';
-		// wc_get_template( 'admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		// require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-supported-gateway.php';
+		wc_get_template( 'templates/membership-templates/mwb-membership-supported-gateway.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**
@@ -446,7 +446,7 @@ class Membership_For_Woocommerce_Admin {
 
 		// echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN ); echo '</pre>';
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/admin-ajax-templates/membership-plan-preview.php';
-		// wc_get_template( 'templates/admin-ajax-templates/membership-plan-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
+		//wc_get_template( 'templates/admin-ajax-templates/membership-plan-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 		wp_die();
 	}
 
@@ -886,7 +886,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_members_metabox_callback( $post ) {
 
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-plans-details.php';
-		// wc_get_template( 'admin/partials/templates/members-templates/mwb-members-plans-details.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		//wc_get_template( 'admin/partials/templates/members-templates/mwb-members-plans-details.php', array( $post ), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 	}
 
 	/**
@@ -923,9 +923,12 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
-		if ( ! empty( $actions ) && is_array( $actions ) ) {
+		foreach ( $actions as $action => $value ) {
 
-			update_post_meta( $post_id, 'member_actions', $actions );
+			if ( array_key_exists( $action, $_POST ) ) {
+
+				update_post_meta( $post_id, $action, $value );
+			}
 		}
 
 		// Saving member billing details metabox fields.
@@ -1057,8 +1060,9 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'membership_status':
+				$status = get_post_meta( $post_id, 'member_status', true );
 				?>
-				<strong><?php echo esc_html( get_post_meta( $post_id, 'plan_status', true ) ); ?></strong>
+				<strong><?php echo esc_html( $status ); ?></strong>
 				<?php
 				break;
 
@@ -1091,8 +1095,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_get_member_content() {
 
-		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/admin-ajax-templates/members-plans-preview.php';
-		// wc_get_template( 'admin/partials/templates/admin-ajax-templates/members-plans-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
+		// require_once plugin_dir_path( __FILE__ ) . '/partials/templates/admin-ajax-templates/members-plans-preview.php';
+		wc_get_template( 'admin/partials/templates/admin-ajax-templates/members-plans-preview.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH );
 		wp_die();
 	}
 

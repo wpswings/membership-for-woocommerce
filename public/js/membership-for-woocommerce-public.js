@@ -59,10 +59,13 @@ jQuery( document ).ready( function( $ ) {
 					if ( response.length > 1 ) {
 						$( "#mwb_billing_state_field" ).show();
 						$( "#membership_billing_state" ).html( response );
+						$( "#membership_billing_state" ).prop( "required", true );
 
 					} else {
 
 						$( "#mwb_billing_state_field" ).hide();
+						$( "#mwb_billing_state_field" ).empty();
+						$( "#membership_billing_state" ).prop( "required", false );
 					}
 				}
 			});
@@ -106,6 +109,25 @@ jQuery( document ).ready( function( $ ) {
 				success : function( response ) {
 
 					console.log( response );
+					if ( "payment_success" == response['result'] ) {
+
+						$( "#mwb_membership_buy_now_modal_form" ).dialog( "close" );
+
+						Swal.fire({
+							icon : 'success',
+							title: response['message'],
+						});
+
+					} else if ( "payment_failed" == response['result'] ) {
+
+						$( "#mwb_membership_buy_now_modal_form" ).dialog( "close" );
+						
+						Swal.fire({
+							icon : 'error',
+							title: 'Oops..!!',
+							text : response['message']
+						});
+					}
 				}
 
 			});

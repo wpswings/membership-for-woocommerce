@@ -97,7 +97,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 					<p class="form-row validate-required" id="mwb_billing_state_field">
 						<label for="membership_billing_state"><?php esc_html_e( 'State&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
-							<select name="membership_billing_state" id="membership_billing_state" class="meb_state_select" required>
+							<select name="membership_billing_state" id="membership_billing_state" class="mwb_state_select">
 									<option value=""><?php esc_html_e( 'Select a state', 'membership-for-woocommerce' ); ?></option>
 							</select>
 						</span>

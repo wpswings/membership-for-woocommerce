@@ -18,9 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH ); echo '</pre>';
-echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_URL ); echo '</pre>';
-
 ?>
 
 <!-- Heading start -->

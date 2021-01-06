@@ -119,6 +119,8 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
+		wp_enqueue_script( 'sweet_alrt', plugin_dir_url( __FILE__ ) . 'js/sweet-alert.js', array( 'jquery' ), $this->version, false );
+
 	}
 
 	/**
@@ -892,7 +894,8 @@ class Membership_For_Woocommerce_Public {
 
 		$validation = new Membership_Checkout_Validation();
 
-		$fields = array();
+		$fields           = array();
+		$payment_response = '';
 
 		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
 
@@ -954,12 +957,30 @@ class Membership_For_Woocommerce_Public {
 		// If all goes well, a membership for customer will be created.
 		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id );
 
+		// Processing payment via membership supported gateways.
 		global $woocommerce;
 		$gateways = $woocommerce->payment_gateways->get_available_payment_gateways();
 
-		if ( in_array( $method_id, $gateways ) ) {
+		if ( ! empty( $gateways[ $method_id ] ) ) {
+			$payment_response = $gateways[ $method_id ]->process_payment( $plan_id, $member_data['member_id'] );
+		}
 
-			$gateways[ $method_id ]->process_payment( $plan_id, $member_data['member_id'] );
+		if ( $payment_response ) {
+
+			echo wp_json_encode(
+				array(
+					'result'  => 'payment_success',
+					'message' => 'Thank you for purchasing ' . get_the_title( $plan_id ),
+				)
+			);
+		} else {
+
+			echo wp_json_encode(
+				array(
+					'result'  => 'payment_failed',
+					'message' => 'Oops! Payment failed',
+				)
+			);
 		}
 
 		wp_die();

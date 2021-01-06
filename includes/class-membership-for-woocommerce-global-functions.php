@@ -890,7 +890,8 @@ class Membership_For_Woocommerce_Global_Functions {
 					'post_status' => 'publish',
 					'post_author' => $user_id,
 					'meta_input'  => array(
-						'plan_id'         => $plan_id,
+						'member_actions'  => 'email_invoice',
+						'member_status'   => 'pending',
 						'plan_obj'        => $plan_meta,
 						'billing_details' => $fields,
 					),
@@ -905,4 +906,47 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 	}
 
+	/**
+	 * Write error and responses to log.
+	 *
+	 * @param int   $member_id Member's ID.
+	 * @param mixed $final_response Response to log.
+	 * @param mixed $payment_gateway Payment gateway id.
+	 * @return void
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_log( $member_id, $final_response, $payment_gateway ) {
+
+		if ( ! defined( 'WC_LOG_DIR' ) ) {
+
+			return;
+		}
+
+		$log_dir      = WC_LOG_DIR;
+		$selected_log_dir = $log_dir . 'membership-for-woocommerce/' . $payment_gateway;
+
+		$log_dir_file = $selected_log_dir . '/membership-for-woocommerce' . time() . '.log';
+
+		// As sometimes when dir is not present, 'fopen' cannot create directories.
+		if ( ! is_dir( $log_dir ) ) {
+			mkdir( $log_dir, 0755, true );
+		}
+
+		if ( ! file_exists( $log_dir_file ) || ! is_writable( $log_dir_file ) ) {
+
+			@fopen( $log_dir_file, 'a' );
+		}
+
+		if ( file_exists( $log_dir_file ) && is_writable( $log_dir_file ) ) {
+
+			$log = 'Website: ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL .
+					'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
+					'Member ID ' . $member_id . PHP_EOL .
+					'Response: ' . json_encode( $final_response ) . PHP_EOL .
+					'----------------------------------------------------------------------------' . PHP_EOL;
+
+			file_put_contents( $log_dir_file, $log, FILE_APPEND );
+		}
+	}
 }
