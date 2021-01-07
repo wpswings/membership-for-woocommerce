@@ -343,10 +343,10 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		}
 
-		$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
+		//$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
 
 		// update order receipt.
-		update_post_meta( $member_id, 'bacs_receipt_attached', $receipt );
+		//update_post_meta( $member_id, 'bacs_receipt_attached', $receipt );
 
 		if ( $plan_price > 0 ) {
 
@@ -362,6 +362,12 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 				// Updating status to hold, admin will change it to 'completed'    after amount is reflected in his account.
 				update_post_meta( $member_id, 'member_status', 'hold' );
+
+				// Send email invoice to customer.
+				if ( 'email_invoice' == get_post_meta( $member_id, 'member_actions', true ) ) {
+
+					$this->global_class->email_membership_invoice();
+				}
 
 			} catch ( \Throwable $e ) {
 				/**

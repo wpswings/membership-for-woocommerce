@@ -119,7 +119,7 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
 
-		wp_enqueue_script( 'sweet_alrt', plugin_dir_url( __FILE__ ) . 'js/sweet-alert.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
 
 	}
 
@@ -904,7 +904,7 @@ class Membership_For_Woocommerce_Public {
 		switch ( $method_id ) {
 
 			case 'membership-adv-bank-transfer':
-				$recpt_att = isset( $fields['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
+				$recpt_att = isset( $fields['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : false;
 				break;
 
 			case 'membership-paypal-gateway':

@@ -47,7 +47,7 @@ if ( ! empty( $member_id ) ) {
 	$output .= '<div class="members_plan_preview" >
 					<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
 					' . esc_html( $plan_info['post_title'] ) . '
-					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '
+					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
 					' . esc_html( $plan_info['post_content'] );
 
 	$output .= '</div>';
@@ -67,9 +67,10 @@ if ( ! empty( $member_id ) ) {
 						<tbody>
 							<tr>
 								<td>' . esc_html( $plan_info['post_title'] ) . '</td>
-								<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'][0] ) ) . '</td>
+								<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '</td>
 							</tr>
-						</tbody>';
+						</tbody>
+					</table>';
 
 	$output .= '<div class="edit_members_action">
 					<a class="button button-primary button-large" href="' . admin_url( 'post.php?action=edit&post=' . $member_id ) . '">' . esc_html__( 'Edit', 'membership-for-woocommerce' ) . '</a>

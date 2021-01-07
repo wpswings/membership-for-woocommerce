@@ -472,7 +472,7 @@ class Membership_For_Woocommerce_Admin {
 		$this->set_plan_creation_fields( get_the_ID() );
 		//echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN . 'templates/membership-templates/mwb-membership-plans-creation.php' ); echo '</pre>';
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-plans-creation.php';
-		// wc_get_template( 'templates/membership-templates/mwb-membership-plans-creation.php', array(), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
+		// wc_get_template( 'templates/membership-templates/mwb-membership-plans-creation.php', array( $this->settings_fields ), '', MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN );
 	}
 
 	/**

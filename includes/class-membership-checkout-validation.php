@@ -34,7 +34,7 @@ class Membership_Checkout_Validation {
 
 		echo wp_json_encode(
 			array(
-				'status'  => false,
+				'result'  => false,
 				'message' => 'Not a valid ' . $field,
 			)
 		);

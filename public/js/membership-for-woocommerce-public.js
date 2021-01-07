@@ -109,24 +109,35 @@ jQuery( document ).ready( function( $ ) {
 				success : function( response ) {
 
 					console.log( response );
+					// Close payment modal.
+					$( "#mwb_membership_buy_now_modal_form" ).dialog( "close" );
+
 					if ( "payment_success" == response['result'] ) {
 
-						$( "#mwb_membership_buy_now_modal_form" ).dialog( "close" );
-
+						// Show "success" response via sweet-alert.
 						Swal.fire({
 							icon : 'success',
 							title: response['message'],
 						});
 
 					} else if ( "payment_failed" == response['result'] ) {
-
-						$( "#mwb_membership_buy_now_modal_form" ).dialog( "close" );
 						
+						// Show "failure" response via sweet-alert.
 						Swal.fire({
 							icon : 'error',
 							title: 'Oops..!!',
 							text : response['message']
 						});
+
+					} else {
+
+						// Show "validation failure" response via sweet-alert.
+						Swal.fire({
+							icon : 'error',
+							title: 'Oops..!!',
+							text : response['message']
+						});
+
 					}
 				}
 
@@ -172,7 +183,7 @@ jQuery( document ).ready( function( $ ) {
 			contentType : false,
 
 			success: function( response ) {
-
+				console.log( response );
 				if ( "success" == response["result"] ) {
 					$( ".bacs_receipt_remove_file" ).show();
 					$( ".bacs_receipt_attached" ).val( response.url );

@@ -864,8 +864,10 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$plan_meta = array_merge( $plan_obj, $post_meta );
 
+			// Checking if user exist or not by email.
 			$_user = get_user_by( 'email', $fields['membership_billing_email'] );
 
+			// If user exist, get the required details.
 			if ( $_user ) {
 
 				$user_name = $_user->display_name;
@@ -873,6 +875,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			} else {
 
+				// Else create user.
 				$_user = wp_create_user( $fields['membership_billing_first_name'], '', $$fields['membership_billing_email'] );
 
 				if ( $_user ) {
@@ -883,6 +886,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 
+			// Creating post for members, keeping its status to pending.
 			$member_id = wp_insert_post(
 				array(
 					'post_type'   => 'mwb_cpt_members',
@@ -948,5 +952,132 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			file_put_contents( $log_dir_file, $log, FILE_APPEND );
 		}
+	}
+
+	/**
+	 * Email membership invoice to customers after successfull purchase.
+	 *
+	 * @param int $member_id Members's ID.
+	 */
+	public function email_membership_invoice( $member_id ) {
+
+		if ( ! function_exists( 'wp_mail' ) ) {
+
+			return;
+		}
+
+		if ( ! empty( $member_id ) ) {
+
+			$plan_info = get_post_meta( $member_id, 'plan_obj', true );
+			$billing = get_post_meta( $member_id, 'billing_details', true );
+
+			$first_name = ! empty( $billing['membership_billing_first_name'] ) ? $billing['membership_billing_first_name'] : '';
+			$last_name  = ! empty( $billing['membership_billing_last_name'] ) ? $billing['membership_billing_last_name'] : '';
+			$company    = ! empty( $billing['membership_billing_company'] ) ? $billing['membership_billing_company'] : '';
+			$address_1  = ! empty( $billing['membership_billing_address_1'] ) ? $billing['membership_billing_address_1'] : '';
+			$address_2  = ! empty( $billing['membership_billing_address_2'] ) ? $billing['membership_billing_address_2'] : '';
+			$city       = ! empty( $billing['membership_billing_city'] ) ? $billing['membership_billing_city'] : '';
+			$postcode   = ! empty( $billing['membership_billing_postcode'] ) ? $billing['membership_billing_postcode'] : '';
+			$state      = ! empty( $billing['membership_billing_state'] ) ? $billing['membership_billing_state'] : '';
+			$country    = ! empty( $billing['membership_billing_country'] ) ? $billing['membership_billing_country'] : '';
+			$email      = ! empty( $billing['membership_billing_email'] ) ? $billing['membership_billing_email'] : '';
+			$phone      = ! empty( $billing['membership_billing_phone'] ) ? $billing['membership_billing_phone'] : '';
+
+			ob_start();
+			?>
+
+			<div class="membership_invoice_wrapper">
+				<div class="invoice_info">
+					<p>
+						<strong><?php esc_html_e( 'Invoice no. :', 'membership-for-woccommerce' ); ?></strong><?php echo esc_html( '#INV' . $member_id ); ?></br>
+						<strong><?php esc_html_e( 'Invoice date :', 'membership-for-woccommerce' ); ?></strong><?php echo esc_html( current_time( 'Y-m-d' ) ); ?>
+					</p>
+				</div>
+
+				<div class="invoice_billing">
+					<h3><?php esc_html_e( 'Bill to', 'membership-for-woocommerce' ); ?></h3>
+					<p>
+						<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
+						<?php echo esc_html( $company ); ?></br>
+						<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
+						<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
+						<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?></br>
+						<?php echo esc_html( $phone ); ?></br>
+						<?php echo esc_html( $email ); ?></br>
+					</p>
+				</div>
+
+				<div class="membership_inv_table_wrapper">
+					<table class="membership_inv_table">
+						<thead>
+							<tr>
+								<th class="inv_table_slno"><?php echo esc_html__( 'SNo.', 'membership-for-woocommerce' ); ?></th>
+								<th class="inv_table_product"><?php echo esc_html__( 'Product', 'membership-for-woocommerce' ); ?></th>
+								<th class="inv_table_total"><?php echo esc_html__( 'Amount', 'membership-for-woocommerce' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><?php esc_html( '1.' ); ?></td>
+								<td><?php esc_html( $plan_info['post_title'] ); ?></td>
+								<td><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ); ?></td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="membership_inv_total">
+						<strong><?php esc_html_e( 'Total : ', 'membership-for-woocommerce' ); ?></strong><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ); ?>
+					</p>
+				</div>
+			</div>
+			<footer>
+				<div class="membership_inv_footer">
+					<p>
+						<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?></strong></br>
+						<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
+					</p>
+				</div>
+			</footer>
+
+			<?php
+
+			$content = ob_get_clean();
+
+			$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
+
+			require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/mpdf_lib/vendor/autoload.php';
+
+			$mpdf = new \mPDF( 'c', 'A4', '', '', 0, 0, 0, 0, 0, 0 );
+
+			// Write some HTML code:.
+			$mpdf->WriteHTML( $content );
+
+			// Output a PDF file directly to the browser.
+			$attachment = $mpdf->Output( WC_LOG_DIR . 'membership-for-woocommerce-invoices/' . get_the_title( $member_id ), 'F' );
+
+			/**
+			 * Now send mail to customer including virtual invoice and a hard copy of it as attachment.
+			 */
+			$_user      = get_user_by( 'email', $email );
+			$user_email = $_user->user_email;
+
+			// If user exists store its email id in array.
+			if ( $user_email === $email ) {
+
+				$to = array( $email );
+			} else {
+				$to = array( $email, $original_email );
+			}
+
+			$subject = 'Thanks for purchasing ' . $plan_info['post_title'];
+
+			wp_mail(
+				$to,
+				$subject,
+				$content,
+				'',
+				$attachment,
+			);
+		}
+
 	}
 }
