@@ -1044,15 +1044,43 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
 
-			require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/mpdf_lib/vendor/autoload.php';
+			require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
 
-			$mpdf = new \mPDF( 'c', 'A4', '', '', 0, 0, 0, 0, 0, 0 );
+			if ( ! class_exists( 'TCPDF' ) ) {
 
-			// Write some HTML code:.
-			$mpdf->WriteHTML( $content );
+				return;
+			}
 
-			// Output a PDF file directly to the browser.
-			$attachment = $mpdf->Output( WC_LOG_DIR . 'membership-for-woocommerce-invoices/' . get_the_title( $member_id ), 'F' );
+			$pdf = new TCPDF();
+
+			$pdf->SetCreator( PDF_CREATOR );
+			$pdf->SetAuthor( get_bloginfo( 'name' ) );
+			$pdf->SetTitle( 'Invoice' );
+
+			// $pdf->SetSubject( 'TCPDF Tutorial' );
+			// $pdf->SetKeywords( 'TCPDF, PDF, example, test, guide' );
+
+			// add a page.
+			$pdf->AddPage();
+
+			// Output the HTML content.
+			$pdf->writeHTML( $content, true, false, true, false, '' );
+
+			try {
+
+				$uploads_dir = trailingslashit( wp_upload_dir()['basedir'] ) . 'mfw-invoices';
+				$path        = wp_mkdir_p( $uploads_dir );
+				if ( $path ) {
+					$pdf->Output( WP_CONTENT_DIR . '/uploads/mfw-invoices/' . $first_name, 'F' );
+				}
+
+			} catch ( Exception $e ) {
+
+				echo esc_html( $e->getMessage() );
+			}
+
+			// Get the attachment file.
+			$attachment = WP_CONTENT_DIR . 'uploads/mfw-invoices/' . $first_name;
 
 			/**
 			 * Now send mail to customer including virtual invoice and a hard copy of it as attachment.

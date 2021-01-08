@@ -17,9 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
+die;
 //echo '<pre>'; print_r( get_post_meta( 503, 'billing_details', true ) ); echo '</pre>';
 ///echo '<pre>'; print_r( get_post_meta( 503, 'plan_obj', true ) ); echo '</pre>';
 // echo '<pre>'; print_r( MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'includes/mpdf_lib/vendor/autoload.php' ); echo '</pre>';
+
+//echo '<pre>'; print_r( wp_mkdir_p( $uploads_dir ) ); echo '</pre>';
 
 require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
 
@@ -119,10 +122,16 @@ $pdf->writeHTML( $content, true, false, true, false, '' );
 
 try {
 
-	$path = wp_upload_dir( '', 'membership-for-woo-invoices', true );
-	echo '<pre>'; print_r( WP_CONTENT_DIR.'/uploads' ); echo '</pre>';die;
-	
-$pdf->Output( $path . '/example_006.pdf', 'F');
+	$uploads_dir = trailingslashit( wp_upload_dir()['basedir'] ) . 'evaluation-uploads';
+	$path        = wp_mkdir_p( $uploads_dir );
+	//echo '<pre>'; print_r( $path['basedir'] ); echo '</pre>';die;
+	if ( $path ) {
+
+		// $ppp = wp_get_upload_dir();
+		$name = 'test-pdf';
+
+		$pdf->Output( WP_CONTENT_DIR . '/uploads/evaluation-uploads/' . $name , 'F' );
+	}
 } catch (Exception $e) {
 	echo $e->getMessage();
 }
