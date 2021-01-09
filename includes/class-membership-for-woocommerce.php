@@ -194,8 +194,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'manage_mwb_cpt_membership_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
 
 		// Adding custom meta box.
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
-		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'membership_for_woo_members_metabox' );
+		//$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
+		//$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'membership_for_woo_members_metabox' );
 
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post_mwb_cpt_membership', $plugin_admin, 'mwb_membership_for_woo_save_fields' );

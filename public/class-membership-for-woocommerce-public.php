@@ -40,13 +40,6 @@ class Membership_For_Woocommerce_Public {
 	private $version;
 
 	/**
-	 * Creating Instance of the country functions class.
-	 *
-	 * @var object
-	 */
-	public $country_class;
-
-	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -766,8 +759,9 @@ class Membership_For_Woocommerce_Public {
 			$file_ext  = strtolower( $file_ext );
 
 			$gateway_opt = new Mwb_Membership_Adv_Bank_Transfer();
-			$settings    = ! empty( $gateway_opt->settings ) ? $gateway_opt->settings : array();
-			$extensions  = ! empty( $settings['support_formats'] ) ? $settings['support_formats'] : array();
+
+			$settings   = ! empty( $gateway_opt->settings ) ? $gateway_opt->settings : array();
+			$extensions = ! empty( $settings['support_formats'] ) ? $settings['support_formats'] : array();
 
 			if ( ! empty( $file_ext ) ) {
 
@@ -864,12 +858,11 @@ class Membership_For_Woocommerce_Public {
 		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
 
 		$country_class = new WC_Countries();
-		$states        = $country_class->__get( 'states' );
-		$states        = ! empty( $states[ $country_code ] ) ? $states[ $country_code ] : array();
+
+		$states = $country_class->__get( 'states' );
+		$states = ! empty( $states[ $country_code ] ) ? $states[ $country_code ] : array();
 
 		$result = '';
-
-		//print_r($states);
 
 		if ( ! empty( $states ) && is_array( $states ) ) {
 
@@ -889,7 +882,7 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function membership_process_payment() {
 
-		// Nonce verify.
+		// Nonce verification.
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 
 		$validation = new Membership_Checkout_Validation();
@@ -900,6 +893,8 @@ class Membership_For_Woocommerce_Public {
 		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
+
+		//echo '<pre>'; print_r( $fields ); echo '</pre>';die;
 
 		switch ( $method_id ) {
 
@@ -925,7 +920,7 @@ class Membership_For_Woocommerce_Public {
 		$firstname = isset( $fields['membership_billing_first_name'] ) ? $validation->validate_input_fname( $fields['membership_billing_first_name'] ) : '';
 		$lastname  = isset( $fields['membership_billing_last_name'] ) ? $validation->validate_input_lname( $fields['membership_billing_last_name'] ) : '';
 		$company   = isset( $fields['membership_billing_company'] ) ? $fields['membership_billing_company'] : '';
-		$country   = isset( $fields['membership_billing_country'][0] ) ? $fields['membership_billing_country'][0] : '';
+		$country   = isset( $fields['membership_billing_country'] ) ? $fields['membership_billing_country'] : '';
 		$addr_1    = isset( $fields['membership_billing_address_1'] ) ? $validation->validate_input_stname( $fields['membership_billing_address_1'] ) : '';
 		$addr_2    = isset( $fields['membership_billing_address_2'] ) ? $validation->validate_input_stname( $fields['membership_billing_address_2'] ) : '';
 		$city      = isset( $fields['membership_billing_city'] ) ? $validation->validate_input_city( $fields['membership_billing_city'] ) : '';
