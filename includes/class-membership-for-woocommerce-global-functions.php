@@ -214,8 +214,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function supported_gateways() {
 
 		$supported_gateways = array(
-			'paypal',
-			'cod',
+			
 			'membership-paypal-gateway', // Membership Paypal.
 			'membership-stripe-gateway', // Membership stripe.
 			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.

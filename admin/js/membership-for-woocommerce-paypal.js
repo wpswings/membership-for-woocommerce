@@ -1,10 +1,10 @@
 jQuery( document ).ready( function( $ ){
 
-	$( "#woocommerce_membership-for-woo-paypal-gateway_testmode" ).on( "change", function( e ){
+	$( "#woocommerce_membership-paypal-gateway_testmode" ).on( "change", function( e ){
 		e.preventDefault();
 
-		var live = $( "#woocommerce_membership-for-woo-paypal-gateway_api_username, #woocommerce_membership-for-woo-paypal-gateway_api_password, #woocommerce_membership-for-woo-paypal-gateway_api_signature" ).closest( "tr" );
-		var	test_sandbox = $( "#woocommerce_membership-for-woo-paypal-gateway_sandbox_api_username, #woocommerce_membership-for-woo-paypal-gateway_sandbox_api_password, #woocommerce_membership-for-woo-paypal-gateway_sandbox_api_signature" ).closest( "tr" );
+		var live = $( "#woocommerce_membership-paypal-gateway_api_username, #woocommerce_membership-paypal-gateway_api_password, #woocommerce_membership-paypal-gateway_api_signature" ).closest( "tr" );
+		var	test_sandbox = $( "#woocommerce_membership-paypal-gateway_sandbox_api_username, #woocommerce_membership-paypal-gateway_sandbox_api_password, #woocommerce_membership-paypal-gateway_sandbox_api_signature" ).closest( "tr" );
 		
 		if ( $( this ).is( ":checked" ) ) {
 

@@ -204,7 +204,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_script( 'jquery-ui-dialog' );
 			}
 
-			if ( isset( $_GET['section'] ) && 'membership-for-woo-paypal-gateway' == $_GET['section'] ) {
+			if ( isset( $_GET['section'] ) && 'membership-paypal-gateway' == $_GET['section'] ) {
 
 				wp_enqueue_script( 'mwb-membership-paypal-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-paypal.js', array( 'jquery' ), $this->version, false );
 
@@ -483,6 +483,9 @@ class Membership_For_Woocommerce_Admin {
 
 			return;
 		}
+
+		// Nonce verification.
+		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
 
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
@@ -885,6 +888,9 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_members_metabox_callback( $post ) {
 
+		// Add a single nonce field to post.
+		wp_nonce_field( 'mwb_members_creation_nonce', 'mwb_members_nonce_field' );
+
 		require_once plugin_dir_path( __FILE__ ) . '/partials/templates/members-templates/mwb-members-plans-details.php';
 
 	}
@@ -910,9 +916,11 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_save_member_fields( $post_id ) {
 
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-
 			return;
 		}
+
+		// Nonce verification.
+		check_admin_referer( 'mwb_members_creation_nonce', 'mwb_members_nonce_field' );
 
 		// Saving member actions metabox fields.
 		$actions = array(
@@ -1324,10 +1332,10 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_supported_gateways( $gateways ) {
 
-		// if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
+		if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
 
-		// 	$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
-		// }
+			$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
+		}
 
 		// if ( class_exists( 'Mwb_Membership_For_Woo_Stripe_Gateway' ) ) {
 

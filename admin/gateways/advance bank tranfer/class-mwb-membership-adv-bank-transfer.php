@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Adding Paypal Payment Gateway support for Membership.
+ * Adding advance BACS Payment Gateway support for Membership.
  */
 class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
@@ -49,7 +49,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		// Instance of global class.
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
-		// BACS account fields shown on purchase completion and emails.
+		// BACS account fields shown on purchase completion.
 		$this->account_details = get_option(
 			'mwb_membership_bacs_accounts',
 			array(
@@ -79,50 +79,40 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		global $woocommerce;
 
-		$countries = new WC_Countries();
-		$country   = $countries->__get( 'countries' );
-
 		$this->form_fields = array(
 
-			'enabled'           => array(
+			'enabled'         => array(
 				'title'   => __( 'Enable/Disable', 'membership-for-woocommerce' ),
 				'type'    => 'checkbox',
 				'label'   => __( 'Enable Advance Bank Transfer', 'membership-for-woocommerce' ),
 				'default' => 'no',
 			),
-			'title'             => array(
+			'title'           => array(
 				'title'       => __( 'Title', 'membership-for-woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'This displays the title of the gateway visible to user', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
 				'default'     => __( 'Advance Direct Bank Transfer', 'membership-for-woocommerce' ),
 			),
-			'description'       => array(
+			'description'     => array(
 				'title'       => __( 'Description', 'membership-for-woocommerce' ),
 				'type'        => 'textarea',
 				'description' => __( 'Payment method description visible to the user', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
-				'default'     => __( 'Make your payment directly into our bank and upload receipt below. Your membership will be on-hold until the funds reflect in our bank' ),
+				'default'     => __( 'Make your payment directly into our bank and upload receipt below. Your membership will be "on-hold" until the funds reflect in our bank.', 'membership-for-woocommerce' ),
 			),
-			'instructions'      => array(
+			'instructions'    => array(
 				'title'      => __( 'Instructions', 'membership-for-woocommerce' ),
 				'type'       => 'textarea',
 				'decription' => __( 'Instructions that will be added on membership purchase and emails', 'membership-for-woocommerce' ),
 				'desc_tip'   => true,
-				'default'    => __( 'Thank You For purchasing the membership plan, We will review your payment and process accordingly.', 'membership-for-woocommerce' ),
+				'default'    => __( 'Thank You for purchasing the membership plan, We will review your payment and process accordingly.', 'membership-for-woocommerce' ),
 			),
-			'account_details'   => array(
+			'account_details' => array(
 				'type' => 'account_details',
 			),
-			'exclude_countries' => array(
-				'title'       => __( 'Exclude Countries', 'membership-for-woocommerce' ),
-				'type'        => 'multiselect',
-				'options'     => $country,
-				'description' => __( 'The payment mehtod won\'t be shown if billing country belongs to one of these.', 'membership-for-woocommerce' ),
-				'desc_tip'    => true,
-				'default'     => '',
-			),
-			'support_formats'   => array(
+
+			'support_formats' => array(
 				'title'       => __( 'Supported Formats', 'membership-for-woocommerce' ),
 				'type'        => 'multiselect',
 				'options'     => array(
@@ -156,11 +146,14 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		?>
 
+		<!-- Account details start -->
 		<tr valign="top">
 			<th scope="row" class="titledesc"><?php esc_html_e( 'Account Details', 'membership-for-woocommerce' ); ?></th>
 			<td class="forminp" id="adv_bank_transfer_account">
+
 				<div class="wc_input_table_wrapper">
 					<table class="widefat wc_input_table sortable" cellspacing="0">
+
 						<thead>
 							<tr>
 								<th class="sort">&nbsp;</th>
@@ -172,6 +165,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 								<th><?php esc_html_e( 'BIC / Swift', 'membership-for-woocommerce' ); ?></th>
 							</tr>
 						</thead>
+
 						<tbody class="accounts">
 							<?php
 							$i = -1;
@@ -195,13 +189,16 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 							}
 							?>
 						</tbody>
+
 						<tfoot>
 							<tr>
-								<th colspan="7"><a href="#" class="add button"><?php esc_html_e( '+ Add Account', 'membership-for-woocommerce' ); ?></a> <a href="#" class="remove_rows button"><?php esc_html_e( 'Remove selected account(s)', 'membership-for-woocommerce' ); ?></a></th>
+								<th colspan="7"><a href="#" class="add button"><?php esc_html_e( '+ Add Account', 'membership-for-woocommerce' ); ?></a><a href="#" class="remove_rows button"><?php esc_html_e( 'Remove selected account(s)', 'membership-for-woocommerce' ); ?></a></th>
 							</tr>
 						</tfoot>
+
 					</table>
 				</div>
+
 				<script type="text/javascript">
 					jQuery(function() {
 						jQuery('#adv_bank_transfer_account').on( 'click', 'a.add', function(){
@@ -222,8 +219,10 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 						});
 					});
 				</script>
+
 			</td>
 		</tr>
+		<!-- Account details end. -->
 		<?php
 		return ob_get_clean();
 	}
@@ -269,23 +268,23 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	// public function is_available() {
 
-	// 	// // Return if admin, as no session is created for admin.
-	// 	// if ( is_admin() ) {
-	// 	// 	return;
-	// 	// }
+	// 	// Return if admin, as no session is created for admin.
+	// 	if ( is_admin() ) {
+	// 		return;
+	// 	}
 
-	// 	// $current_user    = WC()->session->get( 'customer' );
-	// 	// $billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
+	// 	$current_user    = WC()->session->get( 'customer' );
+	// 	$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
 
-	// 	// echo '<pre>'; print_r( $billing_country ); echo '</pre>'; die();
+	// 	echo '<pre>'; print_r( $billing_country ); echo '</pre>'; die();
 
-	// 	// if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
+	// 	if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
 
-	// 	// 	return false;
-	// 	// } else {
+	// 		return false;
+	// 	} else {
 
-	// 	// 	return true;
-	// 	// }
+	// 		return true;
+	// 	}
 	// }
 
 	/**
@@ -310,19 +309,25 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		ob_start();
 		?>
 
+		<!-- Receipt field start. -->
 		<div class="bacs_receipt_wrapper">
+
 			<div class="bacs_receipt_field">
 				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
 				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="true">
 			</div>
+
 			<div id="progress-wrapper" class="is_hidden">
 				<div class="progress-bar"></div>
 				<div class="status"><?php esc_html_e( 'Processing', 'membership-for-woocommerce' ); ?></div>
 			</div>
+
 			<div class="bacs_receipt_field is_hidden">
 				<a href="javascript:void(0);" class="bacs_receipt_remove_file"><?php esc_html_e( 'Remove File', 'membership-for-woocommerce' ); ?></a>
 			</div>
+
 		</div>
+		<!-- Receipt feild end. -->
 
 		<?php
 		return ob_get_clean();
@@ -330,8 +335,13 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 	/**
 	 * Process payment.
+	 *
+	 * @param int $plan_id   Membership plan ID.
+	 * @param int $member_id Members ID.
+	 *
+	 * @return bool
 	 */
-	public function process_payment ( $plan_id, $member_id = '' ) {
+	public function process_payment( $plan_id, $member_id = '' ) {
 
 		if ( empty( $plan_id ) ) {
 			return; // there must be a plan id.
@@ -370,6 +380,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				}
 
 			} catch ( \Throwable $e ) {
+
 				/**
 				 * If there was an error completing the payment, log to a file and add an order note so the admin can take action.
 				 */
@@ -381,6 +392,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 				return false;
 			}
+
 			return true;
 		}
 	}

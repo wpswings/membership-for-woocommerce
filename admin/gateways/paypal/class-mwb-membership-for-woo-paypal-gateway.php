@@ -27,6 +27,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 			'products',
 			'refunds',
 		);
+		$this->charge_type        = 'SALE';
 
 		// Load form fields.
 		$this->init_form_fields();
@@ -39,10 +40,8 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 		$this->enabled             = $this->get_option( 'enabled' );
 		$this->description         = $this->get_option( 'description' );
 		$this->testmode            = $this->get_option( 'testmode' );
-		$this->order_button_text   = __( 'Proceed to Paypal', 'membership-for-woocommerce' );
 		$this->order_number_prefix = $this->get_option( 'invoice_prefix' );
 		$this->billing_desc        = $this->get_option( 'billing_description' );
-		$this->copy_address        = $this->get_option( 'copy_address' );
 		$this->logging             = $this->get_option( 'logging' );
 
 		if ( ! $this->is_valid_for_use() ) {
@@ -64,10 +63,10 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 
 		}
 
-		if ( empty( $this->api_username ) || empty( $this->api_password ) || empty( $this->api_signature ) ) {
+		// if ( empty( $this->api_username ) || empty( $this->api_password ) || empty( $this->api_signature ) ) {
 
-			$this->enabled = 'no';
-		}
+		// 	$this->enabled = 'no';
+		// }
 
 		$this->base_url = 'https://api-3t.paypal.com/nvp';
 
@@ -87,7 +86,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 		add_action( 'admin_notices', array( $this, 'mwb_membership_for_woo_admin_notices' ) );
 
 		// This action hook proccess final payment on Thankyou page.
-		add_action( 'woocommcerce_thankyou_' . $this->id, array( $this, 'mwb_membership_for_woo_fprocess_final_payment' ) );
+		//add_action( 'woocommcerce_thankyou_' . $this->id, array( $this, 'mwb_membership_for_woo_process_final_payment' ) );
 	}
 
 	/**
@@ -102,8 +101,8 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 
 		if ( empty( $this->api_username ) || empty( $this->api_password ) || empty( $this->api_signature ) ) {
 
-			echo '<div class="error"><p>' . __( 'PayPal needs API credentials to work, please find your PayPal API credentials at ', 'membership-for-woocommerce' ) .
-			'<a href="https://developer.paypal.com/" target="_blank">' . __( 'PayPal Developer', 'membership-for-woocommerce' ) . '</a></p></div>';
+			echo '<div class="error"><p>' . esc_html_e( 'PayPal needs API credentials to work, please find your PayPal API credentials at ', 'membership-for-woocommerce' ) .
+			'<a href="https://developer.paypal.com/" target="_blank">' . esc_html_e( 'PayPal Developer', 'membership-for-woocommerce' ) . '</a></p></div>';
 
 		}
 
@@ -139,19 +138,6 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 				'id'          => 'woocommerce_mwb-membership-paypal-gateway_description',
 				'css'         => 'max-width:400px',
 			),
-			// 'charge_type'           => array(
-			// 'type'        => 'select',
-			// 'title'       => __( 'Charge type', 'membership-for-woocommerce' ),
-			// 'description' => __( 'Choose to capture payment at checkout, or authorize only to capture later (when order status is switched to "completed").', 'membership-for-woocommerce' ),
-			// 'options'     => array(
-			// 'SALE'          => __( 'Authorize & Capture', 'membership-for-woocommerce' ),
-			// 'AUTHORIZATION' => __( 'Authorize only', 'membership-for-woocommerce' ),
-			// ),
-			// 'default'     => 'SALE',
-			// 'class'       => 'select',
-			// 'css'         => 'height:40px',
-			// 'desc_tip'    => true,
-			// ),
 			'billing_description'   => array(
 				'type'        => 'text',
 				'title'       => __( 'Billing Description', 'membership-for-woocommerce' ),
@@ -164,14 +150,6 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 				'title'       => __( 'Invoice prefix', 'membership-for-woocommerce' ),
 				'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PayPal account for multiple stores ensure this prefix is unique as PayPal will not allow orders with the same invoice number.', 'membership-for-woocommcerc' ),
 				'default'     => __( 'wc-', 'membership-for-woocommcerce' ),
-				'desc_tip'    => true,
-			),
-			'copy_address'          => array(
-				'type'        => 'checkbox',
-				'title'       => __( 'Copy Shipping Address from PayPal Account', 'membership-for-woocommerce' ),
-				'label'       => __( 'Yes', 'mmebership-for-woocommerce' ),
-				'description' => __( 'Allow to copy shipping address from customers paypal account and add to order details.', 'membership-for-woocommerce' ),
-				'default'     => 'yes',
 				'desc_tip'    => true,
 			),
 			'testmode'              => array(
@@ -371,13 +349,29 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	/**
 	 * Redirects to paypal payment page on successful authorization.
 	 *
-	 * @param int $order_id Order id.
+	 * @param int $plan_id   Membership plan ID.
+	 * @param int $member_id Members ID.
+	 *
+	 * @return array
 	 */
-	public function process_payment( $order_id ) {
+	public function process_payment( $plan_id, $member_id = '' ) {
 
-		$order = wc_get_order( $order_id );
+		if ( empty( $plan_id ) ) {
+			return; // there must be a plan id.
+		}
 
-		$result = $this->mwb_membership_for_woo_paypal_get_response( $order );
+		if ( ! empty( $plan_id ) && ! empty( $member_id ) ) {
+
+			$plan_price = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
+
+		}
+
+		//$order = wc_get_order( $order_id );
+		$plan = get_post_meta( $member_id, 'plan_obj', true );
+
+		if ( ! empty( $plan ) && is_array( $plan ) ) {
+			$result = $this->mwb_membership_for_woo_paypal_get_response( $plan );
+		}
 
 		$mwb_membership_parsed_data = array();
 

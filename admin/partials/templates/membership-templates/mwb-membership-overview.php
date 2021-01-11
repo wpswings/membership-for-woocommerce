@@ -18,6 +18,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+$member_id = 503;
+echo '<pre>'; print_r( get_post_meta( $member_id, 'plan_obj', true ) ); echo '</pre>';
+
 ?>
 
 <!-- Heading start -->
@@ -25,3 +28,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<h2><?php esc_html_e( 'Membership Overview', 'membership-for-woocommerce' ); ?></h2>
 </div>
 <!-- Heading end. -->
+
+<div id="paypal-button-container"></div>
+
+<!-- Include the PayPal JavaScript SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+
+<script>
+	// Render the PayPal button into #paypal-button-container
+	paypal.Buttons({
+
+		// Set up the transaction
+		createOrder: function(data, actions) {
+			return actions.order.create({
+				purchase_units: [{
+					amount: {
+						value: '88.44'
+					}
+				}]
+			});
+		},
+
+		// Finalize the transaction
+		onApprove: function(data, actions) {
+			return actions.order.capture().then(function(details) {
+				// Show a success message to the buyer
+				alert('Transaction completed by ' + details.payer.name.given_name + '!');
+			});
+		}
+
+
+	}).render('#paypal-button-container');
+</script>
