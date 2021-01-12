@@ -135,9 +135,14 @@ class Membership_For_Woocommerce {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-global-functions.php';
 
 		/**
-		 * The calss responsible for defining all function for membership checkout validations.
+		 * The class responsible for defining all function for membership checkout validations.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
+
+		/**
+		 * The class responsible for defining all function for membership checkout validations.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
 
 		$this->loader = new Membership_For_Woocommerce_Loader();
 

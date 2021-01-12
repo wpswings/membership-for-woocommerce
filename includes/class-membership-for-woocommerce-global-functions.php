@@ -922,7 +922,6 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function create_log( $member_id, $final_response, $payment_gateway ) {
 
 		if ( ! defined( 'WC_LOG_DIR' ) ) {
-
 			return;
 		}
 
@@ -937,7 +936,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		if ( ! file_exists( $log_dir_file ) || ! is_writable( $log_dir_file ) ) {
-
 			@fopen( $log_dir_file, 'a' );
 		}
 

@@ -57,20 +57,53 @@ class Membership_Activity_Helper {
 		$this->folder = $folder;
 		$this->sub_folder = $sub_folder;
 
-		switch ( $this->activity  ) {
-			case 'uploads':
-				# For Uploads only...
-				$this->working_path = $this->$base_dir . $folder;
-				break;
-			
-			default:
-				# For Logger only...
-				$this->working_path = $this->$base_dir . $folder;
-				break;
-		}
+		/**
+		 * Create Working Directories.
+		 */
+
+
 	}
 
 	public function create_log() {
 
+		switch ( $this->activity ) {
+			case 'uploads':
+				// For Uploads only...
+				$this->working_path = $this->base_dir . $this->folder;
+				break;
+			
+			default:
+				// For Logger only...
+				$this->working_path = $this->base_dir . $this->folder;
+				break;
+		}
+
+		// Create Base Path.
+		$this->check_and_create_folder( $this->working_path );
+
+		// Base paths
+		if( ! empty( $this->sub_folder ) && is_array( $this->sub_folder ) ) {
+
+			foreach ( $this->sub_folder as $key => $_sub_folder ) {
+
+				if( ! empty( $_sub_folder ) ) {
+					$this->check_and_create_folder( $this->working_path . $_sub_folder );
+				}
+			}
+		}
+
+		// if ( ! file_exists( $log_dir_file ) || ! is_writable( $log_dir_file ) ) {
+		// 	@fopen( $log_dir_file, 'a' );
+		// }
+
 	}
+
+
+	public function check_and_create_folder( $path='' ) {
+		if ( ! empty( $path ) && ! is_dir( $path ) ) {
+			mkdir( $path, 0755, true );
+		}
+	}
+
+// End of class.
 }

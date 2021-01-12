@@ -18,9 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$member_id = 503;
-echo '<pre>'; print_r( get_post_meta( $member_id, 'plan_obj', true ) ); echo '</pre>';
+// $member_id = 503;
+// echo '<pre>'; print_r( get_post_meta( $member_id, 'plan_obj', true ) ); echo '</pre>';
 
+
+$class = new Membership_Activity_Helper(  );
+
+echo '<pre>'; print_r( $class->create_log() ); echo '</pre>';
+
+
+
+return;
 ?>
 
 <!-- Heading start -->
@@ -60,3 +68,6 @@ echo '<pre>'; print_r( get_post_meta( $member_id, 'plan_obj', true ) ); echo '</
 
 	}).render('#paypal-button-container');
 </script>
+
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script>paypal.Buttons().render('body');</script> -->
