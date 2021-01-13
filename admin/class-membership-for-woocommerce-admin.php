@@ -215,6 +215,10 @@ class Membership_For_Woocommerce_Admin {
 			} elseif ( isset( $_GET['section'] ) && 'membership-adv-bank-transfer' == $_GET['section'] ) {
 
 				wp_enqueue_script( 'mwb-membership-ad-bacs-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-ad-bacs.js', array( 'jquery' ), $this->version, false );
+			
+			} elseif ( isset( $_GET['section'] ) && 'membership-paypal-express-checkout' == $_GET['section'] ) {
+
+				wp_enqueue_script( 'mwb-membership-paypal-ec-script', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-express-checkout.js', array( 'jquery' ), $this->version, false );
 			}
 
 			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
@@ -480,13 +484,16 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_save_fields( $post_id ) {
 
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return;
+		}
 
+		if( ( ! empty( $_POST[ 'action' ]  ) && 'inline-save' == $_POST[ 'action' ] ) || ! empty( $_GET[ 'action' ] ) ) {
 			return;
 		}
 
 		// Nonce verification.
 		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
-
+		
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
 			foreach ( $this->get_plans_default_value() as $field => $value ) {
@@ -702,6 +709,7 @@ class Membership_For_Woocommerce_Admin {
 
 		// Handling file upload.
 		$csv_file         = ! empty( $_FILES['file'] ) ? $_FILES['file'] : '';
+		update_option( 'mwb_csv_file', $csv_file );
 		$upload_overrides = array( 'test_form' => false );
 		$upload_file      = wp_handle_upload( $csv_file, $upload_overrides );
 
@@ -1347,6 +1355,11 @@ class Membership_For_Woocommerce_Admin {
 			$gateways[] = 'Mwb_Membership_Adv_Bank_Transfer';
 		}
 
+		if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
+
+			$gateways[] = 'Membership_Paypal_Express_Checkout';
+		}
+
 		return $gateways;
 	}
 
@@ -1361,6 +1374,11 @@ class Membership_For_Woocommerce_Admin {
 		 * The class responsible for defining all methods of PayPal payment gateway.
 		 */
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
+		
+		/**
+		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
+		 */
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
 
 		/**
 		 * The class responsible for defining all methods of Stripe payment gateway.

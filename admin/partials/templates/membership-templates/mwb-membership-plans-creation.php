@@ -29,7 +29,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 	<tbody>
 
 		<!-- Nonce Field -->
-		<?php //wp_nonce_field( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' ); ?>
+		<?php wp_nonce_field( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' ); ?>
 
 		
 

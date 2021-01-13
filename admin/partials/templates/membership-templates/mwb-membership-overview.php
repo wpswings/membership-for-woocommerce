@@ -26,7 +26,7 @@ $class = new Membership_Activity_Helper(  );
 
 echo '<pre>'; print_r( $class->create_log() ); echo '</pre>';
 
-
+echo '<pre>'; print_r( get_option( 'mwb_csv_file' ) ); echo '</pre>';
 
 return;
 ?>
