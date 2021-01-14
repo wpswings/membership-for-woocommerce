@@ -18,17 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// $member_id = 503;
-// echo '<pre>'; print_r( get_post_meta( $member_id, 'plan_obj', true ) ); echo '</pre>';
-
-
-$class = new Membership_Activity_Helper(  );
-
-echo '<pre>'; print_r( $class->create_log() ); echo '</pre>';
-
-echo '<pre>'; print_r( get_option( 'mwb_csv_file' ) ); echo '</pre>';
-
+$class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
+$data =  $class->create_pdf_n_upload( 'Testegetgdjknfdbgkjnkjn nklj hdfkls ndkljshju', 'filename' );
+echo '<pre>'; print_r( $data ); echo '</pre>';
 return;
+
+
 ?>
 
 <!-- Heading start -->

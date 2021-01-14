@@ -1039,42 +1039,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$content = ob_get_clean();
 
-			$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
-
-			require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
-
-			if ( ! class_exists( 'TCPDF' ) ) {
-
-				return;
-			}
-
-			$pdf = new TCPDF();
-
-			$pdf->SetCreator( PDF_CREATOR );
-			$pdf->SetAuthor( get_bloginfo( 'name' ) );
-			$pdf->SetTitle( 'Invoice' );
-
-			// $pdf->SetSubject( 'TCPDF Tutorial' );
-			// $pdf->SetKeywords( 'TCPDF, PDF, example, test, guide' );
-
-			// add a page.
-			$pdf->AddPage();
-
-			// Output the HTML content.
-			$pdf->writeHTML( $content, true, false, true, false, '' );
-
-			try {
-
-				$uploads_dir = trailingslashit( wp_upload_dir()['basedir'] ) . 'mfw-invoices';
-				$path        = wp_mkdir_p( $uploads_dir );
-				if ( $path ) {
-					$pdf->Output( WP_CONTENT_DIR . '/uploads/mfw-invoices/' . $first_name, 'F' );
-				}
-
-			} catch ( Exception $e ) {
-
-				echo esc_html( $e->getMessage() );
-			}
+			// Handling invoice creation and upload.
+			$activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
+			$pdf_file       = $activity_class->create_pdf_n_upload( $content, $first_name );
 
 			// Get the attachment file.
 			$attachment = WP_CONTENT_DIR . 'uploads/mfw-invoices/' . $first_name;
@@ -1090,7 +1057,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				$to = array( $email );
 			} else {
-				$to = array( $email, $original_email );
+				$to = array( $email, $user_email );
 			}
 
 			$subject = 'Thanks for purchasing ' . $plan_info['post_title'];

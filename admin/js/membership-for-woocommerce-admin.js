@@ -194,27 +194,74 @@ jQuery( document ).ready( function( $ ) {
 		$( "#upload_csv_file" ).on( "click", function( e ) {
 			e.preventDefault();
 
-			var form = new FormData();
-			var file = $( document ).find( "#csv_file_upload" );
-	
-			var single_file = file[0].files[0];
+			var empty_check = $( "#csv_file_upload" ).val();
+			//alert( empty_check );
 
-			form.append( "file", single_file );
-			form.append( "action", "csv_file_upload" );
-			form.append( "nonce", admin_ajax_obj.nonce )
+			// If no file selected close the dialog box and show 'failure' sweet alert.
+			if ( empty_check.length == 0 ) {
+			
+				// CLose the import modal.
+				$( ".import_csv_field_wrapper" ).dialog( "close" );
 
-			$.ajax({
-				url         : admin_ajax_obj.ajaxurl,
-				type        : "POST",
-				data        : form,
-				contentType : false,
-				processData : false,
+				// Show "failure" response via sweet-alert.
+				Swal.fire({
+					icon : 'error',
+					title: 'Oops..!!',
+					text : 'No file selected',
+				});
 
-				success : function( response ) {
-					$( ".csv_import_response" ).text( response );
-				},
+				//location.reload();	
+			} else {
 
-			});
+				var form = new FormData();
+				var file = $( document ).find( "#csv_file_upload" );
+		
+				var single_file = file[0].files[0];
+
+				form.append( "file", single_file );
+				form.append( "action", "csv_file_upload" );
+				form.append( "nonce", admin_ajax_obj.nonce )
+
+				$.ajax({
+					url         : admin_ajax_obj.ajaxurl,
+					type        : "POST",
+					data        : form,
+					dataType    : 'json',
+					contentType : false,
+					processData : false,
+
+					success : function( response ) {
+						
+						// CLose the import modal.
+						$( ".import_csv_field_wrapper" ).dialog( "close" );
+
+						if ( 'success' == response['status'] ) {
+
+							// Show "success" response via sweet-alert.
+							Swal.fire({
+								icon : 'success',
+								title: response['message'],
+							});
+							
+							// Reload page after click on ok in
+							$( ".swal2-confirm" ).on( "click", function() {
+								window.location.href = response['redirect'];
+							});
+						} else if ( 'failed' == response['status'] ) {
+
+							// Show "failure" response via sweet-alert.
+							Swal.fire({
+								icon : 'error',
+								title: 'Oops..!!',
+								text : response['message']
+							});
+						}
+
+
+					},
+
+				});
+			}
 
 		});
 	});
@@ -225,5 +272,15 @@ jQuery( document ).ready( function( $ ) {
 		show: {effect: "blind", duration: 800},
 		width : 600,
 	});
+
+	function disable_Event_Propagation(event) {
+	
+		if (event.stopPropagation){
+			event.stopPropagation();
+		}
+		else if(window.event){
+			window.event.cancelBubble=true;
+		}
+	}
 
 });
