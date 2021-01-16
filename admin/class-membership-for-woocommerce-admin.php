@@ -190,7 +190,7 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'nonce'   => wp_create_nonce( 'plan-import-nonce' ),
-					),
+					)
 				);
 
 				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
@@ -235,7 +235,7 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'nonce'   => wp_create_nonce( 'members-nonce' ),
-					),
+					)
 				);
 			}
 		}
@@ -286,7 +286,7 @@ class Membership_For_Woocommerce_Admin {
 				'exclude_from_search'  => false,
 				'rewrite'              => array(
 					'slug' => __( 'membership', 'membership-for-woocommerce' ),
-				),
+				)
 			)
 		);
 	}
@@ -715,7 +715,7 @@ class Membership_For_Woocommerce_Admin {
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
 
 		$csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : '';
-		$upload_file = $activity_class->do_upload( $csv_file, 'csv' );
+		$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
 
 		if ( ! current_user_can( 'edit_posts' ) ) {
 			exit;
@@ -773,7 +773,7 @@ class Membership_For_Woocommerce_Admin {
 							'post_status'  => $value['post_status'],
 							'post_content' => $value['post_content'],
 						),
-						true,
+						true
 					);
 
 					update_post_meta( $plan_id, 'mwb_membership_plan_price', $value['mwb_membership_plan_price'] );
@@ -856,7 +856,7 @@ class Membership_For_Woocommerce_Admin {
 				'exclude_from_search'  => false,
 				'rewrite'              => array(
 					'slug' => __( 'members', 'membership-for-woocommerce' ),
-				),
+				)
 			)
 		);
 	}

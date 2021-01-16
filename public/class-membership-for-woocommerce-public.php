@@ -749,59 +749,28 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $_FILES['receipt']['name'] ) ) {
 
-			$errors = array();
-
-			$file_name = $_FILES['receipt']['name'];
-			$file_tmp  = $_FILES['receipt']['tmp_name'];
-
-			$file_data = explode( '.', $file_name );
-			$file_ext  = end( $file_data );
-			$file_ext  = strtolower( $file_ext );
+			$file     = $_FILES['receipt'];
+			$file_ext = substr( strrchr( $file['name'], '.' ), 1 );
 
 			$gateway_opt = new Mwb_Membership_Adv_Bank_Transfer();
 
 			$settings   = ! empty( $gateway_opt->settings ) ? $gateway_opt->settings : array();
 			$extensions = ! empty( $settings['support_formats'] ) ? $settings['support_formats'] : array();
 
-			if ( ! empty( $file_ext ) ) {
+			// If jpg file is selected and jpg is one of supported formats, 'jpeg' will be added as supported extension for jpg.
+			if ( 'jpg' == $file_ext && in_array( 'jpg', $extensions ) ) {
 
-				if ( ! in_array( $file_ext, $extensions ) ) {
+				// if jpeg is already on of the supported formats, then don't add the extra supported extension.
+				if ( ! in_array( 'jpeg', $extensions ) ) {
 
-					$errors[] = 'Extension not supported.';
+					$extensions[] = 'jpeg';
 				}
 			}
 
-			if ( empty( $errors ) ) {
+			$activity_class = new Membership_Activity_Helper( 'advance bacs receipt', 'uploads' );
+			$receipt_data   = $activity_class->do_upload( $file, $extensions );
 
-				$receipt_dir     = '/mwb-membership-receipt-submissions/';
-				$upload_dir_data = wp_upload_dir();
-				$base_dir        = ! empty( $upload_dir_data['basedir'] ) ? $upload_dir_data['basedir'] : '';
-				$base_url        = ! empty( $upload_dir_data['baseurl'] ) ? $upload_dir_data['baseurl'] : '';
-
-				if ( ! is_dir( $base_dir . $receipt_dir ) ) {
-
-					mkdir( $base_dir . $receipt_dir, 0755, true );
-				}
-
-				move_uploaded_file( $file_tmp, $base_dir . $receipt_dir . $file_name );
-
-				echo wp_json_encode(
-					array(
-						'result' => 'success',
-						'path'   => $base_dir . $receipt_dir . $file_name,
-						'url'    => $base_url . $receipt_dir . $file_name,
-					)
-				);
-
-			} else {
-
-				echo wp_json_encode(
-					array(
-						'result' => 'failure',
-						'errors' => $errors,
-					)
-				);
-			}
+			echo wp_json_encode( $receipt_data );
 
 			wp_die();
 		}

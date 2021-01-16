@@ -184,7 +184,7 @@ jQuery( document ).ready( function( $ ) {
 
 			success: function( response ) {
 				console.log( response );
-				if ( "success" == response["result"] ) {
+				if ( true == response["result"] ) {
 					$( ".bacs_receipt_remove_file" ).show();
 					$( ".bacs_receipt_attached" ).val( response.url );
 					$( "#progress-wrapper" ).addClass( "progress-complete" );
@@ -225,7 +225,7 @@ jQuery( document ).ready( function( $ ) {
 				else if ( "failure" == response["result"] ) {
 
 					$( "#progress-wrapper" ).addClass( "progress-failed" );
-					$( "#progress-wrapper .status" ).text( response["errors"][0] );
+					$( "#progress-wrapper .status" ).text( response["message"] );
 				}
 			}
 		});

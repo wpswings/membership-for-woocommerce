@@ -214,7 +214,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function supported_gateways() {
 
 		$supported_gateways = array(
-			
+
 			'membership-paypal-gateway', // Membership Paypal.
 			'membership-stripe-gateway', // Membership stripe.
 			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
@@ -842,16 +842,12 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_membership_for_customer( $fields , $plan_id ) {
+	public function create_membership_for_customer( $fields, $plan_id ) {
 
 		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
-			// OLD
-			// $plan_obj  = get_post( $plan_id, ARRAY_A );
-			// $plan_meta = array_merge( $plan_obj, get_post_meta( $plan_id ) );
-
-			// New
-			$plan_obj  = get_post( $plan_id, ARRAY_A );
+			// Getting plan data.
+			$plan_obj = get_post( $plan_id, ARRAY_A );
 
 			$post_meta = get_post_meta( $plan_id );
 
@@ -910,48 +906,6 @@ class Membership_For_Woocommerce_Global_Functions {
 	}
 
 	/**
-	 * Write error and responses to log.
-	 *
-	 * @param int   $member_id Member's ID.
-	 * @param mixed $final_response Response to log.
-	 * @param mixed $payment_gateway Payment gateway id.
-	 * @return void
-	 *
-	 * @since 1.0.0
-	 */
-	public function create_log( $member_id, $final_response, $payment_gateway ) {
-
-		if ( ! defined( 'WC_LOG_DIR' ) ) {
-			return;
-		}
-
-		$log_dir      = WC_LOG_DIR;
-		$selected_log_dir = $log_dir . 'membership-for-woocommerce/' . $payment_gateway;
-
-		$log_dir_file = $selected_log_dir . '/membership-for-woocommerce' . time() . '.log';
-
-		// As sometimes when dir is not present, 'fopen' cannot create directories.
-		if ( ! is_dir( $log_dir ) ) {
-			mkdir( $log_dir, 0755, true );
-		}
-
-		if ( ! file_exists( $log_dir_file ) || ! is_writable( $log_dir_file ) ) {
-			@fopen( $log_dir_file, 'a' );
-		}
-
-		if ( file_exists( $log_dir_file ) && is_writable( $log_dir_file ) ) {
-
-			$log = 'Website: ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL .
-					'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
-					'Member ID ' . $member_id . PHP_EOL .
-					'Response: ' . json_encode( $final_response ) . PHP_EOL .
-					'----------------------------------------------------------------------------' . PHP_EOL;
-
-			file_put_contents( $log_dir_file, $log, FILE_APPEND );
-		}
-	}
-
-	/**
 	 * Email membership invoice to customers after successfull purchase.
 	 *
 	 * @param int $member_id Members's ID.
@@ -966,7 +920,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		if ( ! empty( $member_id ) ) {
 
 			$plan_info = get_post_meta( $member_id, 'plan_obj', true );
-			$billing = get_post_meta( $member_id, 'billing_details', true );
+			$billing   = get_post_meta( $member_id, 'billing_details', true );
 
 			$first_name = ! empty( $billing['membership_billing_first_name'] ) ? $billing['membership_billing_first_name'] : '';
 			$last_name  = ! empty( $billing['membership_billing_last_name'] ) ? $billing['membership_billing_last_name'] : '';
@@ -1043,8 +997,8 @@ class Membership_For_Woocommerce_Global_Functions {
 			$activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
 			$pdf_file       = $activity_class->create_pdf_n_upload( $content, $first_name );
 
-			// Get the attachment file.
-			$attachment = WP_CONTENT_DIR . 'uploads/mfw-invoices/' . $first_name;
+			// Get the attachment file using file url.
+			$attachment = $pdf_file;
 
 			/**
 			 * Now send mail to customer including virtual invoice and a hard copy of it as attachment.
@@ -1067,7 +1021,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				$subject,
 				$content,
 				'',
-				$attachment,
+				$attachment
 			);
 		}
 

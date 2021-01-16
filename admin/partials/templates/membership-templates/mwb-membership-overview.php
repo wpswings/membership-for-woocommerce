@@ -18,9 +18,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
-$data =  $class->create_pdf_n_upload( 'Testegetgdjknfdbgkjnkjn nklj hdfkls ndkljshju', 'filename' );
-echo '<pre>'; print_r( $data ); echo '</pre>';
+// array( 'jugh' =>  )
+
+// $class = new Membership_Activity_Helper( 'Advance-bacs-logs', 'logger' );
+// $response = array(
+// 	'status'  => 'failed',
+// 	'message' => sprintf( 'Error completing payment for order #%d', $member_id ),
+// );
+// $data =  $class->create_log( 'Test-log2', $response );
+$activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
+$pdf_file       = $activity_class->create_pdf_n_upload( 'filddfkhvgbdlivbdjvbdvv', 'harshit' );
+echo '<pre>'; print_r( $pdf_file ); echo '</pre>';
 return;
 
 

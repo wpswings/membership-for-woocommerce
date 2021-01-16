@@ -382,13 +382,20 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 			} catch ( \Throwable $e ) {
 
 				/**
-				 * If there was an error completing the payment, log to a file and add an order note so the admin can take action.
+				 * If there was an error completing the payment, log it to a file.
 				 */
 
-				$error  = sprintf( 'Error completing payment for order #%d', $member_id );
-				$error .= sprintf( 'Errors caused due to: %s', $e->getMessage() );
+				/* translators: %d: member's ID. %s: error meaasge */
+				$message = __( 'Error completing payment for member #%1$d. Error caused due to: %2$s ', 'membership-for-woocommerce' );
 
-				$this->global_class->create_log( $member_id, $error, $this->id );
+				$error = array(
+					'status'  => 'payment_failed',
+					'message' => sprintf( $message, $member_id, $e->getMessage() ),
+				);
+
+				// Handling log creation via activity helper class.
+				$activity_class = new Membership_Activity_Helper( 'Advance-bacs-logs', 'logger' );
+				$log_data       = $activity_class->create_log( 'Advance bacs payment failure', $error );
 
 				return false;
 			}
@@ -450,7 +457,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 							'label' => __( 'Branch Code', 'membership-for-woocommerce' ),
 						),
 					),
-				),
+				)
 			);
 		}
 

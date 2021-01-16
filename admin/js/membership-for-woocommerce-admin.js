@@ -273,14 +273,4 @@ jQuery( document ).ready( function( $ ) {
 		width : 600,
 	});
 
-	function disable_Event_Propagation(event) {
-	
-		if (event.stopPropagation){
-			event.stopPropagation();
-		}
-		else if(window.event){
-			window.event.cancelBubble=true;
-		}
-	}
-
 });

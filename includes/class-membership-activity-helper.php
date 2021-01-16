@@ -130,11 +130,11 @@ class Membership_Activity_Helper {
 	 * Function to perform upload.
 	 *
 	 * @param string $file        File to upload.
-	 * @param string $allowed_ext Allowed file extension.
+	 * @param array  $allowed_ext Allowed file extension.
 	 *
 	 * @since 1.0.0
 	 */
-	public function do_upload( $file = '', $allowed_ext = 'csv' ) {
+	public function do_upload( $file = '', $allowed_ext = array() ) {
 
 		// Not on logging activity.
 		if ( 'uploads' != $this->activity || empty( $file ) ) {
@@ -155,13 +155,17 @@ class Membership_Activity_Helper {
 			$file_tmp  = ! empty( $file['tmp_name'] ) ? $file['tmp_name'] : false;
 			$file_type = ! empty( $file['type'] ) ? $file['type'] : false;
 
-			if ( ! empty( $file_type ) && false === strpos( $file_type, $allowed_ext ) ) {
+			// Getting file type here ( eg-: 'application/pdf' will return 'pdf' ).
+			$file_ext = substr( strrchr( $file_type, '/' ), 1 );
+
+			if ( ! empty( $file_type ) && ! in_array( $file_ext, $allowed_ext ) ) {
 
 				return array(
 					'result'  => false,
 					'message' => esc_html__( 'Invalid File type', 'text-domain' ),
 				);
 			}
+
 
 			// Move file to server.
 			$location = $this->active_folder . $file['name'];
@@ -218,7 +222,7 @@ class Membership_Activity_Helper {
 		$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
 
 		$this->active_file = $file_name;
-		$location 		   = $this->active_folder . $this->active_file;
+		$location 		   = $this->active_folder . $this->active_file . '.pdf';
 
 		// TCPDF library.
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
