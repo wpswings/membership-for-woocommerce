@@ -218,6 +218,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			'membership-paypal-gateway', // Membership Paypal.
 			'membership-stripe-gateway', // Membership stripe.
 			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
+			'membership-paypal-smart-buttons',
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -517,11 +518,14 @@ class Membership_For_Woocommerce_Global_Functions {
 				?>
 			</div>
 			<!-- Modal payment content end. -->
-
 			<?php
 			// Modal billing fields.
 			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
 			?>
+
+			<div id="paypal-button-container" style="display: none;"></div>
+			<!-- Include the PayPal JavaScript SDK -->
+			<!-- /<script src="https://www.paypal.com/sdk/js?client-id=Ac1d656B6aeet2elq-lW4_bu6EKDSPtHZCN4P1xp9u6c0Zi2GTmX7T-YAnjNkY2dbnZFyTfq_d8yRewK&currency=USD&intent=capture&components=buttons&disable-funding=card&debug=false"></script> -->
 		</div>
 	</form>
 		<?php
@@ -831,6 +835,38 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		return $cate_titles;
 
+	}
+
+	/**
+	 * Paypal smart button settings.
+	 *
+	 * @return array an array of paypal settings.
+	 * @since 1.0.0
+	 */
+	public function paypal_sb_settings() {
+
+		$settings = array();
+
+		if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
+
+			$paypal_sb = new Membership_Paypal_Express_Checkout();
+
+			$settings['payment_action']  = $paypal_sb->payment_action;
+			$settings['currency_code']   = $paypal_sb->currency_code;
+			$settings['vault']           = $paypal_sb->vault;
+			$settings['component']       = $paypal_sb->component;
+			$settings['disable_funding'] = $paypal_sb->disable_funding;
+			$settings['test_mode']       = $paypal_sb->test_mode;
+			$settings['client_id']       = $paypal_sb->client_id;
+			$settings['debug']           = $paypal_sb->debug;
+			$settings['invoice_prefix']  = $paypal_sb->invoice_prefix;
+			$settings['button_layout']   = $paypal_sb->button_layout;
+			$settings['button_color']    = $paypal_sb->button_color;
+			$settings['button_shape']    = $paypal_sb->button_shape;
+			$settings['button_label']    = $paypal_sb->button_label;
+		}
+
+		return $settings;
 	}
 
 	/**

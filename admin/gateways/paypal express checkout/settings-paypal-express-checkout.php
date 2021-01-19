@@ -14,36 +14,38 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Settings for PayPal Gateway.
  */
 $settings = array(
-	'enabled'                 => array(
+	'enabled'             => array(
 		'title'       => __( 'Enable/Disable', 'membership-for-woocommerce' ),
 		'type'        => 'checkbox',
-		'label'       => __( 'Enable PayPal Checkout', 'membership-for-woocommerce' ),
-		'description' => __( 'This enables PayPal Checkout which allows customers to checkout directly via PayPal.', 'membership-for-woocommerce' ),
+		'label'       => __( 'Enable PayPal Smart buttons', 'membership-for-woocommerce' ),
+		'description' => __( 'This enables PayPal Smart buttons which allows customers to checkout directly via PayPal.', 'membership-for-woocommerce' ),
 		'desc_tip'    => true,
 		'default'     => 'yes',
 	),
 
-	'title'                   => array(
+	'title'               => array(
 		'title'       => __( 'Title', 'membership-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'This controls the title which the user sees during checkout.', 'membership-for-woocommerce' ),
 		'default'     => __( 'PayPal', 'membership-for-woocommerce' ),
 		'desc_tip'    => true,
 	),
-	'description'             => array(
+
+	'description'         => array(
 		'title'       => __( 'Description', 'membership-for-woocommerce' ),
 		'type'        => 'text',
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'membership-for-woocommerce' ),
-		'default'     => __( 'Pay via PayPal; you can pay with your credit card if you don\'t have a PayPal account.', 'membership-for-woocommerce' ),
+		'default'     => __( 'Pay via your PayPal account', 'membership-for-woocommerce' ),
 	),
 
-	'account_settings'        => array(
+	'account_settings'    => array(
 		'title'       => __( 'Account Settings', 'membership-for-woocommerce' ),
 		'type'        => 'title',
-		'description' => '',
+		'description' => 'Select your environment and fill up the details',
 	),
-	'test_mode'               => array(
+
+	'test_mode'           => array(
 		'title'       => __( 'Environment', 'membership-for-woocommerce' ),
 		'type'        => 'checkbox',
 		'label'       => __( 'Sandbox mode', 'membership-for-woocommerce' ),
@@ -52,68 +54,42 @@ $settings = array(
 		'desc_tip'    => true,
 	),
 
-	'api_credentials'         => array(
-		'title'       => __( 'API Credentials', 'membership-for-woocommerce' ),
+	'live_credentials'    => array(
+		'title'       => __( 'Live Credentials', 'membership-for-woocommerce' ),
 		'type'        => 'title',
-		'description' => __( 'Fill out your Paypal Live API credentials below.', 'membership-for-woocommerce' ),
+		'description' => __( 'Fill out your Paypal Live credentials below.', 'membership-for-woocommerce' ),
 	),
-	'api_username'            => array(
-		'title'       => __( 'Live API Username', 'membership-for-woocommerce' ),
+
+	'live_client_id'      => array(
+		'title'       => __( 'Live Client ID', 'membership-for-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'api_password'            => array(
-		'title'       => __( 'Live API Password', 'membership-for-woocommerce' ),
-		'type'        => 'password',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'api_signature'           => array(
-		'title'       => __( 'Live API Signature', 'membership-for-woocommerce' ),
-		'type'        => 'text',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
+		'description' => __( 'Get your Client\'s ID credentials from PayPal.', 'membership-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 
-	'sandbox_api_credentials' => array(
-		'title'       => __( 'Sandbox API Credentials', 'membership-for-woocommerce' ),
+	'sandbox_credentials' => array(
+		'title'       => __( 'Sandbox Credentials', 'membership-for-woocommerce' ),
 		'type'        => 'title',
-		'description' => __( 'Fill out your Sandbox API credentials below.', 'membership-for-woocommerce' ),
+		'description' => __( 'Fill out your Sandbox credentials below.', 'membership-for-woocommerce' ),
 	),
-	'sandbox_api_username'    => array(
-		'title'       => __( 'Sandbox API Username', 'membership-for-woocommerce' ),
+
+	'sb_client_id'        => array(
+		'title'       => __( 'Sandbox Client ID', 'membership-for-woocommerce' ),
 		'type'        => 'text',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'sandbox_api_password'    => array(
-		'title'       => __( 'Sandbox API Password', 'membership-for-woocommerce' ),
-		'type'        => 'password',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
-		'default'     => '',
-		'desc_tip'    => true,
-	),
-	'sandbox_api_signature'   => array(
-		'title'       => __( 'Sandbox API Signature', 'membership-for-woocommerce' ),
-		'type'        => 'text',
-		'description' => __( 'Get your API credentials from PayPal.', 'membership-for-woocommerce' ),
+		'description' => __( 'Get your Sandbox Client\'s ID credentials from PayPal.', 'membership-for-woocommerce' ),
 		'default'     => '',
 		'desc_tip'    => true,
 	),
 
-	'advanced'                => array(
+	'advanced'            => array(
 		'title'       => __( 'Advanced Settings', 'membership-for-woocommerce' ),
 		'type'        => 'title',
 		'description' => '',
 	),
 
-	'debug'                   => array(
-		'title'       => __( 'Debug Log', 'membership-for-woocommerce' ),
+	'debug'               => array(
+		'title'       => __( 'Debug', 'membership-for-woocommerce' ),
 		'type'        => 'checkbox',
 		'label'       => __( 'Enable Logging', 'membership-for-woocommerce' ),
 		'default'     => 'no',
@@ -121,7 +97,7 @@ $settings = array(
 		'description' => __( 'Log PayPal events, such as IPN requests.', 'membership-for-woocommerce' ),
 	),
 
-	'invoice_prefix'          => array(
+	'invoice_prefix'      => array(
 		'title'       => __( 'Invoice Prefix', 'membership-for-woocommerce' ),
 		'type'        => 'text',
 		'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PayPal account for multiple stores ensure this prefix is unique as PayPal will not allow orders with the same invoice number.', 'membership-for-woocommerce' ),
@@ -129,37 +105,29 @@ $settings = array(
 		'desc_tip'    => true,
 	),
 
-	'require_billing'         => array(
-		'title'       => __( 'Billing Addresses', 'membership-for-woocommerce' ),
-		'type'        => 'checkbox',
-		'label'       => __( 'Require Billing Address', 'membership-for-woocommerce' ),
-		'default'     => 'no',
-		'description' => sprintf(
-			/* Translators: 1) is an <a> tag linking to PayPal's contact info, 2) is the closing </a> tag. */
-			__( 'PayPal only returns a shipping address back to the website. To make sure billing address is returned as well, please enable this functionality on your PayPal account by calling %1$sPayPal Technical Support%2$s.', 'membership-for-woocommerce' ),
-			'<a href="https://www.paypal.com/us/selfhelp/contact/call">',
-			'</a>'
+	'button_settings'     => array(
+		'title'       => __( 'Button Settings', 'membership-for-woocommerce' ),
+		'type'        => 'title',
+		'description' => __( 'Customize the appearance of PayPal Smart buttons on your site.', 'membership-for-woocommerce' ),
+	),
+
+	'button_layout'       => array(
+		'title'       => __( 'Button layout', 'membership-for-woocommerce' ),
+		'type'        => 'select',
+		'class'       => 'wc-enhanced-select membership-smart-button-layout',
+		'default'     => 'vertical',
+		'desc_tip'    => true,
+		'description' => __( 'Controls the layout of Paypal button. Use "Vertical" to leverage PayPal\'s recognition and preference, or change it to match your site design or aesthetic.', 'membership-for-woocommerce' ),
+		'options'     => array(
+			'vertical'   => __( 'Vertical (Recommended)', 'membership-for-woocommerce' ),
+			'horizontal' => __( 'Horizontal', 'membership-for-woocommerce' ),
 		),
 	),
 
-	'require_phone_number'    => array(
-		'title'       => __( 'Require Phone Number', 'membership-for-woocommerce' ),
-		'type'        => 'checkbox',
-		'label'       => __( 'Require Phone Number', 'membership-for-woocommerce' ),
-		'default'     => 'no',
-		'description' => __( 'Require buyer to enter their phone number during checkout if none is provided by PayPal. Disabling this option doesn\'t affect direct Debit or Credit Card payments offered by PayPal.', 'membership-for-woocommerce' ),
-	),
-
-	'button_settings'         => array(
-		'title'       => __( 'Button Settings', 'membership-for-woocommerce' ),
-		'type'        => 'title',
-		'description' => __( 'Customize the appearance of PayPal Checkout on your site.', 'membership-for-woocommerce' ),
-	),
-
-	'button_color'            => array(
+	'button_color'        => array(
 		'title'       => __( 'Button Color', 'membership-for-woocommerce' ),
 		'type'        => 'select',
-		'class'       => 'wc-enhanced-select woocommerce_ppec_paypal_spb',
+		'class'       => 'wc-enhanced-select membership-smart-button-color',
 		'default'     => 'gold',
 		'desc_tip'    => true,
 		'description' => __( 'Controls the background color of the primary button. Use "Gold" to leverage PayPal\'s recognition and preference, or change it to match your site design or aesthetic.', 'membership-for-woocommerce' ),
@@ -167,30 +135,33 @@ $settings = array(
 			'gold'   => __( 'Gold (Recommended)', 'membership-for-woocommerce' ),
 			'blue'   => __( 'Blue', 'membership-for-woocommerce' ),
 			'silver' => __( 'Silver', 'membership-for-woocommerce' ),
+			'white'  => __( 'White', 'membership-for-woocommerce' ),
 			'black'  => __( 'Black', 'membership-for-woocommerce' ),
 		),
 	),
-	'button_shape'            => array(
+
+	'button_shape'        => array(
 		'title'       => __( 'Button Shape', 'membership-for-woocommerce' ),
 		'type'        => 'select',
-		'class'       => 'wc-enhanced-select woocommerce_ppec_paypal_spb',
+		'class'       => 'wc-enhanced-select membership-smart-button-shape',
 		'default'     => 'rect',
 		'desc_tip'    => true,
 		'description' => __( 'The pill-shaped button\'s unique and powerful shape signifies PayPal in people\'s minds. Use the rectangular button as an alternative when pill-shaped buttons might pose design challenges.', 'membership-for-woocommerce' ),
 		'options'     => array(
+			'rect' => __( 'Rectangle (Recommended)', 'membership-for-woocommerce' ),
 			'pill' => __( 'Pill', 'membership-for-woocommerce' ),
-			'rect' => __( 'Rectangle', 'membership-for-woocommerce' ),
 		),
 	),
-	'button_label'            => array(
+
+	'button_label'        => array(
 		'title'       => __( 'Button Label', 'membership-for-woocommerce' ),
 		'type'        => 'select',
-		'class'       => 'wc-enhanced-select woocommerce_ppec_paypal_spb',
+		'class'       => 'wc-enhanced-select membership-smart-button-label',
 		'default'     => 'paypal',
 		'desc_tip'    => true,
 		'description' => __( 'This controls the label on the primary button.', 'membership-for-woocommerce' ),
 		'options'     => array(
-			'paypal'   => __( 'PayPal', 'membership-for-woocommerce' ),
+			'paypal'   => __( 'PayPal (Recommended)', 'membership-for-woocommerce' ),
 			'checkout' => __( 'PayPal Checkout', 'membership-for-woocommerce' ),
 			'buynow'   => __( 'PayPal Buy Now', 'membership-for-woocommerce' ),
 			'pay'      => __( 'Pay with PayPal', 'membership-for-woocommerce' ),

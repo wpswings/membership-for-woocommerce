@@ -20,37 +20,37 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 	 */
 	public function __construct() {
 
-		$this->id                 = 'membership-paypal-express-checkout';
+		$this->id                 = 'membership-paypal-smart-buttons';
 		$this->method_title       = __( 'PayPal Checkout( Membership )', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Allow customers to conveniently checkout directly with PayPal.', 'membership-for-woocommerce' );
 
-		$this->payment_action    = 'sale';
-		$this->use_smart_buttons = 'yes';
-		$this->instant_payments  = 'yes';
+		$this->payment_action  = 'capture';
+		$this->currency_code   = get_woocommerce_currency();
+		$this->vault           = false;
+		$this->component       = 'buttons';
+		$this->disable_funding = 'card';
 
 		$this->title       = $this->method_title;
-		$this->description = '';
+		$this->description = $this->get_option( 'description' );
 		$this->enabled     = $this->get_option( 'enabled', 'yes' );
-		$this->button_size = $this->get_option( 'button_size', 'large' );
 		$this->test_mode   = $this->get_option( 'test_mode', 'yes' );
 
 		if ( 'yes' === $this->test_mode ) {
 
-			$this->api_username  = $this->get_option( 'sandbox_api_username' );
-			$this->api_password  = $this->get_option( 'sandbox_api_password' );
-			$this->api_signature = $this->get_option( 'sandbox_api_signature' );
+			$this->client_id = $this->get_option( 'sb_client_id' );
 
 		} else {
 
-			$this->api_username  = $this->get_option( 'api_username' );
-			$this->api_password  = $this->get_option( 'api_password' );
-			$this->api_signature = $this->get_option( 'api_signature' );
-
+			$this->client_id = $this->get_option( 'live_client_id' );
 		}
 
-		$this->debug           = 'yes' === $this->get_option( 'debug', 'no' );
-		$this->invoice_prefix  = $this->get_option( 'invoice_prefix', '' );
-		$this->require_billing = 'yes' === $this->get_option( 'require_billing', 'no' );
+		$this->debug          = 'yes' === $this->get_option( 'debug', 'no' );
+		$this->invoice_prefix = $this->get_option( 'invoice_prefix', '' );
+
+		$this->button_layout = $this->get_option( 'button_layout', 'vertical' );
+		$this->button_color  = $this->get_option( 'button_color', 'gold' );
+		$this->button_shape  = $this->get_option( 'button_shape', 'rect' );
+		$this->button_label  = $this->get_option( 'button_label', 'paypal' );
 
 		$this->init_form_fields();
 		$this->init_settings();

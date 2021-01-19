@@ -114,6 +114,31 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( 'sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
 
+		if ( is_page( 'membership-plans' ) ) {
+
+			wp_enqueue_script( 'paypal-smart-buttons', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-smart-buttons.js', array( 'jquery' ), $this->version, false );
+
+			// Getting paypal settings to localize.
+			$settings = $this->global_class->paypal_sb_settings();
+
+			$client_id    = ! empty( $settings['client_id'] ) ? $settings['client_id'] : '';
+			$currency     = ! empty( $settings['currency_code'] ) ? $settings['currency_code'] : '';
+			$intent       = ! empty( $settings['payment_action'] ) ? $settings['payment_action'] : '';
+			$component    = ! empty( $settings['component'] ) ? $settings['component'] : 'buttons';
+			$disable_fund = ! empty( $settings['disable_funding'] ) ? $settings['disable_funding'] : '';
+			$vault        = ! empty( $settings['vault'] ) ? 'true' : 'false';
+			$debug        = ! empty( $settings['debug'] ) ? 'true' : 'false';
+
+			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), null, false );
+
+			wp_localize_script(  
+				'paypal-smart-buttons',
+				'paypal_sb_obj',
+				array(
+					'settings' => $settings,
+				),
+			);
+		}
 	}
 
 	/**

@@ -218,9 +218,9 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'mwb-membership-ad-bacs-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-ad-bacs.js', array( 'jquery' ), $this->version, false );
 
-			} elseif ( isset( $_GET['section'] ) && 'membership-paypal-express-checkout' == $_GET['section'] ) {
+			} elseif ( isset( $_GET['section'] ) && 'membership-paypal-smart-buttons' == $_GET['section'] ) {
 
-				wp_enqueue_script( 'mwb-membership-paypal-ec-script', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-express-checkout.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'mwb-membership-paypal-sb-script', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-express-checkout.js', array( 'jquery' ), $this->version, false );
 			}
 
 			if ( 'mwb_cpt_members' == $pagescreen_post || 'mwb_cpt_members' == $pagescreen_id ) {
@@ -489,7 +489,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
-		
+
 		// Return if doing ajax.
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;

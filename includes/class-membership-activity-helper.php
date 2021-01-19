@@ -113,7 +113,6 @@ class Membership_Activity_Helper {
 			switch ( $this->activity ) {
 
 				case 'logger':
-
 					// For Logger only...
 					$log_file = $this->prefix . $this->sub_folder;
 					$this->check_and_create_file( $log_file );
@@ -165,7 +164,6 @@ class Membership_Activity_Helper {
 					'message' => esc_html__( 'Invalid File type', 'text-domain' ),
 				);
 			}
-
 
 			// Move file to server.
 			$location = $this->active_folder . $file['name'];

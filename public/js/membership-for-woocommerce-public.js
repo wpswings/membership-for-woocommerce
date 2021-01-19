@@ -87,6 +87,15 @@ jQuery( document ).ready( function( $ ) {
 			$( ".payment_box" ).hide();
 			$( "div.payment_method_" + $payment_methods ).show();
 
+			// Display paypal smart buttons is paypal checkout selected. 
+			if ( $payment_methods == 'membership-paypal-smart-buttons' ) {
+				$( "#paypal-button-container" ).show();
+				$( "#mwb_proceed_payment" ).hide();
+			} else {
+				$( "#paypal-button-container" ).hide();
+				$( "#mwb_proceed_payment" ).show();
+			}
+
 		});
 
 		// Process checkout here.

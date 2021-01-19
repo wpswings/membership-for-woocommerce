@@ -37,14 +37,19 @@ $state      = ! empty( get_user_meta( $user_id, 'billing_state', true ) ) ? get_
 $phone      = ! empty( get_user_meta( $user_id, 'billing_phone', true ) ) ? get_user_meta( $user_id, 'billing_phone', true ) : '';
 $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_user_meta( $user_id, 'billing_email', true ) : '';
 
+// $paypal_sb  = new Membership_Paypal_Express_Checkout();
+// $settings   = $paypal_sb->settings;
+// $settings['payment_action'] = $paypal_sb->payment_action;
+// $settings['currency_code']  = $paypal_sb->currency_code; 
+// echo '<pre>'; print_r( $settings ); echo '</pre>';
 ?>
 
 <!-- <form id="membership_customer_form" method="post" action=""> -->
-	<div class="membership_customer_details" id="membership_customer_details" style="float: left;">
-			<div class="membership_billing_fields">
+	<div class="membership_customer_details" id="membership_customer_details" style="float: left;" >
+			<div class="membership_billing_fields" >
 				<h3><?php esc_html_e( 'Billing details', 'membership-for-woocommerce' ); ?></h3>
 				<div class="membership_billing_fields_wrapper">
-					<input type="hidden" name="plan_id" id="membership_plan_id" value="<?php echo esc_html( $plan_id ); ?>">
+					<input type="hidden" name="plan_id" id="membership_plan_id" value="<?php echo esc_html( $plan_id ); ?>" >
 
 					<p class="form-row validate-required" id="mwb_billing_first_name_field">
 						<label for="membership_billing_first_name"><?php esc_html_e( 'First name&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
@@ -126,6 +131,9 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 							<input type="submit" class="button alt" name="membership_proceed_payment" id="membership_proceed_payment" value="<?php esc_html_e( 'Proceed for Payment', 'membership-for-woocommerce' ); ?>">
 						</span>
 					</p>
+
+					
+
 				</div>
 
 			</div>
