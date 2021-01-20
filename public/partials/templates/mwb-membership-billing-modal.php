@@ -130,12 +130,9 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 						<span class="membership-input-wrapper">
 							<input type="submit" class="button alt" name="membership_proceed_payment" id="membership_proceed_payment" value="<?php esc_html_e( 'Proceed for Payment', 'membership-for-woocommerce' ); ?>">
 						</span>
-					</p>
-
-					
+					</p>	
 
 				</div>
-
 			</div>
 		</div>
 	</div>

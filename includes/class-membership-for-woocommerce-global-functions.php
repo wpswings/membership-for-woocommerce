@@ -837,37 +837,37 @@ class Membership_For_Woocommerce_Global_Functions {
 
 	}
 
-	/**
-	 * Paypal smart button settings.
-	 *
-	 * @return array an array of paypal settings.
-	 * @since 1.0.0
-	 */
-	public function paypal_sb_settings() {
+	// /**
+	//  * Paypal smart button settings.
+	//  *
+	//  * @return array an array of paypal settings.
+	//  * @since 1.0.0
+	//  */
+	// public function paypal_sb_settings() {
 
-		$settings = array();
+	// 	$settings = array();
 
-		if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
+	// 	if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
 
-			$paypal_sb = new Membership_Paypal_Express_Checkout();
+	// 		$paypal_sb = new Membership_Paypal_Express_Checkout();
 
-			$settings['payment_action']  = $paypal_sb->payment_action;
-			$settings['currency_code']   = $paypal_sb->currency_code;
-			$settings['vault']           = $paypal_sb->vault;
-			$settings['component']       = $paypal_sb->component;
-			$settings['disable_funding'] = $paypal_sb->disable_funding;
-			$settings['test_mode']       = $paypal_sb->test_mode;
-			$settings['client_id']       = $paypal_sb->client_id;
-			$settings['debug']           = $paypal_sb->debug;
-			$settings['invoice_prefix']  = $paypal_sb->invoice_prefix;
-			$settings['button_layout']   = $paypal_sb->button_layout;
-			$settings['button_color']    = $paypal_sb->button_color;
-			$settings['button_shape']    = $paypal_sb->button_shape;
-			$settings['button_label']    = $paypal_sb->button_label;
-		}
+	// 		$settings['payment_action']  = $paypal_sb->payment_action;
+	// 		$settings['currency_code']   = $paypal_sb->currency_code;
+	// 		$settings['vault']           = $paypal_sb->vault;
+	// 		$settings['component']       = $paypal_sb->component;
+	// 		$settings['disable_funding'] = $paypal_sb->disable_funding;
+	// 		$settings['test_mode']       = $paypal_sb->test_mode;
+	// 		$settings['client_id']       = $paypal_sb->client_id;
+	// 		$settings['debug']           = $paypal_sb->debug;
+	// 		$settings['invoice_prefix']  = $paypal_sb->invoice_prefix;
+	// 		$settings['button_layout']   = $paypal_sb->button_layout;
+	// 		$settings['button_color']    = $paypal_sb->button_color;
+	// 		$settings['button_shape']    = $paypal_sb->button_shape;
+	// 		$settings['button_label']    = $paypal_sb->button_label;
+	// 	}
 
-		return $settings;
-	}
+	// 	return $settings;
+	// }
 
 	/**
 	 * Create pending membership for customer.

@@ -119,10 +119,11 @@ class Membership_For_Woocommerce_Public {
 			wp_enqueue_script( 'paypal-smart-buttons', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-smart-buttons.js', array( 'jquery' ), $this->version, false );
 
 			// Getting paypal settings to localize.
-			$settings = $this->global_class->paypal_sb_settings();
+			$payapl_sb = new Membership_Paypal_Express_Checkout();
+			$settings  = $payapl_sb->paypal_sb_settings();
 
 			$client_id    = ! empty( $settings['client_id'] ) ? $settings['client_id'] : '';
-			$currency     = ! empty( $settings['currency_code'] ) ? $settings['currency_code'] : '';
+			$currency     = ! empty( $settings['currency_code'] ) ? 'USD' : '';
 			$intent       = ! empty( $settings['payment_action'] ) ? $settings['payment_action'] : '';
 			$component    = ! empty( $settings['component'] ) ? $settings['component'] : 'buttons';
 			$disable_fund = ! empty( $settings['disable_funding'] ) ? $settings['disable_funding'] : '';
@@ -138,6 +139,8 @@ class Membership_For_Woocommerce_Public {
 					'settings' => $settings,
 				),
 			);
+
+			wp_enqueue_script( 'jquery-validate-min', plugin_dir_url( __FILE__ ) . 'js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );
 		}
 	}
 
@@ -888,7 +891,7 @@ class Membership_For_Woocommerce_Public {
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
 
-		//echo '<pre>'; print_r( $fields ); echo '</pre>';die;
+		//echo '<pre>'; print_r( $fields ); echo '</pre>'; die;
 
 		switch ( $method_id ) {
 

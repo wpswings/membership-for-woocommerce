@@ -1,8 +1,47 @@
 jQuery( document ).ready( function( $ ) {
 
-    console.log( paypal_sb_obj.settings );
+    //console.log( paypal_sb_obj.settings );
     // Getting the localized payapl settings object.
     var paypal_settings = paypal_sb_obj.settings;
+
+    // Getting billing form details here.
+    var billing_data = $( "#mwb_membership_buy_now_modal_form" ).serialize();
+    //console.log( billing_data );
+
+    $( "#mwb_membership_buy_now_modal_form" ).on( "change",  function() {
+    
+       validate = $( "form[id='mwb_membership_buy_now_modal_form']" ).validate({
+
+            rules: {
+                membership_billing_first_name : "required",
+                membership_billing_last_name : "required",
+                membership_billing_country : "required",
+                membership_billing_address_1 : "required",
+                membership_billing_city : "required",
+                membership_billing_state : "required",
+                membership_billing_postcode : "required",
+                membership_billing_phone : "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+            },
+            message : {
+                membership_billing_first_name: "Please enter your firstname",
+                membership_billing_last_name : "Please enter your lastname",
+                membership_billing_country : "Please select a country",
+                membership_billing_address_1 : "Please enter your street address",
+                membership_billing_city   : "Please enter your city",
+                membership_billing_state : "Please select your state",
+                membership_billing_postcode : "Please enter your postcode",
+                membership_billing_phone : "Please enter your phone number.",
+                email: "Please enter a valid email address",
+            },
+        });
+
+        console.log( validate.errorList );
+    });
+
     
     paypal.Buttons({
 
@@ -19,11 +58,11 @@ jQuery( document ).ready( function( $ ) {
 
                 purchase_units: [{
                     amount: {
-                        currency_code: paypal_settings.currency_code,
+                        currency_code: 'USD',
                         value: "100.00",
                         breakdown: {
                             item_total: {
-                                currency_code: paypal_settings.currency_code,
+                                currency_code: 'USD',
                                 value: "100.00"
                             }
                         }
@@ -33,7 +72,7 @@ jQuery( document ).ready( function( $ ) {
                             name: "Item 1",
                             description: "The best item ever",
                             unit_amount: {
-                                currency_code: paypal_settings.currency_code,
+                                currency_code: 'USD',
                                 value: "100.00"
                             },
                             quantity: "1",
@@ -61,6 +100,9 @@ jQuery( document ).ready( function( $ ) {
 
             return actions.order.capture().then(function(details) {
                 console.log( details );
+
+
+                
                 alert('Transaction completed by ' + details.payer.name.given_name);
                 // Call your server to save the transaction
                 // return fetch('/api/paypal-transaction-complete', {
