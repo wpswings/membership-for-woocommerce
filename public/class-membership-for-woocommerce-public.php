@@ -136,7 +136,9 @@ class Membership_For_Woocommerce_Public {
 				'paypal-smart-buttons',
 				'paypal_sb_obj',
 				array(
+					'ajax_url' => admin_url( 'admin-ajax.php' ),
 					'settings' => $settings,
+					'nonce'    => wp_create_nonce( 'paypal-nonce' ),
 				),
 			);
 
@@ -176,7 +178,7 @@ class Membership_For_Woocommerce_Public {
 		unset( $items['customer-logout'] );
 
 		// Placing the custom tab just above logout tab.
-		$items['mwb-membership-tab'] = __( 'Membership Details', 'membership-for-woocommerce' );
+		$items['mwb-membership-tab'] = esc_html__( 'Membership Details', 'membership-for-woocommerce' );
 
 		$items['customer-logout'] = $logout;
 
@@ -976,6 +978,17 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		wp_die();
+	}
+
+	/**
+	 * Handle paypal transaction data.
+	 */
+	public function handle_transaction_data() {
+
+		// Nonce verification.
+		check_ajax_referer( 'nonce', 'paypal-nonce' );
+
+
 	}
 
 }

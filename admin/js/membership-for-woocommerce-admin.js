@@ -195,7 +195,6 @@ jQuery( document ).ready( function( $ ) {
 			e.preventDefault();
 
 			var empty_check = $( "#csv_file_upload" ).val();
-			//alert( empty_check );
 
 			// If no file selected close the dialog box and show 'failure' sweet alert.
 			if ( empty_check.length == 0 ) {
@@ -232,7 +231,7 @@ jQuery( document ).ready( function( $ ) {
 
 					success : function( response ) {
 						
-						// CLose the import modal.
+						// Close the import modal.
 						$( ".import_csv_field_wrapper" ).dialog( "close" );
 
 						if ( 'success' == response['status'] ) {

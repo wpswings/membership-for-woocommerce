@@ -39,7 +39,7 @@ jQuery( document ).ready( function( $ ) {
             },
         });
 
-        console.log( validate.errorList );
+        //console.log( validate.errorList );
     });
 
     
@@ -114,6 +114,23 @@ jQuery( document ).ready( function( $ ) {
                 //         orderID: data.orderID
                 //     })
                 // });
+
+                // Ajax call to save transaction data.
+                $.ajax({
+                    url    : paypal_sb_obj.ajax_url,
+                    type   : 'post',
+                    data   : {
+                        action : 'payal_transaction_data_handling',  
+                        transaction_details : details,
+                        nonce : paypal_sb_obj.nonce,
+                    },
+
+                    success : function( response ) {
+                        console.log( response );
+                    }
+
+
+                });
             });
         }
     }).render( '#paypal-button-container' );

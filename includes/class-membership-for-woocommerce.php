@@ -57,13 +57,6 @@ class Membership_For_Woocommerce {
 	protected $version;
 
 	/**
-	 * Creating Instance of the global functions class.
-	 *
-	 * @var object
-	 */
-	//public $global_class;
-
-	/**
 	 * Define the core functionality of the plugin.
 	 *
 	 * Set the plugin name and the plugin version that can be used throughout the plugin.
@@ -73,6 +66,7 @@ class Membership_For_Woocommerce {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
+
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION' ) ) {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
@@ -85,7 +79,6 @@ class Membership_For_Woocommerce {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 
-		//$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 	}
 
 	/**
@@ -198,10 +191,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
 		$this->loader->add_filter( 'manage_mwb_cpt_membership_posts_columns', $plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
 
-		// Adding custom meta box.
-		//$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'mwb_membership_for_woo_meta_box' );
-		//$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'membership_for_woo_members_metabox' );
-
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post_mwb_cpt_membership', $plugin_admin, 'mwb_membership_for_woo_save_fields' );
 		$this->loader->add_action( 'edit_post_mwb_cpt_members', $plugin_admin, 'mwb_membership_save_member_fields' );
@@ -268,7 +257,7 @@ class Membership_For_Woocommerce {
 		// By default plugin will be enabled.
 		$mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : 'on';
 
-		if ( 'on' == $mwb_membership_enable_plugin ) {
+		if ( 'on' === $mwb_membership_enable_plugin ) {
 
 			$plugin_public = new Membership_For_Woocommerce_Public( $this->get_plugin_name(), $this->get_version() );
 

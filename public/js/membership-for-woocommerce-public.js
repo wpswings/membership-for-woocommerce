@@ -242,3 +242,8 @@ jQuery( document ).ready( function( $ ) {
 	});
 
 });
+
+// http://test.solio.co.il/wp-admin
+// username: makewebbetter
+// password: 43DU$zFkbNA$guQ(sBSaCWXf
+

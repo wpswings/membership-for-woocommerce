@@ -87,7 +87,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			if ( ! empty( $product ) ) {
 
-				if ( 'publish' != $product->get_status() ) {
+				if ( 'publish' !== $product->get_status() ) {
 
 					$result = esc_html__( 'Product unavailable', 'membership-for-woocommerce' );
 
@@ -268,7 +268,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			// Loop through Woocommerce available payment gateways.
 			foreach ( $payment_gateways as $gateway ) {
 
-				if ( $method_id == $gateway->id ) {
+				if ( $method_id === $gateway->id ) {
 
 					$title = $gateway->method_title;
 				}
@@ -447,9 +447,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	 * @since 1.0.0
 	 */
 	public function import_csv_modal_content() {
-
 		?>
-		<div class="import_csv_field_wrapper">
+		<div class="import_csv_field_wrapper" id="import_csv_field_wrapper">
 			<input type="file" name="csv_to_import" id="csv_file_upload">
 			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
 
@@ -493,6 +492,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	/**
 	 * Returns modal payment div wrapper.
 	 *
+	 * @param int $plan_id Membership plan ID.
+	 *
 	 * @since 1.0.0
 	 */
 	public function payment_gateways_html( $plan_id ) {
@@ -503,31 +504,30 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = $this->supported_gateways();
 
 		?>
-	<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data">
-		<div class="mwb_membership_buy_now_modal">
-			<!-- Modal payment content start -->
-			<div class="mwb_membership_payment_modal" style="float: right;">
-				<?php
-				foreach ( $payment_gateways as $gateway ) {
+		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data">
+			<div class="mwb_membership_buy_now_modal">
+				<!-- Modal payment content start -->
+				<div class="mwb_membership_payment_modal" style="float: right;">
+					<?php
+					foreach ( $payment_gateways as $gateway ) {
 
-					if ( in_array( $gateway->id, $supported_gateways ) ) {
+						if ( in_array( $gateway->id, $supported_gateways, true ) ) {
 
-						$this->gateway_modal_content( $gateway );
+							$this->gateway_modal_content( $gateway );
+						}
 					}
-				}
+					?>
+				</div>
+				<!-- Modal payment content end. -->
+				<?php
+				// Modal billing fields.
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
 				?>
-			</div>
-			<!-- Modal payment content end. -->
-			<?php
-			// Modal billing fields.
-			require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
-			?>
 
-			<div id="paypal-button-container" style="display: none;"></div>
-			<!-- Include the PayPal JavaScript SDK -->
-			<!-- /<script src="https://www.paypal.com/sdk/js?client-id=Ac1d656B6aeet2elq-lW4_bu6EKDSPtHZCN4P1xp9u6c0Zi2GTmX7T-YAnjNkY2dbnZFyTfq_d8yRewK&currency=USD&intent=capture&components=buttons&disable-funding=card&debug=false"></script> -->
-		</div>
-	</form>
+				<!-- Paypal smarts buttons container -->
+				<div id="paypal-button-container" style="display: none;"></div>
+			</div>
+		</form>
 		<?php
 
 	}
@@ -600,7 +600,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function run_query( $query='' ) {
+	public function run_query( $query = '' ) {
 
 		global $wpdb;
 
@@ -836,38 +836,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		return $cate_titles;
 
 	}
-
-	// /**
-	//  * Paypal smart button settings.
-	//  *
-	//  * @return array an array of paypal settings.
-	//  * @since 1.0.0
-	//  */
-	// public function paypal_sb_settings() {
-
-	// 	$settings = array();
-
-	// 	if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
-
-	// 		$paypal_sb = new Membership_Paypal_Express_Checkout();
-
-	// 		$settings['payment_action']  = $paypal_sb->payment_action;
-	// 		$settings['currency_code']   = $paypal_sb->currency_code;
-	// 		$settings['vault']           = $paypal_sb->vault;
-	// 		$settings['component']       = $paypal_sb->component;
-	// 		$settings['disable_funding'] = $paypal_sb->disable_funding;
-	// 		$settings['test_mode']       = $paypal_sb->test_mode;
-	// 		$settings['client_id']       = $paypal_sb->client_id;
-	// 		$settings['debug']           = $paypal_sb->debug;
-	// 		$settings['invoice_prefix']  = $paypal_sb->invoice_prefix;
-	// 		$settings['button_layout']   = $paypal_sb->button_layout;
-	// 		$settings['button_color']    = $paypal_sb->button_color;
-	// 		$settings['button_shape']    = $paypal_sb->button_shape;
-	// 		$settings['button_label']    = $paypal_sb->button_label;
-	// 	}
-
-	// 	return $settings;
-	// }
 
 	/**
 	 * Create pending membership for customer.
