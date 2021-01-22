@@ -48,12 +48,12 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 			$this->enabled = 'no';
 		}
 
-		if ( 'yes' == $this->testmode ) {
+		if ( 'yes' === $this->testmode ) {
 
 			$this->api_username  = $this->get_option( 'sandbox_api_username' );
 			$this->api_password  = $this->get_option( 'sandbox_api_password' );
 			$this->api_signature = $this->get_option( 'sandbox_api_signature' );
-			$this->description   = __( 'TESTMODE ENABLED. In test mode, you can use the credentials of your Paypal sandbox account to make a payment.', 'membership-for-woocommerce' );
+			$this->description   = esc_html__( 'TESTMODE ENABLED. In test mode, you can use the credentials of your Paypal sandbox account to make a payment.', 'membership-for-woocommerce' );
 
 		} else {
 
@@ -72,7 +72,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 
 		$this->redirect_url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&useraction=commit&token=';
 
-		if ( 'yes' == $this->testmode ) {
+		if ( 'yes' === $this->testmode ) {
 
 			$this->base_url = 'https://api-3t.sandbox.paypal.com/nvp';
 
@@ -94,7 +94,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	 */
 	public function mwb_membership_for_woo_admin_notices() {
 
-		if ( 'no' == $this->get_option( 'enabled' ) ) {
+		if ( 'no' === $this->get_option( 'enabled' ) ) {
 
 			return false;
 		}
@@ -252,11 +252,11 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 		$home_counties = array( 'BE', 'CZ', 'DK', 'HU', 'IT', 'JP', 'NL', 'NO', 'ES', 'SE', 'TR', 'IN' );
 		$countries     = array( 'DZ', 'AU', 'BH', 'BQ', 'BW', 'CA', 'CN', 'CW', 'FI', 'FR', 'DE', 'GR', 'HK', 'ID', 'JO', 'KE', 'KW', 'LU', 'MY', 'MA', 'OM', 'PH', 'PL', 'PT', 'QA', 'IE', 'RU', 'BL', 'SX', 'MF', 'SA', 'SG', 'SK', 'KR', 'SS', 'TW', 'TH', 'AE', 'GB', 'US', 'VN' );
 
-		if ( in_array( $country, $home_counties ) ) {
+		if ( in_array( $country, $home_counties, true ) ) {
 
 			return $url . '/webapps/mpp/home';
 
-		} elseif ( in_array( $country, $countries ) ) {
+		} elseif ( in_array( $country, $countries, true ) ) {
 
 			return $url . '/webapps/mpp/paypal-popup';
 
@@ -462,7 +462,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 
 			$status = wp_remote_retrieve_response_code( $response );
 
-			if ( 200 == $status ) {
+			if ( 200 === $status ) {
 				$result = $response_data;
 			}
 		}
@@ -475,7 +475,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 	 */
 	public function mwb_membership_for_woo_create_paypal_log( $step, $order_id, $final_response ) {
 
-		if ( 'yes' == $this->logging ) {
+		if ( 'yes' === $this->logging ) {
 
 			if ( ! defined( 'WC_LOG_DIR' ) ) {
 
@@ -502,7 +502,7 @@ class Mwb_Membership_For_Woo_Paypal_Gateway extends WC_Payment_Gateway {
 						'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
 						'Order ID ' . $order_id . PHP_EOL .
 						'Step: ' . $step . PHP_EOL .
-						'Response: ' . json_encode( $final_response ) . PHP_EOL .
+						'Response: ' . wp_json_encode( $final_response ) . PHP_EOL .
 						'----------------------------------------------------------------------------' . PHP_EOL;
 
 				file_put_contents( $log_dir_file, $log, FILE_APPEND );

@@ -18,20 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// Creating Instance of the global functions class.
-$global_class = Membership_For_Woocommerce_Global_Functions::get();
-
 ?>
-
 
 <!-- Plans creation start. -->
 <table class="form-table mwb_membership_plans_creation_setting">
 	<tbody>
 
 		<!-- Nonce Field -->
-		<?php wp_nonce_field( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' ); ?>
-
-		
+		<?php wp_nonce_field( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' ); ?>	
 
 		<!-- Memberhship plan price start  -->
 		<tr valign="top">
@@ -46,11 +40,11 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'Provide the amount at which Membership Plan will be available for Users.', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
 				?>
 
-				<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_price'] ); ?>">
+				<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
 		<!-- Membership plan price end. -->
@@ -68,18 +62,18 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'Provide the Access Type of your Membership Plan', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
-				$mwb_membership_plan_access_type = $this->settings_fields['mwb_membership_plan_name_access_type'];
+				$mwb_membership_plan_access_type = $settings_fields['mwb_membership_plan_name_access_type'];
 
 				?>
 
 				<select id="mwb_membership_plan_access_type" name="mwb_membership_plan_name_access_type">
-					<option <?php echo esc_html( 'lifetime' == $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="lifetime"><?php esc_html_e( 'Lifetime', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'lifetime' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="lifetime"><?php esc_html_e( 'Lifetime', 'membership-for-woocommerce' ); ?></option>
 
-					<option <?php echo esc_html( 'limited' == $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="limited"><?php esc_html_e( 'Limited', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'limited' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="limited"><?php esc_html_e( 'Limited', 'membership-for-woocommerce' ); ?></option>
 
-					<option <?php echo esc_html( 'date_ranged' == $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="date_ranged"><?php esc_html_e( 'Date Ranged', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'date_ranged' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="date_ranged"><?php esc_html_e( 'Date Ranged', 'membership-for-woocommerce' ); ?></option>
 				</select>
 			</td>
 		</tr>
@@ -98,17 +92,17 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'Provide the number of days the plan will be active', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
-				$mwb_membership_plan_duration_type = $this->settings_fields['mwb_membership_plan_duration_type'];
+				$mwb_membership_plan_duration_type = $settings_fields['mwb_membership_plan_duration_type'];
 				?>
 
-				<input type="number" id="mwb_membership_plan_duration" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_duration'] ); ?>" min="1" max="31">
+				<input type="number" id="mwb_membership_plan_duration" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" min="1" max="31">
 				<select name="mwb_membership_plan_duration_type" id="mwb_membership_plan_duration_type">
-					<option <?php echo esc_html( 'days' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'weeks' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'months' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'years' == $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'days' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'months' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'years' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
 				</select>
 			</td>
 		</tr>
@@ -127,11 +121,11 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'Provide the Start date of the plan.', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
 				?>
 
-				<input type="date" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_start'] ); ?>" >
+				<input type="date" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_start'] ); ?>" >
 			</td>
 		</tr>
 		<tr id="mwb_membership_date_range_end" style="display: none;">
@@ -145,11 +139,11 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'Provide the End date of the plan.', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
 				?>
 
-				<input type="date" id="mwb_membership_plan_end" name="mwb_membership_plan_end" value="<?php echo esc_attr( $this->settings_fields['mwb_membership_plan_end'] ); ?>" >
+				<input type="date" id="mwb_membership_plan_end" name="mwb_membership_plan_end" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_end'] ); ?>" >
 			</td>
 		</tr>
 		<!-- Plan Date Range End. -->
@@ -167,11 +161,11 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'This will Enable Recurring membership plan.', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
 				?>
 
-				<input type="checkbox" id="mwb_membership_plan_recurring" name="mwb_membership_plan_recurring" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_recurring'] ); ?>>
+				<input type="checkbox" id="mwb_membership_plan_recurring" name="mwb_membership_plan_recurring" value="yes" <?php checked( 'yes', $settings_fields['mwb_membership_plan_recurring'] ); ?>>
 			</td>
 		</tr>
 		<!-- Recurring plan start -->
@@ -189,11 +183,11 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
 
-				$global_class->tool_tip( $description );
+				$instance->tool_tip( $description );
 
 				?>
 
-				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $this->settings_fields['mwb_membership_plan_user_access'] ); ?>>
+				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $settings_fields['mwb_membership_plan_user_access'] ); ?>>
 			</td>
 		</tr>
 		<!-- Show history to user end -->
@@ -229,15 +223,15 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 						<?php
 
-						if ( ! empty( $this->settings_fields ) ) {
+						if ( ! empty( $settings_fields ) ) {
 
-							$mwb_membership_plan_target_product_ids = is_array( $this->settings_fields['mwb_membership_plan_target_ids'] ) ? array_map( 'absint', $this->settings_fields['mwb_membership_plan_target_ids'] ) : array();
+							$mwb_membership_plan_target_product_ids = is_array( $settings_fields['mwb_membership_plan_target_ids'] ) ? array_map( 'absint', $settings_fields['mwb_membership_plan_target_ids'] ) : array();
 
 							if ( $mwb_membership_plan_target_product_ids ) {
 
 								foreach ( $mwb_membership_plan_target_product_ids as $mwb_membership_plan_single_target_product_ids ) {
 
-									$product_name = $global_class->get_product_title( $mwb_membership_plan_single_target_product_ids );
+									$product_name = $instance->get_product_title( $mwb_membership_plan_single_target_product_ids );
 									?>
 
 									<option value="<?php echo esc_html( $mwb_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $mwb_membership_plan_single_target_product_ids, $mwb_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $mwb_membership_plan_single_target_product_ids ) . ')' ); ?></option>
@@ -270,15 +264,15 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 					<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 
-						if ( ! empty( $this->settings_fields ) ) {
+						if ( ! empty( $settings_fields ) ) {
 
-							$mwb_membership_plan_target_categories = is_array( $this->settings_fields['mwb_membership_plan_target_categories'] ) ? array_map( 'absint', $this->settings_fields['mwb_membership_plan_target_categories'] ) : array();
+							$mwb_membership_plan_target_categories = is_array( $settings_fields['mwb_membership_plan_target_categories'] ) ? array_map( 'absint', $settings_fields['mwb_membership_plan_target_categories'] ) : array();
 
 							if ( $mwb_membership_plan_target_categories ) {
 
 								foreach ( $mwb_membership_plan_target_categories as $single_target_category_id ) {
 
-									$category_name = $global_class->get_category_title( $single_target_category_id );
+									$category_name = $instance->get_category_title( $single_target_category_id );
 									?>
 
 									<option value="<?php echo esc_html( $single_target_category_id ); ?>" selected="selected"><?php echo( esc_html( $category_name ) . '(#' . esc_html( $single_target_category_id ) . ')' ); ?></option>
@@ -309,24 +303,24 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 				<?php
 
-				$mwb_membership_plan_access_type = $this->settings_fields['mwb_membership_plan_access_type'];
+				$mwb_membership_plan_access_type = $settings_fields['mwb_membership_plan_access_type'];
 
-				$mwb_membership_plan_time_duration = $this->settings_fields['mwb_membership_plan_time_duration'];
+				$mwb_membership_plan_time_duration = $settings_fields['mwb_membership_plan_time_duration'];
 
-				$mwb_membership_plan_time_duration_type = $this->settings_fields['mwb_membership_plan_time_duration_type'];
+				$mwb_membership_plan_time_duration_type = $settings_fields['mwb_membership_plan_time_duration_type'];
 
 				?>
-					<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="immediate_type" <?php echo esc_html( 'immediate_type' == $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
+					<input type="radio" id="mwb_membership_plan_immediate_type" name="mwb_membership_plan_access_type" value="immediate_type" <?php echo esc_html( 'immediate_type' === $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
 					<label for="mwb_membership_plan_immediate_type"><?php esc_html_e( 'Immediately', 'membership-for-woocommerce' ); ?></label>
 
-					<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type" <?php echo esc_html( 'delay_type' == $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
+					<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type" <?php echo esc_html( 'delay_type' === $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
 					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
 
 					<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
 						<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="<?php echo esc_attr( $mwb_membership_plan_time_duration ); ?>" min="1" max="31" >
 						<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
-							<option <?php echo esc_html( 'days' == $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-							<option <?php echo esc_html( 'weeks' == $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+							<option <?php echo esc_html( 'days' === $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+							<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
 						</select>
 						<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the delay duration in after which plan offers will be accessible.', 'membership-for-woocommerce' ); ?></span>
 					</div>
@@ -358,16 +352,16 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 						<?php
 
-						$mwb_membership_plan_offer_price_type = $this->settings_fields['mwb_membership_plan_offer_price_type'];
+						$mwb_membership_plan_offer_price_type = $settings_fields['mwb_membership_plan_offer_price_type'];
 
-						$mwb_membership_plan_discount_price = $this->settings_fields['mwb_memebership_plan_discount_price'];
+						$mwb_membership_plan_discount_price = $settings_fields['mwb_memebership_plan_discount_price'];
 
 						?>
 						<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
 
-							<option <?php echo esc_html( '%' == $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
+							<option <?php echo esc_html( '%' === $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
 
-							<option <?php echo esc_html( 'fixed' == $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
+							<option <?php echo esc_html( 'fixed' === $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 						</select>
 						<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
@@ -387,7 +381,7 @@ $global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 						<?php
 
-						$mwb_membership_plan_free_shipping = $this->settings_fields['mwb_memebership_plan_free_shipping'];
+						$mwb_membership_plan_free_shipping = $settings_fields['mwb_memebership_plan_free_shipping'];
 
 						?>
 

@@ -505,7 +505,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		?>
 		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data">
+
 			<div class="mwb_membership_buy_now_modal">
+
 				<!-- Modal payment content start -->
 				<div class="mwb_membership_payment_modal" style="float: right;">
 					<?php
@@ -519,6 +521,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					?>
 				</div>
 				<!-- Modal payment content end. -->
+
 				<?php
 				// Modal billing fields.
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';

@@ -23,6 +23,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 		$this->id                 = 'membership-paypal-smart-buttons';
 		$this->method_title       = __( 'PayPal Checkout( Membership )', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Allow customers to conveniently checkout directly with PayPal.', 'membership-for-woocommerce' );
+		$this->has_fields         = true;
 
 		$this->payment_action  = 'capture';
 		$this->currency_code   = get_woocommerce_currency();
@@ -92,6 +93,17 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 		$settings['button_label']    = $this->button_label;
 
 		return $settings;
+	}
+
+	/**
+	 * Payment fields function
+	 *
+	 * @return void
+	 */
+	public function payment_fields() {
+		if ( $this->description ) {
+			echo wpautop( wptexturize( $this->description ) );
+		}
 	}
 
 }

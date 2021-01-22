@@ -1,44 +1,3 @@
-(function( $ ) {
-	'use strict';
-
-	/**
-	 * All of the code for your admin-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
-	$(document).ready(function(){
-
-
-	});
-
-		
-
-})( jQuery );
-
-// Basic JS.
 jQuery( document ).ready( function( $ ) {
 
 	// Display already selected option field.
@@ -188,7 +147,7 @@ jQuery( document ).ready( function( $ ) {
 	$( "#import_all_membership" ).on( "click", function( e ) {
 		e.preventDefault();
 
-		$( ".import_csv_field_wrapper" ).dialog( "open" );
+		$( "#import_csv_field_wrapper" ).dialog( "open" );
 
 		// Ajax call for import CSV.
 		$( "#upload_csv_file" ).on( "click", function( e ) {
@@ -200,7 +159,7 @@ jQuery( document ).ready( function( $ ) {
 			if ( empty_check.length == 0 ) {
 			
 				// CLose the import modal.
-				$( ".import_csv_field_wrapper" ).dialog( "close" );
+				$( "#import_csv_field_wrapper" ).dialog( "close" );
 
 				// Show "failure" response via sweet-alert.
 				Swal.fire({
@@ -208,8 +167,7 @@ jQuery( document ).ready( function( $ ) {
 					title: 'Oops..!!',
 					text : 'No file selected',
 				});
-
-				//location.reload();	
+	
 			} else {
 
 				var form = new FormData();
@@ -232,7 +190,7 @@ jQuery( document ).ready( function( $ ) {
 					success : function( response ) {
 						
 						// Close the import modal.
-						$( ".import_csv_field_wrapper" ).dialog( "close" );
+						$( "#import_csv_field_wrapper" ).dialog( "close" );
 
 						if ( 'success' == response['status'] ) {
 
@@ -255,8 +213,6 @@ jQuery( document ).ready( function( $ ) {
 								text : response['message']
 							});
 						}
-
-
 					},
 
 				});
@@ -265,7 +221,7 @@ jQuery( document ).ready( function( $ ) {
 		});
 	});
 
-	$( ".import_csv_field_wrapper" ).dialog({
+	$( "#import_csv_field_wrapper" ).dialog({
         modal: true,
         autoOpen: false,
 		show: {effect: "blind", duration: 800},

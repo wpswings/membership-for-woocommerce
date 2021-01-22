@@ -33,7 +33,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 $mwb_membership_global_settings = get_option( 'mwb_membership_global_options' );
 
 // Delete only if "Delete data at unistall" in Global settings set to true.
-if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) && 'on' == $mwb_membership_global_settings['mwb_membership_delete_data'] ) {
+if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) && 'on' === $mwb_membership_global_settings['mwb_membership_delete_data'] ) {
 
 	// Deleting membership default page at plugin unistall.
 	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page' );
@@ -50,7 +50,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 
 		foreach ( $user_roles as $user_role ) {
 
-			if ( 'Member' == $user_role['name'] ) {
+			if ( 'Member' === $user_role['name'] ) {
 
 				remove_role( 'member' );
 			}

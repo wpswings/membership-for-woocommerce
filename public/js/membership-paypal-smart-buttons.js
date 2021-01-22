@@ -1,12 +1,10 @@
 jQuery( document ).ready( function( $ ) {
 
-    //console.log( paypal_sb_obj.settings );
     // Getting the localized payapl settings object.
     var paypal_settings = paypal_sb_obj.settings;
 
     // Getting billing form details here.
     var billing_data = $( "#mwb_membership_buy_now_modal_form" ).serialize();
-    //console.log( billing_data );
 
     $( "#mwb_membership_buy_now_modal_form" ).on( "change",  function() {
     
@@ -39,7 +37,6 @@ jQuery( document ).ready( function( $ ) {
             },
         });
 
-        //console.log( validate.errorList );
     });
 
     
@@ -100,9 +97,6 @@ jQuery( document ).ready( function( $ ) {
 
             return actions.order.capture().then(function(details) {
                 console.log( details );
-
-
-                
                 alert('Transaction completed by ' + details.payer.name.given_name);
                 // Call your server to save the transaction
                 // return fetch('/api/paypal-transaction-complete', {
@@ -128,7 +122,6 @@ jQuery( document ).ready( function( $ ) {
                     success : function( response ) {
                         console.log( response );
                     }
-
 
                 });
             });

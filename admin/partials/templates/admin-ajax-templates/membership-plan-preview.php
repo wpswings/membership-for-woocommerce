@@ -16,20 +16,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-
-$plan_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
-
 $output = '';
 
-if ( ! empty( $plan_id ) ) {
+if ( ! empty( $post_id ) ) {
 
-	$plan_title       = get_the_title( $plan_id );
-	$plan_price       = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
-	$plan_products    = $this->global_class->csv_get_prod_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true ) );
-	$plan_categories  = $this->global_class->csv_get_cat_title( get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true ) );
-	$plan_description = get_post_field( 'post_content', $plan_id );
-	$plan_access_type = get_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', true );
-	$plan_user_access = get_post_meta( $plan_id, 'mwb_membership_plan_access_type', true );
+	$plan_title       = get_the_title( $post_id );
+	$plan_price       = get_post_meta( $post_id, 'mwb_membership_plan_price', true );
+	$plan_products    = $instance->csv_get_prod_title( get_post_meta( $post_id, 'mwb_membership_plan_target_ids', true ) );
+	$plan_categories  = $instance->csv_get_cat_title( get_post_meta( $post_id, 'mwb_membership_plan_target_categories', true ) );
+	$plan_description = get_post_field( 'post_content', $post_id );
+	$plan_access_type = get_post_meta( $post_id, 'mwb_membership_plan_name_access_type', true );
+	$plan_user_access = get_post_meta( $post_id, 'mwb_membership_plan_access_type', true );
 	$currency         = get_woocommerce_currency();
 
 	// Html for preview mode.

@@ -24,6 +24,8 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 	/**
 	 * Inastance of global functions class file.
+	 *
+	 * @var object
 	 */
 	public $global_class;
 
@@ -35,7 +37,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		$this->id                 = 'membership-adv-bank-transfer';
 		$this->has_fields         = false;
 		$this->method_title       = __( 'Advance Direct Bank Transfer', 'membership-for-woocommerce' );
-		$this->method_description = __( 'Take Payments in person via BACS.', 'membership-for-woocommerce' ); 
+		$this->method_description = __( 'Take Payments in person via BACS.', 'membership-for-woocommerce' );
 
 		// Load the settings.
 		$this->init_form_fields();
@@ -264,30 +266,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Unset the gateway according to the country.
-	 */
-	// public function is_available() {
-
-	// 	// Return if admin, as no session is created for admin.
-	// 	if ( is_admin() ) {
-	// 		return;
-	// 	}
-
-	// 	$current_user    = WC()->session->get( 'customer' );
-	// 	$billing_country = ! empty( $current_user['country'] ) ? $current_user['country'] : array();
-
-	// 	echo '<pre>'; print_r( $billing_country ); echo '</pre>'; die();
-
-	// 	if ( in_array( $billing_country, (array) $this->settings['exclude_countries'] ) ) {
-
-	// 		return false;
-	// 	} else {
-
-	// 		return true;
-	// 	}
-	// }
-
-	/**
 	 * Output for the receipt fields.
 	 *
 	 * @param int $desc    Description.
@@ -295,7 +273,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function add_receipt_fields_html( $desc = '', $gate_id = '' ) {
 
-		if ( ! empty( $gate_id ) && $gate_id == $this->id ) {
+		if ( ! empty( $gate_id ) && $gate_id === $this->id ) {
 
 			return $desc . $this->return_receipt_fields_html();
 		}
@@ -353,11 +331,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		}
 
-		//$receipt = ! empty( $_POST['bacs_receipt_attached'] ) ? $_POST['bacs_receipt_attached'] : false;
-
-		// update order receipt.
-		//update_post_meta( $member_id, 'bacs_receipt_attached', $receipt );
-
 		if ( $plan_price > 0 ) {
 
 			try {
@@ -366,19 +339,14 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 					update_post_meta( $member_id, '_membership_trans_id', $transaction_id );
 				}
 
-				// if ( ! empty( time() ) ) {
-				// 	update_post_meta( $member_id, 'schedule_time', time() );
-				// }
-
 				// Updating status to hold, admin will change it to 'completed'    after amount is reflected in his account.
 				update_post_meta( $member_id, 'member_status', 'hold' );
 
 				// Send email invoice to customer.
-				if ( 'email_invoice' == get_post_meta( $member_id, 'member_actions', true ) ) {
+				if ( 'email_invoice' === get_post_meta( $member_id, 'member_actions', true ) ) {
 
 					$this->global_class->email_membership_invoice();
 				}
-
 			} catch ( \Throwable $e ) {
 
 				/**

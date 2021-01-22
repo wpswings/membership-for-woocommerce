@@ -18,10 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// $a = array();
-
-// var_dump( isset($a) );
-// var_dump( empty($a) );
 // Save form fields when save changes is clicked.
 if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
@@ -51,11 +47,8 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 }
 
-// Creating Instance of the global functions class.
-$global_class = Membership_For_Woocommerce_Global_Functions::get();
-
 // Saved global settings.
-$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $global_class->default_global_options() );
+$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $instance->default_global_options() );
 
 // By default plugin will be enabled.
 $mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : '';
@@ -105,12 +98,12 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 							<?php
 								$attribute_description = esc_html__( 'Enable Membership for Woocommerce plugin.', 'membership-for-woocommerce' );
 
-								$global_class->tool_tip( $attribute_description );
+								$instance->tool_tip( $attribute_description );
 							?>
 
 							<label for="mwb_membership_for_woo_enable_switch" class="mwb_membership_for_woo_enable_plugin_label mwb_membership_for_woo_plugin_support">
 
-								<input type="checkbox" <?php echo ( 'on' == $mwb_membership_enable_plugin ) ? "checked='checked'" : ''; ?> id="mwb_membership_for_woo_enable_switch" class="mwb_membership_for_woo_plugin_input" name="mwb_membership_enable_plugin" >	
+								<input type="checkbox" <?php echo ( 'on' === $mwb_membership_enable_plugin ) ? "checked='checked'" : ''; ?> id="mwb_membership_for_woo_enable_switch" class="mwb_membership_for_woo_plugin_input" name="mwb_membership_enable_plugin" >	
 								<span class="mwb_memebrship_for_woo_enable_plugin_span"></span>
 
 							</label>
@@ -130,13 +123,13 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 							<?php
 								$attribute_description = esc_html__( 'Manage content for non-membership members.', 'membership-for-woocommerce' );
 
-								$global_class->tool_tip( $attribute_description );
+								$instance->tool_tip( $attribute_description );
 							?>
 
 							<select name="mwb_membership_manage_content" id="mwb_membership_manage_content" value="">
-								<option <?php echo esc_html( 'hide_for_non_members' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="hide_for_non_members"><?php esc_html_e( 'Hide Content for Non-membership user.', 'membership-for-woocommerce' ); ?></option>
-								<option <?php echo esc_html( 'redirect_to_404' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="redirect_to_404"><?php esc_html_e( 'Redirect to 404 page.', 'membership-for-woocommerce' ); ?></option>
-								<option <?php echo esc_html( 'display_a_message' == $mwb_membership_manage_content ? 'selected' : '' ); ?> value="display_a_message"><?php esc_html_e( 'Display a message', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'hide_for_non_members' === $mwb_membership_manage_content ? 'selected' : '' ); ?> value="hide_for_non_members"><?php esc_html_e( 'Hide Content for Non-membership user.', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'redirect_to_404' === $mwb_membership_manage_content ? 'selected' : '' ); ?> value="redirect_to_404"><?php esc_html_e( 'Redirect to 404 page.', 'membership-for-woocommerce' ); ?></option>
+								<option <?php echo esc_html( 'display_a_message' === $mwb_membership_manage_content ? 'selected' : '' ); ?> value="display_a_message"><?php esc_html_e( 'Display a message', 'membership-for-woocommerce' ); ?></option>
 							</select>
 						</td>
 
@@ -154,7 +147,7 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 							<?php
 								$attribute_description = esc_html__( 'Display the custom message when non-membership members try to access the membership products.', 'membership-for-woocommerce' );
 
-								$global_class->tool_tip( $attribute_description );
+								$instance->tool_tip( $attribute_description );
 							?>
 
 							<input type="text" id="mwb_membership_manage_content_display_msg" class="mwb_membership_manage_content_msg_input" value="<?php echo esc_html( $mwb_membership_display_message ); ?>" name="mwb_membership_manage_content_display_msg" placeholder="<?php esc_html_e( 'Enter your message', 'membership-for-woocommerce' ); ?>">
@@ -174,12 +167,12 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 							<?php
 								$attribute_description = esc_html__( 'If enabled, this will delete all data at plugin unistall', 'membership-for-woocommerce' );
 
-								$global_class->tool_tip( $attribute_description );
+								$instance->tool_tip( $attribute_description );
 							?>
 
 							<label for="mwb_membership_for_woo_delete_data" class="mwb_membership_for_woo_delete_data">
 
-								<input type="checkbox" <?php echo ( 'on' == $mwb_membership_delete_data ) ? "checked='checked'" : ''; ?> id="mwb_membership_for_woo_delete_data" class="mwb_membership_for_woo_plugin_input" name="mwb_membership_delete_data" >	
+								<input type="checkbox" <?php echo ( 'on' === $mwb_membership_delete_data ) ? "checked='checked'" : ''; ?> id="mwb_membership_for_woo_delete_data" class="mwb_membership_for_woo_plugin_input" name="mwb_membership_delete_data" >	
 								<span class="mwb_memebrship_for_woo_delete_data_span"></span>
 
 							</label>

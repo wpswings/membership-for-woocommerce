@@ -136,7 +136,7 @@ class Membership_Activity_Helper {
 	public function do_upload( $file = '', $allowed_ext = array() ) {
 
 		// Not on logging activity.
-		if ( 'uploads' != $this->activity || empty( $file ) ) {
+		if ( 'uploads' !== $this->activity || empty( $file ) ) {
 
 			return false;
 		}
@@ -157,7 +157,7 @@ class Membership_Activity_Helper {
 			// Getting file type here ( eg-: 'application/pdf' will return 'pdf' ).
 			$file_ext = substr( strrchr( $file_type, '/' ), 1 );
 
-			if ( ! empty( $file_type ) && ! in_array( $file_ext, $allowed_ext ) ) {
+			if ( ! empty( $file_type ) && ! in_array( $file_ext, $allowed_ext, true ) ) {
 
 				return array(
 					'result'  => false,
@@ -188,7 +188,7 @@ class Membership_Activity_Helper {
 	public function create_log( $step = '', $response = array() ) {
 
 		// Not on logging activity.
-		if ( 'logger' != $this->activity ) {
+		if ( 'logger' !== $this->activity ) {
 
 			return false;
 		}
@@ -199,7 +199,7 @@ class Membership_Activity_Helper {
 			$log = 'Website: ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL .
 					'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
 					'Step: ' . $step . PHP_EOL .
-					'Response: ' . json_encode( $response ) . PHP_EOL .
+					'Response: ' . wp_json_encode( $response ) . PHP_EOL .
 					'----------------------------------------------------------------------------' . PHP_EOL;
 
 			file_put_contents( $file, $log, FILE_APPEND );
@@ -211,16 +211,17 @@ class Membership_Activity_Helper {
 	/**
 	 * Create pdf and upload.
 	 *
-	 * @param string $content Content to show on pdf file.
+	 * @param string $content   Content to show on pdf file.
+	 * @param string $file_name Name of the file.
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_pdf_n_upload( $content = '', $file_name='' ) {
+	public function create_pdf_n_upload( $content = '', $file_name = '' ) {
 
 		$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
 
 		$this->active_file = $file_name;
-		$location 		   = $this->active_folder . $this->active_file . '.pdf';
+		$location          = $this->active_folder . $this->active_file . '.pdf';
 
 		// TCPDF library.
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
@@ -251,7 +252,6 @@ class Membership_Activity_Helper {
 
 				return esc_url( $this->get_file_url( $location ) );
 			}
-
 		} catch ( Exception $e ) {
 
 			echo esc_html( $e->getMessage() );

@@ -18,24 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// array( 'jugh' =>  )
-
-// $class = new Membership_Activity_Helper( 'Advance-bacs-logs', 'logger' );
-// $response = array(
-// 	'status'  => 'failed',
-// 	'message' => sprintf( 'Error completing payment for order #%d', $member_id ),
-// );
-// $data =  $class->create_log( 'Test-log2', $response );
-// $activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
-// $pdf_file       = $activity_class->create_pdf_n_upload( 'filddfkhvgbdlivbdjvbdvv', 'harshit' );
-// $paypal    = new Membership_Paypal_Express_Checkout();
-// $settings  = $paypal->paypal_sb_settings();
-// echo '<pre>'; print_r( $settings ); echo '</pre>';
-// $global_class = new Membership_For_Woocommerce_Global_Functions();
-// echo '<pre>'; print_r( $global_class->paypal_sb_settings() ); echo '</pre>';
-//return;
-
-
 ?>
 
 <!-- Heading start -->

@@ -16,8 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$member_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
-
 $output = '';
 
 $output .= '<div class="members_preview_content">';

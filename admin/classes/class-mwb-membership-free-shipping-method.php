@@ -54,6 +54,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 			'instance-settings',
 			'instance-settings-modal',
 		);
+
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 		$this->init();
 	}
@@ -174,7 +175,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 						foreach ( $product_ids as $product_id ) {
 
-							if ( in_array( $product_id, $cart_items_ids ) ) {
+							if ( in_array( $product_id, $cart_items_ids, true ) ) {
 
 								$plan_active = true;
 								break;
@@ -186,7 +187,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 						foreach ( $cat_ids as $cat_id ) {
 
-							if ( in_array( $cat_id, $cart_item_cat_ids ) ) {
+							if ( in_array( $cat_id, $cart_item_cat_ids, true ) ) {
 
 								$plan_active = true;
 								break;

@@ -18,10 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$plan = get_post_meta( $post->ID, 'plan_obj', true );
-
-//echo '<pre>'; print_r( $plan ); echo '</pre>';
-
 $plan_title  = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
 $plan_price  = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
 $plan_desc   = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
@@ -48,13 +44,13 @@ $args = array(
 );
 
 $existing_plans = get_posts( $args );
-//echo '<pre>'; print_r( $existing_plans ); echo '</pre>';
+
 ?>
 <!-- Members metabox start -->
 <div class="members_plans_details">
 	<?php
 	if ( ! empty( $plan ) ) {
-	?>
+		?>
 		<div class="mwb_members_plans">
 			<table class="form-table">
 				<tr>
@@ -167,7 +163,7 @@ $existing_plans = get_posts( $args );
 						$prod_ids = maybe_unserialize( $products );
 						if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 							foreach ( $prod_ids as $ids ) {
-								echo( esc_html( $this->global_class->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
 						?>
@@ -181,7 +177,7 @@ $existing_plans = get_posts( $args );
 						$cat_ids = maybe_unserialize( $categories );
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 							foreach ( $cat_ids as $ids ) {
-								echo( esc_html( $this->global_class->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
 						?>
@@ -210,5 +206,3 @@ $existing_plans = get_posts( $args );
 
 </div>
 <!-- Members metabox end -->
-
-

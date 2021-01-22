@@ -37,11 +37,6 @@ $state      = ! empty( get_user_meta( $user_id, 'billing_state', true ) ) ? get_
 $phone      = ! empty( get_user_meta( $user_id, 'billing_phone', true ) ) ? get_user_meta( $user_id, 'billing_phone', true ) : '';
 $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_user_meta( $user_id, 'billing_email', true ) : '';
 
-// $paypal_sb  = new Membership_Paypal_Express_Checkout();
-// $settings   = $paypal_sb->settings;
-// $settings['payment_action'] = $paypal_sb->payment_action;
-// $settings['currency_code']  = $paypal_sb->currency_code; 
-// echo '<pre>'; print_r( $settings ); echo '</pre>';
 ?>
 
 <!-- <form id="membership_customer_form" method="post" action=""> -->
@@ -77,7 +72,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 								<?php
 								foreach ( $country_class->__get( 'countries' ) as $code => $name ) {
 									?>
-									<option <?php echo esc_html( $code == $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
+									<option <?php echo esc_html( $code === $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
 								<?php } ?>
 							</select>
 						</span>

@@ -48,7 +48,7 @@ class Membership_For_Woocommerce_Activator {
 
 		$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
 
-		if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' != get_post_status( $mwb_membership_default_plans_page_id ) ) {
+		if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' !== get_post_status( $mwb_membership_default_plans_page_id ) ) {
 
 			$mwb_membership_plans_page = array(
 				'comment_status' => 'closed',

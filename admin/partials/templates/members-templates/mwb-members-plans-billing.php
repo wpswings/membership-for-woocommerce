@@ -18,9 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-// Getting member's billing details.
-$member_details = get_post_meta( $post->ID, 'billing_details', true );
-
 $first_name = ! empty( $member_details['membership_billing_first_name'] ) ? $member_details['membership_billing_first_name'] : '';
 $last_name  = ! empty( $member_details['membership_billing_last_name'] ) ? $member_details['membership_billing_last_name'] : '';
 $company    = ! empty( $member_details['membership_billing_company'] ) ? $member_details['membership_billing_company'] : '';
@@ -46,7 +43,7 @@ $all_users = get_users(
 $wc_gateways      = new WC_Payment_Gateways();
 $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-$supported_gateways = $this->global_class->supported_gateways();
+$supported_gateways = $instance->supported_gateways();
 
 
 // Creating Instance of the WC_Countries class.
@@ -76,7 +73,7 @@ $country_class = new WC_Countries();
 						foreach ( $all_users as $users ) {
 							$user_info = get_user_by( 'ID', $users->ID );
 							?>
-							<option <?php echo esc_html( $users->ID == $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
+							<option <?php echo esc_html( $users->ID === $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
 							<?php
 						}
 					}
@@ -160,7 +157,7 @@ $country_class = new WC_Countries();
 						<?php
 						foreach ( $country_class->__get( 'countries' ) as $code => $name ) {
 							?>
-							<option <?php echo esc_html( $code == $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
+							<option <?php echo esc_html( $code === $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
 						<?php } ?>
 					</select>
 				</p>
@@ -186,7 +183,7 @@ $country_class = new WC_Countries();
 					<strong><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></strong></br>
 					<?php if ( ! empty( $payment ) ) { ?>
 						<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $payment ); ?>" >
-						<?php echo esc_html( $payment ); ?><span><?php $this->global_class->tool_tip( 'Manual' ); ?></span>	
+						<?php echo esc_html( $payment ); ?><span><?php $instance->tool_tip( 'Manual' ); ?></span>	
 						<?php
 					} else {
 						?>
@@ -195,7 +192,7 @@ $country_class = new WC_Countries();
 							<?php
 							foreach ( $payment_gateways as $gateway ) {
 
-								if ( in_array( $gateway->id, $supported_gateways ) ) {
+								if ( in_array( $gateway->id, $supported_gateways, true ) ) {
 									?>
 								<option value="<?php echo esc_html( $gateway->id ); ?>"><?php echo esc_html( $gateway->id ); ?></option>
 									<?php
