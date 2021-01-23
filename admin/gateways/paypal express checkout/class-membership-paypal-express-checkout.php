@@ -32,7 +32,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 		$this->disable_funding = 'card';
 
 		$this->title       = $this->method_title;
-		$this->description = $this->get_option( 'description' );
+		$this->description = $this->get_option( 'description', 'Pay via your PayPal account' );
 		$this->enabled     = $this->get_option( 'enabled', 'yes' );
 		$this->test_mode   = $this->get_option( 'test_mode', 'yes' );
 
@@ -101,8 +101,10 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function payment_fields() {
-		if ( $this->description ) {
-			echo wpautop( wptexturize( $this->description ) );
+
+		if ( ! empty( $this->description ) ) {
+
+			echo wp_kses_post( wpautop( wptexturize( $this->description ) ) . PHP_EOL );
 		}
 	}
 
