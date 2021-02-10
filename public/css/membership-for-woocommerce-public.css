@@ -2,3 +2,423 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+ @keyframes visible {
+    from {opacity: 0;}
+    to{opacity: 0.95;}
+}
+/*main product button designing*/
+.entry-summary .button.alt {
+    width: 100%;
+    max-width: 320px;
+    border: 2px solid #96588a;
+    border-radius: 4px;
+    background-color: rgb(255 255 255 / 50%);
+    color: #171717!important;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.entry-summary .button.alt:hover {
+    border: 2px solid #007cba;
+    background-color: #007cba11;
+    color: #007cba !important;
+}
+
+.entry-summary .button.alt:focus {
+    outline: none;
+}
+
+.mwb_mfw_membership_tool_tip_wrapper {
+    position: relative;
+    cursor: help;
+    top: -22px;
+    right: -88px;
+}
+
+.mwb_mfw_membership_tool_tip{
+    position: absolute;
+    max-width: 300px;
+    top: 30px;
+    left:-93px;
+    padding: 10px;
+    min-width: 200px;
+    text-align: center;
+    background-color: #333;
+    color: #ffffff;
+    border-radius: 5px;
+    display: none;
+    z-index: 1;
+}
+.mwb_mfw_membership_tool_tip:before{
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: -18px;
+    max-width: 300px;
+    right: 50%;
+    margin: auto;
+    border-top: 12px solid #333;
+    border-right: 10px solid #ffffff00;
+    border-left: 10px solid transparent;
+    transform: rotate(180deg) translate(-50%, -50%);
+}
+
+/*membership page designing*/
+.wp-block-cover {
+    background: linear-gradient(180deg, #007cba 50%, #ffffff99 50%) !important;
+    min-height: 100% !important;
+}
+
+.wp-block-cover__inner-container h2 em {
+    text-transform: uppercase;
+    font-style: normal;
+    letter-spacing: 2px;
+    font-size: 40px;
+}
+
+.wp-block-cover__inner-container h2 {
+    padding: 20px 0 0;
+}
+
+.mwb_mfw_membership_front_page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 20px 15px;
+    min-height: 300px;
+    background-color: rgb(255 255 255 / 90%);
+    box-shadow: 0px 0px 20px rgb(100 100 100 / 0.5);
+    border-radius: 5px;
+}
+
+
+.mwb_mfw_membership_icon {
+    font-size: 65px;
+    color: #96588a;
+}
+
+.mwb_membership_plan_content_title,
+.mwb_membership_plan_content_price,
+.mwb_membership_plan_content_desc {
+    width: 100%;
+    text-align: center;
+    padding: 7px 15px;
+    color: #171717;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.mwb_membership_plan_content_title {
+    font-size: 30px;
+    border-bottom: 2px solid #96588a;
+}
+
+.mwb_membership_plan_content_price {
+    font-size: 40px;
+}
+
+.mwb_membership_plan_content_desc {
+    font-size: 18px;
+    min-height: 100px;
+    font-weight: 400;
+}
+
+.mwb_mfw_buy_button {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.mwb_membership_no_thanks.button.alt.thickbox {
+    height: fit-content;
+}
+
+.mwb_membership_buy_now_btn .mwb_membership_buynow,
+.mwb_membership_no_thanks.button.alt.thickbox {
+    border: 2px solid transparent;
+    border-radius: 35px;
+    background-color: #96588a;
+    color: #ffffff;
+    transition: linear 0.3s;
+}
+
+.mwb_membership_buy_now_btn .mwb_membership_buynow:hover,
+.mwb_membership_no_thanks.button.alt.thickbox:hover {
+    border: 2px solid #96588a;
+    background: inherit;
+    color: #96588a;
+}
+
+.mwb_membership_buy_now_btn .mwb_membership_buynow:focus,
+.mwb_membership_no_thanks.button.alt.thickbox:focus {
+    outline: none;
+}
+
+/*multi-step form for woo-commerce*/
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    width: calc(100% - 15px) !important;
+    max-width: 700px;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 auto;
+    top: 20px !important;
+}
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable:focus {
+outline:none;
+}
+
+.ui-dialog-content {
+    position: relative;
+}
+
+input::placeholder {
+    color: #007cba88;
+}
+
+label {
+    font-weight: 600;
+    color: #333333;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+form#mwb_membership_buy_now_modal_form {
+    margin: 0px;
+}
+
+.mwb_membership_buy_now_modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.mwb_mfw_multi-level-form {
+    order: 3;
+}
+.mwb_mfw_progress-bar  {
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+    order: 1;
+    margin: 0px auto;
+    max-width: 400px;
+    color:#dcdcdc;
+}
+
+.mwb_mfw_progress-line {
+max-width:300px;
+padding:0px;
+overflow-x:hidden;
+display:flex;
+align-items: center;
+justify-content:flex-start;
+letter-spacing:2px;
+}
+.mwb_mfw_progress-bar-step {
+    font-size: 20px;
+    padding: 0px;
+    pointer-events: none;
+    display: flex;
+    transition: linear 1s;
+}
+
+.mwb_mfw_progress-bar-line {
+    height: 3px;
+    background-color: #dcdcdc;
+    width: 25%;
+    max-width: 450px;
+}
+
+.mwb_mfw_progress-bar-active {
+    color: #007cba;
+}
+
+.mwb_mfw_billing-heading {
+    max-width: 500px;
+    margin: 20px auto 0px;
+}
+
+.mwb_mfw_billing-heading h3 {
+    align-items: center;
+    border-bottom: 4px solid #007cba;
+    color: #1a1a1a;
+    font-weight: 600;
+    letter-spacing: 1px;
+    pointer-events: none;
+}
+
+.mwb_mfw_complete-name {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.mwb_mfw_complete-name>p {
+    flex: 0 0 100%;
+    max-width: calc(50% - 5px);
+}
+
+.mwb_mfw_form-field-wrapper-part-a {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.membership_billing_fields .mwb_mfw_form_field {
+    background: #fff;
+    border: none;
+    border-bottom: 1px solid #007cba;
+    box-shadow: none;
+    color: #007cba;
+    outline: none;
+    max-width: 500px;
+    padding: 2px;
+    text-transform: capitalize;
+}
+
+.membership_billing_fields .mwb_mfw_form_field:focus {
+    background-color: inherit;
+}
+
+.mwb_mfw_form_field-wrapper {
+    margin: 0 0 10px;
+}
+
+select#membership_billing_country {
+    border: none;
+    color: #fff;
+    background-color: #007cba;
+}
+
+select#membership_billing_country:focus {
+    outline: none;
+}
+
+label.mwb_mfw_form_field-error {
+    font-size: 10px;
+    color: #ff0000;
+    text-align: right;
+}
+
+div .membership_customer_details {
+    max-width: 500px;
+    margin: 0px auto;
+    height: 380px;
+    overflow-y: hidden;
+}
+
+.mwb_membership_payment_modal {
+    list-style-type: none;
+    margin: 50px auto;
+    max-width: 500px;
+    width: 100% !important;
+    order: 2;
+}
+
+.mwb_mfw_pre-next-btn {
+    display: flex;
+    justify-content: space-between;
+    max-width: 500px;
+    margin: 0px auto;
+}
+
+.mwb_mfw_button-main {
+    background: #007cba;
+    border: 2px solid #007cba;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 1px;
+    outline: none;
+    border-radius: 35px;
+    transition: linear 0.3s;
+    margin:10px auto;
+}
+
+.mwb_membership_payment_modal .payment_method_select:focus {
+    outline: none;
+}
+
+.mwb_mfw_button-main:hover {
+    background: inherit;
+    border: 2px solid #007cba;
+    color: #007cba;
+}
+
+.mwb_mfw_button-main:focus {
+    outline: none;
+}
+
+
+.payment_box.payment_method_membership-adv-bank-transfer,.payment_box.payment_method_membership-paypal-smart-buttons {
+    background-color: #007cba11;
+    border-radius: 5px;
+    margin: auto;
+    max-width: 465px;
+    padding: 5px;
+}
+
+#paypal-button-container {
+    max-width: 200px;
+    margin: 0px auto;
+    width: 100%;
+    display: flex;
+    order: 2;
+}
+
+.membership-input-wrapper .button {
+    border: 2px solid #333333;
+    font-size: 14px;
+    letter-spacing: 1px;
+    outline: none;
+    white-space: break-spaces;
+    border-radius: 35px;
+    transition: linear 0.3s;
+    margin:10px auto;
+}
+
+.membership-input-wrapper .button:hover {
+    background: inherit;
+    border: 2px solid #333333;
+    color: #333333;
+}
+
+.wc_payment_method, .wc_payment_method label {
+    cursor: pointer;
+}
+.mwb_mfw_progress-indicator[value]::-webkit-progress-bar {
+    background-color: #eee;
+    border-radius: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.mwb_mfw_progress-indicator[value] {
+    appearance: none;
+    max-width: 300px;
+    width: 100%;
+    height: 10px;
+    margin: 10px 0;
+    position: relative;
+}
+
+.mwb_mfw_progress-indicator[value]::-webkit-progress-value {
+    background-color: #007cba;
+    border-radius: 2px;
+    background-size: 35px 20px, 100% 100%, 100% 100%;
+}
+
+.bacs_receipt_remove_file {
+    border: 1px solid #007cba;
+    padding: 2px;
+    color: #fff;
+    background-color: #007cba;
+}
+
+.bacs_receipt_remove_file:hover {
+    border: 1px solid #007cba;
+    color: #007cba;
+    background-color: inherit;
+}

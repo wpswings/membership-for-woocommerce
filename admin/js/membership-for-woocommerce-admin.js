@@ -228,4 +228,16 @@ jQuery( document ).ready( function( $ ) {
 		width : 600,
 	});
 
+	// Applying script to admin part in all product list page
+	var mwb_status = $('.membership_status').each(function() {
+	// console.log($(this).text());
+
+		if ($(this).text() == 'Live') {
+			$(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' });
+		} else if ($(this).text() == 'Sandbox') {
+			$(this).css({ 'background-color': '#f8dda7', 'color': '#94660c' });
+		}
+
+	});
+
 });

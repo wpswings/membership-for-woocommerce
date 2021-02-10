@@ -61,7 +61,7 @@ $country_class = new WC_Countries();
 			<h3><?php esc_html_e( 'General', 'membership-for-woocommerce' ); ?></h3>
 
 			<p class="form-field membership-customer">
-`				<label for="member-user">
+				<label for="member-user">
 					<?php esc_html_e( 'Customer:', 'membership-for-woocommerce' ); ?>
 					<a href="<?php echo esc_url( admin_url( 'edit.php?post_status=all&post_type=mwb_cpt_members&post_author=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'View other memberships', 'membership-for-woocommerce' ); ?></a>
 					<a href="<?php echo esc_url( admin_url( 'user-edit.php?user_id=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'Profile', 'membership-for-woocommerce' ); ?></a>

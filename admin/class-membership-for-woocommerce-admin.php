@@ -243,6 +243,27 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * Register page IDs for Woocommerce.
+	 *
+	 * @param array $screen Screen ID.
+	 */
+	public function mwb_membership_set_wc_screen_ids( $screen ) {
+
+		$screen_ids = array(
+			'mwb_cpt_membership',
+			'mwb_cpt_members',
+			'mwb_cpt_membership_page_mwb-membership-for-woo-global-settings',
+			'mwb_cpt_membership_page_mwb-membership-for-woo-shortcodes',
+			'mwb_cpt_membership_page_mwb_membership-for-woo-gateways',
+			'mwb_cpt_membership_page_mwb-membership-for-woo-overview',
+		);
+
+		$screen = array_merge( $screen_ids, $screen );
+
+		return $screen;
+	}
+
+	/**
 	 * Custom post type for membership plans creation and settings.
 	 *
 	 * @since 1.0.0
@@ -423,7 +444,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_view':
 				?>
 
-				<a title="<?php echo esc_html__( 'Membership ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_membership_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+				<a title="<?php echo esc_html__( 'Membership ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_membership_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></span></a>
 
 				<?php
 				break;
@@ -452,7 +473,7 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'membership_cost':
 				$plan_cost = get_post_meta( $post_id, 'mwb_membership_plan_price', true );
-				$currency  = get_woocommerce_currency();
+				$currency  = get_woocommerce_currency_symbol();
 
 				if ( ! empty( $currency ) && ! empty( $plan_cost ) ) {
 
@@ -466,7 +487,7 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Get mmebership post data ( Ajax handler)
+	 * Get membership post data ( Ajax handler)
 	 *
 	 * @return void
 	 *
@@ -650,13 +671,6 @@ class Membership_For_Woocommerce_Admin {
 			<input type="submit" name="export_all_membership" id="export_all_membership" class="button button-primary" value="<?php esc_html_e( 'Export Plans', 'membership-for-woocommerce' ); ?>">
 			<input type="submit" name="import_all_membership" id="import_all_membership" class="button button-primary" value="<?php esc_html_e( 'Import Plans', 'membership-for-woocommerce' ); ?>">
 
-			<script type="text/javascript">
-				jQuery( function( $ ) {
-					$( "#export_all_membership" ).insertAfter( "#post-query-submit" );
-					$( "#import_all_membership" ).insertAfter( "#export_all_membership" );
-				});
-			</script>
-
 			<?php
 		}
 	}
@@ -745,7 +759,7 @@ class Membership_For_Woocommerce_Admin {
 					);
 				}
 
-				exit();
+				fclose( $file );
 
 			}
 		}
@@ -1152,7 +1166,7 @@ class Membership_For_Woocommerce_Admin {
 		$columns = array(
 			'cb'                   => '<input type="checkbox" />',
 			'membership_id'        => esc_html__( 'Membership ID', 'membership-for-woocommerce' ),
-			'membership_status'    => esc_html__( 'Membership Status', 'membership-for-woocommerce' ),
+			'members_status'       => esc_html__( 'Membership Status', 'membership-for-woocommerce' ),
 			'membership_user'      => esc_html__( 'User', 'membership-for-woocommerce' ),
 			'membership_user_view' => '',
 			'expiration'           => esc_html__( 'Expiry Date', 'membership-for-woocommerce' ),
@@ -1183,11 +1197,9 @@ class Membership_For_Woocommerce_Admin {
 				<?php
 				break;
 
-			case 'membership_status':
+			case 'members_status':
 				$status = get_post_meta( $post_id, 'member_status', true );
-				?>
-				<strong><?php echo esc_html( $status ); ?></strong>
-				<?php
+				echo esc_html( $status );
 				break;
 
 			case 'membership_user':
@@ -1200,7 +1212,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_user_view':
 				add_thickbox();
 				?>
-				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><span class="dashicons dashicons-visibility"></span></a>
+				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></a>
 
 				<?php
 
@@ -1344,11 +1356,6 @@ class Membership_For_Woocommerce_Admin {
 
 			?>
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-foe-woocommerce' ); ?>">
-			<script type="text/javascript">
-				jQuery( function( $ ) {
-					$( "#export_all_members" ).insertAfter( "#post-query-submit" );
-				});
-			</script>
 			<?php
 		}
 	}

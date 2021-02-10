@@ -61,4 +61,19 @@ jQuery( document ).ready( function( $ ) {
     $( "#members_plan_assign" ).select2();
     $( "#payment_gateway_select" ).select2();
 
+    // Applying script to admin part in all Members list page
+    var mwb_status = $('.members_status').each(function() {
+        console.log($(this).text());
+ 
+         if ($(this).text() == 'complete') {
+             $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' }); // green
+         } else if ($(this).text() == 'hold') {
+             $(this).css({ 'background-color': '#f8dda7', 'color': '#94660c' }); // yellow
+         }
+         else if ($(this).text() == 'pending') {
+             $(this).css({ 'background-color': '#e5e5e5', 'color': '#777' }); // red
+         }
+ 
+     });
+
 });

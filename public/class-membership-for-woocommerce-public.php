@@ -142,7 +142,7 @@ class Membership_For_Woocommerce_Public {
 				),
 			);
 
-			wp_enqueue_script( 'jquery-validate-min', plugin_dir_url( __FILE__ ) . 'js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );
+			//wp_enqueue_script( 'jquery-validate-min', plugin_dir_url( __FILE__ ) . 'js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );
 		}
 	}
 
@@ -418,7 +418,16 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 					$output = substr( $output, 0, -2 );
-					echo esc_html( $output );
+
+					if ( $output ) {
+						?>
+							<i class="fas fa-question-circle mwb_mfw_membership_tool_tip_wrapper">
+								<div class="mwb_mfw_membership_tool_tip">
+									<?php echo esc_html( $output ); ?>
+								</div>
+							</i>
+						<?php
+					}
 				}
 			}
 		}
@@ -887,7 +896,7 @@ class Membership_For_Woocommerce_Public {
 		$fields           = array();
 		$payment_response = '';
 
-		isset( $_POST['form_data'] ) ? parse_str( sanitize_text_field( $_POST['form_data'] ), $fields ) : '';
+		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
 

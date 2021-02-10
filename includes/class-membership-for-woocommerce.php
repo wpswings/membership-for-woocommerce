@@ -172,6 +172,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_filter( 'woocommerce_screen_ids', $plugin_admin, 'mwb_membership_set_wc_screen_ids' );
+
 		// Add admin menu.
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_memberships_for_woo_admin_menu' );
 

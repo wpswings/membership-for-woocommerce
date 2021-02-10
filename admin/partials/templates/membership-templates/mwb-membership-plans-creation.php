@@ -218,6 +218,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</th>
 
 				<td class="forminp forminp-text">
+					<?php
+					$description = esc_html__( 'Select the products you want to offer in Membership Plan.', 'membership-for-woocommerce' );
+
+					$instance->tool_tip( $description );
+					?>
 
 					<select id="mwb_membership_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 
@@ -245,8 +250,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 					</select>
 
-					<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the products you want to offer in Membership Plan.', 'membership-for-woocommerce' ); ?></span>
-
 				</td>	
 
 			</tr>
@@ -260,6 +263,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</th>
 
 				<td class="forminp forminp-text">
+					<?php
+					$description = esc_html__( 'Select the categories you want to offer in Membership Plan.', 'membership-for-woocommerce' );
+
+					$instance->tool_tip( $description );
+					?>
 
 					<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
@@ -285,8 +293,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 						?>
 
 					</select>
-
-					<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the categories you want to offer in Membership Plan.', 'membership-for-woocommerce' ); ?></span>
 
 				</td>
 
@@ -317,12 +323,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
 
 					<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
+					<?php
+						$description = esc_html__( 'Select the delay duration in after which plan offers will be accessible.', 'membership-for-woocommerce' );
+
+						$instance->tool_tip( $description );
+					?>
 						<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="<?php echo esc_attr( $mwb_membership_plan_time_duration ); ?>" min="1" max="31" >
 						<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
 							<option <?php echo esc_html( 'days' === $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 							<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
 						</select>
-						<span class="mwb_membership_plan_description mwb_membership_plan_desc_text"><?php esc_html_e( 'Select the delay duration in after which plan offers will be accessible.', 'membership-for-woocommerce' ); ?></span>
 					</div>
 
 				</td>
@@ -356,6 +366,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						$mwb_membership_plan_discount_price = $settings_fields['mwb_memebership_plan_discount_price'];
 
+						$description = esc_html__( 'Specify discount % applied to orders with this plan.', 'membership-for-woocommerce' );
+
+						$instance->tool_tip( $description );
 						?>
 						<select name="mwb_membership_plan_offer_price_type" id = 'mwb_membership_plan_offer_price_type_id' >
 
@@ -365,7 +378,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						</select>
 						<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
-						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Specify discount % applied to orders with this plan.', 'membership-for-woocommerce' ); ?></span>
 
 					</td>
 				</tr>
@@ -383,10 +395,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 						$mwb_membership_plan_free_shipping = $settings_fields['mwb_memebership_plan_free_shipping'];
 
+
+						$description = esc_html__( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' );
+
+						$instance->tool_tip( $description );
+
 						?>
 
 						<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
-						<span class="mwb_membership_plan_description"><?php esc_html_e( 'Allow Free Shipping to all the members of this membership plan', 'membership-for-woocommerce' ); ?></span>
 
 						<!-- manage free shipping link start. -->
 						<div class="mwb_membership_free_shipping_link" style="display: none;">

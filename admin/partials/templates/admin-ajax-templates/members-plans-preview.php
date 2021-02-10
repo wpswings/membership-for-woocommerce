@@ -26,7 +26,10 @@ if ( ! empty( $member_id ) ) {
 	$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
 	$plan_status  = get_post_meta( $member_id, 'plan_status', true );
 
-	$output .= '<div class="members_billing_preview">
+	echo '<pre>'; print_r( $billing_info ); echo '</pre>';
+
+	$output .= '<div class="members_billing_preview_wrapper">
+				<div class="members_billing_preview">
 					<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>
 					' . esc_html( $billing_info['membership_billing_company'] ) . '
 					' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_first_name'] ), esc_html( $billing_info['membership_billing_last_name'] ) ) . '
@@ -46,12 +49,12 @@ if ( ! empty( $member_id ) ) {
 					<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
 					' . esc_html( $plan_info['post_title'] ) . '
 					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
-					' . esc_html( $plan_info['post_content'] );
+					' . esc_html( $plan_info['post_content'] ) . '
+					<div class="member_plan_status">
+					' . esc_html( $plan_status . 'dasdc' ) . '
+					</div>';
 
-	$output .= '</div>';
-
-	$output .= '<div class="member_plan_status">
-					' . esc_html( $plan_status ) . '
+	$output .= '</div>
 				</div>';
 
 	$output .= '<div class="members_plan_preview_table_wrapper">

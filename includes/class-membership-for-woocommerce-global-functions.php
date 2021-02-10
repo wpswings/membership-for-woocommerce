@@ -403,39 +403,21 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function gutenberg_content() {
 
 		$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)","align":"wide"} -->
-						<div class="wp-block-cover alignwide has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"align":"center","textColor":"white"} -->
+						<div class="wp-block-cover alignwide has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center","textColor":"white"} -->
 						<h2 class="has-text-align-center has-white-color has-text-color"><strong><em>One Membership, Many Benefits</em></strong></h2>
 						<!-- /wp:heading -->
 						
-						<!-- wp:spacer {"height":58} -->
-						<div style="height:58px" aria-hidden="true" class="wp-block-spacer"></div>
-						<!-- /wp:spacer -->
-						
-						<!-- wp:html -->
+						<!-- wp:group -->
+						<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
+						<div class="mwb_mfw_membership_front_page">
+						<i class="fas fa-award mwb_mfw_membership_icon"></i>
 						<div class="mwb_membership_plan_content_title">[mwb_membership_title]</div>
-						<!-- /wp:html -->
-						
-						<!-- wp:html -->
 						<div class="mwb_membership_plan_content_price">[mwb_membership_price]</div>
-						<!-- /wp:html -->
-						
-						<!-- wp:html -->
 						<div class="mwb_membership_plan_content_desc">[mwb_membership_desc]</div>
-						<!-- /wp:html -->
-						
-						<!-- wp:columns -->
-						<div class="wp-block-columns"><!-- wp:column -->
-						<div class="wp-block-column"><!-- wp:shortcode -->
-						[mwb_membership_yes]
-						<!-- /wp:shortcode --></div>
-						<!-- /wp:column -->
-						
-						<!-- wp:column -->
-						<div class="wp-block-column"><!-- wp:shortcode -->
-						[mwb_membership_no]
-						<!-- /wp:shortcode --></div>
-						<!-- /wp:column --></div>
-						<!-- /wp:columns --></div></div>
+						<div class="mwb_mfw_buy_button">[mwb_membership_yes] [mwb_membership_no]</div>
+						</div>
+						<!-- /wp:html --></div></div>
+						<!-- /wp:group --></div></div>
 						<!-- /wp:cover -->';
 
 		return $page_content;
@@ -448,12 +430,9 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function import_csv_modal_content() {
 		?>
-		<div class="import_csv_field_wrapper" id="import_csv_field_wrapper">
+		<div class="import_csv_field_wrapper" style="display: none;">
 			<input type="file" name="csv_to_import" id="csv_file_upload">
 			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
-
-			<div class="csv_import_response">
-			</div>
 		</div>
 		<?php
 
@@ -470,7 +449,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		?>
 		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
-			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?>" required />
+			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> "/>
 
 			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 				<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
@@ -504,12 +483,12 @@ class Membership_For_Woocommerce_Global_Functions {
 		$supported_gateways = $this->supported_gateways();
 
 		?>
-		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data">
+		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data" style="display: none;">
 
 			<div class="mwb_membership_buy_now_modal">
 
 				<!-- Modal payment content start -->
-				<div class="mwb_membership_payment_modal" style="float: right;">
+				<div class="mwb_membership_payment_modal">
 					<?php
 					foreach ( $payment_gateways as $gateway ) {
 
@@ -877,7 +856,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			} else {
 
-				// Else create user.
+				// Create user.
 				$_user = wp_create_user( $fields['membership_billing_first_name'], '', $$fields['membership_billing_email'] );
 
 				if ( $_user ) {

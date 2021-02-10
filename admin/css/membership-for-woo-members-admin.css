@@ -3,3 +3,422 @@
     grid-template-columns: auto auto auto;
     padding: 10px;
 }
+
+/*Adding Custom Scroll bar to the whole page*/
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgb(0 113 161 / 0.2);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(0 113 161 / 0.8);
+    border-radius: 35px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(0 113 161 / 1);
+}
+
+/*Listed member table edit of Member page*/
+table.wp-list-table {
+    font-family: sans-serif;
+}
+
+.mwb_membership_preview_table table tr:nth-child(even) {
+    background-color: rgb(0 113 161 / 0.2);
+}
+
+.mwb_membership_preview_table table tr th {
+    padding-left: 15px;
+}
+
+table.wp-list-table thead th,
+table.wp-list-table tfoot th {
+    color: #0071a1;
+}
+
+.membership_user.column-membership_user,
+.expiration.column-expiration {
+    text-transform: capitalize;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/*Removing focus from elements*/
+#delete-member-action a:focus,
+.submitbox select:focus,
+#posts-filter input[type=submit]:focus,
+.edit_members_action a.button:focus,
+.wrap a.page-title-action:focus,
+p.form-field.membership-customer a:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* Any element Positioning  */
+.alignleft.actions,
+#posts-filter .alignleft.actions {
+    display: flex;
+}
+
+input#export_all_members {
+    order: 3;
+}
+
+input#post-query-submit,
+#postbox-container-1 {
+    order: 2;
+}
+
+select#filter-by-date,
+#postbox-container-2 {
+    order: 1;
+}
+
+/*All plan page status button style*/
+
+.members_status.column-members_status,
+.members_plan_preview .member_plan_status {
+    background-color: rgb(0 153 0 / 63%);
+    color: #034803;
+    border-radius: 2px;
+    padding: 5px;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    text-align: center;
+    vertical-align: middle;
+    width: 110px;
+    display: block;
+    margin: 15px;
+}
+
+.members_plan_preview .member_plan_status {
+    margin: 15px auto;
+}
+
+/*Modal of member page style*/
+#TB_window {
+    font-family: sans-serif;
+}
+
+div#TB_title {
+    height: auto;
+}
+
+div #TB_ajaxWindowTitle {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 21px;
+    padding: 13px 29px 13px 10px;
+    letter-spacing: 2px;
+    border-bottom: 2px solid #0071a1;
+    color: #0071a1;
+}
+
+#TB_ajaxContent h2 {
+    text-align: center;
+    background-color: #0071a1;
+    padding: 15px 0px;
+    color: #ffffff;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+
+.members_billing_preview_wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.members_plan_preview_table_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+table.plan_preview_table {
+    text-align: left;
+    max-width: 250px;
+    width: 100%;
+    padding: 10px;
+}
+
+/*Button in modal of members page*/
+
+#posts-filter input[type=submit],
+.edit_members_action a.button,
+.wrap a.page-title-action {
+    border: 1px solid transparent;
+    background-color: #0071a1;
+    color: #ffffff;
+    transition: linear background-color 0.2s;
+}
+
+#posts-filter input[type=submit]:hover,
+.edit_members_action a.button:hover,
+.wrap a.page-title-action:hover {
+    border: 1px solid #0071a1;
+    background-color: inherit;
+    color: #0071a1;
+}
+
+.edit_members_action {
+    position: absolute;
+    top: 10px;
+    right: 65px;
+}
+/*Billing Part styling starts*/
+.postbox-container {
+    font-family: sans-serif;
+}
+
+#poststuff div#post-body.columns-2 {
+    margin: 0px;
+    display: flex;
+}
+
+#post-body.columns-2 #postbox-container-1 {
+    float: none;
+    margin: 0px 0px 0px 15px;
+}
+
+#post-body-content {
+    margin-bottom: 20px;
+    display: none;
+}
+
+/*headings of Billing page*/
+
+.postbox .postbox-header h2 {
+    display: block;
+    vertical-align: middle;
+    font-size: 18px !important;
+    font-family: sans-serif;
+    height: 25px;
+    letter-spacing: 1px;
+    background: #0071a1;
+    color: #ffffff;
+    border: none;
+    border-right: 8px solid #02435f;
+    border-left: 8px solid #02435f;
+    position: relative;
+}
+
+.postbox .postbox-header h2:after {
+    content: '';
+    position: absolute;
+    right: 12px;
+    top: 15px;
+    cursor: pointer;
+    border-bottom: 10px solid #ffffff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+}
+
+.handle-actions.hide-if-no-js {
+    display: none;
+}
+
+/*Billing page left container billing details*/
+.members_billing_details h1 {
+    text-align: center;
+    border-bottom: 5px solid #0071a1;
+    font-weight: 500;
+    letter-spacing: 1px;
+    background-color: rgb(0 113 161 / 0.2);
+    padding: 10px;
+}
+
+#members_metabox_billing .inside {
+    padding: 0px;
+    margin: 0px;
+}
+
+.wc-wp-version-gte-53 .select2-container .select2-selection--single {
+    box-shadow: none;
+    border: 1px solid #0071a1;
+    border-radius: 0;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+
+.members_data_column_container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.members_data_column h3 {
+    background-color: #0071a1;
+    color: #ffffff;
+    border: 5px solid #0071a1;
+}
+
+.members_data_column {
+    position: relative;
+    max-width: 100%;
+    margin: 0px 10px;
+    width: 100%;
+}
+
+a.edit_member_address,
+span.dashicons.dashicons-no-alt {
+    position: absolute;
+    top: 20px;
+    color: #ffffff;
+    right: 10px;
+}
+
+.member_edit_address p {
+    width: 100%;
+    padding: 0px;
+    margin: 10px 0px 0px 10px;
+}
+
+p.form-field.billing_country_field,
+p.form-field.billing_state_field {
+    display: flex;
+    width: 95%;
+}
+
+.wc-wp-version-gte-53 .select2-container.select2-container--focus .select2-selection--single {
+    box-shadow: none;
+    border: none;
+}
+
+.wc-wp-version-gte-53 .select2-container.select2-container--open .select2-selection--single {
+    border: none;
+}
+
+.member_edit_address p label {
+    color: #0071a1;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    max-width: 250px;
+    width: 100%;
+    font-size: 15px;
+    display: block;
+}
+
+.member_edit_address p input {
+    border: 1px solid #0071a1;
+    border-radius: 0px;
+}
+
+p.form-field.membership-customer {
+    display: flex;
+    flex-direction: column;
+}
+
+p.form-field.membership-customer label {
+    display: flex;
+    flex-direction: column;
+    line-height: 25px;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+p.form-field.membership-customer a {
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    border-left: 3px solid #0071a1;
+    background-color: rgb(0 113 161 / 0.2);
+    padding: 0px 10px;
+    margin: 5px 0px;
+}
+
+p.form-field.membership-customer a:hover {
+    color: #333333;
+}
+
+/*Billing page left container Membership details*/
+.members_plans_details table tr:nth-child(even) {
+    background-color: rgb(0 113 161 / 0.2);
+}
+
+.members_plans_details table th,
+.members_plans_details table td {
+    padding: 8px;
+}
+
+.mwb_members_plan_select {
+    display: block;
+    color: #0071a1;
+}
+
+span.select2.select2-container {
+    max-width: 250px;
+    width: 100% !important;
+}
+
+/*Billing page right container schedule details*/
+.member_billing_schedule_edit {
+    display: flex;
+    justify-content: space-between;
+}
+
+div#members_next_payment {
+    margin: 10px 0px;
+}
+
+.members-date-field {
+    display: flex;
+    margin: 10px 0px;
+}
+
+p.form-field.billing_interval_field {
+    display: flex;
+    justify-content: space-between;
+    max-width: 200px;
+    width: 100%;
+    align-items: center;
+}
+
+span#members-timezone {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0px 10px;
+}
+
+div#members_start_date {
+    display: flex;
+    justify-content: space-between;
+}
+
+/*Billing page right container member action details*/
+.submitbox li.wide {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submitbox li.wide:last-child {
+    margin: 10px 0px;
+}
+
+.submitbox select {
+    width: 100%;
+    max-width: 175px;
+    border: 2px solid #0071a1;
+    display: block;
+    white-space: break-spaces;
+    line-height: 20px;
+}
+
+#delete-member-action a {
+    text-decoration: none;
+    font-size: 15px;
+}
+
+#delete-member-action a:hover {
+    color: #990000;
+}
