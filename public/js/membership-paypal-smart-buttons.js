@@ -2,44 +2,29 @@ jQuery( document ).ready( function( $ ) {
 
     // Getting the localized payapl settings object.
     var paypal_settings = paypal_sb_obj.settings;
+    var plan_data       = paypal_sb_obj.plan_data;
+    var firstname;
+    var lastname;
+    var ad_line_1;
+    var ad_line_2;
+    var city;
+    var state;
+    var zip;
+    var country;
 
     // Getting billing form details here.
-    var billing_data = $( "#mwb_membership_buy_now_modal_form" ).serialize();
+    $('.mwb_mfw_btn-next-b').on('click', function(e){
+        firstname = $( '#membership_billing_first_name' ).val();
+        lastname  = $( '#membership_billing_last_name' ).val();
+        ad_line_1 = $( '#membership_billing_address_1' ).val();
+        ad_line_2 = $( '#membership_billing_address_2' ).val();
+        city      = $( '#membership_billing_city' ).val();
+        state     = $( '#membership_billing_state' ).val();
+        zip       = $( '#membership_billing_postcode' ).val();
+        country   = $( '#membership_billing_country' ).val();
+    });
 
-    // $( "#mwb_membership_buy_now_modal_form" ).on( "change",  function() {
-    
-    //    validate = $( "form[id='mwb_membership_buy_now_modal_form']" ).validate({
-
-    //         rules: {
-    //             membership_billing_first_name : "required",
-    //             membership_billing_last_name : "required",
-    //             membership_billing_country : "required",
-    //             membership_billing_address_1 : "required",
-    //             membership_billing_city : "required",
-    //             membership_billing_state : "required",
-    //             membership_billing_postcode : "required",
-    //             membership_billing_phone : "required",
-    //             email: {
-    //                 required: true,
-    //                 email: true
-    //             },
-    //         },
-    //         message : {
-    //             membership_billing_first_name: "Please enter your firstname",
-    //             membership_billing_last_name : "Please enter your lastname",
-    //             membership_billing_country : "Please select a country",
-    //             membership_billing_address_1 : "Please enter your street address",
-    //             membership_billing_city   : "Please enter your city",
-    //             membership_billing_state : "Please select your state",
-    //             membership_billing_postcode : "Please enter your postcode",
-    //             membership_billing_phone : "Please enter your phone number.",
-    //             email: "Please enter a valid email address",
-    //         },
-    //     });
-
-    // });
-
-    
+    // Initiate payment on paypal.
     paypal.Buttons({
 
 		style: {
@@ -56,21 +41,21 @@ jQuery( document ).ready( function( $ ) {
                 purchase_units: [{
                     amount: {
                         currency_code: 'USD',
-                        value: "100.00",
+                        value: plan_data.price,
                         breakdown: {
                             item_total: {
                                 currency_code: 'USD',
-                                value: "100.00"
+                                value: plan_data.price
                             }
                         }
                     },
                     items: [
                         {
-                            name: "Item 1",
-                            description: "The best item ever",
+                            name: plan_data.name,
+                            description: plan_data.desc,
                             unit_amount: {
                                 currency_code: 'USD',
-                                value: "100.00"
+                                value: plan_data.price
                             },
                             quantity: "1",
                             category : "DIGITAL_GOODS"
@@ -78,15 +63,15 @@ jQuery( document ).ready( function( $ ) {
                     ],
                     shipping: {
                         name: {
-                                full_name: "John Doe",
+                                full_name: firstname + ' ' + lastname,
                             },
                         address: {
-                            address_line_1: "123 Townsend St",
-                            address_line_2: "Floor 6",
-                            admin_area_2: "San Francisco",
-                            admin_area_1: "CA",
-                            postal_code: "94107",
-                            country_code: "US"
+                            address_line_1: ad_line_1,
+                            address_line_2: ad_line_2,
+                            admin_area_2: city,
+                            admin_area_1: state,
+                            postal_code: zip,
+                            country_code: country
                         }
                     }
                 }]
@@ -109,23 +94,43 @@ jQuery( document ).ready( function( $ ) {
                 //     })
                 // });
 
-                // Ajax call to save transaction data.
-                $.ajax({
-                    url    : paypal_sb_obj.ajax_url,
-                    type   : 'post',
-                    data   : {
-                        action : 'payal_transaction_data_handling',  
-                        transaction_details : details,
-                        nonce : paypal_sb_obj.nonce,
-                    },
+                saveTransactionData( details );
 
-                    success : function( response ) {
-                        console.log( response );
-                    }
-
-                });
+            
             });
         }
     }).render( '#paypal-button-container' );
+
+    const saveTransactionData = async( tr_details ) => {
+        const response = await jQuery.ajax(
+            {
+                type : 'POST',
+                url  : paypal_sb_obj.ajax_url,
+                data : {
+                    action : 'membership_save_transaction',
+                    nonce : paypal_sb_obj.nonce,
+                    details : tr_details,
+                    email : email
+                },
+                dataType : 'json',
+            }
+        ).fail(
+            ( response ) => {
+                console.log( response );
+            }
+        );
+
+        if ( true == response.status && response.propertyError != true ) {
+            jQuery( '#paypal-button-container' ).css( 'display', 'none' );
+            jQuery( '#membership_proceed_payment' ).css( 'display', 'block' );
+            jQuery( '#membership_proceed_payment' ).text( 'Proceed' );
+            //jQuery( '#mwb_membership_buy_now_modal_form' ).on( 'submit', function( e ) {
+                jQuery( '#mwb_membership_buy_now_modal_form' ).append( '<input type="hidden" name="mwb_tnx_user_id" id="mwb_tnx_user_id" value="' + response.user_id + '"' );
+            //});
+        } else if ( false == response.status || response.propertyError == true ) {
+            console.log( response );
+        }
+            
+    }
 
 } ); 

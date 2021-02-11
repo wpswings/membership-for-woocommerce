@@ -29,8 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="paypal-button-container"></div>
 
 <!-- Include the PayPal JavaScript SDK -->
-<script src="https://www.paypal.com/sdk/js?client-id=Ac1d656B6aeet2elq-lW4_bu6EKDSPtHZCN4P1xp9u6c0Zi2GTmX7T-YAnjNkY2dbnZFyTfq_d8yRewK&currency=USD&intent=capture&components=buttons&disable-funding=card&debug=false"></script>
-
+<!-- <script src="https://www.paypal.com/sdk/js?client-id=Ac1d656B6aeet2elq-lW4_bu6EKDSPtHZCN4P1xp9u6c0Zi2GTmX7T-YAnjNkY2dbnZFyTfq_d8yRewK&currency=USD&intent=capture&components=buttons&disable-funding=card&debug=false"></script> -->
+<!-- 
 <script>
 
 	paypal.Buttons({
@@ -105,4 +105,4 @@ onApprove: function(data, actions) {
 	});
 }
 }).render('#paypal-button-container');
-</script>
+</script> -->

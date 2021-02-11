@@ -300,6 +300,10 @@ class Membership_For_Woocommerce {
 			// AJAX handlers for process payment.
 			$this->loader->add_action( 'wp_ajax_membership_process_payment', $plugin_public, 'membership_process_payment' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_process_payment', $plugin_public, 'membership_process_payment' );
+			
+			// AJAX handlers to save tnx data.
+			$this->loader->add_action( 'wp_ajax_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
+			$this->loader->add_action( 'wp_ajax_nopriv_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
 		}
 	}
 

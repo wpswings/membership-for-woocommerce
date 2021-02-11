@@ -22,8 +22,9 @@ jQuery( document ).ready( function( $ ) {
 				},
 
 				success: function( response ) {
-
-					if ( response.length > 1 ) {
+				
+					if ( response.length >= 1 ) {
+					
 						$( "#mwb_billing_state_field" ).show();
 						$( "#membership_billing_state" ).html( response );
 						$( "#membership_billing_state" ).prop( "required", true );
@@ -31,7 +32,7 @@ jQuery( document ).ready( function( $ ) {
 					} else {
 
 						$( "#mwb_billing_state_field" ).hide();
-						$( "#mwb_billing_state_field" ).empty();
+						$( "#membership_billing_state" ).empty();
 						$( "#membership_billing_state" ).prop( "required", false );
 					}
 				}
@@ -47,20 +48,21 @@ jQuery( document ).ready( function( $ ) {
 		});
 
 		// Opens payment fields in modal when selected.
-		$( ".mwb_membership_payment_modal" ).on( "change", ".payment_method_select", function() {
-		
+		$( '.mwb_membership_payment_modal' ).on( "change", ".payment_method_select", function( e ) {
+		alert('hi');
 			$payment_methods = $(this).val();
+			alert( $payment_methods );
 			
-			// $( ".payment_box" ).hide();
-			// $( "div.payment_method_" + $payment_methods ).show();
+			$( ".payment_box" ).hide();
+			$( "div.payment_method_" + $payment_methods ).show();
 
 			// Display paypal smart buttons is paypal checkout selected. 
 			if ( $payment_methods == 'membership-paypal-smart-buttons' ) {
 				$( "#paypal-button-container" ).show();
-				$( "#mwb_proceed_payment" ).hide();
+				$( "#membership_proceed_payment" ).hide();
 			} else {
 				$( "#paypal-button-container" ).hide();
-				$( "#mwb_proceed_payment" ).show();
+				$( "#membership_proceed_payment" ).show();
 			}
 
 		});
@@ -242,7 +244,6 @@ jQuery( document ).ready( function( $ ) {
         $('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_btn-next-a').show('300');
     });
     $('.mwb_mfw_btn-next-a').click(function() {
-		alert('ruko jara');
         //Personal Details form validation 
         let f_name = $('#membership_billing_first_name').val().length;
         let l_name = $('#membership_billing_last_name').val().length;
@@ -315,7 +316,8 @@ jQuery( document ).ready( function( $ ) {
 
     $('.mwb_membership_payment_modal > li').click(function() {
         var progress_bar = "<progress min='0' max='100' value='0' class='mwb_mfw_progress-indicator'></progress>";
-        $('#paypal-button-container').css('display', 'none');
+		$('#paypal-button-container').css('display', 'none');
+		console.log( this );
         if ($(this).hasClass("active")) {
             $(this).removeClass("active").find(".payment_box").slideUp();
             $('#progress-wrapper').empty();
@@ -327,8 +329,15 @@ jQuery( document ).ready( function( $ ) {
             $(this).find('.input-radio').prop("checked", true);
             $(this).find('#progress-wrapper').append(progress_bar);
             if ($(this).hasClass('payment_method_membership-paypal-smart-buttons')) {
-                $('#paypal-button-container').css('display', 'block');
-            }
+				$('#paypal-button-container').css('display', 'block');
+				
+			}
+			
+			if ( $(this).data( 'id' ) == 'membership-paypal-smart-buttons' ) {
+				$( '#membership_proceed_payment' ).css( 'display', 'none' );
+			} else {
+				$( '#membership_proceed_payment' ).css( 'display', 'block' );
+			}
         }
         return false;
 

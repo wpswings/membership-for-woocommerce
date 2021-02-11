@@ -130,15 +130,28 @@ class Membership_For_Woocommerce_Public {
 			$vault        = ! empty( $settings['vault'] ) ? 'true' : 'false';
 			$debug        = ! empty( $settings['debug'] ) ? 'true' : 'false';
 
+			$plan_data = array();
+
+			$plan_id = ! empty( $_GET['plan_id'] ) ? $_GET['plan_id'] : '';
+
+			$plan_name  = ! empty( get_the_title( $plan_id ) ) ? get_the_title( $plan_id ) : '';
+			$plan_desc  = ! empty( get_post_field( 'post_content', $plan_id ) ) ? get_post_field( 'post_content', $plan_id ) : '';
+			$plan_price = ! empty( get_post_meta( $plan_id, 'mwb_membership_plan_price', true ) ) ? get_post_meta( $plan_id, 'mwb_membership_plan_price', true ) : '';
+
+			$plan_data['name']  = $plan_name;
+			$plan_data['desc']  = $plan_desc;
+			$plan_data['price'] = $plan_price;
+
 			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), null, false );
 
 			wp_localize_script(
 				'paypal-smart-buttons',
 				'paypal_sb_obj',
 				array(
-					'ajax_url' => admin_url( 'admin-ajax.php' ),
-					'settings' => $settings,
-					'nonce'    => wp_create_nonce( 'paypal-nonce' ),
+					'ajax_url'  => admin_url( 'admin-ajax.php' ),
+					'settings'  => $settings,
+					'plan_data' => $plan_data,
+					'nonce'     => wp_create_nonce( 'paypal-nonce' ),
 				),
 			);
 
@@ -915,9 +928,16 @@ class Membership_For_Woocommerce_Public {
 				break;
 
 			default:
-				esc_html__( 'payment method not selected', 'membership-for-woocommerce' );
-				break;
+				echo wp_json_encode(
+					array(
+						'result'  => 'payment_failed',
+						'message' => 'Oops! No payment Options selected.',
+					)
+				);
+				wp_die();
 		}
+
+		$user_id = isset( $fields['mwb_tnx_user_id'] ) ? $fields['mwb_tnx_user_id'] : '';
 
 		$plan_id   = isset( $fields['plan_id'] ) ? $fields['plan_id'] : '';
 		$recpt_att = isset( $fields['bacs_receipt_attached'] ) ? $fields['bacs_receipt_attached'] : '';
@@ -954,7 +974,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		// If all goes well, a membership for customer will be created.
-		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id );
+		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id, $user_id );
 
 		// Processing payment via membership supported gateways.
 		global $woocommerce;
@@ -988,10 +1008,26 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Handle paypal transaction data.
 	 */
-	public function handle_transaction_data() {
+	public function membership_save_transaction() {
 
 		// Nonce verification.
 		check_ajax_referer( 'nonce', 'paypal-nonce' );
+
+		$tr_details = ! empty( $_post['details'] ) ? sanitize_text_field( wp_unslash( $_POST['details'] ) ) : '';
+
+		$user_id = get_current_user_id();
+
+		if ( ! empty( $tr_details ) && ! empty( $user_id ) ) {
+			update_user_meta( $user_id, 'members_tnx_details', $tr_details );
+		}
+
+		echo wp_json_encode(
+			array(
+				'status'  => true,
+				'user_id' => $user_id,
+			)
+		);
+		wp_die();
 
 	}
 

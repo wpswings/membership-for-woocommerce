@@ -87,8 +87,8 @@ select#filter-by-date,
 
 .members_status.column-members_status,
 .members_plan_preview .member_plan_status {
-    background-color: rgb(0 153 0 / 63%);
-    color: #034803;
+    /* background-color: rgb(0 153 0 / 63%);
+    color: #034803; */
     border-radius: 2px;
     padding: 5px;
     letter-spacing: 1px;

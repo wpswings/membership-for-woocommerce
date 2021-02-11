@@ -449,7 +449,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		?>
 		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
-			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> "/>
+			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> " required/>
 
 			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
 				<?php echo $gateway->get_title(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
@@ -824,11 +824,12 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @param array $fields an array of member billing details.
 	 * @param int   $plan_id Is the membership plan ID.
+	 * @param int   $user id User id to obtain transaction details.
 	 * @return array
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_membership_for_customer( $fields, $plan_id ) {
+	public function create_membership_for_customer( $fields, $plan_id, $user ) {
 
 		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
@@ -867,6 +868,9 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 
+			// Get tnx details saved in user meta.
+			$tnx_detail = get_user_meta( $user, 'members_tnx_details', true );
+
 			// Creating post for members, keeping its status to pending.
 			$member_id = wp_insert_post(
 				array(
@@ -882,6 +886,12 @@ class Membership_For_Woocommerce_Global_Functions {
 					),
 				)
 			);
+
+			// If tnx details exist in user meta update it in members post meta and delete it from existing user data.
+			if ( ! empty( $tnx_detail ) ) {
+				update_post_meta( $member_id, 'members_tnx_details', $tnx_detail );
+				delete_user_meta( $user, 'members_tnx_details', $$tnx_detail );
+			}
 
 			return array(
 				'status'    => true,

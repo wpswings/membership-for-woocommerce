@@ -317,8 +317,8 @@ a#post-preview:hover,
 /*All plan page status button style*/
 
 .membership_status.column-membership_status {
-    background-color: #0071a1;
-    color: #fff;
+    /* background-color: #0071a1;
+    color: #fff; */
     border-radius: 2px;
     padding: 7px;
     text-align: center;
