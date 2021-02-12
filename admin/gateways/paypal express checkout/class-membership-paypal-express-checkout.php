@@ -16,6 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 
 	/**
+	 * Inastance of global functions class file.
+	 *
+	 * @var object
+	 */
+	public $global_class;
+
+	/**
 	 * Constructor function.
 	 */
 	public function __construct() {
@@ -24,6 +31,9 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 		$this->method_title       = __( 'PayPal Checkout( Membership )', 'membership-for-woocommerce' );
 		$this->method_description = __( 'Allow customers to conveniently checkout directly with PayPal.', 'membership-for-woocommerce' );
 		$this->has_fields         = true;
+
+		// Instance of global class.
+		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 		$this->payment_action  = 'capture';
 		$this->currency_code   = get_woocommerce_currency();
@@ -106,6 +116,70 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 
 			echo wp_kses_post( wpautop( wptexturize( $this->description ) ) . PHP_EOL );
 		}
+	}
+
+	/**
+	 * Process payment.
+	 *
+	 * @param int $plan_id   Membership plan ID.
+	 * @param int $member_id Members ID.
+	 * @param int $user      Optional User ID.
+	 *
+	 * @return bool
+	 */
+	public function process_payment( $plan_id, $member_id = '', $user = '' ) {
+
+		$tnx_detail = '';
+
+		if ( empty( $plan_id ) ) {
+			return; // there must be a plan id.
+		}
+
+		if ( ! empty( $user ) ) {
+
+			// Get tnx details saved in user meta.
+			$tnx_detail = get_user_meta( $user, 'members_tnx_details', true );
+		}
+
+		if ( ! empty( $tnx_detail ) ) {
+
+			try {
+
+				update_post_meta( $member_id, '_membership_tnx_details', $tnx_detail );
+
+				// Updating status to complete.
+				update_post_meta( $member_id, 'member_status', 'complete' );
+				delete_user_meta( $user, 'members_tnx_details' );
+
+				// Send email invoice to customer.
+				if ( 'email_invoice' === get_post_meta( $member_id, 'member_actions', true ) ) {
+
+					$this->global_class->email_membership_invoice( $member_id );
+				}
+			} catch ( \Throwable $e ) {
+
+				/**
+				 * If there was an error completing the payment, log it to a file.
+				 */
+
+				/* translators: %d: member's ID. %s: error message */
+				$message = __( 'Error completing payment for member #%1$d. Error caused due to: %2$s ', 'membership-for-woocommerce' );
+
+				$error = array(
+					'status'  => 'payment_failed',
+					'message' => sprintf( $message, $member_id, $e->getMessage() ),
+				);
+
+				// Handling log creation via activity helper class.
+				$activity_class = new Membership_Activity_Helper( 'PayPal-smart-button-logs', 'logger' );
+				$log_data       = $activity_class->create_log( 'PayPal Smart buttons payment failure', $error );
+
+				return false;
+			}
+
+			return true;
+		}
+
 	}
 
 }

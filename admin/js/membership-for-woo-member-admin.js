@@ -63,7 +63,7 @@ jQuery( document ).ready( function( $ ) {
 
     // Applying script to admin part in all Members list page
     var mwb_status = $('.members_status').each(function() {
-        console.log($(this).text());
+        //console.log($(this).text());
  
          if ($(this).text() == 'complete') {
              $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' }); // green
@@ -75,5 +75,18 @@ jQuery( document ).ready( function( $ ) {
          }
  
      });
+
+     // Applying script to admin part in all Members quick preview.
+    // var mwb_status = $( '.member_plan_status' ).text();
+    //     console.log(mwb_status);
+ 
+        //  if ($(this).text() == 'complete') {
+        //      $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' }); // green
+        //  } else if ($(this).text() == 'hold') {
+        //      $(this).css({ 'background-color': '#f8dda7', 'color': '#94660c' }); // yellow
+        //  }
+        //  else if ($(this).text() == 'pending') {
+        //      $(this).css({ 'background-color': '#e5e5e5', 'color': '#777' }); // red
+        //  }
 
 });

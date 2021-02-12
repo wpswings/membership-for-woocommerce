@@ -1136,6 +1136,7 @@ class Membership_For_Woocommerce_Admin {
 
 		$member  = $post;
 		$actions = get_post_meta( $post->ID, 'member_actions', true );
+		$status  = get_post_meta( $post->ID, 'member_status', true );
 		// $member_details = get_post_meta( $post->ID, 'billing_details', true );
 		// $instance       = $this->global_class;
 
@@ -1146,6 +1147,7 @@ class Membership_For_Woocommerce_Admin {
 				// 'instance'       => $instance,
 				'post'    => $member,
 				'actions' => $actions,
+				'status'  => $status,
 			),
 			'',
 			MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN

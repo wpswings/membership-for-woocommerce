@@ -300,10 +300,19 @@ class Membership_For_Woocommerce {
 			// AJAX handlers for process payment.
 			$this->loader->add_action( 'wp_ajax_membership_process_payment', $plugin_public, 'membership_process_payment' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_process_payment', $plugin_public, 'membership_process_payment' );
-			
+
 			// AJAX handlers to save tnx data.
 			$this->loader->add_action( 'wp_ajax_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
+
+			$this->loader->add_action( 'woocommerce_calculate_totals', $plugin_public, 'mysite_box_discount' );
+			$this->loader->add_filter( 'woocommerce_calculated_total', $plugin_public, 'filter_woocommerce_calculated_total', 10, 2 ); 
+
+			//$this->loader->add_filter( 'woocommerce_get_discounted_price', $plugin_public, 'filter_woocommerce_get_discounted_price', 10, 3 );
+
+			$this->loader->add_action( 'woocommerce_cart_totals_after_order_total', $plugin_public, 'bbloomer_show_total_discount_cart_checkout', 9999 );
+			$this->loader->add_action( 'woocommerce_review_order_after_order_total', $plugin_public, 'bbloomer_show_total_discount_cart_checkout', 9999 );
+
 		}
 	}
 

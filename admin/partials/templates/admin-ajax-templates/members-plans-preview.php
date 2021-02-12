@@ -24,9 +24,9 @@ if ( ! empty( $member_id ) ) {
 
 	$billing_info = get_post_meta( $member_id, 'billing_details', true );
 	$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
-	$plan_status  = get_post_meta( $member_id, 'plan_status', true );
+	$plan_status  = get_post_meta( $member_id, 'member_status', true );
 
-	echo '<pre>'; print_r( $billing_info ); echo '</pre>';
+	//echo '<pre>'; print_r( $billing_info ); echo '</pre>';
 
 	$output .= '<div class="members_billing_preview_wrapper">
 				<div class="members_billing_preview">
@@ -50,8 +50,8 @@ if ( ! empty( $member_id ) ) {
 					' . esc_html( $plan_info['post_title'] ) . '
 					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
 					' . esc_html( $plan_info['post_content'] ) . '
-					<div class="member_plan_status">
-					' . esc_html( $plan_status . 'dasdc' ) . '
+					<div class="member_plan_status ' . $plan_status . ' ">
+					' . esc_html( $plan_status ) . '
 					</div>';
 
 	$output .= '</div>

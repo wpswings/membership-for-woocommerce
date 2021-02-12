@@ -316,10 +316,11 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 *
 	 * @param int $plan_id   Membership plan ID.
 	 * @param int $member_id Members ID.
+	 * @param int $user      Optional User ID.
 	 *
 	 * @return bool
 	 */
-	public function process_payment( $plan_id, $member_id = '' ) {
+	public function process_payment( $plan_id, $member_id = '', $user = '' ) {
 
 		if ( empty( $plan_id ) ) {
 			return; // there must be a plan id.
@@ -335,9 +336,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 			try {
 
-				if ( ! empty( $transaction_id ) ) {
-					update_post_meta( $member_id, '_membership_trans_id', $transaction_id );
-				}
 
 				// Updating status to hold, admin will change it to 'completed'    after amount is reflected in his account.
 				update_post_meta( $member_id, 'member_status', 'hold' );
@@ -345,7 +343,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				// Send email invoice to customer.
 				if ( 'email_invoice' === get_post_meta( $member_id, 'member_actions', true ) ) {
 
-					$this->global_class->email_membership_invoice();
+					$this->global_class->email_membership_invoice( $member_id );
 				}
 			} catch ( \Throwable $e ) {
 
@@ -353,7 +351,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				 * If there was an error completing the payment, log it to a file.
 				 */
 
-				/* translators: %d: member's ID. %s: error meaasge */
+				/* translators: %d: member's ID. %s: error message */
 				$message = __( 'Error completing payment for member #%1$d. Error caused due to: %2$s ', 'membership-for-woocommerce' );
 
 				$error = array(

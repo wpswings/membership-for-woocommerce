@@ -327,11 +327,19 @@ class Membership_For_Woocommerce_Public {
 										$page_link
 									);
 
-									echo '<div style="clear: both">
-											<div style="margin-top: 10px;">
-												<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
-											</div>
-										</div>';
+									if ( is_user_logged_in() ) {
+										echo '<div style="clear: both">
+												<div style="margin-top: 10px;">
+													<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+												</div>
+											</div>';
+									} else {
+										echo '<div style="clear: both">
+												<div style="margin-top: 10px;">
+													<a class="button alt" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
+												</div>
+											</div>';
+									}
 								}
 							}
 
@@ -354,11 +362,20 @@ class Membership_For_Woocommerce_Public {
 											$page_link
 										);
 
-										echo '<div style="clear: both">
-												<div style="margin-top: 10px;">
-													<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
-												</div>
-											</div>';
+										if ( is_user_logged_in() ) {
+
+											echo '<div style="clear: both">
+													<div style="margin-top: 10px;">
+														<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+													</div>
+												</div>';
+										} else {
+											echo '<div style="clear: both">
+													<div style="margin-top: 10px;">
+														<a class="button alt" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+													</div>
+												</div>';
+										}
 									}
 								}
 							}
@@ -927,6 +944,10 @@ class Membership_For_Woocommerce_Public {
 				// add fields here.
 				break;
 
+			case 'membership-paypal-smart-buttons':
+				$user_id = isset( $fields['mwb_tnx_user_id'] ) ? $fields['mwb_tnx_user_id'] : '';
+				break;
+
 			default:
 				echo wp_json_encode(
 					array(
@@ -974,17 +995,23 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		// If all goes well, a membership for customer will be created.
-		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id, $user_id );
+		$member_data = $this->global_class->create_membership_for_customer( $fields, $plan_id );
 
 		// Processing payment via membership supported gateways.
 		global $woocommerce;
 		$gateways = $woocommerce->payment_gateways->get_available_payment_gateways();
 
 		if ( ! empty( $gateways[ $method_id ] ) ) {
-			$payment_response = $gateways[ $method_id ]->process_payment( $plan_id, $member_data['member_id'] );
+			$payment_response = $gateways[ $method_id ]->process_payment( $plan_id, $member_data['member_id'], $user_id );
 		}
 
 		if ( $payment_response ) {
+
+			// Assign membership plan to user and assign 'member' role to it.
+			update_user_meta( $member_data['user_id'], 'plan_id', $plan_id );
+
+			$user = get_userdata( $member_data['user_id'] );
+			$user->add_role( 'member' );
 
 			echo wp_json_encode(
 				array(
@@ -992,6 +1019,8 @@ class Membership_For_Woocommerce_Public {
 					'message' => 'Thank you for purchasing ' . get_the_title( $plan_id ),
 				)
 			);
+
+			wp_die();
 		} else {
 
 			echo wp_json_encode(
@@ -1000,9 +1029,9 @@ class Membership_For_Woocommerce_Public {
 					'message' => 'Oops! Payment failed',
 				)
 			);
-		}
 
-		wp_die();
+			wp_die();
+		}
 	}
 
 	/**
@@ -1011,25 +1040,108 @@ class Membership_For_Woocommerce_Public {
 	public function membership_save_transaction() {
 
 		// Nonce verification.
-		check_ajax_referer( 'nonce', 'paypal-nonce' );
+		check_ajax_referer( 'paypal-nonce', 'nonce' );
 
-		$tr_details = ! empty( $_post['details'] ) ? sanitize_text_field( wp_unslash( $_POST['details'] ) ) : '';
+		$tr_details = ! empty( $_POST['details'] ) ? map_deep( $_POST['details'], 'wp_unslash' ) : '';
 
 		$user_id = get_current_user_id();
 
-		if ( ! empty( $tr_details ) && ! empty( $user_id ) ) {
-			update_user_meta( $user_id, 'members_tnx_details', $tr_details );
+		$user_meta = '';
+
+		if ( ! empty( $tr_details ) && 0 !== $user_id ) {
+
+			$user_meta = update_user_meta( $user_id, 'members_tnx_details', $tr_details );
 		}
 
-		echo wp_json_encode(
-			array(
-				'status'  => true,
-				'user_id' => $user_id,
-			)
-		);
-		wp_die();
+		if ( $user_meta ) {
+			echo wp_json_encode(
+				array(
+					'status'  => true,
+					'user_id' => $user_id,
+				)
+			);
+			wp_die();
+		} else {
+			echo wp_json_encode(
+				array(
+					'status'  => false,
+					'user_id' => 'User ID does not exist.',
+				)
+			);
+			wp_die();
+		}
 
 	}
+
+	/**
+	 * Add discount on cart as per memberships.
+	 *
+	 * @param object $cart Object of current cart.
+	 * @return void
+	 */
+	public function mysite_box_discount( $cart ) {
+
+		$user = wp_get_current_user();
+
+		if ( $this->global_class->plans_exist_check() === true ) {
+
+			if ( in_array( 'member', (array) $user->roles, true ) ) {
+
+				$plan_id = get_post_meta();
+			}
+		}
+
+		// Alter the cart discount total.
+		$cart->discount_total = 10;
+
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $round
+	 * @param [type] $instance
+	 * @return void
+	 */
+	public function filter_woocommerce_calculated_total( $round, $instance ) {
+		// make filter magic happen here... 
+		return 10; 
+	}
+
+	// function filter_woocommerce_get_discounted_price( $price, $values, $instance ) { 
+	// 	//$price represents the current product price without discount
+	// 	//$values represents the product object
+	// 	//$instance represent the cart object 
+	// 	$discount = 10;    // add custom discount rule , This is just an example
+	// 	return ($price - $discount); 
+	// }
+
+	/**
+	 * @snippet       Display Total Discount @ WooCommerce Cart/Checkout
+	 * @how-to        Get CustomizeWoo.com FREE
+	 * @author        Rodolfo Melogli, BusinessBloomer.com
+	 * @testedwith    WooCommerce 4.6
+	 * @donate $9     https://businessbloomer.com/bloomer-armada/
+	 */
+	public function bbloomer_show_total_discount_cart_checkout() {
+
+		$discount_total = 10;
+
+		// foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {         
+		// 	$product = $values['data'];
+		// 	if ( $product->is_on_sale() ) {
+		// 		$regular_price = $product->get_regular_price();
+		// 		$sale_price = $product->get_sale_price();
+		// 		$discount = ( $regular_price - $sale_price ) * $values['quantity'];
+		// 		$discount_total += $discount;
+		// 	}
+		// }
+
+		if ( $discount_total > 0 ) {
+		echo '<tr><th>You Saved</th><td data-title="You Saved">' . wc_price( $discount_total ) .'</td></tr>';
+		}
+	}
+
 
 }
 

@@ -102,6 +102,7 @@ jQuery( document ).ready( function( $ ) {
     }).render( '#paypal-button-container' );
 
     const saveTransactionData = async( tr_details ) => {
+
         const response = await jQuery.ajax(
             {
                 type : 'POST',
@@ -110,7 +111,7 @@ jQuery( document ).ready( function( $ ) {
                     action : 'membership_save_transaction',
                     nonce : paypal_sb_obj.nonce,
                     details : tr_details,
-                    email : email
+                   //email : email
                 },
                 dataType : 'json',
             }
@@ -123,10 +124,9 @@ jQuery( document ).ready( function( $ ) {
         if ( true == response.status && response.propertyError != true ) {
             jQuery( '#paypal-button-container' ).css( 'display', 'none' );
             jQuery( '#membership_proceed_payment' ).css( 'display', 'block' );
-            jQuery( '#membership_proceed_payment' ).text( 'Proceed' );
-            //jQuery( '#mwb_membership_buy_now_modal_form' ).on( 'submit', function( e ) {
-                jQuery( '#mwb_membership_buy_now_modal_form' ).append( '<input type="hidden" name="mwb_tnx_user_id" id="mwb_tnx_user_id" value="' + response.user_id + '"' );
-            //});
+            jQuery( '#membership_proceed_payment' ).val( 'Proceed' );
+            jQuery( '#mwb_membership_buy_now_modal_form' ).append( '<div id="mwb_tnx_user"><input type="hidden" name="mwb_tnx_user_id" id="mwb_tnx_user_id" value="' + response.user_id + '"/></div>' );
+            
         } else if ( false == response.status || response.propertyError == true ) {
             console.log( response );
         }

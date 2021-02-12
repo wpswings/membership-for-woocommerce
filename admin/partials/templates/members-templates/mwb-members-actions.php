@@ -18,8 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$mem_status = ! empty( $actions['member_status'] ) ? sanitize_text_field( wp_unslash( $actions['member_status'] ) ) : '';
-$mem_action = ! empty( $actions['member_actions'] ) ? sanitize_text_field( wp_unslash( $actions['member_actions'] ) ) : '';
+$mem_status = ! empty( $status ) ? sanitize_text_field( wp_unslash( $status ) ) : '';
+$mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) ) : '';
 
 ?>
 <ul class="member_status submitbox">

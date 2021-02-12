@@ -829,7 +829,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_membership_for_customer( $fields, $plan_id, $user ) {
+	public function create_membership_for_customer( $fields, $plan_id ) {
 
 		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
@@ -868,9 +868,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 
-			// Get tnx details saved in user meta.
-			$tnx_detail = get_user_meta( $user, 'members_tnx_details', true );
-
 			// Creating post for members, keeping its status to pending.
 			$member_id = wp_insert_post(
 				array(
@@ -888,14 +885,15 @@ class Membership_For_Woocommerce_Global_Functions {
 			);
 
 			// If tnx details exist in user meta update it in members post meta and delete it from existing user data.
-			if ( ! empty( $tnx_detail ) ) {
-				update_post_meta( $member_id, 'members_tnx_details', $tnx_detail );
-				delete_user_meta( $user, 'members_tnx_details', $$tnx_detail );
-			}
+			// if ( ! empty( $tnx_detail ) ) {
+			// 	update_post_meta( $member_id, 'members_tnx_details', $tnx_detail );
+			// 	delete_user_meta( $user, 'members_tnx_details', $$tnx_detail );
+			// }
 
 			return array(
 				'status'    => true,
 				'member_id' => $member_id,
+				'user_id'   => $user_id,
 			);
 
 		}

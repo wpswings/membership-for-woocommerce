@@ -16,6 +16,12 @@
  * This template will only display the content you entered in the page editor
  */
 
+if ( ! is_user_logged_in() ) {
+
+	wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
+}
+
+
 ?>
 
 <html <?php language_attributes(); ?> class="no-js">
