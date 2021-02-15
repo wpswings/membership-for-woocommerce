@@ -170,28 +170,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tr>
 		<!-- Recurring plan start -->
 
-		<!-- Show history to user start -->
-		<tr valign="top">
-
-			<th scope="row" class="titledesc">
-				<label for="mwb_membership_plan_user_access"><?php esc_html_e( 'Show History to User', 'membership-for-woocommerce' ); ?></label>
-			</th>
-
-			<td class="forminp forminp-text">
-
-				<?php
-
-				$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
-
-				$instance->tool_tip( $description );
-
-				?>
-
-				<input type="checkbox" id="mwb_membership_plan_user_access" name="mwb_membership_plan_user_access" value="yes" <?php checked( 'yes', $settings_fields['mwb_membership_plan_user_access'] ); ?>>
-			</td>
-		</tr>
-		<!-- Show history to user end -->
-
 	</tbody>
 </table>
 

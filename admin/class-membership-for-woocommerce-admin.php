@@ -569,7 +569,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		// Return on post trash, quick-edit, new post.
-		if ( empty(  $_POST['action'] ) || $_POST['action'] != 'editpost' ) {
+		if ( empty(  $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
 			return;
 		}
 
@@ -620,7 +620,6 @@ class Membership_For_Woocommerce_Admin {
 			'mwb_membership_plan_start'              => array( 'default' => '' ),
 			'mwb_membership_plan_end'                => array( 'default' => '' ),
 			'mwb_membership_plan_recurring'          => array( 'default' => '' ),
-			'mwb_membership_plan_user_access'        => array( 'default' => 'no' ),
 			'mwb_membership_plan_access_type'        => array( 'default' => 'immediate_type' ),
 			'mwb_membership_plan_time_duration'      => array( 'default' => '0' ),
 			'mwb_membership_plan_time_duration_type' => array( 'default' => 'days' ),
@@ -766,7 +765,7 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Callback function for file Upload.
+	 * Callback function for file Upload and import.
 	 */
 	public function csv_file_upload() {
 

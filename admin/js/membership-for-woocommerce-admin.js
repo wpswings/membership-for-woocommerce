@@ -146,9 +146,9 @@ jQuery( document ).ready( function( $ ) {
 	// Import CSV modal.
 	$( "#import_all_membership" ).on( "click", function( e ) {
 		e.preventDefault();
-
-		$( "#import_csv_field_wrapper" ).dialog( "open" );
-
+		
+		$( ".import_csv_field_wrapper" ).dialog( "open" );
+		
 		// Ajax call for import CSV.
 		$( "#upload_csv_file" ).on( "click", function( e ) {
 			e.preventDefault();
@@ -159,7 +159,7 @@ jQuery( document ).ready( function( $ ) {
 			if ( empty_check.length == 0 ) {
 			
 				// CLose the import modal.
-				$( "#import_csv_field_wrapper" ).dialog( "close" );
+				$( ".import_csv_field_wrapper" ).dialog( "close" );
 
 				// Show "failure" response via sweet-alert.
 				Swal.fire({
@@ -190,7 +190,7 @@ jQuery( document ).ready( function( $ ) {
 					success : function( response ) {
 						
 						// Close the import modal.
-						$( "#import_csv_field_wrapper" ).dialog( "close" );
+						$( ".import_csv_field_wrapper" ).dialog( "close" );
 
 						if ( 'success' == response['status'] ) {
 
@@ -221,11 +221,11 @@ jQuery( document ).ready( function( $ ) {
 		});
 	});
 
-	$( "#import_csv_field_wrapper" ).dialog({
+	$( ".import_csv_field_wrapper" ).dialog({
         modal: true,
         autoOpen: false,
 		show: {effect: "blind", duration: 800},
-		width : 600,
+		width : 600
 	});
 
 	// Applying script to admin part in all product list page

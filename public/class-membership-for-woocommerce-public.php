@@ -9,6 +9,8 @@
  * @subpackage Membership_For_Woocommerce/public
  */
 
+use Braintree\Exception\TooManyRequests;
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -38,6 +40,13 @@ class Membership_For_Woocommerce_Public {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+
+	/**
+	 * Under review membership products.
+	 *
+	 * @since 1.0.0
+	 * @var array
+	 */
 	private $under_review_products;
 
 	/**
@@ -49,9 +58,9 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function __construct( $plugin_name, $version ) {
 
-		$this->plugin_name = $plugin_name;
-		$this->version     = $version;
-		$this->under_review_products     = $this->under_review_products ? $this->under_review_products : array();
+		$this->plugin_name           = $plugin_name;
+		$this->version               = $version;
+		$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
 
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
@@ -189,13 +198,22 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_add_membership_tab( $items ) {
 
-		$logout = $items['customer-logout'];
-		unset( $items['customer-logout'] );
+		// Getting global options.
+		$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $this->global_class->default_global_options() );
 
-		// Placing the custom tab just above logout tab.
-		$items['mwb-membership-tab'] = esc_html__( 'Membership Details', 'membership-for-woocommerce' );
+		if ( ! empty( $mwb_membership_global_settings ) ) {
 
-		$items['customer-logout'] = $logout;
+			if ( ! empty( $mwb_membership_global_settings['mwb_membership_plan_user_history'] ) && 'on' == $mwb_membership_global_settings['mwb_membership_plan_user_history'] ) {
+
+				$logout = $items['customer-logout'];
+				unset( $items['customer-logout'] );
+
+				// Placing the custom tab just above logout tab.
+				$items['mwb-membership-tab'] = esc_html__( 'Membership Details', 'membership-for-woocommerce' );
+
+				$items['customer-logout'] = $logout;
+			}
+		}
 
 		return $items;
 	}
@@ -236,7 +254,8 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
 
-		if( is_admin() ) {
+		if ( is_admin() ) {
+
 			return $is_purchasable;
 		}
 
@@ -247,28 +266,29 @@ class Membership_For_Woocommerce_Public {
 			$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 
 			// Determine access if is a membership product.
-			if( true == $is_membership_product ) {
+			if ( true == $is_membership_product ) {
 
 				// Not a member.
 				if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles, true ) ) {
 
 					// If non logged in or not a member.
 					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids(), true ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+
 						$is_purchasable = false;
 					}
-				}
-
-				else {
+				} else {
 
 					// Check if current product is accessible by any activated membership id.
 					if ( true == $this->is_accessible_to_member( $product ) ) {
-						$is_purchasable = true;
-						if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
-							$is_purchasable = false;
-						}			
-					}
 
-					else {
+						$is_purchasable = true;
+
+						if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+
+							$is_purchasable = false;
+						}
+					} else {
+
 						$is_purchasable = false;
 					}
 				}
@@ -322,7 +342,6 @@ class Membership_For_Woocommerce_Public {
 
 				$data = $this->global_class->run_query( $query );
 
-
 				if ( ! empty( $data ) && is_array( $data ) ) {
 
 					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
@@ -353,18 +372,25 @@ class Membership_For_Woocommerce_Public {
 
 								if ( is_user_logged_in() ) {
 
-									// Show plans under review,
-									if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
-											
+									// Show plans under review.
+									if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+
 										$user_id = get_current_user_id();
 
 										$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-										if( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+
+										if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+
 											foreach ( $current_memberships as $key => $membership_id ) {
+
 												$member_status = get_post_meta( $membership_id, 'member_status', true );
-												if( ! empty( $member_status ) && 'complete' != $member_status ) {
+
+												if ( ! empty( $member_status ) && 'complete' != $member_status ) {
+
 													$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-													if( ! empty( $active_plan[ 'ID' ] ) && $active_plan[ 'ID' ] == $plan['ID'] ) {
+
+													if ( ! empty( $active_plan[ 'ID' ] ) && $active_plan['ID'] == $plan['ID'] ) {
+
 														?>
 														<div class="product-meta product-meta-review">
 															<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
@@ -414,18 +440,25 @@ class Membership_For_Woocommerce_Public {
 
 									if ( is_user_logged_in() ) {
 
-										// Show plans under review,
-										if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+										// Show plans under review.
+										if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
 
 											$user_id = get_current_user_id();
 
 											$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-											if( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+
+											if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+
 												foreach ( $current_memberships as $key => $membership_id ) {
+
 													$member_status = get_post_meta( $membership_id, 'member_status', true );
-													if( ! empty( $member_status ) && 'complete' != $member_status ) {
+
+													if ( ! empty( $member_status ) && 'complete' != $member_status ) {
+
 														$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-														if( ! empty( $active_plan[ 'ID' ] ) && $active_plan[ 'ID' ] == $plan['ID'] ) {
+
+														if ( ! empty( $active_plan[ 'ID' ] ) && $active_plan['ID'] == $plan['ID'] ) {
+
 															?>
 															<div class="product-meta product-meta-review">
 																<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
@@ -464,11 +497,12 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Display membership tag on products which are offered in any membership on shop page.
 	 */
-	public function mwb_membership_products_on_shop_page( $return_status = false, $_product=false ) {
+	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
 		global $product;
 
-		if( empty( $product ) ) {
+		if ( empty( $product ) ) {
+
 			$product = $_product;
 		}
 
@@ -515,18 +549,17 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 				}
-		
+
 				$output = substr( $output, 0, -2 );
 
 				if ( $output ) {
 
-					if( true == $return_status ) {
+					if ( true == $return_status ) {
+
 						return true;
-					}
+					} else {
 
-					else {
-
-						if( in_array( $product->get_id(), $this->under_review_products ) ) {
+						if ( in_array( $product->get_id(), $this->under_review_products ) ) {
 							?>
 							<div class="product-meta product-meta-review">
 								<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
@@ -1239,8 +1272,8 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Giving products/features access to members.
 	 *
-	 * @param string $price_html Price html.
 	 * @param object $product Product object.
+	 * @since 1.0.0
 	 */
 	public function is_accessible_to_member( $product ) {
 
@@ -1258,7 +1291,7 @@ class Membership_For_Woocommerce_Public {
 					// Saved Plan Details.
 					$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-					if( empty( $membership_plan ) ) {
+					if ( empty( $membership_plan ) ) {
 						continue;
 					}
 
@@ -1271,7 +1304,7 @@ class Membership_For_Woocommerce_Public {
 
 						$membership_status = get_post_meta( $membership_id, 'member_status', true );
 
-						if( 'complete' != $membership_status ) {
+						if ( 'complete' != $membership_status ) {
 							$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
 							array_push( $this->under_review_products, $product->get_id() );
 						}

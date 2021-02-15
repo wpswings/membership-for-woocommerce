@@ -140,6 +140,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			'mwb_membership_manage_content'             => 'hide_for_non_members',
 			'mwb_membership_manage_content_display_msg' => '',
 			'mwb_membership_delete_data'                => 'off',
+			'mwb_membership_plan_user_history'          => 'on',
 		);
 
 		return $default_global_settings;

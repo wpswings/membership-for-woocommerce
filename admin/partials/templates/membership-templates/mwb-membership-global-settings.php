@@ -34,6 +34,7 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 	$mwb_membership_global_options['mwb_membership_delete_data'] = ! empty( $_POST['mwb_membership_delete_data'] ) ? 'on' : 'off';
 
+	$mwb_membership_global_options['mwb_membership_plan_user_history'] = ! empty( $_POST['mwb_membership_plan_user_history'] ) ? 'on' : 'off';
 	// Save values.
 	update_option( 'mwb_membership_global_options', $mwb_membership_global_options );
 
@@ -62,6 +63,8 @@ $mwb_membership_display_message = ! empty( $mwb_membership_global_settings['mwb_
 // Data delete setting.
 $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) ? $mwb_membership_global_settings['mwb_membership_delete_data'] : '';
 
+// Show history to user.
+$mwb_membership_user_history = ! empty( $mwb_membership_global_settings['mwb_membership_plan_user_history'] ) ? $mwb_membership_global_settings['mwb_membership_plan_user_history'] : '';
 /**
  * This template is for Membership plans global settings.
  */
@@ -180,6 +183,28 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 
 					</tr>
 					<!-- Delete data at uninstall end -->
+
+					<!-- Show history to user start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_plan_user_access"><?php esc_html_e( 'Show History to User', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<input type="checkbox" id="mwb_membership_plan_user_history" name="mwb_membership_plan_user_history" value="yes" <?php echo ( 'on' === $mwb_membership_user_history ) ? "checked='checked'" : ''; ?>>
+						</td>
+					</tr>
+					<!-- Show history to user end -->
 
 			</tbody>
 
