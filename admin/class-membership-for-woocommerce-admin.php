@@ -563,13 +563,13 @@ class Membership_For_Woocommerce_Admin {
 			return;
 		}
 
-		// Return if doing ajax.
+		// Return if doing ajax :: Quick edits.
 		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
 			return;
 		}
 
 		// Return on post trash, quick-edit, new post.
-		if ( empty( $_POST['save'] ) ) {
+		if ( empty(  $_POST['action'] ) || $_POST['action'] != 'editpost' ) {
 			return;
 		}
 
