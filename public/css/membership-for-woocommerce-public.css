@@ -28,6 +28,15 @@
     outline: none;
 }
 
+.product-meta.product-meta-review {
+    border: 2px solid;
+    border-radius: 5px;
+    background: #96588a;
+    color: #ffffff;
+    width: inherit;
+    text-align: center;
+}
+
 .mwb_mfw_membership_tool_tip_wrapper {
     position: relative;
     cursor: help;

@@ -38,6 +38,7 @@ class Membership_For_Woocommerce_Public {
 	 * @var      string    $version    The current version of this plugin.
 	 */
 	private $version;
+	private $under_review_products;
 
 	/**
 	 * Initialize the class and set its properties.
@@ -50,6 +51,7 @@ class Membership_For_Woocommerce_Public {
 
 		$this->plugin_name = $plugin_name;
 		$this->version     = $version;
+		$this->under_review_products     = $this->under_review_products ? $this->under_review_products : array();
 
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
@@ -261,6 +263,9 @@ class Membership_For_Woocommerce_Public {
 					// Check if current product is accessible by any activated membership id.
 					if ( true == $this->is_accessible_to_member( $product ) ) {
 						$is_purchasable = true;
+						if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+							$is_purchasable = false;
+						}			
 					}
 
 					else {
@@ -347,6 +352,31 @@ class Membership_For_Woocommerce_Public {
 								);
 
 								if ( is_user_logged_in() ) {
+
+									// Show plans under review,
+									if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+											
+										$user_id = get_current_user_id();
+
+										$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+										if( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+											foreach ( $current_memberships as $key => $membership_id ) {
+												$member_status = get_post_meta( $membership_id, 'member_status', true );
+												if( ! empty( $member_status ) && 'complete' != $member_status ) {
+													$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+													if( ! empty( $active_plan[ 'ID' ] ) && $active_plan[ 'ID' ] == $plan['ID'] ) {
+														?>
+														<div class="product-meta product-meta-review">
+															<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
+														</div>
+														<?php
+													}
+												}
+											}
+										}
+									}
+
+									// Show options to buy plans.
 									echo '<div style="clear: both">
 											<div style="margin-top: 10px;">
 												<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
@@ -384,6 +414,30 @@ class Membership_For_Woocommerce_Public {
 
 									if ( is_user_logged_in() ) {
 
+										// Show plans under review,
+										if( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+
+											$user_id = get_current_user_id();
+
+											$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+											if( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+												foreach ( $current_memberships as $key => $membership_id ) {
+													$member_status = get_post_meta( $membership_id, 'member_status', true );
+													if( ! empty( $member_status ) && 'complete' != $member_status ) {
+														$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+														if( ! empty( $active_plan[ 'ID' ] ) && $active_plan[ 'ID' ] == $plan['ID'] ) {
+															?>
+															<div class="product-meta product-meta-review">
+																<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
+															</div>
+															<?php
+														}
+													}
+												}
+											}
+										}
+
+										// Show options to buy plans.
 										echo '<div style="clear: both">
 												<div style="margin-top: 10px;">
 													<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
@@ -471,6 +525,14 @@ class Membership_For_Woocommerce_Public {
 					}
 
 					else {
+
+						if( in_array( $product->get_id(), $this->under_review_products ) ) {
+							?>
+							<div class="product-meta product-meta-review">
+								<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
+							</div>
+							<?php
+						}
 
 						?>
 							<div class="product-meta">
@@ -1033,14 +1095,14 @@ class Membership_For_Woocommerce_Public {
 		if ( $payment_response ) {
 
 
-			$current_memberships = get_user_meta( $member_data['user_id'], 'mfw_plan_id', true );
+			$current_memberships = get_user_meta( $member_data['user_id'], 'mfw_membership_id', true );
 
 			$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
 
-			array_push( $current_memberships, $plan_id );
+			array_push( $current_memberships, $member_data['member_id'] );
 
 			// Assign membership plan to user and assign 'member' role to it.
-			update_user_meta( $member_data['user_id'], 'mfw_plan_id', $current_memberships );
+			update_user_meta( $member_data['user_id'], 'mfw_membership_id', $current_memberships );
 
 			$user = get_userdata( $member_data['user_id'] );
 			$user->add_role( 'member' );
@@ -1187,20 +1249,33 @@ class Membership_For_Woocommerce_Public {
 
 			$user_id = get_current_user_id();
 
-			$current_memberships = get_user_meta( $user_id, 'mfw_plan_id', true );
+			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 			if ( ! empty( $current_memberships && is_array( $current_memberships ) ) ) {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					$accessible_prod = get_post_meta( $membership_id, 'mwb_membership_plan_target_ids', true );
-					$accessible_cat  = get_post_meta( $membership_id, 'mwb_membership_plan_target_categories', true );
+					// Saved Plan Details.
+					$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-					$accessible_prod = $accessible_prod ? $accessible_prod : array();
-					$accessible_cat  = $accessible_cat ? $accessible_prod : array();
+					if( empty( $membership_plan ) ) {
+						continue;
+					}
+
+					$accessible_prod = $membership_plan['mwb_membership_plan_target_ids'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
+					$accessible_cat  = $membership_plan['mwb_membership_plan_target_categories'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] ) : array();
 
 					if ( in_array( $product->get_id(), $accessible_prod ) || ( ! empty( $accessible_cat ) && has_term( $accessible_cat, 'product_cat' ) ) ) {
+
 						$access = true;
+
+						$membership_status = get_post_meta( $membership_id, 'member_status', true );
+
+						if( 'complete' != $membership_status ) {
+							$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
+							array_push( $this->under_review_products, $product->get_id() );
+						}
+
 						break;
 
 					} else {
