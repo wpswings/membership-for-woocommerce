@@ -272,6 +272,10 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'query_vars', $plugin_public, 'mwb_membership_endpoint_query_var', 0 );
 			// Inserting custom Membership tab.
 			$this->loader->add_action( 'woocommerce_account_menu_items', $plugin_public, 'mwb_membership_add_membership_tab' );
+			// Add title to Tab page.
+			$this->loader->add_filter( 'the_title', $plugin_public, 'mwb_membership_tab_title' );
+			// Populate mmbership details tab.
+			$this->loader->add_action( 'woocommerce_account_mwb-membership-tab_endpoint', $plugin_public, 'mwb_membership_populate_tab' );
 
 			// Load all defined shortcodes.
 			$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_shortcodes' );
@@ -305,10 +309,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wp_ajax_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
 			$this->loader->add_action( 'wp_ajax_nopriv_membership_save_transaction', $plugin_public, 'membership_save_transaction' );
 
-			$this->loader->add_action( 'woocommerce_calculate_totals', $plugin_public, 'mysite_box_discount' );
-			$this->loader->add_filter( 'woocommerce_calculated_total', $plugin_public, 'filter_woocommerce_calculated_total', 10, 2 ); 
-
-			//$this->loader->add_filter( 'woocommerce_get_discounted_price', $plugin_public, 'filter_woocommerce_get_discounted_price', 10, 3 );
+			//$this->loader->add_action( 'woocommerce_calculate_totals', $plugin_public, 'mysite_box_discount' );
+			$this->loader->add_filter( 'woocommerce_calculated_total', $plugin_public, 'filter_woocommerce_calculated_total', 10, 2 );
 
 			$this->loader->add_action( 'woocommerce_cart_totals_after_order_total', $plugin_public, 'bbloomer_show_total_discount_cart_checkout', 9999 );
 			$this->loader->add_action( 'woocommerce_review_order_after_order_total', $plugin_public, 'bbloomer_show_total_discount_cart_checkout', 9999 );

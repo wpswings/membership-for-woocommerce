@@ -219,6 +219,47 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Add title to Membership details tab.
+	 *
+	 * @param string $title stores the title of the endpoint.
+	 * @return string
+	 */
+	public function mwb_membership_tab_title( $title ) {
+		global $wp_query;
+
+		$endpoint = isset( $wp_query->query_vars['mwb-membership-tab'] );
+
+		if ( $endpoint && ! is_admin() && in_the_loop() && is_account_page() ) {
+
+			$title = __( 'Membership Details', 'woocommerce-extension' );
+
+		}
+		return $title;
+	}
+
+
+	/**
+	 * Add content to Membership details tab.
+	 */
+	public function mwb_membership_populate_tab() {
+
+		$user       = get_current_user_id();
+		$memerships = get_user_meta( $user, 'mfw_membership_id', true );
+		$instance   = $this->global_class;
+
+		wc_get_template(
+			'templates/mwb-membership-details-tab.php',
+			array(
+				'user_id'        => $user,
+				'membership_ids' => $memerships,
+				'instance'       => $instance,
+			),
+			'',
+			MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_PUBLIC
+		);
+	}
+
+	/**
 	 * Membership Shortcodes for plan Action and plan Attributes.
 	 */
 	public function mwb_membership_shortcodes() {
@@ -1230,9 +1271,12 @@ class Membership_For_Woocommerce_Public {
 	 * @param [type] $instance
 	 * @return void
 	 */
-	public function filter_woocommerce_calculated_total( $round, $instance ) {
+	public function filter_woocommerce_calculated_total( $total, $cart ) {
 		// make filter magic happen here... 
-		return 10; 
+		echo '<pre>'; print_r( $total ); echo '</pre>';
+		echo '<pre>'; print_r( $cart->set_discount_total( 10 ) ); echo '</pre>';
+
+		//return 10; 
 	}
 
 	// function filter_woocommerce_get_discounted_price( $price, $values, $instance ) { 
@@ -1288,7 +1332,7 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					// Saved Plan Details.
+					// Get Saved Plan Details.
 					$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 					if ( empty( $membership_plan ) ) {

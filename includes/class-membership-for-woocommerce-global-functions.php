@@ -79,11 +79,12 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function get_product_title( $product_id = '' ) {
 
+		$result = esc_html__( 'Product not found', 'membership-for-woocommerce' );
+
 		if ( ! empty( $product_id ) ) {
 
-			$result = esc_html__( 'Product not found', 'membership-for-woocommerce' );
-
 			$product = wc_get_product( $product_id );
+
 
 			if ( ! empty( $product ) ) {
 
@@ -93,7 +94,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				} else {
 
-					$result = get_the_title( $product_id );
+					$result = $product->get_name();
 
 				}
 			}
@@ -136,11 +137,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$default_global_settings = array(
 
-			'mwb_membership_enable_plugin'              => 'on',
-			'mwb_membership_manage_content'             => 'hide_for_non_members',
-			'mwb_membership_manage_content_display_msg' => '',
-			'mwb_membership_delete_data'                => 'off',
-			'mwb_membership_plan_user_history'          => 'on',
+			'mwb_membership_enable_plugin'     => 'on',
+			'mwb_membership_delete_data'       => 'off',
+			'mwb_membership_plan_user_history' => 'on',
 		);
 
 		return $default_global_settings;
@@ -617,16 +616,16 @@ class Membership_For_Woocommerce_Global_Functions {
 					'mwb_membership_plan_start'            => ! empty( $value[7] ) ? $value[7] : '',
 					'mwb_membership_plan_end'              => ! empty( $value[8] ) ? $value[8] : '',
 					'mwb_membership_plan_recurring'        => ! empty( $value[9] ) ? $value[9] : '',
-					'mwb_membership_plan_user_access'      => ! empty( $value[10] ) ? $value[10] : '',
-					'mwb_membership_plan_access_type'      => ! empty( $value[11] ) ? $value[11] : '',
-					'mwb_membership_plan_time_duration'    => ! empty( $value[12] ) ? $value[12] : '',
-					'mwb_membership_plan_time_duration_type' => ! empty( $value[13] ) ? $value[13] : '',
-					'mwb_membership_plan_offer_price_type' => ! empty( $value[14] ) ? $value[14] : '',
-					'mwb_memebership_plan_discount_price'  => ! empty( $value[15] ) ? $value[15] : '',
-					'mwb_memebership_plan_free_shipping'   => ! empty( $value[16] ) ? $value[16] : '',
-					'mwb_membership_plan_target_ids'       => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
-					'mwb_membership_plan_target_categories' => ! empty( $value[18] ) ? $this->import_csv_ids( $value[18] ) : '',
-					'post_content'                         => ! empty( $value[19] ) ? $value[19] : '',
+					// 'mwb_membership_plan_user_access'      => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_access_type'      => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_time_duration'    => ! empty( $value[11] ) ? $value[11] : '',
+					'mwb_membership_plan_time_duration_type' => ! empty( $value[12] ) ? $value[12] : '',
+					'mwb_membership_plan_offer_price_type' => ! empty( $value[13] ) ? $value[13] : '',
+					'mwb_memebership_plan_discount_price'  => ! empty( $value[14] ) ? $value[14] : '',
+					'mwb_memebership_plan_free_shipping'   => ! empty( $value[15] ) ? $value[15] : '',
+					'mwb_membership_plan_target_ids'       => ! empty( $value[16] ) ? $this->import_csv_ids( $value[16] ) : '',
+					'mwb_membership_plan_target_categories' => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
+					'post_content'                         => ! empty( $value[18] ) ? $value[18] : '',
 
 				);
 			}
@@ -684,9 +683,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[17] ) ) {
+				if ( ! empty( $value[16] ) ) {
 
-					$prod_array[] = explode( ',', $value[17] );
+					$prod_array[] = explode( ',', $value[16] );
 				}
 			}
 		}
@@ -728,9 +727,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[18] ) ) {
+				if ( ! empty( $value[17] ) ) {
 
-					$cat_array[] = explode( ',', $value[18] );
+					$cat_array[] = explode( ',', $value[17] );
 				}
 			}
 		}
@@ -1020,5 +1019,21 @@ class Membership_For_Woocommerce_Global_Functions {
 			);
 		}
 
+	}
+
+	/**
+	 * Returns Membership details tab headers.
+	 */
+	public function membership_tab_headers() {
+
+		$table_headers = array(
+			'members-id'      => esc_html__( 'Member ID', 'membership-for-woocommerce' ),
+			'members-date'    => esc_html__( 'Date', 'membership-for-woocommerce' ),
+			'members-status'  => esc_html__( 'Status', 'membership-for-woocommerce' ),
+			'members-total'   => esc_html__( 'Total', 'membership-for-woocommerce' ),
+			'members-actions' => esc_html__( 'Actions', 'membership-for-woocommerce' ),
+		);
+
+		return apply_filters( 'mwb_memberhsip_tab_headers', $table_headers );
 	}
 }

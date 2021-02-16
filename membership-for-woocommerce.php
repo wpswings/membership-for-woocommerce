@@ -82,6 +82,9 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH', plugin_dir_path( __FILE__ ) ); // Plugin filesystem directory path.
 
 	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN', plugin_dir_path( __FILE__ ) . 'admin/partials/' ); // Plugin filesystem directory path to admin templates.
+
+	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_PUBLIC', plugin_dir_path( __FILE__ ) . 'public/partials/' ); // PLugin filesystem directory path to public templates.
+
 	/**
 	 * Currently plugin version.
 	 * Start at version 1.0.0 and use SemVer - https://semver.org

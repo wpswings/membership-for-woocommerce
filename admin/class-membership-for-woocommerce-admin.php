@@ -715,7 +715,6 @@ class Membership_For_Woocommerce_Admin {
 						'Plan_start_date',
 						'Plan_end_date',
 						'Plan_recurring',
-						'Plan_user_history',
 						'Plan_access_type',
 						'Plan_access_duration',
 						'Plan_access_duration_type',
@@ -744,7 +743,6 @@ class Membership_For_Woocommerce_Admin {
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_start', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_end', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_recurring', true ),
-							get_post_meta( get_the_ID(), 'mwb_membership_plan_user_access', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_access_type', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration_type', true ),
@@ -759,6 +757,7 @@ class Membership_For_Woocommerce_Admin {
 				}
 
 				fclose( $file );
+				exit;
 
 			}
 		}
@@ -846,7 +845,6 @@ class Membership_For_Woocommerce_Admin {
 					update_post_meta( $plan_id, 'mwb_membership_plan_start', $value['mwb_membership_plan_start'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_end', $value['mwb_membership_plan_end'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_recurring', $value['mwb_membership_plan_recurring'] );
-					update_post_meta( $plan_id, 'mwb_membership_plan_user_access', $value['mwb_membership_plan_user_access'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_access_type', $value['mwb_membership_plan_access_type'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration', $value['mwb_membership_plan_time_duration'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration_type', $value['mwb_membership_plan_time_duration_type'] );
