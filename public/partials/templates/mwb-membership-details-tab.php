@@ -47,6 +47,12 @@ if ( ! isset( $_GET['membership'] ) ) {
 					$membership_data   = get_post_meta( $membership_id );
 					$membership_plan   = get_post_meta( $membership_id, 'plan_obj', true );
 					$membership_status = get_post_meta( $membership_id, 'member_status', true );
+					$button_disable   = ( in_array( $membership_status, array( 'pending', 'hold' ) ) ) ? 'disabled' : '';
+
+					if ( empty( $membership_plan ) ) {
+						continue;
+					}
+
 
 					?>
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr( $membership_status ); ?> order">
@@ -76,7 +82,7 @@ if ( ! isset( $_GET['membership'] ) ) {
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href=" ' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'mwb-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button">' . esc_html( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'mwb-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
 
 									?>
 								<?php endif; ?>
@@ -108,6 +114,13 @@ if ( ! isset( $_GET['membership'] ) ) {
 	$membership_status  = get_post_meta( $membership_id, 'member_status', true );
 	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
 
+	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
+		?>
+		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( $membership_status ); ?></mark>.</p>
+		<?php
+		return;
+	}
+
 
 	?>
 	<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
@@ -135,7 +148,7 @@ if ( ! isset( $_GET['membership'] ) ) {
 
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></th>
-					<td><?php echo esc_html( $membership_billing['payment_method'] ); ?></td>
+					<td><?php echo esc_html( $instance->get_payment_method_title( $membership_billing['payment_method'] ) ); ?></td>
 				</tr>
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>

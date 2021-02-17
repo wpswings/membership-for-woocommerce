@@ -240,4 +240,37 @@ jQuery( document ).ready( function( $ ) {
 
 	});
 
+	// Image uploader in global settings.
+	$('#upload_img').click(function(e){
+        e.preventDefault();
+	
+
+        media_modal = wp.media.frames.media_modal = wp.media({
+            title : 'Upload a logo.',
+            button : { text : 'Select' },
+            library : { type : 'image' },
+        });
+
+        media_modal.on( 'select', function(){
+
+            var attachment  = media_modal.state().get('selection').first().toJSON();
+            var img =  attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.full;
+            $('#mwb_membership_invoice_logo').val( attachment.url );
+            $('#img_thumbnail').find('img').attr( 'src', img.url );
+			$('#upload_img').addClass('button_hide') ; 
+			$('#remove_img').removeClass('button_hide') ; 
+        });
+
+         media_modal.open();
+    });
+
+	// Remove image button.
+    $( document ).on('click', '#remove_img', function(e){
+		e.preventDefault();
+        $('#mwb_membership_invoice_logo').val('');
+        $('#img_thumbnail').find('img').attr( 'src', '' );
+		$('#upload_img').removeClass('button_hide') ; 
+		$('#remove_img').addClass('button_hide') ; 
+    });
+
 });

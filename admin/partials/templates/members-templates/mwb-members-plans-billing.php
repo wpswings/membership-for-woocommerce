@@ -109,7 +109,7 @@ $country_class = new WC_Countries();
 
 				<p>
 					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo esc_html( $payment ); ?>
+					<?php echo esc_html( $instance->get_payment_method_title( $payment ) ); ?>
 				</p>
 
 			</div>

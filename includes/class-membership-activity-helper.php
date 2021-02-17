@@ -220,7 +220,7 @@ class Membership_Activity_Helper {
 
 		$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
 
-		$this->active_file = $file_name;
+		$this->active_file = $file_name . gmdate( 'd-m-y-his' );
 		$location          = $this->active_folder . $this->active_file . '.pdf';
 
 		// TCPDF library.
@@ -233,17 +233,15 @@ class Membership_Activity_Helper {
 		/**
 		 *  Creating pdf using TCPDF library.
 		 */
-		$pdf = new TCPDF();
-
-		$pdf->SetCreator( PDF_CREATOR );
-		$pdf->SetAuthor( get_bloginfo( 'name' ) );
-		$pdf->SetTitle( 'Invoice' );
-
-		// Add a page.
+		$pdf = new TCPDF( PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false );
+		$pdf->SetMargins( -1, 0, -1 );
+		$pdf->setPrintHeader( false );
+		$pdf->setPrintFooter( false );
+		$pdf->SetFont( 'times', '', 12, '', false );
+		$pdf->SetAutoPageBreak( true, PDF_MARGIN_BOTTOM );
 		$pdf->AddPage();
-
-		// Output the HTML content.
-		$pdf->writeHTML( $content, true, false, true, false, '' );
+		$pdf->writeHTMLCell( 0, 0, '', '', $html, 0, 0, 0, true, '', true );
+		$pdf->lastPage();
 
 		try {
 

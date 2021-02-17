@@ -1168,7 +1168,6 @@ class Membership_For_Woocommerce_Public {
 
 		if ( $payment_response ) {
 
-
 			$current_memberships = get_user_meta( $member_data['user_id'], 'mfw_membership_id', true );
 
 			$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
@@ -1183,8 +1182,9 @@ class Membership_For_Woocommerce_Public {
 
 			echo wp_json_encode(
 				array(
-					'result'  => 'payment_success',
-					'message' => 'Thank you for purchasing ' . get_the_title( $plan_id ),
+					'result'   => 'payment_success',
+					'message'  => 'Thank you for purchasing ' . get_the_title( $plan_id ),
+					'redirect' => wc_get_page_permalink( 'shop' ),
 				)
 			);
 
@@ -1242,78 +1242,6 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Add discount on cart as per memberships.
-	 *
-	 * @param object $cart Object of current cart.
-	 * @return void
-	 */
-	public function mysite_box_discount( $cart ) {
-
-		$user = wp_get_current_user();
-
-		if ( $this->global_class->plans_exist_check() === true ) {
-
-			if ( in_array( 'member', (array) $user->roles, true ) ) {
-
-				$plan_id = get_post_meta();
-			}
-		}
-
-		// Alter the cart discount total.
-		$cart->discount_total = 10;
-
-	}
-
-	/**
-	 * Undocumented function
-	 *
-	 * @param [type] $round
-	 * @param [type] $instance
-	 * @return void
-	 */
-	public function filter_woocommerce_calculated_total( $total, $cart ) {
-		// make filter magic happen here... 
-		echo '<pre>'; print_r( $total ); echo '</pre>';
-		echo '<pre>'; print_r( $cart->set_discount_total( 10 ) ); echo '</pre>';
-
-		//return 10; 
-	}
-
-	// function filter_woocommerce_get_discounted_price( $price, $values, $instance ) { 
-	// 	//$price represents the current product price without discount
-	// 	//$values represents the product object
-	// 	//$instance represent the cart object 
-	// 	$discount = 10;    // add custom discount rule , This is just an example
-	// 	return ($price - $discount); 
-	// }
-
-	/**
-	 * @snippet       Display Total Discount @ WooCommerce Cart/Checkout
-	 * @how-to        Get CustomizeWoo.com FREE
-	 * @author        Rodolfo Melogli, BusinessBloomer.com
-	 * @testedwith    WooCommerce 4.6
-	 * @donate $9     https://businessbloomer.com/bloomer-armada/
-	 */
-	public function bbloomer_show_total_discount_cart_checkout() {
-
-		$discount_total = 10;
-
-		// foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {         
-		// 	$product = $values['data'];
-		// 	if ( $product->is_on_sale() ) {
-		// 		$regular_price = $product->get_regular_price();
-		// 		$sale_price = $product->get_sale_price();
-		// 		$discount = ( $regular_price - $sale_price ) * $values['quantity'];
-		// 		$discount_total += $discount;
-		// 	}
-		// }
-
-		if ( $discount_total > 0 ) {
-		echo '<tr><th>You Saved</th><td data-title="You Saved">' . wc_price( $discount_total ) .'</td></tr>';
-		}
-	}
-
-	/**
 	 * Giving products/features access to members.
 	 *
 	 * @param object $product Product object.
@@ -1365,5 +1293,65 @@ class Membership_For_Woocommerce_Public {
 		return $access;
 	}
 
+	/**
+	 * Add discount on cart as per membership plan.
+	 *
+	 * @param object $cart Current Cart object.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_add_cart_discount( $cart ) {
+
+		$cart_total = $cart->subtotal;
+
+		$user_id = get_current_user_id();
+
+		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+
+		if ( ! empty( $current_memberships && is_array( $current_memberships ) ) ) {
+
+			foreach ( $current_memberships as $key => $membership_id ) {
+
+				// Get Saved Plan Details.
+				$membership_plan   = get_post_meta( $membership_id, 'plan_obj', true );
+				$membership_status = get_post_meta( $membership_id, 'member_status', true );
+
+				if ( empty( $membership_plan ) ) {
+					continue;
+				}
+
+				$offer_type  = $membership_plan['mwb_membership_plan_offer_price_type'];
+				$offer_price = ! empty( $membership_plan['mwb_memebership_plan_discount_price'] ) ? sanitize_text_field( $membership_plan['mwb_memebership_plan_discount_price'] ) : '';
+
+				if ( 'complete' == $membership_status ) {
+
+					// If % discount is given.
+					if ( '%' == $offer_type && ! empty( $offer_price ) ) {
+
+						// Discount % is given( no negatives, not more than 100, if 100% then price zero ).
+						$offer_price = floatval( sanitize_text_field( $offer_price ) );
+
+						// Range should be 0-100 only.
+						$offer_price = ( 100 < $offer_price ) ? 100 : $offer_price;
+						$offer_price = ( 0 > $offer_price ) ? 0 : $offer_price;
+
+						$discount = $cart_total * ( $offer_price / 100 );
+						$cart->add_fee( 'Membership Discount', -$discount, false );
+					}
+
+					// If fixed discount is given.
+					if ( 'fixed' == $offer_type && ! empty( $offer_price ) ) {
+
+						// When fixed price is given.
+						$offer_price = ( 0 > $offer_price ) ? 0 : $offer_price;
+						$offer_price = ( $cart_total < $offer_price ) ? 0 : $offer_price;
+
+						$discount = $offer_price;
+						$cart->add_fee( 'Membership Discount', -$discount, false );
+					}
+				}
+			}
+		}
+	}
 }
 // End of class.

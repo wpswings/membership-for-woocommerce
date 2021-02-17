@@ -106,6 +106,11 @@ jQuery( document ).ready( function( $ ) {
 							title: response['message'],
 						});
 
+						// Redirect to "shop" page on successful payment.
+						$( ".swal2-confirm" ).on( "click", function() {
+							window.location.href = response['redirect'];
+						});
+
 					} else if ( "payment_failed" == response['result'] ) {
 						
 						// Show "failure" response via sweet-alert.
@@ -115,6 +120,10 @@ jQuery( document ).ready( function( $ ) {
 							text : response['message']
 						});
 
+						$( ".swal2-confirm" ).on( "click", function() {
+							location.reload();
+						});
+
 					} else {
 
 						// Show "validation failure" response via sweet-alert.
@@ -122,6 +131,10 @@ jQuery( document ).ready( function( $ ) {
 							icon : 'error',
 							title: 'Oops..!!',
 							text : response['message']
+						});
+
+						$( ".swal2-confirm" ).on( "click", function() {
+							location.reload();
 						});
 					}
 				}

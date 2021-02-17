@@ -31,6 +31,21 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 	$mwb_membership_global_options['mwb_membership_delete_data'] = ! empty( $_POST['mwb_membership_delete_data'] ) ? 'on' : 'off';
 
 	$mwb_membership_global_options['mwb_membership_plan_user_history'] = ! empty( $_POST['mwb_membership_plan_user_history'] ) ? 'on' : 'off';
+
+	$mwb_membership_global_options['mwb_membership_email_subject'] = ! empty( $_POST['mwb_membership_email_subject'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_email_subject'] ) ) : '';
+
+	$mwb_membership_global_options['mwb_membership_email_content'] = ! empty( $_POST['mwb_membership_email_content'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_email_content'] ) ) : '';
+
+	$mwb_membership_global_options['mwb_membership_attach_invoice'] = ! empty( $_POST['mwb_membership_attach_invoice'] ) ? 'on' : 'off';
+
+	$mwb_membership_global_options['mwb_membership_invoice_address'] = ! empty( $_POST['mwb_membership_invoice_address'] ) ? sanitize_text_field( $_POST['mwb_membership_invoice_address'] ) : '';
+
+	$mwb_membership_global_options['mwb_membership_invoice_phone'] = ! empty( $_POST['mwb_membership_invoice_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_invoice_phone'] ) ) : '';
+
+	$mwb_membership_global_options['mwb_membership_invoice_email'] = ! empty( $_POST['mwb_membership_invoice_email'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_invoice_email'] ) ) : '';
+
+	$mwb_membership_global_options['mwb_membership_invoice_logo'] = ! empty( $_POST['mwb_membership_invoice_logo'] ) ? $_POST['mwb_membership_invoice_logo'] : '';
+
 	// Save values.
 	update_option( 'mwb_membership_global_options', $mwb_membership_global_options );
 
@@ -55,6 +70,27 @@ $mwb_membership_delete_data = ! empty( $mwb_membership_global_settings['mwb_memb
 
 // Show history to user.
 $mwb_membership_user_history = ! empty( $mwb_membership_global_settings['mwb_membership_plan_user_history'] ) ? $mwb_membership_global_settings['mwb_membership_plan_user_history'] : '';
+
+// Email subject.
+$mwb_membership_email_subject = ! empty( $mwb_membership_global_settings['mwb_membership_email_subject'] ) ? $mwb_membership_global_settings['mwb_membership_email_subject'] : '';
+
+// Email Content.
+$mwb_membership_email_content = ! empty( $mwb_membership_global_settings['mwb_membership_email_content'] ) ? $mwb_membership_global_settings['mwb_membership_email_content'] : '';
+
+// Attach invoice.
+$mwb_membership_attach_invoice = ! empty( $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) ? $mwb_membership_global_settings['mwb_membership_attach_invoice'] : '';
+
+// Company address.
+$mwb_membership_invoice_address = ! empty( $mwb_membership_global_settings['mwb_membership_invoice_address'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_address'] : '';
+
+// Company Phone.
+$mwb_membership_invoice_phone = ! empty( $mwb_membership_global_settings['mwb_membership_invoice_phone'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_phone'] : '';
+
+// Company phone.
+$mwb_membership_invoice_email = ! empty( $mwb_membership_global_settings['mwb_membership_invoice_email'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_email'] : '';
+
+// COmpany Logo.
+$mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '';
 
 /**
  * This template is for Membership plans global settings.
@@ -135,7 +171,7 @@ $mwb_membership_user_history = ! empty( $mwb_membership_global_settings['mwb_mem
 					<tr valign="top">
 
 						<th scope="row" class="titledesc">
-							<label for="mwb_membership_plan_user_access"><?php esc_html_e( 'Show History to User', 'membership-for-woocommerce' ); ?></label>
+							<label for="mwb_membership_plan_user_history"><?php esc_html_e( 'Show History to User', 'membership-for-woocommerce' ); ?></label>
 						</th>
 
 						<td class="forminp forminp-text">
@@ -152,6 +188,171 @@ $mwb_membership_user_history = ! empty( $mwb_membership_global_settings['mwb_mem
 						</td>
 					</tr>
 					<!-- Show history to user end -->
+
+					<!-- Email Subject start-->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_email_subject"><?php esc_html_e( 'Email Subject', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add email subject which will be sent to Customer on successful membership purchase.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<input type="text" id="mwb_membership_email_subject" name="mwb_membership_email_subject" value="<?php echo esc_html( $mwb_membership_email_subject ); ?>">
+						</td>
+					</tr>
+					<!-- Email Subject end-->
+
+					<!-- Email Content start-->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_email_content"><?php esc_html_e( 'Email Content', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add email content which will be sent to Customer on successful membership purchase.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<textarea id="mwb_membership_email_content" name="mwb_membership_email_content"><?php echo esc_html( $mwb_membership_email_content ); ?></textarea>
+						</td>
+					</tr>
+					<!-- Email Content end-->
+
+					<!-- Attach invoice to email start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_attach_invoice"><?php esc_html_e( 'Attach Invoice to Email', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will Enable/Diable Invoice attachment to Email.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<input type="checkbox" id="mwb_membership_attach_invoice" name="mwb_membership_attach_invoice" value="yes" <?php echo ( 'on' === $mwb_membership_attach_invoice ) ? "checked='checked'" : ''; ?> >
+						</td>
+					</tr>
+					<!-- Attach invoice to email start -->
+
+					<!-- Invoice Company address start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_invoice_address"><?php esc_html_e( 'Invoice Company Address', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add Company address to Invoice else default address will be added.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<textarea id="mwb_membership_invoice_address" name="mwb_membership_invoice_address" ><?php echo esc_html( $mwb_membership_invoice_address ); ?></textarea>
+						</td>
+					</tr>
+					<!-- Invoice Company address end-->
+
+					<!-- Invoice Company phone start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_invoice_phone"><?php esc_html_e( 'Invoice Company Phone No.', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add Company phone no. to Invoice else default phone no. will be added.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<input type="tel" id="mwb_membership_invoice_phone" name="mwb_membership_invoice_phone" value="<?php echo esc_html( $mwb_membership_invoice_phone ); ?>">
+						</td>
+					</tr>
+					<!-- Invoice Company phone end-->
+
+					<!-- Invoice Company email start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_invoice_email"><?php esc_html_e( 'Invoice Company Email', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add Company email to Invoice else default email will be added.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							?>
+
+							<input type="email" id="mwb_membership_invoice_email" name="mwb_membership_invoice_email" value="<?php echo esc_html( $mwb_membership_invoice_email ); ?>">
+						</td>
+					</tr>
+					<!-- Invoice Company email end-->
+
+					<!-- Invoice Company logo start -->
+					<tr valign="top">
+
+						<th scope="row" class="titledesc">
+							<label for="mwb_membership_invoice_logo"><?php esc_html_e( 'Invoice Company logo', 'membership-for-woocommerce' ); ?></label>
+						</th>
+
+						<td class="forminp forminp-text">
+
+							<?php
+
+							$description = esc_html__( 'This will add Company logo url to Invoice ( Only JPG or SVG ).', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+
+							$upload_btn_cls = empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
+							$remove_btn_cls = ! empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
+
+							?>
+
+							<input type="hidden" id="mwb_membership_invoice_logo" name="mwb_membership_invoice_logo" value="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>">
+							<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload an Image', 'membership-for-woocommerce' ); ?>">
+							<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Image', 'membership-for-woocommerce' ); ?>">
+						</td>
+						</td>
+						<td id="img_thumbnail">
+							<?php if ( '' !== $mwb_membership_invoice_logo ) { ?>
+								<img src="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>" width="60px" height="60px"/>
+							<?php } ?>           
+						</td>
+					</tr>
+					<!-- Invoice Company email end-->
 
 			</tbody>
 

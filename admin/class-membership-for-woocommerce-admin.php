@@ -201,6 +201,8 @@ class Membership_For_Woocommerce_Admin {
 
 				add_thickbox();
 
+				wp_enqueue_media();
+
 				wp_enqueue_script( 'jquery-ui-dialog' );
 
 				wp_enqueue_script( 'mwb_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );

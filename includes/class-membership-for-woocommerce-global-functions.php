@@ -140,6 +140,14 @@ class Membership_For_Woocommerce_Global_Functions {
 			'mwb_membership_enable_plugin'     => 'on',
 			'mwb_membership_delete_data'       => 'off',
 			'mwb_membership_plan_user_history' => 'on',
+			'mwb_membership_email_subject'     => 'Thank you for Shopping, Do not reply.',
+			'mwb_membership_email_content'     => '',
+			'mwb_membership_attach_invoice'    => 'on',
+			'mwb_membership_invoice_address'   => '',
+			'mwb_membership_invoice_phone'     => '',
+			'mwb_membership_invoice_email'     => '',
+			'mwb_membership_invoice_logo'      => '',
+
 		);
 
 		return $default_global_settings;
@@ -616,7 +624,6 @@ class Membership_For_Woocommerce_Global_Functions {
 					'mwb_membership_plan_start'            => ! empty( $value[7] ) ? $value[7] : '',
 					'mwb_membership_plan_end'              => ! empty( $value[8] ) ? $value[8] : '',
 					'mwb_membership_plan_recurring'        => ! empty( $value[9] ) ? $value[9] : '',
-					// 'mwb_membership_plan_user_access'      => ! empty( $value[10] ) ? $value[10] : '',
 					'mwb_membership_plan_access_type'      => ! empty( $value[10] ) ? $value[10] : '',
 					'mwb_membership_plan_time_duration'    => ! empty( $value[11] ) ? $value[11] : '',
 					'mwb_membership_plan_time_duration_type' => ! empty( $value[12] ) ? $value[12] : '',
@@ -824,7 +831,6 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @param array $fields an array of member billing details.
 	 * @param int   $plan_id Is the membership plan ID.
-	 * @param int   $user id User id to obtain transaction details.
 	 * @return array
 	 *
 	 * @since 1.0.0
@@ -884,12 +890,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				)
 			);
 
-			// If tnx details exist in user meta update it in members post meta and delete it from existing user data.
-			// if ( ! empty( $tnx_detail ) ) {
-			// 	update_post_meta( $member_id, 'members_tnx_details', $tnx_detail );
-			// 	delete_user_meta( $user, 'members_tnx_details', $$tnx_detail );
-			// }
-
 			return array(
 				'status'    => true,
 				'member_id' => $member_id,
@@ -906,6 +906,30 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function email_membership_invoice( $member_id ) {
 
+		// Getting global options.
+		$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $this->global_class->default_global_options() );
+
+		// The main address pieces:
+		$store_address   = get_option( 'woocommerce_store_address' );
+		$store_address_2 = get_option( 'woocommerce_store_address_2' );
+		$store_city      = get_option( 'woocommerce_store_city' );
+		$store_postcode  = get_option( 'woocommerce_store_postcode' );
+
+		// The country/state.
+		$store_raw_country = get_option( 'woocommerce_default_country' );
+
+		// Split the country/state.
+		$split_country = explode( ':', $store_raw_country );
+
+		// Country and state separated.
+		$store_country = $split_country[0];
+		$store_state   = $split_country[1];
+
+		$store_details = $store_address . '<br/>' .
+						$store_address_2 . '<br/>' .
+						$store_city . ', ' . $store_state . ' ' . $store_postcode . '<br/>' .
+						$store_country;
+
 		if ( ! function_exists( 'wp_mail' ) ) {
 
 			return;
@@ -915,6 +939,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$plan_info = get_post_meta( $member_id, 'plan_obj', true );
 			$billing   = get_post_meta( $member_id, 'billing_details', true );
+			$status    = get_post_meta( $member_id, 'member_status', true );
 
 			$first_name = ! empty( $billing['membership_billing_first_name'] ) ? $billing['membership_billing_first_name'] : '';
 			$last_name  = ! empty( $billing['membership_billing_last_name'] ) ? $billing['membership_billing_last_name'] : '';
@@ -931,57 +956,76 @@ class Membership_For_Woocommerce_Global_Functions {
 			ob_start();
 			?>
 
-			<div class="membership_invoice_wrapper">
-				<div class="invoice_info">
-					<p>
-						<strong><?php esc_html_e( 'Invoice no. :', 'membership-for-woccommerce' ); ?></strong><?php echo esc_html( '#INV' . $member_id ); ?></br>
-						<strong><?php esc_html_e( 'Invoice date :', 'membership-for-woccommerce' ); ?></strong><?php echo esc_html( current_time( 'Y-m-d' ) ); ?>
-					</p>
-				</div>
+			<style>
+				table, tr, td {
+				padding: 15px;
+				}
+			</style>
+			<table style="background-color: #222222; color: #fff">
+				<tbody>
+					<tr>
+						<td><h1><?php esc_html_e( 'Membership Invoice', 'membership-for-woocommerce' ); ?><strong><?php echo esc_html( $member_id ); ?></strong></h1></td>
+						<td align="right"><?php echo esc_html( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ); ?><br/>
+							<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : $store_details ); ?><br/>
+							<br/>
+						<strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_phone'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_phone'] : '' ); ?></strong> | <strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_phone'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_phone'] : get_option( 'woocommerce_email_from_address' ) ); ?></strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-				<div class="invoice_billing">
-					<h3><?php esc_html_e( 'Bill to', 'membership-for-woocommerce' ); ?></h3>
-					<p>
-						<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
-						<?php echo esc_html( $company ); ?></br>
-						<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
-						<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
-						<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?></br>
-						<?php echo esc_html( $phone ); ?></br>
-						<?php echo esc_html( $email ); ?></br>
-					</p>
-				</div>
+			<table>
+				<tbody>
+					<tr>
+						<td><b><?php esc_html_e( 'Invoice to : ', 'membership-for-woocommerce' ); ?></b><br/>
+						<strong><?php echo esc_html( $first_name . $last_name ); ?></strong>
+						<br/>
+							<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
+							<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
+							<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+						<br/>
+						<?php echo esc_html( $phone ); ?>
+						<br/>
+						<?php echo esc_html( $email ); ?>
+						</td>
+						<td align="right">
+							<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br/>
+							<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-				<div class="membership_inv_table_wrapper">
-					<table class="membership_inv_table">
-						<thead>
-							<tr>
-								<th class="inv_table_slno"><?php echo esc_html__( 'SNo.', 'membership-for-woocommerce' ); ?></th>
-								<th class="inv_table_product"><?php echo esc_html__( 'Product', 'membership-for-woocommerce' ); ?></th>
-								<th class="inv_table_total"><?php echo esc_html__( 'Amount', 'membership-for-woocommerce' ); ?></th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><?php esc_html( '1.' ); ?></td>
-								<td><?php esc_html( $plan_info['post_title'] ); ?></td>
-								<td><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ); ?></td>
-							</tr>
-						</tbody>
-					</table>
-					<p class="membership_inv_total">
-						<strong><?php esc_html_e( 'Total : ', 'membership-for-woocommerce' ); ?></strong><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ); ?>
-					</p>
-				</div>
-			</div>
-			<footer>
-				<div class="membership_inv_footer">
-					<p>
-						<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?></strong></br>
-						<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
-					</p>
-				</div>
-			</footer>
+			<table>
+				<thead>
+					<tr style="font-weight:bold;">
+						<th><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
+						<th><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
+						<td><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+						<td><?php esc_html_e( '1' ); ?></td>
+						<td><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+					</tr>
+
+					<tr align="right">
+						<td colspan="4" style="border-top: 1px solid #222"><strong>Grand total: (Rs.) ' . $subtotal . '</strong></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<h2><?php esc_html_e( 'Thank you for shopping with us', 'membership-for-woocommerce' ); ?></h2><br/>
+							<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/></strong>
+							<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
 			<?php
 
@@ -991,9 +1035,12 @@ class Membership_For_Woocommerce_Global_Functions {
 			$activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
 			$pdf_file       = $activity_class->create_pdf_n_upload( $content, $first_name );
 
-			// Get the attachment file using file url.
-			$attachment = $pdf_file;
+			$attachment = '';
 
+			if ( ! empty( $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) && 'on' == $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) {
+				// Get the attachment file using file url.
+				$attachment = $pdf_file;
+			}
 			/**
 			 * Now send mail to customer including virtual invoice and a hard copy of it as attachment.
 			 */
@@ -1012,8 +1059,8 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			wp_mail(
 				$to,
-				$subject,
-				$content,
+				! empty( $mwb_membership_global_settings['mwb_membership_email_subject'] ) ? $mwb_membership_global_settings['mwb_membership_email_subject'] : $subject,
+				! empty( $mwb_membership_global_settings['mwb_membership_email_content'] ) ? $mwb_membership_global_settings['mwb_membership_email_content'] : $content,
 				'',
 				$attachment
 			);

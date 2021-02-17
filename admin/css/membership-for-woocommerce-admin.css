@@ -478,3 +478,7 @@ input#upload_csv_file:hover {
     font-family: sans-serif;
     color: #0071a1;
 }
+
+.button_hide {
+    display: none !important;
+}
