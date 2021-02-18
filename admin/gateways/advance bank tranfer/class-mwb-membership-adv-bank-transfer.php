@@ -343,7 +343,18 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				// Send email invoice to customer.
 				if ( 'email_invoice' === get_post_meta( $member_id, 'member_actions', true ) ) {
 
-					$this->global_class->email_membership_invoice( $member_id );
+					$mail_sent = $this->global_class->email_membership_invoice( $member_id );
+
+					if ( false == $mail_sent ) {
+
+						$error = array(
+							'status'  => 'email_failed',
+							'message' => 'Email failed.',
+						);
+
+						$activity_class = new Membership_Activity_Helper( 'Email-logs', 'logger' );
+						$log_data       = $activity_class->create_log( 'Advance bacs payment email failure', $error );
+					}
 				}
 			} catch ( \Throwable $e ) {
 

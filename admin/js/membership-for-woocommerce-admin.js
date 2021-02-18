@@ -257,6 +257,7 @@ jQuery( document ).ready( function( $ ) {
             var img =  attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.full;
             $('#mwb_membership_invoice_logo').val( attachment.url );
             $('#img_thumbnail').find('img').attr( 'src', img.url );
+			$('#img_thumbnail').show();
 			$('#upload_img').addClass('button_hide') ; 
 			$('#remove_img').removeClass('button_hide') ; 
         });
@@ -268,9 +269,12 @@ jQuery( document ).ready( function( $ ) {
     $( document ).on('click', '#remove_img', function(e){
 		e.preventDefault();
         $('#mwb_membership_invoice_logo').val('');
+		$('#img_thumbnail').hide();
         $('#img_thumbnail').find('img').attr( 'src', '' );
 		$('#upload_img').removeClass('button_hide') ; 
-		$('#remove_img').addClass('button_hide') ; 
+		$('#remove_img').addClass('button_hide') ;
+		
+
     });
 
 });

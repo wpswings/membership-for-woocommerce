@@ -218,8 +218,6 @@ class Membership_Activity_Helper {
 	 */
 	public function create_pdf_n_upload( $content = '', $file_name = '' ) {
 
-		$content = iconv( 'UTF-8', 'UTF-8//IGNORE', $content );
-
 		$this->active_file = $file_name . gmdate( 'd-m-y-his' );
 		$location          = $this->active_folder . $this->active_file . '.pdf';
 
@@ -240,19 +238,29 @@ class Membership_Activity_Helper {
 		$pdf->SetFont( 'times', '', 12, '', false );
 		$pdf->SetAutoPageBreak( true, PDF_MARGIN_BOTTOM );
 		$pdf->AddPage();
-		$pdf->writeHTMLCell( 0, 0, '', '', $html, 0, 0, 0, true, '', true );
+
+		// Output the HTML content.
+		$pdf->writeHTMLCell( 0, 0, '', '', $content, 0, 0, 0, true, '', true );
 		$pdf->lastPage();
 
 		try {
 
 			if ( $this->active_file ) {
+				ob_get_clean();
 				$pdf->Output( $location, 'F' );
 
-				return esc_url( $this->get_file_url( $location ) );
+				return array(
+					'status'  => true,
+					'message' => $location,
+				);
 			}
 		} catch ( Exception $e ) {
 
-			echo esc_html( $e->getMessage() );
+			return array(
+				'status'  => false,
+				'message' => esc_html( $e->getMessage() )
+			);
+
 		}
 
 	}

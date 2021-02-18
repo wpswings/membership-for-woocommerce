@@ -163,7 +163,7 @@ class Membership_For_Woocommerce_Public {
 					'settings'  => $settings,
 					'plan_data' => $plan_data,
 					'nonce'     => wp_create_nonce( 'paypal-nonce' ),
-				),
+				)
 			);
 
 			//wp_enqueue_script( 'jquery-validate-min', plugin_dir_url( __FILE__ ) . 'js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );

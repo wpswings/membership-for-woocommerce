@@ -1388,6 +1388,45 @@ class Membership_For_Woocommerce_Admin {
 
 				$file = fopen( 'php://output', 'w' );
 
+				fputcsv(
+					$file,
+					array(
+						'Member ID',
+						'User Name',
+						'User Email',
+						'Member Name',
+						'Member Email ',
+						'Member Phone No.',
+						'Payment Method',
+						'Plan ID',
+						'Plan Name',
+						'Membership Status',
+						'Expiry Date',
+					)
+				);
+
+				foreach ( $all_posts as $post ) {
+					setup_postdata( $post );
+					fputcsv(
+						$file,
+						array(
+							get_the_ID(),
+							! empty( $post->post_author ) ? get_the_author_meta( 'display_name', $post->post_author ) : '',
+							get_the_author_meta( 'user_email' ),
+							$this->global_class->get_member_details( $post, 'name' ),
+							$this->global_class->get_member_details( $post, 'email' ),
+							$this->global_class->get_member_details( $post, 'phone' ),
+							$this->global_class->get_member_details( $post, 'payment_method' ),
+							$this->global_class->get_member_details( $post, 'plan_id' ),
+							$this->global_class->get_member_details( $post, 'plan_name' ),
+							$this->global_class->get_member_details( $post, 'plan_status' ),
+							'',
+						)
+					);
+
+				}
+				fclose( $file );
+				exit;
 			}
 		}
 	}
