@@ -336,7 +336,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 			try {
 
-
 				// Updating status to hold, admin will change it to 'completed'    after amount is reflected in his account.
 				update_post_meta( $member_id, 'member_status', 'hold' );
 
@@ -353,7 +352,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 						);
 
 						$activity_class = new Membership_Activity_Helper( 'Email-logs', 'logger' );
-						$log_data       = $activity_class->create_log( 'Advance bacs payment email failure', $error );
+						$activity_class->create_log( 'Advance bacs email failure', $error );
 					}
 				}
 			} catch ( \Throwable $e ) {

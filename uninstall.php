@@ -40,7 +40,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 
 	if ( ! empty( $mwb_membership_default_page ) ) {
 
-			wp_delete_post( $mwb_membership_default_page );
+			wp_delete_post( $mwb_membership_default_page, true );
 	}
 
 	// Deleting "member" user role at plugin uninstall.
@@ -69,7 +69,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 
 		foreach ( $mwb_membership_posts as $membership_post ) {
 
-			wp_delete_post( $membership_post->ID, false );
+			wp_delete_post( $membership_post->ID, true );
 		}
 	}
 	unregister_post_type( 'mwb_cpt_membership' );
@@ -86,7 +86,7 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 
 		foreach ( $mwb_members_posts as $members_post ) {
 
-			wp_delete_post( $members_post->ID, false );
+			wp_delete_post( $members_post->ID, true );
 		}
 	}
 	unregister_post_type( 'mwb_cpt_members' );

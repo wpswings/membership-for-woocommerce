@@ -64,6 +64,12 @@ class Membership_For_Woocommerce_Activator {
 
 			update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
 		}
+
+		// Schedule cron for checking of membership expiration on daily basis.
+		if ( ! wp_next_scheduled( 'mwb_membership_expiry_check' ) ) {
+
+			wp_schedule_event( time(), 'daily', 'mwb_membership_expiry_check' );
+		}
 	}
 
 }

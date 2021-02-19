@@ -76,7 +76,7 @@ jQuery( document ).ready( function( $ ) {
  
      });
 
-     // Applying script to admin part in all Members quick preview.
+    // Applying script to admin part in all Members quick preview.
     // var mwb_status = $( '.member_plan_status' ).text();
     //     console.log(mwb_status);
  

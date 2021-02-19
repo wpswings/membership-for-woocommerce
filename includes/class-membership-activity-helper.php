@@ -222,7 +222,7 @@ class Membership_Activity_Helper {
 		$location          = $this->active_folder . $this->active_file . '.pdf';
 
 		// TCPDF library.
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/tcpdf_min/tcpdf.php';
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/TCPDF-main/tcpdf.php';
 
 		if ( ! class_exists( 'TCPDF' ) ) {
 			return;
@@ -258,7 +258,7 @@ class Membership_Activity_Helper {
 
 			return array(
 				'status'  => false,
-				'message' => esc_html( $e->getMessage() )
+				'message' => esc_html( $e->getMessage() ),
 			);
 
 		}

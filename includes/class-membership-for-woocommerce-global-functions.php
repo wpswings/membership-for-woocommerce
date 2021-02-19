@@ -621,18 +621,16 @@ class Membership_For_Woocommerce_Global_Functions {
 					'mwb_membership_plan_name_access_type' => ! empty( $value[4] ) ? $value[4] : '',
 					'mwb_membership_plan_duration'         => ! empty( $value[5] ) ? $value[5] : '',
 					'mwb_membership_plan_duration_type'    => ! empty( $value[6] ) ? $value[6] : '',
-					'mwb_membership_plan_start'            => ! empty( $value[7] ) ? $value[7] : '',
-					'mwb_membership_plan_end'              => ! empty( $value[8] ) ? $value[8] : '',
-					'mwb_membership_plan_recurring'        => ! empty( $value[9] ) ? $value[9] : '',
-					'mwb_membership_plan_access_type'      => ! empty( $value[10] ) ? $value[10] : '',
-					'mwb_membership_plan_time_duration'    => ! empty( $value[11] ) ? $value[11] : '',
-					'mwb_membership_plan_time_duration_type' => ! empty( $value[12] ) ? $value[12] : '',
-					'mwb_membership_plan_offer_price_type' => ! empty( $value[13] ) ? $value[13] : '',
-					'mwb_memebership_plan_discount_price'  => ! empty( $value[14] ) ? $value[14] : '',
-					'mwb_memebership_plan_free_shipping'   => ! empty( $value[15] ) ? $value[15] : '',
-					'mwb_membership_plan_target_ids'       => ! empty( $value[16] ) ? $this->import_csv_ids( $value[16] ) : '',
-					'mwb_membership_plan_target_categories' => ! empty( $value[17] ) ? $this->import_csv_ids( $value[17] ) : '',
-					'post_content'                         => ! empty( $value[18] ) ? $value[18] : '',
+					'mwb_membership_plan_recurring'        => ! empty( $value[7] ) ? $value[7] : '',
+					'mwb_membership_plan_access_type'      => ! empty( $value[8] ) ? $value[8] : '',
+					'mwb_membership_plan_time_duration'    => ! empty( $value[9] ) ? $value[9] : '',
+					'mwb_membership_plan_time_duration_type' => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_offer_price_type' => ! empty( $value[11] ) ? $value[11] : '',
+					'mwb_memebership_plan_discount_price'  => ! empty( $value[12] ) ? $value[12] : '',
+					'mwb_memebership_plan_free_shipping'   => ! empty( $value[13] ) ? $value[13] : '',
+					'mwb_membership_plan_target_ids'       => ! empty( $value[14] ) ? $this->import_csv_ids( $value[14] ) : '',
+					'mwb_membership_plan_target_categories' => ! empty( $value[15] ) ? $this->import_csv_ids( $value[15] ) : '',
+					'post_content'                         => ! empty( $value[16] ) ? $value[16] : '',
 
 				);
 			}
@@ -690,9 +688,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[16] ) ) {
+				if ( ! empty( $value[14] ) ) {
 
-					$prod_array[] = explode( ',', $value[16] );
+					$prod_array[] = explode( ',', $value[14] );
 				}
 			}
 		}
@@ -734,9 +732,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $csv_data as $key => $value ) {
 
-				if ( ! empty( $value[17] ) ) {
+				if ( ! empty( $value[15] ) ) {
 
-					$cat_array[] = explode( ',', $value[17] );
+					$cat_array[] = explode( ',', $value[15] );
 				}
 			}
 		}
@@ -930,6 +928,12 @@ class Membership_For_Woocommerce_Global_Functions {
 						$store_city . ', ' . $store_state . ' ' . $store_postcode . '<br/>' .
 						$store_country;
 
+		// From name.
+		$from_name = get_bloginfo( 'name' );
+
+		// From email.
+		$from_email = get_bloginfo( 'admin_email' );
+
 		if ( ! function_exists( 'wp_mail' ) ) {
 
 			return;
@@ -1039,10 +1043,12 @@ class Membership_For_Woocommerce_Global_Functions {
 			$pdf_file       = $activity_class->create_pdf_n_upload( $content, $first_name );
 
 			if ( true == $pdf_file['status'] ) {
+
 				$pdf_location = $pdf_file['message'];
 			} else {
+
 				$activity_class = new Membership_Activity_Helper( 'Pdf-creation-logs', 'logger' );
-				$log_data       = $activity_class->create_log( 'Pdf creation failure', $pdf_file['message'] );
+				$activity_class->create_log( 'Pdf creation failure', $pdf_file['message'] );
 			}
 
 			$attachment = '';
@@ -1072,7 +1078,10 @@ class Membership_For_Woocommerce_Global_Functions {
 				$to,
 				! empty( $mwb_membership_global_settings['mwb_membership_email_subject'] ) ? $mwb_membership_global_settings['mwb_membership_email_subject'] : $subject,
 				! empty( $mwb_membership_global_settings['mwb_membership_email_content'] ) ? $mwb_membership_global_settings['mwb_membership_email_content'] . $content : $content,
-				array( 'Content-Type: text/html; charset=UTF-8' ),
+				array(
+					'Content-Type: text/html; charset=UTF-8',
+					'From: ' . $from_name . ' <' . $from_email . '>',
+				),
 				$attachment
 			);
 

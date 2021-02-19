@@ -7,8 +7,6 @@ jQuery( document ).ready( function( $ ) {
 
 		var selection_radio = $( "input[name='mwb_membership_plan_access_type']:checked" ).val();
 
-		var selection_msg = $( "#mwb_membership_manage_content option:selected" ).val();
-
 		switch( selection_access ) {
 
 			case 'limited':
@@ -42,17 +40,6 @@ jQuery( document ).ready( function( $ ) {
 			case 'delay_type':
 				$( "#mwb_membership_plan_time_duratin_display" ).show();
 		}
-
-		switch( selection_msg ) {
-
-			case 'display_a_message':
-				$( "#mwb_membership_manage_contnet_display" ).show();
-				break;
-
-			default:
-				$( "#mwb_membership_manage_contnet_display" ).hide();
-		}
-
 	}
 
 	selected(); // calling the function when the page is ready.
@@ -124,25 +111,7 @@ jQuery( document ).ready( function( $ ) {
 		}
 	});
 
-	// Display custom message field as per user selection.
-	$( "#mwb_membership_manage_content" ).on( "change", function() {
-
-		var selection = $( this ).val();
-
-		switch( selection ) {
-
-			case 'display_a_message':
-				$( "#mwb_membership_manage_contnet_display" ).show();
-				break;
-
-			default:
-				$( "#mwb_membership_manage_contnet_display" ).hide();
-				$( "#mwb_membership_manage_content_display_msg" ).val( "" );
-
-		}
-
-	});
-
+	
 	// Import CSV modal.
 	$( "#import_all_membership" ).on( "click", function( e ) {
 		e.preventDefault();
@@ -240,7 +209,7 @@ jQuery( document ).ready( function( $ ) {
 
 	});
 
-	// Image uploader in global settings.
+	// Image uploader in global settings email log.
 	$('#upload_img').click(function(e){
         e.preventDefault();
 	

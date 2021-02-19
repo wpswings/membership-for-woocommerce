@@ -37,7 +37,7 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 		<label for="member_actions"><strong><?php esc_html_e( 'Actions', 'membership-for-woocommerce' ); ?></strong></label>
 		<select name="member_actions" id="member_actions">
 			<option <?php echo esc_html( 'email' === $mem_action ? 'selected' : '' ); ?> value="email_invoice"><?php esc_html_e( 'Email invoice to customer', 'membership-for-woocommerce' ); ?></option>
-			<option <?php echo esc_html( 'resend_notif' === $mem_action ? 'selected' : '' ); ?> value="resend_notif"><?php esc_html_e( 'Resend invoice', 'membership-for-woocommerce' ); ?></option>
+			<!-- <option <?php //echo esc_html( 'resend_notif' === $mem_action ? 'selected' : '' ); ?> value="resend_notif"><?php //esc_html_e( 'Resend invoice', 'membership-for-woocommerce' ); ?></option> -->
 		</select>
 	</li>
 

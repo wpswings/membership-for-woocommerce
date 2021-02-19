@@ -619,8 +619,6 @@ class Membership_For_Woocommerce_Admin {
 			'mwb_membership_plan_name_access_type'   => array( 'default' => 'lifetime' ),
 			'mwb_membership_plan_duration'           => array( 'default' => '0' ),
 			'mwb_membership_plan_duration_type'      => array( 'default' => 'days' ),
-			'mwb_membership_plan_start'              => array( 'default' => '' ),
-			'mwb_membership_plan_end'                => array( 'default' => '' ),
 			'mwb_membership_plan_recurring'          => array( 'default' => '' ),
 			'mwb_membership_plan_access_type'        => array( 'default' => 'immediate_type' ),
 			'mwb_membership_plan_time_duration'      => array( 'default' => '0' ),
@@ -714,8 +712,6 @@ class Membership_For_Woocommerce_Admin {
 						'Plan_access_type',
 						'Plan_duration',
 						'Plan_duration_type',
-						'Plan_start_date',
-						'Plan_end_date',
 						'Plan_recurring',
 						'Plan_access_type',
 						'Plan_access_duration',
@@ -742,8 +738,6 @@ class Membership_For_Woocommerce_Admin {
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_name_access_type', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_duration', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_duration_type', true ),
-							get_post_meta( get_the_ID(), 'mwb_membership_plan_start', true ),
-							get_post_meta( get_the_ID(), 'mwb_membership_plan_end', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_recurring', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_access_type', true ),
 							get_post_meta( get_the_ID(), 'mwb_membership_plan_time_duration', true ),
@@ -844,8 +838,6 @@ class Membership_For_Woocommerce_Admin {
 					update_post_meta( $plan_id, 'mwb_membership_plan_name_access_type', $value['mwb_membership_plan_name_access_type'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_duration', $value['mwb_membership_plan_duration'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_duration_type', $value['mwb_membership_plan_duration_type'] );
-					update_post_meta( $plan_id, 'mwb_membership_plan_start', $value['mwb_membership_plan_start'] );
-					update_post_meta( $plan_id, 'mwb_membership_plan_end', $value['mwb_membership_plan_end'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_recurring', $value['mwb_membership_plan_recurring'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_access_type', $value['mwb_membership_plan_access_type'] );
 					update_post_meta( $plan_id, 'mwb_membership_plan_time_duration', $value['mwb_membership_plan_time_duration'] );
@@ -1040,6 +1032,33 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
+		// If manually completing membership then set its expiry date.
+		if ( 'complete' == $_POST['member_status'] ) {
+
+			// Getting current activation date.
+			$current_date = gmdate( 'Y-m-d' );
+
+			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
+
+			// Save expiry date in post.
+			if ( ! empty( $plan_obj ) ) {
+
+				if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+					update_post_meta( $post_id, 'member_expiry', 'Lifetime' );
+
+				} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
+
+					$expiry_date = strtotime( $current_date . $duration );
+
+					update_post_meta( $post_id, 'member_expiry', $expiry_date );
+				}
+			}
+
+		}
+
 		foreach ( $actions as $action => $value ) {
 
 			if ( array_key_exists( $action, $_POST ) ) {
@@ -1220,7 +1239,9 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'expiration':
-				echo 'expiry date';
+				$expiry = get_post_meta( $post_id, 'member_expiry', true );
+
+				echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				break;
 		}
 	}

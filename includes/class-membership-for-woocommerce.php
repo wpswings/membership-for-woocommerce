@@ -312,6 +312,8 @@ class Membership_For_Woocommerce {
 			// Cart discount.
 			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $plugin_public, 'mwb_membership_add_cart_discount' );
 
+			// Cron even to check membership expiry.
+			$this->loader->add_action( 'mwb_membership_expiry_check', $plugin_public, 'mwb_membership_cron_expiry_check' );
 		}
 	}
 

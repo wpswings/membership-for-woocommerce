@@ -149,6 +149,29 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 
 				// Updating status to complete.
 				update_post_meta( $member_id, 'member_status', 'complete' );
+
+				// Getting current activation date.
+				$current_date = gmdate( 'Y-m-d' );
+
+				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+
+				// Save expiry date in post.
+				if ( ! empty( $plan_obj ) ) {
+
+					if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+						update_post_meta( $member_id, 'member_expiry', 'Lifetime' );
+
+					} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+						$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
+
+						$expiry_date = strtotime( $current_date . $duration );
+
+						update_post_meta( $member_id, 'member_expiry', $expiry_date );
+					}
+				}
+
 				delete_user_meta( $user, 'members_tnx_details' );
 
 				// Send email invoice to customer.
@@ -164,7 +187,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 						);
 
 						$activity_class = new Membership_Activity_Helper( 'Email-logs', 'logger' );
-						$log_data       = $activity_class->create_log( 'Paypal smart buttons email failure', $error );
+						$activity_class->create_log( 'Paypal smart buttons email failure', $error );
 					}
 				}
 			} catch ( \Throwable $e ) {

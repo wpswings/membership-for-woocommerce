@@ -342,12 +342,12 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 							?>
 
 							<input type="hidden" id="mwb_membership_invoice_logo" name="mwb_membership_invoice_logo" value="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>">
-							<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload an Image', 'membership-for-woocommerce' ); ?>">
-							<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Image', 'membership-for-woocommerce' ); ?>">
+							<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload Logo', 'membership-for-woocommerce' ); ?>">
+							<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Logo', 'membership-for-woocommerce' ); ?>">
 							<div id="img_thumbnail">
-							<?php if ( '' !== $mwb_membership_invoice_logo ) { ?>
-								<img src="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>" width="60px" height="60px"/>
-							<?php } ?>     
+								<?php if ( '' !== $mwb_membership_invoice_logo ) { ?>
+									<img src="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>" width="60px" height="60px"/>
+								<?php } ?>     
 							</div>
 						</td>
 					</tr>

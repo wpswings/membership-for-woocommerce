@@ -72,8 +72,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<option <?php echo esc_html( 'lifetime' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="lifetime"><?php esc_html_e( 'Lifetime', 'membership-for-woocommerce' ); ?></option>
 
 					<option <?php echo esc_html( 'limited' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="limited"><?php esc_html_e( 'Limited', 'membership-for-woocommerce' ); ?></option>
-
-					<option <?php echo esc_html( 'date_ranged' === $mwb_membership_plan_access_type ? 'selected' : '' ); ?> value="date_ranged"><?php esc_html_e( 'Date Ranged', 'membership-for-woocommerce' ); ?></option>
 				</select>
 			</td>
 		</tr>
@@ -107,46 +105,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</td>
 		</tr>
 		<!-- Plan Duration End. -->
-
-		<!-- Plan Date Range start -->
-		<tr valign="top" id="mwb_membership_date_range_start" style="display: none;">
-
-			<th scope="row" class="titledesc">
-				<label for="mwb_membership_plan_start_date"><?php esc_html_e( 'Start Date', 'membership-for-woocommerce' ); ?></label>
-			</th>
-
-			<td class="forminp forminp-text">
-
-				<?php
-
-				$description = esc_html__( 'Provide the Start date of the plan.', 'membership-for-woocommerce' );
-
-				$instance->tool_tip( $description );
-
-				?>
-
-				<input type="date" id="mwb_membership_plan_start" name="mwb_membership_plan_start" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_start'] ); ?>" >
-			</td>
-		</tr>
-		<tr id="mwb_membership_date_range_end" style="display: none;">
-			<th scope="row" class="titledesc">
-				<label for="mwb_membership_plan_end_date"><?php esc_html_e( 'End Date', 'membership-for-woocommerce' ); ?></label>
-			</th>
-
-			<td class="forminp forminp-text">
-
-				<?php
-
-				$description = esc_html__( 'Provide the End date of the plan.', 'membership-for-woocommerce' );
-
-				$instance->tool_tip( $description );
-
-				?>
-
-				<input type="date" id="mwb_membership_plan_end" name="mwb_membership_plan_end" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_end'] ); ?>" >
-			</td>
-		</tr>
-		<!-- Plan Date Range End. -->
 
 		<!-- Recurring plan start -->
 		<tr id="mwb_membership_recurring_plan" style="display: none" valign="top">

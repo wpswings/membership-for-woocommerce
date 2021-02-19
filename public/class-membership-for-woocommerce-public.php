@@ -1353,5 +1353,50 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 	}
+
+	/**
+	 * Check membership expiration on daily basis.
+	 */
+	public function mwb_membership_cron_expiry_check() {
+
+		// Get all limited memberships.
+		$limited_members = get_posts(
+			array(
+				'numberposts' => -1,
+				'fields'      => 'ids', // return only ids.
+				'post_type'   => 'mwb_cpt_members',
+				'order'       => 'ASC',
+				'meta_query'  => array(
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'member_expiry',
+							'compare' => 'EXISTS',
+						),
+						array(
+							'key'     => 'member_expiry',
+							'value'   => 'Lifetime',
+							'compare' => '!=',
+						),
+					),
+				),
+			)
+		);
+
+		if ( ! empty( $limited_members ) && is_array( $limited_members ) && count( $limited_members ) ) {
+
+			foreach ( $limited_members as $member_id ) {
+
+				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
+
+				$current_date = time();
+
+				if ( $expiry_date < $current_date ) {
+					// Set member status to Expired.
+					update_post_meta( $member_id, 'member_status', 'expired' );
+				}
+			}
+		}
+	}
 }
 // End of class.
