@@ -63,7 +63,7 @@ $existing_plans = get_posts( $args );
 				<tr>
 					<th><label><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
-						<?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_price ) ); ?>
+						<?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_price ) ); ?>
 					</td>
 				</tr>
 

@@ -25,9 +25,6 @@ if ( ! isset( $_GET['membership'] ) ) {
 	$user        = ! empty( $user_id ) ? $user_id : '';
 	$memberships = ! empty( $membership_ids ) ? $membership_ids : array();
 
-
-
-
 	if ( $memberships ) : ?>
 
 		<table class="woocommerce-orders-table woocommerce-MyAccount-orders shop_table shop_table_responsive my_account_orders account-orders-table">
@@ -106,12 +103,13 @@ if ( ! isset( $_GET['membership'] ) ) {
 
 } elseif ( isset( $_GET['membership'] ) ) {
 
-	$membership_id = ! empty( $_GET['membership'] ) ? $_GET['membership'] : '';
+	$membership_id = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
 	$membership_data = get_post_meta( $membership_id );
 	$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 	$membership_status  = get_post_meta( $membership_id, 'member_status', true );
+	$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
@@ -121,9 +119,13 @@ if ( ! isset( $_GET['membership'] ) ) {
 		return;
 	}
 
-
-	?>
-	<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
+	if ( 'Lifetime' == $membership_id ) {
+		?>
+		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
+		<?php } else {
+		?>
+		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'Y-m-d', $membership_expiry ) ); ?> </mark>.</p>
+		<?php } ?>
 
 	<section class="woocommerce-order-details">
 		<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Membership details', 'membership-for-woocommerce' ); ?></h2>

@@ -9,8 +9,6 @@
  * @subpackage Membership_For_Woocommerce/public
  */
 
-use Braintree\Exception\TooManyRequests;
-
 /**
  * The public-facing functionality of the plugin.
  *
@@ -166,7 +164,6 @@ class Membership_For_Woocommerce_Public {
 				)
 			);
 
-			//wp_enqueue_script( 'jquery-validate-min', plugin_dir_url( __FILE__ ) . 'js/jquery.validate.min.js', array( 'jquery' ), $this->version, false );
 		}
 	}
 
@@ -302,7 +299,7 @@ class Membership_For_Woocommerce_Public {
 
 		$user = wp_get_current_user();
 
-		if ( $this->global_class->plans_exist_check() === true ) {
+		if ( $this->global_class->plans_exist_check() == true ) {
 
 			$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 
@@ -310,10 +307,10 @@ class Membership_For_Woocommerce_Public {
 			if ( true == $is_membership_product ) {
 
 				// Not a member.
-				if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles, true ) ) {
+				if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
 					// If non logged in or not a member.
-					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids(), true ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 						$is_purchasable = false;
 					}
@@ -349,11 +346,11 @@ class Membership_For_Woocommerce_Public {
 
 		$user = wp_get_current_user();
 
-		if ( $this->global_class->plans_exist_check() === true ) {
+		if ( $this->global_class->plans_exist_check() == true ) {
 
-			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles, true ) ) {
+			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
-				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids(), true ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
+				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) {
 
 					return '';
 				}
@@ -373,7 +370,7 @@ class Membership_For_Woocommerce_Public {
 		global $product;
 		$user = wp_get_current_user();
 
-		if ( ! $product->is_purchasable() && $this->global_class->plans_exist_check() === true ) {
+		if ( ! $product->is_purchasable() && $this->global_class->plans_exist_check() == true ) {
 
 			if ( function_exists( 'is_product' ) && is_product() ) {
 
@@ -387,7 +384,7 @@ class Membership_For_Woocommerce_Public {
 
 					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
-					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' === get_post_status( $mwb_membership_default_plans_page_id ) ) {
+					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
 						$page_link = get_page_link( $mwb_membership_default_plans_page_id );
 					}
 
@@ -430,7 +427,7 @@ class Membership_For_Woocommerce_Public {
 
 													$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-													if ( ! empty( $active_plan[ 'ID' ] ) && $active_plan['ID'] == $plan['ID'] ) {
+													if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 
 														?>
 														<div class="product-meta product-meta-review">
@@ -460,7 +457,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-						if ( false === $page_link_found && ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
+						if ( false == $page_link_found && ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
 
 							if ( has_term( $target_cat_ids, 'product_cat' ) ) {
 
@@ -469,7 +466,7 @@ class Membership_For_Woocommerce_Public {
 									$target_ids = array();
 								}
 
-								if ( ! in_array( $product->get_id(), $target_ids, true ) ) { // checking if the product does not exist in target id of a plan.
+								if ( ! in_array( $product->get_id(), $target_ids ) ) { // checking if the product does not exist in target id of a plan.
 
 									$page_link = add_query_arg(
 										array(
@@ -498,7 +495,7 @@ class Membership_For_Woocommerce_Public {
 
 														$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-														if ( ! empty( $active_plan[ 'ID' ] ) && $active_plan['ID'] == $plan['ID'] ) {
+														if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 
 															?>
 															<div class="product-meta product-meta-review">
@@ -537,6 +534,11 @@ class Membership_For_Woocommerce_Public {
 
 	/**
 	 * Display membership tag on products which are offered in any membership on shop page.
+	 *
+	 * @param bool   $return_status Returns current products purchaseable status.
+	 * @param object $_product Product object.
+	 *
+	 * @since '1.0.0'
 	 */
 	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
@@ -547,7 +549,7 @@ class Membership_For_Woocommerce_Public {
 			$product = $_product;
 		}
 
-		if ( $this->global_class->plans_exist_check() === true ) {
+		if ( $this->global_class->plans_exist_check() == true ) {
 
 			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
 					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
@@ -556,7 +558,6 @@ class Membership_For_Woocommerce_Public {
 			$data = $this->global_class->run_query( $query );
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
-
 
 				$output = '';
 
@@ -667,7 +668,7 @@ class Membership_For_Woocommerce_Public {
 			// Get plan details.
 			$plan_title    = get_the_title( $plan_id );
 			$plan_price    = get_post_meta( $plan_id, 'mwb_membership_plan_price', true );
-			$plan_currency = get_woocommerce_currency();
+			$plan_currency = get_woocommerce_currency_symbol();
 			$plan_desc     = get_post_field( 'post_content', $plan_id );
 
 			// Plans default text.
@@ -759,7 +760,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_price ) ) {
 
-				$price .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency() ), esc_html( $plan_price ) ) . '</div>';
+				$price .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_price ) ) . '</div>';
 			} else {
 
 				$price .= '<div class="mwb_membership_plan_content_price">' . $content . '</div>';
@@ -951,7 +952,7 @@ class Membership_For_Woocommerce_Public {
 
 		foreach ( $rates as $rate_id => $rate ) {
 
-			if ( 'mwb_membership_shipping' === $rate->method_id ) {
+			if ( 'mwb_membership_shipping' == $rate->method_id ) {
 
 				$all_methods[ $rate_id ] = $rate;
 				break;
@@ -988,7 +989,7 @@ class Membership_For_Woocommerce_Public {
 			$extensions = ! empty( $settings['support_formats'] ) ? $settings['support_formats'] : array();
 
 			// If jpg file is selected and jpg is one of supported formats, 'jpeg' will be added as supported extension for jpg.
-			if ( 'jpg' === $file_ext && in_array( 'jpg', $extensions, true ) ) {
+			if ( 'jpg' == $file_ext && in_array( 'jpg', $extensions, true ) ) {
 
 				// if jpeg is already on of the supported formats, then don't add the extra supported extension.
 				if ( ! in_array( 'jpeg', $extensions, true ) ) {
@@ -1216,7 +1217,7 @@ class Membership_For_Woocommerce_Public {
 
 		$user_meta = '';
 
-		if ( ! empty( $tr_details ) && 0 !== $user_id ) {
+		if ( ! empty( $tr_details ) && 0 != $user_id ) {
 
 			$user_meta = update_user_meta( $user_id, 'members_tnx_details', $tr_details );
 		}

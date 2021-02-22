@@ -27,7 +27,7 @@ if ( ! empty( $post_id ) ) {
 	$plan_description = get_post_field( 'post_content', $post_id );
 	$plan_access_type = get_post_meta( $post_id, 'mwb_membership_plan_name_access_type', true );
 	$plan_user_access = get_post_meta( $post_id, 'mwb_membership_plan_access_type', true );
-	$currency         = get_woocommerce_currency();
+	$currency         = get_woocommerce_currency_symbol();
 
 	// Html for preview mode.
 	$output .= '<h2>' . esc_html( $plan_title ) . '</h2>';

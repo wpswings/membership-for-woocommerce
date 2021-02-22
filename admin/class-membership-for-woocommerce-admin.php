@@ -571,7 +571,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		// Return on post trash, quick-edit, new post.
-		if ( empty(  $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
+		if ( empty( $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
 			return;
 		}
 
@@ -603,6 +603,39 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
+	}
+
+	/**
+	 * Add notices for free membership to plans.
+	 */
+	public function mwb_membership_shipping_notice() {
+
+		global $post;
+
+		$screen = get_current_screen();
+
+		$post_id = isset( $_GET['post'] ) ? sanitize_text_field( wp_unslash( $_GET['post'] ) ) : '';
+
+		if ( ! empty( $post_id ) ) {
+
+			$free_shipping = get_post_meta( $post_id, 'mwb_memebership_plan_free_shipping', true );
+
+			$page_id = $screen->id;
+
+			if ( 'mwb_cpt_membership' == $page_id ) {
+
+				if ( 'publish' == $post->post_status ) {
+
+					if ( ! empty( $free_shipping ) && 'yes' == $free_shipping ) {
+						?>
+						<div class="notice notice-success is-dismissible mwb-notice"> 
+							<p><strong><?php esc_html_e( 'Membership plan published successfully, Now you can manage membership free shipping ', 'membership-for-woocommerce' ); ?></strong></p>
+						</div>
+						<?php
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -1241,7 +1274,12 @@ class Membership_For_Woocommerce_Admin {
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
 
-				echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+				if ( 'Lifetime' == $expiry ) {
+					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
+				} else {
+					echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+				}
+
 				break;
 		}
 	}
@@ -1258,11 +1296,13 @@ class Membership_For_Woocommerce_Admin {
 		check_ajax_referer( 'preview-nonce', 'nonce' );
 
 		$member_id = ! empty( $_GET['post_id'] ) ? sanitize_text_field( wp_unslash( $_GET['post_id'] ) ) : '';
+		$instance  = $this->global_class;
 
 		wc_get_template(
 			'templates/admin-ajax-templates/members-plans-preview.php',
 			array(
 				'member_id' => $member_id,
+				'instance'  => $instance,
 			),
 			'',
 			MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN

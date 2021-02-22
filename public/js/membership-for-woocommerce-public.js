@@ -49,12 +49,11 @@ jQuery( document ).ready( function( $ ) {
 
 		// Opens payment fields in modal when selected.
 		$( '.mwb_membership_payment_modal' ).on( "change", ".payment_method_select", function( e ) {
-		alert('hi');
+
 			$payment_methods = $(this).val();
-			alert( $payment_methods );
 			
-			$( ".payment_box" ).hide();
-			$( "div.payment_method_" + $payment_methods ).show();
+			$( ".payment_box" ).slideUp();
+			$( "div.payment_method_" + $payment_methods ).slideDown();
 
 			// Display paypal smart buttons is paypal checkout selected. 
 			if ( $payment_methods == 'membership-paypal-smart-buttons' ) {
@@ -325,37 +324,38 @@ jQuery( document ).ready( function( $ ) {
     // });
 
     //============================================== second
-    $('.mwb_membership_payment_modal > li > .wc_payment_method,.mwb_membership_payment_modal > li > .wc_payment_method label').hide();
+    // $('.mwb_membership_payment_modal > li > .wc_payment_method,.mwb_membership_payment_modal > li > .wc_payment_method label').hide();
 
-    $('.mwb_membership_payment_modal > li').click(function() {
-        var progress_bar = "<progress min='0' max='100' value='0' class='mwb_mfw_progress-indicator'></progress>";
-		$('#paypal-button-container').css('display', 'none');
-		console.log( this );
-        if ($(this).hasClass("active")) {
-            $(this).removeClass("active").find(".payment_box").slideUp();
-            $('#progress-wrapper').empty();
-        } else {
-            $('#progress-wrapper').empty();
-            $(".mwb_membership_payment_modal > li.active .payment_box").slideUp();
-            $(".mwb_membership_payment_modal > li.active").removeClass("active");
-            $(this).addClass("active").find(".payment_box").slideDown();
-            $(this).find('.input-radio').prop("checked", true);
-            $(this).find('#progress-wrapper').append(progress_bar);
-            if ($(this).hasClass('payment_method_membership-paypal-smart-buttons')) {
-				$('#paypal-button-container').css('display', 'block');
+    // $('.mwb_membership_payment_modal > li').click(function() {
+    //     var progress_bar = "<progress min='0' max='100' value='0' class='mwb_mfw_progress-indicator'></progress>";
+	// 	$('#paypal-button-container').css('display', 'none');
+	// 	console.log( this );
+    //     if ($(this).hasClass("active")) {
+    //         $(this).removeClass("active").find(".payment_box").slideUp();
+    //         $('#progress-wrapper').empty();
+    //     } else {
+    //         $('#progress-wrapper').empty();
+    //         $(".mwb_membership_payment_modal > li.active .payment_box").slideUp();
+    //         $(".mwb_membership_payment_modal > li.active").removeClass("active");
+    //         $(this).addClass("active").find(".payment_box").slideDown();
+    //         $(this).find('.input-radio').prop("checked", true);
+    //         $(this).find('#progress-wrapper').append(progress_bar);
+    //         if ($(this).hasClass('payment_method_membership-paypal-smart-buttons')) {
+	// 			$('#paypal-button-container').css('display', 'block');
 				
-			}
+	// 		}
 			
-			if ( $(this).data( 'id' ) == 'membership-paypal-smart-buttons' ) {
-				$( '#membership_proceed_payment' ).css( 'display', 'none' );
-			} else {
-				$( '#membership_proceed_payment' ).css( 'display', 'block' );
-			}
-        }
-        return false;
+	// 		if ( $(this).data( 'id' ) == 'membership-paypal-smart-buttons' ) {
+	// 			$( '#membership_proceed_payment' ).css( 'display', 'none' );
+	// 		} else {
+	// 			$( '#membership_proceed_payment' ).css( 'display', 'block' );
+	// 		}
+    //     }
+    //     return false;
 
-    });
-    // hover abbreviation on the shop catelogue
+    // });
+
+    // Hover abbreviation on the shop catelogue
 
     $('.mwb_mfw_membership_tool_tip_wrapper').on('mouseenter', function() {
         let abbr_content = $(this).children('.mwb_mfw_membership_tool_tip').html().length;

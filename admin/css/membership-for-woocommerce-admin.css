@@ -62,14 +62,14 @@ a#post-preview:focus,
 
 /*Input fields styling*/
 .postbox-header {
-    border-bottom: 2px solid #0071a1;
+    border-bottom: 2px solid #FF7A59;
 }
 
 .meta-box-sortables input[type=text],
 .meta-box-sortables input[type=number],
 .mwb_membership_plans_creation_setting input[type=text] {
     border: none;
-    border-bottom: 2px solid #0071a1;
+    border-bottom: 2px solid #FF7A59;
     border-radius: 0px;
     border-radius: 0px;
     background: none;
@@ -89,7 +89,7 @@ a#post-preview:focus,
     width: 33px;
     height: 20px;
     border-radius: 35px;
-    background-color: rgb(0 113 161 / 0.3);
+    background-color: #33475B;
     position: relative;
 }
 
@@ -103,7 +103,7 @@ a#post-preview:focus,
     background-color: #fff;
     z-index: 1;
     border-radius: 50%;
-    box-shadow: 1px 0px 3px #0071a1;
+    box-shadow: 1px 0px 3px #FF7A59;
     cursor: pointer;
     transition: linear 0.2s;
 }
@@ -122,7 +122,7 @@ a#post-preview:focus,
 
 .postbox-container input[type=checkbox]:checked,
 .mwb_membership_plans_creation_setting input[type=checkbox]:checked {
-    background-color: #0071a1;
+    background-color: #FF7A59;
 }
 
 /*Tool tip*/
@@ -148,13 +148,13 @@ a#post-preview:focus,
 .postbox-container .mwb_membership_plan_products h1 {
     font-size: 32px;
     font-weight: 600;
-    background-color: rgb(0 114 163 / 0.6);
+    background-color: ;
     color: #ffffff;
 }
 
 #poststuff h2.mwb_membership_offer_title {
     color: #ffffff;
-    background-color: #0071a1;
+    background-color: #FF7A59;
     max-width: 320px;
     font-size: 15px;
     margin: 15px 0px;
@@ -163,7 +163,7 @@ a#post-preview:focus,
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 2px;
-    border-left: 6px solid #055e84;
+    border-left: 6px solid #33475B;
 }
 
 /*Indicators of Admin pannel*/
@@ -177,7 +177,7 @@ a#post-preview:focus,
     display: flex;
     justify-content: center;
     border-radius: 50%;
-    color: #0071a1;
+    color: #FF7A59;
 }
 
 .handle-actions.hide-if-no-js {
@@ -188,11 +188,11 @@ a#post-preview:focus,
 /*Table row In admin pannel*/
 .form-table.mwb_membership_plans_creation_setting tr:nth-child(even),
 .mwb_membership_table.mwb_membership_shortcodes tr:nth-child(even) {
-    background-color: rgb(0 113 161 / 0.2);
+    background-color: #ffffff;
 }
 
 .form-table.mwb_membership_plans_creation_setting tr:last-child {
-    border-bottom: 2px solid #0071a1;
+    border-bottom: 2px solid #FF7A59;
 }
 
 .postbox .inside {
@@ -210,7 +210,7 @@ a#post-preview:focus,
     font-family: sans-serif;
     font-size: 15px;
     letter-spacing: 1px;
-    color: #0071a1;
+    color: #33475B;
 }
 
 .new_created_offers table {
@@ -223,17 +223,17 @@ a#post-preview:focus,
 }
 
 .new_created_offers.mwb_membership_offers table tr:nth-child(odd) {
-    background-color: rgb(0 113 159 / 0.2);
+    background-color: #ffffff;
     display: block;
 }
 
 /*Select box styling*/
 td.forminp.forminp-text .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border: 2px solid #0071a1;
+    border: 2px solid #FF7A59;
 }
 
 .selection .select2-selection.select2-selection--multiple {
-    border: 2px solid #0071a1;
+    border: 2px solid #FF7A59;
     margin: 10px auto;
     padding: 10px 0px;
     background-color: inherit;
@@ -268,7 +268,7 @@ span.select2.select2-container.select2-container--default {
 
 .select2-selection .select2-selection__rendered li.select2-selection__choice {
     border: none;
-    background-color: #0071a1;
+    background-color: #FF7A59;
     color: #ffffff;
 }
 
@@ -279,7 +279,7 @@ span.select2-container--default .select2-selection--multiple .select2-selection_
 /*radio button styling*/
 .postbox-container input[type=radio] {
     background-color: inherit;
-    border: 1px solid #0071a1;
+    border: 1px solid #FF7A59;
     width: 20px;
     height: 20px;
     vertical-align: -webkit-baseline-middle;
@@ -287,7 +287,7 @@ span.select2-container--default .select2-selection--multiple .select2-selection_
 }
 
 .postbox-container input[type=radio]:before {
-    background-color: #0071a1;
+    background-color: #FF7A59;
     margin: 5px;
 }
 
@@ -299,7 +299,7 @@ a#post-preview,
 .wrap a.page-title-action:hover,
 #wpbody-content input[type=submit] {
     border: 1px solid #ffffff;
-    background-color: #0071a1;
+    background-color: #FF7A59;
     color: #ffffff;
     transition: linear background-color 0.2s;
 }
@@ -309,15 +309,15 @@ a#post-preview:hover,
 #posts-filter input[type=submit]:hover,
 .wrap a.page-title-action,
 #wpbody-content input[type=submit]:hover {
-    border: 1px solid #0071a1;
+    border: 1px solid #FF7A59;
     background-color: inherit;
-    color: #0071a1;
+    color: #FF7A59;
 }
 
 /*All plan page status button style*/
 
 .membership_status.column-membership_status {
-    /* background-color: #0071a1;
+    /* background-color: #FF7A59;
     color: #fff; */
     border-radius: 2px;
     padding: 7px;
@@ -336,7 +336,7 @@ td.membership_view.column-membership_view,
 
 .widefat thead tr th,
 .widefat tfoot tr th {
-    color: #0071a1;
+    color: #FF7A59;
 }
 
 #import_all_membership {
@@ -355,13 +355,13 @@ div #TB_ajaxWindowTitle {
     font-size: 21px;
     padding: 13px 29px 13px 10px;
     letter-spacing: 2px;
-    border-bottom: 2px solid #0071a1;
-    color: #0071a1;
+    border-bottom: 2px solid #FF7A59;
+    color: #FF7A59;
 }
 
 #TB_ajaxContent h2 {
     text-align: center;
-    background-color: #0071a1;
+    background-color: #FF7A59;
     padding: 15px 0px;
     color: #ffffff;
     font-family: sans-serif;
@@ -424,7 +424,7 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
 
 input#upload_csv_file:hover {
     background: #ffffff;
-    color: #0071a1;
+    color: #FF7A59;
 }
 
 .import_csv_field_wrapper>input {
@@ -467,7 +467,7 @@ input#upload_csv_file:hover {
 
 .mwb_membership_supported_gateways h2 {
     font-size: 25px;
-    background-color: #0071a1;
+    background-color: #FF7A59;
     margin-right: 15px;
     color: #ffffff;
 }
@@ -476,7 +476,7 @@ input#upload_csv_file:hover {
 
     font-size: 15px;
     font-family: sans-serif;
-    color: #0071a1;
+    color: #FF7A59;
 }
 
 .button_hide {

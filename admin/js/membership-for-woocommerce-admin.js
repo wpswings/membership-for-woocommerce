@@ -11,15 +11,6 @@ jQuery( document ).ready( function( $ ) {
 
 			case 'limited':
 				$( "#mwb_membership_duration" ).show();
-				$( "#mwb_membership_date_range_start" ).hide();
-				$( "#mwb_membership_date_range_end" ).hide();
-				$( "#mwb_membership_recurring_plan" ).show();
-				break;
-			
-			case 'date_ranged':
-				$( "#mwb_membership_date_range_start" ).show();
-				$( "#mwb_membership_date_range_end" ).show();
-				$( "#mwb_membership_duration" ).hide();
 				$( "#mwb_membership_recurring_plan" ).show();
 				break;
 
@@ -52,28 +43,11 @@ jQuery( document ).ready( function( $ ) {
 
 			case 'limited':
 				$( "#mwb_membership_duration" ).show();
-				$( "#mwb_membership_date_range_start" ).hide();
-				$( "#mwb_membership_plan_start" ).val( "" );
-				$( "#mwb_membership_date_range_end" ).hide();
-				$( "#mwb_membership_plan_end" ).val( "" );
-				$( "#mwb_membership_recurring_plan" ).show();
-				break;
-			
-			case 'date_ranged':
-				$( "#mwb_membership_date_range_start" ).show();
-				$( "#mwb_membership_date_range_end" ).show();
-				$( "#mwb_membership_duration" ).hide();
-				$( "#mwb_membership_plan_duration" ).val( "" );
-				$( "#mwb_membership_plan_duration_type" ).prop( "selectedIndex",0 );
 				$( "#mwb_membership_recurring_plan" ).show();
 				break;
 
 			default:
 				$( "#mwb_membership_duration" ).hide();
-				$( "#mwb_membership_date_range_start" ).hide();
-				$( "#mwb_membership_date_range_end" ).hide();
-				$( "#mwb_membership_plan_start" ).val( "" );
-				$( "#mwb_membership_plan_end" ).val( "" );
 				$( "#mwb_membership_plan_duration" ).val( "" );
 				$( "#mwb_membership_plan_duration_type" ).prop( "selectedIndex",0 );
 				$( "#mwb_membership_recurring_plan" ).hide();
@@ -242,8 +216,6 @@ jQuery( document ).ready( function( $ ) {
         $('#img_thumbnail').find('img').attr( 'src', '' );
 		$('#upload_img').removeClass('button_hide') ; 
 		$('#remove_img').addClass('button_hide') ;
-		
-
     });
 
 });
