@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
+
 global $post;
 
 ?>
@@ -238,12 +239,12 @@ global $post;
 			<!-- Offer categories section end. -->
 
 			<!-- Accessibility type start-->
-			<tr>
+			<tr id="mfw_membership_access_type">
 				<th scope="row" class="titledesc">
 					<label for="mwb_membership_offer_access_type"><?php esc_html_e( 'Accessibility Type', 'membership-for-woocommerce' ); ?></label>
 				</th>
 
-				<td>
+				<td id="mfw_offer_access_type">
 
 				<?php
 
@@ -327,7 +328,7 @@ global $post;
 						<label for="mwb_membership_plan_free_shipping"><?php esc_html_e( 'Allow Free Shipping', 'membership-for-woocommerce' ); ?></label>
 					</th>
 
-					<td class="forminp forminp-text">
+					<td id="mfw_free_shipping" class="forminp forminp-text">
 
 						<?php
 

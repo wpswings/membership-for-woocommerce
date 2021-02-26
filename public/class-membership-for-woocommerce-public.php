@@ -48,6 +48,16 @@ class Membership_For_Woocommerce_Public {
 	private $under_review_products;
 
 	/**
+	 * Query data handler.
+	 *
+	 * @since 1.0.0
+	 * @var  array
+	 * @access private
+	 */
+	private $custom_query_data;
+
+
+	/**
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
@@ -61,6 +71,8 @@ class Membership_For_Woocommerce_Public {
 		$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
 
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
+
+		$this->custom_query_handler();
 
 	}
 
@@ -165,6 +177,18 @@ class Membership_For_Woocommerce_Public {
 			);
 
 		}
+	}
+
+	/**
+	 * Custom query handler.
+	 */
+	protected function custom_query_handler() {
+
+		$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
+					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
+					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
+
+		$this->custom_query_data = $this->global_class->run_query( $query );
 	}
 
 	/**
@@ -374,11 +398,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( function_exists( 'is_product' ) && is_product() ) {
 
-				$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
-						AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
-						AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
-
-				$data = $this->global_class->run_query( $query );
+				$data = $this->custom_query_data;
 
 				if ( ! empty( $data ) && is_array( $data ) ) {
 
@@ -443,13 +463,13 @@ class Membership_For_Woocommerce_Public {
 									// Show options to buy plans.
 									echo '<div style="clear: both">
 											<div style="margin-top: 10px;">
-												<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+												<a class="button alt mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 											</div>
 										</div>';
 								} else {
 									echo '<div style="clear: both">
 											<div style="margin-top: 10px;">
-												<a class="button alt" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
+												<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 											</div>
 										</div>';
 									break;
@@ -511,13 +531,13 @@ class Membership_For_Woocommerce_Public {
 										// Show options to buy plans.
 										echo '<div style="clear: both">
 												<div style="margin-top: 10px;">
-													<a class="button alt" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+													<a class="button alt mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 												</div>
 											</div>';
 									} else {
 										echo '<div style="clear: both">
 												<div style="margin-top: 10px;">
-													<a class="button alt" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
+													<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 												</div>
 											</div>';
 										break;
@@ -551,11 +571,7 @@ class Membership_For_Woocommerce_Public {
 
 		if ( $this->global_class->plans_exist_check() == true ) {
 
-			$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
-					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
-					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
-
-			$data = $this->global_class->run_query( $query );
+			$data = $this->custom_query_data;
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
 
@@ -1277,9 +1293,15 @@ class Membership_For_Woocommerce_Public {
 
 						$membership_status = get_post_meta( $membership_id, 'member_status', true );
 
-						if ( 'complete' != $membership_status ) {
+						if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'expired', 'pending' ) ) ) {
+							$access = false;
+
+						} elseif ( 'hold' == $membership_status ) {
+
 							$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
 							array_push( $this->under_review_products, $product->get_id() );
+							array_unique( $this->under_review_products, $product->get_id() );
+							$access = false;
 						}
 
 						break;
@@ -1393,11 +1415,81 @@ class Membership_For_Woocommerce_Public {
 				$current_date = time();
 
 				if ( $expiry_date < $current_date ) {
+
 					// Set member status to Expired.
 					update_post_meta( $member_id, 'member_status', 'expired' );
+				}
+			}
+		}
+
+		// Expired memberships.
+		$expired_members = get_posts(
+			array(
+				'numberposts' => -1,
+				'fields'      => 'ids', // return only ids.
+				'post_type'   => 'mwb_cpt_members',
+				'order'       => 'ASC',
+				'meta_query'  => array(
+					array(
+						'relation' => 'AND',
+						array(
+							'key'     => 'member_status',
+							'compare' => 'EXISTS',
+						),
+						array(
+							'key'     => 'member_status',
+							'value'   => 'expired',
+							'compare' => '==',
+						),
+					),
+				),
+			)
+		);
+
+		$already_processed_users = array();
+
+		if ( ! empty( $expired_members ) && is_array( $expired_members ) && count( $expired_members ) ) {
+
+			foreach ( $expired_members as $key => $id ) {
+
+				$author_id = get_post_field( 'post_author', $id );
+				$user      = get_user_by( 'id', $author_id );
+
+				if ( false !== $user ) {
+
+					// If already processed then ignore.
+					if ( in_array( $author_id, $already_processed_users ) ) {
+						continue;
+					}
+
+					$memberships = get_user_meta( $author_id, 'mfw_membership_id', true );
+					array_push( $already_processed_users, $author_id );
+
+					if ( 1 == count( $memberships ) ) {
+
+						$user->remove_role( 'member' );
+					} else {
+
+						$remove_role = true;
+
+						foreach ( $memberships as $key => $m_id ) {
+
+							$status = get_post_meta( $m_id, 'member_status', true );
+
+							if ( 'expired' != $status ) {
+
+								$remove_role = false;
+								break;
+							}
+						}
+
+						// If removal required then remove role.
+						$user->remove_role( 'member' );
+					}
 				}
 			}
 		}
 	}
 }
 // End of class.
+

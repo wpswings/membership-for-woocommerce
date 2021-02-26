@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <!-- Heading end. -->
 
 <!-- Shortcodes start -->
-<div class="mwb_membership_table mwb_membership_shortcodes">
+<div class="mwb_membership_table mwb_membership_shortcodes_table">
 	<table class="form-table mwb_membership_plan_shortcodes">
 		<tbody>
 

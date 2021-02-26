@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Gateway start. -->
 <div class="mwb_membership_manage_gateways">
-	<a href="<?php echo esc_html( admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ); ?>"><?php esc_html_e( 'Setup Membership Supported Gateways->', 'membership-for-woocommerce' ); ?></a>
+	<a href="<?php echo esc_html( admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ); ?>"><?php esc_html_e( 'Setup Membership Supported Gateways', 'membership-for-woocommerce' ); ?></a>
 </div>
 <div class="mwb_membership_table mwb_membership_gateways">
 	<table class="form-table mwb_membership_plan_gateways">

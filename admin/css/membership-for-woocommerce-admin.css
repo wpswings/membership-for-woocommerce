@@ -17,29 +17,6 @@
 
 /*Custom designing for admin pannel start*/
 
-/*Adding Custom Scroll bar to the whole page*/
-
-/* width */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: rgb(0 113 161 / 0.2);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(0 113 161 / 0.8);
-    border-radius: 35px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(0 113 161 / 1);
-}
-
 /*Removing Focus*/
 select#mwb_membership_plan_offer_price_type_id:focus,
 #mwb_membership_plan_access_type:focus,
@@ -55,25 +32,39 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
 a#post-preview:focus,
 #posts-filter input[type=submit]:focus,
 .wrap a.page-title-action:focus,
-#wpbody-content input[type=submit]:focus {
+#wpbody-content input[type=submit]:focus,
+#wpbody-content input[type=text]:focus,
+#wpbody-content input[type=email]:focus,
+#wpbody-content input[type=tel]:focus,
+#wpbody-content input[type=radio]:focus,
+#wpbody-content input[type=button]:focus,
+#wpbody-content textarea:focus,
+#wpbody-content select:focus,
+#wpbody-content input[type=number]:focus,
+.mwb_membership_gateway_div .button:focus,
+.mwb_membership_manage_gateways a:focus {
     box-shadow: none;
     outline: none;
 }
 
 /*Input fields styling*/
-.postbox-header {
-    border-bottom: 2px solid #FF7A59;
-}
 
 .meta-box-sortables input[type=text],
-.meta-box-sortables input[type=number],
-.mwb_membership_plans_creation_setting input[type=text] {
+.meta-box-sortables input[type=number] {
     border: none;
-    border-bottom: 2px solid #FF7A59;
+    border-bottom: 2px solid #1a3365;
     border-radius: 0px;
     border-radius: 0px;
     background: none;
     padding: 0px;
+}
+
+.meta-box-sortables input[type=text] {
+    max-width: 100px;
+    border: none;
+    border: 1px solid #1a3365;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .meta-box-sortables input[type=text]:focus,
@@ -89,7 +80,7 @@ a#post-preview:focus,
     width: 33px;
     height: 20px;
     border-radius: 35px;
-    background-color: #33475B;
+    background-color: #1a3365;
     position: relative;
 }
 
@@ -103,7 +94,7 @@ a#post-preview:focus,
     background-color: #fff;
     z-index: 1;
     border-radius: 50%;
-    box-shadow: 1px 0px 3px #FF7A59;
+    box-shadow: 1px 0px 3px #1a3365;
     cursor: pointer;
     transition: linear 0.2s;
 }
@@ -122,7 +113,7 @@ a#post-preview:focus,
 
 .postbox-container input[type=checkbox]:checked,
 .mwb_membership_plans_creation_setting input[type=checkbox]:checked {
-    background-color: #FF7A59;
+    background-color: #F37E21;
 }
 
 /*Tool tip*/
@@ -133,10 +124,7 @@ a#post-preview:focus,
 
 /*Headings in Admin pannel*/
 
-#members_meta_box .postbox-header h2,
 .mwb_membership_plan_products h1,
-.postbox .postbox-header h2,
-.mwb_membership_global_settings h2,
 .mwb_membership_shortcodes h2 {
     font-size: 25px !important;
     font-family: sans-serif;
@@ -153,32 +141,48 @@ a#post-preview:focus,
 }
 
 #poststuff h2.mwb_membership_offer_title {
-    color: #ffffff;
-    background-color: #FF7A59;
+    color: #1a3365;
     max-width: 320px;
     font-size: 15px;
     margin: 15px 0px;
-    border-radius: 0px 6px 6px 0px;
-    text-align: center;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 2px;
-    border-left: 6px solid #33475B;
+    border-left: 6px solid #F37E21;
+    border-bottom: 2px solid #1a3365;
+}
+
+#members_meta_box .postbox-header h2,
+.mwb_membership_global_settings h2,
+.mwb_membership_supported_gateways h2,
+.mwb_membership_shortcodes h2,
+.mwb_membership_Overview h2 {
+    font-size: 18px !important;
+    font-family: sans-serif;
+    letter-spacing: 0.5px;
+    color: #1a3365;
+    border: none;
+    justify-content: left;
+}
+
+#members_meta_box .postbox-header,
+.mwb_membership_global_settings,
+.mwb_membership_supported_gateways,
+.mwb_membership_shortcodes,
+.mwb_membership_Overview {
+    box-shadow: 0px 2px 5px #c7c7c7;
+    padding: 10px 5px;
+    background-color: #ffffff;
+    border-left: 5px solid #1a3365;
+    margin: 0px 0px 10px;
+    width: 100%;
+}
+
+#members_meta_box .postbox-header {
+    width: unset;
 }
 
 /*Indicators of Admin pannel*/
-
-.order-higher-indicator,
-.postbox .handle-order-lower {
-    width: 20px;
-    height: 20px;
-    border: none;
-    padding: 0px;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    color: #FF7A59;
-}
 
 .handle-actions.hide-if-no-js {
     display: flex;
@@ -186,13 +190,78 @@ a#post-preview:focus,
 }
 
 /*Table row In admin pannel*/
-.form-table.mwb_membership_plans_creation_setting tr:nth-child(even),
-.mwb_membership_table.mwb_membership_shortcodes tr:nth-child(even) {
+.form-table.mwb_membership_plans_creation_setting tr:nth-child(even) {
     background-color: #ffffff;
 }
 
-.form-table.mwb_membership_plans_creation_setting tr:last-child {
-    border-bottom: 2px solid #FF7A59;
+.form-table.mwb_membership_plans_creation_setting tr:nth-child(odd) {
+    background-color: #f1f6ff;
+}
+
+#mwb_membership_recurring_plan,
+#mfw_membership_access_type {
+    position: relative;
+}
+
+#mwb_membership_recurring_plan:before,
+#mfw_membership_access_type:before {
+    content: "PRO";
+    font-size: 10px;
+    font-family: sans-serif;
+    position: absolute;
+    color: #ffffff;
+    letter-spacing: 2px;
+    top: 4px;
+    left: 0px;
+    padding: 2px 5px;
+    z-index: 1;
+    transform: rotate(-42deg);
+}
+
+#mwb_membership_recurring_plan:after,
+#mfw_membership_access_type:after {
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -19px;
+    border-radius: 2px;
+    padding: 2px 5px;
+    border-right: 20px solid transparent;
+    border-left: 20px solid transparent;
+    border-bottom: 20px solid #772bff;
+    width: 20px;
+    transform: rotate(-42deg);
+}
+
+
+.mwb_membership_shortcodes_table tbody {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mwb_membership_shortcodes_table tr {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 45%;
+    background: #ffffff;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0px 2px 10px #c7c7c7;
+    border-radius: 5px;
+}
+
+
+.mwb_membership_shortcodes_table th {
+    width: 95%;
+    font-family: sans-serif;
+    padding: 10px;
+    border-bottom: 2px solid #1a3365;
+    color: #1a3365;
+}
+
+.mwb_membership_plans_creation_setting label {
+    color: #1a3566;
+    font-family: sans-serif;
 }
 
 .postbox .inside {
@@ -210,7 +279,7 @@ a#post-preview:focus,
     font-family: sans-serif;
     font-size: 15px;
     letter-spacing: 1px;
-    color: #33475B;
+    color: #1a3365;
 }
 
 .new_created_offers table {
@@ -228,12 +297,9 @@ a#post-preview:focus,
 }
 
 /*Select box styling*/
-td.forminp.forminp-text .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border: 2px solid #FF7A59;
-}
 
 .selection .select2-selection.select2-selection--multiple {
-    border: 2px solid #FF7A59;
+    border: 2px solid #1a3365;
     margin: 10px auto;
     padding: 10px 0px;
     background-color: inherit;
@@ -268,7 +334,7 @@ span.select2.select2-container.select2-container--default {
 
 .select2-selection .select2-selection__rendered li.select2-selection__choice {
     border: none;
-    background-color: #FF7A59;
+    background-color: #1a3365;
     color: #ffffff;
 }
 
@@ -279,7 +345,7 @@ span.select2-container--default .select2-selection--multiple .select2-selection_
 /*radio button styling*/
 .postbox-container input[type=radio] {
     background-color: inherit;
-    border: 1px solid #FF7A59;
+    border: 1px solid #1a3365;
     width: 20px;
     height: 20px;
     vertical-align: -webkit-baseline-middle;
@@ -287,31 +353,25 @@ span.select2-container--default .select2-selection--multiple .select2-selection_
 }
 
 .postbox-container input[type=radio]:before {
-    background-color: #FF7A59;
-    margin: 5px;
+    background-color: #1a3365;
+    margin: 4.1px;
+    width: 10px;
+    height: 10px;
 }
 
 /*button styling*/
 
-.mwb_membership_free_shipping_link a.button,
-a#post-preview,
-#posts-filter input[type=submit],
-.wrap a.page-title-action:hover,
-#wpbody-content input[type=submit] {
+.mwb_membership_free_shipping_link a.button {
     border: 1px solid #ffffff;
-    background-color: #FF7A59;
+    background-color: #1a3365;
     color: #ffffff;
     transition: linear background-color 0.2s;
 }
 
-.mwb_membership_free_shipping_link a.button:hover,
-a#post-preview:hover,
-#posts-filter input[type=submit]:hover,
-.wrap a.page-title-action,
-#wpbody-content input[type=submit]:hover {
-    border: 1px solid #FF7A59;
+.mwb_membership_free_shipping_link a.button:hover {
+    border: 1px solid #1a3365;
     background-color: inherit;
-    color: #FF7A59;
+    color: #1a3365;
 }
 
 /*All plan page status button style*/
@@ -336,7 +396,7 @@ td.membership_view.column-membership_view,
 
 .widefat thead tr th,
 .widefat tfoot tr th {
-    color: #FF7A59;
+    color: #1a3365;
 }
 
 #import_all_membership {
@@ -355,26 +415,54 @@ div #TB_ajaxWindowTitle {
     font-size: 21px;
     padding: 13px 29px 13px 10px;
     letter-spacing: 2px;
-    border-bottom: 2px solid #FF7A59;
-    color: #FF7A59;
+    color: #1a3365;
+    box-shadow: 0px 2px 5px #c7c7c7;
 }
 
 #TB_ajaxContent h2 {
     text-align: center;
-    background-color: #FF7A59;
-    padding: 15px 0px;
+    background-color: #1a3365;
+    padding: 10px 0px;
     color: #ffffff;
     font-family: sans-serif;
     letter-spacing: 1px;
+    max-width: 350px;
+    margin: 10px auto 0px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px #c7c7c7;
 }
 
 .mwb_membership_preview_table table tr:nth-child(even) {
-    background-color: rgb(0 113 161 / 0.2);
+    background-color: #f1f6ff;
 }
 
 .mwb_membership_preview_table table tr th {
     padding-left: 15px;
     font-family: sans-serif;
+}
+
+/*Admin pannel button styling*/
+input#export_all_membership,
+input#import_all_membership,
+.mwb_membership_plans_creation_setting input[type=button],
+.mwb_membership_gateway_div .button,
+.mwb_membership_gateway_div a {
+    background-color: inherit;
+    color: #1a3365;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: 1px solid #1a3365;
+    transition: background-color 0.2s ease-in-out;
+}
+
+input#export_all_membership:hover,
+input#import_all_membership:hover,
+.mwb_membership_plans_creation_setting input[type=button]:hover,
+.mwb_membership_gateway_div .button:hover,
+.mwb_membership_gateway_div a:hover {
+    background-color: #1a3365;
+    border-color: transparent;
+    color: #ffffff;
 }
 
 /* Any element Positioning  */
@@ -424,7 +512,7 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
 
 input#upload_csv_file:hover {
     background: #ffffff;
-    color: #FF7A59;
+    color: #1a3365;
 }
 
 .import_csv_field_wrapper>input {
@@ -449,13 +537,62 @@ input#upload_csv_file:hover {
     padding-left: 15px;
 }
 
+.mwb_membership_plans_creation_setting tr {
+    display: flex;
+    align-items: baseline;
+}
+
+.mwb_membership_plans_creation_setting th {
+    max-width: 200px;
+    width: 100%;
+}
+
+.mwb_membership_plans_creation_setting td {
+    display: inline-flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
 .mwb_membership_plans_creation_setting .woocommerce-help-tip {
     margin-right: 10px;
 }
 
+.mwb_membership_plans_creation_setting input[type=text],
+.mwb_membership_plans_creation_setting input[type=email],
+.mwb_membership_plans_creation_setting input[type=tel],
+.mwb_membership_plans_creation_setting input[type=number],
+.meta-box-sortables input[type=number],
+.mwb_membership_plans_creation_setting textarea {
+    max-width: 300px;
+    width: 100%;
+    border: none;
+    resize: none;
+    border: 1px solid #1a3365;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: sans-serif;
+    color: #1a3365;
+}
+
+.mwb_membership_plans_creation_setting input[type=number],
+.meta-box-sortables input[type=number] {
+    max-width: 100px;
+}
+
+#mwb_membership_email_content_ifr {
+    height: fit-content !important;
+}
+
+/*Pro elements*/
+
+input#mwb_membership_plan_recurring,
+#mfw_offer_access_type {
+    pointer-events: none;
+    filter: opacity(0.5) grayscale(1);
+}
+
 /*Gateway page*/
 
-.mwb_membership_supported_gateways h2,
 .mwb_membership_manage_gateways a,
 .mwb_membership_gateways .mwb_membership_plan_gateways {
     font-family: sans-serif;
@@ -465,20 +602,93 @@ input#upload_csv_file:hover {
     padding: 10px;
 }
 
-.mwb_membership_supported_gateways h2 {
-    font-size: 25px;
-    background-color: #FF7A59;
-    margin-right: 15px;
-    color: #ffffff;
-}
-
 .mwb_membership_manage_gateways a {
 
     font-size: 15px;
     font-family: sans-serif;
-    color: #FF7A59;
+    color: #1a3365;
 }
 
 .button_hide {
     display: none !important;
 }
+
+.mwb_membership_plan_gateways tbody {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.mwb_membership_plan_gateways tr {
+    padding: 10px 20px;
+    display: flex;
+    margin: 10px 10px 0px 0px;
+    flex-direction: column;
+    background-color: #ffffff;
+    box-shadow: 0px 2px 15px #c7c7c7;
+    border-radius: 5px;
+}
+
+.mwb_membership_plan_gateways th {
+    border-bottom: 1px solid #1a3365;
+    padding: 0px 0px 10px;
+    margin: 0px 0px 30px 0px;
+}
+
+.mwb_membership_plan_gateways th label {
+    color: #1a3365;
+
+}
+
+.mwb_membership_plan_gateways td {
+    padding: 5px;
+    margin: 0px;
+}
+
+.mwb_membership_manage_gateways a {
+    border: 2px solid #1a3365;
+    padding: 5px;
+    color: #1a3365;
+    margin-top: 5px;
+    display: block;
+    border-radius: 5px;
+    max-width: fit-content;
+}
+
+.mwb_membership_manage_gateways a:hover {
+    border: 2px solid #F37E21;
+    color: #F37E21;
+}
+
+
+td#mfw_free_shipping {
+    display: inline-flex;
+    align-items: center;
+    min-height: 60px;
+}
+
+.mwb_membership_free_shipping_link {
+    margin-left: 30px;
+}
+
+/*Media Query for small screen devices*/
+
+@media screen and (max-width:992px) {
+    .mwb_membership_plans_creation_setting tr {
+        display: block;
+        padding: 10px 0px;
+    }
+
+    .mwb_membership_plans_creation_setting td {
+        padding: 10px;
+    }
+
+    .mwb_membership_shortcodes_table tbody {
+        flex-wrap: wrap;
+    }
+
+    .mwb_membership_shortcodes_table tr {
+        flex: 0 0 80%;
+    }
+}
+

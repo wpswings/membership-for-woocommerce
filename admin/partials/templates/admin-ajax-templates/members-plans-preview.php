@@ -28,18 +28,24 @@ if ( ! empty( $member_id ) ) {
 
 	$output .= '<div class="members_billing_preview_wrapper">
 				<div class="members_billing_preview">
-					<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>
-					' . esc_html( $billing_info['membership_billing_company'] ) . '
+					<h2>' . esc_html__( 'Billing details', 'membership-for-woocommerce' ) . '</h2>';
+
+	if ( ! empty( $billing_info['membership_billing_first_name'] ) ) {
+		$output .= esc_html( $billing_info['membership_billing_company'] ) . '
 					' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_first_name'] ), esc_html( $billing_info['membership_billing_last_name'] ) ) . '
 					' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_address_1'] ), esc_html( $billing_info['membership_billing_address_2'] ) ) . '
 					' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_city'] ), esc_html( $billing_info['membership_billing_postcode'] ) ) . '
-					' . sprintf( ' %s, %s ', esc_html( $billing_info['membership_billing_state'] ), esc_html( $billing_info['membership_billing_country'] ) ) . '</br>
-					<strong>' . esc_html__( 'Email address :', 'membership-for-woocommerce' ) . '</strong>
-					<a href="mailto:' . esc_html( $billing_info['membership_billing_email'] ) . '">' . esc_html( $billing_info['membership_billing_email'] ) . '</a></br>
-					<strong>' . esc_html__( 'Phone :', 'membership-for-woocommerce' ) . '</strong>
-					' . esc_html( $billing_info['membership_billing_phone'] ) . '</br>
-					<strong>' . esc_html__( 'Payment Method', 'membership-for-woocommerce' ) . '</strong>
-					' . esc_html( $instance->get_payment_method_title( $billing_info['payment_method'] ) );
+					' . sprintf( ' %s, %s ', esc_html( $billing_info['membership_billing_state'] ), esc_html( $billing_info['membership_billing_country'] ) ) . '</br>';
+	} else {
+		$output .= esc_html__( 'No billing details', 'membership-for-woocommerce' ) . '</br>';
+	}
+
+	$output .= '<strong>' . esc_html__( 'Email address :', 'membership-for-woocommerce' ) . '</strong>
+				<a href="mailto:' . esc_html( $billing_info['membership_billing_email'] ) . '">' . esc_html( $billing_info['membership_billing_email'] ) . '</a></br>
+				<strong>' . esc_html__( 'Phone :', 'membership-for-woocommerce' ) . '</strong>
+				' . esc_html( $billing_info['membership_billing_phone'] ) . '</br>
+				<strong>' . esc_html__( 'Payment Method', 'membership-for-woocommerce' ) . '</strong>
+				' . esc_html( $instance->get_payment_method_title( $billing_info['payment_method'] ) );
 
 	$output .= '</div>';
 
@@ -48,9 +54,7 @@ if ( ! empty( $member_id ) ) {
 					' . esc_html( $plan_info['post_title'] ) . '
 					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
 					' . esc_html( $plan_info['post_content'] ) . '
-					<div class="member_plan_status ' . $plan_status . ' ">
-					' . esc_html( $plan_status ) . '
-					</div>';
+					<div class="member_plan_status ' . $plan_status . '">' . esc_html( $plan_status ) . '</div>';
 
 	$output .= '</div>
 				</div>';

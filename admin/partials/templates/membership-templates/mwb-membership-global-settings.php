@@ -226,9 +226,20 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 							$instance->tool_tip( $description );
 
+							$content   = esc_html( $mwb_membership_email_content );
+							$editor_id = 'mwb_membership_email_content';
+
+							$args = array(
+								'media_buttons' => false,
+								'tinymce'       => array(
+									'toolbar1' => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
+								),
+							);
+
+							wp_editor( $content, $editor_id, $args );
+
 							?>
 
-							<textarea id="mwb_membership_email_content" name="mwb_membership_email_content"><?php echo esc_html( $mwb_membership_email_content ); ?></textarea>
 						</td>
 					</tr>
 					<!-- Email Content end-->
@@ -256,7 +267,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 					<!-- Attach invoice to email start -->
 
 					<!-- Invoice Company address start -->
-					<tr valign="top">
+					<tr valign="top" class="mfw_membership_invoice_pdf">
 
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_invoice_address"><?php esc_html_e( 'Invoice Company Address', 'membership-for-woocommerce' ); ?></label>
@@ -278,7 +289,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 					<!-- Invoice Company address end-->
 
 					<!-- Invoice Company phone start -->
-					<tr valign="top">
+					<tr valign="top" class="mfw_membership_invoice_pdf">
 
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_invoice_phone"><?php esc_html_e( 'Invoice Company Phone No.', 'membership-for-woocommerce' ); ?></label>
@@ -300,7 +311,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 					<!-- Invoice Company phone end-->
 
 					<!-- Invoice Company email start -->
-					<tr valign="top">
+					<tr valign="top" class="mfw_membership_invoice_pdf">
 
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_invoice_email"><?php esc_html_e( 'Invoice Company Email', 'membership-for-woocommerce' ); ?></label>
@@ -322,7 +333,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 					<!-- Invoice Company email end-->
 
 					<!-- Invoice Company logo start -->
-					<tr valign="top">
+					<tr valign="top" class="mfw_membership_invoice_pdf">
 
 						<th scope="row" class="titledesc">
 							<label for="mwb_membership_invoice_logo"><?php esc_html_e( 'Invoice Company logo', 'membership-for-woocommerce' ); ?></label>

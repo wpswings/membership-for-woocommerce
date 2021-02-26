@@ -240,8 +240,7 @@ class Membership_For_Woocommerce {
 		// Remove title & editor field.
 		$this->loader->add_action( 'init', $plugin_admin, 'membership_for_woo_remove_fields' );
 
-		// Free shipping notice.
-		// add_action( 'admin_notices', array( $this, 'mwb_membership_shipping_notice' ) ) ;
+		// Admin notice about free shipping.
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_membership_shipping_notice' );
 	}
 

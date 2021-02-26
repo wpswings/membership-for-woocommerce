@@ -50,9 +50,6 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 		<li class="mwb_mfw_progress-bar-step" id="mwb_mfw_progress-bar-c">
 			<div class="mwb_mfw_progress-line"><i class="fas fa-check-circle mwb_mfw_progress-bar_done"></i></div>
 		</li>
-		<li class="mwb_mfw_progress-bar-step" id="mwb_mfw_progress-bar-d">
-			<div class="mwb_mfw_progress-line"><i class="fas fa-check-circle mwb_mfw_progress-bar_done"></i></div>
-		</li>
 	</ul>
 </div>
 

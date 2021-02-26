@@ -97,14 +97,6 @@ $settings = array(
 		'description' => __( 'Log PayPal events, such as IPN requests.', 'membership-for-woocommerce' ),
 	),
 
-	// 'invoice_prefix'      => array(
-	// 	'title'       => __( 'Invoice Prefix', 'membership-for-woocommerce' ),
-	// 	'type'        => 'text',
-	// 	'description' => __( 'Please enter a prefix for your invoice numbers. If you use your PayPal account for multiple stores ensure this prefix is unique as PayPal will not allow orders with the same invoice number.', 'membership-for-woocommerce' ),
-	// 	'default'     => 'WC-',
-	// 	'desc_tip'    => true,
-	// ),
-
 	'button_settings'     => array(
 		'title'       => __( 'Button Settings', 'membership-for-woocommerce' ),
 		'type'        => 'title',

@@ -142,7 +142,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			'mwb_membership_plan_user_history' => 'on',
 			'mwb_membership_email_subject'     => 'Thank you for Shopping, Do not reply.',
 			'mwb_membership_email_content'     => '',
-			'mwb_membership_attach_invoice'    => 'on',
+			'mwb_membership_attach_invoice'    => 'off',
 			'mwb_membership_invoice_address'   => '',
 			'mwb_membership_invoice_phone'     => '',
 			'mwb_membership_invoice_email'     => '',
@@ -222,11 +222,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function supported_gateways() {
 
 		$supported_gateways = array(
-
-			'membership-paypal-gateway', // Membership Paypal.
-			'membership-stripe-gateway', // Membership stripe.
 			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
-			'membership-paypal-smart-buttons',
+			'membership-paypal-smart-buttons', // PayPal Smart buttons.
 		);
 
 		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
@@ -506,6 +503,9 @@ class Membership_For_Woocommerce_Global_Functions {
 						}
 					}
 					?>
+
+					<!-- Paypal smarts buttons container -->
+					<div id="paypal-button-container" style="display: none;"></div>
 				</div>
 				<!-- Modal payment content end. -->
 
@@ -514,8 +514,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
 				?>
 
-				<!-- Paypal smarts buttons container -->
-				<div id="paypal-button-container" style="display: none;"></div>
 			</div>
 		</form>
 		<?php

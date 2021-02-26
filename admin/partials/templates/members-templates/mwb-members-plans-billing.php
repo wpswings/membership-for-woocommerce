@@ -89,12 +89,20 @@ $country_class = new WC_Countries();
 
 			<div class="member_address">
 				<p>
-					<strong><?php esc_html_e( 'Address :', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
-					<?php echo esc_html( $company ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
-					<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+				<strong><?php esc_html_e( 'Address :', 'membership-for-woocommerce' ); ?></strong></br>
+					<?php
+					if ( ! empty( $first_name ) ) {
+						?>
+						<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
+						<?php echo esc_html( $company ); ?></br>
+						<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
+						<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
+						<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+						<?php
+					} else {
+						esc_html_e( 'No billing details', 'membershi-for-woocommerce' );
+					}
+					?>
 				</p>
 
 				<p>

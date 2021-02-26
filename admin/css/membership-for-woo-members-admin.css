@@ -4,36 +4,13 @@
     padding: 10px;
 }
 
-/*Adding Custom Scroll bar to the whole page*/
-
-/* width */
-::-webkit-scrollbar {
-    width: 8px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: rgb(0 113 161 / 0.2);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: rgb(0 113 161 / 0.8);
-    border-radius: 35px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(0 113 161 / 1);
-}
-
 /*Listed member table edit of Member page*/
 table.wp-list-table {
     font-family: sans-serif;
 }
 
 .mwb_membership_preview_table table tr:nth-child(even) {
-    background-color: rgb(0 113 161 / 0.2);
+    background-color: #f1f6ff;
 }
 
 .mwb_membership_preview_table table tr th {
@@ -42,7 +19,7 @@ table.wp-list-table {
 
 table.wp-list-table thead th,
 table.wp-list-table tfoot th {
-    color: #FF7A59;
+    color: #1a3365;
 }
 
 .membership_user.column-membership_user,
@@ -58,7 +35,10 @@ table.wp-list-table tfoot th {
 #posts-filter input[type=submit]:focus,
 .edit_members_action a.button:focus,
 .wrap a.page-title-action:focus,
-p.form-field.membership-customer a:focus {
+p.form-field.membership-customer a:focus,
+a.edit_member_address:focus,
+span.dashicons.dashicons-no-alt:focus,
+.cancel_member_edit:focus {
     box-shadow: none;
     outline: none;
 }
@@ -71,6 +51,17 @@ p.form-field.membership-customer a:focus {
 
 input#export_all_members {
     order: 3;
+    background-color: inherit;
+    color: #1a3365;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    border: 1px solid #1a3365;
+    transition: background-color 0.2s ease-in-out;
+}
+
+input#export_all_members:hover {
+    background-color: #1a3365;
+    color: #ffffff;
 }
 
 input#post-query-submit,
@@ -87,8 +78,6 @@ select#filter-by-date,
 
 .members_status.column-members_status,
 .members_plan_preview .member_plan_status {
-    /* background-color: rgb(0 153 0 / 63%);
-    color: #034803; */
     border-radius: 2px;
     padding: 5px;
     letter-spacing: 1px;
@@ -119,22 +108,31 @@ div #TB_ajaxWindowTitle {
     font-size: 21px;
     padding: 13px 29px 13px 10px;
     letter-spacing: 2px;
-    border-bottom: 2px solid #FF7A59;
-    color: #FF7A59;
+    color: #1a3365;
+    box-shadow: 0px 2px 5px #c7c7c7;
 }
 
 #TB_ajaxContent h2 {
     text-align: center;
-    background-color: #FF7A59;
-    padding: 15px 0px;
+    background-color: #1a3365;
+    padding: 10px 0px;
     color: #ffffff;
     font-family: sans-serif;
     letter-spacing: 1px;
+    max-width: 350px;
+    margin: 10px auto 0px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px #c7c7c7;
 }
 
 .members_billing_preview_wrapper {
     display: flex;
     justify-content: space-around;
+}
+
+.members_billing_preview_wrapper .members_billing_preview,
+.members_billing_preview_wrapper .members_plan_preview {
+    flex: 0 0 48%;
 }
 
 .members_plan_preview_table_wrapper {
@@ -152,28 +150,12 @@ table.plan_preview_table {
 
 /*Button in modal of members page*/
 
-#posts-filter input[type=submit],
-.edit_members_action a.button,
-.wrap a.page-title-action {
-    border: 1px solid transparent;
-    background-color: #FF7A59;
-    color: #ffffff;
-    transition: linear background-color 0.2s;
-}
-
-#posts-filter input[type=submit]:hover,
-.edit_members_action a.button:hover,
-.wrap a.page-title-action:hover {
-    border: 1px solid #FF7A59;
-    background-color: inherit;
-    color: #FF7A59;
-}
-
 .edit_members_action {
     position: absolute;
     top: 10px;
     right: 65px;
 }
+
 /*Billing Part styling starts*/
 .postbox-container {
     font-family: sans-serif;
@@ -197,29 +179,13 @@ table.plan_preview_table {
 /*headings of Billing page*/
 
 .postbox .postbox-header h2 {
-    display: block;
-    vertical-align: middle;
     font-size: 18px !important;
     font-family: sans-serif;
-    height: 25px;
-    letter-spacing: 1px;
-    background: #FF7A59;
-    color: #ffffff;
+    letter-spacing: 0.5px;
+    color: #1a3365;
     border: none;
-    border-right: 8px solid #33475B;
-    border-left: 8px solid #33475B;
-    position: relative;
-}
-
-.postbox .postbox-header h2:after {
-    content: '';
-    position: absolute;
-    right: 12px;
-    top: 15px;
-    cursor: pointer;
-    border-bottom: 10px solid #ffffff;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
+    border-left: 5px solid #1a3365;
+    box-shadow: 0px 2px 5px #c7c7c7;
 }
 
 .handle-actions.hide-if-no-js {
@@ -229,11 +195,16 @@ table.plan_preview_table {
 /*Billing page left container billing details*/
 .members_billing_details h1 {
     text-align: center;
-    border-bottom: 5px solid #FF7A59;
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: 1px;
-    background-color: #ffffff;
-    padding: 10px;
+    background-color: #1a3365;
+    padding: 5px;
+    color: #ffffff;
+    max-width: 350px;
+    margin: 15px auto 0px;
+    border-radius: 5px;
+    font-size: 20px;
+    box-shadow: 0px 5px 5px #d6d6d6;
 }
 
 #members_metabox_billing .inside {
@@ -243,7 +214,7 @@ table.plan_preview_table {
 
 .wc-wp-version-gte-53 .select2-container .select2-selection--single {
     box-shadow: none;
-    border: 1px solid #FF7A59;
+    border: 1px solid #1a3365;
     border-radius: 0;
     font-size: 15px;
     text-transform: capitalize;
@@ -255,9 +226,9 @@ table.plan_preview_table {
 }
 
 .members_data_column h3 {
-    background-color: #FF7A59;
-    color: #ffffff;
-    border: 5px solid #FF7A59;
+    color: #1a3365;
+    border-bottom: 2px solid #1a3365;
+    padding: 5px;
 }
 
 .members_data_column {
@@ -271,7 +242,7 @@ a.edit_member_address,
 span.dashicons.dashicons-no-alt {
     position: absolute;
     top: 20px;
-    color: #ffffff;
+    color: #1a3365;
     right: 10px;
 }
 
@@ -297,7 +268,7 @@ p.form-field.billing_state_field {
 }
 
 .member_edit_address p label {
-    color: #33475B;
+    color: #1a3365;
     margin-bottom: 4px;
     letter-spacing: 1px;
     max-width: 250px;
@@ -307,7 +278,7 @@ p.form-field.billing_state_field {
 }
 
 .member_edit_address p input {
-    border: 1px solid #33475B;
+    border: 1px solid #1a3365;
     border-radius: 0px;
 }
 
@@ -329,7 +300,7 @@ p.form-field.membership-customer a {
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
-    border-left: 3px solid #FF7A59;
+    border-left: 3px solid #1a3365;
     background-color: #ffffff;
     padding: 0px 10px;
     margin: 5px 0px;
@@ -341,7 +312,7 @@ p.form-field.membership-customer a:hover {
 
 /*Billing page left container Membership details*/
 .members_plans_details table tr:nth-child(even) {
-    background-color: #eff2f6;
+    background-color: #f1f6ff;
 }
 
 .members_plans_details table th,
@@ -351,7 +322,7 @@ p.form-field.membership-customer a:hover {
 
 .mwb_members_plan_select {
     display: block;
-    color: #33475B;
+    color: #F37E21;
 }
 
 span.select2.select2-container {
@@ -360,6 +331,26 @@ span.select2.select2-container {
 }
 
 /*Billing page right container schedule details*/
+
+#members_metabox_schedule {
+    position: relative;
+}
+
+#members_metabox_schedule:after {
+    content: "PRO";
+    font-size: 16px;
+    font-family: sans-serif;
+    position: absolute;
+    color: #ffffff;
+    letter-spacing: 2px;
+    top: 0;
+    right: 0;
+    border-radius: 2px;
+    padding: 3px;
+    background-color: #772BFF;
+    box-shadow: 0px 2px 10px #c7c7c7;
+}
+
 .member_billing_schedule_edit {
     display: flex;
     justify-content: space-between;
@@ -393,6 +384,12 @@ div#members_start_date {
     justify-content: space-between;
 }
 
+/*Pro Schedule*/
+#members_metabox_schedule {
+    pointer-events: none;
+    filter: opacity(0.5) grayscale(1);
+}
+
 /*Billing page right container member action details*/
 .submitbox li.wide {
     display: flex;
@@ -408,7 +405,7 @@ div#members_start_date {
 .submitbox select {
     width: 100%;
     max-width: 175px;
-    border: 2px solid #FF7A59;
+    border: 1px solid #1a3365;
     display: block;
     white-space: break-spaces;
     line-height: 20px;
@@ -421,4 +418,31 @@ div#members_start_date {
 
 #delete-member-action a:hover {
     color: #990000;
+}
+
+.member_plan_status.complete {
+    background: #c6e1c6;
+    color: #5b841b;
+}
+
+.member_plan_status.pending {
+    background: #e5e5e5;
+    color: #777;
+}
+
+.member_plan_status.hold {
+    background:#f8dda7;
+    color: #94660c;
+}
+
+.member_plan_status.expired {
+    background: #d46363;
+    color: #777;
+}
+
+/*responsiveness site*/
+@media screen and (max-width:992px) {
+    #poststuff div#post-body.columns-2 {
+        flex-wrap: wrap;
+    }
 }

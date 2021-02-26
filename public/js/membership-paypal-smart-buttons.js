@@ -40,11 +40,11 @@ jQuery( document ).ready( function( $ ) {
 
                 purchase_units: [{
                     amount: {
-                        currency_code: 'USD',
+                        currency_code: paypal_settings.currency_code,
                         value: plan_data.price,
                         breakdown: {
                             item_total: {
-                                currency_code: 'USD',
+                                currency_code: paypal_settings.currency_code,
                                 value: plan_data.price
                             }
                         }
@@ -52,9 +52,9 @@ jQuery( document ).ready( function( $ ) {
                     items: [
                         {
                             name: plan_data.name,
-                            description: plan_data.desc,
+                            description: shorten_desc( plan_data.desc, 250 ),
                             unit_amount: {
-                                currency_code: 'USD',
+                                currency_code: paypal_settings.currency_code,
                                 value: plan_data.price
                             },
                             quantity: "1",
@@ -81,18 +81,12 @@ jQuery( document ).ready( function( $ ) {
         onApprove: function(data, actions) {
 
             return actions.order.capture().then(function(details) {
-                console.log( details );
-                alert('Transaction completed by ' + details.payer.name.given_name);
-                // Call your server to save the transaction
-                // return fetch('/api/paypal-transaction-complete', {
-                //     method: 'post',
-                //     headers: {
-                //         'content-type': 'application/json'
-                //     },
-                //     body: JSON.stringify({
-                //         orderID: data.orderID
-                //     })
-                // });
+
+                Swal.fire({
+                    icon : 'success',
+                    title: 'Transaction completed by ',
+                    text : details.payer.name.given_name,
+                });
 
                 saveTransactionData( details );
 
@@ -111,7 +105,6 @@ jQuery( document ).ready( function( $ ) {
                     action : 'membership_save_transaction',
                     nonce : paypal_sb_obj.nonce,
                     details : tr_details,
-                   //email : email
                 },
                 dataType : 'json',
             }
@@ -131,6 +124,16 @@ jQuery( document ).ready( function( $ ) {
             console.log( response );
         }
             
+    }
+
+    // Shorten the description if length is greater than 250 chars.
+    function shorten_desc( desc, max_len, separator ) {
+
+        if ( ! desc || desc.length <= max_len ) { 
+            return desc;
+        } else {
+            return desc.substr(0, desc.lastIndexOf( separator, max_len ) );
+        }
     }
 
 } ); 

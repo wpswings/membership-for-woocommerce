@@ -101,6 +101,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 				wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
 			}
 
 			if ( isset( $_GET['tab'] ) && 'shipping' === $_GET['tab'] ) {
@@ -113,6 +114,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_style( 'members-admin-css', plugin_dir_url( __FILE__ ) . 'css/membership-for-woo-members-admin.css', array(), $this->version, 'all' );
 
 				wp_enqueue_style( 'mwb_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+
 			}
 		}
 
@@ -206,6 +208,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_script( 'jquery-ui-dialog' );
 
 				wp_enqueue_script( 'mwb_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
+
 			}
 
 			if ( isset( $_GET['section'] ) && 'membership-paypal-gateway' === $_GET['section'] ) {
@@ -239,6 +242,7 @@ class Membership_For_Woocommerce_Admin {
 						'nonce'   => wp_create_nonce( 'members-nonce' ),
 					)
 				);
+
 			}
 		}
 
@@ -273,8 +277,8 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_cpt_membership() {
 
 		$labels = array(
-			'name'               => esc_html__( 'Memberships', 'membership-for-woocommerce' ),
-			'singular_name'      => esc_html__( 'Membership', 'membership-for-woocommerce' ),
+			'name'               => esc_html__( 'Plans', 'membership-for-woocommerce' ),
+			'singular_name'      => esc_html__( 'Plan', 'membership-for-woocommerce' ),
 			'add_new'            => esc_html__( 'Add Plans', 'membership-for-woocommerce' ),
 			'all_items'          => esc_html__( 'All Plans', 'membership-for-woocommerce' ),
 			'add_new_item'       => esc_html__( 'Add New Plan', 'membership-for-woocommerce' ),
@@ -1161,14 +1165,10 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_members_metabox_schedule( $post ) {
 
 		$member = $post;
-		// $member_details = get_post_meta( $post->ID, 'billing_details', true );
-		// $instance       = $this->global_class;
 
 		wc_get_template(
 			'templates/members-templates/mwb-members-plans-schedule.php',
 			array(
-				// 'member_details' => $member_details,
-				// 'instance'       => $instance,
 				'post' => $member,
 			),
 			'',
@@ -1188,14 +1188,10 @@ class Membership_For_Woocommerce_Admin {
 		$member  = $post;
 		$actions = get_post_meta( $post->ID, 'member_actions', true );
 		$status  = get_post_meta( $post->ID, 'member_status', true );
-		// $member_details = get_post_meta( $post->ID, 'billing_details', true );
-		// $instance       = $this->global_class;
 
 		wc_get_template(
 			'templates/members-templates/mwb-members-actions.php',
 			array(
-				// 'member_details' => $member_details,
-				// 'instance'       => $instance,
 				'post'    => $member,
 				'actions' => $actions,
 				'status'  => $status,
@@ -1265,7 +1261,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_user_view':
 				add_thickbox();
 				?>
-				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></a>
+				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox member-preview"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></a>
 
 				<?php
 
@@ -1579,16 +1575,6 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_supported_gateways( $gateways ) {
 
-		if ( class_exists( 'Mwb_Membership_For_Woo_Paypal_Gateway' ) ) {
-
-			$gateways[] = 'Mwb_Membership_For_Woo_Paypal_Gateway';
-		}
-
-		// if ( class_exists( 'Mwb_Membership_For_Woo_Stripe_Gateway' ) ) {
-
-		// $gateways[] = 'Mwb_Membership_For_Woo_Stripe_Gateway';
-		// }
-
 		if ( class_exists( 'Mwb_Membership_Adv_Bank_Transfer' ) ) {
 
 			$gateways[] = 'Mwb_Membership_Adv_Bank_Transfer';
@@ -1610,22 +1596,9 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_plugins_loaded() {
 
 		/**
-		 * The class responsible for defining all methods of PayPal payment gateway.
-		 */
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal/class-mwb-membership-for-woo-paypal-gateway.php';
-
-		/**
 		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
 		 */
 		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
-
-		/**
-		 * The class responsible for defining all methods of Stripe payment gateway.
-		 */
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/class-mwb-membership-for-woo-stripe-gateway.php';
-
-		// Stripe library with composer.
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/stripe/vendor/autoload.php';
 
 		/**
 		 * The class responsible for defining all methods of advance bank transfer gateway.
