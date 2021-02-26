@@ -9,23 +9,23 @@ jQuery( document ).ready( function( $ ){
 		if ( $( this ).is( ":checked" ) ) {
 
             test_sandbox.show();
-            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).show();
-            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).next('p').show();
+            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).show(500);
+            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).next('p').show(500);
 
             live.hide();
-            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).hide();
-            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).next('p').hide();
+            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).hide(500);
+            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).next('p').hide(500);
 
 
 		} else {
 
             test_sandbox.hide();
-            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).hide();
-            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).next('p').hide();
+            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).hide(500);
+            $( "#woocommerce_membership-paypal-smart-buttons_sandbox_credentials" ).next('p').hide(500);
 
             live.show();
-            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).show();
-            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).next('p').show();
+            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).show(500);
+            $( "#woocommerce_membership-paypal-smart-buttons_live_credentials" ).next('p').show(500);
 		}
 		
 	}).change();
