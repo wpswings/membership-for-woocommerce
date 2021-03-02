@@ -19,7 +19,7 @@ table.wp-list-table {
 
 table.wp-list-table thead th,
 table.wp-list-table tfoot th {
-    color: #1a3365;
+    color: #0071a1;
 }
 
 .membership_user.column-membership_user,
@@ -52,15 +52,15 @@ span.dashicons.dashicons-no-alt:focus,
 input#export_all_members {
     order: 3;
     background-color: inherit;
-    color: #1a3365;
+    color: #0071a1;
     font-weight: 500;
     letter-spacing: 0.5px;
-    border: 1px solid #1a3365;
+    border: 1px solid #0071a1;
     transition: background-color 0.2s ease-in-out;
 }
 
 input#export_all_members:hover {
-    background-color: #1a3365;
+    background-color: #0071a1;
     color: #ffffff;
 }
 

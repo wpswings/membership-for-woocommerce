@@ -46,7 +46,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		// Get settings values.
 		$this->title        = $this->get_option( 'title' );
 		$this->description  = $this->get_option( 'description' );
-		$this->instructions = $this->get_option( 'instructions' );
 
 		// Instance of global class.
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
@@ -103,13 +102,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				'desc_tip'    => true,
 				'default'     => __( 'Make your payment directly into our bank and upload receipt below. Your membership will be "on-hold" until the funds reflect in our bank.', 'membership-for-woocommerce' ),
 			),
-			'instructions'    => array(
-				'title'      => __( 'Instructions', 'membership-for-woocommerce' ),
-				'type'       => 'textarea',
-				'decription' => __( 'Instructions that will be added on membership purchase and emails', 'membership-for-woocommerce' ),
-				'desc_tip'   => true,
-				'default'    => __( 'Thank You for purchasing the membership plan, We will review your payment and process accordingly.', 'membership-for-woocommerce' ),
-			),
+
 			'account_details' => array(
 				'type' => 'account_details',
 			),

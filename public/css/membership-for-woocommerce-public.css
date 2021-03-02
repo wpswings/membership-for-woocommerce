@@ -49,8 +49,9 @@ select#membership_billing_country:focus,
     border-radius: 5px;
     background: #F37E21;
     color: #ffffff;
-    width: inherit;
+    max-width: 200px;
     text-align: center;
+    margin-bottom: -10px;
 }
 
 .mwb_mfw_membership_tool_tip_wrapper {

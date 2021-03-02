@@ -87,6 +87,7 @@ jQuery(document).ready(function ($) {
 						$("#progress-wrapper").addClass("progress-complete");
 						$(".bacs_receipt_field").removeClass("is_hidden");
 						$("#progress-wrapper .status").text("Completed");
+						$("#membership_proceed_payment").show();
 
 						// Add file removal script.
 						$(document).on("click", ".bacs_receipt_remove_file", function () {
@@ -108,10 +109,12 @@ jQuery(document).ready(function ($) {
 								success: function (response) {
 
 									if ("success" == response["result"]) {
+										$( 'input[name="bacs_receipt_file"]' ).val('');
 										$(".bacs_receipt_remove_file").hide();
+										$("#membership_proceed_payment").hide();
 										$("#progress-wrapper").removeClass("progress-complete");
 										$("#progress-wrapper").addClass("progress-failed");
-										$("#progress-wrapper .status").text("Something Went Wrong. Please refresh!");
+										$("#progress-wrapper .status").text("File removed");
 									}
 								}
 							});
@@ -135,15 +138,16 @@ jQuery(document).ready(function ($) {
 			$("div.payment_method_" + $payment_methods).slideDown();
 
 			// Display paypal smart buttons is paypal checkout selected. 
-			if ($payment_methods == 'membership-paypal-smart-buttons') {
+			// if ($payment_methods == 'membership-paypal-smart-buttons') {
 
-				$("#paypal-button-container").show(500);
-				$("#membership_proceed_payment").hide();
-			} else {
+			// 	$("#paypal-button-container").show(500);
+			// 	$("#membership_proceed_payment").hide();
+			// } else {
 
-				$("#paypal-button-container").hide(500);
-				$("#membership_proceed_payment").show();
-			}
+			// 	$("#paypal-button-container").hide(500);
+			// 	$("#membership_proceed_payment").show();
+			// }
+			$("#membership_proceed_payment").hide(500);
 
 		});
 
@@ -152,7 +156,6 @@ jQuery(document).ready(function ($) {
 
 			e.preventDefault();
 			var form = $("#mwb_membership_buy_now_modal_form");
-			resetform();
 
 			$.ajax({
 				url: membership_public_obj.ajaxurl,

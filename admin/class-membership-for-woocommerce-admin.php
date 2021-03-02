@@ -277,17 +277,17 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_cpt_membership() {
 
 		$labels = array(
-			'name'               => esc_html__( 'Plans', 'membership-for-woocommerce' ),
-			'singular_name'      => esc_html__( 'Plan', 'membership-for-woocommerce' ),
-			'add_new'            => esc_html__( 'Add Plans', 'membership-for-woocommerce' ),
-			'all_items'          => esc_html__( 'All Plans', 'membership-for-woocommerce' ),
-			'add_new_item'       => esc_html__( 'Add New Plan', 'membership-for-woocommerce' ),
-			'edit_item'          => esc_html__( 'Edit Plan', 'membership-for-woocommerce' ),
-			'new_item'           => esc_html__( 'New Plan', 'membership-for-woocommerce' ),
-			'view_item'          => esc_html__( 'View Plan', 'membership-for-woocommerce' ),
-			'search_item'        => esc_html__( 'Search Plan', 'membership-for-woocommerce' ),
-			'not_found'          => esc_html__( 'No Plans Found', 'membership-for-woocommerce' ),
-			'not_found_in_trash' => esc_html__( 'No Plans Found In Trash', 'membership-for-woocommerce' ),
+			'name'               => esc_html__( 'Memberships', 'membership-for-woocommerce' ),
+			'singular_name'      => esc_html__( 'Membership', 'membership-for-woocommerce' ),
+			'add_new'            => esc_html__( 'Add Membership plans', 'membership-for-woocommerce' ),
+			'all_items'          => esc_html__( 'All Membership plans', 'membership-for-woocommerce' ),
+			'add_new_item'       => esc_html__( 'Add New Membership plan', 'membership-for-woocommerce' ),
+			'edit_item'          => esc_html__( 'Edit Membership plan', 'membership-for-woocommerce' ),
+			'new_item'           => esc_html__( 'New Membership plan', 'membership-for-woocommerce' ),
+			'view_item'          => esc_html__( 'View Membership plan', 'membership-for-woocommerce' ),
+			'search_item'        => esc_html__( 'Search Membership plan', 'membership-for-woocommerce' ),
+			'not_found'          => esc_html__( 'No Membership plans Found', 'membership-for-woocommerce' ),
+			'not_found_in_trash' => esc_html__( 'No Membership plans Found In Trash', 'membership-for-woocommerce' ),
 		);
 
 		register_post_type(
@@ -303,7 +303,7 @@ class Membership_For_Woocommerce_Admin {
 				'show_in_admin_bar'    => true,
 				'show_in_menu'         => true,
 				'menu_position'        => 56,
-				'menu_icon'            => 'dashicons-businessperson',
+				'menu_icon'            => 'dashicons-buddicons-buddypress-logo',
 				'description'          => esc_html__( 'Membership Plans will be created here.', 'membership-for-woocommerce' ),
 				'register_meta_box_cb' => array( $this, 'mwb_membership_for_woo_meta_box' ),
 				'supports'             => array(
@@ -628,14 +628,17 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( 'mwb_cpt_membership' == $page_id ) {
 
-				if ( 'publish' == $post->post_status ) {
+				if ( $post->post_date_gmt == $post->post_modified_gmt ) {
 
-					if ( ! empty( $free_shipping ) && 'yes' == $free_shipping ) {
-						?>
-						<div class="notice notice-success is-dismissible mwb-notice"> 
-							<p><strong><?php esc_html_e( 'Membership plan published successfully, Now you can manage membership free shipping ', 'membership-for-woocommerce' ); ?></strong></p>
-						</div>
-						<?php
+					if ( 'publish' == $post->post_status ) {
+
+						if ( ! empty( $free_shipping ) && 'yes' == $free_shipping ) {
+							?>
+							<div class="notice notice-success is-dismissible mwb-notice"> 
+								<p><strong><?php esc_html_e( 'Membership plan published successfully, Now you can manage membership free shipping ', 'membership-for-woocommerce' ); ?></strong></p>
+							</div>
+							<?php
+						}
 					}
 				}
 			}

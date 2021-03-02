@@ -1,5 +1,22 @@
 jQuery(document).ready(function($) {
 
+
+    // Avoid negative values for amount/discount and convert it to zero.
+    $( 'input[name="mwb_membership_plan_price"]' ).keyup( function(){
+
+        if ( $(this).val() < 0 ) {
+            $(this).val( 0 );
+        }
+    } );
+
+    $( 'input[name="mwb_memebership_plan_discount_price"]' ).keyup( function(){
+
+        if ( $(this).val() < 0 ) {
+            $(this).val( 0 );
+        }
+    } );
+    
+
     // Display already selected option field.
     function selected() {
 
@@ -49,6 +66,17 @@ jQuery(document).ready(function($) {
 
             case 'limited':
                 $("#mwb_membership_duration").show('500');
+
+                $("#mwb_membership_plan_duration_type").on( "change", function() {
+                    var duration_type = $("#mwb_membership_plan_duration_type").val();
+                    if ( 'days' == duration_type ) {
+                        $("#mwb_membership_plan_duration_type" ).attr({ min:1, max:31 })
+                    }else{
+                        $("#mwb_membership_plan_duration_type" ).removeAttr("min");
+                        $("#mwb_membership_plan_duration_type" ).removeAttr("max");
+                    }
+                });
+               
                 $("#mwb_membership_recurring_plan").show('500');
                 break;
 
@@ -234,6 +262,24 @@ jQuery(document).ready(function($) {
 
             $('.mfw_membership_invoice_pdf').hide('500');
 
+        }
+    });
+
+    // Add default plan title.
+    var post_title = $( 'input[name="post_title"]' ).val();
+    var post_id    = $( 'input[name="post_ID"]' ).val();
+    
+    if ( ! post_title ) {
+        $( 'input[name="post_title"]' ).val( 'Plan ' + '#' + post_id );
+    }
+
+    // Display warning if plan title field is empty.
+    $( 'input[name="post_title"]' ).on( 'keyup', function() {
+        var post_title = $( 'input[name="post_title"]' ).val();
+        
+        if ( ! post_title ) {
+            var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
+            $('div#titlewrap').append( title_msg );
         }
     });
 

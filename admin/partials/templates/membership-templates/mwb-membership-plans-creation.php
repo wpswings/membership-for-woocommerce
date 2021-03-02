@@ -91,14 +91,14 @@ global $post;
 
 				<?php
 
-				$description = esc_html__( 'Provide the number of days the plan will be active', 'membership-for-woocommerce' );
+				$description = esc_html__( 'Duration in terms of  \'DAYS\', \'WEEKS\', \'MONTHS\', \'YEARS\' for which the plan will be active.', 'membership-for-woocommerce' );
 
 				$instance->tool_tip( $description );
 
 				$mwb_membership_plan_duration_type = $settings_fields['mwb_membership_plan_duration_type'];
 				?>
 
-				<input type="number" id="mwb_membership_plan_duration" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" min="1" max="31">
+				<input type="number" id="mwb_membership_plan_duration" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" >
 				<select name="mwb_membership_plan_duration_type" id="mwb_membership_plan_duration_type">
 					<option <?php echo esc_html( 'days' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 					<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>

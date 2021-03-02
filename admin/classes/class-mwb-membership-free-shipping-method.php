@@ -145,6 +145,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 * @return array
 	 */
 	public function get_instance_form_fields() {
+
 		return parent::get_instance_form_fields();
 	}
 
@@ -158,7 +159,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		$plan_active = false;
 
-		if ( in_array( $this->requires, array( 'active_plan' ), true ) ) {
+		if ( in_array( $this->requires, array( 'active_plan' ) ) ) {
 
 			$plan_ids = $this->get_option( 'allowed_membership' );
 
@@ -175,7 +176,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 						foreach ( $product_ids as $product_id ) {
 
-							if ( in_array( $product_id, $cart_items_ids, true ) ) {
+							if ( in_array( $product_id, $cart_items_ids ) ) {
 
 								$plan_active = true;
 								break;
@@ -187,7 +188,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 						foreach ( $cat_ids as $cat_id ) {
 
-							if ( in_array( $cat_id, $cart_item_cat_ids, true ) ) {
+							if ( in_array( $cat_id, $cart_item_cat_ids ) ) {
 
 								$plan_active = true;
 								break;

@@ -173,6 +173,7 @@ class Membership_Activity_Helper {
 				'result'  => true,
 				'message' => esc_html__( 'File upload successful', 'text-domain' ),
 				'url'     => esc_url( $this->get_file_url( $location ) ),
+				'path'    => $location,
 			);
 		}
 	}

@@ -126,7 +126,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 						<td class="forminp forminp-text">
 							<?php
-								$attribute_description = esc_html__( 'Enable Membership for Woocommerce plugin.', 'membership-for-woocommerce' );
+								$attribute_description = esc_html__( 'Enable/Disable Membership for Woocommerce plugin functionality on front-end.', 'membership-for-woocommerce' );
 
 								$instance->tool_tip( $attribute_description );
 							?>
@@ -255,7 +255,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 							<?php
 
-							$description = esc_html__( 'This will Enable/Diable Invoice attachment to Email.', 'membership-for-woocommerce' );
+							$description = esc_html__( 'This will Enable/Disable Invoice attachment to Email.', 'membership-for-woocommerce' );
 
 							$instance->tool_tip( $description );
 
@@ -343,7 +343,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 							<?php
 
-							$description = esc_html__( 'This will add Company logo url to Invoice ( Only JPG or SVG ).', 'membership-for-woocommerce' );
+							$description = esc_html__( 'This will add Company logo url to Invoice ( JPG, JPEG, PNG only ).', 'membership-for-woocommerce' );
 
 							$instance->tool_tip( $description );
 

@@ -396,7 +396,7 @@ td.membership_view.column-membership_view,
 
 .widefat thead tr th,
 .widefat tfoot tr th {
-    color: #1a3365;
+    color: #0071a1;
 }
 
 #import_all_membership {
@@ -448,10 +448,10 @@ input#import_all_membership,
 .mwb_membership_gateway_div .button,
 .mwb_membership_gateway_div a {
     background-color: inherit;
-    color: #1a3365;
+    color: #0071a1;
     font-weight: 500;
     letter-spacing: 0.5px;
-    border: 1px solid #1a3365;
+    border: 1px solid #0071a1;
     transition: background-color 0.2s ease-in-out;
 }
 
@@ -460,7 +460,7 @@ input#import_all_membership:hover,
 .mwb_membership_plans_creation_setting input[type=button]:hover,
 .mwb_membership_gateway_div .button:hover,
 .mwb_membership_gateway_div a:hover {
-    background-color: #1a3365;
+    background-color: #0071a1;
     border-color: transparent;
     color: #ffffff;
 }
@@ -573,6 +573,10 @@ input#upload_csv_file:hover {
     font-family: sans-serif;
     color: #1a3365;
 }
+.mwb_membership_plans_creation_setting textarea {
+     max-width: unset;
+     max-height: 180px;
+}
 
 .mwb_membership_plans_creation_setting input[type=number],
 .meta-box-sortables input[type=number] {
@@ -669,6 +673,12 @@ td#mfw_free_shipping {
 
 .mwb_membership_free_shipping_link {
     margin-left: 30px;
+}
+
+span.title_warning {
+    font-size: 13px;
+    margin-left: 4px;
+    color: red;
 }
 
 /*Media Query for small screen devices*/

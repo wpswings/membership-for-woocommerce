@@ -119,13 +119,13 @@ if ( ! isset( $_GET['membership'] ) ) {
 		return;
 	}
 
-	if ( 'Lifetime' == $membership_id ) {
+	if ( 'Lifetime' == $membership_expiry ) {
 		?>
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
 		<?php
 	} else {
 		?>
-		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'Y-m-d', $membership_expiry ) ); ?> </mark>.</p>
+		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', $membership_expiry ) ); ?> </mark>.</p>
 		<?php } ?>
 
 	<section class="woocommerce-order-details">
