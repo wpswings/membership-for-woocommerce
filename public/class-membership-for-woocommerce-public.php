@@ -1277,37 +1277,40 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					// Get Saved Plan Details.
-					$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
+					if ( 'publish' == get_post_status( $membership_id ) ) {
 
-					if ( empty( $membership_plan ) ) {
-						continue;
-					}
+						// Get Saved Plan Details.
+						$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-					$accessible_prod = $membership_plan['mwb_membership_plan_target_ids'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
-					$accessible_cat  = $membership_plan['mwb_membership_plan_target_categories'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] ) : array();
-
-					if ( in_array( $product->get_id(), $accessible_prod ) || ( ! empty( $accessible_cat ) && has_term( $accessible_cat, 'product_cat' ) ) ) {
-
-						$access = true;
-
-						$membership_status = get_post_meta( $membership_id, 'member_status', true );
-
-						if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'expired', 'pending' ) ) ) {
-							$access = false;
-
-						} elseif ( 'hold' == $membership_status ) {
-
-							$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
-							array_push( $this->under_review_products, $product->get_id() );
-							array_unique( $this->under_review_products, $product->get_id() );
-							$access = false;
+						if ( empty( $membership_plan ) ) {
+							continue;
 						}
 
-						break;
+						$accessible_prod = $membership_plan['mwb_membership_plan_target_ids'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
+						$accessible_cat  = $membership_plan['mwb_membership_plan_target_categories'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] ) : array();
 
-					} else {
-						$access = false;
+						if ( in_array( $product->get_id(), $accessible_prod ) || ( ! empty( $accessible_cat ) && has_term( $accessible_cat, 'product_cat' ) ) ) {
+
+							$access = true;
+
+							$membership_status = get_post_meta( $membership_id, 'member_status', true );
+
+							if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'expired', 'pending' ) ) ) {
+								$access = false;
+
+							} elseif ( 'hold' == $membership_status && 'publish' == $membership_plan['post_status'] ) {
+
+								$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
+								array_push( $this->under_review_products, $product->get_id() );
+								array_unique( $this->under_review_products, $product->get_id() );
+								$access = false;
+							}
+
+							break;
+
+						} else {
+							$access = false;
+						}
 					}
 				}
 			}
