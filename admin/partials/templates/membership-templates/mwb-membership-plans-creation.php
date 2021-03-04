@@ -47,7 +47,7 @@ global $post;
 
 				?>
 
-				<input type="text" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
+				<input type="number" step=".01" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
 		<!-- Membership plan price end. -->
@@ -98,7 +98,7 @@ global $post;
 				$mwb_membership_plan_duration_type = $settings_fields['mwb_membership_plan_duration_type'];
 				?>
 
-				<input type="number" id="mwb_membership_plan_duration" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" >
+				<input type="number" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" >
 				<select name="mwb_membership_plan_duration_type" id="mwb_membership_plan_duration_type">
 					<option <?php echo esc_html( 'days' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 					<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
@@ -316,7 +316,7 @@ global $post;
 							<option <?php echo esc_html( 'fixed' === $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 						</select>
-						<input type="text" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
+						<input type="number" step=".01" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
 
 					</td>
 				</tr>

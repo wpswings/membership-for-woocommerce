@@ -46,6 +46,24 @@ jQuery(document).ready(function ($) {
 
 		$("#mwb_membership_buy_now_modal_form").dialog("open");
 
+		// Validate all email fields.
+
+		let membership_modal = $("#mwb_membership_buy_now_modal_form");
+		if( membership_modal.length > 0 ) {
+
+			$('input[type="email"]').on( 'keyup', function() {
+				let val = $(this).val();
+				let tooltip = $('.tooltip');
+				let result =  (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(val));
+				if ( result ) {
+					tooltip.hide();
+				}
+				else {
+					tooltip.show();
+				}
+			});
+		}
+
 		// Ajax call for states as per country change.
 		$("#membership_billing_country").on("change", function () {
 
@@ -146,6 +164,8 @@ jQuery(document).ready(function ($) {
 
 			e.preventDefault();
 			var form = $("#mwb_membership_buy_now_modal_form");
+
+			$( '#membership_proceed_payment' ).css( 'pointer-events', none );
 
 			$.ajax({
 				url: membership_public_obj.ajaxurl,

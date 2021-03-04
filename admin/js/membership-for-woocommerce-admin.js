@@ -2,20 +2,20 @@ jQuery(document).ready(function($) {
 
 
     // Avoid negative values for amount/discount and convert it to zero.
-    $( 'input[name="mwb_membership_plan_price"]' ).keyup( function(){
+    $('input[name="mwb_membership_plan_price"]').keyup(function() {
 
-        if ( $(this).val() < 0 ) {
-            $(this).val( 0 );
+        if ($(this).val() < 0) {
+            $(this).val(0);
         }
-    } );
+    });
 
-    $( 'input[name="mwb_memebership_plan_discount_price"]' ).keyup( function(){
+    $('input[name="mwb_memebership_plan_discount_price"]').keyup(function() {
 
-        if ( $(this).val() < 0 ) {
-            $(this).val( 0 );
+        if ($(this).val() < 0) {
+            $(this).val(0);
         }
-    } );
-    
+    });
+
 
     // Display already selected option field.
     function selected() {
@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 
         var selection_radio = $("input[name='mwb_membership_plan_access_type']:checked").val();
 
-        var shipping_value  =$("input[name='mwb_memebership_plan_free_shipping']:checked").val();
+        var shipping_value = $("input[name='mwb_memebership_plan_free_shipping']:checked").val();
 
         switch (selection_access) {
 
@@ -49,7 +49,7 @@ jQuery(document).ready(function($) {
                 $("#mwb_membership_plan_time_duratin_display").show('500');
         }
 
-        if ( 'yes' == shipping_value ) {
+        if ('yes' == shipping_value) {
             $(".mwb_membership_free_shipping_link").show('500');
         } else {
             $(".mwb_membership_free_shipping_link").hide('500');
@@ -67,16 +67,16 @@ jQuery(document).ready(function($) {
             case 'limited':
                 $("#mwb_membership_duration").show('500');
 
-                $("#mwb_membership_plan_duration_type").on( "change", function() {
+                $("#mwb_membership_plan_duration_type").on("change", function() {
                     var duration_type = $("#mwb_membership_plan_duration_type").val();
-                    if ( 'days' == duration_type ) {
-                        $("#mwb_membership_plan_duration_type" ).attr({ min:1, max:31 })
-                    }else{
-                        $("#mwb_membership_plan_duration_type" ).removeAttr("min");
-                        $("#mwb_membership_plan_duration_type" ).removeAttr("max");
+                    if ('days' == duration_type) {
+                        $("#mwb_membership_plan_duration_type").attr({ min: 1, max: 31 })
+                    } else {
+                        $("#mwb_membership_plan_duration_type").removeAttr("min");
+                        $("#mwb_membership_plan_duration_type").removeAttr("max");
                     }
                 });
-               
+
                 $("#mwb_membership_recurring_plan").show('500');
                 break;
 
@@ -249,16 +249,16 @@ jQuery(document).ready(function($) {
         $('#upload_img').removeClass('button_hide');
         $('#remove_img').addClass('button_hide');
     });
-    
+
     // invoice attach checkbox
     $('#mwb_membership_attach_invoice').on('change', function() {
 
-    	var check = $(this).prop('checked');
+        var check = $(this).prop('checked');
 
-        if ( check == true) {
+        if (check == true) {
 
             $('.mfw_membership_invoice_pdf').show('500');
-        } else  if ( check == false){
+        } else if (check == false) {
 
             $('.mfw_membership_invoice_pdf').hide('500');
 
@@ -266,21 +266,24 @@ jQuery(document).ready(function($) {
     });
 
     // Add default plan title.
-    var post_title = $( 'input[name="post_title"]' ).val();
-    var post_id    = $( 'input[name="post_ID"]' ).val();
-    
-    if ( ! post_title ) {
-        $( 'input[name="post_title"]' ).val( 'Plan ' + '#' + post_id );
+    var post_title = $('input[name="post_title"]').val();
+    var post_id = $('input[name="post_ID"]').val();
+
+    if (!post_title) {
+        $('input[name="post_title"]').val('Plan ' + '#' + post_id);
     }
 
     // Display warning if plan title field is empty.
-    $( 'input[name="post_title"]' ).on( 'keyup', function() {
-        var post_title = $( 'input[name="post_title"]' ).val();
-        
-        if ( ! post_title ) {
+    $('input[name="post_title"]').on('keyup', function() {
+        var post_title = $('input[name="post_title"]').val();
+
+        if (!post_title) {
             var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
-            $('div#titlewrap').append( title_msg );
+            $('div#titlewrap').append(title_msg);
         }
     });
-
+    // overview page JS
+    $('.mfw_overview-help-icon').click(function() {
+        $('.mfw_overview_help').toggleClass('mfw_out');
+    });
 });

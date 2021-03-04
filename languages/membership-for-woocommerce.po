@@ -1,0 +1,926 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Membership For Woocommerce 1.0.0\n"
+"POT-Creation-Date: 2021-03-04 18:23+0530\n"
+"PO-Revision-Date: 2021-03-04 18:23+0530\n"
+"Last-Translator: \n"
+"Language-Team: MakeWebBetter\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ../../Downloads/membership-for-woocommerce/admin\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html;esc_html_e;esc_attr;esc_attr_e;esc_url;"
+"esc_url_raw\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: class-membership-for-woocommerce-admin.php:453
+#: class-membership-for-woocommerce-admin.php:1267
+msgid "admin/resources/icons/eye-icon.svg"
+msgstr ""
+
+#: class-membership-for-woocommerce-admin.php:638
+msgid ""
+"Membership plan published successfully, Now you can manage membership free "
+"shipping "
+msgstr ""
+
+#: class-membership-for-woocommerce-admin.php:710
+msgid "Export Plans"
+msgstr ""
+
+#: class-membership-for-woocommerce-admin.php:711
+msgid "Import Plans"
+msgstr ""
+
+#: class-membership-for-woocommerce-admin.php:1419
+msgid "Export Members"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:48
+#: classes/class-mwb-membership-free-shipping-method.php:51
+#: classes/class-mwb-membership-free-shipping-method.php:109
+msgid "Membership Shipping"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:49
+msgid "Membership shipping allows free shipping to active members."
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:97
+msgid "Enable"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:99
+msgid "Enable the membership shipping method."
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:105 gateways/advance
+#: bank tranfer/class-mwb-membership-adv-bank-transfer.php:92 gateways/paypal
+#: express checkout/settings-paypal-express-checkout.php:27
+#: partials/templates/members-templates/mwb-members-plans-details.php:57
+msgid "Title"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:107
+msgid "Title to be displayed on front-end."
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:113
+msgid "Membership Free Shipping Requires"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:118
+msgid "N/A"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:119
+msgid "An Active Membership"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:121
+msgid "Enter cost for membership shipping method"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:126
+msgid "Allowed Memberships"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:130
+msgid ""
+"Select the active membership plans on which you want to offer free shipping"
+msgstr ""
+
+#: classes/class-mwb-membership-free-shipping-method.php:134
+msgid "Select Membership Plans"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:39
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:96
+msgid "Advance Direct Bank Transfer"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:40
+msgid "Take Payments in person via BACS."
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:86
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:18
+msgid "Enable/Disable"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:88
+msgid "Enable Advance Bank Transfer"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:94
+msgid "This displays the title of the gateway visible to user"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:99
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:35
+#: partials/templates/members-templates/mwb-members-plans-details.php:71
+msgid "Description"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:101
+msgid "Payment method description visible to the user"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:103
+msgid ""
+"Make your payment directly into our bank and upload receipt below. Your "
+"membership will be \"on-hold\" until the funds reflect in our bank."
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:111
+msgid "Supported Formats"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:119
+msgid "The supported formats for receipt."
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:140
+msgid "Sort code"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:146
+msgid "Account Details"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:155
+msgid "Account Holder's Name"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:156
+msgid "Account Number"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:157
+msgid "Bank Name"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:159
+msgid "IBAN"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:160
+msgid "BIC / Swift"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:190
+msgid "+ Add Account"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:190
+msgid "Remove selected account(s)"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:293
+msgid "Processing"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:297
+msgid "Remove File"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:358
+#: gateways/paypal express
+#: checkout/class-membership-paypal-express-checkout.php:198
+#, php-format
+msgid "Error completing payment for member #%1$d. Error caused due to: %2$s "
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:391
+msgid "BSB"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:396
+msgid "Bank transit number"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:401
+msgid "IFSC"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:406
+msgid "Branch sort"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:411
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:416
+msgid "Bank Code"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:421
+msgid "Routing Number"
+msgstr ""
+
+#: gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php:426
+msgid "Branch Code"
+msgstr ""
+
+#: gateways/paypal express
+#: checkout/class-membership-paypal-express-checkout.php:31
+msgid "PayPal Checkout( Membership )"
+msgstr ""
+
+#: gateways/paypal express
+#: checkout/class-membership-paypal-express-checkout.php:32
+msgid "Allow customers to conveniently checkout directly with PayPal."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:20
+msgid "Enable PayPal Smart buttons"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:21
+msgid ""
+"This enables PayPal Smart buttons which allows customers to checkout "
+"directly via PayPal."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:29
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:30
+msgid "PayPal"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:38
+msgid "This controls the description which the user sees during checkout."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:39
+msgid "Pay via your PayPal account"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:43
+msgid "Account Settings"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:49
+msgid "Environment"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:51
+msgid "Sandbox mode"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:52
+msgid ""
+"This specifies whether you will process live transactions, or you will "
+"process simulated transactions using the PayPal Sandbox."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:58
+msgid "Live Credentials"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:60
+msgid "Fill out your Paypal Live credentials below."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:64
+msgid "Live Client ID"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:66
+msgid "Get your Client's ID credentials from PayPal."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:72
+msgid "Sandbox Credentials"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:74
+msgid "Fill out your Sandbox credentials below."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:78
+msgid "Sandbox Client ID"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:80
+msgid "Get your Sandbox Client's ID credentials from PayPal."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:86
+msgid "Advanced Settings"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:92
+msgid "Debug"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:94
+msgid "Enable Logging"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:97
+msgid "Log PayPal events, such as IPN requests."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:101
+msgid "Button Settings"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:103
+msgid "Customize the appearance of PayPal Smart buttons on your site."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:107
+msgid "Button layout"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:112
+msgid ""
+"Controls the layout of Paypal button. Use \"Vertical\" to leverage PayPal's "
+"recognition and preference, or change it to match your site design or "
+"aesthetic."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:114
+msgid "Vertical (Recommended)"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:115
+msgid "Horizontal"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:120
+msgid "Button Color"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:125
+msgid ""
+"Controls the background color of the primary button. Use \"Gold\" to "
+"leverage PayPal's recognition and preference, or change it to match your "
+"site design or aesthetic."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:127
+msgid "Gold (Recommended)"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:128
+msgid "Blue"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:129
+msgid "Silver"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:130
+msgid "White"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:131
+msgid "Black"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:136
+msgid "Button Shape"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:141
+msgid ""
+"The pill-shaped button's unique and powerful shape signifies PayPal in "
+"people's minds. Use the rectangular button as an alternative when pill-"
+"shaped buttons might pose design challenges."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:143
+msgid "Rectangle (Recommended)"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:144
+msgid "Pill"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:149
+msgid "Button Label"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:154
+msgid "This controls the label on the primary button."
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:156
+msgid "PayPal (Recommended)"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:157
+msgid "PayPal Checkout"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:158
+msgid "PayPal Buy Now"
+msgstr ""
+
+#: gateways/paypal express checkout/settings-paypal-express-checkout.php:159
+msgid "Pay with PayPal"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:41
+msgid "Plan Price"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:50
+msgid "Plan Access Type"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:59
+msgid "Plan User Access Type"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:68
+msgid "Plan Offered Categories"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:77
+msgid "Plan Offered Products"
+msgstr ""
+
+#: partials/templates/admin-ajax-templates/membership-plan-preview.php:86
+msgid "Plan Description"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:28
+msgid "Status"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:30
+msgid "pending"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:30
+msgid "Pending"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:31
+msgid "hold"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:31
+msgid "On-hold"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:32
+msgid "complete"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:32
+msgid "Completed"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:37
+msgid "Actions"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:39
+msgid "email"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:39
+msgid "Email invoice to customer"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:45
+msgid "Move to trash"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-actions.php:47
+msgid "Update"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:61
+msgid "General"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:65
+msgid "Customer:"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:66
+msgid "View other memberships"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:67
+msgid "Profile"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:76
+#: partials/templates/members-templates/mwb-members-plans-billing.php:168
+msgid "selected"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:86
+msgid "Billing"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:92
+msgid "Address :"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:103
+msgid "No billing details"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:109
+msgid "Email address :"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:114
+msgid "Phone :"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:119
+msgid "Payment Method"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:128
+msgid "First name"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:133
+msgid "Last name"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:138
+msgid "Company"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:143
+msgid "Address line 1"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:148
+msgid "Address line 2"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:153
+msgid "City"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:158
+msgid "Postcode/ZIP"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:163
+msgid "Country"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:174
+msgid "State/County"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:181
+msgid "Email address"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:186
+msgid "Phone"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:191
+msgid "Payment method"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-billing.php:199
+msgid "Select a payment method"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:64
+msgid "Price"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:78
+msgid "Plan Type"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:113
+msgid "Plan access"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:120
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:59
+msgid "Access Type"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:146
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:297
+msgid "Discount"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:153
+msgid "Free Shipping"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:160
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:156
+msgid "Offered Products"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:174
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:201
+msgid "Offered Categories"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:193
+msgid "No membership details found"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-details.php:195
+msgid "Select a plan"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:29
+msgid "Payment"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:31
+msgid "every"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:37
+msgid "Day"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:38
+msgid "Week"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:39
+msgid "Month"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:40
+msgid "Year"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:48
+msgid "Start date"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:54
+msgid "Next Payment"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:64
+msgid "End Date"
+msgstr ""
+
+#: partials/templates/members-templates/mwb-members-plans-schedule.php:74
+msgid "Timezone :"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:55
+msgid "Settings saved"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:103
+msgid "Membership Global Settings"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:124
+msgid "Enable Membership Plans"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:149
+msgid "Delete data at Uninstall"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:174
+msgid "Show History to User"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:196
+msgid "Email Subject"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:218
+msgid "Email Content"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:251
+msgid "Attach Invoice to Email"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:273
+msgid "Invoice Company Address"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:295
+msgid "Invoice Company Phone No."
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:317
+msgid "Invoice Company Email"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:339
+msgid "Invoice Company logo"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:356
+msgid "Upload Logo"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:357
+msgid "Remove Logo"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-global-settings.php:375
+msgid "Save Changes"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-overview.php:24
+msgid "Membership Overview"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:37
+msgid "Membership Plan Amount"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:75
+msgid "lifetime"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:75
+msgid "Lifetime"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:77
+msgid "limited"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:77
+msgid "Limited"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:87
+msgid "Duration"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:103
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:272
+msgid "days"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:103
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:272
+msgid "Days"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:104
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:273
+msgid "weeks"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:104
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:273
+msgid "Weeks"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:105
+msgid "months"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:105
+msgid "Months"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:106
+msgid "years"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:106
+msgid "Years"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:116
+msgid "Enable Recurring Plan"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:138
+msgid "Membership Plan Offers"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:148
+msgid "Offer Section"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:166
+msgid "Search for a product&hellip;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:211
+msgid "Search for a category&hellip;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:244
+msgid "Accessibility Type"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:258
+msgid "immediate_type"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:259
+msgid "Immediately"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:261
+msgid "delay_type"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:262
+msgid "Specifiy a time"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:290
+msgid "Membership Features Section"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:314
+msgid "%"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:314
+msgid "Discount %"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:316
+msgid "fixed"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:316
+msgid "Fixed price"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:328
+msgid "Allow Free Shipping"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:352
+msgid "?page=wc-settings&tab=shipping"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-plans-creation.php:352
+msgid "Manage Free shipping"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:23
+msgid "Membership Shortcodes"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:35
+msgid "Membership Action Shortcodes"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:50
+msgid "Buy Now &rarr;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:68
+msgid "No Thanks &rarr;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:82
+msgid "Membership Plan Shortcodes"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:97
+msgid "Membership Plan Title &rarr;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:113
+msgid "Membership Plan Price &rarr;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-shortcodes.php:129
+msgid "Membership Plan Desc &rarr;"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-supported-gateway.php:24
+msgid "Membership Supported Gateways"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-supported-gateway.php:30
+msgid "Setup Membership Supported Gateways"
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-supported-gateway.php:63
+msgid "?page=wc-settings&tab=checkout&section="
+msgstr ""
+
+#: partials/templates/membership-templates/mwb-membership-supported-gateway.php:63
+#: partials/templates/membership-templates/mwb-membership-supported-gateway.php:74
+msgid "Manage"
+msgstr ""

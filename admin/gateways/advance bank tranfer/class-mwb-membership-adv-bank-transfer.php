@@ -287,14 +287,15 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
 				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="true">
 			</div>
+			<div id="mfw-bacs-file-upload-wrapper">
+				<div id="progress-wrapper" class="is_hidden">
+					<div class="progress-bar"></div>
+					<div class="status"><?php esc_html_e( 'Processing', 'membership-for-woocommerce' ); ?></div>
+				</div>
 
-			<div id="progress-wrapper" class="is_hidden">
-				<div class="progress-bar"></div>
-				<div class="status"><?php esc_html_e( 'Processing', 'membership-for-woocommerce' ); ?></div>
-			</div>
-
-			<div class="bacs_receipt_field is_hidden">
-				<a href="javascript:void(0);" class="bacs_receipt_remove_file"><?php esc_html_e( 'Remove File', 'membership-for-woocommerce' ); ?></a>
+				<div class="bacs_receipt_field is_hidden">
+					<a href="javascript:void(0);" class="bacs_receipt_remove_file"><?php esc_html_e( 'Remove File', 'membership-for-woocommerce' ); ?></a>
+				</div>
 			</div>
 
 		</div>
@@ -434,6 +435,3 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	}
 
 }
-
-
-

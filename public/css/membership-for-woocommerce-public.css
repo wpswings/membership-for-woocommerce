@@ -2,17 +2,19 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+
  @keyframes visible {
     from {
         opacity: 0;
     }
-
     to {
         opacity: 0.95;
     }
 }
 
+
 /*Remove Focus*/
+
 select#membership_billing_country:focus,
 .entry-summary .button.alt:focus,
 .mwb_mfw_button-main:focus,
@@ -20,12 +22,15 @@ select#membership_billing_country:focus,
 .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable:focus,
 .mwb_membership_buy_now_btn .mwb_membership_buynow:focus,
 .mwb_membership_no_thanks.button.alt.thickbox:focus,
-.bacs_receipt_remove_file:focus {
+.bacs_receipt_remove_file:focus,
+.bacs_receipt_wrapper input:focus {
     box-shadow: none;
     outline: none;
 }
 
+
 /*main product button designing*/
+
 .button.alt.mfw-membership {
     width: 100%;
     max-width: 200px;
@@ -36,8 +41,6 @@ select#membership_billing_country:focus,
     font-size: 12px;
     font-weight: 400;
     transition: 0.3s background-color ease-in-out;
-    margin: 0px auto;
-    display: block;
 }
 
 .button.alt.mfw-membership:hover {
@@ -47,14 +50,13 @@ select#membership_billing_country:focus,
 }
 
 .product-meta.product-meta-review {
-    border-radius: 30px;
-    /* background: #F37E21; */
-    color: #F37E21;
+    border: 2px solid;
+    border-radius: 5px;
+    background: #F37E21;
+    color: #ffffff;
     max-width: 200px;
     text-align: center;
-    display: block;
-    border-top: 2px solid;
-    margin:10px auto 0;
+    margin-bottom: -10px;
 }
 
 .mwb_mfw_membership_tool_tip_wrapper {
@@ -94,7 +96,9 @@ select#membership_billing_country:focus,
     transform: rotate(180deg) translate(-50%, -50%);
 }
 
+
 /*membership page designing*/
+
 .wp-block-cover {
     background: linear-gradient(180deg, #1a3365 50%, #ffffff99 50%) !important;
     min-height: 100% !important;
@@ -129,7 +133,6 @@ select#membership_billing_country:focus,
     box-shadow: 0px 0px 5px #565656;
     border-radius: 5px;
 }
-
 
 .mwb_mfw_membership_icon {
     font-size: 65px;
@@ -168,6 +171,7 @@ select#membership_billing_country:focus,
     justify-content: space-evenly;
     width: 100%;
     flex-wrap: wrap;
+    align-items: baseline;
 }
 
 .mwb_membership_no_thanks.button.alt.thickbox {
@@ -190,7 +194,9 @@ select#membership_billing_country:focus,
     color: #F37E21;
 }
 
+
 /*multi-step form for woo-commerce*/
+
 .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
     width: calc(100% - 15px) !important;
     max-width: 700px;
@@ -228,6 +234,15 @@ form#mwb_membership_buy_now_modal_form {
     order: 3;
 }
 
+.bacs_receipt_wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.bacs_receipt_field {
+    margin-bottom: 20px;
+}
+
 .mwb_mfw_progress-bar {
     display: flex;
     justify-content: center;
@@ -235,6 +250,14 @@ form#mwb_membership_buy_now_modal_form {
     order: 1;
     margin: 0px auto;
     color: #dcdcdc;
+}
+
+#mfw-bacs-file-upload-wrapper {
+    display: flex;
+}
+
+#progress-wrapper {
+    margin-right: 20px;
 }
 
 .mwb_mfw_progress-line {
@@ -362,16 +385,11 @@ div .membership_customer_details {
     margin: 10px auto;
 }
 
-
-
 .mwb_mfw_button-main:hover {
     background: inherit;
     border: 2px solid #1a3365;
     color: #1a3365;
 }
-
-
-
 
 .payment_box.payment_method_membership-adv-bank-transfer,
 .payment_box.payment_method_membership-paypal-smart-buttons {
@@ -429,11 +447,6 @@ div .membership_customer_details {
     border-radius: 2px;
 }
 
-.bacs_receipt_wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
 div.status {
     margin: 10px;
     font-size: 14px;
@@ -457,3 +470,26 @@ div.status {
 .is_hidden {
     display: none;
 }
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: none;
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    max-width: 160px;
+    width: 100%;
+    padding: 5px;
+    background-color: #333;
+    color: #dcdcdc;
+    text-align: center;
+    border-radius: 2px;
+    position: absolute;
+    right: 0px;
+    top: -42px;
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
