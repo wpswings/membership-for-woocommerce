@@ -269,9 +269,6 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-			// Force reset cart data.
-			$this->loader->add_action( 'wp_loaded', $plugin_public, 'force_reset_cart_data', 1 );
-
 			// Register Endpoint.
 			$this->loader->add_action( 'init', $plugin_public, 'mwb_membership_register_endpoint' );
 			// Add query variable.

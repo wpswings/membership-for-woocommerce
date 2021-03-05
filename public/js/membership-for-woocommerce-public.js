@@ -165,7 +165,7 @@ jQuery(document).ready(function ($) {
 			e.preventDefault();
 			var form = $("#mwb_membership_buy_now_modal_form");
 
-			$( '#membership_proceed_payment' ).css( 'pointer-events', none );
+			$( '#membership_proceed_payment' ).css( 'pointer-events', 'none' );
 
 			$.ajax({
 				url: membership_public_obj.ajaxurl,

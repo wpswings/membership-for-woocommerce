@@ -41,6 +41,8 @@ select#membership_billing_country:focus,
     font-size: 12px;
     font-weight: 400;
     transition: 0.3s background-color ease-in-out;
+    display: block;
+    margin: 0px auto;
 }
 
 .button.alt.mfw-membership:hover {
@@ -50,13 +52,12 @@ select#membership_billing_country:focus,
 }
 
 .product-meta.product-meta-review {
-    border: 2px solid;
-    border-radius: 5px;
-    background: #F37E21;
-    color: #ffffff;
+    border-top: 2px solid;
+    border-radius: 35px;
+    color: #F37E21;
     max-width: 200px;
     text-align: center;
-    margin-bottom: -10px;
+    margin: 0px auto -5px;
 }
 
 .mwb_mfw_membership_tool_tip_wrapper {

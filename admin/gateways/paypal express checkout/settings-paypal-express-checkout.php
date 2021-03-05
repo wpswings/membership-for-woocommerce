@@ -20,7 +20,7 @@ $settings = array(
 		'label'       => __( 'Enable PayPal Smart buttons', 'membership-for-woocommerce' ),
 		'description' => __( 'This enables PayPal Smart buttons which allows customers to checkout directly via PayPal.', 'membership-for-woocommerce' ),
 		'desc_tip'    => true,
-		'default'     => 'yes',
+		'default'     => 'no',
 	),
 
 	'title'               => array(
@@ -36,7 +36,7 @@ $settings = array(
 		'type'        => 'text',
 		'desc_tip'    => true,
 		'description' => __( 'This controls the description which the user sees during checkout.', 'membership-for-woocommerce' ),
-		'default'     => __( 'Pay via your PayPal account', 'membership-for-woocommerce' ),
+		'default'     => __( 'Pay via your PayPal account.', 'membership-for-woocommerce' ),
 	),
 
 	'account_settings'    => array(

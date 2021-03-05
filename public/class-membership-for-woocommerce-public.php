@@ -308,26 +308,6 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Reset cart data.
-	 */
-	public function force_reset_cart_data() {
-
-		if ( is_admin() ) {
-			return;
-		}
-
-		if ( function_exists( 'WC' ) ) {
-
-			$cart = WC()->session->get( 'cart', false );
-
-			if( false == $cart ) {
-
-				delete_user_meta( get_current_user_id(), '_woocommerce_persistent_cart_' . get_current_blog_id() );
-			}
-		}
-	}
-
-	/**
 	 * Restrict purchase of product to non-members.
 	 *
 	 * @param bool   $is_purchasable Whether the product is purchasable or not.

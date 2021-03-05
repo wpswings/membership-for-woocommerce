@@ -14,8 +14,8 @@
  * @wordpress-plugin
  * Plugin Name:       Membership For Woocommerce
  * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce
- * Description:       Membership for WooCommerce is another featured-packed membership plugin designed to help you create any type of membership site you want. 
- * Version:           1.0.0(development)
+ * Description:       Membership for WooCommerce is another featured-packed membership plugin designed to help you create any type of membership site you want.
+ * Version:           1.0.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com
  * License:           GPL-2.0+
