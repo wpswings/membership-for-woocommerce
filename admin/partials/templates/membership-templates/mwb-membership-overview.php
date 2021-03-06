@@ -181,7 +181,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						like Stripe and Authorize.net, or any of your special requirements. Do not let users turn away
 						from you because of payment gateways. So, add recurring revenue based on the membership of your
 						users.',
-						'membership-for-woocommerce',
+						'membership-for-woocommerce'
 					);
 					?>
 						</p>

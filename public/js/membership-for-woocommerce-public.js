@@ -240,24 +240,6 @@ jQuery(document).ready(function ($) {
 	// multi-step form for woo-commerce
 	$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_form-field-wrapper-part-b, #mwb_proceed_payment, .mwb_membership_payment_modal, .mwb_mfw_btn-back-a,.mwb_mfw_btn-back-b, .mwb_mfw_btn-next-b, .mwb_mfw_order-confirm, .mwb_mfw_purchase-again').hide();
 	
-	var li;
-
-	if (window.matchMedia('(max-width: 768px)').matches) {
-
-		for (li = 0; li < 15; li++) {
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-b .mwb_mfw_progress-line");
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-c .mwb_mfw_progress-line");
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-d .mwb_mfw_progress-line");
-		}
-
-	} else {
-		for (li = 0; li < 30; li++) {
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-b .mwb_mfw_progress-line");
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-c .mwb_mfw_progress-line");
-			$("<i class='fas fa-circle' style='font-size:5px;'></i>").prependTo("#mwb_mfw_progress-bar-d .mwb_mfw_progress-line");
-		}
-	}
-
 	// Reset form on modal close.
 	$('.ui-dialog-titlebar-close').click(function () {
 		resetform();

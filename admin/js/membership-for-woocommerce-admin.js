@@ -282,6 +282,7 @@ jQuery(document).ready(function($) {
             $('div#titlewrap').append(title_msg);
         }
     });
+
     // overview page JS
     $('.mfw_overview-help-icon').click(function() {
         $('.mfw_overview_help').toggleClass('mfw_out');

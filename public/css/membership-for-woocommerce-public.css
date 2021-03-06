@@ -242,15 +242,29 @@ form#mwb_membership_buy_now_modal_form {
 
 .bacs_receipt_field {
     margin-bottom: 20px;
+    overflow: hidden;
 }
 
 .mwb_mfw_progress-bar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     list-style-type: none;
     order: 1;
     margin: 0px auto;
     color: #dcdcdc;
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+}
+
+.mwb_mfw_progress-bar:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-top: 2px dashed #ddd;
+    top: 9px;
 }
 
 #mfw-bacs-file-upload-wrapper {
@@ -277,6 +291,9 @@ form#mwb_membership_buy_now_modal_form {
     pointer-events: none;
     display: flex;
     transition: linear 1s;
+    position: relative;
+    z-index: 5;
+    background: #fff;
 }
 
 .mwb_mfw_progress-bar-line {
@@ -494,3 +511,7 @@ div.status {
     font-size: 12px;
     letter-spacing: 0.5px;
   }
+
+.disable_required {
+    pointer-events: none ! important;
+}
