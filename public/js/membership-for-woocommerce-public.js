@@ -159,13 +159,12 @@ jQuery(document).ready(function ($) {
 			
 			if ($payment_methods == 'membership-paypal-smart-buttons') {
 	
-					$("#paypal-button-container").show(500);
-					
-				} else {
-	
-					$("#paypal-button-container").hide(500);
-				}
-			
+				$("#paypal-button-container").show();
+				
+			} else {
+
+				$("#paypal-button-container").hide();
+			}
 
 		});
 
@@ -266,8 +265,8 @@ jQuery(document).ready(function ($) {
 
 	$('.mwb_membership_buynow').click(function () {
 	
-		$('#mwb_mfw_progress-bar-a').css({ 'color': '#007cba' }); //progress bar
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'color': '' });
+		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_btn-next-a').show('300');
 	});
 
@@ -287,8 +286,8 @@ jQuery(document).ready(function ($) {
 
 		// end
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'color': '#007cba' }); //progress bar
-		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'color': '' });
+		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_form-field-wrapper-part-a').hide();
 		$('.mwb_mfw_form-field-wrapper-part-b,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-b').show('500');
 
@@ -297,8 +296,8 @@ jQuery(document).ready(function ($) {
 	$('.mwb_mfw_btn-back-a').click(function () {
 
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a').css({ 'color': '#007cba' }); //progress bar
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'color': '' });
+		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_btn-next-a, .mwb_mfw_form-field-wrapper-part-a').show()
 		$('.mwb_mfw_form-field-wrapper-part-b, .mwb_mfw_btn-next-b').hide();
 	});
@@ -318,8 +317,8 @@ jQuery(document).ready(function ($) {
 
 		// end
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-c').css({ 'color': '#007cba' }); //progress bar
-		$('#mwb_mfw_progress-bar-d').css({ 'color': '' });
+		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-c').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_form-field-wrapper-part-b, .membership_customer_details,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-a, .mwb_mfw_billing-heading h3, .mwb_mfw_btn-next-b, .mwb_mfw_form-field-wrapper-part-a').hide();
 		$('#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b').show();
 	});
@@ -327,8 +326,8 @@ jQuery(document).ready(function ($) {
 	$('.mwb_mfw_btn-back-b').click(function () {
 
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'color': '#007cba' }); //progress bar
-		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'color': '' });
+		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_billing-heading h3, .membership_customer_details, .mwb_mfw_form-field-wrapper-part-b,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-b').show();
 		$('.mwb_mfw_btn-next-a,.mwb_mfw_form-field-wrapper-part-a,#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b').hide();
 	});

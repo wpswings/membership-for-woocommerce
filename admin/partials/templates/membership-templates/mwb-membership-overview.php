@@ -20,9 +20,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <!-- Heading start -->
-<div class="mwb_membership_Overview">
-	<h2><?php esc_html_e( 'Membership Overview', 'membership-for-woocommerce' ); ?></h2>
-</div>
 <div class="mfw_overview_wrapper">
 	<div class="mfw_overview_banner">
 		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Membership for Woocommerce-01.jpg' ); ?>" alt="banner-image">

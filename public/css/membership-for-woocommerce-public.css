@@ -7,6 +7,7 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 0.95;
     }
@@ -38,17 +39,30 @@ select#membership_billing_country:focus,
     border-radius: 4px;
     background-color: rgb(255 255 255 / 50%);
     color: #1a3365 !important;
-    font-size: 12px;
+    font-size: 12px !important;
     font-weight: 400;
     transition: 0.3s background-color ease-in-out;
     display: block;
-    margin: 0px auto;
+    margin: 10px auto;
+    padding: 10px !important;
+    text-transform: capitalize;
+    letter-spacing: 0;
+    line-height: 1.5;
 }
 
 .button.alt.mfw-membership:hover {
-    border: 2px solid #1a3365;
-    background-color: #1a3365;
+    border: 2px solid #1a3365 !important;
+    background-color: #1a3365 !important;
     color: #ffffff !important;
+    padding: 10px !important;
+}
+
+.button.alt.mfw-membership:after {
+    display: none;
+}
+
+.product-meta {
+    text-align: left !important;
 }
 
 .product-meta.product-meta-review {
@@ -63,8 +77,45 @@ select#membership_billing_country:focus,
 .mwb_mfw_membership_tool_tip_wrapper {
     position: relative;
     cursor: help;
-    top: -22px;
-    right: -88px;
+    top: 0px;
+    right: 0px;
+}
+
+.fa-question-circle.mwb_mfw_membership_tool_tip_wrapper {
+    background-color: #3a3a3a;
+    border-radius: 50%;
+    font-size: 10px;
+    color: #ffffff;
+    font-style: normal;
+    display: block;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+}
+
+.fa-question-circle.mwb_mfw_membership_tool_tip_wrapper:before {
+    content: "?";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fa-check-circle.mwb_mfw_progress-bar_done {
+    font-size: 20px;
+    color: #ffffff;
+    display: block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+}
+
+.fa-check-circle.mwb_mfw_progress-bar_done:before {
+    content: "\2714";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .mwb_mfw_membership_tool_tip {
@@ -102,7 +153,7 @@ select#membership_billing_country:focus,
 
 .wp-block-cover {
     background: linear-gradient(180deg, #1a3365 50%, #ffffff99 50%) !important;
-    min-height: 100% !important;
+    min-height: 400px !important;
     font-family: sans-serif;
 }
 
@@ -115,6 +166,7 @@ select#membership_billing_country:focus,
     text-transform: uppercase;
     font-style: normal;
     letter-spacing: 2px;
+    line-height: 1.5;
     font-size: 40px;
 }
 
@@ -145,7 +197,7 @@ select#membership_billing_country:focus,
 .mwb_membership_plan_content_desc {
     width: 100%;
     text-align: center;
-    padding: 7px 15px;
+    padding: 20px 15px 15px;
     color: #171717;
     letter-spacing: 1px;
     text-transform: capitalize;
@@ -172,26 +224,31 @@ select#membership_billing_country:focus,
     justify-content: space-evenly;
     width: 100%;
     flex-wrap: wrap;
-    align-items: baseline;
-}
-
-.mwb_membership_no_thanks.button.alt.thickbox {
-    height: fit-content;
+    align-items: flex-start;
 }
 
 .mwb_membership_buy_now_btn .mwb_membership_buynow,
-.mwb_membership_no_thanks.button.alt.thickbox {
+.button.alt.mwb_membership_no_thanks {
     border: 2px solid transparent;
     border-radius: 5px;
     background-color: #F37E21;
     color: #ffffff;
     transition: linear 0.3s;
+    font-size: 16px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    margin: 10;
+    min-height: 40px;
+    min-width: 150px;
+    justify-content: center;
 }
 
 .mwb_membership_buy_now_btn .mwb_membership_buynow:hover,
 .mwb_membership_no_thanks.button.alt.thickbox:hover {
     border: 2px solid #F37E21;
-    background: inherit;
+    background-color: #ffffff;
+    box-shadow: none;
     color: #F37E21;
 }
 
@@ -255,6 +312,7 @@ form#mwb_membership_buy_now_modal_form {
     position: relative;
     max-width: 500px;
     width: 100%;
+    padding: 0;
 }
 
 .mwb_mfw_progress-bar:after {
@@ -264,7 +322,7 @@ form#mwb_membership_buy_now_modal_form {
     right: 0;
     width: 100%;
     border-top: 2px dashed #ddd;
-    top: 9px;
+    top: 14px;
 }
 
 #mfw-bacs-file-upload-wrapper {
@@ -274,6 +332,7 @@ form#mwb_membership_buy_now_modal_form {
 #progress-wrapper {
     margin-right: 20px;
 }
+
 
 .mwb_mfw_progress-line {
     max-width: 300px;
@@ -287,13 +346,12 @@ form#mwb_membership_buy_now_modal_form {
 
 .mwb_mfw_progress-bar-step {
     font-size: 20px;
-    padding: 0px;
     pointer-events: none;
-    display: flex;
     transition: linear 1s;
     position: relative;
     z-index: 5;
-    background: #fff;
+    background-color: #dcdcdc;
+    border-radius: 50%;
 }
 
 .mwb_mfw_progress-bar-line {
@@ -357,23 +415,54 @@ form#mwb_membership_buy_now_modal_form {
     margin: 0 0 10px;
 }
 
-select#membership_billing_country {
+#membership_billing_country {
     border: none;
     color: #1a3365;
     background-color: #ffffff;
     border-bottom: 1px solid #1a3365;
 }
 
-label.mwb_mfw_form_field-error {
+#mwb_billing_first_name_field,
+#mwb_billing_last_name_field,
+#mwb_billing_country_field,
+#mwb_billing_state_field,
+#mwb_billing_company_field,
+#mwb_billing_phone_field,
+#mwb_billing_email_field,
+#mwb_billing_address_1_field,
+#mwb_billing_address_2_field,
+#mwb_billing_city_field,
+#mwb_billing_postcode_field {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+#mwb_billing_first_name_field>.membership-input-wrapper,
+#mwb_billing_last_name_field>.membership-input-wrapper,
+#mwb_billing_company_field>.membership-input-wrapper,
+#mwb_billing_phone_field>.membership-input-wrapper,
+#mwb_billing_email_field>.membership-input-wrapper,
+#mwb_billing_address_1_field>.membership-input-wrapper,
+#mwb_billing_address_2_field>.membership-input-wrapper,
+#mwb_billing_city_field>.membership-input-wrapper,
+#mwb_billing_postcode_field>.membership-input-wrapper,
+#mwb_billing_country_field>.membership-input-wrapper,
+#mwb_billing_state_field>.membership-input-wrapper {
+    flex: 0 0 100%;
+    display: contents;
+}
+
+.mwb_mfw_form_field-error {
     font-size: 10px;
     color: #ff0000;
     text-align: right;
 }
 
-div .membership_customer_details {
+.membership_customer_details {
     max-width: 500px;
     margin: 0px auto;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .mwb_membership_payment_modal {
@@ -387,6 +476,7 @@ div .membership_customer_details {
 .mwb_mfw_pre-next-btn {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     max-width: 500px;
     margin: 0px auto;
 }
@@ -401,6 +491,7 @@ div .membership_customer_details {
     border-radius: 5px;
     transition: linear 0.3s;
     margin: 10px auto;
+    padding: 10px;
 }
 
 .mwb_mfw_button-main:hover {
@@ -415,6 +506,7 @@ div .membership_customer_details {
     border-radius: 5px;
     margin: auto;
     max-width: 465px;
+    min-height: 200px;
     padding: 5px;
 }
 
@@ -427,8 +519,8 @@ div .membership_customer_details {
     order: 2;
 }
 
-.membership-input-wrapper .button {
-    border: 2px solid #333333;
+.membership-input-wrapper input[name="membership_proceed_payment"] {
+    border: 2px solid #F37E21;
     font-size: 14px;
     letter-spacing: 1px;
     outline: none;
@@ -436,17 +528,25 @@ div .membership_customer_details {
     border-radius: 5px;
     transition: linear 0.3s;
     margin: 10px 0px 10px 10px;
+    padding: 10px;
+    background-color: #F37E21;
+    color: #ffffff;
 }
 
-.membership-input-wrapper .button:hover {
-    background: inherit;
-    border: 2px solid #333333;
-    color: #333333;
+.membership-input-wrapper input[name="membership_proceed_payment"]:hover {
+    background: #ffffff;
+    box-shadow: none;
+    border: 2px solid #F37E21;
+    color: #F37E21;
 }
 
 .wc_payment_method,
 .wc_payment_method label {
     cursor: pointer;
+}
+
+#progress-wrapper .progress-bar {
+    background-color: transparent;
 }
 
 .progress-complete {
@@ -489,14 +589,9 @@ div.status {
     display: none;
 }
 
-/* Tooltip container */
-.tooltip {
-    position: relative;
-    display: none;
-  }
-  
-  /* Tooltip text */
-  .tooltip .tooltiptext {
+
+/* Tooltip text */
+.tooltip .tooltiptext {
     max-width: 160px;
     width: 100%;
     padding: 5px;
@@ -510,7 +605,7 @@ div.status {
     display: block;
     font-size: 12px;
     letter-spacing: 0.5px;
-  }
+}
 
 .disable_required {
     pointer-events: none ! important;

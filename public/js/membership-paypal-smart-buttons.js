@@ -81,18 +81,11 @@ jQuery( document ).ready( function( $ ) {
         onApprove: function(data, actions) {
 
             return actions.order.capture().then(function(details) {
-                
-                $( '.swal2-container' ).css( 'z-index', '100102' );
-
-                Swal.fire({
-                    icon : 'success',
-                    title: 'Transaction completed by ',
-                    text : details.payer.name.given_name,
-                });
-
+               
+                alert(  'Transaction completed by ' + details.payer.name.given_name );
+               
                 saveTransactionData( details );
 
-            
             });
         }
     }).render( '#paypal-button-container' );
