@@ -242,6 +242,13 @@ class Membership_For_Woocommerce {
 
 		// Admin notice about free shipping.
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'mwb_membership_shipping_notice' );
+
+		// Remove bulk action for members.
+		$this->loader->add_filter( 'bulk_actions-edit-mwb_cpt_members', $plugin_admin, 'membership_for_woo_members_remove_bulkaction' );
+
+		// Remove quick edit.
+		$this->loader->add_filter( 'post_row_actions', $plugin_admin, 'membership_for_woo_remove_quick_edit', 10, 1 );
+
 	}
 
 	/**

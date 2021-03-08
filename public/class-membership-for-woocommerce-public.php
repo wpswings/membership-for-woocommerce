@@ -143,8 +143,8 @@ class Membership_For_Woocommerce_Public {
 			$payapl_sb = new Membership_Paypal_Express_Checkout();
 			$settings  = $payapl_sb->paypal_sb_settings();
 
-			$client_id    = ! empty( $settings['client_id'] ) ? $settings['client_id'] : '';
-			$currency     = ! empty( $settings['currency_code'] ) ? 'USD' : '';
+			$client_id    = ! empty( $settings['client_id'] ) ? $settings['client_id'] : 'sb';
+			$currency     = ! empty( $settings['currency_code'] ) ? $settings['currency_code'] : '';
 			$intent       = ! empty( $settings['payment_action'] ) ? $settings['payment_action'] : '';
 			$component    = ! empty( $settings['component'] ) ? $settings['component'] : 'buttons';
 			$disable_fund = ! empty( $settings['disable_funding'] ) ? $settings['disable_funding'] : '';

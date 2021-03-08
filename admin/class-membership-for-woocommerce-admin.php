@@ -967,6 +967,43 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * Remove bulk actions for members post.
+	 *
+	 * @param array $actions An array of bulk actions options.
+	 *
+	 * @return array.
+	 * @since 1.0.0
+	 */
+	public function membership_for_woo_members_remove_bulkaction( $actions ) {
+
+		unset( $actions['edit'] );
+		unset( $actions['trash'] );
+
+		return $actions;
+	}
+
+	/**
+	 * Remove quick edit from members.
+	 *
+	 * @param array $actions An array of quick action on hover.
+	 *
+	 * @return array.
+	 * @since 1.0.0
+	 */
+	public function membership_for_woo_remove_quick_edit( $actions ) {
+
+		global $post;
+
+		if ( 'mwb_cpt_members' == $post->post_type ) {
+
+			unset( $actions['trash'] );
+			unset( $actions['view'] );
+			unset( $actions['inline hide-if-no-js'] );
+		}
+		return $actions;
+	}
+
+	/**
 	 * Register custom meta box for members custom post type.
 	 *
 	 * @since 1.0.0
