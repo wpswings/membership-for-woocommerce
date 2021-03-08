@@ -155,7 +155,17 @@ jQuery(document).ready(function ($) {
 			$(".payment_box").slideUp();
 			$("div.payment_method_" + $payment_methods).slideDown();
 
-			$("#membership_proceed_payment").hide(500);
+			$("#membership_proceed_payment").hide();
+			
+			if ($payment_methods == 'membership-paypal-smart-buttons') {
+	
+					$("#paypal-button-container").show(500);
+					
+				} else {
+	
+					$("#paypal-button-container").hide(500);
+				}
+			
 
 		});
 
