@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     Make Web Better <plugins@makewebbetter.com>
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_Checkout_Validation {
 

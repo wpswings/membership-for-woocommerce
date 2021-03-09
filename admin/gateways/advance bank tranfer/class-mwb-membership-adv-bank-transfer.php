@@ -44,8 +44,8 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		$this->init_settings();
 
 		// Get settings values.
-		$this->title        = $this->get_option( 'title' );
-		$this->description  = $this->get_option( 'description' );
+		$this->title       = $this->get_option( 'title' );
+		$this->description = $this->get_option( 'description' );
 
 		// Instance of global class.
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
@@ -266,9 +266,28 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 	 */
 	public function add_receipt_fields_html( $desc = '', $gate_id = '' ) {
 
-		if ( ! empty( $gate_id ) && $gate_id === $this->id ) {
+		if ( ! empty( $gate_id ) && $gate_id == $this->id ) {
 
-			return $desc . $this->return_receipt_fields_html();
+			$accnt_details = $this->account_details;
+
+			$str = '';
+
+			if ( ! empty( $accnt_details ) ) {
+
+				$str .= '<table>';
+
+				foreach ( $accnt_details as $key => $accnt_detail ) {
+
+					foreach ( $accnt_detail as $key => $value ) {
+
+						$str .= '<tr><th>' . ucwords( str_replace( '_', ' ', $key ) ) . '</th><td>' . $value . '</td></tr>';
+					}
+				}
+
+				$str .= '</table>';
+			}
+
+			return $desc . ' ' . $str . $this->return_receipt_fields_html();
 		}
 	}
 
@@ -279,7 +298,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		ob_start();
 		?>
-
 		<!-- Receipt field start. -->
 		<div class="bacs_receipt_wrapper">
 

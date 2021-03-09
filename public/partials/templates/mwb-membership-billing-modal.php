@@ -58,7 +58,6 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 		<h3><?php esc_html_e( 'Billing details', 'membership-for-woocommerce' ); ?></h3>
 	</div>
 
-	<!-- <form id="membership_customer_form" method="post" action=""> -->
 	<div class="membership_customer_details" id="membership_customer_details" >
 
 		<div class="membership_billing_fields" >

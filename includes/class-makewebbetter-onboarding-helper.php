@@ -17,7 +17,7 @@
  *
  * @package    Makewebbetter_Onboarding_Helper
  * @subpackage Makewebbetter_Onboarding_Helper/admin
- * @author     Make Web Better <dev@mwb.com>
+ * @author     MakeWebBetter <dev@mwb.com>
  */
 if ( class_exists( 'Makewebbetter_Onboarding_Helper' ) ) {
 	return;

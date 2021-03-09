@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 			</p>
 			<h3>
-				<?php esc_html_e( 'With our WooCommerce Membership plugin, as a store owner you get:', 'membership-for-woocommerce' ); ?>
+				<?php esc_html_e( 'With our Membership for WooCommerce plugin, as a store owner you get:', 'membership-for-woocommerce' ); ?>
 			</h3>
 			<ul>
 				<li>
@@ -131,7 +131,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</li>
 
 			<li class="mfw_overview_heading">
-				<h2><?php esc_html_e( 'Elite Features of Membership For WooCommerce- Coming Soon', 'membership-for-woocommerce' ); ?> </h2>
+				<h2><?php esc_html_e( 'Elite Features of Premium Version - Coming Soon', 'membership-for-woocommerce' ); ?> </h2>
 			</li>
 
 			<li>
@@ -190,7 +190,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<p>
 					<?php
 					esc_html_e(
-						'In case you want to offer more than one membership plan to your users, Memberships for
+						'In case you want to offer more than one membership plan to your users, Membership for
 						WooCommerce Pro, is for you. Your users may find their new requirements.',
 						'membership-for-woocommerce'
 					);
@@ -231,7 +231,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/mfw13.png' ); ?>" alt="logo-right">
 			</li>
 		</ul>
-		<!-- <a href="#" class="mfw_upgrade_plan">Upgrade now</a> -->
 	</div>
 	<div class="mfw_overview_help">
 		<div class="mfw_overview-help-icon"><span>&#9881;</span></div>

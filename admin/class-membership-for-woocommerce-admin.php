@@ -17,7 +17,7 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     Make Web Better <plugins@makewebbetter.com>
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_For_Woocommerce_Admin {
 
@@ -1767,12 +1767,14 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Get all valid screens to add scripts and templates.
 	 *
+	 * @param array $valid_screens An array of valid screens for onboarding form.
+	 * @return array
 	 * @since    1.0.0
 	 */
-	public function add_mwb_frontend_screens( $valid_screens=array() ) {
+	public function add_mwb_frontend_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-			
+
 			// Push your screen here.
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-global-settings' );
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb_membership-for-woo-gateways' );
@@ -1780,18 +1782,20 @@ class Membership_For_Woocommerce_Admin {
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-overview' );
 		}
 
-		return $valid_screens;	
+		return $valid_screens;
 	}
 
 	/**
 	 * Get all valid slugs to add deactivate popup.
 	 *
+	 * @param array $valid_screens An array of valid screens for onboarding form.
+	 * @return array
 	 * @since    1.0.0
 	 */
-	public function add_mwb_deactivation_screens( $valid_screens=array() ) {
+	public function add_mwb_deactivation_screens( $valid_screens = array() ) {
 
 		if ( is_array( $valid_screens ) ) {
-			
+
 			// Push your screen here.
 			array_push( $valid_screens, 'membership-for-woocommerce' );
 		}
@@ -1800,5 +1804,5 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 
-// End of class.
 }
+// End of class.

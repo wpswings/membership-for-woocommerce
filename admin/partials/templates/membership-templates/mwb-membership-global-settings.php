@@ -151,7 +151,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 						<td class="forminp forminp-text">
 							<?php
-								$attribute_description = esc_html__( 'If enabled, this will delete all data at plugin unistall', 'membership-for-woocommerce' );
+								$attribute_description = esc_html__( 'If enabled, this will delete all data at plugin uninstall', 'membership-for-woocommerce' );
 
 								$instance->tool_tip( $attribute_description );
 							?>
@@ -178,7 +178,7 @@ $mwb_membership_invoice_logo = ! empty( $mwb_membership_global_settings['mwb_mem
 
 							<?php
 
-							$description = esc_html__( 'This will Enable Users to visit and see Plans Histroy in Membership tab  on My Account page.', 'membership-for-woocommerce' );
+							$description = esc_html__( 'This will Enable Users to visit and see Plans History in Membership tab  on My Account page.', 'membership-for-woocommerce' );
 
 							$instance->tool_tip( $description );
 

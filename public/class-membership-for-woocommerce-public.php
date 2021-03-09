@@ -17,7 +17,7 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/public
- * @author     Make Web Better <plugins@makewebbetter.com>
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_For_Woocommerce_Public {
 
@@ -558,7 +558,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param bool   $return_status Returns current products purchaseable status.
 	 * @param object $_product Product object.
 	 *
-	 * @since '1.0.0'
+	 * @since 1.0.0
 	 */
 	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
