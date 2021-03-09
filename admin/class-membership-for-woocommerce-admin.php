@@ -1764,4 +1764,41 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
+	/**
+	 * Get all valid screens to add scripts and templates.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_mwb_frontend_screens( $valid_screens=array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+			
+			// Push your screen here.
+			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-global-settings' );
+			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb_membership-for-woo-gateways' );
+			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-shortcodes' );
+			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-overview' );
+		}
+
+		return $valid_screens;	
+	}
+
+	/**
+	 * Get all valid slugs to add deactivate popup.
+	 *
+	 * @since    1.0.0
+	 */
+	public function add_mwb_deactivation_screens( $valid_screens=array() ) {
+
+		if ( is_array( $valid_screens ) ) {
+			
+			// Push your screen here.
+			array_push( $valid_screens, 'membership-for-woocommerce' );
+		}
+
+		return $valid_screens;
+	}
+
+
+// End of class.
 }
