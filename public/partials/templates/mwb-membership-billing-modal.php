@@ -95,15 +95,15 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 							<input type="tel" class="input-text mwb_mfw_form_field" name="membership_billing_phone" id="membership_billing_phone" value="<?php echo esc_html( $phone ); ?>" placeholder="<?php esc_html_e( 'Phone no.', 'membership-for-woocommerce' ); ?>" required>
 						</span>
 					</p>
-					<p class="form-row validate-required mwb_mfw_form_field-wrapper" id="mwb_billing_email_field">
+					<div class="form-row validate-required mwb_mfw_form_field-wrapper" id="mwb_billing_email_field">
 						<label for="membership_billing_email"><?php esc_html_e( 'E-mail&nbsp;', 'membership-for-woocommerce' ); ?><abbr class="required" title="required"><?php esc_html_e( '*', 'membership-for-woocommerce' ); ?></abbr></label>
 						<span class="membership-input-wrapper">
 							<input type="email" class="input-text mwb_mfw_form_field" name="membership_billing_email" id="membership_billing_email" value="<?php echo esc_html( $email ); ?>" placeholder="<?php esc_html_e( 'Email', 'membership-for-woocommerce' ); ?>" required>
-							<div class="tooltip">
-								<span class="tooltiptext"><?php esc_html_e( 'Please enter a valid email.', 'membership-for-woocommerce' ); ?></span>
-							</div>
 						</span>
-					</p>
+						<div class="tooltip">
+								<span class="tooltiptext"><?php esc_html_e( 'Please enter a valid email.', 'membership-for-woocommerce' ); ?></span>
+						</div>
+					</div>
 				</div>
 				<!-- address details -->
 				<div class="mwb_mfw_form-field-wrapper-part-b">

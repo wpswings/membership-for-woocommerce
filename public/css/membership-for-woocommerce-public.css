@@ -61,9 +61,6 @@ select#membership_billing_country:focus,
     display: none;
 }
 
-.product-meta {
-    text-align: left !important;
-}
 
 .product-meta.product-meta-review {
     border-top: 2px solid;
@@ -72,6 +69,10 @@ select#membership_billing_country:focus,
     max-width: 200px;
     text-align: center;
     margin: 0px auto -5px;
+}
+
+.mfw-product-meta-membership {
+    text-align: center;
 }
 
 .mwb_mfw_membership_tool_tip_wrapper {
@@ -91,6 +92,7 @@ select#membership_billing_country:focus,
     width: 16px;
     height: 16px;
     text-align: center;
+    margin : 0px auto;
 }
 
 .fa-question-circle.mwb_mfw_membership_tool_tip_wrapper:before {
@@ -153,12 +155,11 @@ select#membership_billing_country:focus,
 
 .wp-block-cover {
     background: linear-gradient(180deg, #1a3365 50%, #ffffff99 50%) !important;
-    min-height: 400px !important;
     font-family: sans-serif;
+    height: auto;
 }
 
 .wp-block-cover .wp-block-cover__inner-container {
-    position: absolute;
     top: 0;
 }
 
@@ -254,7 +255,6 @@ select#membership_billing_country:focus,
 
 
 /*multi-step form for woo-commerce*/
-
 .ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
     width: calc(100% - 15px) !important;
     max-width: 700px;
@@ -396,6 +396,11 @@ form#mwb_membership_buy_now_modal_form {
     flex-direction: column;
 }
 
+.mwb_mfw_form-field-wrapper-part-a,
+.mwb_mfw_form-field-wrapper-part-b {
+    width: 100% !important;
+}
+
 .membership_billing_fields .mwb_mfw_form_field {
     background: #fff;
     border: none;
@@ -405,6 +410,7 @@ form#mwb_membership_buy_now_modal_form {
     outline: none;
     max-width: 500px;
     padding: 2px;
+    width: 100%;
 }
 
 .membership_billing_fields .mwb_mfw_form_field:focus {
@@ -506,7 +512,7 @@ form#mwb_membership_buy_now_modal_form {
     border-radius: 5px;
     margin: auto;
     max-width: 465px;
-    min-height: 200px;
+    /*min-height: 200px;*/
     padding: 5px;
 }
 
@@ -565,18 +571,25 @@ form#mwb_membership_buy_now_modal_form {
     border-radius: 2px;
 }
 
-div.status {
-    margin: 10px;
+.mwb-mfw__progress-bar {
+    margin-right: 10px;
+    width: 100px;
+}
+
+.mwb-mfw__progress-bar .status {
+    margin: 10px 0;
     font-size: 14px;
+    display: none;
 }
 
 .bacs_receipt_remove_file {
-    border: 1px solid #1a3365;
-    padding: 5px;
-    color: #fff;
     background-color: #1a3365;
+    border: 1px solid #1a3365;
     border-radius: 5px;
+    color: #fff;
+    display: inline-block;
     font-size: 12px;
+    padding: 5px;
 }
 
 .bacs_receipt_remove_file:hover {
@@ -590,21 +603,27 @@ div.status {
 }
 
 
+
+
 /* Tooltip text */
-.tooltip .tooltiptext {
-    max-width: 160px;
-    width: 100%;
-    padding: 5px;
-    background-color: #333;
-    color: #dcdcdc;
-    text-align: center;
+.mwb_mfw_form_field-wrapper {
+    position: relative;
+}
+
+.mwb_mfw_form_field-wrapper .tooltip {
+    position: static;
+}
+
+.mwb_mfw_form_field-wrapper .tooltip .tooltiptext {
     border-radius: 2px;
-    position: absolute;
-    right: 0px;
-    top: -42px;
+    color: red;
     display: block;
     font-size: 12px;
     letter-spacing: 0.5px;
+    padding: 5px;
+    right: 0px;
+    top: 0;
+    width: 100%;
 }
 
 .disable_required {

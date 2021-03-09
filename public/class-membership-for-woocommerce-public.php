@@ -463,7 +463,7 @@ class Membership_For_Woocommerce_Public {
 									// Show options to buy plans.
 									echo '<div style="clear: both">
 											<div style="margin-top: 10px;">
-												<a class="button alt ' . $disable_required .  ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+												<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 											</div>
 										</div>';
 								} else {
@@ -626,10 +626,10 @@ class Membership_For_Woocommerce_Public {
 						}
 
 						?>
-							<div class="product-meta">
+							<div class="product-meta mfw-product-meta-membership">
 								<span><b><?php esc_html_e( 'Membership Product', 'membership-for-woocommerce' ); ?></b></span>
 							</div>
-							<i class="fas fa-question-circle mwb_mfw_membership_tool_tip_wrapper">
+							<i class="fa-question-circle mwb_mfw_membership_tool_tip_wrapper">
 								<div class="mwb_mfw_membership_tool_tip">
 									<?php echo esc_html( $output ); ?>
 								</div>

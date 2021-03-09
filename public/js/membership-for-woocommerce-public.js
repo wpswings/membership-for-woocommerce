@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
 
 		let membership_modal = $("#mwb_membership_buy_now_modal_form");
 		if( membership_modal.length > 0 ) {
-
+			
 			$('input[type="email"]').on( 'keyup', function() {
 				let val = $(this).val();
 				let tooltip = $('.tooltip');
@@ -78,7 +78,8 @@ jQuery(document).ready(function ($) {
 			$(".bacs_receipt_attached").val("");
 			$("#progress-wrapper").removeClass("progress-complete");
 			$("#progress-wrapper").removeClass("progress-failed");
-			$("#progress-wrapper .status").text("Processing");
+			$(".mwb-mfw__progress-bar .status").css( 'display', 'block' );
+			$(".mwb-mfw__progress-bar .status").text("Processing");
 			$("#progress-wrapper").show();
 
 
@@ -104,7 +105,7 @@ jQuery(document).ready(function ($) {
 						$(".bacs_receipt_attached").val(response.url);
 						$("#progress-wrapper").addClass("progress-complete");
 						$(".bacs_receipt_field").removeClass("is_hidden");
-						$("#progress-wrapper .status").text("Completed");
+						$(".mwb-mfw__progress-bar .status").text("Completed");
 						$("#membership_proceed_payment").show();
 
 						// Add file removal script.
@@ -132,7 +133,7 @@ jQuery(document).ready(function ($) {
 										$("#membership_proceed_payment").hide();
 										$("#progress-wrapper").removeClass("progress-complete");
 										$("#progress-wrapper").addClass("progress-failed");
-										$("#progress-wrapper .status").text("File removed");
+										$(".mwb-mfw__progress-bar .status").text("File removed");
 									}
 								}
 							});
@@ -141,7 +142,7 @@ jQuery(document).ready(function ($) {
 					} else if (false == response["result"]) {
 
 						$("#progress-wrapper").addClass("progress-failed");
-						$("#progress-wrapper .status").text(response["message"]);
+						$(".mwb-mfw__progress-bar .status").text(response["message"]);
 					}
 				}
 			});
@@ -333,7 +334,6 @@ jQuery(document).ready(function ($) {
 	});
 
 	// Hover abbreviation on the shop catelogue
-
 	$('.mwb_mfw_membership_tool_tip_wrapper').on('mouseenter', function () {
 
 		let abbr_content = $(this).children('.mwb_mfw_membership_tool_tip').html().length;
@@ -351,6 +351,6 @@ jQuery(document).ready(function ($) {
 		$(this).children('.mwb_mfw_membership_tool_tip').css('display', 'none');
 	})
 
-});
+ });
 
 

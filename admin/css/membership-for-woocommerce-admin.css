@@ -143,7 +143,6 @@ a#post-preview:focus,
 }
 
 .postbox-container .mwb_membership_plan_products h1 {
-    background-color: ;
     color: #ffffff;
     font-size: 32px;
     font-weight: 600;
@@ -212,7 +211,7 @@ a#post-preview:focus,
 }
 
 .form-table.mwb_membership_plans_creation_setting tr:nth-child(odd) {
-    background-color: #f1f6ff;
+    background-color: #ffffff;
 }
 
 #mwb_membership_recurring_plan,

@@ -288,8 +288,10 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="true">
 			</div>
 			<div id="mfw-bacs-file-upload-wrapper">
-				<div id="progress-wrapper" class="is_hidden">
-					<div class="progress-bar"></div>
+				<div class="mwb-mfw__progress-bar">
+					<div id="progress-wrapper" class="is_hidden">
+						<div class="progress-bar"></div>
+					</div>
 					<div class="status"><?php esc_html_e( 'Processing', 'membership-for-woocommerce' ); ?></div>
 				</div>
 
@@ -300,7 +302,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		</div>
 		<!-- Receipt feild end. -->
-
 		<?php
 		return ob_get_clean();
 	}
