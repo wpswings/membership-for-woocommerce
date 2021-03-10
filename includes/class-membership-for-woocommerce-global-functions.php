@@ -590,7 +590,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function run_query( $query = '' ) {
 
 		global $wpdb;
-		
+
 		return ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 

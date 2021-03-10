@@ -9,7 +9,6 @@ jQuery(document).ready(function ($) {
 
 	const validate_email = ( val ) => {
 
-		console.log( val );
 		let tooltip = $('.tooltip');
 		let result =  (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(val));
 		if ( result ) {
@@ -171,8 +170,15 @@ jQuery(document).ready(function ($) {
 				
 			} else {
 
+				let file_attached = jQuery( '.bacs_receipt_file' ).prop("files");
 				$("#paypal-button-container").hide();
-				$("#membership_proceed_payment").show();
+				if( file_attached.length > 0 ) {
+					// Show place order.
+					$("#membership_proceed_payment").show();
+				}
+				else {
+					$("#membership_proceed_payment").hide();
+				}
 			}
 
 		});

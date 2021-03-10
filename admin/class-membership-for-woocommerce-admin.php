@@ -1167,7 +1167,7 @@ class Membership_For_Woocommerce_Admin {
 			'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
 			'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
 			'payment_method'                => $payment,
-		);			// phpcs:enable
+		);          // phpcs:enable
 
 		update_post_meta( $post_id, 'billing_details', $fields );
 
@@ -1501,7 +1501,7 @@ class Membership_For_Woocommerce_Admin {
 						'Expiry Date',
 					)
 				);
-//phpcs:disable
+				//phpcs:disable
 				foreach ( $all_posts as $post ) {
 					setup_postdata( $post );
 					fputcsv(
@@ -1522,7 +1522,7 @@ class Membership_For_Woocommerce_Admin {
 					);
 
 				}
-//phpcs:enable
+				//phpcs:enable
 
 				fclose( $file );
 				exit;
