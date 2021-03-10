@@ -301,7 +301,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 		<div class="bacs_receipt_wrapper">
 
 			<div class="bacs_receipt_field">
-				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file"/>
+				<input type="file" name="bacs_receipt_file" class="bacs_receipt_file" required="required"/>
 				<input type="hidden" name="bacs_receipt_attached" class="bacs_receipt_attached" value="true">
 			</div>
 			<div id="mfw-bacs-file-upload-wrapper">

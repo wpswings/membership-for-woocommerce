@@ -7,6 +7,19 @@ jQuery(document).ready(function ($) {
 		$('#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b, .mwb_mfw_btn-back-a').hide();
 	}
 
+	const validate_email = ( val ) => {
+
+		console.log( val );
+		let tooltip = $('.tooltip');
+		let result =  (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(val));
+		if ( result ) {
+			tooltip.hide();
+		}
+		else {
+			tooltip.show();
+		}
+	}
+
 	// Opens modal when clicked on membership "buy now" button.
 	$(".mwb_membership_buynow").on("click", function (e) {
 		e.preventDefault();
@@ -47,20 +60,15 @@ jQuery(document).ready(function ($) {
 		$("#mwb_membership_buy_now_modal_form").dialog("open");
 
 		// Validate all email fields.
-
 		let membership_modal = $("#mwb_membership_buy_now_modal_form");
 		if( membership_modal.length > 0 ) {
-			
+			setTimeout(() => {
+				validate_email( $('#membership_billing_email').val() );
+			}, 500 );
+
 			$('input[type="email"]').on( 'keyup', function() {
-				let val = $(this).val();
-				let tooltip = $('.tooltip');
-				let result =  (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(val));
-				if ( result ) {
-					tooltip.hide();
-				}
-				else {
-					tooltip.show();
-				}
+
+				validate_email( $(this).val() );
 			});
 		}
 
@@ -155,16 +163,16 @@ jQuery(document).ready(function ($) {
 
 			$(".payment_box").slideUp();
 			$("div.payment_method_" + $payment_methods).slideDown();
-
-			$("#membership_proceed_payment").hide();
 			
 			if ($payment_methods == 'membership-paypal-smart-buttons') {
 	
 				$("#paypal-button-container").show();
+				$("#membership_proceed_payment").hide();
 				
 			} else {
 
 				$("#paypal-button-container").hide();
+				$("#membership_proceed_payment").show();
 			}
 
 		});

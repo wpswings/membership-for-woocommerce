@@ -562,6 +562,10 @@ form#mwb_membership_buy_now_modal_form {
     border-radius: 2px;
 }
 
+#membership_proceed_payment {
+    display: none;
+}
+
 .progress-failed {
     max-width: 120px;
     width: 100%;
