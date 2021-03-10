@@ -313,7 +313,7 @@ class Membership_For_Woocommerce_Admin {
 				'exclude_from_search'  => false,
 				'rewrite'              => array(
 					'slug' => esc_html__( 'membership', 'membership-for-woocommerce' ),
-				)
+				),
 			)
 		);
 	}
@@ -951,7 +951,7 @@ class Membership_For_Woocommerce_Admin {
 				'exclude_from_search'  => false,
 				'rewrite'              => array(
 					'slug' => esc_html__( 'members', 'membership-for-woocommerce' ),
-				)
+				),
 			)
 		);
 	}
@@ -1133,7 +1133,6 @@ class Membership_For_Woocommerce_Admin {
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
-
 		}
 
 		foreach ( $actions as $action => $value ) {

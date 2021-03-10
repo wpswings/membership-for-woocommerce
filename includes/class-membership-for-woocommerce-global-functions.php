@@ -85,7 +85,6 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$product = wc_get_product( $product_id );
 
-
 			if ( ! empty( $product ) ) {
 
 				if ( 'publish' !== $product->get_status() ) {
@@ -861,8 +860,8 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				// Create user.
 				try {
-					$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand() , '', $fields['membership_billing_email'] );
-				} catch (\Throwable $th) {
+					$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
+				} catch ( \Throwable $th ) {
 					throw new Exception( $th->getMessage() );
 				}
 

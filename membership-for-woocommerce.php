@@ -7,9 +7,9 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://makewebbetter.com
- * @since             1.0.0
- * @package           Membership_For_Woocommerce
+ * @link    https://makewebbetter.com
+ * @since   1.0.0
+ * @package Membership_For_Woocommerce
  *
  * @wordpress-plugin
  * Plugin Name:       Membership For Woocommerce
@@ -39,7 +39,6 @@ if ( ! defined( 'WPINC' ) ) {
  * @param string $plugin_slug is the slug of the plugin.
  */
 function mwb_membership_for_woo_is_plugin_active( $plugin_slug = '' ) {
-
 	if ( empty( $plugin_slug ) ) {
 
 		return;
@@ -59,7 +58,6 @@ function mwb_membership_for_woo_is_plugin_active( $plugin_slug = '' ) {
  * Checking whether the dependent plugin is active or not.
  */
 function mwb_membership_for_woo_plugin_activation() {
-
 	$activation['status']  = true;
 	$activation['message'] = '';
 
@@ -101,7 +99,7 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 * This action is documented in includes/class-membership-for-woocommerce-activator.php
 	 */
 	function activate_membership_for_woocommerce() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
+		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
 		Membership_For_Woocommerce_Activator::activate();
 	}
 
@@ -110,7 +108,7 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 * This action is documented in includes/class-membership-for-woocommerce-deactivator.php
 	 */
 	function deactivate_membership_for_woocommerce() {
-		require_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-deactivator.php';
+		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-deactivator.php';
 		Membership_For_Woocommerce_Deactivator::deactivate();
 	}
 
@@ -140,7 +138,7 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
-	require plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce.php';
+	include plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce.php';
 
 	/**
 	 * Begins execution of the plugin.
@@ -149,7 +147,7 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 * then kicking off the plugin from this point in the file does
 	 * not affect the page life cycle.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
 	function run_membership_for_woocommerce() {
 
