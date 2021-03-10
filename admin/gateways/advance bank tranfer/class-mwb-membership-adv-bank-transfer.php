@@ -298,7 +298,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		ob_start();
 		?>
-		<!-- Receipt field start. -->
 		<div class="bacs_receipt_wrapper">
 
 			<div class="bacs_receipt_field">
@@ -319,7 +318,6 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 			</div>
 
 		</div>
-		<!-- Receipt feild end. -->
 		<?php
 		return ob_get_clean();
 	}

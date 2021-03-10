@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Membership For Woocommerce 1.0.0\n"
-"POT-Creation-Date: 2021-03-09 17:41+0530\n"
-"PO-Revision-Date: 2021-03-09 17:45+0530\n"
+"POT-Creation-Date: 2021-03-10 10:04+0530\n"
+"PO-Revision-Date: 2021-03-10 10:05+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -445,55 +445,55 @@ msgid "Remove selected account(s)"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:295
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:313
 msgid "Processing"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:299
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:317
 msgid "Remove File"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:360 admin/gateways/paypal
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:378 admin/gateways/paypal
 #: express checkout/class-membership-paypal-express-checkout.php:198
 #, php-format
 msgid "Error completing payment for member #%1$d. Error caused due to: %2$s "
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:393
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:411
 msgid "BSB"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:398
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:416
 msgid "Bank transit number"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:403
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:421
 msgid "IFSC"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:408
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:426
 msgid "Branch sort"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:413
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:418
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:431
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:436
 msgid "Bank Code"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:423
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:441
 msgid "Routing Number"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:428
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:446
 msgid "Branch Code"
 msgstr ""
 
@@ -880,7 +880,7 @@ msgstr ""
 
 #: admin/partials/templates/members-templates/mwb-members-plans-billing.php:76
 #: admin/partials/templates/members-templates/mwb-members-plans-billing.php:168
-#: public/partials/templates/mwb-membership-billing-modal.php:135
+#: public/partials/templates/mwb-membership-billing-modal.php:134
 msgid "selected"
 msgstr ""
 
@@ -1074,7 +1074,7 @@ msgid "Delete data at Uninstall"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:154
-msgid "If enabled, this will delete all data at plugin unistall"
+msgid "If enabled, this will delete all data at plugin uninstall"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:174
@@ -1083,7 +1083,7 @@ msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:181
 msgid ""
-"This will Enable Users to visit and see Plans Histroy in Membership tab  on "
+"This will Enable Users to visit and see Plans History in Membership tab  on "
 "My Account page."
 msgstr ""
 
@@ -1182,9 +1182,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:41
-msgid ""
-"With our WooCommerce Membership for WooCommerce plugin, as a store owner you "
-"get:"
+msgid "With our Membership for WooCommerce plugin, as a store owner you get:"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:46
@@ -1379,19 +1377,19 @@ msgstr ""
 msgid "admin/resources/icons/mfw13.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:238
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:237
 msgid "Connect with us in one click"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:239
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:238
 msgid "admin/resources/logo/skype_logo.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:239
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:238
 msgid "Connect"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:240
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:239
 msgid "Regarding any issue, queries or features request for Membership"
 msgstr ""
 
@@ -1807,23 +1805,23 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: membership-for-woocommerce.php:125
+#: membership-for-woocommerce.php:129
 msgid "Settings"
 msgstr ""
 
-#: membership-for-woocommerce.php:190
+#: membership-for-woocommerce.php:194
 msgid "WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:190
+#: membership-for-woocommerce.php:194
 msgid " is not activated, Please activate WooCommerce first to activate "
 msgstr ""
 
-#: membership-for-woocommerce.php:190
+#: membership-for-woocommerce.php:194
 msgid "Membership for WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:190
+#: membership-for-woocommerce.php:194
 msgid "."
 msgstr ""
 
@@ -1877,129 +1875,129 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:74
+#: public/partials/templates/mwb-membership-billing-modal.php:73
 msgid "First name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:74
-#: public/partials/templates/mwb-membership-billing-modal.php:80
-#: public/partials/templates/mwb-membership-billing-modal.php:93
-#: public/partials/templates/mwb-membership-billing-modal.php:99
-#: public/partials/templates/mwb-membership-billing-modal.php:111
-#: public/partials/templates/mwb-membership-billing-modal.php:122
-#: public/partials/templates/mwb-membership-billing-modal.php:128
-#: public/partials/templates/mwb-membership-billing-modal.php:141
-#: public/partials/templates/mwb-membership-billing-modal.php:149
+#: public/partials/templates/mwb-membership-billing-modal.php:73
+#: public/partials/templates/mwb-membership-billing-modal.php:79
+#: public/partials/templates/mwb-membership-billing-modal.php:92
+#: public/partials/templates/mwb-membership-billing-modal.php:98
+#: public/partials/templates/mwb-membership-billing-modal.php:110
+#: public/partials/templates/mwb-membership-billing-modal.php:121
+#: public/partials/templates/mwb-membership-billing-modal.php:127
+#: public/partials/templates/mwb-membership-billing-modal.php:140
+#: public/partials/templates/mwb-membership-billing-modal.php:148
 msgid "*"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:76
+#: public/partials/templates/mwb-membership-billing-modal.php:75
 msgid "First name&hellip;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:80
+#: public/partials/templates/mwb-membership-billing-modal.php:79
 msgid "Last name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:82
+#: public/partials/templates/mwb-membership-billing-modal.php:81
 msgid "Last name&hellip;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:87
+#: public/partials/templates/mwb-membership-billing-modal.php:86
 msgid "Company name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:87
+#: public/partials/templates/mwb-membership-billing-modal.php:86
 msgid "(Optional)"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:89
+#: public/partials/templates/mwb-membership-billing-modal.php:88
 msgid "Company name"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:93
+#: public/partials/templates/mwb-membership-billing-modal.php:92
 msgid "Phone&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:95
+#: public/partials/templates/mwb-membership-billing-modal.php:94
 msgid "Phone no."
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:99
+#: public/partials/templates/mwb-membership-billing-modal.php:98
 msgid "E-mail&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:101
+#: public/partials/templates/mwb-membership-billing-modal.php:100
 msgid "Email"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:104
+#: public/partials/templates/mwb-membership-billing-modal.php:103
 msgid "Please enter a valid email."
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:111
+#: public/partials/templates/mwb-membership-billing-modal.php:110
 msgid "Street address&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:113
+#: public/partials/templates/mwb-membership-billing-modal.php:112
 msgid "House number and street name"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:118
+#: public/partials/templates/mwb-membership-billing-modal.php:117
 msgid "Apartment, suit, unit, etc. (Optional)"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:122
+#: public/partials/templates/mwb-membership-billing-modal.php:121
 msgid "Town/City&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:124
+#: public/partials/templates/mwb-membership-billing-modal.php:123
 msgid "Town/City"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:128
+#: public/partials/templates/mwb-membership-billing-modal.php:127
 msgid "Country/Region&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:131
+#: public/partials/templates/mwb-membership-billing-modal.php:130
 msgid "Select a Country"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:141
+#: public/partials/templates/mwb-membership-billing-modal.php:140
 msgid "State&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:144
+#: public/partials/templates/mwb-membership-billing-modal.php:143
 msgid "Select a state"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:149
+#: public/partials/templates/mwb-membership-billing-modal.php:148
 msgid "Pin code&nbsp;"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:151
+#: public/partials/templates/mwb-membership-billing-modal.php:150
 msgid "Pin code"
 msgstr ""
 
+#: public/partials/templates/mwb-membership-billing-modal.php:162
 #: public/partials/templates/mwb-membership-billing-modal.php:163
-#: public/partials/templates/mwb-membership-billing-modal.php:164
 msgid "Previous Step"
 msgstr ""
 
+#: public/partials/templates/mwb-membership-billing-modal.php:166
 #: public/partials/templates/mwb-membership-billing-modal.php:167
-#: public/partials/templates/mwb-membership-billing-modal.php:168
 msgid "Next Step"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:172
+#: public/partials/templates/mwb-membership-billing-modal.php:171
 msgid "Proceed for Payment"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:178
+#: public/partials/templates/mwb-membership-billing-modal.php:177
 msgid "Your order is confirmed."
 msgstr ""
 
-#: public/partials/templates/mwb-membership-billing-modal.php:179
+#: public/partials/templates/mwb-membership-billing-modal.php:178
 msgid "Shop more"
 msgstr ""
 
