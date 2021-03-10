@@ -107,6 +107,11 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 				'type' => 'account_details',
 			),
 
+			'nonce_save' => array(
+				'type' => 'hidden',
+				'default' => wp_create_nonce ( 'mwb-auth-nonce' ),
+			),
+
 			'support_formats' => array(
 				'title'       => __( 'Supported Formats', 'membership-for-woocommerce' ),
 				'type'        => 'multiselect',
@@ -229,14 +234,16 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		$accounts = array();
 
+		check_admin_referer( 'mwb-auth-nonce', 'woocommerce_membership-adv-bank-transfer_nonce_save' );
+
 		if ( isset( $_POST['bacs_account_name'] ) && isset( $_POST['bacs_account_number'] ) && isset( $_POST['bacs_bank_name'] ) && isset( $_POST['bacs_sort_code'] ) && isset( $_POST['bacs_iban'] ) && isset( $_POST['bacs_bic'] ) ) {
 
-			$account_names   = wc_clean( wp_unslash( $_POST['bacs_account_name'] ) );
-			$account_numbers = wc_clean( wp_unslash( $_POST['bacs_account_number'] ) );
-			$bank_names      = wc_clean( wp_unslash( $_POST['bacs_bank_name'] ) );
-			$sort_codes      = wc_clean( wp_unslash( $_POST['bacs_sort_code'] ) );
-			$ibans           = wc_clean( wp_unslash( $_POST['bacs_iban'] ) );
-			$bics            = wc_clean( wp_unslash( $_POST['bacs_bic'] ) );
+			$account_names   = sanitize_text_field( wp_unslash( $_POST['bacs_account_name'] ) );
+			$account_numbers = sanitize_text_field( wp_unslash( $_POST['bacs_account_number'] ) );
+			$bank_names      = sanitize_text_field( wp_unslash( $_POST['bacs_bank_name'] ) );
+			$sort_codes      = sanitize_text_field( wp_unslash( $_POST['bacs_sort_code'] ) );
+			$ibans           = sanitize_text_field( wp_unslash( $_POST['bacs_iban'] ) );
+			$bics            = sanitize_text_field( wp_unslash( $_POST['bacs_bic'] ) );
 
 			foreach ( $account_names as $i => $name ) {
 

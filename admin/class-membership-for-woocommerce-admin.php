@@ -765,6 +765,7 @@ class Membership_For_Woocommerce_Admin {
 					)
 				);
 
+				// phpcs:disable
 				foreach ( $all_posts as $post ) {
 
 					setup_postdata( $post );
@@ -791,6 +792,7 @@ class Membership_For_Woocommerce_Admin {
 						)
 					);
 				}
+				// phpcs:enable
 
 				fclose( $file );
 				exit;
@@ -804,15 +806,14 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function csv_file_upload() {
 
-		$nonce = ! empty( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-
 		// Nonce Verification.
 		check_ajax_referer( 'plan-import-nonce', 'nonce' );
 
 		// Handling file upload using activity helper class..
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
-
+			// phpcs:disable
 		$csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : '';
+					// phpcs:enable
 		$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
 
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -1152,7 +1153,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
 		}
-
+			// phpcs:disable
 		$fields = array(
 			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
 			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
@@ -1166,7 +1167,7 @@ class Membership_For_Woocommerce_Admin {
 			'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
 			'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
 			'payment_method'                => $payment,
-		);
+		);			// phpcs:enable
 
 		update_post_meta( $post_id, 'billing_details', $fields );
 
@@ -1500,7 +1501,7 @@ class Membership_For_Woocommerce_Admin {
 						'Expiry Date',
 					)
 				);
-
+//phpcs:disable
 				foreach ( $all_posts as $post ) {
 					setup_postdata( $post );
 					fputcsv(
@@ -1521,6 +1522,8 @@ class Membership_For_Woocommerce_Admin {
 					);
 
 				}
+//phpcs:enable
+
 				fclose( $file );
 				exit;
 			}
@@ -1756,8 +1759,9 @@ class Membership_For_Woocommerce_Admin {
 
 				$result .= '<option value="' . $state_code . '">' . $name . '</option>';
 			}
-
-			echo $result;
+			//phpcs:disable
+			echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			//phpcs:enable
 		}
 
 		wp_die();

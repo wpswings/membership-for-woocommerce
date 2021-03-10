@@ -153,7 +153,7 @@ class Membership_For_Woocommerce_Public {
 
 			$plan_data = array();
 
-			$plan_id = ! empty( $_GET['plan_id'] ) ? $_GET['plan_id'] : '';
+			$plan_id = ! empty( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
 			$plan_name  = ! empty( get_the_title( $plan_id ) ) ? get_the_title( $plan_id ) : '';
 			$plan_desc  = ! empty( get_post_field( 'post_content', $plan_id ) ) ? get_post_field( 'post_content', $plan_id ) : '';
@@ -162,9 +162,9 @@ class Membership_For_Woocommerce_Public {
 			$plan_data['name']  = $plan_name;
 			$plan_data['desc']  = $plan_desc;
 			$plan_data['price'] = $plan_price;
-
+			// phpcs:disable
 			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), null, false );
-
+			// phpcs:enable
 			wp_localize_script(
 				'paypal-smart-buttons',
 				'paypal_sb_obj',
@@ -996,7 +996,10 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $_FILES['receipt']['name'] ) ) {
 
+			// phpcs:disable
 			$file     = $_FILES['receipt'];
+			// phpcs:enable
+
 			$file_ext = substr( strrchr( $file['name'], '.' ), 1 );
 
 			$gateway_opt = new Mwb_Membership_Adv_Bank_Transfer();
@@ -1034,7 +1037,9 @@ class Membership_For_Woocommerce_Public {
 		// Verify nonce.
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
 
+		// phpcs:disable
 		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( $_POST['path'] ) : '';
+		// phpcs:enable
 
 		if ( ! empty( $file_path ) ) {
 
@@ -1104,7 +1109,9 @@ class Membership_For_Woocommerce_Public {
 		$fields           = array();
 		$payment_response = '';
 
-		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
+		// phpcs:disable.
+		isset( $_POST['form_data'] ) ? parse_str( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ), $fields ) : '';
+		// phpcs:enable.
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
 

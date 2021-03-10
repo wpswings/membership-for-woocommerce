@@ -930,7 +930,7 @@ class Makewebbetter_Onboarding_Helper {
 
 		$response = $this->hic_post( $url, $form_data, $headers );
 
-		if ( $response['status_code'] == 200 ) {
+		if ( 200 == $response['status_code'] ) {
 			$result = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
@@ -941,9 +941,12 @@ class Makewebbetter_Onboarding_Helper {
 		return $result;
 	}
 
-
-	// Function to get the client IP address
-	function get_client_ip() {
+	/**
+	 *  Hubwoo Onboarding Submission :: Function to get the client IP address.
+	 *
+	 * @since       1.0.0
+	 */
+	public function get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
