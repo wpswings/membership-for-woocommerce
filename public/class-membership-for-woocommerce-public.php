@@ -497,7 +497,7 @@ class Membership_For_Woocommerce_Public {
 									);
 
 									if ( is_user_logged_in() ) {
-
+										$disable_required = false;
 										// Show plans under review.
 										if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
 
@@ -516,7 +516,7 @@ class Membership_For_Woocommerce_Public {
 														$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 														if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
-
+															$disable_required = 'disable_required';
 															?>
 															<div class="product-meta product-meta-review">
 																<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
@@ -531,7 +531,7 @@ class Membership_For_Woocommerce_Public {
 										// Show options to buy plans.
 										echo '<div style="clear: both">
 												<div style="margin-top: 10px;">
-													<a class="button alt mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+													<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 												</div>
 											</div>';
 									} else {
@@ -1110,7 +1110,7 @@ class Membership_For_Woocommerce_Public {
 		$payment_response = '';
 
 		// phpcs:disable.
-		isset( $_POST['form_data'] ) ? parse_str( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ), $fields ) : '';
+		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
 		// phpcs:enable.
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
