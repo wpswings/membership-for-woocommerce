@@ -57,7 +57,7 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $onboarding_form_id   = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
 	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
@@ -141,7 +141,7 @@ class Makewebbetter_Onboarding_Helper {
 
 			wp_enqueue_style( 'makewebbetter-onboarding-style', MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/css/makewebbetter-onboarding-admin.css', array(), '1.0.0', 'all' );
 
-			// Uncomment Only when your plugin doesn't uses the Select2
+			// Uncomment Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'makewebbetter-onboarding-select2-style', MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/css/select2.min.css', array(), '1.0.0', 'all' );
 		}
 	}
@@ -174,14 +174,14 @@ class Makewebbetter_Onboarding_Helper {
 				'makewebbetter-onboarding-scripts',
 				'mwb_onboarding',
 				array(
-					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'auth_nonce'    => wp_create_nonce( 'mwb_onboarding_nonce' ),
-					'current_screen'    => $pagenow,
-					'current_supported_slug'    => apply_filters( 'mwb_deactivation_supported_slug', array( $current_slug ) ),
+					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+					'auth_nonce'             => wp_create_nonce( 'mwb_onboarding_nonce' ),
+					'current_screen'         => $pagenow,
+					'current_supported_slug' => apply_filters( 'mwb_deactivation_supported_slug', array( $current_slug ) ),
 				)
 			);
 
-			// Uncomment Only when your plugin doesn't uses the Select2
+			// Uncomment Only when your plugin doesn't uses the Select2.
 			wp_enqueue_script( 'makewebbetter-onboarding-select2-script', MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/js/select2.min.js', array( 'jquery' ), '1.0.0', false );
 		}
 	}
@@ -281,8 +281,8 @@ class Makewebbetter_Onboarding_Helper {
 		}
 
 		$currency_symbol = get_woocommerce_currency_symbol();
-		$store_name = get_bloginfo( 'name ' );
-		$store_url = get_home_url();
+		$store_name      = get_bloginfo( 'name ' );
+		$store_url       = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -303,114 +303,114 @@ class Makewebbetter_Onboarding_Helper {
 			 */
 
 			rand() => array(
-				'id' => 'monthly-revenue',
-				'label' => esc_html__( 'What is your monthly revenue?', 'woo-one-click-upsell-funnel' ),
-				'type' => 'radio',
-				'name' => 'monthly_revenue_',
-				'value' => '',
-				'multiple' => 'no',
-				'required' => 'yes',
+				'id'          => 'monthly-revenue',
+				'label'       => esc_html__( 'What is your monthly revenue?', 'woo-one-click-upsell-funnel' ),
+				'type'        => 'radio',
+				'name'        => 'monthly_revenue_',
+				'value'       => '',
+				'multiple'    => 'no',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'0-500'         => $currency_symbol . '0-' . $currency_symbol . '500',
-					'501-5000'          => $currency_symbol . '501-' . $currency_symbol . '5000',
-					'5001-10000'        => $currency_symbol . '5001-' . $currency_symbol . '10000',
-					'10000+'        => $currency_symbol . '10000+',
+				'options'     => array(
+					'0-500'      => $currency_symbol . '0-' . $currency_symbol . '500',
+					'501-5000'   => $currency_symbol . '501-' . $currency_symbol . '5000',
+					'5001-10000' => $currency_symbol . '5001-' . $currency_symbol . '10000',
+					'10000+'     => $currency_symbol . '10000+',
 				),
 			),
 
 			rand() => array(
-				'id' => 'industry_type',
-				'label' => esc_html__( 'What industry defines your business?', 'woo-one-click-upsell-funnel' ),
-				'type' => 'select',
-				'name' => 'industry_type_',
-				'value' => '',
-				'multiple' => 'yes',
-				'required' => 'yes',
+				'id'          => 'industry_type',
+				'label'       => esc_html__( 'What industry defines your business?', 'woo-one-click-upsell-funnel' ),
+				'type'        => 'select',
+				'name'        => 'industry_type_',
+				'value'       => '',
+				'multiple'    => 'yes',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'agency'                => 'Agency',
-					'consumer-services'     => 'Consumer Services',
-					'ecommerce'             => 'Ecommerce',
-					'financial-services'    => 'Financial Services',
-					'healthcare'            => 'Healthcare',
-					'manufacturing'         => 'Manufacturing',
+				'options'     => array(
+					'agency'                  => 'Agency',
+					'consumer-services'       => 'Consumer Services',
+					'ecommerce'               => 'Ecommerce',
+					'financial-services'      => 'Financial Services',
+					'healthcare'              => 'Healthcare',
+					'manufacturing'           => 'Manufacturing',
 					'nonprofit-and-education' => 'Nonprofit and Education',
-					'professional-services' => 'Professional Services',
-					'real-estate'           => 'Real Estate',
-					'software'              => 'Software',
-					'startups'              => 'Startups',
-					'restaurant'            => 'Restaurant',
-					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
-					'beauty'                => 'Beauty',
-					'celebrity'             => 'Celebrity',
-					'gaming'                => 'Gaming',
-					'government'            => 'Government',
-					'sports'                => 'Sports',
-					'retail-store'          => 'Retail Store',
-					'travel'                => 'Travel',
-					'political-campaign'    => 'Political Campaign',
+					'professional-services'   => 'Professional Services',
+					'real-estate'             => 'Real Estate',
+					'software'                => 'Software',
+					'startups'                => 'Startups',
+					'restaurant'              => 'Restaurant',
+					'fitness'                 => 'Fitness',
+					'jewelry'                 => 'Jewelry',
+					'beauty'                  => 'Beauty',
+					'celebrity'               => 'Celebrity',
+					'gaming'                  => 'Gaming',
+					'government'              => 'Government',
+					'sports'                  => 'Sports',
+					'retail-store'            => 'Retail Store',
+					'travel'                  => 'Travel',
+					'political-campaign'      => 'Political Campaign',
 				),
 			),
 
 			rand() => array(
-				'id' => 'onboard-email',
-				'label' => esc_html__( 'What is the best email address to contact you?' ),
-				'type' => 'email',
-				'name' => 'email',
-				'value' => $current_user_email,
-				'required' => 'yes',
+				'id'          => 'onboard-email',
+				'label'       => esc_html__( 'What is the best email address to contact you?' ),
+				'type'        => 'email',
+				'name'        => 'email',
+				'value'       => $current_user_email,
+				'required'    => 'yes',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'onboard-number',
-				'label' => esc_html__( 'What is your contact number?' ),
-				'type' => 'text',
-				'name' => 'phone',
-				'value' => '',
-				'required' => 'yes',
+				'id'          => 'onboard-number',
+				'label'       => esc_html__( 'What is your contact number?' ),
+				'type'        => 'text',
+				'name'        => 'phone',
+				'value'       => '',
+				'required'    => 'yes',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'company',
-				'value' => $store_name,
-				'required' => '',
+				'id'          => 'store-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'company',
+				'value'       => $store_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-url',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'website',
-				'value' => $store_url,
-				'required' => '',
+				'id'          => 'store-url',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'website',
+				'value'       => $store_url,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'show-counter',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'show-counter',
-				'value' => get_option( 'onboarding-data-sent', 'not-sent' ),
-				'required' => '',
+				'id'          => 'show-counter',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'show-counter',
+				'value'       => get_option( 'onboarding-data-sent', 'not-sent' ),
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'plugin-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'org_plugin_name',
-				'value' => self::$plugin_name,
-				'required' => '',
+				'id'          => 'plugin-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'org_plugin_name',
+				'value'       => self::$plugin_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 		);
@@ -432,7 +432,7 @@ class Makewebbetter_Onboarding_Helper {
 		}
 
 		$store_name = get_bloginfo( 'name ' );
-		$store_url = get_home_url();
+		$store_url  = get_home_url();
 
 		/**
 		 * Do not repeat id index.
@@ -453,71 +453,71 @@ class Makewebbetter_Onboarding_Helper {
 			 */
 
 			rand() => array(
-				'id' => 'deactivation-reason',
-				'label' => '',
-				'type' => 'radio',
-				'name' => 'plugin_deactivation_reason',
-				'value' => '',
-				'multiple' => 'no',
-				'required' => 'yes',
+				'id'          => 'deactivation-reason',
+				'label'       => '',
+				'type'        => 'radio',
+				'name'        => 'plugin_deactivation_reason',
+				'value'       => '',
+				'multiple'    => 'no',
+				'required'    => 'yes',
 				'extra-class' => '',
-				'options' => array(
-					'temporary-deactivation-for-debug'      => 'It is a temporary deactivation. I am just debugging an issue.',
-					'site-layout-broke'         => 'The plugin broke my layout or some functionality.',
-					'complicated-configuration'         => 'The plugin is too complicated to configure.',
-					'no-longer-need'        => 'I no longer need the plugin',
-					'found-better-plugin'       => 'I found a better plugin',
-					'other'         => 'Other',
+				'options'     => array(
+					'temporary-deactivation-for-debug' => 'It is a temporary deactivation. I am just debugging an issue.',
+					'site-layout-broke'                => 'The plugin broke my layout or some functionality.',
+					'complicated-configuration'        => 'The plugin is too complicated to configure.',
+					'no-longer-need'                   => 'I no longer need the plugin',
+					'found-better-plugin'              => 'I found a better plugin',
+					'other'                            => 'Other',
 				),
 			),
 
 			rand() => array(
-				'id' => 'deactivation-reason-text',
-				'label' => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
-				'type' => 'textarea',
-				'name' => 'deactivation_reason_text',
-				'value' => '',
-				'required' => '',
+				'id'          => 'deactivation-reason-text',
+				'label'       => 'Let us know why you are deactivating {plugin-name} so we can improve the plugin',
+				'type'        => 'textarea',
+				'name'        => 'deactivation_reason_text',
+				'value'       => '',
+				'required'    => '',
 				'extra-class' => 'mwb-keep-hidden',
 			),
 
 			rand() => array(
-				'id' => 'admin-email',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'email',
-				'value' => $current_user_email,
-				'required' => '',
+				'id'          => 'admin-email',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'email',
+				'value'       => $current_user_email,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'company',
-				'value' => $store_name,
-				'required' => '',
+				'id'          => 'store-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'company',
+				'value'       => $store_name,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'store-url',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'website',
-				'value' => $store_url,
-				'required' => '',
+				'id'          => 'store-url',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'website',
+				'value'       => $store_url,
+				'required'    => '',
 				'extra-class' => '',
 			),
 
 			rand() => array(
-				'id' => 'plugin-name',
-				'label' => '',
-				'type' => 'hidden',
-				'name' => 'org_plugin_name',
-				'value' => '',
-				'required' => '',
+				'id'          => 'plugin-name',
+				'label'       => '',
+				'type'        => 'hidden',
+				'name'        => 'org_plugin_name',
+				'value'       => '',
+				'required'    => '',
 				'extra-class' => '',
 			),
 		);
@@ -534,15 +534,15 @@ class Makewebbetter_Onboarding_Helper {
 	 */
 	public function render_field_html( $attr = array(), $base_class = 'on-boarding' ) {
 
-		$id     = ! empty( $attr['id'] ) ? $attr['id'] : '';
-		$name   = ! empty( $attr['name'] ) ? $attr['name'] : '';
-		$label  = ! empty( $attr['label'] ) ? $attr['label'] : '';
-		$type   = ! empty( $attr['type'] ) ? $attr['type'] : '';
-		$class  = ! empty( $attr['extra-class'] ) ? $attr['extra-class'] : '';
-		$value  = ! empty( $attr['value'] ) ? $attr['value'] : '';
-		$options    = ! empty( $attr['options'] ) ? $attr['options'] : array();
-		$multiple   = ! empty( $attr['multiple'] ) && 'yes' == $attr['multiple'] ? 'yes' : 'no';
-		$required   = ! empty( $attr['required'] ) ? 'required="required"' : '';
+		$id       = ! empty( $attr['id'] ) ? $attr['id'] : '';
+		$name     = ! empty( $attr['name'] ) ? $attr['name'] : '';
+		$label    = ! empty( $attr['label'] ) ? $attr['label'] : '';
+		$type     = ! empty( $attr['type'] ) ? $attr['type'] : '';
+		$class    = ! empty( $attr['extra-class'] ) ? $attr['extra-class'] : '';
+		$value    = ! empty( $attr['value'] ) ? $attr['value'] : '';
+		$options  = ! empty( $attr['options'] ) ? $attr['options'] : array();
+		$multiple = ! empty( $attr['multiple'] ) && 'yes' == $attr['multiple'] ? 'yes' : 'no';
+		$required = ! empty( $attr['required'] ) ? 'required="required"' : '';
 
 		$html = '';
 
@@ -572,7 +572,7 @@ class Makewebbetter_Onboarding_Helper {
 					<?php endforeach; ?>
 
 					<?php
-				 endif;
+				endif;
 
 				break;
 
@@ -582,10 +582,10 @@ class Makewebbetter_Onboarding_Helper {
 					?>
 
 					<label class="on-boarding-label" for="<?php echo esc_attr( $id ); ?>'"><?php echo esc_attr( $label ); ?></label>
-					
+
 					<?php foreach ( $options as $option_id => $option_label ) : ?>
-						
-						   <div class="mwb-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
+
+						<div class="mwb-<?php echo esc_html( $base_class ); ?>-checkbox-wrapper">
 						<input type="<?php echo esc_html( $type ); ?>" class="on-boarding-<?php echo esc_html( $type ); ?>-field <?php echo esc_html( $class ); ?>" value="<?php echo esc_html( $value ); ?>" id="<?php echo esc_html( $option_id ); ?>">
 						<label class="on-boarding-field-label" for="<?php echo esc_html( $option_id ); ?>"><?php echo esc_html( $option_label ); ?></label>
 						</div>
@@ -613,7 +613,7 @@ class Makewebbetter_Onboarding_Helper {
 						<?php endif; ?>
 
 						<?php foreach ( $options as $option_value => $option_label ) : ?>	
-						
+
 							<option class="on-boarding-options" value="<?php echo esc_attr( $option_value ); ?>"><?php echo esc_html( $option_label ); ?></option>
 
 						<?php endforeach; ?>
@@ -814,7 +814,8 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * Handle Hubspot form submission.
 	 *
-	 * @param      string $result       The result of this validation.
+	 * @param bool   $submission Bool value to check form submission.
+	 * @param string $action_type Action of user.
 	 * @since    1.0.0
 	 */
 	protected function handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
@@ -840,67 +841,55 @@ class Makewebbetter_Onboarding_Helper {
 
 
 	/**
-	 * Handle Hubspot GET api calls.
-	 *
-	 * @since    1.0.0
-	 */
-	private function hic_get( $endpoint, $headers ) {
-
-		$url = $this->base_url . $endpoint;
-
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, false );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
-
-		return array(
-			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
-		);
-	}
-
-
-	/**
 	 * Handle Hubspot POST api calls.
 	 *
+	 * @param string $endpoint Endpoint of api.
+	 * @param array  $post_params Data to send.
+	 * @param array  $headers An array of api call headers.
 	 * @since    1.0.0
 	 */
 	private function hic_post( $endpoint, $post_params, $headers ) {
 
 		$url = $this->base_url . $endpoint;
 
-		$ch = @curl_init();
-		@curl_setopt( $ch, CURLOPT_POST, true );
-		@curl_setopt( $ch, CURLOPT_URL, $url );
-		@curl_setopt( $ch, CURLOPT_POSTFIELDS, $post_params );
-		@curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
-		@curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, false );
-		@curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, false );
-		$response = @curl_exec( $ch );
-		$status_code = @curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-		$curl_errors = curl_error( $ch );
-		@curl_close( $ch );
+		$request = array(
+			'httpversion' => '1.0',
+			'sslverify'   => false,
+			'method'      => 'POST',
+			'timeout'     => 45,
+			'headers'     => $headers,
+			'body'        => $post_params,
+			'cookies'     => array(),
+		);
+
+		$response = wp_remote_post( $url, $request );
+
+		if ( is_wp_error( $response ) ) {
+
+			$status_code = 500;
+			$response    = esc_html__( 'Unexpected Error Occured', 'membership-for-woocommerce' );
+			$errors      = $response;
+
+		} else {
+
+			$response    = json_decode( wp_remote_retrieve_body( $response ) );
+			$status_code = wp_remote_retrieve_response_code( $response );
+			$errors      = $response;
+		}
 
 		return array(
 			'status_code' => $status_code,
-			'response' => $response,
-			'errors' => $curl_errors,
+			'response'    => $response,
+			'errors'      => $errors,
 		);
+
 	}
 
 	/**
-	 *  Hubwoo Onboarding Submission :: Get a form.
+	 *  Hubwoo Onboarding Submission ::submit form data.
 	 *
-	 * @param           $form_id    form ID.
+	 * @param  array  $form_data An array of form data.
+	 * @param  string $action_type Action of user.
 	 * @since       1.0.0
 	 */
 	protected function hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
@@ -914,15 +903,15 @@ class Makewebbetter_Onboarding_Helper {
 		$url = 'submissions/v3/integration/submit/' . self::$portal_id . '/' . $form_id;
 
 		$headers = array(
-			'Content-Type: application/json',
+			'Content-Type' => 'application/json',
 		);
 
 		$form_data = json_encode(
 			array(
-				'fields' => $form_data,
-				'context'  => array(
-					'pageUri' => self::$store_url,
-					'pageName' => self::$store_name,
+				'fields'  => $form_data,
+				'context' => array(
+					'pageUri'   => self::$store_url,
+					'pageName'  => self::$store_name,
 					'ipAddress' => $this->get_client_ip(),
 				),
 			)
@@ -931,7 +920,7 @@ class Makewebbetter_Onboarding_Helper {
 		$response = $this->hic_post( $url, $form_data, $headers );
 
 		if ( 200 == $response['status_code'] ) {
-			$result = json_decode( $response['response'], true );
+			$result            = json_decode( $response['response'], true );
 			$result['success'] = true;
 		} else {
 
@@ -950,15 +939,15 @@ class Makewebbetter_Onboarding_Helper {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_X_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} else if ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} else if ( getenv( 'REMOTE_ADDR' ) ) {
+		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
 			$ipaddress = getenv( 'REMOTE_ADDR' );
 		} else {
 			$ipaddress = 'UNKNOWN';
