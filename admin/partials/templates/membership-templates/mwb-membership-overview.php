@@ -21,8 +21,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Heading start -->
 <div class="mfw_overview_wrapper">
+	<div class="mfw_overview-contact">
+		<a href="#"><span class="mfw_overview-dial-text">Contact</span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/dial.svg' ); ?>" alt="banner-image" class="mfw_overview-dial"></a>
+		<a href="#"><span class="mfw_overview-doc-text">Document</span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/doc.svg' ); ?>" alt="banner-image" class="mfw_overview-doc"></a>
+		<a href="https://join.skype.com/invite/IKVeNkLHebpC"><span class="mfw_overview-skype-text">Connect</span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/logo/skype.svg' ); ?>" alt="icon" class="mfw_overview-skype"></a>
+	</div>
 	<div class="mfw_overview_banner">
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Membership for Woocommerce-01.jpg' ); ?>" alt="banner-image">
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
 	</div>
 	<div class="mfw_overview_content">
 		<div class="mfw_overview_content-entry_text">
@@ -40,6 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<h3>
 				<?php esc_html_e( 'With our Membership for WooCommerce plugin, as a store owner you get:', 'membership-for-woocommerce' ); ?>
 			</h3>
+			<div class="mfw_overview-intro">
 			<ul>
 				<li>
 					<span>&#9900;</span>
@@ -62,6 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<p><?php esc_html_e( 'Advance bank transfer and Paypal smart button integration', 'membership-for-woocommerce' ); ?></p>
 				</li>
 			</ul>
+			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
+			</div>
 		</div>
 		<ul>
 			<li class="mfw_overview_heading">
@@ -231,11 +239,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/mfw13.png' ); ?>" alt="logo-right">
 			</li>
 		</ul>
-	</div>
-	<div class="mfw_overview_help">
-		<div class="mfw_overview-help-icon"><span>&#9881;</span></div>
-		<h4><?php esc_html_e( 'Connect with us in one click', 'membership-for-woocommerce' ); ?></h4>
-		<a href="https://join.skype.com/invite/IKVeNkLHebpC"><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/logo/skype_logo.png' ); ?>" alt="icon"><span><?php esc_html_e( 'Connect', 'membership-for-woocommerce' ); ?> </span></a>
-		<p><?php esc_html_e( 'Regarding any issue, queries or features request for Membership', 'membership-for-woocommerce' ); ?></p>
 	</div>
 </div>

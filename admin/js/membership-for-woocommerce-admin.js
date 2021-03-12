@@ -283,8 +283,10 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // overview page JS
-    $('.mfw_overview-help-icon').click(function() {
-        $('.mfw_overview_help').toggleClass('mfw_out');
-    });
+   // overview buttons animation
+   $('.mfw_overview-contact').children('a').on('mouseenter', function(){
+    $(this).children('span').css({'width':'150px','opacity':'1'});
+  }).on('mouseleave',function(){
+    $(this).children('span').css({'width':'0','opacity':'0'});
+  });
 });

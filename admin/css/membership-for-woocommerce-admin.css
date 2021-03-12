@@ -49,7 +49,8 @@ a#post-preview:focus,
 #wpbody-content input[type=number]:focus,
 .mwb_membership_gateway_div .button:focus,
 .mwb_membership_manage_gateways a:focus,
-.mfw_overview_help a:focus {
+.mfw_overview_help a:focus,
+.mfw_overview-contact a:focus {
     box-shadow: none;
     outline: none;
 }
@@ -743,68 +744,6 @@ span.title_warning {
     letter-spacing: 0.5px;
 }
 
-.mfw_overview_help {
-    background-color: #ffffff;
-    border-radius: 0px 0px 0px 5px;
-    box-shadow: 0px 1px 5px #6f6f6f;
-    max-width: 200px;
-    padding: 10px;
-    position: fixed;
-    right: -222px;
-    top: 40%;
-    transition: right 0.5s ease-in-out;
-}
-
-.mfw_overview-help-icon {
-    background-image: linear-gradient(45deg, #2196F3, #772BFF);
-    border-radius: 7px 0 0 7px;
-    color: #ffffff;
-    cursor: pointer;
-    font-size: 32px;
-    font-weight: 800;
-    left: -44px;
-    padding: 10px 10px 10px 5px;
-    position: absolute;
-    top: 0px;
-}
-
-.mfw_overview_help a {
-    align-items: center;
-    border-radius: 35px;
-    border: 2px solid;
-    color: #2196F3;
-    display: flex;
-    font-size: 20px;
-    justify-content: center;
-    margin: 0px auto;
-    max-width: 130px;
-    padding: 5px;
-    text-decoration: none;
-}
-
-.mfw_overview_help>a>img {
-    margin: 0px 10px 0 0;
-    width: 25px;
-}
-
-.mfw_overview-help-icon:hover>span {
-    display: block;
-    transform: rotate(45deg);
-    transition: transform 0.3s ease-in-out;
-}
-
-.mfw_overview-help-icon:hover {
-    box-shadow: -2px 2px 5px #909090;
-}
-
-.mfw_overview_help h4 {
-    margin: 2px 0px 10px;
-}
-
-.mfw_overview_help>p {
-    font-size: 12px;
-}
-
 .mfw_upgrade_plan {
     background-image: linear-gradient(45deg, #2196F3, #772BFF);
     border-radius: 5px;
@@ -845,7 +784,6 @@ span.title_warning {
 
 .mfw_overview_content-entry_text>p {
     margin: 0;
-    max-width: 600px;
 }
 
 .mfw_overview_content-entry_text ul {
@@ -856,7 +794,7 @@ span.title_warning {
 
 .mfw_overview_content-entry_text ul {
     line-height: 150%;
-    margin: 0px ;
+    margin: 0px;
     max-width: 600px;
     text-align: left;
 }
@@ -905,10 +843,60 @@ span.title_warning {
     max-width: 425px;
 }
 
-.mfw_out {
-    right: 0;
+.mfw_overview-contact {
+    text-align: right;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
 }
 
+.mfw_overview-contact a img {
+    width: 50px;
+    margin: 0 5px;
+}
+
+.mfw_overview-contact a img:hover {
+    opacity: 0.8;
+}
+
+.mfw_overview-intro {
+    display: flex;
+}
+
+#contextual-help-link {
+    display: none;
+}
+
+/*contact button in overview page*/
+.mfw_overview-contact a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.mfw_overview-dial-text,
+.mfw_overview-doc-text,
+.mfw_overview-skype-text {
+    font-size: 16px;
+    padding: 10px;
+    margin-right: -11px;
+    border-radius: 35px 0 0 35px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1a3365;
+    border: 3px solid #1a3365;
+    border-right-color: transparent;
+    opacity: 0;
+    width: 0;
+    text-align: center;
+    transition: 0.4s all ease-in-out;
+}
+
+.mfw_overview-skype-text {
+    color: #00aff0;
+    border-color: #00aff0;
+    border-right-color: transparent;
+}
 
 /*Media Query for small screen devices*/
 
@@ -917,21 +905,27 @@ span.title_warning {
         display: block;
         padding: 10px 0px;
     }
+
     .mwb_membership_plans_creation_setting td {
         padding: 10px;
     }
+
     .mwb_membership_shortcodes_table tbody {
         flex-wrap: wrap;
     }
+
     .mwb_membership_shortcodes_table tr {
         flex: 0 0 80%;
     }
+
     .mfw_overview_content>ul>li {
         flex-wrap: wrap;
     }
+
     .mfw_overview_content>ul>li:nth-child(even) {
         flex-direction: column-reverse;
     }
+
     .mfw_overview_content>ul>li>img {
         width: 50%;
     }
