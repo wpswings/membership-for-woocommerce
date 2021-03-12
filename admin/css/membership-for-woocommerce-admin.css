@@ -890,6 +890,7 @@ span.title_warning {
     width: 0;
     text-align: center;
     transition: 0.4s all ease-in-out;
+    white-space: nowrap;
 }
 
 .mfw_overview-skype-text {

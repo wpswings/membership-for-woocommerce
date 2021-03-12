@@ -366,5 +366,3 @@ jQuery(document).ready(function ($) {
 	})
 
  });
-
-
