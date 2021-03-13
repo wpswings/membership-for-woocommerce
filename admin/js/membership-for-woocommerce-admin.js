@@ -26,6 +26,8 @@ jQuery(document).ready(function($) {
 
         var shipping_value = $("input[name='mwb_memebership_plan_free_shipping']:checked").val();
 
+        var attch_inv = $( "input[name='mwb_membership_attach_invoice']:checked" ).val();
+
         switch (selection_access) {
 
             case 'limited':
@@ -53,6 +55,12 @@ jQuery(document).ready(function($) {
             $(".mwb_membership_free_shipping_link").show('500');
         } else {
             $(".mwb_membership_free_shipping_link").hide('500');
+        }
+
+        if ( 'yes' == attch_inv ) {
+            $('.mfw_membership_invoice_pdf').show();
+        } else {
+            $('.mfw_membership_invoice_pdf').hide();
         }
     }
 
