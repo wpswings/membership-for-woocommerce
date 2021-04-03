@@ -346,7 +346,7 @@ span.select2.select2-container.select2-container--default {
     min-width: 250px;
 }
 
-.select2-selection .select2-selection__rendered li.select2-selection__choice {
+/* .select2-selection .select2-selection__rendered li.select2-selection__choice {
     background-color: #1a3365;
     border: none;
     color: #ffffff;
@@ -354,7 +354,7 @@ span.select2.select2-container.select2-container--default {
 
 span.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
     color: #fff;
-}
+} */
 
 
 /*radio button styling*/
