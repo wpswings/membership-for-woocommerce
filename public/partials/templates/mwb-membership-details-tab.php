@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $current_url = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
-if ( ! isset( $current_url ) ) {
+if ( empty( $current_url ) ) {
 
 	$user        = ! empty( $user_id ) ? $user_id : '';
 	$memberships = ! empty( $membership_ids ) ? $membership_ids : array();

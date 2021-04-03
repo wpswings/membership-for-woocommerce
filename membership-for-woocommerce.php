@@ -12,7 +12,7 @@
  * @package Membership_For_Woocommerce
  *
  * @wordpress-plugin
- * Plugin Name:       Membership For Woocommerce
+ * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
  * Version:           1.0.0

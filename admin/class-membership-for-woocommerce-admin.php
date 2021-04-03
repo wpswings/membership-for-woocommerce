@@ -197,7 +197,13 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'mwb_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/mwb_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
 
-				wp_localize_script( 'mwb_membership_for_woo_add_new_plan_script', 'ajax_url', admin_url( 'admin-ajax.php' ) );
+				wp_localize_script(
+					'mwb_membership_for_woo_add_new_plan_script',
+					'add_new_obj',
+					array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+					)
+				);
 
 				wp_enqueue_script( 'wp-color-picker' );
 
