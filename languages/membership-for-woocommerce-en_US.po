@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Membership For Woocommerce 1.0.0\n"
-"POT-Creation-Date: 2021-03-10 10:04+0530\n"
-"PO-Revision-Date: 2021-03-10 10:05+0530\n"
+"POT-Creation-Date: 2021-04-13 17:40+0530\n"
+"PO-Revision-Date: 2021-04-13 17:40+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -57,230 +57,230 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:280
+#: admin/class-membership-for-woocommerce-admin.php:286
 msgid "Memberships"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:281
+#: admin/class-membership-for-woocommerce-admin.php:287
 msgid "Membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:282
+#: admin/class-membership-for-woocommerce-admin.php:288
 msgid "Add Membership plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:283
+#: admin/class-membership-for-woocommerce-admin.php:289
 msgid "All Membership plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:284
+#: admin/class-membership-for-woocommerce-admin.php:290
 msgid "Add New Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:285
+#: admin/class-membership-for-woocommerce-admin.php:291
 msgid "Edit Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:286
+#: admin/class-membership-for-woocommerce-admin.php:292
 msgid "New Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:287
+#: admin/class-membership-for-woocommerce-admin.php:293
 msgid "View Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:288
+#: admin/class-membership-for-woocommerce-admin.php:294
 msgid "Search Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:289
+#: admin/class-membership-for-woocommerce-admin.php:295
 msgid "No Membership plans Found"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:290
+#: admin/class-membership-for-woocommerce-admin.php:296
 msgid "No Membership plans Found In Trash"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:307
+#: admin/class-membership-for-woocommerce-admin.php:313
 msgid "Membership Plans will be created here."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:315
+#: admin/class-membership-for-woocommerce-admin.php:321
 msgid "membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:342
+#: admin/class-membership-for-woocommerce-admin.php:348
 msgid "Global Settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:345
+#: admin/class-membership-for-woocommerce-admin.php:351
 msgid "Shortcodes"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:348
+#: admin/class-membership-for-woocommerce-admin.php:354
 msgid "Supported Gateways"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:351
+#: admin/class-membership-for-woocommerce-admin.php:357
 msgid "Overview"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:432
+#: admin/class-membership-for-woocommerce-admin.php:438
 msgid "Membership Plan Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:433
+#: admin/class-membership-for-woocommerce-admin.php:439
 msgid "Membership Plan Cost"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:453
+#: admin/class-membership-for-woocommerce-admin.php:459
 msgid "Membership ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:453
-#: admin/class-membership-for-woocommerce-admin.php:1304
+#: admin/class-membership-for-woocommerce-admin.php:459
+#: admin/class-membership-for-woocommerce-admin.php:1310
 msgid "admin/resources/icons/eye-icon.svg"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:466
-#: admin/class-membership-for-woocommerce-admin.php:470
+#: admin/class-membership-for-woocommerce-admin.php:472
+#: admin/class-membership-for-woocommerce-admin.php:476
 msgid "Sandbox"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:474
+#: admin/class-membership-for-woocommerce-admin.php:480
 msgid "Live"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:530
+#: admin/class-membership-for-woocommerce-admin.php:536
 msgid "Create Plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:638
+#: admin/class-membership-for-woocommerce-admin.php:644
 msgid ""
 "Membership plan published successfully, Now you can manage membership free "
 "shipping "
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:710
+#: admin/class-membership-for-woocommerce-admin.php:716
 msgid "Export Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:711
+#: admin/class-membership-for-woocommerce-admin.php:717
 msgid "Import Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:923
+#: admin/class-membership-for-woocommerce-admin.php:930
 msgid "Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:924
+#: admin/class-membership-for-woocommerce-admin.php:931
 #: includes/class-membership-for-woocommerce-activator.php:38
 msgid "Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:925
+#: admin/class-membership-for-woocommerce-admin.php:932
 msgid "Add Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:926
+#: admin/class-membership-for-woocommerce-admin.php:933
 msgid "All Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:927
+#: admin/class-membership-for-woocommerce-admin.php:934
 msgid "Add New Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:928
+#: admin/class-membership-for-woocommerce-admin.php:935
 msgid "Edit Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:929
+#: admin/class-membership-for-woocommerce-admin.php:936
 msgid "New Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:930
+#: admin/class-membership-for-woocommerce-admin.php:937
 msgid "View Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:931
+#: admin/class-membership-for-woocommerce-admin.php:938
 msgid "Search Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:932
+#: admin/class-membership-for-woocommerce-admin.php:939
 msgid "No Members Found"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:933
+#: admin/class-membership-for-woocommerce-admin.php:940
 msgid "No Members Found In Trash"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:949
+#: admin/class-membership-for-woocommerce-admin.php:956
 msgid "Displays the list of all members."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:953
+#: admin/class-membership-for-woocommerce-admin.php:960
 msgid "members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1014
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:87
+#: admin/class-membership-for-woocommerce-admin.php:1021
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:95
 #: public/class-membership-for-woocommerce-public.php:233
 #: public/class-membership-for-woocommerce-public.php:255
 msgid "Membership Details"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1017
+#: admin/class-membership-for-woocommerce-admin.php:1024
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:31
 #: public/partials/templates/mwb-membership-billing-modal.php:58
 msgid "Billing details"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1020
+#: admin/class-membership-for-woocommerce-admin.php:1027
 msgid "Schedule"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1026
+#: admin/class-membership-for-woocommerce-admin.php:1033
 msgid "Member actions"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1257
+#: admin/class-membership-for-woocommerce-admin.php:1263
 msgid "Membership ID"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1258
+#: admin/class-membership-for-woocommerce-admin.php:1264
 msgid "Membership Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1259
+#: admin/class-membership-for-woocommerce-admin.php:1265
 msgid "User"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1261
+#: admin/class-membership-for-woocommerce-admin.php:1267
 msgid "Expiry Date"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1304
+#: admin/class-membership-for-woocommerce-admin.php:1310
 msgid "Member ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1456
+#: admin/class-membership-for-woocommerce-admin.php:1462
 msgid "Export Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1573
+#: admin/class-membership-for-woocommerce-admin.php:1581
 msgid "Membership Support"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1598
+#: admin/class-membership-for-woocommerce-admin.php:1606
 #: public/partials/templates/mwb-membership-details-tab.php:189
 msgid "Yes"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1601
+#: admin/class-membership-for-woocommerce-admin.php:1609
 msgid "No"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1661
+#: admin/class-membership-for-woocommerce-admin.php:1669
 msgid "Membership Default Page"
 msgstr ""
 
@@ -445,55 +445,55 @@ msgid "Remove selected account(s)"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:313
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:316
 msgid "Processing"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:317
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:320
 msgid "Remove File"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:378 admin/gateways/paypal
-#: express checkout/class-membership-paypal-express-checkout.php:198
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:380 admin/gateways/paypal
+#: express checkout/class-membership-paypal-express-checkout.php:199
 #, php-format
 msgid "Error completing payment for member #%1$d. Error caused due to: %2$s "
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:411
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:413
 msgid "BSB"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:416
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:418
 msgid "Bank transit number"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:421
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:423
 msgid "IFSC"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:426
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:428
 msgid "Branch sort"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:431
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:436
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:433
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:438
 msgid "Bank Code"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:441
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:443
 msgid "Routing Number"
 msgstr ""
 
 #: admin/gateways/advance bank
-#: tranfer/class-mwb-membership-adv-bank-transfer.php:446
+#: tranfer/class-mwb-membership-adv-bank-transfer.php:448
 msgid "Branch Code"
 msgstr ""
 
@@ -1052,126 +1052,162 @@ msgstr ""
 msgid "Timezone :"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:55
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:58
 msgid "Settings saved"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:103
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:106
 msgid "Membership Global Settings"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:124
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:127
 msgid "Enable Membership Plans"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:129
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:132
 msgid ""
 "Enable/Disable Membership for Woocommerce plugin functionality on front-end."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:149
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:152
 msgid "Delete data at Uninstall"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:154
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:157
 msgid "If enabled, this will delete all data at plugin uninstall"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:174
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:177
 msgid "Show History to User"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:181
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:184
 msgid ""
 "This will Enable Users to visit and see Plans History in Membership tab  on "
 "My Account page."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:196
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:199
 msgid "Email Subject"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:203
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:206
 msgid ""
 "This will add email subject which will be sent to Customer on successful "
 "membership purchase."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:218
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:221
 msgid "Email Content"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:225
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:228
 msgid ""
 "This will add email content which will be sent to Customer on successful "
 "membership purchase."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:251
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:254
 msgid "Attach Invoice to Email"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:258
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:261
 msgid "This will Enable/Disable Invoice attachment to Email."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:273
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:276
 msgid "Invoice Company Address"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:280
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:283
 msgid ""
 "This will add Company address to Invoice else default address will be added."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:295
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:298
 msgid "Invoice Company Phone No."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:302
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:305
 msgid ""
 "This will add Company phone no. to Invoice else default phone no. will be "
 "added."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:317
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:320
 msgid "Invoice Company Email"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:324
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:327
 msgid ""
 "This will add Company email to Invoice else default email will be added."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:339
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:342
 msgid "Invoice Company logo"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:346
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:349
 msgid "This will add Company logo url to Invoice ( JPG, JPEG, PNG only )."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:356
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:359
 msgid "Upload Logo"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:357
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:360
 msgid "Remove Logo"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:375
+#: admin/partials/templates/membership-templates/mwb-membership-global-settings.php:378
 msgid "Save Changes"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:25
-msgid "admin/resources/icons/Membership for Woocommerce-01.jpg"
+msgid "https://makewebbetter.com/contact-us/"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:29
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:25
+msgid "Contact Us"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:25
+msgid "admin/resources/icons/dial.svg"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:26
+msgid "https://docs.makewebbetter.com/membership-for-woocommerce/"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:26
+msgid "Document"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:26
+msgid "admin/resources/icons/doc.svg"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:27
+msgid "https://join.skype.com/invite/IKVeNkLHebpC"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:27
+msgid "Connect"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:27
+msgid "admin/resources/logo/skype.svg"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:30
+msgid "admin/resources/icons/banner.png"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:34
 msgid "What is Membership for WooCommerce?"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:33
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:38
 msgid ""
 "Membership for WooCommerce allows you to create membership plans for a "
 "segment of customers, thereby\n"
@@ -1181,45 +1217,45 @@ msgid ""
 "updates."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:41
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:46
 msgid "With our Membership for WooCommerce plugin, as a store owner you get:"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:46
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:52
 msgid "Control access to your content and see complete customer history"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:50
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:56
 msgid "Quick preview section for Membership plans on the plans listing page"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:54
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:60
 msgid ""
 "A different status selection like pending, on hold, or completed as per "
 "their payment and plan expiry"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:58
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:64
 msgid "Manual assignment of membership to a customer"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:62
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:68
 msgid "Advance bank transfer and Paypal smart button integration"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:68
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:76
 msgid "The Freemium Benefits"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:71
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:79
 msgid "admin/resources/icons/3.jpeg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:73
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:81
 msgid "Complete Customer History"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:77
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:85
 msgid ""
 "You get a quick preview section for Membership plans on the plans listing "
 "page. Your users too\n"
@@ -1227,7 +1263,7 @@ msgid ""
 "details of their membership plans."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:91
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:99
 msgid ""
 "You can offer products/categories in a membership plan. Those products and "
 "categories can only be\n"
@@ -1236,31 +1272,31 @@ msgid ""
 "\t\t\t\t\t\thas all the details of the plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:99
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:107
 msgid "admin/resources/icons/audit1.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:102
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:168
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:110
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:176
 msgid "admin/resources/icons/mfw20.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:104
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:112
 msgid "Data Export"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:108
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:116
 msgid ""
 "You can effortlessly export all the membership plans along with the user "
 "data and settings. You\n"
 "\t\t\t\t\t\tcan also import the details of all members as a CSV file."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:118
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:126
 msgid "Email PDF Invoice With Out-And-Out Modification Options"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:122
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:130
 msgid ""
 "You can attach a PDF invoice to the customer’s email after a successful "
 "purchase. You can modify\n"
@@ -1270,23 +1306,23 @@ msgid ""
 "the email."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:130
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:138
 msgid "admin/resources/icons/mfw17.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:134
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:142
 msgid "Elite Features of Premium Version - Coming Soon"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:138
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:146
 msgid "admin/resources/icons/mfw2.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:140
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:148
 msgid "Recurring membership Feature"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:144
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:152
 msgid ""
 "Get a steady and fix revenue with the recurring feature of our pro version. "
 "Recurring\n"
@@ -1295,11 +1331,11 @@ msgid ""
 "\t\t\t\t\t\t\tservices."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:155
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:163
 msgid "Drip content feature"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:159
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:167
 msgid ""
 "Get the powerful drip content feature to increase the stickiness and value "
 "of your membership.\n"
@@ -1310,15 +1346,15 @@ msgid ""
 "\t\t\t\t\t\t\tusers can view them in a certain order."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:171
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:179
 msgid "admin/resources/icons/mfw15.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:173
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:181
 msgid "More Add-on payment gateways"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:177
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:185
 msgid ""
 "Get additional payment gateway integration with the premium version of "
 "membership for WooCommerce\n"
@@ -1329,11 +1365,11 @@ msgid ""
 "\t\t\t\t\t\tusers."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:189
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:197
 msgid "Create Multiple Membership Levels or Products"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:193
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:201
 msgid ""
 "In case you want to offer more than one membership plan to your users, "
 "Membership for\n"
@@ -1341,19 +1377,19 @@ msgid ""
 "requirements."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:200
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:208
 msgid "admin/resources/icons/mfw9.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:203
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:211
 msgid "admin/resources/icons/mfw3.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:205
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:213
 msgid "Min/Max Discount Implementation on the Cart"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:209
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:217
 msgid ""
 "You can grant discounts to your customers on cart value and even offer them "
 "free shipping as per\n"
@@ -1362,35 +1398,19 @@ msgid ""
 "\t\t\t\t\t\t\tmultiple memberships are purchased by your user."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:220
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:228
 msgid "Purchase Other Plans Related to Product"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:224
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:232
 msgid ""
 "Display plans related to particular products in different membership with "
 "purchasing options for\n"
 "\t\t\t\t\t\t\tthe same."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:231
-msgid "admin/resources/icons/mfw13.png"
-msgstr ""
-
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:237
-msgid "Connect with us in one click"
-msgstr ""
-
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:238
-msgid "admin/resources/logo/skype_logo.png"
-msgstr ""
-
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:238
-msgid "Connect"
-msgstr ""
-
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:239
-msgid "Regarding any issue, queries or features request for Membership"
+msgid "admin/resources/icons/mfw13.png"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:37
@@ -1513,12 +1533,11 @@ msgid "delay_type"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:262
-msgid "Specifiy a time"
+msgid "Specify a time"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:266
-msgid ""
-"Select the delay duration in after which plan offers will be accessible."
+msgid "Select the delay duration after which plan offers will be accessible."
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:290
@@ -1686,24 +1705,28 @@ msgstr ""
 msgid "Skip For Now"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:307
+#: includes/class-makewebbetter-onboarding-helper.php:331
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:324
+#: includes/class-makewebbetter-onboarding-helper.php:348
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:359
+#: includes/class-makewebbetter-onboarding-helper.php:383
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:369
+#: includes/class-makewebbetter-onboarding-helper.php:393
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-makewebbetter-onboarding-helper.php:611
+#: includes/class-makewebbetter-onboarding-helper.php:636
 msgid "Select Any One Option..."
+msgstr ""
+
+#: includes/class-makewebbetter-onboarding-helper.php:894
+msgid "Unexpected Error Occured"
 msgstr ""
 
 #: includes/class-membership-activity-helper.php:148
@@ -1722,11 +1745,11 @@ msgstr ""
 msgid "Product not found"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:93
+#: includes/class-membership-for-woocommerce-global-functions.php:92
 msgid "Product unavailable"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:117
+#: includes/class-membership-for-woocommerce-global-functions.php:116
 msgid "Category not found"
 msgstr ""
 
@@ -1741,7 +1764,6 @@ msgstr ""
 
 #: includes/class-membership-for-woocommerce-global-functions.php:999
 #: includes/class-membership-for-woocommerce-global-functions.php:1102
-#: public/partials/templates/mwb-membership-details-tab.php:187
 msgid "Status : "
 msgstr ""
 
@@ -1805,23 +1827,35 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: membership-for-woocommerce.php:129
+#: membership-for-woocommerce.php:127
 msgid "Settings"
 msgstr ""
 
-#: membership-for-woocommerce.php:194
+#: membership-for-woocommerce.php:148
+msgid "Demo"
+msgstr ""
+
+#: membership-for-woocommerce.php:149
+msgid "Documentation"
+msgstr ""
+
+#: membership-for-woocommerce.php:150
+msgid "Support"
+msgstr ""
+
+#: membership-for-woocommerce.php:218
 msgid "WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:194
+#: membership-for-woocommerce.php:218
 msgid " is not activated, Please activate WooCommerce first to activate "
 msgstr ""
 
-#: membership-for-woocommerce.php:194
+#: membership-for-woocommerce.php:218
 msgid "Membership for WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:194
+#: membership-for-woocommerce.php:218
 msgid "."
 msgstr ""
 
@@ -2048,19 +2082,23 @@ msgid "Billing address"
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:186
-msgid "Plan Name : "
+msgid "Plan Name: "
+msgstr ""
+
+#: public/partials/templates/mwb-membership-details-tab.php:187
+msgid "Status: "
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:188
-msgid "Discount on cart : "
+msgid "Discount on cart: "
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:189
-msgid "Free Shipping : "
+msgid "Free Shipping: "
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:191
-msgid "Offered Products : "
+msgid "Offered Products: "
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:201
@@ -2068,7 +2106,7 @@ msgid "No Products Offered in this Plan"
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:208
-msgid "Offered Categories : "
+msgid "Offered Categories: "
 msgstr ""
 
 #: public/partials/templates/mwb-membership-details-tab.php:218
