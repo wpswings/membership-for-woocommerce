@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Membership For WooCommerce 1.0.1\n"
-"POT-Creation-Date: 2021-04-13 18:31+0530\n"
-"PO-Revision-Date: 2021-04-13 18:31+0530\n"
+"Project-Id-Version: Membership For Woocommerce 1.0.\n"
+"POT-Creation-Date: 2021-04-13 18:58+0530\n"
+"PO-Revision-Date: 2021-04-13 18:58+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:286
 msgid "Memberships"
-msgstr ""
+msgstr "Memberships"
 
 #: admin/class-membership-for-woocommerce-admin.php:287
 msgid "Membership"
