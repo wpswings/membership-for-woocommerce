@@ -31,6 +31,7 @@ class Makewebbetter_Onboarding_Helper {
 	/**
 	 * The single instance of the class.
 	 *
+	 * @var object $_instance Instance of the class.
 	 * @since   1.0.0
 	 */
 	protected static $_instance = null;
@@ -57,17 +58,40 @@ class Makewebbetter_Onboarding_Helper {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $onboarding_form_id   = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+
+
+	/**
+	 * Form id of hubspot api.
+	 *
+	 * @since 1.0.0
+	 * @var string Form id.
+	 */
 	private static $deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
 
 
 	/**
 	 * Plugin Name.
 	 *
+	 * @var string $plugin_name Name of the plugin
 	 * @since 1.0.0
 	 */
 	private static $plugin_name;
+
+	/**
+	 * Plugin Name.
+	 *
+	 * @var string $plugin_name Name of the plugin
+	 * @since 1.0.0
+	 */
 	private static $store_name;
+
+	/**
+	 * Plugin Name.
+	 *
+	 * @var string $plugin_name Name of the plugin
+	 * @since 1.0.0
+	 */
 	private static $store_url;
 
 	/**

@@ -145,9 +145,9 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 		if ( strpos( $file, 'membership-for-woocommerce.php' ) !== false ) {
 
 			$row_meta = array(
-				'demo'    => '<a href="https://demo.makewebbetter.com/membership-for-woocommerce/" target="_blank">' . esc_html__( 'Free Demo', 'membership-for-woocommerce' ) . '</a>',
-				'doc'     => '<a href="https://docs.makewebbetter.com/membership-for-woocommerce/" target="_blank">' . esc_html__( 'Documentation', 'membership-for-woocommerce' ) . '</a>',
-				'support' => '<a href="https://makewebbetter.com/submit-query/" target="_blank">' . esc_html__( 'Support', 'membership-for-woocommerce' ) . '</a>',
+				'demo'    => '<a href="https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Demo.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Demo', 'membership-for-woocommerce' ) . '</a>',
+				'doc'     => '<a href="https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Documentation.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Documentation', 'membership-for-woocommerce' ) . '</a>',
+				'support' => '<a href="https://makewebbetter.com/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Support.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Support', 'membership-for-woocommerce' ) . '</a>',
 			);
 
 			return array_merge( $links, $row_meta );

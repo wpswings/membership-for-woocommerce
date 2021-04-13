@@ -772,7 +772,7 @@ class Membership_For_Woocommerce_Admin {
 				);
 
 				// phpcs:disable
-				foreach ( $all_posts as $post ) {
+				foreach ( $all_posts as $post ) { /* phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited */
 
 					setup_postdata( $post );
 					fputcsv(
@@ -817,9 +817,9 @@ class Membership_For_Woocommerce_Admin {
 
 		// Handling file upload using activity helper class..
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
-			// phpcs:disable
-		$csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : '';
-					// phpcs:enable
+		// phpcs:disable
+		$csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : ''; // phpcs:ignore
+		// phpcs:enable
 		$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
 
 		if ( ! current_user_can( 'edit_posts' ) ) {
@@ -1164,8 +1164,8 @@ class Membership_For_Woocommerce_Admin {
 			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
 			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
 			'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
-			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( $_POST['billing_address_1'] ) : '',
-			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( $_POST['billing_address_2'] ) : '',
+			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( $_POST['billing_address_1'] ) : '', // phpcs:ignore
+			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( $_POST['billing_address_2'] ) : '', // phpcs:ignore
 			'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
 			'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
 			'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
@@ -1508,7 +1508,7 @@ class Membership_For_Woocommerce_Admin {
 					)
 				);
 				//phpcs:disable
-				foreach ( $all_posts as $post ) {
+				foreach ( $all_posts as $post ) { // phpcs:ignore
 					setup_postdata( $post );
 					fputcsv(
 						$file,

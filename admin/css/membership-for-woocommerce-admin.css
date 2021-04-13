@@ -888,6 +888,11 @@ span.title_warning {
     border-right-color: transparent;
 }
 
+img.mwb_mfw_plugin_extra_custom_tab {
+    width: 20px;
+    padding-right: 5px;
+}
+
 /*Media Query for small screen devices*/
 
 @media screen and (max-width:992px) {

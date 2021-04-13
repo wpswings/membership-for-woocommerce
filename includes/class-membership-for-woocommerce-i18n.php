@@ -23,7 +23,7 @@
  * @subpackage Membership_For_Woocommerce/includes
  * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
-class Membership_For_Woocommerce_i18n {
+class Membership_For_Woocommerce_i18n { // phpcs:ignore
 
 
 	/**

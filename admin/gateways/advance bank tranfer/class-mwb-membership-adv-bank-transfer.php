@@ -229,7 +229,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 
 		$accounts = array();
 
-		// @codingStandardsIgnoreStart
+		// phpcs:disable
 		if ( isset( $_POST['bacs_account_name'] ) && isset( $_POST['bacs_account_number'] ) && isset( $_POST['bacs_bank_name'] ) && isset( $_POST['bacs_sort_code'] ) && isset( $_POST['bacs_iban'] ) && isset( $_POST['bacs_bic'] ) ) {
 
 			$account_names   = wc_clean( wp_unslash( $_POST['bacs_account_name'] ) );
@@ -238,7 +238,7 @@ class Mwb_Membership_Adv_Bank_Transfer extends WC_Payment_Gateway {
 			$sort_codes      = wc_clean( wp_unslash( $_POST['bacs_sort_code'] ) );
 			$ibans           = wc_clean( wp_unslash( $_POST['bacs_iban'] ) );
 			$bics            = wc_clean( wp_unslash( $_POST['bacs_bic'] ) );
-			// @codingStandardsIgnoreEnd
+			// phpcs:enable
 			if ( ! empty( $account_names ) ) {
 
 				foreach ( $account_names as $i => $name ) {
