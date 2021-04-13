@@ -1,66 +1,68 @@
-﻿=== Membership For WooCommerce ===
-Contributors: makewebbetter
+﻿=== Membership for WooCommerce ===
+Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags: Membership, WooCommerce, Memberships,  Memberships for WooCommerce, WooCommerce Membership
+Tags:Membership, WooCommerce, Memberships,  Members, WooCommerce Membership
 Requires at least: 4.0
-Tested up to 5.6.2
-WC requires at least: 3.0.0
-WC tested up to 5.0.0
-Stable tag: 1.0.0
+Tested up to: 5.7
+WC requires at least: 4.0.0
+WC tested up to: 5.1.0
+Stable tag: 1.0.1
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 
-The absolute Membership for WooCommerce plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using membership plans.
+The Membership for WooCommerce plugin provides a restriction on access for any facility and adds recurring revenue with engaging customers.
 
 == Description ==
 
-***SWIFT AND EFFORTLESS MEMBERSHIP FOR WOOCOMMERCE PLUGIN***
+== SWIFT AND EFFORTLESS MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
 
 Membership for WooCommerce Plugin is the missing piece of your eCommerce store. Get your membership website going with the smart Membership for WooCommerce plugin. It gets on directly to give you a way out of the three most customary pain points related to the WooCommerce membership store:
 
-**#** Restriction on access for any facility
-**#** Adding recurring revenue based on memberships
-**#** Engaging customers using membership plans 
+ * Restriction on access for any facility
+ * Adding recurring revenue based on memberships
+ * Engaging customers using membership plans 
+
+[youtube https://www.youtube.com/watch?v=Yf0pa_Fgn5s&w=560&h=315&rel=0]
 
 
-== Membership for WooCommerce Plugin Free Version Benefits At a Glance: ==
+== MEMBERSHIP FOR WOOCOMMERCE PLUGIN FREE VERSION BENEFITS AT A GLANCE : ==
 
-**1-** Different section for WooCommerce membership plans and WooCommerce members
+* Different section for WooCommerce membership plans and WooCommerce members
 
-**2-** Multiple language translation for WooCommerce membership available
+* Multiple language translation for WooCommerce membership available
 
-**3-** Manually assign membership for WOoCommerce to customers
+* Manually assign membership for WooCommerce to customers
 
-**4-**Offer free shipping and discount on WooCommerce member cart total
+* Offer free shipping and discount on WooCommerce member cart total
 
-**5-**Export/ Import WooCommerce membership site and user details
+* Export/ Import WooCommerce membership site and user details
 
-**6-** Efficient Shortcodes
+* Efficient Shortcodes
 
-**7-** Add on payment gateways i.e Advance Bank Transfer and Paypal smart buttons
+* Add on payment gateways i.e Advance Bank Transfer and Paypal smart buttons
 
-**8-** Customize plan page using shortcodes
+* Customize plan page using shortcodes
 
-**9-** Complete WooCommerce members and plans details 
+* Complete WooCommerce members and plans details 
 
-**10-** Assign or sell membership plans, restrict access facility to WooCommerce members only
+* Assign or sell membership plans, restrict access facility to WooCommerce members only
 
-**11-** Error Logging for handling WooCommerce membership errors
+* Error Logging for handling WooCommerce membership errors
 
-**12-** Delete WooCommerce Membership free plugin data on uninstall
+* Delete WooCommerce Membership free plugin data on uninstall
 
-**13-**Show Woo membership history to WooCommerce store owner users as well
+* Show Woo membership history to WooCommerce store owner users as well
 
-**14-** Offer membership categories to users 
+* Offer membership categories to users 
 
-**15-** Select limited or lifetime accessibility to WooCommerce members
+* Select limited or lifetime accessibility to WooCommerce members
 
-**16-** Set different status for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
+* Set different status for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
 
 
-***FEATURES OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN***
+== FEATURES OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
 
 Admin, as a WooCommerce store owner, already has so much to handle. And we want to simplify things for admin to the bare minimum. So, we exhibit the most appropriate and must-have features for membership websites. The FREE Membership for WooCommerce plugin brings you:
 
@@ -91,44 +93,28 @@ Admin can display offered products and product categories in a membership plan. 
 **4-** Access Type (Lifetime or Limited accessibility) 
 
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
-**Download Now !!**
+[**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.1.0.0.zip)
 Visit [**Membership For WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
 
 == WHAT PREMIUM VERSION MEMBERSHIP FOR WOOCOMMERCE PLUGIN PROVIDES YOU ==
 
 Admin has enough features in the Membership for WooCommerce free plugin but things will get even better in the premium version of Membership for WooCommerce. It will have the following features:  
 
-**1-** **Automatic Membership for WooCommerce Assignment Based on Members Orders**
-
-Based on order history, the membership will automatically be assigned to the users. Admin can activate membership depending on a stipulated period. All membership-related settings are included for the store owner. 
-
-Cut down time-consuming tasks like new account creation, pausing, canceling or resuming membership subscriptions, email reminders, upgrading membership status, and resetting forgotten passwords. Get automated tasks with Membership for WooCommerce done just in time.   
+* Automatic Membership for WooCommerce Assignment Based on Members Orders
   
-**2-** **Email PDF Invoice of Membership for WooCommerce Without-And-Out Modification Options**
+* Email PDF Invoice of Membership for WooCommerce Without-And-Out Modification Options
 
-Admin can attach a PDF invoice to the customer’s email after a successful WooCommerce membership purchase. Admin can modify the email address, phone number, and the logo of the sender in the pdf invoice. 
+* Recurring Membership for WooCommerce Feature
 
-Admin also has options to manipulate the subject or add extra static content to the email. Moreover, notifications will be sent out on WooCommerce membership plan expiry for different levels of membership. 
+* Drip Content for WooCommerce Members Only
 
-**3-** **Recurring Membership for WooCommerce Feature**
-Get a steady and fix revenue with the recurring feature of our pro Membership for Woocommerce version. Recurring subscriptions will provide monthly or annual membership, and the admin will get regular payments for his services.
+* More Add-on Payment Gateways and Extensions
 
-This recurring membership feature fits perfectly with our Subscriptions for WooCommerce plugin. Admin may change settings for the recurring WooCommerce membership plan.   
+* Create Multiple Membership Levels of Products
 
-**4-** **Drip Content for WooCommerce Members Only**
-Get the powerful drip content feature to increase the stickiness and value of your membership. Release content drip by drip to your site users to avoid overwhelming them at once and have complete access to your full library. You may drip particular items, menus, or posts so that users can view them in a certain order. Decide when to drip your content on, daily, weekly, or monthly basis.  
+* Minimum and Maximum Discount Implementation on the Cart
 
-**5-** **More Add-on Payment Gateways and Extensions**
-Get additional payment gateway integration with the premium version of membership for WooCommerce like Stripe and Authorize.net, or any of your special requirements. Do let us know. Do not let users turn away from you because of payment gateways. So, add recurring revenue based on the membership of your users.
-
-**6-** **Create Multiple Membership Levels of Products**
-In case you want to offer more than one membership plan to your users, Membership for WooCommerce Pro is for you. Your users may find their new requirements when you create multiple memberships for your website. WooCommerce members can have multiple memberships, and store owners can renew them according to membership plans.
-
-**7-** **Minimum and Maximum Discount Implementation on the Cart**
-Admin can perform minimum and maximum discount implementation if a user purchases multiple memberships. This discount can be fixed or percentage-based.
-
-**8-** **Purchase Other WooCommerce Membership Plans Related to Product**
-Admin can display plans related to particular products in different membership that can be made available after membership upgrades. Admin can urge users to purchase options they will get after they upgrade their membership plans. This way, you get new upgrades as well.
+* Purchase Other WooCommerce Membership Plans Related to Product
 
 **LIVE DEMO OF FREE VERSION**
 
@@ -159,26 +145,31 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == FAQ ==
 
-**1-** **Will this plugin compatible with my current theme?**
+= Will this plugin compatible with my current theme? =
 
 Yes, Membership for WooCommerce plugin is compatible with all popular themes that follow WooCommerce standards.
 
-**2-** **Do you have a shortcode to display the Membership Plan/price??** 
+= Do you have a shortcode to display the Membership Plan/price? =
 
 Yes, the membership plugin has a shortcode section to display the Membership plan, price, and description.
 
- Membership Plan Title → [mwb_membership_title]
- Membership Plan Price → [mwb_membership_price]
- Membership Plan Desc → [mwb_membership_desc]
+ Membership Plan Title : [mwb_membership_title]
+ Membership Plan Price : [mwb_membership_price]
+ Membership Plan Desc : [mwb_membership_desc]
  
-**3-** **I don't know any coding, will I be able to use the Membership for WooCommerce  plugin?**
+= I don't know any coding, will I be able to use the Membership for WooCommerce  plugin? =
 Yes, Membership For WooCommerce is very easy to use and does not require any knowledge of coding.
 
-**4-** **Can I add as many levels of membership as I want?** 
+= Can I add as many levels of membership as I want? = 
 Yes, You can create as many levels as you want in the Membership for Woocommerce plugin.
 
-**5-** **Can a person get a lifetime membership or limited membership?**
+= Can a person get a lifetime membership or limited membership? =
 We have both options to set the membership to lifetime or limited. You can set either of two.
+
+= My question is not listed =
+
+  Please visit the  [**MakeWebBetter Knowledgebase**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)  and for more detailed visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)
+
 
 
 == Screenshots ==
@@ -204,6 +195,15 @@ We have both options to set the membership to lifetime or limited. You can set e
 
 == Changelog ==
 
-= 1.0.0 - RELEASED ON 10 MARCH 2021 =
+= 1.0.1 - RELEASED ON 13 APRIL 2021 =
+
+* New: Compatibility with WooCommerce 5.1.0 and WordPress 5.7
+
+= 1.0.0 - RELEASED ON 12 MARCH 2021 =
 
 * First version
+
+== Upgrade Notice ==
+
+= 1.0.1 - Released on 13 April 2021 =
+* New: Compatibility with WooCommerce 5.1.0 and WordPress 5.7
