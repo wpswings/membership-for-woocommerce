@@ -259,11 +259,11 @@ global $post;
 					<label for="mwb_membership_plan_immediate_type"><?php esc_html_e( 'Immediately', 'membership-for-woocommerce' ); ?></label>
 
 					<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type" <?php echo esc_html( 'delay_type' === $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
-					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specifiy a time', 'membership-for-woocommerce' ); ?></label>
+					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specify a time', 'membership-for-woocommerce' ); ?></label>
 
 					<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
 					<?php
-						$description = esc_html__( 'Select the delay duration in after which plan offers will be accessible.', 'membership-for-woocommerce' );
+						$description = esc_html__( 'Select the delay duration after which plan offers will be accessible.', 'membership-for-woocommerce' );
 
 						$instance->tool_tip( $description );
 					?>

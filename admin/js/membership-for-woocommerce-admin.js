@@ -225,7 +225,7 @@ jQuery(document).ready(function($) {
     });
 
     // Image uploader in global settings email log.
-    $('#upload_img').click(function(e) {
+    $('#upload_img').on( 'click', function(e) {
         e.preventDefault();
 
         media_modal = wp.media.frames.media_modal = wp.media({
