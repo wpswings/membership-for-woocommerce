@@ -163,7 +163,7 @@ class Membership_For_Woocommerce_Public {
 			$plan_data['desc']  = $plan_desc;
 			$plan_data['price'] = $plan_price;
 			// phpcs:disable
-			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), null, false );
+			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), null, false ); /* phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion */
 			// phpcs:enable
 			wp_localize_script(
 				'paypal-smart-buttons',
@@ -997,7 +997,7 @@ class Membership_For_Woocommerce_Public {
 		if ( ! empty( $_FILES['receipt']['name'] ) ) {
 
 			// phpcs:disable
-			$file     = $_FILES['receipt'];
+			$file     = $_FILES['receipt']; // phpcs:ignore
 			// phpcs:enable
 
 			$file_ext = substr( strrchr( $file['name'], '.' ), 1 );
@@ -1038,7 +1038,7 @@ class Membership_For_Woocommerce_Public {
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
 
 		// phpcs:disable
-		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( $_POST['path'] ) : '';
+		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( $_POST['path'] ) : ''; // phpcs:ignore
 		// phpcs:enable
 
 		if ( ! empty( $file_path ) ) {
@@ -1110,7 +1110,7 @@ class Membership_For_Woocommerce_Public {
 		$payment_response = '';
 
 		// phpcs:disable.
-		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : '';
+		isset( $_POST['form_data'] ) ? parse_str( $_POST['form_data'], $fields ) : ''; // phpcs:ignore
 		// phpcs:enable.
 
 		$method_id = isset( $fields['payment_method'] ) ? $fields['payment_method'] : '';
@@ -1234,7 +1234,7 @@ class Membership_For_Woocommerce_Public {
 		// Nonce verification.
 		check_ajax_referer( 'paypal-nonce', 'nonce' );
 
-		$tr_details = ! empty( $_POST['details'] ) ? map_deep( $_POST['details'], 'wp_unslash' ) : '';
+		$tr_details = ! empty( $_POST['details'] ) ? map_deep( $_POST['details'], 'wp_unslash' ) : ''; // phpcs:ignore
 
 		$user_id = get_current_user_id();
 

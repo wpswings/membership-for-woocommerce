@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $current_url = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
-if ( ! isset( $current_url ) ) {
+if ( empty( $current_url ) ) {
 
 	$user        = ! empty( $user_id ) ? $user_id : '';
 	$memberships = ! empty( $membership_ids ) ? $membership_ids : array();
@@ -183,12 +183,12 @@ if ( ! isset( $current_url ) ) {
 			<div class="woocommerce-column woocommerce-column--2 woocommerce-column--plan-details col-2">
 				<h2 class="woocommerce-column__title"><?php esc_html_e( 'Plan details', 'membership-for-woocommerce' ); ?></h2>
 				<address>
-					<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name : ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
-					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart : ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_plan_discount_price'] ), esc_html( $membership_plan['mwb_membership_plan_offer_price_type'] ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping : ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
+					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_plan_discount_price'] ), esc_html( $membership_plan['mwb_membership_plan_offer_price_type'] ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
 					<tr>
-						<th><label><?php esc_html_e( 'Offered Products : ', 'membership-for-woocommerce' ); ?></label></th>
+						<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
 							$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
@@ -205,7 +205,7 @@ if ( ! isset( $current_url ) ) {
 					</tr></br>
 
 					<tr>
-						<th><label><?php esc_html_e( 'Offered Categories : ', 'membership-for-woocommerce' ); ?></label></th>
+						<th><label><?php esc_html_e( 'Offered Categories: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
 							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] );

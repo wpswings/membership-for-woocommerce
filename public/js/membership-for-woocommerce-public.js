@@ -8,7 +8,7 @@ jQuery(document).ready(function ($) {
 	}
 
 	const validate_email = ( val ) => {
-
+	
 		let tooltip = $('.tooltip');
 		let result =  (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(val));
 		if ( result ) {
@@ -265,7 +265,7 @@ jQuery(document).ready(function ($) {
 	$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_form-field-wrapper-part-b, #mwb_proceed_payment, .mwb_membership_payment_modal, .mwb_mfw_btn-back-a,.mwb_mfw_btn-back-b, .mwb_mfw_btn-next-b, .mwb_mfw_order-confirm, .mwb_mfw_purchase-again').hide();
 	
 	// Reset form on modal close.
-	$('.ui-dialog-titlebar-close').click(function () {
+	$('.ui-dialog-titlebar-close').on( 'click', function () {
 		resetform();
 	});
 
@@ -278,14 +278,14 @@ jQuery(document).ready(function ($) {
 		}
 	});
 
-	$('.mwb_membership_buynow').click(function () {
+	$('.mwb_membership_buynow').on( 'click', function () {
 	
 		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
 		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
 		$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_btn-next-a').show('300');
 	});
 
-	$('.mwb_mfw_btn-next-a').click(function () {
+	$('.mwb_mfw_btn-next-a').on( 'click', function () {
 
 		//Personal Details form validation 
 		let f_name = $('#membership_billing_first_name').val().length;
@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
 
 	});
 
-	$('.mwb_mfw_btn-back-a').click(function () {
+	$('.mwb_mfw_btn-back-a').on( 'click', function () {
 
 		$(this).hide();
 		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
@@ -317,7 +317,7 @@ jQuery(document).ready(function ($) {
 		$('.mwb_mfw_form-field-wrapper-part-b, .mwb_mfw_btn-next-b').hide();
 	});
 
-	$('.mwb_mfw_btn-next-b').click(function () {
+	$('.mwb_mfw_btn-next-b').on( 'click', function () {
 
 		//Address Details form validation 
 		let street = $('#membership_billing_address_1').val().length;
@@ -338,7 +338,7 @@ jQuery(document).ready(function ($) {
 		$('#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b').show();
 	});
 
-	$('.mwb_mfw_btn-back-b').click(function () {
+	$('.mwb_mfw_btn-back-b').on( 'click', function () {
 
 		$(this).hide();
 		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar

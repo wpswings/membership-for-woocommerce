@@ -5,7 +5,7 @@ jQuery( document ).ready( function( $ ){
 
         ajax:{
 
-            url:      ajaxurl,
+            url:      add_new_obj.ajax_url,
             dataType: "json",
             delay:    200,
             data: function( params ) {
@@ -38,7 +38,7 @@ jQuery( document ).ready( function( $ ){
 
         ajax:{
 
-            url: ajaxurl,
+            url: add_new_obj.ajax_url,
             dataType: "json",
             delay: 200,
             data: function( params ) {

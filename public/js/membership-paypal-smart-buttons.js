@@ -24,71 +24,76 @@ jQuery( document ).ready( function( $ ) {
         country   = $( '#membership_billing_country' ).val();
     });
 
-    // Initiate payment on paypal.
-    paypal.Buttons({
+    if ( 'yes' == paypal_settings.enabled ) {
+        // Initiate payment on paypal.
+        paypal.Buttons({
 
-		style: {
-            layout: paypal_settings.button_layout,
-            color:  paypal_settings.button_color,
-            shape:  paypal_settings.button_shape,
-            label:  paypal_settings.button_label,
-		},
+            style: {
+                layout: paypal_settings.button_layout,
+                color:  paypal_settings.button_color,
+                shape:  paypal_settings.button_shape,
+                label:  paypal_settings.button_label,
+            },
 
-        createOrder: function(data, actions) {
+            createOrder: function(data, actions) {
 
-            return actions.order.create({
+                return actions.order.create({
 
-                purchase_units: [{
-                    amount: {
-                        currency_code: paypal_settings.currency_code,
-                        value: plan_data.price,
-                        breakdown: {
-                            item_total: {
-                                currency_code: paypal_settings.currency_code,
-                                value: plan_data.price
+                    purchase_units: [{
+                        amount: {
+                            currency_code: paypal_settings.currency_code,
+                            value: plan_data.price,
+                            breakdown: {
+                                item_total: {
+                                    currency_code: paypal_settings.currency_code,
+                                    value: plan_data.price
+                                }
+                            }
+                        },
+                        items: [
+                            {
+                                name: plan_data.name,
+                                description: shorten_desc( plan_data.desc, 250 ),
+                                unit_amount: {
+                                    currency_code: paypal_settings.currency_code,
+                                    value: plan_data.price
+                                },
+                                quantity: "1",
+                                category : "DIGITAL_GOODS"
+                            },
+                        ],
+                        shipping: {
+                            name: {
+                                    full_name: firstname + ' ' + lastname,
+                                },
+                            address: {
+                                address_line_1: ad_line_1,
+                                address_line_2: ad_line_2,
+                                admin_area_2: city,
+                                admin_area_1: state,
+                                postal_code: zip,
+                                country_code: country
                             }
                         }
-                    },
-                    items: [
-                        {
-                            name: plan_data.name,
-                            description: shorten_desc( plan_data.desc, 250 ),
-                            unit_amount: {
-                                currency_code: paypal_settings.currency_code,
-                                value: plan_data.price
-                            },
-                            quantity: "1",
-                            category : "DIGITAL_GOODS"
-                        },
-                    ],
-                    shipping: {
-                        name: {
-                                full_name: firstname + ' ' + lastname,
-                            },
-                        address: {
-                            address_line_1: ad_line_1,
-                            address_line_2: ad_line_2,
-                            admin_area_2: city,
-                            admin_area_1: state,
-                            postal_code: zip,
-                            country_code: country
-                        }
-                    }
-                }]
-            });
-        },
+                    }]
+                });
+            },
 
-        onApprove: function(data, actions) {
+            onApprove: function(data, actions) {
 
-            return actions.order.capture().then(function(details) {
-               
-                alert(  'Transaction completed by ' + details.payer.name.given_name );
-               
-                saveTransactionData( details );
+                return actions.order.capture().then(function(details) {
+                
+                    alert(  'Transaction completed by ' + details.payer.name.given_name );
+                
+                    saveTransactionData( details );
 
-            });
-        }
-    }).render( '#paypal-button-container' );
+                });
+            }
+        }).render( '#paypal-button-container' );
+    } else {
+        console.log( 'PayPal Checkout( Membership ) not enabled' );
+    }
+
 
     const saveTransactionData = async( tr_details ) => {
 

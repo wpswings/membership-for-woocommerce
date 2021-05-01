@@ -87,6 +87,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 
 		$settings = array();
 
+		$settings['enabled']         = $this->enabled;
 		$settings['payment_action']  = $this->payment_action;
 		$settings['currency_code']   = $this->currency_code;
 		$settings['vault']           = $this->vault;
