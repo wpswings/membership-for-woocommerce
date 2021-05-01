@@ -3,8 +3,8 @@
 ![Membership   for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2494227)
 * Contributors: MakeWebBetter
 * Author URI:  [https://makewebbetter.com/](https://makewebbetter.com/?utm_source=MWB-membership-github&utm_medium=MWB-github-Page&utm_campaign=MWB-site&utm_term=git)
-*Tags: membership, memberships, woocommerce, woocommerce membership
-*License URI: http://www.gnu.org/licenses/gpl-3.0.html
+* Tags: membership, memberships, woocommerce, woocommerce membership
+* License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 # Description
 **SWIFT AND EFFORTLESS MEMBERSHIP FOR WOOCOMMERCE PLUGIN**
