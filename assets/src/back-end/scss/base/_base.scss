@@ -1,0 +1,25 @@
+@import 
+    'colors',
+    'typography',
+    'abstracts/placeholders',
+    'abstracts/mixins',
+    'abstracts/functions';
+
+
+/* Enter Your Global CSS here */
+
+* {
+    box-sizing: border-box;
+
+    &:after,
+    &:before {
+        box-sizing: border-box;
+    }
+}
+
+.mwb-info-img {
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: -3px;
+    max-width: 15px;
+}

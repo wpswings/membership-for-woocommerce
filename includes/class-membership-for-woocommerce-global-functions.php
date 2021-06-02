@@ -1,0 +1,1361 @@
+<?php
+/**
+ * The global helper class of the plugin.
+ *
+ * @link       https://makewebbetter.com
+ * @since      1.0.0
+ *
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/admin
+ */
+
+/**
+ * The global helper class of the plugin.
+ *
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/admin
+ * @author     MakeWebBetter <plugins@makewebbetter.com>
+ */
+class Membership_For_Woocommerce_Global_Functions {
+
+	/**
+	 * Instance of the class
+	 *
+	 * @var object
+	 */
+	public static $instance;
+
+	/**
+	 * Initialize the class and set its properties.
+	 *
+	 * @since    1.0.0
+	 */
+	public function __construct() {
+		self::$instance = $this;
+	}
+
+	/**
+	 * Returns Instcance of the class
+	 */
+	public static function get() {
+
+		if ( null == self::$instance ) {
+
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+
+	/**
+	 * Allowed html for description on admin side
+	 *
+	 * @param string $description tooltip message.
+	 *
+	 * @since 1.0.0
+	 */
+	public function tool_tip( $description = '' ) {
+
+		// Run only if description message is present.
+		if ( ! empty( $description ) ) {
+
+			$allowed_html = array(
+				'span' => array(
+					'class'    => array(),
+					'data-tip' => array(),
+				),
+			);
+
+			echo wp_kses( wc_help_tip( $description ), $allowed_html );
+		}
+	}
+
+	/**
+	 * Returns product name and status.
+	 *
+	 * @param string $product_id Product id of a particular product.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_product_title( $product_id = '' ) {
+
+		$result = esc_html__( 'Product not found', 'membership-for-woocommerce' );
+
+		if ( ! empty( $product_id ) ) {
+
+			$product = wc_get_product( $product_id );
+
+			if ( ! empty( $product ) ) {
+
+				if ( 'publish' !== $product->get_status() ) {
+
+					$result = esc_html__( 'Product unavailable', 'membership-for-woocommerce' );
+
+				} else {
+
+					$result = $product->get_name();
+
+				}
+			}
+
+			return $result;
+		}
+	}
+
+	/**
+	 * Return category name and its existance
+	 *
+	 * @param string $cat_id Category ID of a particular category.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_category_title( $cat_id = '' ) {
+
+		if ( ! empty( $cat_id ) ) {
+
+			$result = esc_html__( 'Category not found', 'membership-for-woocommerce' );
+
+			$cat_name = get_the_category_by_ID( $cat_id );
+
+			if ( ! empty( $cat_name ) ) {
+
+				$result = $cat_name;
+
+			}
+
+			return $result;
+		}
+	}
+
+	/**
+	 * Membership default global options.
+	 *
+	 * @since 1.0.0
+	 */
+	public function default_global_options() {
+
+		$default_global_settings = array(
+
+			'mwb_membership_enable_plugin'     => 'on',
+			'mwb_membership_delete_data'       => 'off',
+			'mwb_membership_plan_user_history' => 'on',
+			'mwb_membership_email_subject'     => 'Thank you for Shopping, Do not reply.',
+			'mwb_membership_email_content'     => '',
+			'mwb_membership_attach_invoice'    => 'off',
+			'mwb_membership_invoice_address'   => '',
+			'mwb_membership_invoice_phone'     => '',
+			'mwb_membership_invoice_email'     => '',
+			'mwb_membership_invoice_logo'      => '',
+
+		);
+
+		return $default_global_settings;
+
+	}
+
+	/**
+	 * Membership product title for CSV.
+	 *
+	 * @param array $products An array of product ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function csv_get_prod_title( $products ) {
+
+		if ( ! empty( $products ) && is_array( $products ) ) {
+
+			$product_ids = ! empty( $products ) ? array_map( 'absint', $products ) : null;
+
+			$output = '';
+
+			if ( $product_ids ) {
+
+				foreach ( $product_ids as $single_id ) {
+
+					$single_name = $this->get_product_title( $single_id );
+					$output     .= esc_html( $single_name ) . '(#' . esc_html( $single_id ) . '),';
+
+				}
+			}
+
+			$output = preg_replace( '/,[^,]*$/', '', $output );
+			return $output;
+		}
+
+	}
+
+	/**
+	 * Membership category title for CSV.
+	 *
+	 * @param array $categories An array of cataegory ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function csv_get_cat_title( $categories ) {
+
+		if ( ! empty( $categories ) && is_array( $categories ) ) {
+
+			$category_ids = ! empty( $categories ) ? array_map( 'absint', $categories ) : null;
+
+			$output = '';
+
+			if ( $category_ids ) {
+
+				foreach ( $category_ids as $cat_id ) {
+
+					$single_cat = $this->get_category_title( $cat_id );
+					$output    .= esc_html( $single_cat ) . '(#' . esc_html( $cat_id ) . '),';
+				}
+			}
+
+			$output = preg_replace( '/,[^,]*$/', '', $output );
+			return $output;
+		}
+	}
+
+	/**
+	 * Membership supported gateways.
+	 *
+	 * @since 1.0.0
+	 */
+	public function supported_gateways() {
+
+		$supported_gateways = array(
+			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
+			'membership-paypal-smart-buttons', // PayPal Smart buttons.
+		);
+
+		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
+	}
+
+	/**
+	 * Available payment gateways.
+	 *
+	 * @since 1.0.0
+	 */
+	public function available_gateways() {
+
+		$wc_gateways      = new WC_Payment_Gateways();
+		$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+		$woo_gateways = array();
+
+		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+
+			// Loop through Woocommerce available payment gateways.
+			foreach ( $payment_gateways as $gateway_id ) {
+
+				$woo_gateways[] = $gateway_id->id;
+			}
+		}
+
+		return $woo_gateways;
+
+	}
+
+	/**
+	 * Returns the method title.
+	 *
+	 * @param string $method_id Id of the payment method.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_payment_method_title( $method_id ) {
+
+		$title = '';
+
+		$wc_gateways      = new WC_Payment_Gateways();
+		$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+
+			// Loop through Woocommerce available payment gateways.
+			foreach ( $payment_gateways as $gateway ) {
+
+				if ( $method_id === $gateway->id ) {
+
+					$title = $gateway->method_title;
+				}
+			}
+		}
+		return $title;
+	}
+	/**
+	 * Cart item Ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function cart_item_ids() {
+
+		$cart_items = WC()->cart->get_cart();
+
+		$prod_ids = array();
+
+		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
+
+			foreach ( $cart_items as $item ) {
+
+				$prod_ids[] = $item['product_id'];
+			}
+		}
+
+		return $prod_ids;
+	}
+
+	/**
+	 * Cart item category Ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function cart_item_cat_ids() {
+
+		$cart_items = WC()->cart->get_cart();
+
+		$cat_ids = array();
+
+		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
+
+			foreach ( $cart_items as $cart_item_key => $cart_item ) {
+
+				$cat_ids = array_merge( $cat_ids, $cart_item['data']->get_category_ids() );
+			}
+		}
+
+		return $cat_ids;
+	}
+
+	/**
+	 * Cart item category Ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function cart_item_tag_ids() {
+
+		$cart_items = WC()->cart->get_cart();
+
+		$tag_ids = array();
+
+		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
+
+			foreach ( $cart_items as $cart_item_key => $cart_item ) {
+
+				$tag_ids = array_merge( $tag_ids, $cart_item['data']->get_tag_ids() );
+			}
+		}
+
+		return $tag_ids;
+	}
+
+	/**
+	 * Get all plans offered products ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function plans_products_ids() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$products = array();
+
+		$ids = array();
+
+		$all_posts = get_posts( $args );
+
+		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
+
+			foreach ( $all_posts as $post ) {
+
+				$products = get_post_meta( $post->ID, 'mwb_membership_plan_target_ids', true );
+
+				if ( is_array( $products ) ) {
+
+					foreach ( $products as $id ) {
+						$ids[] = $id;
+					}
+				}
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Get all plans offered categories ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function plans_cat_ids() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$categories = array();
+
+		$cat_ids = array();
+
+		$all_posts = get_posts( $args );
+
+		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
+
+			foreach ( $all_posts as $post ) {
+
+				$categories = get_post_meta( $post->ID, 'mwb_membership_plan_target_categories', true );
+
+				if ( is_array( $categories ) ) {
+
+					foreach ( $categories as $id ) {
+
+						$cat_ids[] = $id;
+					}
+				}
+			}
+		}
+
+		return $cat_ids;
+	}
+
+
+	/**
+	 * Get all plans offered tag ids.
+	 *
+	 * @since 1.0.0
+	 */
+	public function plans_tag_ids() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$tag = array();
+
+		$tag_ids = array();
+
+		$all_posts = get_posts( $args );
+
+		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
+
+			foreach ( $all_posts as $post ) {
+
+				$tag = get_post_meta( $post->ID, 'mwb_membership_plan_target_tags', true );
+
+				if ( is_array( $tag ) ) {
+
+					foreach ( $tag as $id ) {
+
+						$tag_ids[] = $id;
+					}
+				}
+			}
+		}
+
+		return $tag_ids;
+	}
+
+
+	/**
+	 * Gutenberg offer plan content.
+	 *
+	 * @since 1.0.0
+	 */
+	public function gutenberg_content() {
+
+		$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)","align":"wide"} -->
+						<div class="wp-block-cover alignwide has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center","textColor":"white"} -->
+						<h2 class="has-text-align-center has-white-color has-text-color"><strong><em>One Membership, Many Benefits</em></strong></h2>
+						<!-- /wp:heading -->
+						
+						<!-- wp:group -->
+						<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
+						<div class="mwb_mfw_membership_front_page">
+						<i class="fas fa-award mwb_mfw_membership_icon"></i>
+						<div class="mwb_membership_plan_content_title">[mwb_membership_title]</div>
+						<div class="mwb_membership_plan_content_price">[mwb_membership_price]</div>
+						<div class="mwb_membership_plan_content_desc">[mwb_membership_desc]</div>
+						<div class="mwb_mfw_buy_button">[mwb_membership_yes] [mwb_membership_no]</div>
+						</div>
+						<!-- /wp:html --></div></div>
+						<!-- /wp:group --></div></div>
+						<!-- /wp:cover -->';
+
+		return $page_content;
+	}
+
+	/**
+	 * Returns Import CSV modal.
+	 *
+	 * @since 1.0.0
+	 */
+	public function import_csv_modal_content() {
+		?>
+		<div class="import_csv_field_wrapper" style="display: none;">
+			<input type="file" name="csv_to_import" id="csv_file_upload">
+			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
+		</div>
+		<?php
+
+	}
+
+
+	/**
+	 * Returns payment modal content
+	 *
+	 * @param object $gateway An object of payment gateway.
+	 * @return void
+	 */
+	public function gateway_modal_content( $gateway ) {
+
+		?>
+		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
+			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> " required/>
+
+			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
+				<?php echo esc_html( $gateway->get_title() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
+			</label>
+			<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
+				<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
+				<?php
+				if ( ! $gateway->chosen ) :
+						/* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */
+					?>
+					style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
+					<?php $gateway->payment_fields(); ?>
+				</div>
+			<?php endif; ?>
+		</li>
+		<?php
+	}
+
+	/**
+	 * Returns modal payment div wrapper.
+	 *
+	 * @param int $plan_id Membership plan ID.
+	 *
+	 * @since 1.0.0
+	 */
+	public function payment_gateways_html( $plan_id ) {
+
+		$wc_gateways      = new WC_Payment_Gateways();
+		$payment_gateways = $wc_gateways->get_available_payment_gateways();
+
+		$supported_gateways = $this->supported_gateways();
+
+		?>
+		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data" style="display: none;">
+
+			<div class="mwb_membership_buy_now_modal">
+
+				<!-- Modal payment content start -->
+				<div class="mwb_membership_payment_modal">
+					<?php
+					foreach ( $payment_gateways as $gateway ) {
+
+						if ( in_array( $gateway->id, $supported_gateways, true ) ) {
+
+							$this->gateway_modal_content( $gateway );
+						}
+					}
+					?>
+
+					<!-- Paypal smarts buttons container -->
+					<div id="paypal-button-container" style="display: none;"></div>
+				</div>
+				<!-- Modal payment content end. -->
+
+				<?php
+				// Modal billing fields.
+				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
+				?>
+
+			</div>
+		</form>
+		<?php
+
+	}
+
+	/**
+	 * Check if any plan exist or not.
+	 *
+	 * @return bool
+	 * @since 1.0.0
+	 */
+	public function plans_exist_check() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$check = '';
+
+		$all_plans = get_posts( $args );
+
+		if ( ! empty( $all_plans ) && is_array( $all_plans ) ) {
+
+			$check = true;
+		} else {
+
+			$check = false;
+		}
+
+		return $check;
+
+	}
+
+	/**
+	 * Return all memberships in membership free shipping.
+	 *
+	 * @since 1.0.0
+	 */
+	public function format_all_membership() {
+
+		$formatted_all_membership = array();
+
+		// Query run for all memberships for free shipping.
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+			'fields'      => 'ids',
+		);
+
+		$all_membership = get_posts( $args );
+
+		if ( ! empty( $all_membership ) && is_array( $all_membership ) ) {
+
+			foreach ( $all_membership as $key => $id ) {
+
+				$formatted_all_membership[ $id ] = get_the_title( $id );
+			}
+		}
+
+		return $formatted_all_membership;
+	}
+
+	/**
+	 * Function to run query.
+	 *
+	 * @param string $query Is the query.
+	 * @return mixed
+	 *
+	 * @since 1.0.0
+	 */
+	public function run_query( $query = '' ) {
+
+		global $wpdb;
+
+		return ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	}
+
+	/**
+	 * Maps the CSV data.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function csv_data_map( $csv_data ) {
+
+		$formatted_data = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				$formatted_data[] = array(
+					'post_id'                              => ! empty( $value[0] ) ? $value[0] : '',
+					'post_title'                           => ! empty( $value[1] ) ? $value[1] : '',
+					'post_status'                          => ! empty( $value[2] ) ? $value[2] : '',
+					'mwb_membership_plan_price'            => ! empty( $value[3] ) ? $value[3] : '',
+					'mwb_membership_plan_name_access_type' => ! empty( $value[4] ) ? $value[4] : '',
+					'mwb_membership_plan_duration'         => ! empty( $value[5] ) ? $value[5] : '',
+					'mwb_membership_plan_duration_type'    => ! empty( $value[6] ) ? $value[6] : '',
+					'mwb_membership_plan_recurring'        => ! empty( $value[7] ) ? $value[7] : '',
+					'mwb_membership_plan_access_type'      => ! empty( $value[8] ) ? $value[8] : '',
+					'mwb_membership_plan_time_duration'    => ! empty( $value[9] ) ? $value[9] : '',
+					'mwb_membership_plan_time_duration_type' => ! empty( $value[10] ) ? $value[10] : '',
+					'mwb_membership_plan_offer_price_type' => ! empty( $value[11] ) ? $value[11] : '',
+					'mwb_memebership_plan_discount_price'  => ! empty( $value[12] ) ? $value[12] : '',
+					'mwb_memebership_plan_free_shipping'   => ! empty( $value[13] ) ? $value[13] : '',
+					'mwb_membership_plan_target_ids'       => ! empty( $value[14] ) ? $this->import_csv_ids( $value[14] ) : '',
+					'mwb_membership_plan_target_categories' => ! empty( $value[15] ) ? $this->import_csv_ids( $value[15] ) : '',
+					'post_content'                         => ! empty( $value[16] ) ? $value[16] : '',
+
+				);
+			}
+		}
+
+		return $formatted_data;
+
+	}
+
+	/**
+	 * String to array conversion of pro ids.
+	 *
+	 * @param string $csv_string A string of CSV Products and Category ids.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function import_csv_ids( $csv_string ) {
+
+		$ids = array();
+
+		if ( ! empty( $csv_string ) ) {
+
+			$ids_array = explode( ',', $csv_string );
+
+			foreach ( $ids_array as $key => $id ) {
+
+				$matches = array();
+
+				$check = preg_match( '/(#[0-9][0-9])+/', $id, $matches );
+
+				if ( $check ) {
+
+					$ids[] = str_replace( '#', '', $matches[0] );
+				}
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
+	 * Returns all Products ids offered from CSV.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function csv_prod_title( $csv_data ) {
+
+		$csv_prod_title = array();
+		$prod_array     = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				if ( ! empty( $value[14] ) ) {
+
+					$prod_array[] = explode( ',', $value[14] );
+				}
+			}
+		}
+
+		if ( ! empty( $prod_array ) && is_array( $prod_array ) ) {
+
+			foreach ( $prod_array as $key ) {
+
+				foreach ( $key as $index => $title ) {
+
+					$matches = array();
+
+					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
+
+					if ( $check ) {
+
+						$csv_prod_title[] = $matches[0];
+					}
+				}
+			}
+		}
+
+		return $csv_prod_title;
+	}
+
+	/**
+	 * Return all Category ids offered from CSV.
+	 *
+	 * @param array $csv_data An array of CSV data.
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function csv_cat_title( $csv_data ) {
+
+		$csv_cat_title = array();
+		$cat_array     = array();
+
+		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
+
+			foreach ( $csv_data as $key => $value ) {
+
+				if ( ! empty( $value[15] ) ) {
+
+					$cat_array[] = explode( ',', $value[15] );
+				}
+			}
+		}
+
+		if ( ! empty( $cat_array ) && is_array( $cat_array ) ) {
+
+			foreach ( $cat_array as $key ) {
+
+				foreach ( $key as $index => $title ) {
+
+					$matches = array();
+
+					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
+
+					if ( $check ) {
+
+						$csv_cat_title[] = $matches[0];
+					}
+				}
+			}
+		}
+		return $csv_cat_title;
+	}
+
+	/**
+	 * Returns an aray of all products title available in woocommerce store.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function all_prod_title() {
+
+		$product_titles = array();
+
+		// Getting all Product ids from woocommerce.
+		$all_prod_ids = get_posts(
+			array(
+				'posts_per_page' => -1,
+				'post_type'      => array( 'product', 'product_variation' ),
+				'fields'         => 'ids',
+			)
+		);
+
+		if ( ! empty( $all_prod_ids ) && is_array( $all_prod_ids ) ) {
+
+			foreach ( $all_prod_ids as $id ) {
+
+				$product_titles[] = get_the_title( $id );
+			}
+		}
+
+		return $product_titles;
+	}
+
+	/**
+	 * Returns an array of all category title available in woocommerce store.
+	 *
+	 * @return array
+	 * @since 1.0.0
+	 */
+	public function all_cat_title() {
+
+		$cate_titles = array();
+
+		// Getting all Category ids from woocommerce.
+		$all_cat_ids = get_terms(
+			array(
+				'taxonomy' => 'product_cat',
+				'fields'   => 'ids',
+			)
+		);
+
+		if ( ! empty( $all_cat_ids ) && is_array( $all_cat_ids ) ) {
+
+			foreach ( $all_cat_ids as $id ) {
+
+				$term = get_term_by( 'id', $id, 'product_cat' );
+
+				if ( $term ) {
+
+					$cate_titles[] = $term->name;
+				}
+			}
+		}
+
+		return $cate_titles;
+
+	}
+
+	/**
+	 * Create pending membership for customer.
+	 *
+	 * @param array $fields an array of member billing details.
+	 * @param int   $plan_id Is the membership plan ID.
+	 * @return array
+	 * @throws  Exception Error.
+	 *
+	 * @since 1.0.0
+	 */
+	public function create_membership_for_customer( $fields, $plan_id, $order_status ) {
+
+		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
+
+			// Getting plan data.
+			$plan_obj = get_post( $plan_id, ARRAY_A );
+
+			$post_meta = get_post_meta( $plan_id );
+
+			// Formatting array.
+			foreach ( $post_meta as $key => $value ) {
+
+				$post_meta[ $key ] = reset( $value );
+			}
+
+			$plan_meta = array_merge( $plan_obj, $post_meta );
+
+			// Checking if user exist or not by email.
+			$_user = get_user_by( 'email', $fields['membership_billing_email'] );
+
+			// If user exist, get the required details.
+			if ( $_user ) {
+
+				$user_name = $_user->display_name;
+				$user_id   = $_user->ID;
+
+			} else {
+
+				// Create user.
+				try {
+					$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
+				} catch ( \Throwable $th ) {
+					throw new Exception( $th->getMessage() );
+				}
+
+				if ( $_user ) {
+
+					$user_id   = $_user;
+					$user_ob   = get_user_by( 'id', $user_id );
+					$user_name = $user_ob->display_name;
+				}
+			}
+
+			if ( 'completed' == $order_status ) {
+				$order_st = 'complete';
+			} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
+				$order_st = 'hold';
+			} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'processing' == $order_status ) {
+				$order_st = 'pending';
+			} elseif ( 'cancelled' == $order_status ) {
+				$order_st = 'cancelled';
+			}
+
+			// Creating post for members, keeping its status to pending.
+			$member_id = wp_insert_post(
+				array(
+					'post_type'   => 'mwb_cpt_members',
+					'post_title'  => $user_name,
+					'post_status' => 'publish',
+					'post_author' => $user_id,
+					'meta_input'  => array(
+						'member_actions'  => 'email_invoice',
+						'member_status'   => $order_st,
+						'plan_obj'        => $plan_meta,
+						'billing_details' => $fields,
+					),
+				)
+			);
+
+			return array(
+				'status'    => true,
+				'member_id' => $member_id,
+				'user_id'   => $user_id,
+			);
+		}
+	}
+
+	/**
+	 * Email membership invoice to customers after successfull purchase.
+	 *
+	 * @param int $member_id Members's ID.
+	 */
+	public function email_membership_invoice( $member_id ) {
+
+		// Getting global options.
+		$mwb_membership_global_settings = get_option( 'mwb_membership_global_options', $this->default_global_options() );
+
+		// The main address pieces.
+		$store_address   = get_option( 'woocommerce_store_address' );
+		$store_address_2 = get_option( 'woocommerce_store_address_2' );
+		$store_city      = get_option( 'woocommerce_store_city' );
+		$store_postcode  = get_option( 'woocommerce_store_postcode' );
+
+		// The country/state.
+		$store_raw_country = get_option( 'woocommerce_default_country' );
+
+		// Split the country/state.
+		$split_country = explode( ':', $store_raw_country );
+
+		// Country and state separated.
+		$store_country = $split_country[0];
+		$store_state   = $split_country[1];
+
+		$store_details = $store_address . '<br/>' .
+						! empty( $store_address_2 ) ? $store_address_2 : '<br/>' .
+						$store_city . ', ' . $store_state . ' ' . $store_postcode . '<br/>' .
+						$store_country;
+
+		// From name.
+		$from_name = get_bloginfo( 'name' );
+
+		// From email.
+		$from_email = get_bloginfo( 'admin_email' );
+
+		if ( ! function_exists( 'wp_mail' ) ) {
+
+			return;
+		}
+
+		if ( ! empty( $member_id ) ) {
+
+			$plan_info = get_post_meta( $member_id, 'plan_obj', true );
+			$billing   = get_post_meta( $member_id, 'billing_details', true );
+			$status    = get_post_meta( $member_id, 'member_status', true );
+
+			$first_name = ! empty( $billing['membership_billing_first_name'] ) ? $billing['membership_billing_first_name'] : '';
+			$last_name  = ! empty( $billing['membership_billing_last_name'] ) ? $billing['membership_billing_last_name'] : '';
+			$company    = ! empty( $billing['membership_billing_company'] ) ? $billing['membership_billing_company'] : '';
+			$address_1  = ! empty( $billing['membership_billing_address_1'] ) ? $billing['membership_billing_address_1'] : '';
+			$address_2  = ! empty( $billing['membership_billing_address_2'] ) ? $billing['membership_billing_address_2'] : '';
+			$city       = ! empty( $billing['membership_billing_city'] ) ? $billing['membership_billing_city'] : '';
+			$postcode   = ! empty( $billing['membership_billing_postcode'] ) ? $billing['membership_billing_postcode'] : '';
+			$state      = ! empty( $billing['membership_billing_state'] ) ? $billing['membership_billing_state'] : '';
+			$country    = ! empty( $billing['membership_billing_country'] ) ? $billing['membership_billing_country'] : '';
+			$email      = ! empty( $billing['membership_billing_email'] ) ? $billing['membership_billing_email'] : '';
+			$phone      = ! empty( $billing['membership_billing_phone'] ) ? $billing['membership_billing_phone'] : '';
+
+			ob_start();
+			?>
+			<style>
+				table, tr, td {
+				padding: 15px;
+				}
+			</style>
+
+			<table style="background-color: #222222; color: #fff">
+				<tbody>
+					<tr>
+						<td><h1><?php esc_html_e( 'Membership Invoice #', 'membership-for-woocommerce' ); ?><strong><?php echo esc_html( $member_id ); ?></strong></h1></td>
+						<td align="right"><img src="<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '' ); ?>" height="50px"/><br/>
+							<?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/>
+							<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_address'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_address'] : $store_details ); ?><br/>
+							<br/>
+							<strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_phone'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_phone'] : '' ); ?></strong> | <strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_email'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_email'] : get_option( 'woocommerce_email_from_address' ) ); ?></strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table>
+				<tbody>
+					<tr>
+						<td><b><?php esc_html_e( 'Invoice to : ', 'membership-for-woocommerce' ); ?></b><br/>
+							<strong><?php echo esc_html( $first_name . $last_name ); ?></strong>
+							<br/>
+								<?php echo esc_html( $company ); ?><br/>
+								<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
+								<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
+								<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+							<br/>
+							<?php echo esc_html( $phone ); ?>
+							<br/>
+							<?php echo esc_html( $email ); ?>
+						</td>
+						<td align="right">
+							<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br/>
+							<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table>
+				<thead>
+					<tr style="font-weight:bold;">
+						<th><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
+						<th><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
+						<th><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
+						<td><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+						<td><?php esc_html_e( '1' ); ?></td>
+						<td><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+					</tr>
+
+					<tr align="right">
+						<td colspan="4" style="border-top: 1px solid #222"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<h2><?php esc_html_e( 'Thank you for shopping with us', 'membership-for-woocommerce' ); ?></h2><br/>
+							<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/></strong>
+							<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+
+			<?php
+
+			$content = ob_get_clean();
+
+			ob_start();
+			?>
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+				<meta charset="UTF-8">
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title><?php esc_html_e( 'Membership Invoice', 'membership-for-woocommerce' ); ?></title>
+				<style type="text/css">
+					table {
+						table-layout: auto;
+					}
+
+					a[href] {
+						color: #ffffff;
+						text-decoration: none;
+					}
+
+				</style>
+			</head>
+			<body>
+				<div style="width:600px; max-width: 100%;margin:0px auto;font-family:sans-serif; border: 1px solid #1f1f1f;">
+					<table border="0" cellpadding="0" cellspacing="0"  style="width:100%;padding:0;color:#fff;">
+						<tbody style="background-color:#1f1f1f;">
+							<tr style="vertical-align: top;">
+								<td class="hello" style="width: 50%; padding: 15px;">
+									<h1 style="display:block;font-size: 20px;margin: 0;">
+										<?php esc_html_e( 'Membership Invoice ', 'membership-for-woocommerce' ); ?><strong style="width:100%;padding:15px 0"><?php echo esc_html__( '#', 'membership-for-woocommerce' ) . esc_html( $member_id ); ?></strong>
+									</h1>
+								</td>
+								<td class="xyz" style="width: 50%; text-align: right; padding: 15px;">
+									<img src="<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '' ); ?>" height="50px" class="CToWUd">
+									<br>
+									<?php echo esc_html( get_bloginfo( 'name' ) ); ?><br>
+									<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_address'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_address'] : $store_details ); ?><br>
+									<strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_phone'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_phone'] : '' ); ?></strong>
+									|
+									<strong><?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_email'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_email'] : get_option( 'woocommerce_email_from_address' ) ); ?></strong>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table border = "0" cellpadding = "0" cellspacing = "0" style="width:600px; max-width: 100%; padding:0 15px;">
+						<tbody>
+							<tr style="vertical-align: top;">
+								<td style="width: 50%;line-height:150%;padding-top: 15px;">
+									<b><?php esc_html_e( 'Invoice to : ', 'membership-for-woocommerce' ); ?></b><br>
+									<strong><?php echo esc_html( $first_name . ' ' . $last_name ); ?></strong>
+									<br>
+									<?php echo esc_html( $company ); ?><br/>
+									<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
+									<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
+									<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+									<br>
+									<?php echo esc_html( $phone ); ?>
+									<br/>
+									<?php echo esc_html( $email ); ?>
+								</td>
+								<td style="width:50%; text-align:right;">
+									<strong style=""><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br>
+									<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<div style="overflow-x:auto;border-top: 15px solid transparent">
+						<table border = "0" cellpadding = "0" cellspacing = "0" style="width:600px; max-width: 100%; line-height:200%;margin:0px auto;padding: 0 15px;">
+							<thead>
+								<tr style="font-weight:bold">
+									<th style="text-align: left;"><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
+									<th style="text-align: left;"><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
+									<th style="text-align: center;"><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
+									<th style="text-align: right;"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+								</tr>
+							</thead>
+
+							<tbody>
+								<tr>
+									<td style="text-align: left;"><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
+									<td style="text-align: left;"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+									<td style="text-align: center;"><?php esc_html_e( '1' ); ?></td>
+									<td style="text-align: right;"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+								</tr>
+
+								<tr align="right">
+									<td colspan="4" style="border-top:1px solid #1a3365;padding:10px 0">
+										<strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<table border = "0" cellpadding = "0" cellspacing = "0" style="text-align:center;width:100%;color:#1f1f1f">
+						<tbody>
+							<tr>
+								<td colspan="4" style="line-height:150%; padding: 15px; text-align: left;">
+									<h2 style="margin: 0;"><?php esc_html_e( 'Thank you for shopping with us', 'membership-for-woocommerce' ); ?></h2><br/>
+									<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/></strong>
+									<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</body>
+			</html>
+			<?php
+			$email_content = ob_get_clean();
+
+			// Handling invoice creation and upload.
+			$activity_class = new Membership_Activity_Helper( 'mfw-invoices', 'uploads' );
+			$pdf_file       = $activity_class->create_pdf_n_upload( $content, $first_name );
+
+			if ( true == $pdf_file['status'] ) {
+
+				$pdf_location = $pdf_file['message'];
+			} else {
+
+				$activity_class = new Membership_Activity_Helper( 'Pdf-creation-logs', 'logger' );
+				$activity_class->create_log( 'Pdf creation failure', $pdf_file['message'] );
+			}
+
+			$attachment = '';
+
+			if ( ! empty( $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) && 'on' == $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) {
+				// Get the attachment file using file url.
+				$attachment = $pdf_location;
+			}
+
+			/**
+			 * Now send mail to customer including virtual invoice and a hard copy of it as attachment.
+			 */
+			$_user      = get_user_by( 'email', $email );
+			$user_email = $_user->user_email;
+
+			// If user exists store its email id in array.
+			if ( $user_email === $email ) {
+
+				$to = array( $email );
+			} else {
+				$to = array( $email, $user_email );
+			}
+
+			$subject = 'Thanks for purchasing ' . $plan_info['post_title'];
+
+			$mail = wp_mail(
+				$to,
+				! empty( $mwb_membership_global_settings['mwb_membership_email_subject'] ) ? $mwb_membership_global_settings['mwb_membership_email_subject'] : $subject,
+				! empty( $mwb_membership_global_settings['mwb_membership_email_content'] ) ? $mwb_membership_global_settings['mwb_membership_email_content'] . $email_content : $email_content,
+				array(
+					'Content-Type: text/html; charset=UTF-8',
+					'From: ' . $from_name . ' <' . $from_email . '>',
+				),
+				$attachment
+			);
+
+			if ( $mail ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+	}
+
+	/**
+	 * Returns Membership details tab headers.
+	 */
+	public function membership_tab_headers() {
+
+		$table_headers = array(
+			'members-id'      => esc_html__( 'Member ID', 'membership-for-woocommerce' ),
+			'members-date'    => esc_html__( 'Date', 'membership-for-woocommerce' ),
+			'members-status'  => esc_html__( 'Status', 'membership-for-woocommerce' ),
+			'members-total'   => esc_html__( 'Total', 'membership-for-woocommerce' ),
+			'members-actions' => esc_html__( 'Actions', 'membership-for-woocommerce' ),
+		);
+
+		return apply_filters( 'mwb_memberhsip_tab_headers', $table_headers );
+	}
+
+	/**
+	 * Returns members details for CSV.
+	 *
+	 * @param object $post Post object.
+	 * @param string $fields Member fields needed.
+	 *
+	 * @since 1.0.0
+	 */
+	public function get_member_details( $post = '', $fields = '' ) {
+
+		$post_id = '';
+		$result  = false;
+
+		if ( ! empty( $post ) ) {
+			$post_id = $post->ID;
+		}
+
+		$billing_info = get_post_meta( $post_id, 'billing_details', true );
+		$plan_info    = get_post_meta( $post_id, 'plan_obj', true );
+		$plan_status  = get_post_meta( $post_id, 'member_status', true );
+
+		if ( ! empty( $fields ) && ! empty( $billing_info ) ) {
+
+			switch ( $fields ) {
+
+				case 'name':
+					$result = $billing_info['membership_billing_first_name'] . $billing_info['membership_billing_last_name'];
+					break;
+
+				case 'email':
+					$result = $billing_info['membership_billing_email'];
+					break;
+
+				case 'phone':
+					$result = $billing_info['membership_billing_phone'];
+					break;
+
+				case 'payment_method':
+					$result = ! empty( $billing_info['payment_method'] ) ? $this->get_payment_method_title( $billing_info['payment_method'] ) : $billing_info['payment_method'];
+					break;
+			}
+		}
+
+		if ( ! empty( $fields ) && ! empty( $plan_info ) ) {
+
+			switch ( $fields ) {
+
+				case 'plan_id':
+					$result = $plan_info['ID'];
+					break;
+
+				case 'plan_name':
+					$result = $plan_info['post_title'];
+					break;
+			}
+		}
+
+		if ( ! empty( $fields ) && 'plan_status' == $fields && ! empty( $plan_status ) ) {
+			$result = $plan_status;
+		}
+
+		return $result;
+
+	}
+}

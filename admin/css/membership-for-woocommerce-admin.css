@@ -1,0 +1,986 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ * {
+    box-sizing: border-box;
+}
+
+
+/*Appearance Section start*/
+
+.mwb_membership_card_div_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.mwb-membership-appearance-section-hidden {
+    display: none;
+}
+
+
+/*Appearance Section End*/
+
+
+/*Custom designing for admin pannel start*/
+
+
+/*Removing Focus*/
+
+select#mwb_membership_plan_offer_price_type_id:focus,
+#mwb_membership_plan_access_type:focus,
+#mwb_membership_plan_duration_type:focus,
+#poststuff .toggle-indicator:focus,
+#poststuff .handlediv:focus,
+td.membership_view.column-membership_view a:focus,
+.import_csv_field_wrapper>input:focus,
+#mwb_membership_manage_content:focus,
+ul.select2-selection__rendered:focus,
+button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:focus,
+.mwb_membership_free_shipping_link a.button:focus,
+a#post-preview:focus,
+#posts-filter input[type="submit"]:focus,
+.wrap a.page-title-action:focus,
+#wpbody-content input[type="submit"]:focus,
+#wpbody-content input[type="text"]:focus,
+#wpbody-content input[type="email"]:focus,
+#wpbody-content input[type="tel"]:focus,
+#wpbody-content input[type="radio"]:focus,
+#wpbody-content input[type="button"]:focus,
+#wpbody-content textarea:focus,
+#wpbody-content select:focus,
+#wpbody-content input[type="number"]:focus,
+.mwb_membership_gateway_div .button:focus,
+.mwb_membership_manage_gateways a:focus,
+.mfw_overview_help a:focus,
+.mfw_overview-contact a:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+
+/*Input fields styling*/
+
+.meta-box-sortables input[type="text"]:focus,
+.meta-box-sortables input[type="checkbox"]:focus,
+.mwb_membership_plans_creation_setting input[type="checkbox"]:focus,
+.mwb_membership_plans_creation_setting input[type="text"]:focus {
+    box-shadow: none;
+}
+
+.postbox-container input[type="checkbox"],
+.mwb_membership_plans_creation_setting input[type="checkbox"] {
+    background-color: #1a3365;
+    border-radius: 35px;
+    border: none;
+    height: 20px;
+    position: relative;
+    width: 33px;
+}
+
+.postbox-container input[type="checkbox"]:before,
+.mwb_membership_plans_creation_setting input[type="checkbox"]:before {
+    background-color: #fff;
+    border-radius: 50%;
+    box-shadow: 1px 0px 3px #1a3365;
+    content: "";
+    cursor: pointer;
+    height: 18px;
+    position: absolute;
+    top: 1px;
+    transition: linear 0.2s;
+    width: 18px;
+    z-index: 1;
+}
+
+.postbox-container input[type="checkbox"]:before,
+.mwb_membership_plans_creation_setting input[type="checkbox"]:before {
+    left: 0px;
+}
+
+.postbox-container input[type="checkbox"]:checked:before,
+.mwb_membership_plans_creation_setting input[type="checkbox"]:checked:before {
+    margin: 0;
+    left: 15px;
+}
+
+.postbox-container input[type="checkbox"]:checked,
+.mwb_membership_plans_creation_setting input[type="checkbox"]:checked {
+    background-color: #f37e21;
+}
+
+
+/*Tool tip*/
+
+.postbox-container .postbox .woocommerce-help-tip {
+    margin: 0 20px 0 9px;
+}
+
+
+/*Headings in Admin pannel*/
+
+.mwb_membership_plan_products h1,
+.mwb_membership_shortcodes h2 {
+    display: flex;
+    font-family: sans-serif;
+    font-size: 25px !important;
+    justify-content: center;
+    letter-spacing: 2px;
+}
+
+.postbox-container .mwb_membership_plan_products h1 {
+    color: #1a3365;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+#poststuff h2.mwb_membership_offer_title {
+    border-bottom: 2px solid #1a3365;
+    border-left: 6px solid #f37e21;
+    color: #1a3365;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin: 15px 0px;
+    max-width: 320px;
+    text-transform: uppercase;
+}
+
+#members_meta_box .postbox-header h2,
+.mwb_membership_global_settings h2,
+.mwb_membership_supported_gateways h2,
+.mwb_membership_shortcodes h2,
+.mwb_membership_Overview h2 {
+    border: none;
+    color: #1a3365;
+    font-family: sans-serif;
+    font-size: 18px !important;
+    justify-content: left;
+    letter-spacing: 0.5px;
+}
+
+#wpbody-content .mwb_membership_Overview {
+    margin: -10px 0 0 -10px;
+    width: calc(100% - 10px);
+}
+
+#members_meta_box .postbox-header,
+.mwb_membership_global_settings,
+.mwb_membership_supported_gateways,
+.mwb_membership_shortcodes,
+.mwb_membership_Overview {
+    background-color: #ffffff;
+    border-left: 5px solid #1a3365;
+    box-shadow: 0px 2px 5px #c7c7c7;
+    margin: 0px 0px 10px;
+    padding: 10px 5px;
+    width: 100%;
+}
+
+#members_meta_box .postbox-header {
+    width: unset;
+}
+
+
+/*Indicators of Admin pannel*/
+
+.handle-actions.hide-if-no-js {
+    align-items: center;
+    display: flex;
+}
+
+
+/*Table row In admin pannel*/
+
+#mwb_membership_recurring_plan,
+#mfw_membership_access_type {
+    position: relative;
+}
+
+.mwb_membership_shortcodes_table tbody {
+    display: flex;
+    justify-content: space-around;
+}
+
+.mwb_membership_shortcodes_table tr {
+    background: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 10px #c7c7c7;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 45%;
+    margin: 10px;
+    padding: 10px;
+}
+
+.mwb_membership_shortcodes_table th {
+    border-bottom: 2px solid #1a3365;
+    color: #1a3365;
+    font-family: sans-serif;
+    padding: 10px;
+    width: 95%;
+}
+
+.mwb_membership_plans_creation_setting label {
+    color: #1a3566;
+    font-family: sans-serif;
+}
+
+.postbox .inside {
+    padding: 0;
+}
+
+.mwb_membership_table.mwb_membership_shortcodes tr,
+.mwb_membership_offers table tr,
+.mwb_membership_plans_creation_setting tr {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.mwb_membership_plans_creation_setting tr th,
+.mwb_membership_offers table tr th,
+.mwb_membership_table.mwb_membership_shortcodes tr th {
+    flex: 0 0 100%;
+    max-width: 25%;
+    padding: 15px;
+    text-align: left;
+}
+
+.mwb_membership_plans_creation_setting tr td,
+.mwb_membership_offers table tr td,
+.mwb_membership_table.mwb_membership_shortcodes tr {
+    max-width: 75%;
+    flex: 0 0 100%;
+}
+
+.postbox .inside table tr th label {
+    color: #1a3365;
+    font-family: sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+
+.new_created_offers table {
+    display: block;
+    width: 100%;
+}
+
+.new_created_offers table tbody {
+    display: block;
+}
+
+.mwb_membership_offers table tr #mfw_show_notice.forminp {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.mwb_membership_offers table tr #mfw_show_notice.forminp .mwb_membership_show_notice {
+    margin-right: 20px;
+}
+
+.mwb_membership_offers table tr #mfw_show_notice.forminp p {
+    margin: 0;
+}
+
+
+/*Select box styling*/
+
+.selection .select2-selection.select2-selection--multiple {
+    background-color: inherit;
+    margin: 0px auto;
+    padding: 10px 0px;
+}
+
+select#mwb_membership_plan_offer_price_type_id,
+#mwb_membership_plan_duration_type,
+#mwb_membership_manage_content,
+.mwb_membership_table.mwb_membership_shortcodes .woocommerce-help-tip {
+    border: none;
+    margin-right: 10px;
+}
+
+#mwb_membership_plan_time_duration_type {
+    margin: 0px 0px 0px 20px;
+}
+
+div#mwb_membership_plan_time_duratin_display {
+    margin: 10px 0px;
+}
+
+select #mwb_membership_plan_duration_type {
+    background: rgb(0 113 159 / 0.2);
+}
+
+span.select2.select2-container.select2-container--default {
+    min-width: 250px;
+}
+
+
+/*radio button styling*/
+
+.postbox-container input[type="radio"] {
+    background-color: inherit;
+    border: 1px solid #1a3365;
+    height: 20px;
+    margin-left: 50px;
+    vertical-align: -webkit-baseline-middle;
+    width: 20px;
+}
+
+.postbox-container input[type="radio"]:before {
+    background-color: #1a3365;
+    height: 10px;
+    margin: 4.1px;
+    width: 10px;
+}
+
+
+/*button styling*/
+
+.mwb_membership_free_shipping_link a.button {
+    background-color: #1a3365;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    transition: linear background-color 0.2s;
+}
+
+.mwb_membership_free_shipping_link a.button:hover {
+    background-color: inherit;
+    border: 1px solid #1a3365;
+    color: #1a3365;
+}
+
+
+/*All plan page status button style*/
+
+.membership_status.column-membership_status {
+    border-radius: 2px;
+    display: block;
+    margin: 15px;
+    padding: 7px;
+    text-align: center;
+    width: 110px;
+}
+
+td.membership_view.column-membership_view,
+.widefat td.membership_user_view {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.widefat thead tr th,
+.widefat tfoot tr th {
+    color: #0071a1;
+}
+
+#import_all_membership {
+    margin-left: 10px;
+}
+
+
+/*Modal of product page style*/
+
+div#TB_title {
+    height: auto;
+}
+
+div #TB_ajaxWindowTitle {
+    box-shadow: 0px 2px 5px #c7c7c7;
+    color: #1a3365;
+    font-family: sans-serif;
+    font-size: 21px;
+    letter-spacing: 2px;
+    padding: 13px 29px 13px 10px;
+    text-align: center;
+}
+
+#TB_ajaxContent h2 {
+    background-color: #1a3365;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px #c7c7c7;
+    color: #ffffff;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    margin: 10px auto 0px;
+    max-width: 350px;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.mwb_membership_preview_table table tr:nth-child(even) {
+    background-color: #f1f6ff;
+}
+
+.mwb_membership_preview_table table tr th {
+    font-family: sans-serif;
+    padding-left: 15px;
+}
+
+
+/*Admin pannel button styling*/
+
+input#export_all_membership,
+input#import_all_membership,
+.mwb_membership_plans_creation_setting input[type="button"],
+.mwb_membership_gateway_div .button,
+.mwb_membership_gateway_div a {
+    background-color: inherit;
+    border: 1px solid #0071a1;
+    color: #0071a1;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+input#export_all_membership:hover,
+input#import_all_membership:hover,
+.mwb_membership_plans_creation_setting input[type="button"]:hover,
+.mwb_membership_gateway_div .button:hover,
+.mwb_membership_gateway_div a:hover {
+    background-color: #0071a1;
+    border-color: transparent;
+    color: #ffffff;
+}
+
+
+/* Any element Positioning  */
+
+.alignleft.actions,
+#posts-filter .alignleft.actions {
+    display: flex;
+}
+
+input#import_all_membership {
+    order: 4;
+}
+
+input#export_all_membership,
+input#export_all_members {
+    order: 3;
+}
+
+input#post-query-submit,
+input#post-query-submit {
+    order: 2;
+}
+
+select#filter-by-date,
+select#filter-by-date {
+    order: 1;
+}
+
+
+/*Upload button modal box*/
+
+.ui-dialog-titlebar.ui-corner-all.ui-widget-header.ui-helper-clearfix.ui-draggable-handle {
+    background: transparent;
+    border: none;
+}
+
+.ui-dialog.ui-corner-all.ui-widget.ui-widget-content.ui-front.ui-draggable.ui-resizable {
+    background-color: rgb(0 0 0/50%);
+}
+
+button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close {
+    color: #fff;
+}
+
+.import_csv_field_wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+input#upload_csv_file:hover {
+    background: #ffffff;
+    color: #1a3365;
+}
+
+.import_csv_field_wrapper>input {
+    background-color: inherit;
+    border: 2px solid #fff;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.import_csv_field_wrapper>input:first-child {
+    background-color: inherit;
+    border: none;
+    color: #ffffff;
+    padding: 5px;
+}
+
+
+/*Global Setting page styling*/
+
+.mwb_membership_plans_creation_setting th,
+.mwb_membership_plans_creation_setting td {
+    padding-left: 15px;
+}
+
+.mwb_membership_plans_creation_setting tr {
+    align-items: baseline;
+    display: flex;
+}
+
+.mwb_membership_plans_creation_setting th {
+    max-width: 200px;
+    width: 100%;
+}
+
+.mwb_membership_plans_creation_setting td {
+    align-items: center;
+    display: inline-flex;
+    flex-grow: 1;
+}
+
+.mwb_membership_plans_creation_setting .woocommerce-help-tip {
+    margin-right: 10px;
+}
+
+body.post-type-mwb_cpt_membership input[type="text"],
+body.post-type-mwb_cpt_membership input[type="email"],
+body.post-type-mwb_cpt_membership input[type="tel"],
+body.post-type-mwb_cpt_membership input[type="number"],
+body.post-type-mwb_cpt_membership select,
+.mwb_membership_plans_creation_setting textarea {
+    border-radius: 5px;
+    border: 1px solid #1a3365;
+    color: #1a3365;
+    font-family: sans-serif;
+    font-size: 16px;
+    max-width: 250px;
+    padding: 13px 10px !important;
+    resize: none;
+    width: 100%;
+}
+
+body.post-type-mwb_cpt_membership select {
+    overflow: auto;
+    border: 1px solid #1a3365 !important;
+    max-height: 60px;
+}
+
+body.post-type-mwb_cpt_membership .select2-container .select2-selection--multiple {
+    border: 1px solid #1a3365;
+    padding: 0;
+}
+
+body.post-type-mwb_cpt_membership .select2-container .select2-selection--multiple .select2-selection__rendered {
+    overflow: visible !important;
+    padding: 0;
+}
+
+.wp-editor-container>textarea.wp-editor-area {
+    width: 100%;
+    max-height: 180px;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    max-width: unset;
+}
+
+#mwb_membership_email_content_ifr {
+    height: fit-content !important;
+}
+
+
+/*Gateway page*/
+
+.mwb_membership_manage_gateways a,
+.mwb_membership_gateways .mwb_membership_plan_gateways {
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    padding: 10px;
+    text-decoration: none;
+    word-spacing: 1px;
+}
+
+.mwb_membership_manage_gateways a {
+    color: #1a3365;
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+.button_hide {
+    display: none !important;
+}
+
+.mwb_membership_plan_gateways tbody {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.mwb_membership_plan_gateways tr {
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 2px 15px #c7c7c7;
+    display: flex;
+    flex-direction: column;
+    margin: 10px 10px 0px 0px;
+    padding: 10px 20px;
+}
+
+.mwb_membership_plan_gateways th {
+    border-bottom: 1px solid #1a3365;
+    margin: 0px 0px 30px 0px;
+    padding: 0px 0px 10px;
+}
+
+.mwb_membership_plan_gateways th label {
+    color: #1a3365;
+}
+
+.mwb_membership_plan_gateways td {
+    margin: 0px;
+    padding: 5px;
+}
+
+.mwb_membership_manage_gateways a {
+    border-radius: 5px;
+    border: 2px solid #1a3365;
+    color: #1a3365;
+    display: block;
+    margin-top: 5px;
+    max-width: fit-content;
+    padding: 5px;
+}
+
+.mwb_membership_manage_gateways a:hover {
+    border: 2px solid #f37e21;
+    color: #f37e21;
+}
+
+td#mfw_free_shipping {
+    align-items: center;
+    display: inline-flex;
+    min-height: 60px;
+}
+
+.mwb_membership_free_shipping_link {
+    margin-left: 30px;
+}
+
+span.title_warning {
+    color: red;
+    font-size: 13px;
+    margin-left: 4px;
+}
+
+
+/* woocommerce footer */
+
+#wpfooter {
+    position: unset;
+}
+
+
+/* overview page style */
+
+.mfw_overview_wrapper {
+    font-family: sans-serif;
+    width: 99%;
+}
+
+.mfw_overview_wrapper h2 {
+    color: #1a3365;
+    font-size: 30px;
+    letter-spacing: 0.5px;
+    line-height: 150%;
+    margin: 10px 0px;
+    text-align: left;
+}
+
+.mfw_overview_wrapper p {
+    color: #565857;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.mfw_overview_wrapper h3 {
+    color: #f37e21;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+}
+
+.mfw_upgrade_plan {
+    background-image: linear-gradient(45deg, #2196f3, #772bff);
+    border-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-size: 20px;
+    margin: 30px auto;
+    max-width: 200px;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow 0.5s ease-in-out;
+}
+
+.mfw_upgrade_plan:hover,
+.mfw_upgrade_plan:focus {
+    box-shadow: 0px 5px 10px #555454;
+    color: #ffffff;
+}
+
+.mfw_overview_banner {
+    background-color: #ffffff;
+    box-shadow: 0px 3px 3px #c7c7c7;
+    margin: 10px 0px;
+    padding: 10px;
+}
+
+.mfw_overview_banner>img {
+    width: 100%;
+}
+
+.mfw_overview_content-entry_text {
+    background-color: #ffffff;
+    box-shadow: 0px 3px 3px #c7c7c7;
+    padding: 15px;
+    text-align: left;
+}
+
+.mfw_overview_content-entry_text>p {
+    margin: 0;
+}
+
+.mfw_overview_content-entry_text ul {
+    line-height: 150%;
+    max-width: 600px;
+    text-align: left;
+}
+
+.mfw_overview_content-entry_text ul {
+    line-height: 150%;
+    margin: 0px;
+    max-width: 600px;
+    text-align: left;
+}
+
+.mfw_overview_content-entry_text ul li {
+    align-items: center;
+    display: flex;
+}
+
+.mfw_overview_content-entry_text ul li span {
+    color: #f37e21;
+    font-size: 45px;
+    font-weight: 400;
+    margin: 0px 10px;
+}
+
+.mfw_overview_content-entry_text ul li p {
+    margin: 0px;
+}
+
+.mfw_overview_content>ul>li {
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: 0px 3px 5px #dcdcdc;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    padding: 15px;
+}
+
+.mfw_overview_content>ul>li.mfw_overview_heading {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.mfw_overview_content>ul>li>img {
+    width: 25%;
+    text-align: center;
+}
+
+.mfw_overview_content>ul>li>div {
+    padding: 15px;
+}
+
+.mfw_overview_content>ul>li>div>h3 {
+    max-width: 425px;
+}
+
+.mfw_overview-contact {
+    text-align: right;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mfw_overview-contact a img {
+    width: 50px;
+    margin: 0 5px;
+}
+
+.mfw_overview-contact a img:hover {
+    opacity: 0.8;
+}
+
+.mfw_overview-intro {
+    display: flex;
+}
+
+#contextual-help-link {
+    display: none;
+}
+
+
+/*contact button in overview page*/
+
+.mfw_overview-contact a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.mfw_overview-dial-text,
+.mfw_overview-doc-text,
+.mfw_overview-skype-text {
+    font-size: 16px;
+    padding: 10px;
+    margin-right: -11px;
+    border-radius: 35px 0 0 35px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #1a3365;
+    border: 3px solid #1a3365;
+    border-right-color: transparent;
+    opacity: 0;
+    width: 0;
+    text-align: center;
+    transition: 0.4s all ease-in-out;
+    white-space: nowrap;
+}
+
+.mfw_overview-skype-text {
+    color: #00aff0;
+    border-color: #00aff0;
+    border-right-color: transparent;
+}
+
+img.mwb_mfw_plugin_extra_custom_tab {
+    width: 20px;
+    padding-right: 5px;
+}
+
+
+/* update version  */
+
+.membership-offers table tr {
+    padding: 15px 0;
+}
+
+.mwb-membership__plan--pro-disabled {
+    background-color: #f2f2f2;
+    pointer-events: none;
+    position: relative;
+    overflow: hidden;
+}
+
+.mwb-membership__plan--pro-disabled::before {
+    color: #ffffff;
+    content: "PRO";
+    font-family: sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    left: 2px;
+    letter-spacing: 2px;
+    position: absolute;
+    top: 5px;
+    transform: rotate( -40deg);
+    z-index: 1;
+}
+
+.mwb-membership__plan--pro-disabled::after {
+    background: #772bff;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    content: "";
+    height: 30px;
+    left: -35px;
+    padding: 2px 5px;
+    position: absolute;
+    top: -4px;
+    transform: rotate( -40deg);
+    width: 80px;
+}
+
+/*Additional CSS to improve Layout*/
+
+.members_billing_preview_wrapper h2 {
+    font-size: 18px;
+}
+
+#TB_window {
+    max-width: 600px;
+    width: 90% !important;
+    margin: 0 !important;
+    top: 50px !important;
+    left: 50% !important;
+    transform: translate(-50%, 0);
+}
+
+#TB_ajaxContent {
+    width: 100% !important;
+}
+
+div#TB_ajaxWindowTitle {
+    width: 100%;
+}
+
+.members_preview_content .edit_members_action {
+    top:unset;
+    bottom: 10px;
+    right: 10px;
+}
+
+@media screen and (max-width:768px) {
+    .members_billing_preview_wrapper {
+        flex-wrap: wrap;
+    }
+
+    .members_billing_preview_wrapper .members_billing_preview,
+    .members_billing_preview_wrapper .members_plan_preview {
+        flex: 0 0 100%;
+        max-width: 300px;
+    }
+
+    .mwb_membership_preview {
+        text-align: right;
+    }
+}
+/*Media Query for small screen devices*/
+
+@media screen and (max-width: 992px) {
+    .mwb_membership_plans_creation_setting tr {
+        display: block;
+        padding: 10px 0px;
+    }
+    .mwb_membership_plans_creation_setting td {
+        padding: 10px;
+    }
+    .mwb_membership_shortcodes_table tbody {
+        flex-wrap: wrap;
+    }
+    .mwb_membership_shortcodes_table tr {
+        flex: 0 0 80%;
+    }
+    .mfw_overview_content>ul>li {
+        flex-wrap: wrap;
+    }
+    .mfw_overview_content>ul>li:nth-child(even) {
+        flex-direction: column-reverse;
+    }
+    .mfw_overview_content>ul>li>img {
+        width: 50%;
+    }
+}
