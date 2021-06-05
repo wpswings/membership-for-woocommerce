@@ -104,23 +104,17 @@
 
         }
     });
+    
+    $("#mwb_membership_plan_immediate_type").on("click", function() {
+        $("#mwb_membership_plan_time_duratin_display").hide('500');
+        $("#mwb_membership_plan_time_duration").val("");
+        $("#mwb_membership_plan_time_duration_type").prop("selectedIndex", 0);
+    }); 
+    $("#mwb_membership_plan_time_type").on("click", function() {
+        $("#mwb_membership_plan_time_duratin_display").show('500');
 
-    // Display specify time form fields as per user selection.
-    $("#new_created_offers table tr:last td :radio").on("change", function() {
+    }); 
 
-        if (this.id == "mwb_membership_plan_time_type") {
-
-            $("#mwb_membership_plan_time_duratin_display").show('500');
-
-        } else {
-
-            $("#mwb_membership_plan_time_duratin_display").hide('500');
-            $("#mwb_membership_plan_time_duration").val("");
-            $("#mwb_membership_plan_time_duration_type").prop("selectedIndex", 0);
-
-        }
-
-    });
 
     // Display free shipping link as per user selection.
     $("input[name='mwb_memebership_plan_free_shipping']").on("change", function() {

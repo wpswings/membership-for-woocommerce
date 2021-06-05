@@ -1179,7 +1179,9 @@ class Membership_For_Woocommerce_Admin {
 			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_creation_email'];
-			$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, '22/34/4545' );
+			if ( ! empty( $customer_email ) ) {
+				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+			}
 		}
 
 		// If manually cancelling membership then remove its expiry date.
@@ -1193,7 +1195,10 @@ class Membership_For_Woocommerce_Admin {
 		
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
-			$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+			if ( ! empty( $customer_email ) ) {
+
+				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+			}
 		}
 
 		foreach ( $actions as $action => $value ) {

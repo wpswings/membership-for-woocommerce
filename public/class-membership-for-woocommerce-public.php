@@ -1325,7 +1325,10 @@ class Membership_For_Woocommerce_Public {
 			$user = get_userdata($user_id);
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_creation_email'];
-			$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date);
+				if ( ! empty( $customer_email ) ) {
+
+					$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date);
+				}
 			}
 			
 		}
@@ -1548,7 +1551,11 @@ class Membership_For_Woocommerce_Public {
 				
 					$user_name = $user->data->display_name;
 					$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
-					$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date );
+					if ( ! empty( $customer_email ) ) {
+
+						$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date );
+
+					}
 				}
 
 				if ( $expiry_date < $current_date ) {
@@ -1557,7 +1564,10 @@ class Membership_For_Woocommerce_Public {
 					update_post_meta( $member_id, 'member_status', 'expired' );
 
 					$customer_email = WC()->mailer()->emails['membership_expired_email'];
-					$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date );
+					if ( ! empty( $customer_email ) ) {
+
+						$email_status = $customer_email->trigger( $user_id , $plan_obj, $user_name, $expiry_date );
+					}
 				}
 			}
 		}
