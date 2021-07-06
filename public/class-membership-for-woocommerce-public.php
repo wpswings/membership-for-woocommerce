@@ -617,7 +617,11 @@ if ($plan_existing  == false) {
 
 
 		foreach ( $data as $plan ) { 
-		
+			$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
+
+			if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
+				$page_link = get_page_link( $mwb_membership_default_plans_page_id );
+			}
 			if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
 
@@ -628,6 +632,9 @@ if ($plan_existing  == false) {
 						
 
 
+
+
+				
 						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
 
@@ -653,6 +660,32 @@ if ($plan_existing  == false) {
 								);
 
 
+							} 
+							$page_link_found = false;
+							if ( false == $page_link_found && ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) {
+
+									if ( has_term( $target_cat_ids, 'product_cat' ) || has_term( $target_tag_ids, 'product_tag' )  ) {
+		
+										if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
+		
+											$target_ids = array();
+										}
+		
+										if ( ! in_array( $product->get_id(), $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+		
+											$page_link = add_query_arg(
+												array(
+													'plan_id' => $plan['ID'],
+													'prod_id' => $product->get_id(),
+												),
+												$page_link
+											);
+										}
+									}
+								}
+
+
+
 								// Show options to buy plans.
 								echo '<div style="clear: both">
 								<div style="margin-top: 10px;">
@@ -661,7 +694,7 @@ if ($plan_existing  == false) {
 							</div>';
 							}
 
-						}
+						
 					
 
 
@@ -1579,13 +1612,14 @@ if ($plan_existing  == false) {
 
 				$offer_type  = $membership_plan['mwb_membership_plan_offer_price_type'];
 				$offer_price = ! empty( $membership_plan['mwb_memebership_plan_discount_price'] ) ? sanitize_text_field( $membership_plan['mwb_memebership_plan_discount_price'] ) : '';
-				
+
 				if ( 'complete' == $membership_status ) {
 
 					// If % discount is given.
 
 					if ( empty ( $applied_offer_price ) ) {
 						$applied_offer_price = $offer_price;
+						$applied_offer_type = $offer_type;
 					} elseif ( $applied_offer_price < $offer_price ) {
 						$applied_offer_price = $offer_price;
 						$applied_offer_type = $offer_type;
@@ -1595,10 +1629,11 @@ if ($plan_existing  == false) {
 				}
 			}
 
+
 			if ( '%' == $applied_offer_type && ! empty( $applied_offer_price ) ) {
 
 				// Discount % is given( no negatives, not more than 100, if 100% then price zero ).
-				$applied_offer_price = floatval( sanitize_text_field( $offer_price ) );
+				$applied_offer_price = floatval( sanitize_text_field( $applied_offer_price ) );
 
 				// Range should be 0-100 only.
 				$applied_offer_price = ( 100 < $applied_offer_price ) ? 100 : $applied_offer_price;
@@ -1609,7 +1644,7 @@ if ($plan_existing  == false) {
 			}
 
 			// If fixed discount is given.
-			if ( 'fixed' == $offer_type && ! empty( $applied_offer_price ) ) {
+			if ( 'fixed' == $applied_offer_type && ! empty( $applied_offer_price ) ) {
 
 				// When fixed price is given.
 				$applied_offer_price = ( 0 > $applied_offer_price ) ? 0 : $applied_offer_price;
