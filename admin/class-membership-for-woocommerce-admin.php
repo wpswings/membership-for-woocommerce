@@ -891,7 +891,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 
 			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
-			if ( true === $prd_check && true === $cat_check ) {
+			if ( true === $prd_check || true === $cat_check ) {
 
 				foreach ( $formatted_csv_data as $key => $value ) {
 					$plan_id = wp_insert_post(
@@ -1181,6 +1181,7 @@ class Membership_For_Woocommerce_Admin {
 			$customer_email = WC()->mailer()->emails['membership_creation_email'];
 			if ( ! empty( $customer_email ) ) {
 				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+				update_option('email_status',$email_status);
 			}
 		}
 
@@ -1198,6 +1199,7 @@ class Membership_For_Woocommerce_Admin {
 			if ( ! empty( $customer_email ) ) {
 
 				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+			update_option('$email_status',$email_status);
 			}
 		}
 
@@ -1343,6 +1345,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
 
+		$plugin_public = new Membership_For_Woocommerce_Public( '', '' );
+		$plugin_public->mwb_membership_cron_expiry_check();
 		switch ( $column ) {
 
 			case 'membership_id':
