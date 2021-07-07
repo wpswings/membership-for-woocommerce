@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="mfw_overview-contact">
 		<a href="<?php echo esc_url( 'https://makewebbetter.com/contact-us/' ); ?>" target="__blank"><span class="mfw_overview-dial-text"><?php esc_html_e( 'Contact Us', 'membership-for-woocommerce' ); ?></span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/dial.svg' ); ?>" alt="banner-image" class="mfw_overview-dial"></a>
 		<a href="<?php echo esc_url( 'https://docs.makewebbetter.com/membership-for-woocommerce/' ); ?>" target="__blank"><span class="mfw_overview-doc-text"><?php esc_html_e( 'Document', 'membership-for-woocommerce' ); ?></span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/doc.svg' ); ?>" alt="banner-image" class="mfw_overview-doc"></a>
-		<a href="<?php echo esc_url( 'https://join.skype.com/invite/IKVeNkLHebpC' ); ?>" target="__blank"><span class="mfw_overview-skype-text"><?php esc_html_e( 'Connect', 'membership-for-woocommerce' ); ?></span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/image/Support.svg' ); ?>" alt="icon" class="mfw_overview-skype"></a>
+		<a href="<?php echo esc_url( 'https://makewebbetter.com/contact-us/' ); ?>" target="__blank"><span class="mfw_overview-skype-text"><?php esc_html_e( 'Connect', 'membership-for-woocommerce' ); ?></span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/image/Support.png' ); ?>" alt="icon" class="mfw_overview-skype"></a>
 	</div>
 	<div class="mfw_overview_banner">
 		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">

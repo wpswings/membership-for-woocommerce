@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => '1.1.0.x-dev',
+    'version' => '1.1.0.9999999-dev',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '15323a004ea67cac1142985513f4e0e2dade9808',
     'name' => 'makewebbetter/membership-for-woocommerce',
   ),
   'versions' => 
@@ -31,12 +31,12 @@
     ),
     'makewebbetter/membership-for-woocommerce' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => '1.1.0.x-dev',
+      'version' => '1.1.0.9999999-dev',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '15323a004ea67cac1142985513f4e0e2dade9808',
     ),
     'phpcompatibility/php-compatibility' => 
     array (

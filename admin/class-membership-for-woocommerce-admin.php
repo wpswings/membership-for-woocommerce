@@ -351,7 +351,6 @@ class Membership_For_Woocommerce_Admin {
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), esc_html__( 'Shortcodes', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-shortcodes', array( $this, 'mwb_membership_for_woo_shortcodes' ) );
 
 		// Add submenu fro supported gateways.
-		// add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Supported Gateways', 'membership-for-woocommerce' ), esc_html__( 'Supported Gateways', 'membership-for-woocommerce' ), 'manage_options', 'mwb_membership-for-woo-gateways', array( $this, 'mwb_membership_for_woo_gateways' ) );
 
 		// Add submenu for overview.
 		add_submenu_page( 'edit.php?post_type=mwb_cpt_membership', esc_html__( 'Overview', 'membership-for-woocommerce' ), esc_html__( 'Overview', 'membership-for-woocommerce' ), 'manage_options', 'mwb-membership-for-woo-overview', array( $this, 'mwb_membership_for_woo_overview' ) );
@@ -398,25 +397,6 @@ class Membership_For_Woocommerce_Admin {
 
 		wc_get_template(
 			'templates/membership-templates/mwb-membership-shortcodes.php',
-			array(
-				'instance' => $instance,
-			),
-			'',
-			MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN
-		);
-	}
-
-	/**
-	 * Callback function for supported gateways sub-menu page.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_for_woo_gateways() {
-
-		$instance = $this->global_class;
-
-		wc_get_template(
-			'templates/membership-templates/mwb-membership-supported-gateway.php',
 			array(
 				'instance' => $instance,
 			),
@@ -611,8 +591,8 @@ class Membership_For_Woocommerce_Admin {
 				}
 				update_post_meta( $post_id, $field, $post_data );
 
-				if ( isset( $_POST['mwb_membership_plan_info'] )) {
-					update_post_meta( $post_id, 'mwb_membership_plan_info', $_POST['mwb_membership_plan_info'] );
+				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
+					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
 				}
 			}
 		}
@@ -795,9 +775,9 @@ class Membership_For_Woocommerce_Admin {
 				);
 
 				// phpcs:disable
-				foreach ( $all_posts as $post ) { /* phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited */
+				foreach ( $all_posts as $single_post ) { /* phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited */
 
-					setup_postdata( $post );
+					setup_postdata( $single_post );
 					fputcsv(
 						$file,
 						array(
@@ -841,7 +821,10 @@ class Membership_For_Woocommerce_Admin {
 		// Handling file upload using activity helper class..
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
 		// phpcs:disable
-		$csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : ''; // phpcs:ignore
+		// $csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : ''; // phpcs:ignore
+
+		$csv_file    = ! empty( $_FILES['file'] ) ? map_deep( wp_unslash( $_FILES['file'] ), 'sanitize_text_field' ) : ''; // phpcs:ignore
+
 		// phpcs:enable
 		$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
 
@@ -1046,9 +1029,6 @@ class Membership_For_Woocommerce_Admin {
 		// Add billing details metabox.
 		add_meta_box( 'members_metabox_billing', esc_html__( 'Billing details', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_billing' ), 'mwb_cpt_members', 'normal', 'high' );
 
-		// Add schedule metabox.
-		// add_meta_box( 'members_metabox_schedule', esc_html__( 'Schedule', 'membership-for-woocommerce' ), array( $this, 'mwb_members_metabox_schedule' ), 'mwb_cpt_members', 'side', 'high' );
-
 		// Remove sumitdiv metabox for mwb_cpt_members.
 		remove_meta_box( 'submitdiv', 'mwb_cpt_members', 'side' );
 
@@ -1147,7 +1127,6 @@ class Membership_For_Woocommerce_Admin {
 
 			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
 
-
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
@@ -1157,7 +1136,7 @@ class Membership_For_Woocommerce_Admin {
 					$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 					$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
 
-					$current_date = gmdate( 'Y-m-d', strtotime( $current_date. ' + ' . $time_duration . ' ' . $time_duration_type ) );
+					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
 				}
 
@@ -1181,7 +1160,7 @@ class Membership_For_Woocommerce_Admin {
 			$customer_email = WC()->mailer()->emails['membership_creation_email'];
 			if ( ! empty( $customer_email ) ) {
 				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
-				update_option('email_status',$email_status);
+				update_option( 'email_status', $email_status );
 			}
 		}
 
@@ -1192,14 +1171,14 @@ class Membership_For_Woocommerce_Admin {
 			update_post_meta( $post_id, 'plan_obj', '' );
 
 			$user_id = get_current_user_id();
-			$user = get_userdata($user_id);
-		
+			$user = get_userdata( $user_id );
+
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
 			if ( ! empty( $customer_email ) ) {
 
 				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
-			update_option('$email_status',$email_status);
+				update_option( '$email_status', $email_status );
 			}
 		}
 
@@ -1225,8 +1204,8 @@ class Membership_For_Woocommerce_Admin {
 			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
 			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
 			'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
-			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( $_POST['billing_address_1'] ) : '', // phpcs:ignore
-			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( $_POST['billing_address_2'] ) : '', // phpcs:ignore
+			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
+			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
 			'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
 			'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
 			'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
@@ -1586,21 +1565,21 @@ class Membership_For_Woocommerce_Admin {
 					)
 				);
 				//phpcs:disable
-				foreach ( $all_posts as $post ) { // phpcs:ignore
-					setup_postdata( $post );
+				foreach ( $all_posts as $post_datas ) {
+					setup_postdata( $post_datas );
 					fputcsv(
 						$file,
 						array(
 							get_the_ID(),
-							! empty( $post->post_author ) ? get_the_author_meta( 'display_name', $post->post_author ) : '',
+							! empty( $post_datas->post_author ) ? get_the_author_meta( 'display_name', $post_datas->post_author ) : '',
 							get_the_author_meta( 'user_email' ),
-							$this->global_class->get_member_details( $post, 'name' ),
-							$this->global_class->get_member_details( $post, 'email' ),
-							$this->global_class->get_member_details( $post, 'phone' ),
-							$this->global_class->get_member_details( $post, 'payment_method' ),
-							$this->global_class->get_member_details( $post, 'plan_id' ),
-							$this->global_class->get_member_details( $post, 'plan_name' ),
-							$this->global_class->get_member_details( $post, 'plan_status' ),
+							$this->global_class->get_member_details( $post_datas, 'name' ),
+							$this->global_class->get_member_details( $post_datas, 'email' ),
+							$this->global_class->get_member_details( $post_datas, 'phone' ),
+							$this->global_class->get_member_details( $post_datas, 'payment_method' ),
+							$this->global_class->get_member_details( $post_datas, 'plan_id' ),
+							$this->global_class->get_member_details( $post_datas, 'plan_name' ),
+							$this->global_class->get_member_details( $post_datas, 'plan_status' ),
 							'',
 						)
 					);
@@ -1848,7 +1827,7 @@ class Membership_For_Woocommerce_Admin {
 				$result .= '<option value="' . $state_code . '">' . $name . '</option>';
 			}
 			//phpcs:disable
-			echo $result; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo esc_attr( $result ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			//phpcs:enable
 		}
 
@@ -1868,7 +1847,6 @@ class Membership_For_Woocommerce_Admin {
 
 			// Push your screen here.
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-global-settings' );
-			// array_push( $valid_screens, 'mwb_cpt_membership_page_mwb_membership-for-woo-gateways' );
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-shortcodes' );
 			array_push( $valid_screens, 'mwb_cpt_membership_page_mwb-membership-for-woo-overview' );
 			array_push( $valid_screens, 'mwb_cpt_membership_page_woocommerce-membership-reports' );

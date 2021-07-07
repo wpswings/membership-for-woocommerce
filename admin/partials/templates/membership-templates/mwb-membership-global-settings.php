@@ -38,7 +38,7 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 
 	$mwb_membership_global_options['mwb_membership_attach_invoice'] = ! empty( $_POST['mwb_membership_attach_invoice'] ) ? 'on' : 'off';
 	//phpcs:disable
-	$mwb_membership_global_options['mwb_membership_invoice_address'] = ! empty( $_POST['mwb_membership_invoice_address'] ) ? sanitize_text_field( $_POST['mwb_membership_invoice_address'] ) : ''; // phpcs:ignore
+	$mwb_membership_global_options['mwb_membership_invoice_address'] = ! empty( $_POST['mwb_membership_invoice_address'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_invoice_address'] ) ) : ''; // phpcs:ignore
 	//phpcs:enable
 
 	$mwb_membership_global_options['mwb_membership_invoice_phone'] = ! empty( $_POST['mwb_membership_invoice_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_invoice_phone'] ) ) : '';

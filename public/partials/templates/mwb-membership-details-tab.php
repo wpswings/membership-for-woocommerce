@@ -248,7 +248,7 @@ if ( empty( $current_url ) ) {
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
 
-									echo( esc_html(get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 								}
 							} else {
 								esc_html_e( 'No Posts Offered in this Plan', 'membership-for-woocommerce' );

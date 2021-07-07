@@ -32,7 +32,7 @@ $mfw_onboarding_form_deactivate = apply_filters( 'mwb_mfw_deactivation_form_fiel
 					<h3 class="mwb-mfw-on-boarding-heading mdc-dialog__title"></h3>
 					<p class="mwb-mfw-on-boarding-desc"><?php esc_html_e( 'May we have a little info about why you are deactivating?', 'membership-for-woocommerce' ); ?></p>
 					<form action="#" method="post" class="mwb-mfw-on-boarding-form">
-						<?php 
+						<?php
 						$mfw_onboarding_deactive_html = $mfw_mwb_mfw_obj->mwb_mfw_plug_generate_html( $mfw_onboarding_form_deactivate );
 						echo esc_html( $mfw_onboarding_deactive_html );
 						?>

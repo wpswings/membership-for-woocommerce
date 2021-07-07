@@ -696,7 +696,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		return $formatted_data;
-
 	}
 
 	/**
@@ -837,11 +836,13 @@ class Membership_For_Woocommerce_Global_Functions {
 			)
 		);
 
+
 		if ( ! empty( $all_prod_ids ) && is_array( $all_prod_ids ) ) {
 
 			foreach ( $all_prod_ids as $id ) {
 
 				$product_titles[] = get_the_title( $id );
+			
 			}
 		}
 
