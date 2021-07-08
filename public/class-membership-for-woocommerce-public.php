@@ -444,7 +444,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( is_user_logged_in() && in_array( 'member', (array) $user->roles ) ) {
 
-				echo 'Other Available Membership';
+				echo '<div class="mwb-mfwp__available--title">Other Available Membership</div>';
 				$suggested_membership = true;
 			}
 		}
@@ -1268,12 +1268,9 @@ class Membership_For_Woocommerce_Public {
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 
 		$country_code = ! empty( $_POST['country'] ) ? sanitize_text_field( wp_unslash( $_POST['country'] ) ) : '';
-
 		$country_class = new WC_Countries();
-
 		$states = $country_class->__get( 'states' );
 		$states = ! empty( $states[ $country_code ] ) ? $states[ $country_code ] : array();
-
 		$result = '';
 
 		if ( ! empty( $states ) && is_array( $states ) ) {
@@ -1301,7 +1298,6 @@ class Membership_For_Woocommerce_Public {
 			$plan_id = $item->get_meta( '_mwb_plan_id' );
 			$member_id = $item->get_meta( '_member_id' );
 			$product_id = $item->get_data()['product_id'];
-
 		}
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 		if ( $product_id == $mwb_membership_default_product ) {
@@ -1412,7 +1408,6 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_target_post_categories'] = array_merge( $plan_obj['mwb_membership_plan_target_post_categories'], $pcats );
 								$plan_obj['mwb_membership_plan_target_post_categories'] = serialize( $plan_obj['mwb_membership_plan_target_post_categories'] );
 							}
-
 							update_post_meta( $member_id, 'plan_obj', $plan_obj );
 
 						}
@@ -1467,7 +1462,6 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
-
 	}
 
 	/**
