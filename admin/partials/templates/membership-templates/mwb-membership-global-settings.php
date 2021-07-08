@@ -46,7 +46,7 @@ if ( isset( $_POST['mwb_membership_global_settings_save'] ) ) {
 	$mwb_membership_global_options['mwb_membership_invoice_email'] = ! empty( $_POST['mwb_membership_invoice_email'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_membership_invoice_email'] ) ) : '';
 
 	//phpcs:disable
-	$mwb_membership_global_options['mwb_membership_invoice_logo'] = ! empty( $_POST['mwb_membership_invoice_logo'] ) ? esc_url_raw( $_POST['mwb_membership_invoice_logo'] ) : ''; // phpcs:ignore
+	$mwb_membership_global_options['mwb_membership_invoice_logo'] = ! empty( $_POST['mwb_membership_invoice_logo'] ) ? esc_url_raw( wp_unslash( $_POST['mwb_membership_invoice_logo'] ) ) : ''; // phpcs:ignore
 	//phpcs:enable
 
 	// Save values.
