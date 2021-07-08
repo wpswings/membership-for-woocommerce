@@ -1710,7 +1710,7 @@ class Membership_For_Woocommerce_Admin {
 		/**
 		 * The class responsible for defining all methods of advance bank transfer gateway.
 		 */
-		//require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';
+		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';.
 	}
 
 	/**

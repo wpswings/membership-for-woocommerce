@@ -310,7 +310,7 @@ class Membership_For_Woocommerce_Public {
 		// Default Gutenberg offer.
 		add_shortcode( 'mwb_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
 	}
-/**
+	/**
 	 * Membership default global options.
 	 *
 	 * @since 1.0.0
@@ -343,7 +343,6 @@ class Membership_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
-
 
 		if ( is_admin() ) {
 
@@ -1233,7 +1232,7 @@ class Membership_For_Woocommerce_Public {
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
 
 		// phpcs:disable
-		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( $_POST['path'] ) : ''; // phpcs:ignore
+		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( wp_unslash( $_POST['path'] ) ) : ''; // phpcs:ignore
 		// phpcs:enable
 
 		if ( ! empty( $file_path ) ) {

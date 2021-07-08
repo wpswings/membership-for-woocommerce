@@ -142,7 +142,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 
 		if ( ! empty( $tnx_detail ) ) {
 
-			try {	
+			try {
 
 				update_post_meta( $member_id, '_membership_tnx_details', $tnx_detail );
 
