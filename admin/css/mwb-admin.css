@@ -10,16 +10,125 @@
  * use $fs for font size
  i.e $ff-roboto-b: Roboto-bold;
  * $fs-large: 40px; */
+/*==========================================================
+=            Typography Variable and Declaration            =
+============================================================*/
+@font-face {
+  font-family: 'NunitoSans-ExtraBold';
+  src: url("../fonts/nunito-sans/NunitoSans-ExtraBold.ttf");
+  font-style: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NunitoSans-SemiBold';
+  src: url("../fonts/nunito-sans/NunitoSans-SemiBold.ttf");
+  font-style: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NunitoSans-Bold';
+  src: url("../fonts/nunito-sans/NunitoSans-Bold.ttf");
+  font-style: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NunitoSans-Regular';
+  src: url("../fonts/nunito-sans/NunitoSans-Regular.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+
+/*----------  Font Family Variable  ----------*/
+/*----------  Font Size Variable  ----------*/
+/*=====  End of Typography Variable and Declaration  ======*/
 /* Placeholders */
 /* Mixins */
 /* SCSS Functions */
 /* Enter Your Global CSS here */
-* {
+:root {
+  --mdc-theme-primary: #2196f3;
+  --mdc-theme-secondary: #2196f3;
+}
+
+.makewebbetter_page_membership_for_woocommerce_menu #sswpbody-content {
+  font-family: "NunitoSans-Regular", sans-serif;
+  margin: 0;
+}
+
+body {
+  background-color: #e5f4fe;
+}
+
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
-*:after, *:before {
-  box-sizing: border-box;
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+a:focus {
+  box-shadow: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+input[type="checkbox"]:focus,
+input[type="color"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="datetime"]:focus,
+input[type="email"]:focus,
+input[type="month"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="radio"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="text"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
+input[type="week"]:focus,
+select:focus,
+textarea:focus {
+  box-shadow: none !important;
+}
+
+select,
+option {
+  color: rgba(0, 0, 0, 0.7) !important;
+  box-shadow: none !important;
+  border-color: rgba(0, 0, 0, 0.38) !important;
+}
+
+select {
+  padding: 10px 30px 10px 15px !important;
+}
+
+.mwb-link:focus {
+  outline: none;
+  border: none;
 }
 
 .mwb-info-img {
@@ -29,7 +138,211 @@
   max-width: 15px;
 }
 
+.mwb-link {
+  font-family: "NunitoSans-Bold";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.3px;
+  color: #000000;
+  display: inline-block;
+  transition: 0.3s ease;
+}
+
+.mwb-link:hover {
+  color: #2196f3 !important;
+}
+
+.mwb-link.active {
+  position: relative;
+  color: #2196f3 !important;
+}
+
+.mwb-link:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-bottom: 3px solid #2196f3;
+  border-radius: 2px;
+}
+
+.mwb-bg-white {
+  background-color: #ffffff;
+  margin-right: 15px;
+}
+
+.mwb-r-8 {
+  border-radius: 8px;
+}
+
+.mwb-pl-4 {
+  padding: 0 4px !important;
+}
+
+.mwb-section {
+  padding: 28px 32px;
+}
+
+.mwb-header-container {
+  padding: 28px 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  margin-right: 15px;
+}
+
+.mwb-header-container .mwb-header-title {
+  font-family: "NunitoSans-ExtraBold";
+  font-style: normal;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.3px;
+  color: #2196f3;
+  flex: 0 0 100%;
+  max-width: calc(100% - 200px);
+}
+
+.mwb-form-group {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -15px 35px;
+}
+
+.mwb-form-group .mwb-form-group__label {
+  flex: 0 0 100%;
+  max-width: 200px;
+  padding: 0 15px;
+}
+
+.mwb-form-group .mwb-form-group__label .mwb-form-label {
+  font-family: "NunitoSans-SemiBold";
+  font-size: 14px;
+  line-height: 24px;
+  letter-spacing: 0.3px;
+}
+
+.mwb-form-group .mwb-form-group__control {
+  flex: 0 0 100%;
+  max-width: calc(100% - 200px);
+  padding: 0 15px;
+}
+
+.mwb-form-group .mwb-form-group__control .mwb-form-select:hover select {
+  border-color: rgba(0, 0, 0, 0.87) !important;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.mwb-form-group .mwb-form-group__control .mwb-form-select:focus select {
+  border-color: #2196f3 !important;
+}
+
+.mwb-form-group .mwb-form-group__control .mwb-form-select .mdl-textfield__label {
+  display: block;
+  max-width: 450px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+.mwb-form-group .mwb-form-group__control .mdc-switch__native-control {
+  width: 68px;
+  height: 48px;
+}
+
+.mwb-form-group .mwb-password-hidden {
+  outline: none;
+  opacity: 0.7;
+  transition: opacity 0.2s linear;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.mwb-form-group .mwb-password-hidden:hover {
+  opacity: 1;
+}
+
+.select2.select2-container {
+  max-width: 100%;
+}
+
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #ffffff;
+  box-shadow: 0px 2px 5px rgba(63, 71, 86, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.mwb-col-wrap {
+  margin-bottom: 35px;
+}
+
+.mwb-options {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+}
+
+.mdc-button {
+  border-radius: 35px !important;
+  padding: 12px 24px !important;
+  height: 100%;
+}
+
+.mdc-floating-label {
+  color: #2196f3;
+}
+
+.mdc-floating-label--float-above,
+.mdc-floating-label--shake {
+  color: #2196f3 !important;
+}
+
+#mwb-mfw-table-inner-container,
+#public-hooks-listing,
+#admin-hooks-listing {
+  width: 100%;
+}
+
+#mwb-mfw-table-inner-container table thead th,
+#public-hooks-listing table thead th,
+#admin-hooks-listing table thead th {
+  font-size: 18px;
+  font-family: "NunitoSans-ExtraBold";
+}
+
 /* Enter Button Global CSS Here */
+.mwb-btn {
+  border-radius: 30px;
+  border: 1px solid #2196f3;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "NunitoSans-Regular";
+  font-size: 14px;
+  font-weight: 400;
+  min-width: 140px;
+  outline: 0;
+  padding: 16px 32px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.mwb-btn:hover, .mwb-btn:active, .mwb-btn:focus {
+  color: #ffffff;
+}
+
+.mwb-btn__filled {
+  background-color: #2196f3;
+}
+
 /* Header CSS */
 /* Footer CSS */
 /* Navigation CSS */
@@ -166,17 +479,226 @@
 }
 
 /* overview page css ends */
+/*====================================
+=            Tabs Section            =
+====================================*/
+.mwb-navbar {
+  padding: 0 32px;
+  border-bottom: 1px solid rgba(63, 71, 86, 0.25);
+}
+
+.mwb-navbar .mwb-navbar__items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.mwb-navbar .mwb-navbar__items li {
+  margin-right: 32px;
+  margin-bottom: 0;
+}
+
+.mwb-navbar .mwb-navbar__items li a {
+  padding: 18px 0;
+  color: #000000;
+}
+
+/*=====   Tabs Section CSS Ends  ======*/
+/*============================================
+=           License Section CSS          =
+=============================================*/
+.mwb-mfw-wrap {
+  border-radius: 10px;
+  border: 1px solid #dddddd;
+  box-shadow: 0px 4px 10px #EFEFEF;
+  margin: 0 auto;
+  max-width: 600px;
+  padding: 10px 20px;
+}
+
+.mwb-mfw-wrap h2 {
+  color: #163062;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  line-height: 150%;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text > p {
+  margin: 10px 0;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form .mwb-mfw-form-table input#mwb_mfw_license_key {
+  width: 100%;
+  transition: 0.3s ease;
+  height: 50px;
+  font-size: 14px;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form .mwb-mfw-form-table input#mwb_mfw_license_key:hover {
+  border-color: #000000;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form .mwb-mfw-form-table input#mwb_mfw_license_key:focus {
+  border-color: #2196f3;
+  outline: none;
+  box-shadow: none;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form #mwb_mfw_license_activation_status {
+  padding: 0 10px;
+  font-weight: 600;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form button {
+  background-color: #163062;
+  text-transform: uppercase;
+  width: 100%;
+  height: 40px;
+  letter-spacing: 1.5px;
+  border: 1px solid #163062;
+  transition: 0.5s ease;
+  font-weight: 600;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form button:hover {
+  color: #163062;
+  background-color: #ffffff;
+}
+
+.mwb-mfw-wrap .mwb_mfw_license_text #mwb_mfw_license_form button:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+/*=====  License Section CSS ends  ======*/
+/*============================================
+=          DataTables CSS         =
+=============================================*/
+.dataTables_wrapper {
+  padding: 20px 10px;
+}
+
+.dataTables_wrapper .dataTable {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08) !important;
+}
+
+.dataTables_wrapper .dataTable thead {
+  text-align: left;
+}
+
+.dataTables_wrapper .dataTable thead th {
+  border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+  padding: 15px;
+  font-family: "NunitoSans-SemiBold" !important;
+  font-size: 16px !important;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.25px;
+}
+
+.dataTables_wrapper .dataTable tr {
+  background-color: #ffffff !important;
+}
+
+.dataTables_wrapper .dataTable tr td {
+  background-color: #ffffff !important;
+}
+
+.dataTables_wrapper .mwb-dt-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dataTables_wrapper .mwb-dt-buttons .dt-buttons {
+  margin: 0 10px;
+}
+
+.dataTables_wrapper .mwb-dt-buttons .dt-buttons .dt-button {
+  padding: 5px 10px;
+  border: 1px solid #c7c7c7;
+  background-color: #ffffff;
+  transition: 0.5s ease;
+  border-radius: 2px;
+}
+
+.dataTables_wrapper .mwb-dt-buttons .dt-buttons .dt-button:hover {
+  cursor: pointer;
+  background: #EFEFEF;
+}
+
+.dataTables_wrapper .bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin: 10px 0;
+}
+
+.dataTables_wrapper .bottom .dataTables_length {
+  font-family: "NunitoSans-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  margin-right: 14px;
+}
+
+.dataTables_wrapper .bottom .dataTables_length select {
+  margin: 0 25px;
+  min-width: 90px;
+  padding: 5px 30px 5px 15px !important;
+}
+
+.dataTables_wrapper .bottom .dataTables_info {
+  font-family: "NunitoSans-SemiBold";
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.25px;
+  margin-right: 5px;
+}
+
+.dataTables_wrapper .bottom .dataTables_paginate {
+  padding: 0;
+}
+
+.dataTables_wrapper .bottom .dataTables_paginate span .paginate_button {
+  display: none !important;
+}
+
+.dataTables_wrapper .bottom .dataTables_paginate .paginate_button {
+  display: inline-block;
+}
+
+.dataTables_wrapper .bottom .dataTables_paginate .paginate_button:hover {
+  background: #f4f4f4 !important;
+  cursor: pointer !important;
+}
+
+/*=====  End of DataTables  ======*/
+
+@media (max-width: 768px){
+  .mwb-header-container {
+    justify-content: flex-start;
+  }
+  .mwb-header-container .mwb-header-title {
+    max-width: 100%;
+  }
+  .mwb-header-container .mwb-link {
+    margin-top: 15px;
+  }
+  .mwb-header-container span {
+    margin: 15px 5px 0;
+  }
+  .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
 
 @media (max-width: 992px){
   .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
     flex: 0 0 50%;
     max-width: 50%;
-  }
-}
-
-@media (max-width: 768px){
-  .mwb-overview__wrapper .mwb-overview__content .mwb-overview__keywords .mwb-overview__keywords-item {
-    flex: 0 0 100%;
-    max-width: 100%;
   }
 }

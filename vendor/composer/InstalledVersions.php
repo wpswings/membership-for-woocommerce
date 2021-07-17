@@ -25,24 +25,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.1.0.x-dev',
-    'version' => '1.1.0.9999999-dev',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => '15323a004ea67cac1142985513f4e0e2dade9808',
+    'reference' => '667afee545b2d674de117276e25ba591757cee45',
     'name' => 'makewebbetter/membership-for-woocommerce',
   ),
   'versions' => 
   array (
     'automattic/vipwpcs' => 
     array (
-      'pretty_version' => '2.3.2',
-      'version' => '2.3.2.0',
+      'pretty_version' => '2.2.0',
+      'version' => '2.2.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'efacebef421334d54b99afa92fb8fa645336a8a7',
+      'reference' => '4d0612461232b313d06321f1501c3989bd6aecf9',
     ),
     'dealerdirect/phpcodesniffer-composer-installer' => 
     array (
@@ -55,12 +55,12 @@ private static $installed = array (
     ),
     'makewebbetter/membership-for-woocommerce' => 
     array (
-      'pretty_version' => '1.1.0.x-dev',
-      'version' => '1.1.0.9999999-dev',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => '15323a004ea67cac1142985513f4e0e2dade9808',
+      'reference' => '667afee545b2d674de117276e25ba591757cee45',
     ),
     'phpcompatibility/php-compatibility' => 
     array (

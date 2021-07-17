@@ -48,6 +48,7 @@ $supported_gateways = $instance->supported_gateways();
 
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
+
 ?>
 
 <!-- Members billing metabox start -->

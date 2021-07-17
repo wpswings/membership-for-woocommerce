@@ -1,5 +1,217 @@
-@import 
-    'about',
-    'home',
-    'overview';
+@import 'about',
+'home',
+'overview';
+
+/*====================================
+=            Tabs Section            =
+====================================*/
+
+
+.mwb-navbar {
+    padding: 0 32px;
+    border-bottom: 1px solid rgba(63, 71, 86, 0.25);
+
+    .mwb-navbar__items {
+        display: flex;
+        flex-wrap: wrap;
+    }
     
+    .mwb-navbar__items {
+        li {
+            margin-right: 32px;
+            margin-bottom: 0;
+            a {
+                padding: 18px 0;
+                color: $c-black;
+            }
+        }
+    }
+}
+
+
+/*=====   Tabs Section CSS Ends  ======*/
+
+
+/*============================================
+=           License Section CSS          =
+=============================================*/
+
+.mwb-mfw-wrap {
+    border-radius: 10px;
+    border: 1px solid $c-alto;
+    box-shadow: 0px 4px 10px $c-gallery;
+    margin: 0 auto;
+    max-width: 600px;
+    padding: 10px 20px;
+
+    h2 {
+        color: $c-biscay;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: .5px;
+        line-height: 150%;
+        margin: 10px 0;
+        text-align: left;
+    }
+
+    .mwb_mfw_license_text {
+        > p {
+            margin: 10px 0;
+        }
+
+        #mwb_mfw_license_form {
+            .mwb-mfw-form-table {
+                input#mwb_mfw_license_key {
+                    width: 100%;
+                    transition: 0.3s ease;
+                    height: 50px;
+                    font-size: 14px;
+
+                    &:hover {
+                        border-color: #000000;
+                    }
+
+                    &:focus {
+                        border-color: $c-doger-blue;
+                        outline: none;
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            #mwb_mfw_license_activation_status {
+                padding: 0 10px;
+                font-weight: 600;
+            }
+
+            button {
+                background-color: $c-biscay;
+                text-transform: uppercase;
+                width: 100%;
+                height: 40px;
+                letter-spacing: 1.5px;
+                border: 1px solid $c-biscay;
+                transition: 0.5s ease;
+                font-weight: 600;
+
+                &:hover {
+                    color: $c-biscay;
+                    background-color: #ffffff;
+                }
+
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
+
+
+/*=====  License Section CSS ends  ======*/
+
+
+/*============================================
+=          DataTables CSS         =
+=============================================*/
+
+.dataTables_wrapper {
+    padding: 20px 10px;
+    
+    .dataTable {
+        border-bottom: 1px solid rgba(33,33,33,0.08)!important;
+
+        thead {
+            text-align: left;
+        
+            th {
+                border-bottom: 1px solid rgba(33, 33, 33, 0.08);
+                padding: 15px;
+                font-family: $ff-nunitosans-s!important;
+                font-size: $fs-normal!important;
+                font-weight: 400;
+                line-height: 24px;
+                letter-spacing: 0.25px;        
+            }
+        }
+        tr {
+            background-color:$c-white!important ;
+            td {
+                background-color:$c-white!important ;
+
+            }
+        }
+       
+    }
+    .mwb-dt-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .dt-buttons {
+            margin: 0 10px;
+            .dt-button {
+                padding: 5px 10px;
+                border: 1px solid $c-silver;
+                background-color: $c-white;
+                transition: 0.5s ease;
+                border-radius: 2px;
+                &:hover {
+                    cursor: pointer;
+                    background: $c-gallery;
+                }
+
+            }
+        }
+    }
+    .bottom {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        margin: 10px 0;
+
+        .dataTables_length {
+            font-family: $ff-nunitosans-s;
+            font-size: $fs-xm-small;
+            font-weight: 400;
+            letter-spacing: 0.25px;
+            margin-right: 14px;
+            select {
+                margin: 0 25px;
+                min-width: 90px;
+                padding: 5px 30px 5px 15px!important;
+            }
+        }
+
+        .dataTables_info {
+            font-family: $ff-nunitosans-s;
+            font-size: $fs-xm-small;
+            font-weight: 400;
+            letter-spacing: 0.25px;
+            margin-right: 5px;
+        }
+        
+        .dataTables_paginate {
+            padding: 0;
+
+            span {
+                .paginate_button {
+                    display: none !important;
+                }
+            }
+
+            .paginate_button {
+                display: inline-block;
+
+                &:hover {
+                    background:  $c-wild-sand!important;
+                    cursor: pointer!important;
+                }
+            }
+        }
+    }
+}
+
+/*=====  End of DataTables  ======*/
+
+

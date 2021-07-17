@@ -18,14 +18,16 @@ class RemoteRequestTimeoutSniff extends AbstractArrayAssignmentRestrictionsSniff
 
 	/**
 	 * Groups of variables to restrict.
+	 * This should be overridden in extending classes.
 	 *
 	 * Example: groups => array(
-	 *  'groupname' => array(
-	 *      'type'     => 'error' | 'warning',
-	 *      'message'  => 'Dont use this one please!',
-	 *      'keys'     => array( 'key1', 'another_key' ),
-	 *      'callback' => array( 'class', 'method' ), // Optional.
-	 *  )
+	 *     'wpdb' => array(
+	 *         'type'          => 'error' | 'warning',
+	 *         'message'       => 'Dont use this one please!',
+	 *         'variables'     => array( '$val', '$var' ),
+	 *         'object_vars'   => array( '$foo->bar', .. ),
+	 *         'array_members' => array( '$foo['bar']', .. ),
+	 *     )
 	 * )
 	 *
 	 * @return array

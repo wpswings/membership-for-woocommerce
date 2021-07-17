@@ -22,7 +22,7 @@ class ZoninatorSniff extends Sniff {
 	 * @return array(int)
 	 */
 	public function register() {
-		return [ T_STRING ];
+		return Tokens::$functionNameTokens;
 	}
 
 

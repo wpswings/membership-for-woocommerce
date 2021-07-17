@@ -53,7 +53,7 @@ $mfw_php_details = is_array( $mfw_default_status['php'] ) && ! empty( $mfw_defau
 				<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-sys">
 					<thead>
 						<tr>
-							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'Sysytem Variables', 'membership-for-woocommerce' ); ?></th>
+							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'membership-for-woocommerce' ); ?></th>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Values', 'membership-for-woocommerce' ); ?></th>
 						</tr>
 					</thead>

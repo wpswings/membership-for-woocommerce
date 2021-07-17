@@ -273,7 +273,7 @@ if ( empty( $current_url ) ) {
 						</td>
 					</tr>
 					<tr>
-						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<th><label><?php esc_html_e( 'Offered POst Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
 							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_tags'] );
@@ -285,7 +285,7 @@ if ( empty( $current_url ) ) {
 									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
 								}
 							} else {
-								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+								esc_html_e( 'No Post Tags Offered in this Plan', 'membership-for-woocommerce' );
 							}
 							?>
 						</td>

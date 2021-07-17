@@ -53,7 +53,8 @@ class RestrictedHooksSniff extends AbstractFunctionParameterSniff {
 			],
 		],
 		'http_request' => [
-			// https://docs.wpvip.com/technical-references/code-quality-and-best-practices/retrieving-remote-data/.
+			// WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/fetching-remote-data/.
+			// VIP Go: https://vip.wordpress.com/documentation/vip-go/fetching-remote-data/.
 			'type'  => 'Warning',
 			'msg'   => 'Please ensure that the timeout being filtered is not greater than 3s since remote requests require the user to wait for completion before the rest of the page will load. Manual inspection required.',
 			'hooks' => [
@@ -62,7 +63,7 @@ class RestrictedHooksSniff extends AbstractFunctionParameterSniff {
 			],
 		],
 		'robotstxt' => [
-			// https://docs.wpvip.com/how-tos/modify-the-robots-txt-file/.
+			// WordPress.com + VIP Go: https://wpvip.com/documentation/robots-txt/.
 			'type'  => 'Warning',
 			'msg'   => 'Don\'t forget to flush the robots.txt cache by going to Settings > Reading and toggling the privacy settings.',
 			'hooks' => [

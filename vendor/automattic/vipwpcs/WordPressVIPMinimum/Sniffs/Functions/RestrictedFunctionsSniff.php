@@ -25,6 +25,13 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 	public function getGroups() {
 
 		$groups = [
+			'wp_cache_get_multi' => [
+				'type'      => 'error',
+				'message'   => '`%s` is not supported on the WordPress.com VIP platform.',
+				'functions' => [
+					'wp_cache_get_multi',
+				],
+			],
 			'opcache' => [
 				'type'      => 'error',
 				'message'   => '`%s` is prohibited on the WordPress VIP platform due to memory corruption.',
@@ -43,6 +50,13 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'opcache_get_configuration',
 				],
 			],
+			'get_super_admins' => [
+				'type'      => 'error',
+				'message'   => '`%s` is prohibited on the WordPress.com VIP platform.',
+				'functions' => [
+					'get_super_admins',
+				],
+			],
 			'internal' => [
 				'type'      => 'error',
 				'message'   => '`%1$s()` is for internal use only.',
@@ -50,6 +64,7 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'wpcom_vip_irc',
 				],
 			],
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#flush_rewrite_rules
 			'flush_rewrite_rules' => [
 				'type'      => 'error',
 				'message'   => '`%s` should not be used in any normal circumstances in the theme code.',
@@ -81,10 +96,11 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'dbDelta',
 				],
 			],
-			// @link https://docs.wpvip.com/technical-references/code-review/vip-notices/#h-switch_to_blog
+			// @link WordPress.com: https://vip.wordpress.com/documentation/vip/code-review-what-we-look-for/#switch_to_blog
+			// @link VIP Go: https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#switch_to_blog
 			'switch_to_blog' => [
-				'type'      => 'warning',
-				'message'   => '%s() may not work as expected since it only changes the database context for the blog and does not load the plugins or theme of that site. Filters or hooks on the blog you are switching to will not run.',
+				'type'      => 'error',
+				'message'   => '%s() is not something you should ever need to do in a VIP theme context. Instead use an API (XML-RPC, REST) to interact with other sites if needed.',
 				'functions' => [
 					'switch_to_blog',
 				],
@@ -103,12 +119,24 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'url_to_postid',
 				],
 			],
-			// @link https://docs.wpvip.com/how-tos/customize-user-roles/
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#custom-roles
+			// @link VIP Go: https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#custom-roles
 			'custom_role' => [
 				'type'      => 'error',
 				'message'   => 'Use wpcom_vip_add_role() instead of %s().',
 				'functions' => [
 					'add_role',
+				],
+			],
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#wp_users-and-user_meta
+			'user_meta' => [
+				'type'      => 'error',
+				'message'   => '%s() usage is highly discouraged on WordPress.com VIP due to it being a multisite, please see https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#wp_users-and-user_meta.',
+				'functions' => [
+					'get_user_meta',
+					'update_user_meta',
+					'delete_user_meta',
+					'add_user_meta',
 				],
 			],
 			'term_exists' => [
@@ -150,7 +178,8 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'get_intermediate_image_sizes',
 				],
 			],
-			// @link https://docs.wpvip.com/technical-references/code-review/vip-warnings/#h-mobile-detection
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#mobile-detection
+			// @link VIP Go: https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#mobile-detection
 			'wp_is_mobile' => [
 				'type'      => 'error',
 				'message'   => '%s() found. When targeting mobile visitors, jetpack_is_mobile() should be used instead of wp_is_mobile. It is more robust and works better with full page caching.',
@@ -230,6 +259,15 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'lchown',
 				],
 			],
+			'site_option' => [
+				'type'      => 'error',
+				'message'   => '%s() will overwrite network option values, please use the `*_option()` equivalent instead (e.g. `update_option()`).',
+				'functions' => [
+					'add_site_option',
+					'update_site_option',
+					'delete_site_option',
+				],
+			],
 			'stats_get_csv' => [
 				'type'      => 'error',
 				'message'   => 'Using `%s` outside of Jetpack context pollutes the stats_cache entry in the wp_options table. We recommend building a custom function instead.',
@@ -260,7 +298,8 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'the_field',
 				],
 			],
-			// @link https://docs.wpvip.com/technical-references/code-review/vip-warnings/#h-remote-calls
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#remote-calls
+			// @link VIP Go: https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#remote-calls
 			'wp_remote_get' => [
 				'type'      => 'warning',
 				'message'   => '%s() is highly discouraged. Please use vip_safe_wp_remote_get() instead which is designed to more gracefully handle failure than wp_remote_get() does.',
@@ -268,10 +307,11 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 					'wp_remote_get',
 				],
 			],
-			// @link https://docs.wpvip.com/technical-references/code-review/vip-errors/#h-cache-constraints
+			// @link WordPress.com: https://lobby.vip.wordpress.com/wordpress-com-documentation/code-review-what-we-look-for/#custom-roles
+			// @link VIP Go: https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#cache-constraints
 			'cookies' => [
-				'type'      => 'error',
-				'message'   => 'Due to server-side caching, server-side based client related logic might not work. We recommend implementing client side logic in JavaScript instead.',
+				'type'      => 'warning',
+				'message'   => 'Due to using Batcache, server side based client related logic will not work, use JS instead.',
 				'functions' => [
 					'setcookie',
 				],
@@ -279,7 +319,7 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 			// @todo Introduce a sniff specific to get_posts() that checks for suppress_filters=>false being supplied.
 			'get_posts' => [
 				'type'      => 'warning',
-				'message'   => '%s() is uncached unless the "suppress_filters" parameter is set to false. If the suppress_filter parameter is set to false this can be safely ignored. More Info: https://docs.wpvip.com/technical-references/caching/uncached-functions/.',
+				'message'   => '%s() is uncached unless the "suppress_filters" parameter is set to false. If the suppress_filter parameter is set to false this can be safely ignored. More Info: https://wpvip.com/documentation/vip-go/uncached-functions/.',
 				'functions' => [
 					'get_posts',
 					'wp_get_recent_posts',
@@ -288,7 +328,7 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 			],
 			'create_function' => [
 				'type'      => 'warning',
-				'message'   => '%s() is highly discouraged, as it can execute arbritary code (additionally, it\'s deprecated as of PHP 7.2): https://docs.wpvip.com/technical-references/code-review/vip-warnings/#h-eval-and-create_function. )',
+				'message'   => '%s() is highly discouraged, as it can execute arbritary code (additionally, it\'s deprecated as of PHP 7.2): https://wpvip.com/documentation/vip-go/code-review-blockers-warnings-notices/#eval-and-create_function. )',
 				'functions' => [
 					'create_function',
 				],
@@ -363,7 +403,7 @@ class RestrictedFunctionsSniff extends AbstractFunctionRestrictionsSniff {
 				if ( isset( $skipped[ $this->tokens[ $prev ]['code'] ] ) ) {
 					return false;
 				}
-				// Skip namespaced functions, ie: `\foo\bar()` not `\bar()`.
+				// Skip namespaced functions, ie: \foo\bar() not \bar().
 				if ( $this->tokens[ $prev ]['code'] === \T_NS_SEPARATOR ) {
 					$pprev = $this->phpcsFile->findPrevious( Tokens::$emptyTokens, $prev - 1, null, true );
 					if ( $pprev !== false && $this->tokens[ $pprev ]['code'] === \T_STRING ) {

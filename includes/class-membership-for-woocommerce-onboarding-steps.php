@@ -14,7 +14,6 @@
  *
  * @package     membership_for_woocommerce
  * @subpackage  membership_for_woocommerce/includes
- * @author      makewebbetter <webmaster@makewebbetter.com>
  */
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -170,7 +169,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		if ( $this->mwb_mfw_valid_page_screen_check() || $is_valid ) {
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-mfw-onboarding-select2-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
-			
+
 			wp_enqueue_style( 'mwb-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-mfw-meterial-css2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
 			wp_enqueue_style( 'mwb-mfw-meterial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
@@ -216,7 +215,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'mfw_auth_nonce'    => wp_create_nonce( 'mwb_mfw_onboarding_nonce' ),
 					'mfw_current_screen'    => $pagenow,
-					'mfw_current_supported_slug'    => apply_filters( 'mwb_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
+					'mfw_current_supported_slug'    =>
+					// desc - filter for trial.
+					apply_filters( 'mwb_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
 				)
 			);
 		}
@@ -253,7 +254,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function mwb_mfw_skip_onboarding_popup() {
 
-	 $get_skipped_timstamp = update_option( 'mwb_mfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'mwb_mfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -668,7 +669,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since       1.0.0
 	 */
 	protected function mwb_mfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
-		
+
 		if ( 'onboarding' == $action_type ) {
 			$form_id = self::$mwb_mfw_onboarding_form_id;
 		} else {
@@ -691,7 +692,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 				),
 			)
 		);
-	
+
 		$response = $this->mwb_mfw_hic_post( $url, $form_data, $headers );
 
 		if ( 200 == $response['status_code'] ) {
@@ -713,7 +714,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
 	private function mwb_mfw_hic_post( $endpoint, $post_params, $headers ) {
-		$url      = $this->mwb_isfw_base_url . $endpoint;
+		$url      = $this->mwb_mfw_base_url . $endpoint;
 		$request  = array(
 			'method'      => 'POST',
 			'timeout'     => 45,
@@ -727,7 +728,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		$response = wp_remote_post( $url, $request );
 		if ( is_wp_error( $response ) ) {
 			$status_code = 500;
-			$response    = esc_html__( 'Unexpected Error Occured', 'invoice-system-for-woocommerce' );
+			$response    = esc_html__( 'Unexpected Error Occured', 'membership-for-woocommerce' );
 			$curl_errors = $response;
 		} else {
 			$response    = wp_remote_retrieve_body( $response );

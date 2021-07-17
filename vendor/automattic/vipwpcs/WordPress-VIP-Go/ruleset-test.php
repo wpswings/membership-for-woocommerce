@@ -37,6 +37,7 @@ $expected = [
 		341 => 1,
 		342 => 1,
 		346 => 1,
+		349 => 1,
 		350 => 1,
 		351 => 1,
 		352 => 1,
@@ -133,6 +134,7 @@ $expected = [
 		41  => 1,
 		44  => 1,
 		47  => 1,
+		60  => 1,
 		63  => 1,
 		66  => 1,
 		85  => 1,
@@ -182,6 +184,7 @@ $expected = [
 		207 => 1,
 		208 => 1,
 		212 => 1,
+		217 => 1,
 		221 => 1,
 		223 => 1,
 		225 => 1,
@@ -219,6 +222,7 @@ $expected = [
 		417 => 1,
 		418 => 1,
 		419 => 1,
+		420 => 2,
 		421 => 1,
 		423 => 1,
 		424 => 1,
@@ -239,49 +243,49 @@ $expected = [
 	],
 	'messages' => [
 		4   => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as delete(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as delete(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		7   => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as file_put_contents(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as file_put_contents(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		10  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as flock(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as flock(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		14  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fputcsv(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fputcsv(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		17  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fputs(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fputs(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		20  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fwrite(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fwrite(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		23  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as ftruncate(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as ftruncate(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		26  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as is_writable(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as is_writable(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		29  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as is_writeable(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as is_writeable(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		32  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as link(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as link(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		35  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as rename(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as rename(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		38  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as symlink(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as symlink(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		41  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as tempnam(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as tempnam(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		44  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as touch(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as touch(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		47  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as unlink(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as unlink(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		50  => [
 			'Due to server-side caching, server-side based client related logic might not work. We recommend implementing client side logic in JavaScript instead.',
@@ -292,11 +296,14 @@ $expected = [
 		56  => [
 			'Due to server-side caching, server-side based client related logic might not work. We recommend implementing client side logic in JavaScript instead.',
 		],
+		60  => [
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fclose(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
+		],
 		63  => [
-			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fopen(). For more details, please see: https://docs.wpvip.com/technical-references/vip-go-files-system/local-file-operations/',
+			'File system operations only work on the `/tmp/` and `wp-content/uploads/` directories. To avoid unexpected results, please use helper functions like `get_temp_dir()`  or `wp_get_upload_dir()` to get the proper directory path when using functions such as fopen(). For more details, please see: https://wpvip.com/documentation/vip-go/writing-files-on-vip-go/',
 		],
 		66  => [
-			'file_get_contents() is uncached. If the function is being used to fetch a remote file (e.g. a URL starting with https://), please use wpcom_vip_file_get_contents() to ensure the results are cached. For more details, please see: https://docs.wpvip.com/technical-references/code-quality-and-best-practices/retrieving-remote-data/',
+			'file_get_contents() is uncached. If the function is being used to fetch a remote file (e.g. a URL starting with https://), please use wpcom_vip_file_get_contents() to ensure the results are cached. For more details, please see https://wpvip.com/documentation/vip-go/fetching-remote-data/',
 		],
 		90 => [
 			'Having more than 100 posts returned per page may lead to severe performance problems.',
@@ -314,7 +321,7 @@ $expected = [
 			'get_page_by_title() is uncached, please use wpcom_vip_get_page_by_title() instead.',
 		],
 		139 => [
-			'get_children() is uncached and performs a no limit query. Please use get_posts or WP_Query instead. Please see: https://docs.wpvip.com/technical-references/caching/uncached-functions/',
+			'get_children() is uncached and performs a no limit query. Please use get_posts or WP_Query instead. More Info: https://wpvip.com/documentation/vip-go/uncached-functions/',
 		],
 		150 => [
 			'url_to_postid() is uncached, please use wpcom_vip_url_to_postid() instead.',
@@ -331,6 +338,9 @@ $expected = [
 		196 => [
 			'Stylesheets should be registered/enqueued via `wp_enqueue_style`. This can improve the site\'s performance due to styles concatenation.',
 		],
+		269 => [
+			'Switch to blog may not work as expected since it only changes the database context for the blog and does not load the plugins or theme of that site. This means that filters or hooks that the blog you are switching to uses will not run.',
+		],
 	],
 ];
 
@@ -339,6 +349,7 @@ require __DIR__ . '/../tests/RulesetTest.php';
 // Run the tests!
 $test = new RulesetTest( 'WordPress-VIP-Go', $expected );
 if ( $test->passes() ) {
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	printf( 'All WordPress-VIP-Go tests passed!' . PHP_EOL );
 	exit( 0 );
 }

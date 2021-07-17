@@ -2,7 +2,7 @@
 /**
  * Fired during plugin activation
  *
- * @link       https://makewebbetter.com
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -17,9 +17,29 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
- * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_For_Woocommerce_Activator {
+
+	/**
+	 * Short Description. (use period)
+	 *
+	 * Long Description.
+	 *
+	 * @since    1.0.0
+	 */
+	public static function membership_for_woocommerce_activate() {
+
+		$timestamp = get_option( 'mwb_mfw_activated_timestamp', 'not_set' );
+
+		if ( 'not_set' === $timestamp ) {
+
+			$current_time = current_time( 'timestamp' );
+
+			$thirty_days = strtotime( '+30 days', $current_time );
+
+			update_option( 'mwb_mfw_activated_timestamp', $thirty_days );
+		}
+	}
 
 	/**
 	 * Short Description. (use period)
@@ -64,7 +84,6 @@ class Membership_For_Woocommerce_Activator {
 
 			update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
 		}
-
 
 		/**
 		 * Generating default membership plans page at the time of plugin activation.
@@ -128,5 +147,4 @@ class Membership_For_Woocommerce_Activator {
 			wp_schedule_event( time(), 'daily', 'mwb_membership_expiry_check' );
 		}
 	}
-
 }

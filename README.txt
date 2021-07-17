@@ -1,4 +1,4 @@
-=== Membership For Woocommerce ===
+=== Membership For WooCommerce ===
 Contributors: makewebbetter
 Tags: comments, spam
 Requires at least: 4.6

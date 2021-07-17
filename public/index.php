@@ -1,8 +1,12 @@
 <?php
 /**
- * Index page.
+ * Provide a public area view for the plugin
  *
- * @package Membership_For_Woocommerce
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/public
  */
 
 // Silence is golden.

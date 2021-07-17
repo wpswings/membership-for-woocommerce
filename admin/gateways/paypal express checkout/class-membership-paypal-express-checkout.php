@@ -74,7 +74,7 @@ class Membership_Paypal_Express_Checkout extends WC_Payment_Gateway {
 	 */
 	public function init_form_fields() {
 
-		$this->form_fields = include dirname( dirname( __FILE__ ) ) . '/paypal express checkout/settings-paypal-express-checkout.php';
+		// $this->form_fields = include dirname( dirname( __FILE__ ) ) . '/paypal express checkout/settings-paypal-express-checkout.php';
 	}
 
 	/**

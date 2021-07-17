@@ -138,6 +138,7 @@ function scripts()
   return (
   gulp
     .src([
+
     'assets/src/front-end/js/**/*',
     ])
     .pipe(plumber())
@@ -157,6 +158,7 @@ function scriptsBackend()
   gulp
     .src([
     'assets/src/back-end/js/**/*',
+
     ])
     .pipe(plumber())
     .pipe(concat('mwb-admin.js'))

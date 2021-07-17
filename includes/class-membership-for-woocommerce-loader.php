@@ -2,7 +2,7 @@
 /**
  * Register all actions and filters for the plugin
  *
- * @link       https://makewebbetter.com
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -18,7 +18,6 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
- * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_For_Woocommerce_Loader {
 
@@ -26,7 +25,6 @@ class Membership_For_Woocommerce_Loader {
 	 * The array of actions registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      array    $actions    The actions registered with WordPress to fire when the plugin loads.
 	 */
 	protected $actions;
@@ -35,7 +33,6 @@ class Membership_For_Woocommerce_Loader {
 	 * The array of filters registered with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      array    $filters    The filters registered with WordPress to fire when the plugin loads.
 	 */
 	protected $filters;
@@ -85,14 +82,13 @@ class Membership_For_Woocommerce_Loader {
 	 * collection.
 	 *
 	 * @since    1.0.0
-	 * @access   private
 	 * @param    array  $hooks            The collection of hooks that is being registered (that is, actions or filters).
 	 * @param    string $hook             The name of the WordPress filter that is being registered.
 	 * @param    object $component        A reference to the instance of the object on which the filter is defined.
 	 * @param    string $callback         The name of the function definition on the $component.
 	 * @param    int    $priority         The priority at which the function should be fired.
 	 * @param    int    $accepted_args    The number of arguments that should be passed to the $callback.
-	 * @return   array                    The collection of actions and filters registered with WordPress.
+	 * @return   array                                  The collection of actions and filters registered with WordPress.
 	 */
 	private function add( $hooks, $hook, $component, $callback, $priority, $accepted_args ) {
 
@@ -113,7 +109,7 @@ class Membership_For_Woocommerce_Loader {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function mfw_run() {
 
 		foreach ( $this->filters as $hook ) {
 			add_filter( $hook['hook'], array( $hook['component'], $hook['callback'] ), $hook['priority'], $hook['accepted_args'] );

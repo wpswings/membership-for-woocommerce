@@ -24,7 +24,7 @@ class StaticStrreplaceSniff extends Sniff {
 	 * @return array
 	 */
 	public function register() {
-		return [ T_STRING ];
+		return Tokens::$functionNameTokens;
 	}
 
 	/**

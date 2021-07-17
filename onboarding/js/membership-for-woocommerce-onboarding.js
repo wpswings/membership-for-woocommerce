@@ -13,11 +13,18 @@ jQuery(document).ready(function($) {
         return new MDCSwitch(el);
     });
 
-    var dialog = "";
-    if( $('.mdc-dialog').length > 0 ){
-        dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.mdc-dialog'));
-    }
+    var mwb_deactivation_skip_button_id = mwb_mfw_onboarding.mfw_current_supported_slug[0] + "-no_thanks_deactive";
+    var mwb_onboarding_popup_id = mwb_mfw_onboarding.mfw_current_supported_slug[0] + "-onboarding_popup";
 
+
+    var dialog = "";
+    if ($('.membership-for-woocommerce').length > 0 ){
+        if ('admin.php' == mwb_mfw_onboarding.mfw_current_screen) {
+            dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.' + mwb_mfw_onboarding.mfw_current_supported_slug[0]));
+        } else if ('plugins.php' == mwb_mfw_onboarding.mfw_current_screen) {
+            dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('#' + mwb_onboarding_popup_id));   
+        }
+    }
     /*if device is mobile*/
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         jQuery('body').addClass('mobile-device');
@@ -60,7 +67,7 @@ jQuery(document).ready(function($) {
     });
 
     /* Skip and deactivate. */
-    jQuery(document).on('click', '.mwb-deactivation-no_thanks', function(e) {
+    jQuery(document).on('click', '#' + mwb_deactivation_skip_button_id, function(e) {
 
         window.location.replace(deactivate_url);
         mwb_mfw_hide_onboard_popup();
@@ -68,7 +75,6 @@ jQuery(document).ready(function($) {
 
     /* Skip For a day. */
     jQuery(document).on('click', '.mwb-mfw-on-boarding-no_thanks', function(e) {
-
         jQuery.ajax({
             type: 'post',
             dataType: 'json',
