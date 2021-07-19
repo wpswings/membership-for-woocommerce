@@ -405,10 +405,10 @@ class Membership_For_Woocommerce_Public {
 
 							$is_purchasable = false;
 						}
-						if ( ! empty( $this->another_plan_products ) && in_array( $product->get_id(), $this->another_plan_products ) ) {
+						// if ( ! empty( $this->another_plan_products ) && in_array( $product->get_id(), $this->another_plan_products ) ) {
 
-							$is_purchasable = false;
-						}
+						// 	$is_purchasable = false;
+						// }
 					} else {
 						if ( $this->global_class->plans_exist_check() == true ) {
 							$is_purchasable = true;
@@ -459,7 +459,6 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_membership_product_membership_purchase_html() {
-
 
 		global $product;
 		$user = wp_get_current_user();

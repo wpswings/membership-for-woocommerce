@@ -522,7 +522,10 @@ class Membership_For_Woocommerce_Admin {
 				),
 			),
 		);
-
+		$after_email = array();
+		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );
+		$mfw_settings_general_before = array_merge( $mfw_settings_general_before, $after_email );
+		
 		// $mfw_settings_general_button = array(
 		// array(
 		// 'title' => __( ' Attach Invoice to Email', 'membership-for-woocommerce' ),

@@ -66,7 +66,7 @@ function auto_update_membership_for_woocommerce() {
 	}
 	membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
 	membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $mwb_mfw_license_key );
-	include_once 'mwb-update.php';
+	//include_once 'mwb-update.php';
 }
 
 /**

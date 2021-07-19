@@ -493,6 +493,7 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-shortcodes',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/mwb-membership-shortcodes.php',
 			);
+			$mfw_default_tabs = apply_filters( 'mwb_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
 			$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
 				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-system-status',
@@ -513,6 +514,7 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-developer',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
 			);
+
 			// if ( ! get_option( 'mwb_mfw_license_check', 0 ) ) {
 			// $mfw_default_tabs['membership-for-woocommerce-license'] = array(
 			// 'title'       => esc_html__( 'License', 'membership-for-woocommerce' ),
@@ -1057,13 +1059,14 @@ class Membership_For_Woocommerce {
 
 							<?php
 
-							$description = ! empty( $mwf_component['description'] ) ? esc_attr( $mwf_component['description'] ) : '';
-							$value   = ! empty( $mwf_component['value'] ) ? esc_attr( $mwf_component['value'] ) : '';
-							$mwb_membership_invoice_logo = '';
-							$upload_btn_cls = empty( $value ) ? '' : 'button_hide';
-							$remove_btn_cls = ! empty( $value ) ? '' : 'button_hide';
-							$file_upload_id = ! empty( $mwf_component['id'] ) ? $mwf_component['id'] : '';
-
+							$description = ! empty( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '';
+							$mwb_membership_invoice_logo   = ! empty( $mfw_component['value'] ) ? esc_attr( $mfw_component['value'] ) : '';
+							// $mwb_membership_invoice_logo = '';
+							$upload_btn_cls = empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
+							$remove_btn_cls = ! empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
+							$file_upload_id = ! empty( $mfw_component['id'] ) ? $mfw_component['id'] : '';
+							// $upload_btn_cls = empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
+							// $remove_btn_cls = ! empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
 							?>
 
 <input type="hidden" id="mwb_membership_invoice_logo" name="mwb_membership_invoice_logo" value="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>">
