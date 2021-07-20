@@ -217,7 +217,6 @@ class Membership_For_Woocommerce {
 
 		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $mfw_plugin_admin, 'mfw_admin_submenu_page', 15 );
-		$this->loader->add_filter( 'mfw_template_settings_array', $mfw_plugin_admin, 'mfw_admin_template_settings_page', 10 );
 		$this->loader->add_filter( 'mfw_general_settings_array', $mfw_plugin_admin, 'mfw_admin_general_settings_page', 10 );
 
 		// Saving tab settings.
@@ -498,11 +497,6 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-system-status',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-system-status.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-template'] = array(
-				'title'       => esc_html__( 'Templates', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-template',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-template.php',
 			);
 			$mfw_default_tabs['membership-for-woocommerce-overview'] = array(
 				'title'       => esc_html__( 'Overview', 'membership-for-woocommerce' ),

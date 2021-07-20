@@ -16,7 +16,7 @@
  * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
  * Version:           1.0.0
- * Author:            makewebbetter
+ * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
@@ -66,7 +66,7 @@ function auto_update_membership_for_woocommerce() {
 	}
 	membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
 	membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $mwb_mfw_license_key );
-	//include_once 'mwb-update.php';
+
 }
 
 /**
