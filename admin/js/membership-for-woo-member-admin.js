@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
             url: members_admin_obj.ajaxurl,
             type: "POST",
             data: {
-                action: "membership_get_states",
+                action: "mwb_membership_get_states",
                 country: $("#billing_country").val(),
                 nonce: members_admin_obj.nonce,
             },

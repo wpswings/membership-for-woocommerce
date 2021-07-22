@@ -386,7 +386,7 @@ class Membership_For_Woocommerce_Public {
 
 			// Determine access if is a membership product.
 			if ( true == $is_membership_product ) {
-	
+
 				// Not a member.
 				if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
 
@@ -1321,8 +1321,8 @@ class Membership_For_Woocommerce_Public {
 		 * if on default page get the plan_id from query.
 		 */
 
-		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
-		$mode = $this->mwb_membership_validate_mode();
+		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : 0;
+		$mode    = $this->mwb_membership_validate_mode();
 
 		if ( empty( $plan_id ) ) {
 
@@ -1389,7 +1389,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt thickbox" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
-		$no_thanks_button = apply_filters( 'membership_plan_no_thanks_button_shortcode', $no_thanks_button );
+		$no_thanks_button  = apply_filters( 'membership_plan_no_thanks_button_shortcode', $no_thanks_button );
 
 		return $no_thanks_button;
 	}
@@ -1447,7 +1447,7 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function upload_receipt() {
+	public function mwb_membership_upload_receipt() {
 
 		// Verify nonce.
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
@@ -1485,7 +1485,7 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function remove_current_receipt() {
+	public function mwb_membership_remove_current_receipt() {
 
 		// Verify nonce.
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
@@ -1517,11 +1517,11 @@ class Membership_For_Woocommerce_Public {
 			wp_die();
 		}
 	}
-
+	
 	/**
 	 * Ajax callback for getting states.
 	 */
-	public function membership_get_states_public() {
+	public function mwb_membership_get_states_public() {
 
 		// Nonce verify.
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
@@ -1548,7 +1548,7 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @param mixed $order_id  id of order.
 	 */
-	public function membership_process_payment( $order_id ) {
+	public function mwb_membership_process_payment( $order_id ) {
 
 		$fields = array();
 		$order = wc_get_order( $order_id );
@@ -1726,7 +1726,7 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Handle paypal transaction data.
 	 */
-	public function membership_save_transaction() {
+	public function mwb_membership_save_transaction() {
 
 		// Nonce verification.
 		check_ajax_referer( 'paypal-nonce', 'nonce' );
@@ -1774,7 +1774,7 @@ class Membership_For_Woocommerce_Public {
 		$all_member_plans = array();
 		$all_member_category = array();
 		$all_member_tag = array();
-	
+
 		if ( ! empty( $product ) ) {
 
 			$exclude = get_post_meta( $product->get_id(), '_mwb_membership_exclude', true );
@@ -1810,6 +1810,12 @@ class Membership_For_Woocommerce_Public {
 
 							$membership_status = get_post_meta( $membership_id, 'member_status', true );
 
+							if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'complete' ) ) ) {
+								$access = true;
+								
+								array_push( $all_member_tag, $product->get_id() );
+								
+							}
 							if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'expired' ) ) ) {
 								$access = false;
 
@@ -1824,6 +1830,13 @@ class Membership_For_Woocommerce_Public {
 							$access = false;
 						}
 					}
+				}
+			}
+
+			foreach ($all_member_tag as $key => $value) {
+
+				foreach ( array_keys($this->under_review_products,$value ) as $keys ) {
+					unset($this->under_review_products[$keys]);
 				}
 			}
 
@@ -1989,7 +2002,8 @@ class Membership_For_Woocommerce_Public {
 		);
 
 		if ( ! empty( $limited_members ) && is_array( $limited_members ) && count( $limited_members ) ) {
-
+			$user_id = '';
+			$user_name = '';
 			foreach ( $limited_members as $member_id ) {
 
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
@@ -2016,7 +2030,11 @@ class Membership_For_Woocommerce_Public {
 					// Set member status to Expired.
 					update_post_meta( $member_id, 'member_status', 'expired' );
 
-					$customer_email = WC()->mailer()->emails['membership_expired_email'];
+					$customer_email = '';
+					if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
+						$customer_email = WC()->mailer()->emails['membership_expired_email'];
+					}
+				
 					if ( ! empty( $customer_email ) ) {
 
 						$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
@@ -2064,13 +2082,26 @@ class Membership_For_Woocommerce_Public {
 					if ( in_array( $author_id, $already_processed_users ) ) {
 						continue;
 					}
-
+					$other_member_exists = false;
 					$memberships = get_user_meta( $author_id, 'mfw_membership_id', true );
+				
 					array_push( $already_processed_users, $author_id );
 
-					if ( 1 == count( $memberships ) ) {
+					foreach ( $memberships as $key => $m_id ) {
 
-						$user->remove_role( 'member' );
+						$status = get_post_meta( $m_id, 'member_status', true );
+
+						if ( 'complete' == $status ) {
+
+							$other_member_exists = true;
+						}
+					}
+
+					if ( 1 == count( $memberships ) ) {
+						if ( $other_member_exists == false ) {
+							$user->remove_role( 'member' );
+						}
+				
 					} else {
 
 						$remove_role = true;
@@ -2087,7 +2118,9 @@ class Membership_For_Woocommerce_Public {
 						}
 
 						// If removal required then remove role.
-						$user->remove_role( 'member' );
+						if ( $other_member_exists == false ) {
+							$user->remove_role( 'member' );
+						}
 					}
 				}
 			}
@@ -2154,7 +2187,7 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @param OBJECT $cart cart.
 	 */
-	public function set_membership_product_price( $cart ) {
+	public function mwb_membership_set_membership_product_price( $cart ) {
 
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
@@ -2189,7 +2222,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param mixed   $product object of product.
 	 * @return boolean
 	 */
-	public function make_membership_product_purchasable( $is_purchasable, $product ) {
+	public function mwb_membership_make_membership_product_purchasable( $is_purchasable, $product ) {
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$membership_product = wc_get_product( $mwb_membership_default_product );

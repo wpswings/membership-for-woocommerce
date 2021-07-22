@@ -497,7 +497,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function import_csv_modal_content() {
 		?>
 		<div class="import_csv_field_wrapper" style="display: none;">
-			<input type="file" name="csv_to_import" id="csv_file_upload">
+			<input type="file" name="csv_to_import" id="mwb_membership_csv_file_upload">
 			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
 		</div>
 		<?php

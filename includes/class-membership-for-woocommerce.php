@@ -255,11 +255,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'manage_mwb_cpt_membership_posts_custom_column', $mfw_plugin_admin, 'mwb_membership_for_woo_fill_columns_membership', 10, 2 );
 
 		// Admin side ajax.
-		$this->loader->add_action( 'wp_ajax_search_products_for_membership', $mfw_plugin_admin, 'search_products_for_membership' );
-		$this->loader->add_action( 'wp_ajax_search_product_categories_for_membership', $mfw_plugin_admin, 'search_product_categories_for_membership' );
-		$this->loader->add_action( 'wp_ajax_mwb_get_membership_content', $mfw_plugin_admin, 'mwb_get_membership_content' );
-		$this->loader->add_action( 'wp_ajax_membership_get_states', $mfw_plugin_admin, 'membership_get_states' );
-		$this->loader->add_action( 'wp_ajax_mwb_get_member_content', $mfw_plugin_admin, 'mwb_get_member_content' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_search_products_for_membership', $mfw_plugin_admin, 'mwb_membership_search_products_for_membership' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_search_product_categories_for_membership', $mfw_plugin_admin, 'mwb_membership_search_product_categories_for_membership' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_get_membership_content', $mfw_plugin_admin, 'mwb_membership_get_membership_content' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_get_states', $mfw_plugin_admin, 'mwb_membership_get_states' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_get_member_content', $mfw_plugin_admin, 'mwb_membership_get_member_content' );
 
 		// Download CSV.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
@@ -288,7 +288,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'save_post_mwb_cpt_membership', $mfw_plugin_admin, 'mwb_membership_for_woo_save_fields' );
 		$this->loader->add_action( 'edit_post_mwb_cpt_members', $mfw_plugin_admin, 'mwb_membership_save_member_fields' );
 
-		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'woo_order_status_change_custom', 10, 3 );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
 
 		// Distraction free page for membership plans page.
 		//$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
@@ -310,12 +310,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_enqueue_scripts', $mfw_plugin_common, 'mfw_common_enqueue_scripts' );
 
 		// license validation.
-		$this->loader->add_action( 'wp_ajax_mwb_mfw_validate_license_key', $mfw_plugin_common, 'mwb_mfw_validate_license_key' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_mfw_validate_license_key', $mfw_plugin_common, 'mwb_membership_mfw_validate_license_key' );
 		// AJAX handlers to save tnx data.
 		$this->loader->add_action( 'wp_ajax_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );
-		$this->loader->add_action( 'wp_ajax_csv_file_upload', $mfw_plugin_common, 'csv_file_upload' ); // Import CSV.
-		$this->loader->add_action( 'wp_ajax_nopriv_csv_file_upload', $mfw_plugin_common, 'csv_file_upload' );
+		$this->loader->add_action( 'wp_ajax_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' ); // Import CSV.
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
 
 	}
 
@@ -369,21 +369,21 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'woocommerce_package_rates', $mfw_plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
 
 			// AJAX handlers for receipt upload.
-			$this->loader->add_action( 'wp_ajax_upload_receipt', $mfw_plugin_public, 'upload_receipt' );
-			$this->loader->add_action( 'wp_ajax_nopriv_upload_receipt', $mfw_plugin_public, 'upload_receipt' );
+			$this->loader->add_action( 'wp_ajax_mwb_membership_upload_receipt', $mfw_plugin_public, 'mwb_membership_upload_receipt' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_upload_receipt', $mfw_plugin_public, 'mwb_membership_upload_receipt' );
 			// AJAX handlers for receipt removal.
-			$this->loader->add_action( 'wp_ajax_remove_current_receipt', $mfw_plugin_public, 'remove_current_receipt' );
-			$this->loader->add_action( 'wp_ajax_nopriv_remove_current_receipt', $mfw_plugin_public, 'remove_current_receipt' );
+			$this->loader->add_action( 'wp_ajax_mwb_membership_remove_current_receipt', $mfw_plugin_public, 'mwb_membership_remove_current_receipt' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_remove_current_receipt', $mfw_plugin_public, 'mwb_membership_remove_current_receipt' );
 			// AJAX handlers for get states.
-			$this->loader->add_action( 'wp_ajax_membership_get_states_public', $mfw_plugin_public, 'membership_get_states_public' );
-			$this->loader->add_action( 'wp_ajax_nopriv_membership_get_states_public', $mfw_plugin_public, 'membership_get_states_public' );
+			$this->loader->add_action( 'wp_ajax_mwb_membership_get_states_public', $mfw_plugin_public, 'mwb_membership_get_states_public' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_get_states_public', $mfw_plugin_public, 'mwb_membership_get_states_public' );
 			// AJAX handlers for process payment.
-			$this->loader->add_action( 'wp_ajax_membership_process_payment', $mfw_plugin_public, 'membership_process_payment' );
-			$this->loader->add_action( 'wp_ajax_nopriv_membership_process_payment', $mfw_plugin_public, 'membership_process_payment' );
+			$this->loader->add_action( 'wp_ajax_mwb_membership_process_payment', $mfw_plugin_public, 'mwb_membership_process_payment' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_process_payment', $mfw_plugin_public, 'mwb_membership_process_payment' );
 
 			// AJAX handlers to save tnx data.
-			$this->loader->add_action( 'wp_ajax_membership_save_transaction', $mfw_plugin_public, 'membership_save_transaction' );
-			$this->loader->add_action( 'wp_ajax_nopriv_membership_save_transaction', $mfw_plugin_public, 'membership_save_transaction' );
+			$this->loader->add_action( 'wp_ajax_mwb_membership_save_transaction', $mfw_plugin_public, 'mwb_membership_save_transaction' );
+			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_save_transaction', $mfw_plugin_public, 'mwb_membership_save_transaction' );
 
 			// Cart discount.
 			$this->loader->add_action( 'woocommerce_cart_calculate_fees', $mfw_plugin_public, 'mwb_membership_add_cart_discount' );
@@ -392,13 +392,13 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'mwb_membership_expiry_check', $mfw_plugin_public, 'mwb_membership_cron_expiry_check' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'set_membership_product_price' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'mwb_membership_set_membership_product_price' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'make_membership_product_purchasable', 10, 2 );
+			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'mwb_membership_make_membership_product_purchasable', 10, 2 );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_public, 'membership_process_payment' );
+			$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_public, 'mwb_membership_process_payment' );
 			$this->loader->add_action( 'template_redirect', $mfw_plugin_public, 'mwb_membership_buy_now_add_to_cart' );
 
 

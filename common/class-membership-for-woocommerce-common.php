@@ -82,7 +82,7 @@ class Membership_For_Woocommerce_Common {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_validate_license_key() {
+	public function mwb_membership_mfw_validate_license_key() {
 	
 		$mwb_mfw_purchase_code = sanitize_text_field( $_POST['purchase_code'] );
 		$api_params = array(
@@ -212,7 +212,7 @@ class Membership_For_Woocommerce_Common {
 	/**
 	 * Callback function for file Upload and import.
 	 */
-	public function csv_file_upload() {
+	public function mwb_membership_csv_file_upload() {
 
 		// Nonce Verification.
 		//check_ajax_referer( 'plan-import-nonce', 'nonce' );

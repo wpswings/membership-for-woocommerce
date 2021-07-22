@@ -51,7 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_buy]' ); ?></span>
 
 						</p>
-						mwb_membership_buynow
+						
 					</div>
 
 					<div class="mwb_membership_shortcode_div">

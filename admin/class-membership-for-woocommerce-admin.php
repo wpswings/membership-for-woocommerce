@@ -489,7 +489,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Show History to User', 'membership-for-woocommerce' ),
 				'type'  => 'radio-switch',
-				'description'  => __( 'If enabled, this will delete all data at plugin uninstall.', 'membership-for-woocommerce' ),
+				'description'  => __( 'This will Enable Users to visit and see Plans History in Membership tab  on My Account page.', 'membership-for-woocommerce' ),
 				'id'    => 'mwb_membership_plan_user_history',
 				'value' => get_option( 'mwb_membership_plan_user_history' ),
 				'class' => 'mfw-radio-switch-class',
@@ -505,7 +505,7 @@ class Membership_For_Woocommerce_Admin {
 				'id'    => 'mwb_membership_email_subject',
 				'value' => empty( get_option( 'mwb_membership_email_subject' ) ) ? __( 'Thank you for Shopping, Do not reply', 'membership-for-woocommerce' ) : get_option( 'mwb_membership_email_subject' ),
 				'class' => 'mfw-text-class',
-				'placeholder' => __( 'Text Demo', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'Email Subject', 'membership-for-woocommerce' ),
 			),
 			array(
 				'title' => __( 'Email Content', 'membership-for-woocommerce' ),
@@ -525,58 +525,7 @@ class Membership_For_Woocommerce_Admin {
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );
 		$mfw_settings_general_before = array_merge( $mfw_settings_general_before, $after_email );
-		
-		// $mfw_settings_general_button = array(
-		// array(
-		// 'title' => __( ' Attach Invoice to Email', 'membership-for-woocommerce' ),
-		// 'type'  => 'radio-switch',
-		// 'description'  => __( 'If enabled, this will delete all data at plugin uninstall.', 'membership-for-woocommerce' ),
-		// 'id'    => 'mwb_membership_attach_invoice',
-		// 'value' => $mwb_membership_attach_invoice_data = apply_filters( 'mwb_membership_set_attach_invoice_data', $mwb_membership_attach_invoice ),
-		// 'class' => 'mfw-radio-switch-class',
-		// 'options' => array(
-		// 'yes' => __( 'YES', 'membership-for-woocommerce' ),
-		// 'no' => __( 'NO', 'membership-for-woocommerce' ),
-		// ),
-		// ),
-		// array(
-		// 'title' => __( 'Invoice Company Address', 'membership-for-woocommerce' ),
-		// 'type'  => 'textarea',
-		// 'description'  => __( 'This is textarea field demo follow same structure for further use.', 'membership-for-woocommerce' ),
-		// 'id'    => 'mwb_membership_invoice_address',
-		// 'value' => get_option( 'mwb_membership_invoice_address' ),
-		// 'class' => 'mfw-textarea-class',
-		// 'rows' => '5',
-		// 'cols' => '10',
-		// 'placeholder' => __( 'Textarea Demo', 'membership-for-woocommerce' ),
-		// ),
-		// array(
-		// 'title' => __( 'Invoice Company Phone No.', 'membership-for-woocommerce' ),
-		// 'type'  => 'number',
-		// 'description'  => __( 'This will add Company phone no. to Invoice else default phone no. will be added.', 'membership-for-woocommerce' ),
-		// 'id'    => 'mwb_membership_invoice_phone',
-		// 'value' => get_option( 'mwb_membership_invoice_phone' ),
-		// 'class' => 'mfw-number-class',
-		// 'placeholder' => '',
-		// ),
-		// array(
-		// 'title' => __( 'Invoice Company Email', 'membership-for-woocommerce' ),
-		// 'type'  => 'email',
-		// 'description'  => __( 'This will add Company phone no. to Invoice else default phone no. will be added.', 'membership-for-woocommerce' ),
-		// 'id'    => 'mwb_membership_invoice_email',
-		// 'value' => get_option( 'mwb_membership_invoice_email' ),
-		// 'class' => 'mfw-number-class',
-		// 'placeholder' => '',
-		// ),
-		// array(
-		// 'title' => __( 'Invoice Company Logo', 'membership-for-woocommerce' ),
-		// 'type'  => 'file_upload',
-		// 'description'  => __( 'This will add Company phone no. to Invoice else default phone no. will be added.', 'membership-for-woocommerce' ),
-		// 'id'    => 'mwb_membership_invoice_logo',
-		// 'value' => get_option( 'mwb_membership_invoice_logo' ),
-		// 'class' => 'mfw-file_upload-class',
-		// 'placeholder' => ' ',
-		// ),
+
 		$mfw_settings_general_button = array(
 			array(
 				'type'  => 'button',
@@ -590,7 +539,7 @@ class Membership_For_Woocommerce_Admin {
 		return $mfw_settings_general;
 	}
 
-	
+
 
 	/**
 	 * Membership For WooCommerce save tab settings.
@@ -673,18 +622,6 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		$query = esc_url_raw( add_query_arg( $api_params, MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
-
-		// $ch = curl_init();
-		// curl_setopt($ch, CURLOPT_URL, $query);
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		// curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-		// curl_setopt($ch, CURLOPT_SSL_VERIFYSTATUS, false);
-
-		// $mwb_response = curl_exec($ch);
-
-		// curl_close($ch);
-
-		// $license_data = json_decode($mwb_response);
 
 		$mwb_response = wp_remote_get(
 			$query,
@@ -838,7 +775,7 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Ajax callback for getting states.
 	 */
-	public function membership_get_states() {
+	public function mwb_membership_get_states() {
 
 		// Nonce verify.
 		check_ajax_referer( 'members-nonce', 'nonce' );
@@ -1122,7 +1059,7 @@ class Membership_For_Woocommerce_Admin {
 			 */
 			require_once plugin_dir_path( __FILE__ ) . '/classes/class-mwb-membership-free-shipping-method.php'; // Including class file.
 			new Mwb_Membership_Free_Shipping_Method();
-			
+
 		}
 	}
 
@@ -1197,7 +1134,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_view':
 				?>
 
-				<a title="<?php echo esc_html__( 'Membership ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_membership_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></span></a>
+				<a title="<?php echo esc_html__( 'Membership ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_get_membership_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></span></a>
 
 				<?php
 				break;
@@ -1247,7 +1184,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_get_membership_content() {
+	public function mwb_membership_get_membership_content() {
 
 		// Nonce verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
@@ -1307,7 +1244,7 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_user_view':
 				add_thickbox();
 				?>
-				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox member-preview"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></a>
+				<a title="<?php echo esc_html__( 'Member ID #', 'membership-for-woocommerce' ) . esc_html( $post_id ); ?>" href="admin-ajax.php?action=mwb_membership_get_member_content&post_id=<?php echo esc_html( $post_id ); ?>&nonce=<?php echo esc_html( wp_create_nonce( 'preview-nonce' ) ); ?>" class="thickbox member-preview"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/eye-icon.svg' ); ?>" alt="eye"></a>
 
 				<?php
 
@@ -1332,7 +1269,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 * @since 1.0.0
 	 */
-	public function mwb_get_member_content() {
+	public function mwb_membership_get_member_content() {
 
 		// Nonce Verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
@@ -1353,12 +1290,13 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 
+
 	/**
 	 * Select2 search for membership target products.
 	 *
 	 * @since 1.0.0
 	 */
-	public function search_products_for_membership() {
+	public function mwb_membership_search_products_for_membership() {
 
 		$return         = array();
 		$search_results = new WP_Query(
@@ -1371,7 +1309,7 @@ class Membership_For_Woocommerce_Admin {
 			)
 		);
 
-		$search_results = apply_filters( 'search_products_for_membership', $search_results );
+		$search_results = apply_filters( 'mwb_membership_search_products_for_membership', $search_results );
 
 		if ( $search_results->have_posts() ) {
 
@@ -1432,7 +1370,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function search_product_categories_for_membership() {
+	public function mwb_membership_search_product_categories_for_membership() {
 
 		$return = array();
 		$args   = array(
@@ -1441,7 +1379,7 @@ class Membership_For_Woocommerce_Admin {
 			'orderby'  => 'name',
 		);
 
-		$args = apply_filters( 'search_product_categories_for_membership', $args );
+		$args = apply_filters( 'mwb_membership_search_product_categories_for_membership', $args );
 
 		$product_categories = get_terms( $args );
 
@@ -1652,7 +1590,7 @@ class Membership_For_Woocommerce_Admin {
 		/**
 		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
 		 */
-		//require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
+		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
 
 		/**
 		 * The class responsible for defining all methods of advance bank transfer gateway.
@@ -1835,10 +1773,12 @@ class Membership_For_Woocommerce_Admin {
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
-			// $user_id = get_current_user_id();
 
 			$post   = get_post( $post_id );
 			$user    = get_userdata( $post->post_author );
+
+			$user = new WP_User( $post->post_author ); // create a new user object for this user.
+			$user->set_role( 'member' ); // set them to whatever role you want using the full word.
 
 			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 
@@ -1868,7 +1808,6 @@ class Membership_For_Woocommerce_Admin {
 				update_option( 'email_status_cancle', $email_status );
 			}
 		}
-
 		foreach ( $actions as $action => $value ) {
 
 			if ( array_key_exists( $action, $_POST ) ) {
@@ -1876,7 +1815,6 @@ class Membership_For_Woocommerce_Admin {
 				update_post_meta( $post_id, $action, $value );
 			}
 		}
-
 		// Saving member billing details metabox fields.
 		if ( isset( $_POST['payment_gateway_select'] ) ) {
 
@@ -2032,7 +1970,6 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_plan_page_template( $page_template ) {
 
-
 		$pages_available = get_posts(
 			array(
 				'post_type'      => 'any',
@@ -2104,7 +2041,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
+	public function mwb_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
 
 		$order = new WC_Order( $order_id );
 		$orderstatus = $order->status;

@@ -67,7 +67,7 @@ jQuery(document).ready(function ($) {
 	// 			url: membership_public_obj.ajaxurl,
 	// 			type: "POST",
 	// 			data: {
-	// 				action: "membership_get_states_public",
+	// 				action: "mwb_membership_get_states_public",
 	// 				country: $("#membership_billing_country").val(),
 	// 				nonce: membership_public_obj.nonce,
 	// 			},
@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
 
 	// 		upload.append("receipt", file[0]);
 	// 		upload.append("auth_nonce", membership_public_obj.nonce);
-	// 		upload.append("action", "upload_receipt");
+	// 		upload.append("action", "mwb_membership_upload_receipt");
 
 	// 		$.ajax({
 	// 			url: membership_public_obj.ajaxurl,
@@ -156,7 +156,7 @@ jQuery(document).ready(function ($) {
 
 	// 						removal.append("path", response.path);
 	// 						removal.append("auth_nonce", membership_public_obj.nonce);
-	// 						removal.append("action", "remove_current_receipt");
+	// 						removal.append("action", "mwb_membership_remove_current_receipt");
 
 	// 						$.ajax({
 	// 							url: membership_public_obj.ajaxurl,
@@ -230,7 +230,7 @@ jQuery(document).ready(function ($) {
 	// 			type: form.attr("method"),
 	// 			dataType: "json",
 	// 			data: {
-	// 				action: "membership_process_payment",
+	// 				action: "mwb_membership_process_payment",
 	// 				nonce: membership_public_obj.nonce,
 	// 				form_data: form.serialize()
 	// 			},

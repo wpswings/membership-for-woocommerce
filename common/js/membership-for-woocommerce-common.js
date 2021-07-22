@@ -69,7 +69,7 @@ $(".mwb_membership_buynow").on("click", function (e) {
 //       $("#upload_csv_file").on("click", function(e) {
 //           e.preventDefault();
 
-//           var empty_check = $("#csv_file_upload").val();
+//           var empty_check = $("#mwb_membership_csv_file_upload").val();
 
 //           // If no file selected close the dialog box and show 'failure' sweet alert.
 //           if (empty_check.length == 0) {
@@ -87,12 +87,12 @@ $(".mwb_membership_buynow").on("click", function (e) {
 //           } else {
 
 //               var form = new FormData();
-//               var file = $(document).find("#csv_file_upload");
+//               var file = $(document).find("#mwb_membership_csv_file_upload");
 
 //               var single_file = file[0].files[0];
 
 //               form.append("file", single_file);
-//               form.append("action", "csv_file_upload");
+//               form.append("action", "mwb_membership_csv_file_upload");
 //               form.append("nonce", admin_ajax_obj.nonce)
 // console.log(form);
 //               $.ajax({
@@ -148,7 +148,7 @@ $(".mwb_membership_buynow").on("click", function (e) {
 // 				url: mfw_common_param.ajaxurl,
 // 				type: "POST",
 // 				data: {
-// 					action: "csv_file_upload",
+// 					action: "mwb_membership_csv_file_upload",
 // 				//	nonce: membership_public_obj.nonce,
 // 				},
 		

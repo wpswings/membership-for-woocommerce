@@ -34,12 +34,7 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 		</select>
 	</li>
 
-	<li class="wide" id="actions">
-		<label for="member_actions"><strong><?php esc_html_e( 'Actions', 'membership-for-woocommerce' ); ?></strong></label>
-		<select name="member_actions" id="member_actions">
-			<option <?php echo esc_html( 'email' === $mem_action ? 'selected' : '' ); ?> value="email_invoice"><?php esc_html_e( 'Email invoice to customer', 'membership-for-woocommerce' ); ?></option>
-		</select>
-	</li>
+<?php do_action( 'mwb_member_action_settings_array', $mem_action ); ?>
 
 	<li class="wide">
 		<div id="delete-member-action">
