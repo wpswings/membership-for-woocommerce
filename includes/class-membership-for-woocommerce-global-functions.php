@@ -518,7 +518,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> " required/>
 
 			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
-				<?php echo esc_html( $gateway->get_title() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo $gateway->get_icon(); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
+				<?php echo esc_html( $gateway->get_title() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo esc_html( $gateway->get_icon() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
 			</label>
 			<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
 				<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
@@ -652,8 +652,9 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function run_query( $query = '' ) {
 
 		global $wpdb;
+		$result = ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-		return ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		return $result;
 	}
 
 	/**
@@ -888,6 +889,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 *
 	 * @param array $fields an array of member billing details.
 	 * @param int   $plan_id Is the membership plan ID.
+	 * @param mixed $order_status is the order status.
 	 * @return array
 	 * @throws  Exception Error.
 	 *

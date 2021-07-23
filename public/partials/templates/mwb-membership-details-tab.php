@@ -194,21 +194,21 @@ if ( empty( $current_url ) ) {
 							if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 								$check_licence = check_membership_pro_plugin_is_active();
 								if ( $check_licence ) {
-								
-								$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
-								if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
-									foreach ( $prod_ids as $ids ) {
-										echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+
+									$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
+									if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
+										foreach ( $prod_ids as $ids ) {
+											echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+										}
+									} else {
+										esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
 									}
-								} else {
-									esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
 								}
-							}
 							} else {
 								esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
 							}
-							
-							
+
+
 							?>
 						</td>
 					</tr></br>

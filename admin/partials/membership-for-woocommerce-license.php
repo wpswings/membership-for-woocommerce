@@ -1,7 +1,23 @@
 <?php
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the html field for general tab.
+ *
+ * @link       https://makewebbetter.com/
+ * @since      1.0.0
+ *
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/admin/partials
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div class="mwb-mfw-wrap">
-<h2><?php _e( 'Your License', 'membership-for-woocommerce' ); ?></h2>
+<h2><?php esc_html_e( 'Your License', 'membership-for-woocommerce' ); ?></h2>
 <div class="mwb_mfw_license_text">
 	<p>
 	<?php
@@ -13,8 +29,8 @@
 			<tr>
 			<th scope="row"><label for="puchase-code"><?php esc_html_e( 'Purchase Code : ', 'membership-for-woocommerce' ); ?></label></th>
 			<td>
-				<input type="text" id="mwb_mfw_license_key" name="purchase-code" required="" size="30" class="mwb-mfw-purchase-code" value="" placeholder="<?php _e( 'Enter your code here...', 'membership-for-woocommerce' ); ?>">
-				<!-- <div id="mwb_license_ajax_loader"><img src="<?php // echo 'images/spinner.gif'; ?>"></div>-->
+				<input type="text" id="mwb_mfw_license_key" name="purchase-code" required="" size="30" class="mwb-mfw-purchase-code" value="" placeholder="<?php esc_html_e( 'Enter your code here...', 'membership-for-woocommerce' ); ?>">
+
 			</td>
 			</tr>
 		</table>

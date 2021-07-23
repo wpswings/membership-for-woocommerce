@@ -196,8 +196,10 @@ class Membership_Activity_Helper {
 
 		$file = $this->active_file;
 		if ( file_exists( $file ) && is_writable( $file ) ) {
+			$server_add = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+
 			//phpcs:disable
-			$log = 'Website: ' . $_SERVER['REMOTE_ADDR'] . PHP_EOL . // phpcs:ignore
+			$log = 'Website: ' . $server_add . PHP_EOL . // phpcs:ignore
 					'Time: ' . current_time( 'F j, Y  g:i a' ) . PHP_EOL .
 					'Step: ' . $step . PHP_EOL .
 					'Response: ' . wp_json_encode( $response ) . PHP_EOL .

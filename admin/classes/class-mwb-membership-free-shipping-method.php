@@ -64,7 +64,7 @@ function request_shipping_for_membership_init() {
 		/**
 		 * Calculate custom shipping method.
 		 *
-		 * @param array $package
+		 * @param array $package are the shipping package.
 		 *
 		 * @return void
 		 */

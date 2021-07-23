@@ -29,16 +29,6 @@ class Membership_For_Woocommerce_Activator {
 	 */
 	public static function membership_for_woocommerce_activate() {
 
-		$timestamp = get_option( 'mwb_mfw_activated_timestamp', 'not_set' );
-
-		if ( 'not_set' === $timestamp ) {
-
-			$current_time = current_time( 'timestamp' );
-
-			$thirty_days = strtotime( '+30 days', $current_time );
-
-			update_option( 'mwb_mfw_activated_timestamp', $thirty_days );
-		}
 	}
 
 	/**

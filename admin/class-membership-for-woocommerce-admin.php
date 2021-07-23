@@ -352,9 +352,9 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * mwb_developer_admin_hooks_listing
+	 * Mwb_developer_admin_hooks_listing.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function mwb_developer_admin_hooks_listing() {
 		$admin_hooks = array();
@@ -365,7 +365,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 		$data = array();
 		foreach ( $val['files'] as $v ) {
-			if ( $v !== 'css' && $v !== 'js' && $v !== 'images' ) {
+			if ( 'css' !== $v && 'js' !== $v && 'images' !== $v ) {
 				$helo = self::mwb_developer_hooks_function( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/' . $v . '/' );
 				if ( ! empty( $helo['hooks'] ) ) {
 					$admin_hooks[] = $helo['hooks'];
@@ -380,7 +380,7 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * mwb_developer_public_hooks_listing
+	 * Mwb_developer_public_hooks_listing.
 	 */
 	public function mwb_developer_public_hooks_listing() {
 
@@ -393,7 +393,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 		$data = array();
 		foreach ( $val['files'] as $v ) {
-			if ( $v !== 'css' && $v !== 'js' && $v !== 'images' ) {
+			if ( 'css' !== $v && 'js' !== $v && 'images' !== $v ) {
 				$helo = self::mwb_developer_hooks_function( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'public/' . $v . '/' );
 				if ( ! empty( $helo['hooks'] ) ) {
 					$public_hooks[] = $helo['hooks'];
@@ -407,7 +407,9 @@ class Membership_For_Woocommerce_Admin {
 		return $public_hooks;
 	}
 	/**
-	 * mwb_developer_hooks_function
+	 * Mwb_developer_hooks_function.
+	 *
+	 * @param mixed $path is the path of file.
 	 */
 	public function mwb_developer_hooks_function( $path ) {
 		$all_hooks = array();
@@ -453,9 +455,6 @@ class Membership_For_Woocommerce_Admin {
 		$mwb_membership_global_settings['mwb_membership_email_subject'] = get_option( 'mwb_membership_email_subject' );
 		$mwb_membership_global_settings['mwb_membership_email_content'] = get_option( 'mwb_membership_email_content' );
 		$mwb_membership_global_settings = apply_filters( 'mfw_mwb_membership_global_settings', $mwb_membership_global_settings );
-		// By default plugin will be enabled.
-		// $mwb_membership_enable_plugin = ! empty( $mwb_membership_global_settings['mwb_membership_enable_plugin'] ) ? $mwb_membership_global_settings['mwb_membership_enable_plugin'] : '';
-
 		update_option( 'mwb_membership_global_options', $mwb_membership_global_settings );
 
 		$mwb_membership_attach_invoice = ! empty( $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) ? $mwb_membership_global_settings['mwb_membership_attach_invoice'] : '';
@@ -501,7 +500,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title' => __( 'Email Subject', 'membership-for-woocommerce' ),
 				'type'  => 'text',
-				'description'  => __( ' ', 'membership-for-woocommerce' ),
+				'description'  => ( ' ' ),
 				'id'    => 'mwb_membership_email_subject',
 				'value' => empty( get_option( 'mwb_membership_email_subject' ) ) ? __( 'Thank you for Shopping, Do not reply', 'membership-for-woocommerce' ) : get_option( 'mwb_membership_email_subject' ),
 				'class' => 'mfw-text-class',
@@ -550,7 +549,7 @@ class Membership_For_Woocommerce_Admin {
 		global $mfw_mwb_mfw_obj;
 		if ( isset( $_POST['mfw_button_demo'] )
 			&& ( ! empty( $_POST['mwb_tabs_nonce'] )
-			&& wp_verify_nonce( sanitize_text_field( $_POST['mwb_tabs_nonce'] ), 'admin_save_data' ) )
+			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_tabs_nonce'] ) ), 'admin_save_data' ) )
 		) {
 
 			$mwb_mfw_gen_flag     = false;
@@ -588,10 +587,9 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * sanitation for an array
+	 * Sanitation for an array
 	 *
-	 * @param $array
-	 *
+	 * @param mixed $mwb_input_array for array value.
 	 * @return array
 	 */
 	public function mwb_sanitize_array( $mwb_input_array ) {
@@ -602,45 +600,7 @@ class Membership_For_Woocommerce_Admin {
 		return $mwb_input_array;
 	}
 
-	/**
-	 * checking makewebbetter license on daily basis
-	 *
-	 * @since 1.0.0
-	 */
-
-	public function mwb_mfw_check_license() {
-
-		$user_license_key = get_option( 'mwb_mfw_license_key', '' );
-
-		$api_params = array(
-			'slm_action'        => 'slm_check',
-			'secret_key'        => MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY,
-			'license_key'       => $user_license_key,
-			'_registered_domain' => $_SERVER['SERVER_NAME'],
-			'item_reference'    => urlencode( MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
-			'product_reference' => 'MWBPK-2965',
-		);
-
-		$query = esc_url_raw( add_query_arg( $api_params, MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
-
-		$mwb_response = wp_remote_get(
-			$query,
-			array(
-				'timeout' => 20,
-				'sslverify' => false,
-			)
-		);
-		$license_data = json_decode( wp_remote_retrieve_body( $mwb_response ) );
-
-		if ( isset( $license_data->result ) && 'success' === $license_data->result && isset( $license_data->status ) && 'active' === $license_data->status ) {
-
-			update_option( 'mwb_mfw_license_check', true );
-
-		} else {
-
-			delete_option( 'mwb_mfw_license_check' );
-		}
-	}
+	
 	/**
 	 * Custom post type to display the list of all members.
 	 *
@@ -1580,24 +1540,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-	/**
-	 * Include Membership supported payment gateway classes after plugins are loaded.
-	 *
-	 * @since       1.0.0
-	 */
-	public function mwb_membership_for_woo_plugins_loaded() {
-
-		/**
-		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
-		 */
-		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
-
-		/**
-		 * The class responsible for defining all methods of advance bank transfer gateway.
-		 */
-		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';.
-	}
-
 
 	/**
 	 * Add membership supported gateways.
@@ -1622,49 +1564,7 @@ class Membership_For_Woocommerce_Admin {
 		return $gateways;
 	}
 
-	/**
-	 * Add Membership Support Column on payment gateway page.
-	 *
-	 * @param array $columns An array of default columns.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_for_woo_gateway_support_column( $columns ) {
 
-		$add_column['mwb_membership_gateways'] = esc_html__( 'Membership Support', 'membership-for-woocommerce' );
-
-		// Position of new column.
-		$position = count( $columns ) - 1;
-
-		$columns = array_slice( $columns, 0, $position, true ) + $add_column + array_slice( $columns, $position, count( $columns ) - $position, true );
-
-		return $columns;
-	}
-
-	/**
-	 * Populating 'Membership support' column on payment gateway page.
-	 *
-	 * @param object $gateways Object of all payment gateways.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_for_woo_gateway_column_content( $gateways ) {
-
-		$supported_gateways = $this->global_class->supported_gateways();
-
-		echo '<td class="mwb_membership_gateways">';
-
-		if ( in_array( $gateways->id, $supported_gateways, true ) ) {
-
-			echo '<span class="status-enabled">' . esc_html__( 'Yes', 'membership-for-woocommerce' ) . '</span>';
-		} else {
-
-			echo '<span class="status-disabled">' . esc_html__( 'No', 'membership-for-woocommerce' ) . '</span>';
-		}
-
-		echo '</td>';
-
-	}
 
 	/**
 	 * Add export to csv button on Membership CPT
@@ -1961,50 +1861,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-	/**
-	 *  Adding distraction free mode to the offers page.
-	 *
-	 * @param mixed $page_template Default template for the page.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_plan_page_template( $page_template ) {
-
-		$pages_available = get_posts(
-			array(
-				'post_type'      => 'any',
-				'post_status'    => 'publish',
-				'posts_per_page' => -1,
-				'pagename'       => 'membership-plans',
-				'order'          => 'ASC',
-				'orderby'        => 'ID',
-			)
-		);
-
-		$pages_available = array_merge(
-			get_posts(
-				array(
-					'post_type'      => 'any',
-					'post_status'    => 'publish',
-					'posts_per_page' => -1,
-					's'              => '[mwb_membership_default_page_identification]',
-					'order'          => 'ASC',
-					'orderby'        => 'ID',
-				)
-			),
-			$pages_available
-		);
-
-		foreach ( $pages_available as $single_page ) {
-
-			if ( is_page( $single_page->ID ) ) {
-
-				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-template.php';
-			}
-		}
-		$page_template = apply_filters( 'mwb_membership_plan_page_template', $page_template );
-		return $page_template;
-	}
 
 	/**
 	 * Remove add-on payment gateways from checkout page.
@@ -2056,7 +1912,7 @@ class Membership_For_Woocommerce_Admin {
 			$get_data = $item->get_formatted_meta_data();
 			$item_meta_data = $item->get_formatted_meta_data( '', true );
 			foreach ( $item_meta_data as $mfw_key => $mfw_value ) {
-				// print_r( $mfw_key);
+
 				print_r( $mfw_value->display_key );
 				if ( '_member_id' == $mfw_value->display_key ) {
 					$member_id = $mfw_value->value;

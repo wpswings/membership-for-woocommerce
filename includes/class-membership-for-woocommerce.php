@@ -141,21 +141,14 @@ class Membership_For_Woocommerce {
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
 
-		// The class responsible for defining all actions that occur in the admin area.
-		// include_once plugin_dir_path(dirname(__FILE__)) . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
-
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
-
 
 			/**
 		 * The class responsible for defining all function for membership checkout validations.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
 
-
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/classes/class-mwb-membership-free-shipping-method.php';
-
-		
 
 		/**
 		 * The class responsible for defining all global functions for the plugin.
@@ -215,7 +208,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'admin_menu', $mfw_plugin_admin, 'mfw_options_page' );
 		$this->loader->add_action( 'admin_menu', $mfw_plugin_admin, 'mwb_mfw_remove_default_submenu', 50 );
 
-		// All admin actions and filters after License Validation goes here.
 		$this->loader->add_filter( 'mwb_add_plugins_menus_array', $mfw_plugin_admin, 'mfw_admin_submenu_page', 15 );
 		$this->loader->add_filter( 'mfw_general_settings_array', $mfw_plugin_admin, 'mfw_admin_general_settings_page', 10 );
 
@@ -243,7 +235,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'display_post_states', $mfw_plugin_admin, 'mwb_membership_default_page_states', 10, 2 );
 
 		// Creating membership method.
-		//$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
+
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
 
 		// Adding custom columns.
@@ -265,22 +257,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
 
-		// Include supported gateway classes.
-		// $this->loader->add_action( 'plugins_loaded', $mfw_plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
-
-		// Supported Gateways column.
-		$this->loader->add_filter( 'woocommerce_payment_gateways_setting_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_gateway_support_column' );
-
-		// Supported gateways content.
-		$this->loader->add_action( 'woocommerce_payment_gateways_setting_column_mwb_membership_gateways', $mfw_plugin_admin, 'mwb_membership_for_woo_gateway_column_content' );
-
-		// Add Membership gateways.
-		//$this->loader->add_filter( 'woocommerce_payment_gateways', $mfw_plugin_admin, 'mwb_membership_for_supported_gateways' );
-
 		// Add CSV export button.
 		$this->loader->add_action( 'restrict_manage_posts', $mfw_plugin_admin, 'mwb_membership_for_woo_export_members', 10 );
 		$this->loader->add_action( 'restrict_manage_posts', $mfw_plugin_admin, 'mwb_membership_for_woo_export_membership', 10 );
-	
+
 		// Hide payment gateways.
 		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
 
@@ -289,9 +269,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'edit_post_mwb_cpt_members', $mfw_plugin_admin, 'mwb_membership_save_member_fields' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
-
-		// Distraction free page for membership plans page.
-		//$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
 
 	}
 
@@ -401,7 +378,6 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_public, 'mwb_membership_process_payment' );
 			$this->loader->add_action( 'template_redirect', $mfw_plugin_public, 'mwb_membership_buy_now_add_to_cart' );
 
-
 			// Distraction free page for membership plans page.
 			$this->loader->add_filter( 'page_template', $mfw_plugin_public, 'mwb_membership_plan_page_template' );
 
@@ -509,13 +485,6 @@ class Membership_For_Woocommerce {
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
 			);
 
-			// if ( ! get_option( 'mwb_mfw_license_check', 0 ) ) {
-			// $mfw_default_tabs['membership-for-woocommerce-license'] = array(
-			// 'title'       => esc_html__( 'License', 'membership-for-woocommerce' ),
-			// 'name'        => 'membership-for-woocommerce-license',
-			// 'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-license.php',
-			// );
-			// }
 			$mfw_default_tabs =
 			// desc - filter for trial.
 			apply_filters( 'mwb_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
@@ -531,8 +500,6 @@ class Membership_For_Woocommerce {
 	 * @param array  $params parameters to pass to the file for access.
 	 */
 	public function mwb_mfw_plug_load_template( $path, $params = array() ) {
-
-		// $mfw_file_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . $path;
 
 		if ( file_exists( $path ) ) {
 
@@ -1003,7 +970,7 @@ class Membership_For_Woocommerce {
 										id="<?php echo esc_attr( $mfw_component['id'] ); ?>"
 										type="<?php echo esc_attr( $mfw_component['type'] ); ?>"
 										value="<?php echo ( isset( $mfw_component['value'] ) ? esc_attr( $mfw_component['value'] ) : '' ); ?>"
-									<?php echo esc_html( ( 'date' === $mfw_component['type'] ) ? 'max=' . date( 'Y-m-d', strtotime( date( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . 'min=' . date( 'Y-m-d' ) . '' : '' ); ?>
+									<?php echo esc_html( ( 'date' === $mfw_component['type'] ) ? 'max=' . gmdate( 'Y-m-d', strtotime( gmdate( 'Y-m-d', mktime() ) . ' + 365 day' ) ) . 'min=' . gmdate( 'Y-m-d' ) . '' : '' ); ?>
 										>
 									</label>
 									<div class="mdc-text-field-helper-line">

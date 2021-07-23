@@ -10,10 +10,11 @@
  * @package    Makewebbetter_Onboarding
  * @subpackage Makewebbetter_Onboarding/admin/onboarding
  */
+
 global $mfw_mwb_mfw_obj;
-$mfw_onboarding_form_fields = 
-//desc - filter for trial.
-apply_filters('mwb_mfw_on_boarding_form_fields', array());
+$mfw_onboarding_form_fields =
+// desc - filter for trial.
+apply_filters( 'mwb_mfw_on_boarding_form_fields', array() );
 ?>
 
 <?php if ( ! empty( $mfw_onboarding_form_fields ) ) : ?>
@@ -30,7 +31,7 @@ apply_filters('mwb_mfw_on_boarding_form_fields', array());
 					<p class="mwb-mfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'membership-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-mfw-on-boarding-form">
-						<?php 
+						<?php
 						$mfw_onboarding_html = $mfw_mwb_mfw_obj->mwb_mfw_plug_generate_html( $mfw_onboarding_form_fields );
 						echo esc_html( $mfw_onboarding_html );
 						?>

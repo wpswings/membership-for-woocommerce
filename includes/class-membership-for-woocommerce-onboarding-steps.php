@@ -482,7 +482,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-mfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ' . self::$mwb_mfw_plugin_name_label . ' so we can improve the plugin', 'membership-for-woocommerce' ),
+				'title' => esc_html__( 'Let us know why you are deactivating ', 'membership-for-woocommerce' ) . self::$mwb_mfw_plugin_name_label . esc_html__( 'so we can improve the plugin', 'membership-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',

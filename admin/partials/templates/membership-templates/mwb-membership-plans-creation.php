@@ -113,7 +113,7 @@ global $post;
 
 				<?php
 
-				$description = esc_html__( 'membership info', 'membership-for-woocommerce' );
+				$description = esc_html__( 'Provide the information related to membership', 'membership-for-woocommerce' );
 
 				$instance->tool_tip( $description );
 				$mwb_membership_plan_info = '';
@@ -924,7 +924,7 @@ global $post;
 
 							}
 						}
-						$description = esc_html__( 'Show Notice to members', 'membership-for-woocommerce' );
+						$description = esc_html__( 'Show notice to the members', 'membership-for-woocommerce' );
 
 						$instance->tool_tip( $description );
 
