@@ -96,13 +96,7 @@ class Membership_For_Woocommerce_Common {
 		);
 
 		$query = esc_url_raw( add_query_arg( $api_params, MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
-		// $ch = curl_init();
-		// curl_setopt( $ch, CURLOPT_URL, $query );
-		// curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-		// curl_setopt( $ch, CURLOPT_TIMEOUT, 20 );
-		// curl_setopt( $ch, CURLOPT_SSL_VERIFYSTATUS, false );
-		// $mwb_mfw_response = curl_exec( $ch );
-		// curl_close($ch);
+	
 
 		$mwb_mfw_response = wp_remote_get(
 			$query,
