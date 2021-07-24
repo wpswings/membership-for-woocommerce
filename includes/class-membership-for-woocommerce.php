@@ -286,8 +286,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $mfw_plugin_common, 'mfw_common_enqueue_scripts' );
 
-		// license validation.
-		$this->loader->add_action( 'wp_ajax_mwb_membership_mfw_validate_license_key', $mfw_plugin_common, 'mwb_membership_mfw_validate_license_key' );
 		// AJAX handlers to save tnx data.
 		$this->loader->add_action( 'wp_ajax_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );

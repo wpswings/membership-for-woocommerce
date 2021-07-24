@@ -78,82 +78,12 @@ class Membership_For_Woocommerce_Common {
 	}
 
 	/**
-	 * validating makewebbetter license
-	 *
-	 * @since    1.0.0
-	 */
-	public function mwb_membership_mfw_validate_license_key() {
-	
-		$mwb_mfw_purchase_code = sanitize_text_field( $_POST['purchase_code'] );
-		$api_params = array(
-			'slm_action'        => 'slm_activate',
-			'secret_key'        => MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY,
-			'license_key'       => $mwb_mfw_purchase_code,
-			'_registered_domain' => $_SERVER['SERVER_NAME'],
-			'item_reference'    => urlencode( MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE ),
-			'product_reference' => 'MWBPK-2965',
-
-		);
-
-		$query = esc_url_raw( add_query_arg( $api_params, MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL ) );
-	
-
-		$mwb_mfw_response = wp_remote_get(
-			$query,
-			array(
-				'timeout' => 20,
-				'sslverify' => false,
-			)
-		);
-
-		if ( is_wp_error( $mwb_mfw_response ) ) {
-			echo json_encode(
-				array(
-					'status' => false,
-					'msg' => __(
-						'An unexpected error occurred. Please try again.',
-						'membership-for-woocommerce'
-					),
-				)
-			);
-		} else {
-			$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
-
-			if ( isset( $mwb_mfw_license_data->result ) && $mwb_mfw_license_data->result == 'success' ) {
-				update_option( 'mwb_mfw_license_key', $mwb_mfw_purchase_code );
-				update_option( 'mwb_mfw_license_check', true );
-
-				echo json_encode(
-					array(
-						'status' => true,
-						'msg' => __(
-							'Successfully Verified. Please Wait.',
-							'membership-for-woocommerce'
-						),
-					)
-				);
-			} else {
-				echo json_encode(
-					array(
-						'status' => false,
-						'msg' => $mwb_mfw_license_data->message,
-					)
-				);
-			}
-		}
-		wp_die();
-	}
-
-
-	/**
 	 * Ajax function for membership checkout.
 	 *
 	 * @return void
 	 */
 	public function mwb_membership_checkout() {
 
-		ini_set('display_errors',1);
-		error_reporting(E_ALL);
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 		$plan_id    = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
 		$plan_price = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
@@ -208,8 +138,6 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function mwb_membership_csv_file_upload() {
 
-		// Nonce Verification.
-		//check_ajax_referer( 'plan-import-nonce', 'nonce' );
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
 
 		// Handling file upload using activity helper class..

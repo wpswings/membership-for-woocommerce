@@ -138,7 +138,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * This action is documented in includes/class-membership-for-woocommerce-activator.php
 	 */
 	function activate_membership_for_woocommerce() {
-		
+
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
 		Membership_For_Woocommerce_Activator::activate();
 		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate();

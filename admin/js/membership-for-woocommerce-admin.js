@@ -30,49 +30,7 @@
    */
 
   
-jQuery(document).ready(function($) {
-  $("#mwb_mfw_license_key").on("click", function(e) {
-    $("#mwb_mfw_license_activation_status").html("");
-  });
 
-  $("form#mwb_mfw_license_form").on("submit", function(e) {
-    e.preventDefault();
-
-    //   $("#mwb_license_ajax_loader").show();
-    var license_key = $("#mwb_mfw_license_key").val();
-    mwb_mfw_send_license_request(license_key);
-  });
-
-  function mwb_mfw_send_license_request(license_key) {
-    $.ajax({
-      type: "POST",
-      dataType: "JSON",
-      url: mfw_admin_param.ajaxurl,
-      data: {
-        action: "mwb_membership_mfw_validate_license_key",
-        purchase_code: license_key,
-      },
-
-      success: function(data) {
-        //   $("#mwb_upsell_license_ajax_loader").hide();
-
-        if (data.status == true) {
-          $("#mwb_mfw_license_activation_status").css("color", "#42b72a");
-
-          jQuery("#mwb_mfw_license_activation_status").html(data.msg);
-
-          location = mfw_admin_param.mfw_admin_param_location;
-        } else {
-          $("#mwb_mfw_license_activation_status").css("color", "#ff3333");
-
-          jQuery("#mwb_mfw_license_activation_status").html(data.msg);
-
-          jQuery("#mwb_mfw_license_key").val("");
-        }
-      },
-    });
-  }
-});
 
 
 jQuery(document).ready(function($) {

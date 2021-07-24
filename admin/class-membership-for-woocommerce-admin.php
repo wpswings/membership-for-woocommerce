@@ -566,7 +566,7 @@ class Membership_For_Woocommerce_Admin {
 					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
 						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
 							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
-								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? $this->mwb_sanitize_array( $_POST[ sanitize_text_field( wp_unslash( $mfw_genaral_setting['id'] ) ) ] ) : sanitize_text_field( $_POST[ $mfw_genaral_setting['id'] ] ) );
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
 							} else {
 								update_option( $mfw_genaral_setting['id'], '' );
 							}
@@ -599,7 +599,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 		return $mwb_input_array;
 	}
-
 
 	/**
 	 * Custom post type to display the list of all members.
