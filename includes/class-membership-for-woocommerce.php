@@ -253,6 +253,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_mwb_membership_get_states', $mfw_plugin_admin, 'mwb_membership_get_states' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_get_member_content', $mfw_plugin_admin, 'mwb_membership_get_member_content' );
 
+		// Include supported gateway classes.
+		$this->loader->add_action( 'plugins_loaded', $mfw_plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
+
 		// Download CSV.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
@@ -269,6 +272,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'edit_post_mwb_cpt_members', $mfw_plugin_admin, 'mwb_membership_save_member_fields' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
+
+		// Add Membership gateways.
+		$this->loader->add_filter( 'woocommerce_payment_gateways', $mfw_plugin_admin, 'mwb_membership_for_supported_gateways' );
+		// Distraction free page for membership plans page.
+		$this->loader->add_filter( 'page_template', $mfw_plugin_public, 'mwb_membership_plan_page_template' );
 
 	}
 

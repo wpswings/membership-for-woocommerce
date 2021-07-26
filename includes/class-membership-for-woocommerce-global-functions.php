@@ -561,6 +561,7 @@ class Membership_For_Woocommerce_Global_Functions {
 						if ( in_array( $gateway->id, $supported_gateways, true ) ) {
 
 							$this->gateway_modal_content( $gateway );
+
 						}
 					}
 					?>
@@ -571,8 +572,8 @@ class Membership_For_Woocommerce_Global_Functions {
 				<!-- Modal payment content end. -->
 
 				<?php
-				// Modal billing fields.
-				require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/mwb-membership-billing-modal.php';
+
+				//require_oncde plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/membership-templates/mwb-membership-billing-modal.php';
 				?>
 
 			</div>

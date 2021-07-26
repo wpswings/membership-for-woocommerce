@@ -135,7 +135,10 @@ class Membership_For_Woocommerce_Public {
 
 			wp_enqueue_script( 'paypal-smart-buttons', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-smart-buttons.js', array( 'jquery' ), $this->version, false );
 
-			$settings = '';
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
+			// Getting paypal settings to localize.
+			$payapl_sb = new Membership_Paypal_Express_Checkout();
+			$settings  = $payapl_sb->paypal_sb_settings();
 
 			$client_id    = ! empty( $settings['client_id'] ) ? $settings['client_id'] : 'sb';
 			$currency     = ! empty( $settings['currency_code'] ) ? $settings['currency_code'] : '';

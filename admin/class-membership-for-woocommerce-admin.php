@@ -1961,6 +1961,72 @@ class Membership_For_Woocommerce_Admin {
 		update_post_meta( $member_id, 'member_status', $order_st );
 	}
 
+	/**
+	 * Include Membership supported payment gateway classes after plugins are loaded.
+	 *
+	 * @since       1.0.0
+	 */
+	public function mwb_membership_for_woo_plugins_loaded() {
+
+		/**
+		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
+		 */
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
+
+		/**
+		 * The class responsible for defining all methods of advance bank transfer gateway.
+		 */
+		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';.
+	}
+
+
+	/**
+	 *  Adding distraction free mode to the offers page.
+	 *
+	 * @param mixed $page_template Default template for the page.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_plan_page_template( $page_template ) {
+
+
+		$pages_available = get_posts(
+			array(
+				'post_type'      => 'any',
+				'post_status'    => 'publish',
+				'posts_per_page' => -1,
+				'pagename'       => 'membership-plans',
+				'order'          => 'ASC',
+				'orderby'        => 'ID',
+			)
+		);
+
+		$pages_available = array_merge(
+			get_posts(
+				array(
+					'post_type'      => 'any',
+					'post_status'    => 'publish',
+					'posts_per_page' => -1,
+					's'              => '[mwb_membership_default_page_identification]',
+					'order'          => 'ASC',
+					'orderby'        => 'ID',
+				)
+			),
+			$pages_available
+		);
+
+		foreach ( $pages_available as $single_page ) {
+
+			if ( is_page( $single_page->ID ) ) {
+
+				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-template.php';
+			}
+		}
+		$page_template = apply_filters( 'mwb_membership_plan_page_template', $page_template );
+		return $page_template;
+	}
+	
+
 
 
 }

@@ -1,37 +1,3 @@
-(function( $ ) {
-	'use strict';
-
-	/**
-	 * All of the code for your public-facing JavaScript source
-	 * should reside in this file.
-	 *
-	 * Note: It has been assumed you will write jQuery code here, so the
-	 * $ function reference has been prepared for usage within the scope
-	 * of this function.
-	 *
-	 * This enables you to define handlers, for when the DOM is ready:
-	 *
-	 * $(function() {
-	 *
-	 * });
-	 *
-	 * When the window is loaded:
-	 *
-	 * $( window ).load(function() {
-	 *
-	 * });
-	 *
-	 * ...and/or other possibilities.
-	 *
-	 * Ideally, it is not considered best practise to attach more than a
-	 * single DOM-ready or window-load handler for a particular page.
-	 * Although scripts in the WordPress core, Plugins and Themes may be
-	 * practising this, we should strive to set a better example in our own work.
-	 */
-
-})( jQuery );
-
-
 jQuery(document).ready(function ($) {
 
 	var $payment_methods;
@@ -67,7 +33,7 @@ jQuery(document).ready(function ($) {
 	// 			url: membership_public_obj.ajaxurl,
 	// 			type: "POST",
 	// 			data: {
-	// 				action: "mwb_membership_get_states_public",
+	// 				action: "membership_get_states_public",
 	// 				country: $("#membership_billing_country").val(),
 	// 				nonce: membership_public_obj.nonce,
 	// 			},
@@ -128,7 +94,7 @@ jQuery(document).ready(function ($) {
 
 	// 		upload.append("receipt", file[0]);
 	// 		upload.append("auth_nonce", membership_public_obj.nonce);
-	// 		upload.append("action", "mwb_membership_upload_receipt");
+	// 		upload.append("action", "upload_receipt");
 
 	// 		$.ajax({
 	// 			url: membership_public_obj.ajaxurl,
@@ -156,7 +122,7 @@ jQuery(document).ready(function ($) {
 
 	// 						removal.append("path", response.path);
 	// 						removal.append("auth_nonce", membership_public_obj.nonce);
-	// 						removal.append("action", "mwb_membership_remove_current_receipt");
+	// 						removal.append("action", "remove_current_receipt");
 
 	// 						$.ajax({
 	// 							url: membership_public_obj.ajaxurl,
@@ -230,7 +196,7 @@ jQuery(document).ready(function ($) {
 	// 			type: form.attr("method"),
 	// 			dataType: "json",
 	// 			data: {
-	// 				action: "mwb_membership_process_payment",
+	// 				action: "membership_process_payment",
 	// 				nonce: membership_public_obj.nonce,
 	// 				form_data: form.serialize()
 	// 			},
@@ -417,8 +383,7 @@ jQuery(document).ready(function ($) {
 			},
 
 			success: function (response) {
-		
-			//	console.log(response);
+
 				window.location.replace('checkout');
 			}
 		});
