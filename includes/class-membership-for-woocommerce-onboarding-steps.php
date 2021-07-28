@@ -109,8 +109,8 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	public function __construct() {
 		self::$mwb_mfw_store_name = get_bloginfo( 'name' );
 		self::$mwb_mfw_store_url = home_url();
-		self::$mwb_mfw_plugin_name = 'membership-for-woocommerce';
-		self::$mwb_mfw_plugin_name_label = 'MWB STANDARD PLUGIN';
+		self::$mwb_mfw_plugin_name = 'Membership For WooCommerce';
+		self::$mwb_mfw_plugin_name_label = 'Membership For WooCommerce';
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_scripts' ) );
@@ -482,7 +482,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 			rand() => array(
 				'id' => 'mwb-mfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ', 'membership-for-woocommerce' ) . self::$mwb_mfw_plugin_name_label . esc_html__( 'so we can improve the plugin', 'membership-for-woocommerce' ),
+				'title' => esc_html__( 'Let us know why you are deactivating ', 'membership-for-woocommerce' ) . self::$mwb_mfw_plugin_name_label . esc_html__( ' so we can improve the plugin', 'membership-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',

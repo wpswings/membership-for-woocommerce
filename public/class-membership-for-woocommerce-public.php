@@ -1402,6 +1402,7 @@ class Membership_For_Woocommerce_Public {
 						unset( $rates[ $rate_key ] );
 					}
 				}
+			
 				return $rates;
 			}
 		}
@@ -2286,5 +2287,43 @@ class Membership_For_Woocommerce_Public {
 		return $page_template;
 	}
 
+
+	/**
+	 * Creating shipping method for membership.
+	 *
+	 * @param array $methods an array of shipping methods.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_create_shipping_method( $methods ) {
+
+		if ( ! class_exists( 'Mwb_Membership_free_shipping_method' ) ) {
+			/**
+			 * Custom shipping class for membership.
+			 */
+			require_once plugin_dir_path( __FILE__ ) . '/classes/class-mwb-membership-free-shipping-method.php'; // Including class file.
+			new Mwb_Membership_Free_Shipping_Method();
+		}
+	}
+
+		/**
+	 * Adding membership shipping method.
+	 *
+	 * @param array $methods an array of shipping methods.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_add_shipping_method( $methods ) {
+
+		$methods['mwb_membership_shipping'] = 'Mwb_Membership_Free_Shipping_Method';
+
+		$methods = apply_filters( 'mwb_membership_for_woo_add_shipping_method', $methods );
+
+		return $methods;
+	}
+
+
+	
 }
 // End of class.
