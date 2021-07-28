@@ -497,29 +497,7 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-			array(
-				'title' => __( 'Email Subject', 'membership-for-woocommerce' ),
-				'type'  => 'text',
-				'description'  => ( ' ' ),
-				'id'    => 'mwb_membership_email_subject',
-				'value' => empty( get_option( 'mwb_membership_email_subject' ) ) ? __( 'Thank you for Shopping, Do not reply', 'membership-for-woocommerce' ) : get_option( 'mwb_membership_email_subject' ),
-				'class' => 'mfw-text-class',
-				'placeholder' => __( 'Email Subject', 'membership-for-woocommerce' ),
-			),
-			array(
-				'title' => __( 'Email Content', 'membership-for-woocommerce' ),
-				'type'  => 'wp_editor',
-				'description'  => __( 'This will add email content which will be sent to Customer on successful membership purchase.', 'membership-for-woocommerce' ),
-				'id'    => 'mwb_membership_email_content',
-				'value' => get_option( 'mwb_membership_email_content' ),
-				'class' => 'mfw-wp-editor-class',
-				'args' => array(
-					'media_buttons' => false,
-					'tinymce' => array(
-						'toolbar1' => 'bold,italic,underline,separator,alignleft,aligncenter,alignright,separator,link,unlink,undo,redo',
-					),
-				),
-			),
+			
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );

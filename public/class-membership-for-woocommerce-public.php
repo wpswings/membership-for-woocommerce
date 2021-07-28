@@ -1896,8 +1896,10 @@ class Membership_For_Woocommerce_Public {
 		$user_id = get_current_user_id();
 
 		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-		$applied_offer_type = '';
-		$applied_offer_price = '';
+		$applied_offer_type_percentage = '';
+		$applied_offer_price_percentage = '';
+		$applied_offer_type_fixed = '';
+		$applied_offer_price_fixed = '';
 
 		if ( ! empty( $current_memberships && is_array( $current_memberships ) ) ) {
 
@@ -1914,43 +1916,64 @@ class Membership_For_Woocommerce_Public {
 				$offer_type  = $membership_plan['mwb_membership_plan_offer_price_type'];
 				$offer_price = ! empty( $membership_plan['mwb_memebership_plan_discount_price'] ) ? sanitize_text_field( $membership_plan['mwb_memebership_plan_discount_price'] ) : '';
 
-				if ( 'complete' == $membership_status ) {
+				if ( 'complete' == $membership_status && $offer_type = '%' ) {
 
 					// If % discount is given.
 
-					if ( empty( $applied_offer_price ) ) {
-						$applied_offer_price = $offer_price;
-						$applied_offer_type = $offer_type;
-					} elseif ( $applied_offer_price < $offer_price ) {
-						$applied_offer_price = $offer_price;
-						$applied_offer_type = $offer_type;
+					if ( empty( $applied_offer_price_percentage ) ) {
+						$applied_offer_price_percentage = $offer_price;
+						$applied_offer_type_percentage = $offer_type;
+					} elseif ( $applied_offer_price_percentage < $offer_price ) {
+						$applied_offer_price_percentage = $offer_price;
+						$applied_offer_type_percentage = $offer_type;
+					}
+				}
+				if ( 'complete' == $membership_status && $offer_type = 'fixed' ) {
+
+					// If % discount is given.
+
+					if ( empty( $applied_offer_price_fixed ) ) {
+						$applied_offer_price_fixed = $offer_price;
+						$applied_offer_type_fixed = $offer_type;
+					} elseif ( $applied_offer_price_fixed < $offer_price ) {
+						$applied_offer_price_fixed = $offer_price;
+						$applied_offer_type_fixed = $offer_type;
 
 					}
 				}
 			}
 		}
 
-		if ( '%' == $applied_offer_type && ! empty( $applied_offer_price ) ) {
+
+
+		if ( '%' == $applied_offer_type_percentage && ! empty( $applied_offer_price_percentage ) ) {
 
 			// Discount % is given( no negatives, not more than 100, if 100% then price zero ).
-			$applied_offer_price = floatval( sanitize_text_field( $applied_offer_price ) );
+			$applied_offer_price_percentage = floatval( sanitize_text_field( $applied_offer_price_percentage ) );
 
 			// Range should be 0-100 only.
-			$applied_offer_price = ( 100 < $applied_offer_price ) ? 100 : $applied_offer_price;
-			$applied_offer_price = ( 0 > $applied_offer_price ) ? 0 : $applied_offer_price;
+			$applied_offer_price_percentage = ( 100 < $applied_offer_price_percentage ) ? 100 : $applied_offer_price_percentage;
+			$applied_offer_price_percentage = ( 0 > $applied_offer_price_percentage ) ? 0 : $applied_offer_price_percentage;
 
-			$discount = $cart_total * ( $applied_offer_price / 100 );
-			$cart->add_fee( 'Membership Discount', -$discount, false );
+			$discount_percentage = $cart_total * ( $applied_offer_price_percentage / 100 );
+			//$cart->add_fee( 'Membership Discount', -$discount, false );
 		}
 
 				// If fixed discount is given.
-		if ( 'fixed' == $applied_offer_type && ! empty( $applied_offer_price ) ) {
+		if ( 'fixed' == $applied_offer_type_fixed && ! empty( $applied_offer_price_fixed ) ) {
 
 			// When fixed price is given.
-			$applied_offer_price = ( 0 > $applied_offer_price ) ? 0 : $applied_offer_price;
-			$applied_offer_price = ( $cart_total < $applied_offer_price ) ? 0 : $applied_offer_price;
+			$applied_offer_price_fixed = ( 0 > $applied_offer_price_fixed ) ? 0 : $applied_offer_price_fixed;
+			$applied_offer_price_fixed = ( $cart_total < $applied_offer_price_fixed ) ? 0 : $applied_offer_price_fixed;
 
-			$discount = $applied_offer_price;
+			$discount_fixed = $applied_offer_price_fixed;
+			//$cart->add_fee( 'Membership Discount', -$discount, false );
+		}
+
+
+
+		if ( ! empty( $discount_percentage ) || ! empty( $discount_fixed ) ) {
+			$discount = $discount_percentage > $discount_fixed ? $discount_percentage : $discount_fixed;
 			$cart->add_fee( 'Membership Discount', -$discount, false );
 		}
 

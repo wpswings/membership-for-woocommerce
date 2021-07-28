@@ -471,6 +471,11 @@ class Membership_For_Woocommerce {
 	public function mwb_mfw_plug_default_tabs() {
 		$mfw_default_tabs = array();
 
+			$mfw_default_tabs['membership-for-woocommerce-overview'] = array(
+				'title'       => esc_html__( 'Overview', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-overview',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/mwb-membership-overview.php',
+			);
 			$mfw_default_tabs['membership-for-woocommerce-general'] = array(
 				'title'       => esc_html__( 'General Setting', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-general',
@@ -487,11 +492,7 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-system-status',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-system-status.php',
 			);
-			$mfw_default_tabs['membership-for-woocommerce-overview'] = array(
-				'title'       => esc_html__( 'Overview', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-overview',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/mwb-membership-overview.php',
-			);
+		
 			$mfw_default_tabs['membership-for-woocommerce-developer'] = array(
 				'title'       => esc_html__( 'Developer', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-developer',

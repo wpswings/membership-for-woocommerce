@@ -191,23 +191,15 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
-								$check_licence = check_membership_pro_plugin_is_active();
-								if ( $check_licence ) {
+								$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
 
-									$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
-									if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
-										foreach ( $prod_ids as $ids ) {
-											echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
+								if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
+									foreach ( $prod_ids as $ids ) {
+										echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 									}
+								} else {
+									esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
 								}
-							} else {
-								esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
-							}
-
 
 							?>
 						</td>
@@ -228,6 +220,12 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr>
+					<?php 
+					if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+						$check_licence = check_membership_pro_plugin_is_active();
+						if ( $check_licence ) {
+
+							?>
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
@@ -297,7 +295,12 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr></br>
+					</tr>
+					<?php
+						}
+					}
+					?>
+					</br>
 				</address>
 			</div>
 		</section>
