@@ -276,7 +276,7 @@ class Membership_For_Woocommerce {
 		// Add Membership gateways.
 		$this->loader->add_filter( 'woocommerce_payment_gateways', $mfw_plugin_admin, 'mwb_membership_for_supported_gateways' );
 		// Distraction free page for membership plans page.
-		$this->loader->add_filter( 'page_template', $mfw_plugin_public, 'mwb_membership_plan_page_template' );
+		$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
 
 	}
 
@@ -490,7 +490,6 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-developer',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
 			);
-
 			$mfw_default_tabs =
 			// desc - filter for trial.
 			apply_filters( 'mwb_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
@@ -937,7 +936,7 @@ class Membership_For_Woocommerce {
 													<span class="mdc-notched-outline__leading"></span>
 													<span class="mdc-notched-outline__notch">
 								<?php if ( 'number' != $component['type'] ) { ?>
-															<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
+													<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
 							<?php } ?>
 													</span>
 													<span class="mdc-notched-outline__trailing"></span>
