@@ -571,11 +571,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				</div>
 				<!-- Modal payment content end. -->
 
-				<?php
-
-				//require_oncde plugin_dir_path( dirname( __FILE__ ) ) . 'public/partials/templates/membership-templates/mwb-membership-billing-modal.php';
-				?>
-
+		
 			</div>
 		</form>
 		<?php

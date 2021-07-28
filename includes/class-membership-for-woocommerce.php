@@ -148,9 +148,8 @@ class Membership_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
 
-	//	include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/classes/class-mwb-membership-free-shipping-method.php';
+		// include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/classes/class-mwb-membership-free-shipping-method.php';
 
-		
 		/**
 		 * The class responsible for defining all global functions for the plugin.
 		 */
@@ -237,7 +236,7 @@ class Membership_For_Woocommerce {
 
 		// Creating membership method.
 
-	//	$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
+		// $this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
 
 		// Adding custom columns.
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
@@ -279,13 +278,9 @@ class Membership_For_Woocommerce {
 		// Distraction free page for membership plans page.
 		$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
 
-
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
-
-
-
 
 	}
 
@@ -395,10 +390,9 @@ class Membership_For_Woocommerce {
 			// Distraction free page for membership plans page.
 			$this->loader->add_filter( 'page_template', $mfw_plugin_public, 'mwb_membership_plan_page_template' );
 
-
-				// Creating membership method.
-		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
-		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
+			// Creating membership method.
+			$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
+			$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
 
 		}
 	}
@@ -570,7 +564,7 @@ class Membership_For_Woocommerce {
 	/**
 	 * Show wordpress and server info.
 	 *
-	 * @return Array $mfw_system_data       returns array of all wordpress and server related information.
+	 * @return Array $mfw_system_data returns array of all wordpress and server related information.
 	 * @since  1.0.0
 	 */
 	public function mwb_mfw_plug_system_status() {
