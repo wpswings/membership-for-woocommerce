@@ -28,3 +28,84 @@
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
+
+// Getting global options.
+$mwb_membership_global_settings = get_option( 'mwb_membership_global_options' );
+
+// Delete only if "Delete data at unistall" in Global settings set to true.
+if ( ! empty( $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) && 'on' === $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) {
+
+	// Deleting membership default page at plugin unistall.
+	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page' );
+
+	if ( ! empty( $mwb_membership_default_page ) ) {
+
+			wp_delete_post( $mwb_membership_default_page, true );
+	}
+
+	// Deleting "member" user role at plugin uninstall.
+	$user_roles = get_option( 'wp_user_roles' );
+
+	if ( is_array( $user_roles ) && ! empty( $user_roles ) ) {
+
+		foreach ( $user_roles as $user_role ) {
+
+			if ( 'Member' === $user_role['name'] ) {
+
+				remove_role( 'member' );
+			}
+		}
+	}
+
+	// Delete all membership plans(post) & unregister post type at plugin uninstall.
+	$mwb_membership_cpt = array(
+		'post_type'      => 'mwb_cpt_membership',
+		'posts_per_page' => -1,
+	);
+
+	$mwb_membership_posts = get_posts( $mwb_membership_cpt );
+
+	if ( is_array( $mwb_membership_posts ) && ! empty( $mwb_membership_posts ) ) {
+
+		foreach ( $mwb_membership_posts as $membership_post ) {
+
+			wp_delete_post( $membership_post->ID, true );
+		}
+	}
+	unregister_post_type( 'mwb_cpt_membership' );
+
+	// Delete all members (post) & unregister post type at plugin uninstall.
+	$mwb_members_cpt = array(
+		'post_type'      => 'mwb_cpt_members',
+		'posts_per_page' => -1,
+	);
+
+	$mwb_members_posts = get_posts( $mwb_members_cpt );
+
+	if ( is_array( $mwb_members_posts ) && ! empty( $mwb_members_posts ) ) {
+
+		foreach ( $mwb_members_posts as $members_post ) {
+
+			wp_delete_post( $members_post->ID, true );
+		}
+	}
+	unregister_post_type( 'mwb_cpt_members' );
+
+	delete_option( 'mwb_membership_enable_plugin' );
+	delete_option( 'mwb_membership_for_woo_delete_data' );
+	delete_option( 'mwb_membership_plan_user_history' );
+
+	// Deleting options at last during plugin uninstall.
+	$plugin_options = array(
+		'mwb_membership_default_plans_page',
+		'mwb_membership_global_options',
+	);
+
+	foreach ( $plugin_options as $option ) {
+
+		if ( get_option( $option ) ) {
+
+			delete_option( $option );
+		}
+	}
+}

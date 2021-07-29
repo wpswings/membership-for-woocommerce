@@ -454,6 +454,7 @@ class Membership_For_Woocommerce_Admin {
 		$mwb_membership_global_settings['mwb_membership_plan_user_history'] = get_option( 'mwb_membership_plan_user_history' );
 		$mwb_membership_global_settings['mwb_membership_email_subject'] = get_option( 'mwb_membership_email_subject' );
 		$mwb_membership_global_settings['mwb_membership_email_content'] = get_option( 'mwb_membership_email_content' );
+		$mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] = get_option( 'mwb_membership_for_woo_delete_data' );
 		$mwb_membership_global_settings = apply_filters( 'mfw_mwb_membership_global_settings', $mwb_membership_global_settings );
 		update_option( 'mwb_membership_global_options', $mwb_membership_global_settings );
 
@@ -497,7 +498,7 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-			
+
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );

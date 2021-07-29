@@ -1,5 +1,9 @@
 jQuery(document).ready(function ($) {
 
+
+	jQuery(jQuery('.not_accessible').parent().find('.add_to_cart_button')).hide();
+
+
 	var $payment_methods;
 
 	const resetform = async () => {

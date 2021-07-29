@@ -193,13 +193,13 @@ if ( empty( $current_url ) ) {
 							<?php
 								$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
 
-								if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
-									foreach ( $prod_ids as $ids ) {
-										echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-									}
-								} else {
-									esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
+							if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
+								foreach ( $prod_ids as $ids ) {
+									echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 								}
+							} else {
+								esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
+							}
 
 							?>
 						</td>
@@ -220,7 +220,7 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr>
-					<?php 
+					<?php
 					if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 						$check_licence = check_membership_pro_plugin_is_active();
 						if ( $check_licence ) {
@@ -296,7 +296,7 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr>
-					<?php
+							<?php
 						}
 					}
 					?>

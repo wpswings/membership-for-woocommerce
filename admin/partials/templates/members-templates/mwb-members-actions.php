@@ -38,7 +38,16 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 
 	<li class="wide">
 		<div id="delete-member-action">
+		<?php
+		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+			$check_licence = check_membership_pro_plugin_is_active();
+			if ( $check_licence ) {
+				?>
 			<a href="<?php echo esc_url( admin_url( 'admin.php?post.php?post=' . $post->ID . '&action=trash' ) ); ?>"><?php esc_html_e( 'Move to trash', 'membership-for-woocommerce' ); ?></a>
+				<?php
+			}
+		}
+		?>
 		</div>
 		<input type="submit" name="save" id="publish" class="button button-primary button-large" value="<?php esc_html_e( 'Update', 'membership-for-woocommerce' ); ?>">
 	</li>
