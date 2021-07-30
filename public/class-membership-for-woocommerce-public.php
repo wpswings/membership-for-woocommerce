@@ -2014,45 +2014,68 @@ class Membership_For_Woocommerce_Public {
 		if ( ! empty( $limited_members ) && is_array( $limited_members ) && count( $limited_members ) ) {
 			$user_id = '';
 			$user_name = '';
+
+
 			foreach ( $limited_members as $member_id ) {
 
+				$post   = get_post( $member_id );				
+				$user = get_userdata( $post->post_author );
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+	
 				$current_date = time();
 
 				//echo $expiry_date.'---' ;
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $current_date . '+ 7 day' ) );
 
+				$Expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
+				$expiry = get_post_meta( $member_id, 'member_expiry', true );
+
+				if ( 'Lifetime' == $expiry ) {
+					$Expiry_mail = 'Lifetime';
+				} else {
+					$Expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+				}
 
 				if ( $expiry_date == $expiry_current ) {
 
-					$user_id = get_current_user_id();
-					$user = get_userdata( $user_id );
 
 					$user_name = $user->data->display_name;
 					$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
 					if ( ! empty( $customer_email ) ) {
 
-						$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+						$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $Expiry_mail );
 
 					}
 				}
 
 				if ( $expiry_date < $current_date ) {
-
-					// Set member status to Expired.
+					
+			// Set member status to Expired.
 					update_post_meta( $member_id, 'member_status', 'expired' );
 
 					$customer_email = '';
 					if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
 						$customer_email = WC()->mailer()->emails['membership_expired_email'];
 					}
+					$Expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
+
+
+				$expiry = get_post_meta( $member_id, 'member_expiry', true );
+
+				if ( 'Lifetime' == $expiry ) {
+					$Expiry_mail = 'Lifetime';
+				} else {
+					$Expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+				}
+
 
 					if ( ! empty( $customer_email ) ) {
 
-						$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+						$email_status = $customer_email->trigger($post->post_author, $plan_obj, $user_name, $Expiry_mail );
 					}
+
 				}
 			}
 		}
