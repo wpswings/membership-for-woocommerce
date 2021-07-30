@@ -2020,7 +2020,11 @@ class Membership_For_Woocommerce_Public {
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 				$current_date = time();
 
+				//echo $expiry_date.'---' ;
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $current_date . '+ 7 day' ) );
+
+
+
 				if ( $expiry_date == $expiry_current ) {
 
 					$user_id = get_current_user_id();
@@ -2271,7 +2275,7 @@ class Membership_For_Woocommerce_Public {
 
 						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
-							array_push( $this->existing_plan_product, $product->get_id() );
+							array_push( $existing_plan_product, $product->get_id() );
 
 						}
 					}

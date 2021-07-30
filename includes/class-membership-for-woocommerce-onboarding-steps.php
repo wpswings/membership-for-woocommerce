@@ -535,7 +535,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => '',
+				'value' => self::$mwb_mfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),

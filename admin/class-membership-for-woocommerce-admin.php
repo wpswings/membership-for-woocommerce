@@ -1637,7 +1637,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$post   = get_post( $post_id );
 			$user    = get_userdata( $post->post_author );
-
+			
 			$user = new WP_User( $post->post_author ); // create a new user object for this user.
 			$user->set_role( 'member' ); // set them to whatever role you want using the full word.
 
@@ -1655,10 +1655,41 @@ class Membership_For_Woocommerce_Admin {
 		// If manually cancelling membership then remove its expiry date.
 		if ( 'cancelled' == $_POST['member_status'] ) {
 
-			update_post_meta( $post_id, 'member_expiry', '' );
-			update_post_meta( $post_id, 'plan_obj', '' );
+			
 			$post   = get_post( $post_id );
 			$user = get_userdata( $post->post_author );
+			$expiry_date = '';
+			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
+
+
+			// Save expiry date in post.
+			if ( ! empty( $plan_obj ) ) {
+
+				$access_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_access_type', true );
+
+				if ( 'delay_type' == $access_type ) {
+					$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
+					$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
+
+					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
+				}
+
+				if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+					update_post_meta( $post_id, 'member_expiry', 'Lifetime' );
+
+				} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
+
+					$expiry_date = strtotime( $current_date . $duration );
+
+					update_post_meta( $post_id, 'member_expiry', $expiry_date );
+				}
+			}
+
+
 
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
@@ -1668,7 +1699,10 @@ class Membership_For_Woocommerce_Admin {
 				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
 				update_option( 'email_status_cancle', $email_status );
 			}
+			update_post_meta( $post_id, 'member_expiry', '' );
+			update_post_meta( $post_id, 'plan_obj', '' );
 		}
+	
 		foreach ( $actions as $action => $value ) {
 
 			if ( array_key_exists( $action, $_POST ) ) {
