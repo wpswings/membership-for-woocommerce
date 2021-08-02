@@ -680,7 +680,9 @@ class Membership_For_Woocommerce_Public {
 
 						$member_status = get_post_meta( $membership_id, 'member_status', true );
 						if ( 'pending' == $member_status || 'on-hold' == $member_status ) {
-									$plan_existing = true;
+
+									$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+									array_push( $existing_plan_id, $active_plan['ID'] );
 								break;
 						}
 						if ( ! empty( $member_status ) && 'complete' == $member_status ) {
@@ -691,6 +693,7 @@ class Membership_For_Woocommerce_Public {
 
 						}
 					}
+
 					if ( false == $plan_existing ) {
 
 						foreach ( $data as $plan ) {
@@ -724,8 +727,7 @@ class Membership_For_Woocommerce_Public {
 
 											$page_link = add_query_arg(
 												array(
-													'plan_id' => $plan['ID'],
-													'prod_id' => $product->get_id(),
+
 												),
 												$page_link
 											);
@@ -745,9 +747,11 @@ class Membership_For_Woocommerce_Public {
 										}
 										++$count;
 
+										$page_link = $page_link . '?plan_id=' . $plan['ID'] . '&prod_id=' . $product->get_id();
+
 										echo '<div class="available_member" style="clear: both">
 									<div style="margin-top: 10px;">
-										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
+										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membershipss	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 									</div>
 								</div>';
 									}
@@ -2484,9 +2488,9 @@ class Membership_For_Woocommerce_Public {
 						$target_cat_ids  = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_categories', true );
 						$target_tag_ids  = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_tags', true );
 
-						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
+						if ( in_array( get_the_ID(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
-							array_push( $this->existing_plan_product, $product->get_id() );
+							array_push( $existing_plan_product, get_the_ID() );
 
 						}
 					}
@@ -2506,38 +2510,16 @@ class Membership_For_Woocommerce_Public {
 							$target_cat_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
 							$target_tag_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
 
-					if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
+					if ( in_array( get_the_ID(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
-						if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
+						if ( ! in_array( get_the_ID(), $existing_plan_product ) ) {
 
 							 $methods = '<div class="not_accessible"></div>';
 							 echo wp_kses_post( $methods );
 						}
 					}
 
-					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
-
-						if ( in_array( $product->get_id(), $target_ids ) ) {
-
-							foreach ( $target_ids as $ids ) {
-								$exclude = get_post_meta( $ids, '_mwb_membership_exclude', true );
-
-								if ( 'yes' === $exclude ) {
-
-									return;
-								}
-							}
-							$page_link_found = true;
-
-							$page_link = add_query_arg(
-								array(
-									'plan_id' => $plan['ID'],
-									'prod_id' => $product->get_id(),
-								),
-								$page_link
-							);
-						}
-					}
+				
 				}
 			}
 		}
