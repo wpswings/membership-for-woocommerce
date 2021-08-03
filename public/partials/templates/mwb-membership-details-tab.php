@@ -109,8 +109,41 @@ if ( empty( $current_url ) ) {
 	$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 	$membership_status  = get_post_meta( $membership_id, 'member_status', true );
-	$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+
 	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
+
+
+	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
+
+
+	if ( ! empty( $membership_plan ) ) {
+
+		$access_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_access_type', true );
+
+		if ( 'delay_type' == $access_type ) {
+			$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
+			$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+
+			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
+		}
+
+		if ( 'lifetime' == $membership_plan['mwb_membership_plan_name_access_type'] ) {
+
+			update_post_meta( $membership_id, 'member_expiry', 'Lifetime' );
+
+		} elseif ( 'limited' == $membership_plan['mwb_membership_plan_name_access_type'] ) {
+
+			$duration = $membership_plan['mwb_membership_plan_duration'] . ' ' . $membership_plan['mwb_membership_plan_duration_type'];
+
+			$expiry_date = strtotime( $current_date . $duration );
+
+			update_post_meta( $membership_id, 'member_expiry', $expiry_date );
+		}
+	}
+
+
+				$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -124,8 +157,10 @@ if ( empty( $current_url ) ) {
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
 		<?php
 	} else {
+
+
 		?>
-		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', $membership_expiry ) ); ?> </mark>.</p>
+		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', intval( $membership_expiry ) ) ); ?> </mark>.</p>
 		<?php } ?>
 
 	<section class="woocommerce-order-details">
@@ -208,6 +243,7 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Products Categories: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
+
 							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] );
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {

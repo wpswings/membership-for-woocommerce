@@ -536,7 +536,7 @@ class Membership_For_Woocommerce_Public {
 
 													if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 														$is_pending = 'pending';
-													//	$disable_required = 'disable_required';
+														// $disable_required = 'disable_required';
 														?>
 														<div class="product-meta product-meta-review">
 															<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
@@ -726,9 +726,7 @@ class Membership_For_Woocommerce_Public {
 											$page_link_found = true;
 
 											$page_link = add_query_arg(
-												array(
-
-												),
+												array(),
 												$page_link
 											);
 										}
@@ -2019,67 +2017,61 @@ class Membership_For_Woocommerce_Public {
 			$user_id = '';
 			$user_name = '';
 
-
 			foreach ( $limited_members as $member_id ) {
 
-				$post   = get_post( $member_id );				
+				$post   = get_post( $member_id );
 				$user = get_userdata( $post->post_author );
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-	
+
 				$current_date = time();
 
-				//echo $expiry_date.'---' ;
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $current_date . '+ 7 day' ) );
 
-				$Expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
+				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
 				$expiry = get_post_meta( $member_id, 'member_expiry', true );
 
 				if ( 'Lifetime' == $expiry ) {
-					$Expiry_mail = 'Lifetime';
+					$expiry_mail = 'Lifetime';
 				} else {
-					$Expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+					$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
 				if ( $expiry_date == $expiry_current ) {
-
 
 					$user_name = $user->data->display_name;
 					$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
 					if ( ! empty( $customer_email ) ) {
 
-						$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $Expiry_mail );
+						$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_mail );
 
 					}
 				}
 
 				if ( $expiry_date < $current_date ) {
-					
-			// Set member status to Expired.
+
+					// Set member status to Expired.
 					update_post_meta( $member_id, 'member_status', 'expired' );
 
 					$customer_email = '';
 					if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
 						$customer_email = WC()->mailer()->emails['membership_expired_email'];
 					}
-					$Expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
+					$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
+					$expiry = get_post_meta( $member_id, 'member_expiry', true );
 
-				$expiry = get_post_meta( $member_id, 'member_expiry', true );
-
-				if ( 'Lifetime' == $expiry ) {
-					$Expiry_mail = 'Lifetime';
-				} else {
-					$Expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
-				}
-
+					if ( 'Lifetime' == $expiry ) {
+						$expiry_mail = 'Lifetime';
+					} else {
+						$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+					}
 
 					if ( ! empty( $customer_email ) ) {
 
-						$email_status = $customer_email->trigger($post->post_author, $plan_obj, $user_name, $Expiry_mail );
+						$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_mail );
 					}
-
 				}
 			}
 		}
@@ -2457,7 +2449,6 @@ class Membership_For_Woocommerce_Public {
 		 * Adding membership shipping method.
 		 *
 		 * @param array $methods an array of shipping methods.
-		 * @return array
 		 *
 		 * @since 1.0.0
 		 */
@@ -2518,8 +2509,6 @@ class Membership_For_Woocommerce_Public {
 							 echo wp_kses_post( $methods );
 						}
 					}
-
-				
 				}
 			}
 		}
