@@ -84,3 +84,38 @@
     display: block;
     font-weight: 600;
 }
+
+
+
+
+/*issue #70*/
+
+.mwb_membership_plan_content_price{
+    padding-bottom: 0;
+  }
+  
+  .mwb_membership_plan_content_desc img {
+      object-fit: cover;
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+  }
+  
+  .mwb_membership_buy_now_btn .mwb_membership_buynow:hover, .mwb_membership_no_thanks.button.alt.thickbox:hover {
+      border: 2px solid #f37e21!important;
+  }
+  
+  .mwb_membership_buy_now_btn .mwb_membership_buynow, .button.alt.mwb_membership_no_thanks {
+      border: 2px solid transparent!important;
+      margin: 10px;
+      padding: 0;
+      height: 55px;
+  }
+  
+  .available_member {
+      margin: 10px 10px -20px 0!important;
+  }
+  
+  .available_member .button.alt.mfw-membership {
+      width: unset;
+  }
