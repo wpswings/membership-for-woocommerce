@@ -45,9 +45,10 @@ global $post;
 
 				$instance->tool_tip( $description );
 
+
 				?>
 
-				<input type="number" step=".01" id="mwb_membership_plan_price" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
+				<input type="number" step=".01" id="mwb_membership_plan_price" placeholder="<?php echo esc_attr( $description ); ?>" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
 		<!-- Membership plan price end. -->

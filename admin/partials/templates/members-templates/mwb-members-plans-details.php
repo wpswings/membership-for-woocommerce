@@ -179,11 +179,113 @@ $existing_plans = get_posts( $args );
 							foreach ( $cat_ids as $ids ) {
 								echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
+						} else {
+							esc_html_e( 'No categories Offered in this Plan', 'membership-for-woocommerce' );
 						}
 						?>
 					</td>
 				</tr>
+				<?php
+					if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+						$check_licence = check_membership_pro_plugin_is_active();
+						if ( $check_licence ) {
 
+							?>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_tags'] );
+
+							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+								foreach ( $tag_ids as $ids ) {
+									$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+									$tag_name = $tagn->name;
+									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr></br>
+					
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Posts: ', 'membership-for-woocommerce' ); ?></label></th>
+					
+						<td>
+							<?php
+							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_post_target_ids'] );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Posts Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_categories'] );
+
+							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+								foreach ( $cat_ids as $ids ) {
+									echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered POst Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_tags'] );
+
+							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+								foreach ( $tag_ids as $ids ) {
+									$tagn     = get_term_by( 'id', $ids, 'post_tag' );
+									$tag_name = $tagn->name;
+									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Post Tags Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_page_target_ids'] );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Page Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+<?php
+
+						}
+					}
+?>
 			</table>
 		</div>
 	<?php } else { ?>

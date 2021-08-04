@@ -462,7 +462,7 @@ class Membership_For_Woocommerce_Admin {
 		$mwb_membership_attach_invoice_data = '';
 		$mfw_settings_general_before = array(
 			array(
-				'title' => __( 'Enable Membership Plans', 'membership-for-woocommerce' ),
+				'title' => __( 'Enable Membership Plansssss', 'membership-for-woocommerce' ),
 				'type'  => 'radio-switch',
 				'description'  => __( 'Enable plugin to start the functionality.', 'membership-for-woocommerce' ),
 				'id'    => 'mwb_membership_enable_plugin',
@@ -1137,7 +1137,6 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
 
-		// $public_plugin = new Membership_For_Woocommerce_Public( '', '' );
 		 $plugin_public = new Membership_For_Woocommerce_Public( '', '' );
 		 $plugin_public->mwb_membership_cron_expiry_check();
 		switch ( $column ) {
@@ -1927,7 +1926,8 @@ class Membership_For_Woocommerce_Admin {
 				$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
 
 				$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-
+				update_post_meta( $member_id, 'membership_delay_date', $current_date );
+				$today_date = get_the_date( 'Y-m-d' );
 			}
 
 			if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
@@ -1944,6 +1944,10 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
+
+
+
+
 		if ( 'completed' == $order->get_status() ) {
 			$order_st = 'complete';
 		} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
@@ -1954,7 +1958,15 @@ class Membership_For_Woocommerce_Admin {
 			$order_st = 'cancelled';
 		}
 
-		update_post_meta( $member_id, 'member_status', $order_st );
+		if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
+
+			update_post_meta( $member_id, 'member_status', 'pending' );
+		} else {
+			update_post_meta( $member_id, 'member_status', $order_st );
+		}
+
+
+		
 	}
 
 	/**
