@@ -143,7 +143,7 @@ if ( empty( $current_url ) ) {
 	}
 
 
-				$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+		$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -280,9 +280,10 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr></br>
-
+					
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Posts: ', 'membership-for-woocommerce' ); ?></label></th>
+					
 						<td>
 							<?php
 							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_post_target_ids'] );
@@ -332,6 +333,26 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr>
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_page_target_ids'] );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Page Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
 							<?php
 						}
 					}

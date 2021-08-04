@@ -530,7 +530,7 @@ class Membership_For_Woocommerce_Public {
 
 												$member_status = get_post_meta( $membership_id, 'member_status', true );
 
-												if ( ! empty( $member_status ) && 'complete' != $member_status ) {
+												if ( ! empty( $member_status ) && 'complete' != $member_status && 'expired' != $member_status ) {
 
 													$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
@@ -2013,6 +2013,34 @@ class Membership_For_Woocommerce_Public {
 			)
 		);
 
+
+
+		// // Get all limited memberships.
+		// $check_members = get_posts(
+		// 	array(
+		// 		'numberposts' => -1,
+		// 		'fields'      => 'ids', // return only ids.
+		// 		'post_type'   => 'mwb_cpt_members',
+		// 		'order'       => 'ASC',
+		// 		'meta_query'  => array(
+		// 			array(
+		// 				'relation' => 'AND',
+		// 				array(
+		// 					'key'     => 'member_expiry',
+		// 					'compare' => 'EXISTS',
+		// 				),
+		// 				//array(
+		// 				//	'key'     => 'member_expiry',
+		// 				//	'value'   => 'Lifetime',
+		// 				//	'compare' => '!=',
+		// 				//),
+		// 			),
+		// 		),
+		// 	)
+		// );
+
+
+	
 		if ( ! empty( $limited_members ) && is_array( $limited_members ) && count( $limited_members ) ) {
 			$user_id = '';
 			$user_name = '';
@@ -2024,6 +2052,7 @@ class Membership_For_Woocommerce_Public {
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 
+				//print_r($plan_obj);
 				$current_date = time();
 
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $current_date . '+ 7 day' ) );
@@ -2031,6 +2060,53 @@ class Membership_For_Woocommerce_Public {
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
 				$expiry = get_post_meta( $member_id, 'member_expiry', true );
+
+ //echo $member_id  ;
+
+
+
+
+
+
+// $current_date = gmdate( 'Y-m-d' );
+
+// $plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+
+// // Save expiry date in post.
+// if ( ! empty( $plan_obj ) ) {
+
+// 	$access_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_access_type', true );
+
+// 	if ( 'delay_type' == $access_type ) {
+// 		$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
+// 		$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
+
+// 		$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
+// 	}
+
+// 	if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+// 		update_post_meta( $member_id, 'member_expiry', 'Lifetime' );
+
+// 	} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
+
+// 		$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
+
+// 		$expiry_date = strtotime( $current_date . $duration );
+
+// 		update_post_meta( $member_id, 'member_expiry', $expiry_date );
+// 	}
+// }
+
+
+
+
+
+
+
+
+
 
 				if ( 'Lifetime' == $expiry ) {
 					$expiry_mail = 'Lifetime';
@@ -2514,9 +2590,5 @@ class Membership_For_Woocommerce_Public {
 		}
 
 	}
-
-
-
-
 }
 // End of class.
