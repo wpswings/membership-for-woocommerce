@@ -2014,32 +2014,6 @@ class Membership_For_Woocommerce_Public {
 		);
 
 
-
-		// // Get all limited memberships.
-		// $check_members = get_posts(
-		// 	array(
-		// 		'numberposts' => -1,
-		// 		'fields'      => 'ids', // return only ids.
-		// 		'post_type'   => 'mwb_cpt_members',
-		// 		'order'       => 'ASC',
-		// 		'meta_query'  => array(
-		// 			array(
-		// 				'relation' => 'AND',
-		// 				array(
-		// 					'key'     => 'member_expiry',
-		// 					'compare' => 'EXISTS',
-		// 				),
-		// 				//array(
-		// 				//	'key'     => 'member_expiry',
-		// 				//	'value'   => 'Lifetime',
-		// 				//	'compare' => '!=',
-		// 				//),
-		// 			),
-		// 		),
-		// 	)
-		// );
-
-
 	
 		if ( ! empty( $limited_members ) && is_array( $limited_members ) && count( $limited_members ) ) {
 			$user_id = '';
