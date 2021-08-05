@@ -253,9 +253,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_mwb_membership_get_states', $mfw_plugin_admin, 'mwb_membership_get_states' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_get_member_content', $mfw_plugin_admin, 'mwb_membership_get_member_content' );
 
-		// Include supported gateway classes.
-		$this->loader->add_action( 'plugins_loaded', $mfw_plugin_admin, 'mwb_membership_for_woo_plugins_loaded' );
-
 		// Download CSV.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_members' );
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_export_csv_membership' );
@@ -264,17 +261,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'restrict_manage_posts', $mfw_plugin_admin, 'mwb_membership_for_woo_export_members', 10 );
 		$this->loader->add_action( 'restrict_manage_posts', $mfw_plugin_admin, 'mwb_membership_for_woo_export_membership', 10 );
 
-		// Hide payment gateways.
-		$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_admin, 'mwb_membership_hide_payment_gateway', 100, 1 );
-
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post_mwb_cpt_membership', $mfw_plugin_admin, 'mwb_membership_for_woo_save_fields' );
 		$this->loader->add_action( 'edit_post_mwb_cpt_members', $mfw_plugin_admin, 'mwb_membership_save_member_fields' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
 
-		// Add Membership gateways.
-		$this->loader->add_filter( 'woocommerce_payment_gateways', $mfw_plugin_admin, 'mwb_membership_for_supported_gateways' );
 		// Distraction free page for membership plans page.
 		$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
 
@@ -354,9 +346,6 @@ class Membership_For_Woocommerce {
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $mfw_plugin_public, 'mwb_membership_unset_shipping_if_membership_available', 10, 2 );
 
-			// AJAX handlers for receipt upload.
-			$this->loader->add_action( 'wp_ajax_mwb_membership_upload_receipt', $mfw_plugin_public, 'mwb_membership_upload_receipt' );
-			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_upload_receipt', $mfw_plugin_public, 'mwb_membership_upload_receipt' );
 			// AJAX handlers for receipt removal.
 			$this->loader->add_action( 'wp_ajax_mwb_membership_remove_current_receipt', $mfw_plugin_public, 'mwb_membership_remove_current_receipt' );
 			$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_remove_current_receipt', $mfw_plugin_public, 'mwb_membership_remove_current_receipt' );
@@ -394,12 +383,6 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
-
-
-
-			
-
-
 
 		}
 	}
@@ -499,7 +482,7 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-system-status',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-system-status.php',
 			);
-		
+
 			$mfw_default_tabs['membership-for-woocommerce-developer'] = array(
 				'title'       => esc_html__( 'Developer', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-developer',

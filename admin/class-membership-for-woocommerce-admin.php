@@ -1501,28 +1501,7 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 
-	/**
-	 * Add membership supported gateways.
-	 *
-	 * @param array $gateways An array of wooommerce default gateway classes.
-	 * @return array $gateways An array of woocommerce gateway classes along with membership gateways.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_for_supported_gateways( $gateways ) {
 
-		if ( class_exists( 'Mwb_Membership_Adv_Bank_Transfer' ) ) {
-
-			$gateways[] = 'Mwb_Membership_Adv_Bank_Transfer';
-		}
-
-		if ( class_exists( 'Membership_Paypal_Express_Checkout' ) ) {
-
-			$gateways[] = 'Membership_Paypal_Express_Checkout';
-		}
-
-		return $gateways;
-	}
 
 
 
@@ -1636,7 +1615,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$post   = get_post( $post_id );
 			$user    = get_userdata( $post->post_author );
-			
+
 			$user = new WP_User( $post->post_author ); // create a new user object for this user.
 			$user->set_role( 'member' ); // set them to whatever role you want using the full word.
 
@@ -1654,12 +1633,10 @@ class Membership_For_Woocommerce_Admin {
 		// If manually cancelling membership then remove its expiry date.
 		if ( 'cancelled' == $_POST['member_status'] ) {
 
-			
 			$post   = get_post( $post_id );
 			$user = get_userdata( $post->post_author );
 			$expiry_date = '';
 			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
-
 
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
@@ -1688,8 +1665,6 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 
-
-
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
 
@@ -1701,7 +1676,7 @@ class Membership_For_Woocommerce_Admin {
 			update_post_meta( $post_id, 'member_expiry', '' );
 			update_post_meta( $post_id, 'plan_obj', '' );
 		}
-	
+
 		foreach ( $actions as $action => $value ) {
 
 			if ( array_key_exists( $action, $_POST ) ) {
@@ -1859,32 +1834,6 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Remove add-on payment gateways from checkout page.
 	 *
-	 * @param object $available_gateways Object of all woocommerce availabe gateways.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_hide_payment_gateway( $available_gateways ) {
-
-		if ( is_checkout() ) {
-
-			$supported_gateways = $this->global_class->supported_gateways();
-
-			foreach ( $available_gateways as $gateway ) {
-
-				if ( in_array( $gateway->id, $supported_gateways, true ) ) {
-
-					unset( $available_gateways[ $gateway->id ] );
-				}
-			}
-		}
-		$available_gateways = apply_filters( 'mwb_membership_hide_payment_gateway', $available_gateways );
-		return $available_gateways;
-	}
-
-
-	/**
-	 * Remove add-on payment gateways from checkout page.
-	 *
 	 * @param mixed $order_id order id.
 	 * @param mixed $old_status order old status.
 	 * @param mixed $new_status order new status.
@@ -1944,10 +1893,6 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-
-
-
-
 		if ( 'completed' == $order->get_status() ) {
 			$order_st = 'complete';
 		} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
@@ -1965,26 +1910,6 @@ class Membership_For_Woocommerce_Admin {
 			update_post_meta( $member_id, 'member_status', $order_st );
 		}
 
-
-		
-	}
-
-	/**
-	 * Include Membership supported payment gateway classes after plugins are loaded.
-	 *
-	 * @since       1.0.0
-	 */
-	public function mwb_membership_for_woo_plugins_loaded() {
-
-		/**
-		 * The class responsible for defining all methods of PayPal express checkout payment gateway.
-		 */
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/gateways/paypal express checkout/class-membership-paypal-express-checkout.php';
-
-		/**
-		 * The class responsible for defining all methods of advance bank transfer gateway.
-		 */
-		// require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'admin/gateways/advance bank tranfer/class-mwb-membership-adv-bank-transfer.php';.
 	}
 
 

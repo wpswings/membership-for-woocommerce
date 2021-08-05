@@ -62,10 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<span>&#9900;</span>
 					<p><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></p>
 				</li>
-				<li>
-					<span>&#9900;</span>
-					<p><?php esc_html_e( 'Advance bank transfer and Paypal smart button integration', 'membership-for-woocommerce' ); ?></p>
-				</li>
+				
 			</ul>
 			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
 			</div>

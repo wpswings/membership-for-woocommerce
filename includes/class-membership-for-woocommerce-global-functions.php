@@ -59,14 +59,12 @@ class Membership_For_Woocommerce_Global_Functions {
 		// Run only if description message is present.
 		if ( ! empty( $description ) ) {
 
-			$allowed_html = array(
-				'span' => array(
-					'class'    => array(),
-					'data-tip' => array(),
-				),
-			);
+			$allowed_html  = '<div class="mwb-tool-tip">';
+			$allowed_html .= '	<span class="icon">?</span>';
+			$allowed_html .= '<span class="description">' . esc_attr( $description ) . '</span>';
+			$allowed_html .= '	</div>';
 
-			echo wp_kses( wc_help_tip( $description ), $allowed_html );
+			 echo wp_kses_post( $allowed_html );
 		}
 	}
 
@@ -213,20 +211,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 	}
 
-	/**
-	 * Membership supported gateways.
-	 *
-	 * @since 1.0.0
-	 */
-	public function supported_gateways() {
-
-		$supported_gateways = array(
-			'membership-adv-bank-transfer', // Mwb Advance abnk transfer.
-			'membership-paypal-smart-buttons', // PayPal Smart buttons.
-		);
-
-		return apply_filters( 'mwb_membership_for_woo_supported_gateways', $supported_gateways );
-	}
 
 	/**
 	 * Available payment gateways.
@@ -534,49 +518,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		<?php
 	}
 
-	/**
-	 * Returns modal payment div wrapper.
-	 *
-	 * @param int $plan_id Membership plan ID.
-	 *
-	 * @since 1.0.0
-	 */
-	public function payment_gateways_html( $plan_id ) {
-
-		$wc_gateways      = new WC_Payment_Gateways();
-		$payment_gateways = $wc_gateways->get_available_payment_gateways();
-
-		$supported_gateways = $this->supported_gateways();
-
-		?>
-		<form id="mwb_membership_buy_now_modal_form" action="" method="post" enctype="multipart/form-data" style="display: none;">
-
-			<div class="mwb_membership_buy_now_modal">
-
-				<!-- Modal payment content start -->
-				<div class="mwb_membership_payment_modal">
-					<?php
-					foreach ( $payment_gateways as $gateway ) {
-
-						if ( in_array( $gateway->id, $supported_gateways, true ) ) {
-
-							$this->gateway_modal_content( $gateway );
-
-						}
-					}
-					?>
-
-					<!-- Paypal smarts buttons container -->
-					<div id="paypal-button-container" style="display: none;"></div>
-				</div>
-				<!-- Modal payment content end. -->
-
-		
-			</div>
-		</form>
-		<?php
-
-	}
 
 	/**
 	 * Check if any plan exist or not.

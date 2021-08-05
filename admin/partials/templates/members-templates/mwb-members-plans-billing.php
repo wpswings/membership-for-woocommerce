@@ -43,7 +43,7 @@ $all_users = get_users(
 $wc_gateways      = new WC_Payment_Gateways();
 $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-$supported_gateways = $instance->supported_gateways();
+//$supported_gateways = $instance->supported_gateways();
 
 
 // Creating Instance of the WC_Countries class.
