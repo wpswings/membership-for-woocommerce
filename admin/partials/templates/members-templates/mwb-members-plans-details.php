@@ -109,15 +109,21 @@ $existing_plans = get_posts( $args );
 						echo '<tr>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
 
 				}
-				?>
-
+			
+		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+					$check_licence = check_membership_pro_plugin_is_active();
+					if ( $check_licence ) {
+						?>
 				<tr>
 					<th><label><?php esc_html_e( 'Plan access', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php echo esc_html( $plan_access ); ?>
 					</td>
 				</tr>
-
+				<?php
+					}
+				}
+				?>
 				<tr>
 					<th><label><?php esc_html_e( 'Access Type', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
