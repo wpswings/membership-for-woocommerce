@@ -119,6 +119,12 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 	}
 
+
+
+
+
+
+
 	/**
 	 * Callable function for defining plugin constants.
 	 *
@@ -205,6 +211,18 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	}
 	run_membership_for_woocommerce();
 
+	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
+
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    1.0.0
+	 * @name mfw_admin_enqueue_styles.
+	 */
+	function mfw_admin_enqueue_styles() {
+			
+		wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
+	}
 
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
@@ -219,6 +237,10 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=membership_for_woocommerce_menu' ) . '">' . __( 'Settings', 'membership-for-woocommerce' ) . '</a>',
 		);
+		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+
+			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=membership-pro-plugin&utm_medium=membership-backend&utm_campaign=membership-pro">' . esc_html__( 'GO PRO', 'points-and-rewards-for-woocommerce' ) . '</a>';
+		}
 		return array_merge( $my_link, $links );
 	}
 

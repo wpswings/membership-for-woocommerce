@@ -1054,3 +1054,12 @@ div#TB_ajaxWindowTitle {
     justify-content: space-between;
 }
 
+
+a.mwb-wpr-go-pro {
+    background: #05d5d8;
+    color: white;
+    font-weight: 700;
+    padding: 2px 5px;
+    border: 1px solid #05d5d8;
+    border-radius: 5px;
+  }
