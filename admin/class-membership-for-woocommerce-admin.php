@@ -462,7 +462,7 @@ class Membership_For_Woocommerce_Admin {
 		$mwb_membership_attach_invoice_data = '';
 		$mfw_settings_general_before = array(
 			array(
-				'title' => __( 'Enable Membership Plansssss', 'membership-for-woocommerce' ),
+				'title' => __( 'Enable Membership Plans', 'membership-for-woocommerce' ),
 				'type'  => 'radio-switch',
 				'description'  => __( 'Enable plugin to start the functionality.', 'membership-for-woocommerce' ),
 				'id'    => 'mwb_membership_enable_plugin',
@@ -1768,6 +1768,7 @@ class Membership_For_Woocommerce_Admin {
 
 			foreach ( $this->get_plans_default_value() as $field => $value ) {
 
+				
 				$default = ! empty( $value['default'] ) ? $value['default'] : '';
 
 				$post_data = '';
@@ -1785,11 +1786,14 @@ class Membership_For_Woocommerce_Admin {
 					}
 				}
 				update_post_meta( $post_id, $field, $post_data );
-
+				if ( 'mwb_membership_plan_hide_products' ==  $field ) {
+					update_post_meta( $post_id, $field . $post_id, $post_data );
+				}
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
 				}
 			}
+		
 		}
 
 	}
