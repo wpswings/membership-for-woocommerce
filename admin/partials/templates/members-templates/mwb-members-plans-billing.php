@@ -72,10 +72,17 @@ $country_class = new WC_Countries();
 					if ( ! empty( $all_users ) && is_array( $all_users ) ) {
 
 						foreach ( $all_users as $users ) {
-							$user_info = get_user_by( 'ID', $users->ID );
-							?>
+							$user_info  = get_user_by( 'ID', $users->ID );
+							$user_meta  = get_userdata($users->ID);
+							$user_roles = $user_meta->roles; //array of roles the user is part of.
+
+							if ( 'administrator' != $user_roles[0] ) {
+
+
+								?>
 							<option <?php echo esc_html( $users->ID === $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
 							<?php
+							}
 						}
 					}
 					?>
@@ -116,10 +123,10 @@ $country_class = new WC_Countries();
 					<?php echo esc_html( $phone ); ?>
 				</p>
 
-				<p>
+				<!-- <p>
 					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
 					<?php echo esc_html( $instance->get_payment_method_title( $payment ) ); ?>
-				</p>
+				</p> -->
 
 			</div>
 
@@ -188,30 +195,7 @@ $country_class = new WC_Countries();
 					<input type="text" name="billing_phone" id="billing_phone" value="<?php echo esc_html( $phone ); ?>">
 				</p>
 
-				<p class="form-field payment_method_field">
-					<strong><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php if ( ! empty( $payment ) ) { ?>
-						<input type="hidden" name="billing_payment" id="billing_payment" value="<?php echo esc_html( $payment ); ?>" >
-						<?php echo esc_html( $payment ); ?><span><?php $instance->tool_tip( 'Manual' ); ?></span>	
-						<?php
-					} else {
-						?>
-						<select name="payment_gateway_select" id="payment_gateway_select">
-							<option value=""><?php esc_html_e( 'Select a payment method', 'membership-for-woocommerce' ); ?></option>
-							<?php
-							foreach ( $payment_gateways as $gateway ) {
-
-								if ( in_array( $gateway->id, $supported_gateways, true ) ) {
-									?>
-								<option value="<?php echo esc_html( $gateway->id ); ?>"><?php echo esc_html( $gateway->id ); ?></option>
-									<?php
-								}
-							}
-							?>
-						</select>
-					<?php } ?>
-
-				</p>
+			
 			</div>
 		</div>
 
