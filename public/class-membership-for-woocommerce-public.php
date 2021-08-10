@@ -2402,7 +2402,7 @@ class Membership_For_Woocommerce_Public {
 					$member_status = get_post_meta( $member_id, 'member_status', true );
 					// Set member status to Expired.
 
-					//if ( 'expired' != $member_status ) {
+					if ( 'expired' != $member_status ) {
 
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
@@ -2424,7 +2424,7 @@ class Membership_For_Woocommerce_Public {
 
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail,$plan_obj );
 						}
-					//	}
+						}
 				
 			}
 		}
