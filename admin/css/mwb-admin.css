@@ -150,6 +150,9 @@ select {
   transition: 0.3s ease;
 }
 
+
+
+
 .mwb-link:hover {
   color: #2196f3 !important;
 }
@@ -157,6 +160,7 @@ select {
 .mwb-link.active {
   position: relative;
   color: #2196f3 !important;
+  border-bottom: 0.5px solid var(--mdc-theme-primary);
 }
 
 .mwb-link:after {

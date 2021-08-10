@@ -43,7 +43,7 @@ $all_users = get_users(
 $wc_gateways      = new WC_Payment_Gateways();
 $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-//$supported_gateways = $instance->supported_gateways();
+// $supported_gateways = $instance->supported_gateways();
 
 
 // Creating Instance of the WC_Countries class.
@@ -73,15 +73,15 @@ $country_class = new WC_Countries();
 
 						foreach ( $all_users as $users ) {
 							$user_info  = get_user_by( 'ID', $users->ID );
-							$user_meta  = get_userdata($users->ID);
-							$user_roles = $user_meta->roles; //array of roles the user is part of.
+							$user_meta  = get_userdata( $users->ID );
+							$user_roles = $user_meta->roles; // array of roles the user is part of.
 
 							if ( 'administrator' != $user_roles[0] ) {
 
 
 								?>
 							<option <?php echo esc_html( $users->ID === $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
-							<?php
+								<?php
 							}
 						}
 					}

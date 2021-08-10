@@ -86,7 +86,6 @@ class Membership_For_Woocommerce_Admin {
 
 			wp_enqueue_style( $this->plugin_name . '-admin-global', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-global.css', array( 'mwb-mfw-meterial-icons-css' ), time(), 'all' );
 
-			wp_enqueue_style( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'mwb-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/mwb-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'mwb-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 			wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
@@ -1606,20 +1605,10 @@ class Membership_For_Woocommerce_Admin {
 				} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
-
-					$expiry_date = strtotime( $current_date . $duration );
-
-					if ( 'delay_type' == $access_type ) {
-						$delay_duration = $time_duration . ' ' . $time_duration_type;
-
-						$expiry_date = gmdate( strtotime( $current_date . $duration ) );
-						$date_exipary = gmdate( 'Y-m-d', $expiry_date );
-						$expiry_date = strtotime( $date_exipary . $delay_duration );
-
-					}
+					$today_date = get_the_date( 'Y-m-d' );
+					$expiry_date = strtotime( $today_date . $duration );
 
 				
-
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
@@ -1672,7 +1661,6 @@ class Membership_For_Woocommerce_Admin {
 
 					$expiry_date = strtotime( $current_date . $duration );
 
-
 					if ( 'delay_type' == $access_type ) {
 						$delay_duration = $time_duration . ' ' . $time_duration_type;
 
@@ -1681,7 +1669,6 @@ class Membership_For_Woocommerce_Admin {
 						$expiry_date = strtotime( $date_exipary . $delay_duration );
 
 					}
-
 
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
@@ -1707,17 +1694,16 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-
 		// Saving member billing details metabox fields.
 		if ( isset( $_POST['payment_gateway_select'] ) ) {
 
 			$payment = ! empty( $_POST['payment_gateway_select'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_gateway_select'] ) ) : '';
 
-		} elseif (  isset( $_POST['billing_payment'] ) ) {
+		} elseif ( isset( $_POST['billing_payment'] ) ) {
 
 			$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
 		} else {
-			$payment = 	! empty( get_post_meta( $post_id, 'billing_details_payment', true ) )  ? get_post_meta( $post_id, 'billing_details_payment', true )  : '';
+			$payment = ! empty( get_post_meta( $post_id, 'billing_details_payment', true ) ) ? get_post_meta( $post_id, 'billing_details_payment', true ) : '';
 		}
 
 			// phpcs:disable
@@ -1795,7 +1781,6 @@ class Membership_For_Woocommerce_Admin {
 
 			foreach ( $this->get_plans_default_value() as $field => $value ) {
 
-				
 				$default = ! empty( $value['default'] ) ? $value['default'] : '';
 
 				$post_data = '';
@@ -1813,14 +1798,13 @@ class Membership_For_Woocommerce_Admin {
 					}
 				}
 				update_post_meta( $post_id, $field, $post_data );
-				if ( 'mwb_membership_plan_hide_products' ==  $field ) {
+				if ( 'mwb_membership_plan_hide_products' == $field ) {
 					update_post_meta( $post_id, $field . $post_id, $post_data );
 				}
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
 				}
 			}
-		
 		}
 
 	}
@@ -1917,7 +1901,7 @@ class Membership_For_Woocommerce_Admin {
 			} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 				$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
-			
+
 				$expiry_date = gmdate( strtotime( $current_date . $duration ) );
 
 				if ( 'delay_type' == $access_type ) {
@@ -1928,7 +1912,6 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = strtotime( $date_exipary . $delay_duration );
 
 				}
-
 
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}

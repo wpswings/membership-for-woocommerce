@@ -70,7 +70,7 @@ global $post;
 				<select id="mwb_membership_club" class="wc-membership-search" multiple="multiple" name="mwb_membership_club[]" data-placeholder="<?php esc_attr_e( 'Search for a memberships&hellip;', 'membership-for-woocommerce' ); ?>">
 
 					<?php
-				
+
 					$mwb_membership_club = '';
 					if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 						$check_licence = check_membership_pro_plugin_is_active();

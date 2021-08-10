@@ -109,8 +109,8 @@ $existing_plans = get_posts( $args );
 						echo '<tr>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
 
 				}
-			
-		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+
+				if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 					$check_licence = check_membership_pro_plugin_is_active();
 					if ( $check_licence ) {
 						?>
@@ -120,7 +120,7 @@ $existing_plans = get_posts( $args );
 						<?php echo esc_html( $plan_access ); ?>
 					</td>
 				</tr>
-				<?php
+						<?php
 					}
 				}
 				?>
@@ -324,7 +324,7 @@ $existing_plans = get_posts( $args );
 
 							$post_ids = maybe_unserialize( $plan['mwb_membership_plan_target_disc_categories'] );
 
-							
+
 							$cat_ids = maybe_unserialize( $categories );
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
