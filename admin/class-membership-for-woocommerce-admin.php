@@ -1609,6 +1609,17 @@ class Membership_For_Woocommerce_Admin {
 
 					$expiry_date = strtotime( $current_date . $duration );
 
+					if ( 'delay_type' == $access_type ) {
+						$delay_duration = $time_duration . ' ' . $time_duration_type;
+
+						$expiry_date = gmdate( strtotime( $current_date . $duration ) );
+						$date_exipary = gmdate( 'Y-m-d', $expiry_date );
+						$expiry_date = strtotime( $date_exipary . $delay_duration );
+
+					}
+
+				
+
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
@@ -1661,6 +1672,17 @@ class Membership_For_Woocommerce_Admin {
 
 					$expiry_date = strtotime( $current_date . $duration );
 
+
+					if ( 'delay_type' == $access_type ) {
+						$delay_duration = $time_duration . ' ' . $time_duration_type;
+
+						$expiry_date = gmdate( strtotime( $current_date . $duration ) );
+						$date_exipary = gmdate( 'Y-m-d', $expiry_date );
+						$expiry_date = strtotime( $date_exipary . $delay_duration );
+
+					}
+
+
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
@@ -1684,15 +1706,20 @@ class Membership_For_Woocommerce_Admin {
 				update_post_meta( $post_id, $action, $value );
 			}
 		}
+
+
 		// Saving member billing details metabox fields.
 		if ( isset( $_POST['payment_gateway_select'] ) ) {
 
 			$payment = ! empty( $_POST['payment_gateway_select'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_gateway_select'] ) ) : '';
 
-		} else {
+		} elseif (  isset( $_POST['billing_payment'] ) ) {
 
 			$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
+		} else {
+			$payment = 	! empty( get_post_meta( $post_id, 'billing_details_payment', true ) )  ? get_post_meta( $post_id, 'billing_details_payment', true )  : '';
 		}
+
 			// phpcs:disable
 		$fields = array(
 			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
@@ -1890,8 +1917,18 @@ class Membership_For_Woocommerce_Admin {
 			} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 				$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
+			
+				$expiry_date = gmdate( strtotime( $current_date . $duration ) );
 
-				$expiry_date = strtotime( $current_date . $duration );
+				if ( 'delay_type' == $access_type ) {
+					$delay_duration = $time_duration . ' ' . $time_duration_type;
+
+					$expiry_date = gmdate( strtotime( $current_date . $duration ) );
+					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
+					$expiry_date = strtotime( $date_exipary . $delay_duration );
+
+				}
+
 
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
@@ -1914,6 +1951,7 @@ class Membership_For_Woocommerce_Admin {
 			update_post_meta( $member_id, 'member_status', $order_st );
 		}
 
+		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
 	}
 
 

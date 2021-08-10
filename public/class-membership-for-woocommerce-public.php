@@ -1190,12 +1190,12 @@ class Membership_For_Woocommerce_Public {
 				$description .= '<div class="members_plans_details">  ';
 				if ( ! empty( $plan ) ) {
 					$description .= '<div class="mwb_members_plans"> 
-	<label>Membership Details </label>
-	<table class="form-table">';
+	<label>Membership Details </label>';
+	$description .= '<div class="mwb_table_wrapper"><ul class="form-table">';
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Plan Type', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . $plan_type . '</td></tr>';
+					$description .= '</label><span>' . $plan_type . '</span></li>';
 
 					switch ( $plan_type ) {
 
@@ -1203,33 +1203,33 @@ class Membership_For_Woocommerce_Public {
 							break;
 
 						case 'limited':
-							$description .= '<tr>
-					<th><label>' . esc_html__( 'Plan Duration', 'membership-for-woocommerce' ) . '</label></th>
+							$description .= '<li>
+					<label>' . esc_html__( 'Plan Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<td>' . sprintf( ' %u %s ', esc_html( $plan_dura ), esc_html( $dura_type ) ) . '</td>
-				</tr>';
+					<span>' . sprintf( ' %u %s ', esc_html( $plan_dura ), esc_html( $dura_type ) ) . '</span>
+				</li>';
 							break;
 
 						case 'date_ranged':
-							$description .= '<tr>
-					<th><label>' . esc_html__( 'Duration', 'membership-for-woocommerce' ) . '</label></th>
+							$description .= '<li>
+					<label>' . esc_html__( 'Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<td>' . sprintf( ' %s to %s ', esc_html( $plan_start ), esc_html( $plan_end ) ) . '</td>
-				</tr>';
+					<span>' . sprintf( ' %s to %s ', esc_html( $plan_start ), esc_html( $plan_end ) ) . '</span>
+				</li>';
 							break;
 
 						default:
-							$description .= '<tr>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
+							$description .= '<li>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</li></br>';
 
 					}
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Plan access', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . $plan_access . '</td></tr>';
+					$description .= '</label><span>' . $plan_access . '</span></li>';
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Access Type', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . $access_type . '</td></tr>';
+					$description .= '</label><span>' . $access_type . '</span></li>';
 
 					switch ( $access_type ) {
 
@@ -1237,46 +1237,46 @@ class Membership_For_Woocommerce_Public {
 							break;
 
 						case 'delay_type':
-							$description .= '<tr>
-					<th><label>' . esc_html__( 'Delay Duration', 'membership-for-woocommerce' ) . '</label></th>
+							$description .= '<li>
+					<label>' . esc_html__( 'Delay Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<td>' . sprintf( ' %u %s ', esc_html( $delay_dura ), esc_html( $delay_type ) ) . '</td>
-				</tr>';
+					<span>' . sprintf( ' %u %s ', esc_html( $delay_dura ), esc_html( $delay_type ) ) . '</span>
+				</li>';
 							break;
 
 						default:
-							$description .= '<tr>' . esc_html__( 'Access type duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
+							$description .= '<li>' . esc_html__( 'Access type duration not defined', 'membership-for-woocommerce' ) . '</li></br>';
 					}
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Discount on cart', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . sprintf( ' %u %s ', esc_html( $discount ), esc_html( $price_type ) ) . '</td></tr>';
+					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $discount ), esc_html( $price_type ) ) . '</span></li>';
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Discount on Product', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . sprintf( ' %u %s ', esc_html( $discount_on_product ), esc_html( $price_type_on_product ) ) . '</td></tr>';
+					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $discount_on_product ), esc_html( $price_type_on_product ) ) . '</span></li>';
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Free Shipping', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>' . $shipping . '</td></tr>';
+					$description .= '</label><span>' . $shipping . '</span></li>';
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Offered Products', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>';
+					$description .= '</label><span>';
 					$prod_ids = maybe_unserialize( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 						foreach ( $prod_ids as $ids ) {
 							$description .= ( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 						}
 					}
-					$description .= '</td></tr>';
+					$description .= '</span></li>';
 
 					$cat_ids = maybe_unserialize( $categories );
 					if ( ! empty( $cat_ids ) ) {
 
-					$description .= '<tr><th><label>';
+					$description .= '<li><label>';
 					$description .= __( 'Offered Categories', 'membership-for-woocommerce' );
-					$description .= '</label></th><td>';
+					$description .= '</label><span>';
 
 					$cat_ids = maybe_unserialize( $categories );
 					if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
@@ -1285,15 +1285,15 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 
-					$description .= '</td></tr>';
+					$description .= '</span></li>';
 				}
 
 					$tag_ids = maybe_unserialize( $plan['mwb_membership_plan_target_tags'] );
 					if ( ! empty( $tag_ids ) ) {
 
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Product Tags', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 
 						if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 							foreach ( $tag_ids as $ids ) {
@@ -1303,14 +1303,14 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-							$description .= '</td></tr>';
+							$description .= '</span></li>';
 					}
 
 					$post_ids = maybe_unserialize( $plan['mwb_membership_plan_post_target_ids'] );
 					if ( ! empty( $post_ids ) ) {
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Posts', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 
 						if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 							foreach ( $post_ids as $ids ) {
@@ -1318,28 +1318,28 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
 					$cat_ids = maybe_unserialize( $plan['mwb_membership_plan_target_post_categories'] );
 					if ( ! empty( $cat_ids ) ) {
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Posts Categories', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 							foreach ( $cat_ids as $ids ) {
 								$description .= ( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
 					$tag_ids = maybe_unserialize( $plan['mwb_membership_plan_target_post_tags'] );
 					if ( ! empty( $tag_ids ) ) {
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Post Tags', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 						if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 							foreach ( $tag_ids as $ids ) {
 								$tagn     = get_term_by( 'id', $ids, 'post_tag' );
@@ -1347,16 +1347,16 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 
 					}
 
 					$page_ids = maybe_unserialize( $plan['mwb_membership_plan_page_target_ids'] );
 					if ( ! empty( $page_ids ) ) {
 
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Pages', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 						$page_ids = maybe_unserialize( $plan['mwb_membership_plan_page_target_ids'] );
 
 						if ( ! empty( $page_ids ) && is_array( $page_ids ) ) {
@@ -1365,15 +1365,15 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
 					$product_ids_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_ids'] );
 					if ( ! empty( $product_ids_discount ) ) {
 
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Product (under Product Discount)', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 						$product_ids_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_ids'] );
 
 						if ( ! empty( $product_ids_discount ) && is_array( $product_ids_discount ) ) {
@@ -1382,15 +1382,15 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
 					$product_cat_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_categories'] );
 					if ( ! empty( $product_cat_discount ) ) {
 
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Product Categories (under Product Discount)', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 
 						$cat_ids = maybe_unserialize( $product_cat_discount );
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
@@ -1398,15 +1398,15 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
 					$product_tags_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_tags'] );
 					if ( ! empty( $product_tags_discount ) ) {
 
-						$description .= '<tr><th><label>';
+						$description .= '<li><label>';
 						$description .= __( 'Offered Product Tags (under Product Discount)', 'membership-for-woocommerce' );
-						$description .= '</label></th><td>';
+						$description .= '</label><span>';
 
 						if ( ! empty( $product_tags_discount ) && is_array( $product_tags_discount ) ) {
 							foreach ( $product_tags_discount as $ids ) {
@@ -1415,10 +1415,10 @@ class Membership_For_Woocommerce_Public {
 								$description .= ( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
-						$description .= '</td></tr>';
+						$description .= '</span></li>';
 					}
 
-					$description .= '</table>';
+					$description .= '</ul></div>';
 
 					$description .= '</div></div>';
 
@@ -2390,8 +2390,6 @@ class Membership_For_Woocommerce_Public {
 					$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
-				if ( $expiry_date == $expiry_current ) {
-
 					$user_name = $user->data->display_name;
 					$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
 					if ( ! empty( $customer_email ) ) {
@@ -2399,13 +2397,12 @@ class Membership_For_Woocommerce_Public {
 						$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_mail );
 
 					}
-				}
-
-				if ( $expiry_date < $current_date ) {
+			
+			
 					$member_status = get_post_meta( $member_id, 'member_status', true );
 					// Set member status to Expired.
 
-					if ( 'expired' != $member_status ) {
+					//if ( 'expired' != $member_status ) {
 
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
@@ -2425,10 +2422,10 @@ class Membership_For_Woocommerce_Public {
 
 						if ( ! empty( $customer_email ) ) {
 
-							$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_mail );
+							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail,$plan_obj );
 						}
-					}
-				}
+					//	}
+				
 			}
 		}
 

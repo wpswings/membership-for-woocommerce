@@ -628,6 +628,23 @@
     position: relative;
     text-align: center;
   }
+
+  .mwb-membership__header {
+    background-color: #fff;
+    border-left: 6px solid #007aff;
+    max-width: 1140px;
+    width:90%;
+    margin: 25px auto;
+    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+}
+a.mwb-membership__header--close {
+  color: #007aff;
+}
+
+a.mwb-membership__header--close:focus {
+  color: #007aff;
+  outline:none;
+}
   
   .mwb-membership__header--msg {
     font-size: 24px;
@@ -749,4 +766,60 @@
 
 .available_member .button.alt.mfw-membership {
     width: unset;
+}
+
+.mwb_table_wrapper ul,.mwb_table_wrapper li,a {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none;
+}
+
+
+.mwb_members_plans {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.mwb_members_plans>label {
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.25;
+  margin-bottom: 25px;
+  display: inline-block;
+  border-bottom: 1.5px solid rgba(0,0,0,0.3);
+  padding: 5px;
+}
+
+.mwb_table_wrapper li label {
+  text-align: left;
+  font-weight: 600;
+  flex: 0 0 200px;
+  margin-right: 30px;
+}
+
+.mwb_table_wrapper li span {
+  text-align: left;
+  display: inline-block;
+  flex: 1;
+}
+
+.mwb_table_wrapper li {
+  display: flex;
+  max-width: 450px;
+  width: 90%;
+  margin: 20px auto 0;
+  justify-content: space-between;
+}
+
+@media screen and (max-width:520px) {
+  .mwb_table_wrapper li {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .mwb_table_wrapper li span {
+    display: block;
+  }
 }
