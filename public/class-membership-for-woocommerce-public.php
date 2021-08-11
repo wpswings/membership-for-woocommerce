@@ -2652,7 +2652,7 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 		$is_purchasable = apply_filters( 'add_membership_product_price_to_is_purchasable', $is_purchasable );
-
+		$is_product_exclude = false;
 		$user = wp_get_current_user();
 		if ( is_user_logged_in() || in_array( 'member', (array) $user->roles ) ) {
 			$data                = $this->custom_query_data;
@@ -2693,6 +2693,17 @@ class Membership_For_Woocommerce_Public {
 					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
 						$page_link = get_page_link( $mwb_membership_default_plans_page_id );
 					}
+
+					$exclude_product = array();
+					$exclude_product = apply_filters( 'mwb_membership_exclude_product', $exclude_product, $product->get_id() );
+
+					$is_product_exclude = apply_filters( 'mwb_membership_is_exclude_product', $exclude_product, $data, $is_product_exclude );
+
+					if ( $is_product_exclude ) {
+						break;
+					}
+
+
 
 					if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
