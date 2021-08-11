@@ -18,25 +18,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$plan_title  = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
-$plan_price  = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
-$plan_desc   = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
-$plan_type   = ! empty( $plan['mwb_membership_plan_name_access_type'] ) ? $plan['mwb_membership_plan_name_access_type'] : '';
-$plan_dura   = ! empty( $plan['mwb_membership_plan_duration'] ) ? $plan['mwb_membership_plan_duration'] : '';
-$dura_type   = ! empty( $plan['mwb_membership_plan_duration_type'] ) ? $plan['mwb_membership_plan_duration_type'] : '';
-$plan_start  = ! empty( $plan['mwb_membership_plan_start'] ) ? $plan['mwb_membership_plan_start'] : '';
-$plan_end    = ! empty( $plan['mwb_membership_plan_end'] ) ? $plan['mwb_membership_plan_end'] : '';
-$plan_access = ! empty( $plan['mwb_membership_plan_user_access'] ) ? $plan['mwb_membership_plan_user_access'] : '';
-$access_type = ! empty( $plan['mwb_membership_plan_access_type'] ) ? $plan['mwb_membership_plan_access_type'] : '';
-$delay_dura  = ! empty( $plan['mwb_membership_plan_time_duration'] ) ? $plan['mwb_membership_plan_time_duration'] : '';
-$delay_type  = ! empty( $plan['mwb_membership_plan_time_duration_type'] ) ? $plan['mwb_membership_plan_time_duration_type'] : '';
-$discount    = ! empty( $plan['mwb_memebership_plan_discount_price'] ) ? $plan['mwb_memebership_plan_discount_price'] : '';
-$price_type  = ! empty( $plan['mwb_membership_plan_offer_price_type'] ) ? $plan['mwb_membership_plan_offer_price_type'] : '';
-$shipping    = ! empty( $plan['mwb_memebership_plan_free_shipping'] ) ? $plan['mwb_memebership_plan_free_shipping'] : '';
-$products    = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $plan['mwb_membership_plan_target_ids'] : '';
-$categories  = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
-$discount_on_product    = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
-$price_type_on_product  = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
+$plan_title            = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
+$plan_price            = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
+$plan_desc             = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
+$plan_type             = ! empty( $plan['mwb_membership_plan_name_access_type'] ) ? $plan['mwb_membership_plan_name_access_type'] : '';
+$plan_dura             = ! empty( $plan['mwb_membership_plan_duration'] ) ? $plan['mwb_membership_plan_duration'] : '';
+$dura_type             = ! empty( $plan['mwb_membership_plan_duration_type'] ) ? $plan['mwb_membership_plan_duration_type'] : '';
+$plan_start            = ! empty( $plan['mwb_membership_plan_start'] ) ? $plan['mwb_membership_plan_start'] : '';
+$plan_end              = ! empty( $plan['mwb_membership_plan_end'] ) ? $plan['mwb_membership_plan_end'] : '';
+$plan_access           = ! empty( $plan['mwb_membership_plan_user_access'] ) ? $plan['mwb_membership_plan_user_access'] : '';
+$access_type           = ! empty( $plan['mwb_membership_plan_access_type'] ) ? $plan['mwb_membership_plan_access_type'] : '';
+$delay_dura            = ! empty( $plan['mwb_membership_plan_time_duration'] ) ? $plan['mwb_membership_plan_time_duration'] : '';
+$delay_type            = ! empty( $plan['mwb_membership_plan_time_duration_type'] ) ? $plan['mwb_membership_plan_time_duration_type'] : '';
+$discount              = ! empty( $plan['mwb_memebership_plan_discount_price'] ) ? $plan['mwb_memebership_plan_discount_price'] : '';
+$price_type            = ! empty( $plan['mwb_membership_plan_offer_price_type'] ) ? $plan['mwb_membership_plan_offer_price_type'] : '';
+$shipping              = ! empty( $plan['mwb_memebership_plan_free_shipping'] ) ? $plan['mwb_memebership_plan_free_shipping'] : '';
+$products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $plan['mwb_membership_plan_target_ids'] : '';
+$categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
+$discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
+$price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
 
 
 $args = array(
@@ -336,7 +336,6 @@ $existing_plans = get_posts( $args );
 							?>
 						</td>
 					</tr>
-
 
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Product Tags (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
