@@ -379,10 +379,9 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_categories'] );
+							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_categories'] );
 
 
-							$cat_ids = maybe_unserialize( $categories );
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
 									echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -400,7 +399,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_tags'] );
+							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_tags'] );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {

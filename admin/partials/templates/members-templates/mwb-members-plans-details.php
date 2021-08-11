@@ -260,7 +260,7 @@ $existing_plans = get_posts( $args );
 						</td>
 					</tr>
 					<tr>
-						<th><label><?php esc_html_e( 'Offered POst Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
 							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_post_tags'] ) ? $plan['mwb_membership_plan_target_post_tags'] : array() );
@@ -322,10 +322,8 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_categories'] ) ? $plan['mwb_membership_plan_target_disc_categories'] : array() );
+							$cat_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_categories'] ) ? $plan['mwb_membership_plan_target_disc_categories'] : array() );
 
-
-							$cat_ids = maybe_unserialize( $categories );
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
 									echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -342,13 +340,16 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_tags'] ) ? $plan['mwb_membership_plan_target_disc_tags'] : array() );
+							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_tags'] ) ? $plan['mwb_membership_plan_target_disc_tags'] : array() );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
 									$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+								if ( ! empty( $tagn ) ) {
 									$tag_name = $tagn->name;
 									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+									
 								}
 							} else {
 								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );

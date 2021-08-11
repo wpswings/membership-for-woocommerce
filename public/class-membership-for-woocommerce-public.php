@@ -468,10 +468,12 @@ class Membership_For_Woocommerce_Public {
 		$already_included_plan = array();
 		$suggested_membership = false;
 		$count = 0;
+		$is_pending = 'not pending';
+
 		$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 
 		if ( ! $product->is_purchasable() && $this->global_class->plans_exist_check() == true ) {
-
+		
 			if ( function_exists( 'is_product' ) && is_product() ) {
 
 				$data = $this->custom_query_data;
@@ -532,8 +534,7 @@ class Membership_For_Woocommerce_Public {
 								if ( is_user_logged_in() ) {
 									$disable_required = false;
 									// Show plans under review.
-									$is_pending = 'not pending';
-
+								
 									if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
 										$is_pending = 'not pending';
 										$user_id = get_current_user_id();
@@ -2638,7 +2639,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return boolean
 	 */
 	public function mwb_membership_make_membership_product_purchasable( $is_purchasable, $product ) {
-
+	
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$membership_product = wc_get_product( $mwb_membership_default_product );
@@ -2710,7 +2711,7 @@ class Membership_For_Woocommerce_Public {
 							$target_ids      = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) : array();
 							$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) : array();
 							$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) : array();
-
+							
 						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
 							if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
