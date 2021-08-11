@@ -1038,7 +1038,6 @@ class Membership_For_Woocommerce_Admin {
 		$columns = apply_filters( 'mwb_membership_for_woo_cpt_columns_members', $columns );
 
 		return $columns;
-
 	}
 	/**
 	 * Populating custom columns with content.
