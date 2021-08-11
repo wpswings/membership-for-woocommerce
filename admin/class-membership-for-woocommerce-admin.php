@@ -1024,7 +1024,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
 
-
+	
 		// Adding new columns.
 		$columns = array(
 			'cb'                   => '<input type="checkbox" />',
@@ -1180,6 +1180,9 @@ class Membership_For_Woocommerce_Admin {
 				break;
 		}
 
+
+
+		
 
 
 	}

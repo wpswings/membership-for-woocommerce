@@ -2396,7 +2396,7 @@ class Membership_For_Woocommerce_Public {
 			$user_name = '';
 
 			foreach ( $limited_members as $member_id ) {
-
+				$member_status = get_post_meta( $member_id, 'member_status', true );
 				$post   = get_post( $member_id );
 				$user = get_userdata( $post->post_author );
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
@@ -2416,15 +2416,16 @@ class Membership_For_Woocommerce_Public {
 					$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
+				if ( 'complete' == $member_status ) {				
 					$user_name = $user->data->display_name;
 					$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
-				if ( ! empty( $customer_email ) ) {
+					if ( ! empty( $customer_email ) ) {
 
-					$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
+						$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
 
+					}
 				}
-
-					$member_status = get_post_meta( $member_id, 'member_status', true );
+					
 					// Set member status to Expired.
 
 					$today_date = get_the_date( 'Y-m-d' );
