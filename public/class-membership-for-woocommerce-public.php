@@ -359,7 +359,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function mwb_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
-
+		
 		if ( is_admin() ) {
 
 			return $is_purchasable;
@@ -377,25 +377,25 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 		$exclude = get_post_meta( $product->get_id(), '_mwb_membership_exclude', true );
-
-
+	
+		
 		if ( 'yes' === $exclude ) {
 			$is_purchasable = false;
 			return $is_purchasable;
 		}
-
+	
 		$user = wp_get_current_user();
 
 		if ( $this->global_class->plans_exist_check() == true ) {
-
+			
 			$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 
 			// Determine access if is a membership product.
 			if ( true == $is_membership_product ) {
 
 				// Not a member.
-				if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
-
+				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
+				
 					// If non logged in or not a member.
 					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
 
@@ -749,9 +749,7 @@ class Membership_For_Woocommerce_Public {
 									$target_ids      = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
 									$target_cat_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
 									$target_tag_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
-
-
-																
+							
 									if ( $target_cat_ids ) {
 														
 										$target_ids = array_merge( $target_ids, $target_cat_ids );
@@ -1772,7 +1770,7 @@ class Membership_For_Woocommerce_Public {
 		$user = wp_get_current_user();
 		if ( $this->global_class->plans_exist_check() == true ) {
 
-			if ( ! is_user_logged_in() || ! in_array( 'member', (array) $user->roles ) ) {
+			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
 
 				foreach ( $rates as $rate_key => $rate ) {
 					// Excluding membership shipping methods.
