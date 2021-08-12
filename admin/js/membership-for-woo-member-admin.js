@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+  
+
     // Display edit fields on edit click
     $(".members_data_column").on("click", ".edit_member_address", function(e) {
         e.preventDefault();
@@ -81,3 +83,6 @@ jQuery(document).ready(function($) {
             $(this).closest('.mwb_membership_plan_gateways tr').css('background','red');
         }
 });
+
+
+

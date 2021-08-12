@@ -1026,8 +1026,6 @@ class Membership_For_Woocommerce {
 
 							$description = ! empty( $mfw_component['description'] ) ? $mfw_component['description'] : '';
 
-							// $instance->tool_tip( $description );
-
 							$content   = ! empty( $mfw_component['value'] ) ? $mfw_component['value'] : '';
 
 							$editor_id = ! empty( $mfw_component['id'] ) ? $mfw_component['id'] : '';
@@ -1064,16 +1062,16 @@ class Membership_For_Woocommerce {
 							$upload_btn_cls = empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
 							$remove_btn_cls = ! empty( $mwb_membership_invoice_logo ) ? '' : 'button_hide';
 							$file_upload_id = ! empty( $mfw_component['id'] ) ? $mfw_component['id'] : '';
-						
+
 							?>
 
 <input type="hidden" id="mwb_membership_invoice_logo" name="mwb_membership_invoice_logo" value="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>">
 	<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload Logo', 'membership-for-woocommerce' ); ?>">
 	<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Logo', 'membership-for-woocommerce' ); ?>">
 	<div id="img_thumbnail">
-							<?php if ( '' !== $mwb_membership_invoice_logo ) { ?>
-									<img src="<?php echo esc_html( $mwb_membership_invoice_logo ); ?>" alt='Logo Image' width="60px" height="60px"/>
-								<?php } ?>     
+							
+									<img src="<?php echo esc_html( ! empty( $mwb_membership_invoice_logo ) ? $mwb_membership_invoice_logo : ' ' ); ?>" alt='Logo Image' onerror=this.src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/placeholder.png' ); ?>" width="60px" height="60px"/>
+								   
 	</div>
 </div>
 </div>

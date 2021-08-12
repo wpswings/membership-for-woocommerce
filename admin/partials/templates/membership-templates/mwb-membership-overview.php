@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<!-- <a href="<?php echo esc_url( 'https://makewebbetter.com/contact-us/' ); ?>" target="__blank"><span class="mfw_overview-skype-text"><?php esc_html_e( 'Connect', 'membership-for-woocommerce' ); ?></span><img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Support.png' ); ?>" alt="icon" class="mfw_overview-skype"></a> -->
 	</div>
 	<div class="mfw_overview_banner">
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/banner.png' ); ?>" alt="banner-image">
 	</div>
 	<div class="mfw_overview_content">
 		<div class="mfw_overview_content-entry_text">

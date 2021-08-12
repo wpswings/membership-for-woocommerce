@@ -454,11 +454,19 @@ class Membership_For_Woocommerce_Admin {
 		$mwb_membership_global_settings['mwb_membership_email_subject'] = get_option( 'mwb_membership_email_subject' );
 		$mwb_membership_global_settings['mwb_membership_email_content'] = get_option( 'mwb_membership_email_content' );
 		$mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] = get_option( 'mwb_membership_for_woo_delete_data' );
+
+		$mwb_membership_global_settings['mwb_membership_attach_invoice'] = get_option( 'mwb_membership_attach_invoice' );
+		$mwb_membership_global_settings['mwb_membership_invoice_address'] = get_option( 'mwb_membership_invoice_address' );
+		$mwb_membership_global_settings['mwb_membership_invoice_phone'] = get_option( 'mwb_membership_invoice_phone' );
+		$mwb_membership_global_settings['mwb_membership_invoice_email'] = get_option( 'mwb_membership_invoice_email' );
+		$mwb_membership_global_settings['mwb_membership_invoice_logo'] = get_option( 'mwb_membership_invoice_logo' );
+
 		$mwb_membership_global_settings = apply_filters( 'mfw_mwb_membership_global_settings', $mwb_membership_global_settings );
 		update_option( 'mwb_membership_global_options', $mwb_membership_global_settings );
 
 		$mwb_membership_attach_invoice = ! empty( $mwb_membership_global_settings['mwb_membership_attach_invoice'] ) ? $mwb_membership_global_settings['mwb_membership_attach_invoice'] : '';
 		$mwb_membership_attach_invoice_data = '';
+
 		$mfw_settings_general_before = array(
 			array(
 				'title' => __( 'Enable Membership Plans', 'membership-for-woocommerce' ),
@@ -497,7 +505,6 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );
@@ -1024,7 +1031,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
 
-	
+
 		// Adding new columns.
 		$columns = array(
 			'cb'                   => '<input type="checkbox" />',
@@ -1805,6 +1812,7 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'mwb_membership_plan_hide_products' == $field ) {
 					update_post_meta( $post_id, $field . $post_id, $post_data );
 				}
+
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
 				}
@@ -1930,11 +1938,13 @@ class Membership_For_Woocommerce_Admin {
 		} elseif ( 'cancelled' == $order->get_status() ) {
 			$order_st = 'cancelled';
 		}
-
+		if ( 'delay_type' == $access_type ) {
 		if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
 
 			update_post_meta( $member_id, 'member_status', 'pending' );
-		} else {
+		}
+	 } else {
+
 			update_post_meta( $member_id, 'member_status', $order_st );
 		}
 
