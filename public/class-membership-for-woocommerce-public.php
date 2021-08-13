@@ -1982,12 +1982,18 @@ class Membership_For_Woocommerce_Public {
 					if ( ! empty( $club_membership ) ) {
 
 						foreach ( $club_membership as $mem_ids ) {
-
+							
 							$product_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_ids', true );
 							if ( ! empty( $product_ids ) ) {
 								$plan_obj['mwb_membership_plan_target_ids'] = unserialize( $plan_obj['mwb_membership_plan_target_ids'] );
 								$plan_obj['mwb_membership_plan_target_ids'] = array_merge( $plan_obj['mwb_membership_plan_target_ids'], $product_ids );
 								$plan_obj['mwb_membership_plan_target_ids'] = serialize( $plan_obj['mwb_membership_plan_target_ids'] );
+							}
+							$product_disc_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_disc_ids', true );
+							if ( ! empty( $product_ids ) ) {
+								$plan_obj['mwb_membership_plan_target_disc_ids'] = unserialize( $plan_obj['mwb_membership_plan_target_disc_ids'] );
+								$plan_obj['mwb_membership_plan_target_disc_ids'] = array_merge( $plan_obj['mwb_membership_plan_target_disc_ids'], $product_disc_ids );
+								$plan_obj['mwb_membership_plan_target_disc_ids'] = serialize( $plan_obj['mwb_membership_plan_target_disc_ids'] );
 							}
 
 							$post_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_post_target_ids', true );
@@ -1997,6 +2003,15 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_post_target_ids'] = serialize( $plan_obj['mwb_membership_plan_post_target_ids'] );
 							}
 
+					
+							$post_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_page_target_ids', true );
+							if ( ! empty( $post_ids ) ) {
+								$plan_obj['mwb_membership_plan_page_target_ids'] = unserialize( $plan_obj['mwb_membership_plan_page_target_ids'] );
+								$plan_obj['mwb_membership_plan_page_target_ids'] = array_merge( $plan_obj['mwb_membership_plan_page_target_ids'], $post_ids );
+								$plan_obj['mwb_membership_plan_page_target_ids'] = serialize( $plan_obj['mwb_membership_plan_page_target_ids'] );
+							}
+
+
 							$cat_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_categories', true );
 							if ( ! empty( $cat_ids ) ) {
 								$plan_obj['mwb_membership_plan_target_categories'] = unserialize( $plan_obj['mwb_membership_plan_target_categories'] );
@@ -2004,11 +2019,26 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_target_categories'] = serialize( $plan_obj['mwb_membership_plan_target_categories'] );
 							}
 
+							$cat_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_disc_categories', true );
+							if ( ! empty( $cat_ids ) ) {
+								$plan_obj['mwb_membership_plan_target_disc_categories'] = unserialize( $plan_obj['mwb_membership_plan_target_disc_categories'] );
+								$plan_obj['mwb_membership_plan_target_disc_categories'] = array_merge( $plan_obj['mwb_membership_plan_target_disc_categories'], $cat_ids );
+								$plan_obj['mwb_membership_plan_target_disc_categories'] = serialize( $plan_obj['mwb_membership_plan_target_disc_categories'] );
+							}
+
+
+
 							$tag_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_tags', true );
 							if ( ! empty( $tag_ids ) ) {
 								$plan_obj['mwb_membership_plan_target_tags'] = unserialize( $plan_obj['mwb_membership_plan_target_tags'] );
 								$plan_obj['mwb_membership_plan_target_tags'] = array_merge( $plan_obj['mwb_membership_plan_target_tags'], $tag_ids );
 								$plan_obj['mwb_membership_plan_target_tags'] = serialize( $plan_obj['mwb_membership_plan_target_tags'] );
+							}
+							$post_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_disc_tags', true );
+							if ( ! empty( $post_ids ) ) {
+								$plan_obj['mwb_membership_plan_target_disc_tags'] = unserialize( $plan_obj['mwb_membership_plan_target_disc_tags'] );
+								$plan_obj['mwb_membership_plan_target_disc_tags'] = array_merge( $plan_obj['mwb_membership_plan_target_disc_tags'], $post_ids );
+								$plan_obj['mwb_membership_plan_target_disc_tags'] = serialize( $plan_obj['mwb_membership_plan_target_disc_tags'] );
 							}
 
 							$ptags = get_post_meta( $mem_ids, 'mwb_membership_plan_target_post_tags', true );
@@ -2025,6 +2055,7 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_target_post_categories'] = serialize( $plan_obj['mwb_membership_plan_target_post_categories'] );
 							}
 							update_post_meta( $member_id, 'plan_obj', $plan_obj );
+							update_post_meta( $member_id, 'member_order_id', $order_id );
 
 						}
 					}
@@ -2372,6 +2403,7 @@ class Membership_For_Woocommerce_Public {
 
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 				$member_status = get_post_meta( $member_id, 'member_status', true );
+				$order_status = get_post_meta( $plan_obj['ID'], 'member_order_id', true );
 
 				if ( 'pending' == $member_status ) {
 
@@ -2389,8 +2421,10 @@ class Membership_For_Woocommerce_Public {
 							// Getting current activation date.
 							$current_date = gmdate( 'Y-m-d' );
 							if ( $current_date >= $delay_date ) {
-
+								if ( $order_status == 'completed' ) {
 									update_post_meta( $member_id, 'member_status', 'complete' );
+								}
+								
 
 							}
 						}
@@ -2435,7 +2469,7 @@ class Membership_For_Woocommerce_Public {
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 				$today_date = get_the_date( 'Y-m-d' );
 				$current_date = time();
-
+				$order_status = get_post_meta( $plan_obj['ID'], 'member_order_id', true );
 			
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
@@ -2471,7 +2505,7 @@ class Membership_For_Woocommerce_Public {
 				if ( $today_date == $expiry_mail ) {
 
 					if ( 'expired' != $member_status ) {
-
+						if ( $order_status == 'completed' ) {
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
 						$customer_email = '';
@@ -2492,6 +2526,7 @@ class Membership_For_Woocommerce_Public {
 
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
 						}
+					}
 					}
 				}
 			}

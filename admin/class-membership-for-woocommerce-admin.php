@@ -1872,6 +1872,7 @@ class Membership_For_Woocommerce_Admin {
 		$order = new WC_Order( $order_id );
 		$orderstatus = $order->status;
 
+
 		$items = $order->get_items();
 
 		$member_id = '';
@@ -1938,17 +1939,22 @@ class Membership_For_Woocommerce_Admin {
 		} elseif ( 'cancelled' == $order->get_status() ) {
 			$order_st = 'cancelled';
 		}
+
+
 		if ( 'delay_type' == $access_type ) {
 		if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
 
+			update_post_meta( $member_id, 'member_order_id', $order_st );			
 			update_post_meta( $member_id, 'member_status', 'pending' );
 		}
 	 } else {
 
 			update_post_meta( $member_id, 'member_status', $order_st );
+			update_post_meta( $member_id, 'member_order_id', $order_st );
 		}
-
+	
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
+
 	}
 
 

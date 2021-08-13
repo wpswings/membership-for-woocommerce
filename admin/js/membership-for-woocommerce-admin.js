@@ -35,6 +35,13 @@
 
 jQuery(document).ready(function($) {
 
+
+
+    jQuery( ".media-button" ).click(function() {
+        jQuery('.media-modal-close').trigger('click');
+      });
+
+
     var Post_id = jQuery('#post_ID').val();
     if ( Post_id != '' &&  Post_id != undefined) {
         jQuery('#preview-action').html('');
@@ -261,10 +268,13 @@ jQuery(document).ready(function($) {
 
   });
 
+
   // Image uploader in global settings email log.
   $('#upload_img').on( 'click', function(e) {
       e.preventDefault();
 
+      if ( jQuery('.media-modal-content').length == 0) {
+            
      var media_modals = wp.media.frames.media_modal = wp.media({
           title: 'Upload a logo.',
           button: { text: 'Select' },
@@ -283,6 +293,7 @@ jQuery(document).ready(function($) {
       });
 
       media_modals.open();
+    }
   });
 
   // Remove image button.
