@@ -1588,6 +1588,16 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
+
+	
+		$order = new WC_Order(get_post_meta( $post_id, 'member_order_id',true) );
+		$orderstatus = $order->status;
+		
+		if ( 'complete' != $orderstatus && 'complete' == $_POST['member_status'] ) {
+return;
+		}
+
+
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
 
@@ -1622,7 +1632,7 @@ class Membership_For_Woocommerce_Admin {
 				
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
-			}
+			
 
 			$post   = get_post( $post_id );
 			$user    = get_userdata( $post->post_author );
@@ -1640,7 +1650,7 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
-
+	}
 		// If manually cancelling membership then remove its expiry date.
 		if ( 'cancelled' == $_POST['member_status'] ) {
 

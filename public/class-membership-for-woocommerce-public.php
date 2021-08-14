@@ -466,6 +466,7 @@ class Membership_For_Woocommerce_Public {
 		global $product;
 		$user = wp_get_current_user();
 		$already_included_plan = array();
+		$already_pending_plan = array();
 		$suggested_membership = false;
 		$count = 0;
 		$is_pending = 'not pending';
@@ -552,12 +553,17 @@ class Membership_For_Woocommerce_Public {
 
 													if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 														$is_pending = 'pending';
-														// $disable_required = 'disable_required';
+														 
+													
+														if ( ! in_array( $active_plan['ID'], $already_pending_plan ) ) {
+															array_push($already_pending_plan, $active_plan['ID'] );	
+														
 														?>
 														<div class="product-meta product-meta-review">
 															<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
 														</div>
 														<?php
+													}
 													}
 												}
 											}
@@ -1915,6 +1921,7 @@ class Membership_For_Woocommerce_Public {
 			$member_id = $item->get_meta( '_member_id' );
 			$product_id = $item->get_data()['product_id'];
 		}
+
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 		if ( $product_id == $mwb_membership_default_product ) {
 			if ( $plan_id ) {
@@ -2054,6 +2061,15 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_target_post_categories'] = array_merge( $plan_obj['mwb_membership_plan_target_post_categories'], $pcats );
 								$plan_obj['mwb_membership_plan_target_post_categories'] = serialize( $plan_obj['mwb_membership_plan_target_post_categories'] );
 							}
+
+							//$product_disc_ids
+							
+							$product_disc_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_disc_ids', true );
+							foreach ( $product_disc_ids as $product_id ) {
+								$prouct_discount = get_post_meta( $product_id, '_mwb_membership_discount_' . $mem_ids, true );
+								update_post_meta(  $product_id, '_mwb_membership_discount_' . $plan_id, $prouct_discount );	
+							}
+
 							update_post_meta( $member_id, 'plan_obj', $plan_obj );
 							update_post_meta( $member_id, 'member_order_id', $order_id );
 
@@ -2061,6 +2077,7 @@ class Membership_For_Woocommerce_Public {
 					}
 				}
 			}
+
 			$member_status = get_post_meta( $member_id, 'member_status' );
 
 			// If manually completing membership then set its expiry date.
@@ -2746,8 +2763,7 @@ class Membership_For_Woocommerce_Public {
 					
 
 					$club_membership = get_post_meta( 	$active_plan['ID'], 'mwb_membership_club', true );
-					
-		
+						
 
 							foreach ( $club_membership as $key => $value) {
 								array_push( $existing_plan_id, $value );
