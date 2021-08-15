@@ -37,13 +37,14 @@ $products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $p
 $categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
 $discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
 $price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
-
-
+//$club_membership       = ! empty( $plan['mwb_membership_club'] ) ? $plan['mwb_membership_club'] : '';
+$club_membership = get_post_meta( 	$plan['ID'], 'mwb_membership_club', true );
 $args = array(
 	'post_type'   => 'mwb_cpt_membership',
 	'post_status' => array( 'publish' ),
 	'numberposts' => -1,
 );
+
 
 $existing_plans = get_posts( $args );
 
@@ -162,6 +163,22 @@ $existing_plans = get_posts( $args );
 					<td>
 						<?php echo sprintf( ' %u %s ', esc_html( $discount_on_product ), esc_html( $price_type_on_product ) ); ?>
 					</td>  
+				</tr>
+
+
+				
+				<tr>
+					<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+					<?php
+
+					if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
+						foreach ( $club_membership as $ids ) {
+							echo( esc_html( get_the_title( $ids ) ) );
+						}
+					}
+					?>
+					</td>
 				</tr>
 
 				<tr>

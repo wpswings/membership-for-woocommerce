@@ -221,7 +221,31 @@ if ( empty( $current_url ) ) {
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
 					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_plan_discount_price'] ), esc_html( $membership_plan['mwb_membership_plan_offer_price_type'] ) ); ?></br>
+				
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
+					<?php
+					$club_membership = get_post_meta( 	$membership_plan['ID'], 'mwb_membership_club', true );
+					 if ( ! empty( $club_membership  ) ) {
+					 ?>
+					<tr>
+					<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+					<?php
+					 
+
+					if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
+						foreach ( $club_membership as $ids ) {
+							$include_membership_data = get_post( $ids );
+
+							echo( esc_html( $include_membership_data->post_title ) );
+						}
+					}
+					?>
+					</td>
+				</tr>
+				<?php
+					 }
+				?>
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>

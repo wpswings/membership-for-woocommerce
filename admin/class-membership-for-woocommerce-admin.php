@@ -1590,12 +1590,7 @@ class Membership_For_Woocommerce_Admin {
 
 
 	
-		$order = new WC_Order(get_post_meta( $post_id, 'member_order_id',true) );
-		$orderstatus = $order->status;
 		
-		if ( 'complete' != $orderstatus && 'complete' == $_POST['member_status'] ) {
-return;
-		}
 
 
 		// If manually completing membership then set its expiry date.
@@ -1954,13 +1949,13 @@ return;
 		if ( 'delay_type' == $access_type ) {
 		if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
 
-			update_post_meta( $member_id, 'member_order_id', $order_st );			
+				
 			update_post_meta( $member_id, 'member_status', 'pending' );
 		}
 	 } else {
 
 			update_post_meta( $member_id, 'member_status', $order_st );
-			update_post_meta( $member_id, 'member_order_id', $order_st );
+		
 		}
 	
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
