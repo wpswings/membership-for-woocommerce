@@ -1031,7 +1031,6 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_for_woo_cpt_columns_members( $columns ) {
 
-
 		// Adding new columns.
 		$columns = array(
 			'cb'                   => '<input type="checkbox" />',
@@ -1185,11 +1184,6 @@ class Membership_For_Woocommerce_Admin {
 
 				break;
 		}
-
-
-
-		
-
 
 	}
 
@@ -1588,11 +1582,6 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
-
-	
-		
-
-
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
 
@@ -1624,28 +1613,26 @@ class Membership_For_Woocommerce_Admin {
 					$today_date = get_the_date( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
 
-				
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
-			
 
-			$post   = get_post( $post_id );
-			$user    = get_userdata( $post->post_author );
+				$post   = get_post( $post_id );
+				$user    = get_userdata( $post->post_author );
 
-			$user = new WP_User( $post->post_author ); // create a new user object for this user.
-			$user->set_role( 'member' ); // set them to whatever role you want using the full word.
+				$user = new WP_User( $post->post_author ); // create a new user object for this user.
+				$user->set_role( 'member' ); // set them to whatever role you want using the full word.
 
-			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
+				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 
-			$user_name = $user->data->display_name;
+				$user_name = $user->data->display_name;
 
-			$customer_email = WC()->mailer()->emails['membership_creation_email'];
-			if ( ! empty( $customer_email ) ) {
-				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
+				$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				if ( ! empty( $customer_email ) ) {
+					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
 
+				}
 			}
 		}
-	}
 		// If manually cancelling membership then remove its expiry date.
 		if ( 'cancelled' == $_POST['member_status'] ) {
 
@@ -1877,7 +1864,6 @@ class Membership_For_Woocommerce_Admin {
 		$order = new WC_Order( $order_id );
 		$orderstatus = $order->status;
 
-
 		$items = $order->get_items();
 
 		$member_id = '';
@@ -1945,19 +1931,17 @@ class Membership_For_Woocommerce_Admin {
 			$order_st = 'cancelled';
 		}
 
-
 		if ( 'delay_type' == $access_type ) {
-		if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
+			if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
 
-				
-			update_post_meta( $member_id, 'member_status', 'pending' );
-		}
-	 } else {
+				update_post_meta( $member_id, 'member_status', 'pending' );
+			}
+		} else {
 
 			update_post_meta( $member_id, 'member_status', $order_st );
-		
+
 		}
-	
+
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
 
 	}

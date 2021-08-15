@@ -679,7 +679,7 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group mwb-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-							<?php							
+							<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
 							?>
@@ -717,10 +717,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-trailing-icon">
@@ -752,10 +752,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label class="mwb-form-label" for="<?php echo esc_attr( $mfw_component['id'] ); ?>"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--textarea"      for="text-field-hero-input">
@@ -781,10 +781,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label class="mwb-form-label" for="<?php echo esc_attr( $mfw_component['id'] ); ?>"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 								<div class="mwb-form-select">
@@ -820,10 +820,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control mwb-pl-4">
 								<div class="mdc-form-field">
@@ -856,10 +856,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control mwb-pl-4">
 								<div class="mwb-flex-col">
@@ -898,10 +898,10 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 								<div>
@@ -1015,10 +1015,10 @@ class Membership_For_Woocommerce {
 							<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 
@@ -1047,10 +1047,10 @@ class Membership_For_Woocommerce {
 	<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); ?></label>
-								<?php							
+								<?php
 								$instance = Membership_For_Woocommerce_Global_Functions::get();
 								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+								?>
 							</div>
 							<div class="mwb-form-group__control">
 

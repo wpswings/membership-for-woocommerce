@@ -37,8 +37,8 @@ $products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $p
 $categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
 $discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
 $price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
-//$club_membership       = ! empty( $plan['mwb_membership_club'] ) ? $plan['mwb_membership_club'] : '';
-$club_membership = get_post_meta( 	$plan['ID'], 'mwb_membership_club', true );
+// $club_membership       = ! empty( $plan['mwb_membership_club'] ) ? $plan['mwb_membership_club'] : '';
+$club_membership = get_post_meta( $plan['ID'], 'mwb_membership_club', true );
 $args = array(
 	'post_type'   => 'mwb_cpt_membership',
 	'post_status' => array( 'publish' ),
@@ -362,11 +362,10 @@ $existing_plans = get_posts( $args );
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
 									$tagn     = get_term_by( 'id', $ids, 'product_tag' );
-								if ( ! empty( $tagn ) ) {
-									$tag_name = $tagn->name;
-									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
-								}
-									
+									if ( ! empty( $tagn ) ) {
+										$tag_name = $tagn->name;
+										echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+									}
 								}
 							} else {
 								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
