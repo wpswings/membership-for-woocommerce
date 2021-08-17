@@ -34,7 +34,7 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 		</select>
 	</li>
 
-<?php do_action( 'mwb_member_action_settings_array', $mem_action ); ?>
+<?php  ?>
 
 	<li class="wide">
 		<div id="delete-member-action">

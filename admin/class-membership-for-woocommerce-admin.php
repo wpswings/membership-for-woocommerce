@@ -1141,7 +1141,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
-
+		
 		switch ( $column ) {
 
 			case 'membership_id':
@@ -1179,7 +1179,7 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
-					echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				}
 
 				break;
@@ -1612,7 +1612,7 @@ class Membership_For_Woocommerce_Admin {
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
 					$today_date = get_the_date( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
-
+					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 
@@ -1640,7 +1640,7 @@ class Membership_For_Woocommerce_Admin {
 			$user = get_userdata( $post->post_author );
 			$expiry_date = '';
 			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
-
+			$today_date = get_the_date( 'Y-m-d' );
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
@@ -1667,12 +1667,12 @@ class Membership_For_Woocommerce_Admin {
 					if ( 'delay_type' == $access_type ) {
 						$delay_duration = $time_duration . ' ' . $time_duration_type;
 
-						$expiry_date = gmdate( strtotime( $current_date . $duration ) );
+						$expiry_date = gmdate( strtotime( $today_date . $duration ) );
 						$date_exipary = gmdate( 'Y-m-d', $expiry_date );
 						$expiry_date = strtotime( $date_exipary . $delay_duration );
 
 					}
-
+					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
@@ -1779,7 +1779,8 @@ class Membership_For_Woocommerce_Admin {
 
 		// Nonce verification.
 		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
-
+		$offered_product = array();
+		$product_discount = '';
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
 			foreach ( $this->get_plans_default_value() as $field => $value ) {
@@ -1803,12 +1804,29 @@ class Membership_For_Woocommerce_Admin {
 				update_post_meta( $post_id, $field, $post_data );
 				if ( 'mwb_membership_plan_hide_products' == $field ) {
 					update_post_meta( $post_id, $field . $post_id, $post_data );
+					echo $post_data;
 				}
+
+				if ( 'mwb_membership_plan_target_disc_ids' == $field ) {
+					$offered_product = $post_data;
+				}
+				if ( 'mwb_memebership_product_discount_price' == $field ) {
+					$product_discount = $post_data;
+				}
+			
+
 
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
 				}
 			}
+			foreach ($offered_product as $key => $product_id) {
+				# code...
+
+				update_post_meta( $product_id, '_mwb_membership_discount_' . $post_id, $product_discount  );
+			}
+			//
+
 		}
 
 	}
@@ -1874,8 +1892,6 @@ class Membership_For_Woocommerce_Admin {
 			$get_data = $item->get_formatted_meta_data();
 			$item_meta_data = $item->get_formatted_meta_data( '', true );
 			foreach ( $item_meta_data as $mfw_key => $mfw_value ) {
-
-				print_r( $mfw_value->display_key );
 				if ( '_member_id' == $mfw_value->display_key ) {
 					$member_id = $mfw_value->value;
 				}
@@ -1911,12 +1927,12 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'delay_type' == $access_type ) {
 					$delay_duration = $time_duration . ' ' . $time_duration_type;
 
-					$expiry_date = gmdate( strtotime( $current_date . $duration ) );
+					$expiry_date = gmdate( strtotime( $today_date . $duration ) );
 					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
 					$expiry_date = strtotime( $date_exipary . $delay_duration );
-
+				
 				}
-
+				$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}

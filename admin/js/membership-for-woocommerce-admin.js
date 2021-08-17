@@ -41,13 +41,7 @@ jQuery(document).ready(function($) {
         jQuery('.media-modal-close').trigger('click');
       });
 
-
-    var Post_id = jQuery('#post_ID').val();
-    if ( Post_id != '' &&  Post_id != undefined) {
-        jQuery('#preview-action').html('');
-        jQuery('.insert-media').hide();
-    }
-
+    
   // Avoid negative values for amount/discount and convert it to zero.
   $('input[name="mwb_membership_plan_price"]').keyup(function() {
 
