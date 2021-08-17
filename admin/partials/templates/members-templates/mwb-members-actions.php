@@ -34,7 +34,6 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 		</select>
 	</li>
 
-<?php  ?>
 
 	<li class="wide">
 		<div id="delete-member-action">

@@ -227,7 +227,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			$pagescreen_id   = $screen->id;
 
 			if ( 'product' != $pagescreen_post ) {
-		wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
+				wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
 			}
 		}
 	}

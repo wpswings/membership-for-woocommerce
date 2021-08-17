@@ -867,11 +867,9 @@ class Membership_For_Woocommerce_Public {
 						break;
 					}
 
-				
-						if ( in_array( $plan['ID'], $exclude_product ) && ! empty( $exclude_product ) ) {
-							break;
-						}
-					
+					if ( in_array( $plan['ID'], $exclude_product ) && ! empty( $exclude_product ) ) {
+						break;
+					}
 
 					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
 					$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
@@ -2526,7 +2524,7 @@ class Membership_For_Woocommerce_Public {
 				if ( 'Lifetime' == $expiry ) {
 					$expiry_mail = 'Lifetime';
 				} else {
-					$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry  : '' );
+					$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
 				}
 
 				$number_of_day_to_send_expiry_mail = get_option( 'mwb_membership_number_of_expiry_days' );
@@ -2538,7 +2536,7 @@ class Membership_For_Woocommerce_Public {
 
 						$user_name = $user->data->display_name;
 						$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
-						
+
 						if ( ! empty( $customer_email ) ) {
 
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
@@ -2781,7 +2779,7 @@ class Membership_For_Woocommerce_Public {
 			$existing_plan_product   = array();
 			$plan_existing       = false;
 			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-		
+
 			if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
@@ -2803,66 +2801,64 @@ class Membership_For_Woocommerce_Public {
 						$target_cat_ids  = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_categories', true );
 						$target_tag_ids  = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_tags', true );
 
-
 						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 							array_push( $existing_plan_product, $product->get_id() );
 						}
 					}
 				}
 			}
-			
+
 			if ( false == $plan_existing ) {
-			
-				if ( ! empty($data) && is_array($data)) {
 
-				foreach ( $data as $plan ) {
-					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
+				if ( ! empty( $data ) && is_array( $data ) ) {
 
-					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
-						$page_link = get_page_link( $mwb_membership_default_plans_page_id );
-					}
+					foreach ( $data as $plan ) {
+						$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
-					$exclude_product = array();
-					$exclude_product = apply_filters( 'mwb_membership_exclude_product', $exclude_product, $product->get_id() );
+						if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
+							$page_link = get_page_link( $mwb_membership_default_plans_page_id );
+						}
 
-					$is_product_exclude = apply_filters( 'mwb_membership_is_exclude_product', $exclude_product, $data, $is_product_exclude );
+						$exclude_product = array();
+						$exclude_product = apply_filters( 'mwb_membership_exclude_product', $exclude_product, $product->get_id() );
 
-					if ( $is_product_exclude ) {
-						break;
-					}
+						$is_product_exclude = apply_filters( 'mwb_membership_is_exclude_product', $exclude_product, $data, $is_product_exclude );
 
-					if ( ! empty( $exclude_product ) ) {
-						if ( in_array( $plan['ID'], $exclude_product ) ) {
+						if ( $is_product_exclude ) {
 							break;
 						}
-					}
 
-					if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
+						if ( ! empty( $exclude_product ) ) {
+							if ( in_array( $plan['ID'], $exclude_product ) ) {
+								break;
+							}
+						}
+
+						if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
 							$page_link_found = false;
 							$target_ids      = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) : array();
 							$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) : array();
 							$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) : array();
 
-							
-						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
+							if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
-							if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
-								$is_purchasable = false;
+								if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
+									$is_purchasable = false;
 
-								if ( $product->is_type( 'variable' ) ) {
-									$product = wc_get_product( $product->get_id() );
-									$current_products = $product->get_children();
-									foreach ( $current_products as $key => $value ) {
-										// code...
+									if ( $product->is_type( 'variable' ) ) {
+										$product = wc_get_product( $product->get_id() );
+										$current_products = $product->get_children();
+										foreach ( $current_products as $key => $value ) {
+											// code...
 
-										array_push( $this->exclude_other_plan_products, $value );
+											array_push( $this->exclude_other_plan_products, $value );
+										}
 									}
 								}
 							}
 						}
 					}
-				}
 				}
 			}
 		}

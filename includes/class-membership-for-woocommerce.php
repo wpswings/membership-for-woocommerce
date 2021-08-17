@@ -148,8 +148,6 @@ class Membership_For_Woocommerce {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
 
-		// include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/classes/class-mwb-membership-free-shipping-method.php';
-
 		/**
 		 * The class responsible for defining all global functions for the plugin.
 		 */

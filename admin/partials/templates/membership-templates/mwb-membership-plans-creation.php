@@ -137,7 +137,7 @@ global $post;
 					'dfw'              => true,
 					'teeny'            => true,
 					'editor_height'    => 200,
-					'editor_class'       => 'mwb_etmfw_new_woo_ver_style_textarea',					
+					'editor_class'       => 'mwb_etmfw_new_woo_ver_style_textarea',
 				);
 
 				wp_editor( $mwb_membership_plan_info, 'mwb_membership_plan_info', $settings );

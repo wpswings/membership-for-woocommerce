@@ -71,7 +71,7 @@ class Membership_For_Woocommerce_Activator {
 			);
 
 			$mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
- 
+
 			update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
 		}
 
@@ -80,7 +80,6 @@ class Membership_For_Woocommerce_Activator {
 		 */
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product' );
 
-	
 		if ( empty( $mwb_membership_default_product ) || 'private' !== get_post_status( $mwb_membership_default_product ) ) {
 
 			$mwb_membership_product = array(
