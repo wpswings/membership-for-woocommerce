@@ -42,6 +42,9 @@ span.dashicons.dashicons-no-alt:focus,
     box-shadow: none;
     outline: none;
 }
+.cancel_member_edit {
+    display: none;
+}
 
 /* Any element Positioning  */
 .alignleft.actions,
@@ -244,6 +247,9 @@ span.dashicons.dashicons-no-alt {
     top: 20px;
     color: #1a3365;
     right: 10px;
+}
+.member_edit_address {
+   display:none;
 }
 
 .member_edit_address p {

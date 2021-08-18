@@ -1054,7 +1054,6 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_membership( $column, $post_id ) {
-
 		switch ( $column ) {
 
 			case 'membership_view':
@@ -1221,7 +1220,6 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_search_products_for_membership() {
-
 		$return         = array();
 		$search_results = new WP_Query(
 			array(
@@ -1335,7 +1333,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) && ( 'edit-mwb_cpt_members' === $screen->id ) ) {
 
 			?>
-			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-foe-woocommerce' ); ?>">
+			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
 			<?php
 		}
 	}

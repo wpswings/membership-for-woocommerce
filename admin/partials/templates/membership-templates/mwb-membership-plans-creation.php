@@ -180,7 +180,7 @@ global $post;
 		<!-- Access Type End -->
 
 		<!-- Plan Duration start. -->
-		<tr valign="top" id="mwb_membership_duration" style="display: none;">
+		<tr valign="top" id="mwb_membership_duration" >
 
 			<th scope="row" class="titledesc">
 				<label for="mwb_membership_plan_duration"><?php esc_html_e( 'Duration', 'membership-for-woocommerce' ); ?></label>
@@ -811,7 +811,7 @@ global $post;
 					<input type="radio" id="mwb_membership_plan_time_type" name="mwb_membership_plan_access_type" value="delay_type" <?php echo esc_html( 'delay_type' === $mwb_membership_plan_access_type ? 'checked' : '' ); ?>>
 					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specify a time', 'membership-for-woocommerce' ); ?></label>
 
-					<div id="mwb_membership_plan_time_duratin_display" style="display: none;">
+					<div id="mwb_membership_plan_time_duratin_display">
 					
 						<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="<?php echo esc_attr( $mwb_membership_plan_time_duration ); ?>" min="1" max="31" >
 						<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
@@ -896,7 +896,7 @@ global $post;
 						if ( 'publish' == $post->post_status ) {
 							?>
 						<!-- manage free shipping link start. -->
-						<div class="mwb_membership_free_shipping_link" style="display: none;">
+						<div class="mwb_membership_free_shipping_link" >
 							<p class="mwb_membership_free_shipping">
 								<a class="button" target="_blank" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=shipping' ); ?>"><?php esc_html_e( 'Manage Free shipping', 'membership-for-woocommerce' ); ?></a>
 							</p>
@@ -967,7 +967,7 @@ global $post;
 						$mwb_membership_notice_message = $settings_fields['mwb_membership_notice_message'];
 						?>
 						<!-- manage free shipping link start. -->
-						<div class="mwb_membership_notice_message" style="display: none;">
+						<div class="mwb_membership_notice_message" >
 							<p class="mwb_membership_notice_message">
 								<input type="text" class="mwb_membership_notice_message" name="mwb_membership_notice_message" value="<?php echo isset( $mwb_membership_notice_message ) ? esc_html( $mwb_membership_notice_message ) : ''; ?>" >
 							</p>

@@ -77,7 +77,6 @@ class Membership_For_Woocommerce_Rest_Api {
 			'mfw-route/v1',
 			'/mfw-dummy-data/',
 			array(
-				// 'methods'  => 'POST',
 				'methods'  => WP_REST_Server::CREATABLE,
 				'callback' => array( $this, 'mwb_mfw_default_callback' ),
 				'permission_callback' => array( $this, 'mwb_mfw_default_permission_check' ),

@@ -1,112 +1,260 @@
-=== Membership For WooCommerce ===
-Contributors: makewebbetter
-Tags: comments, spam
-Requires at least: 4.6
-Tested up to: 4.9.5
-Stable tag: 1.0.0
-License: GNU General Public License v3.0
+=== Membership for WooCommerce ===
+Contributors: MakeWebBetter
+Donate link:  https://makewebbetter.com/
+Tags:Membership, WooCommerce, Memberships, Members, WooCommerce Membership
+Requires at least: 5.0
+Tested up to: 5.8.0
+WC requires at least: 4.0.0
+WC tested up to: 5.5.2
+Stable tag: 1.1.0
+Requires PHP: 7.3.5
+License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+
+The Membership for WooCommerce plugin provides a restriction on access for any facility and adds recurring revenue with engaging customers.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+== BUILD YOUR ECOMMERCE COMMUNITY THROUGH USER REGISTRATION WITH MEMBERSHIP FOR WOOCOMMERCE AND CHARM USER PROFILES WITH MEMBERS-ONLY OFFERS
+ ==
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
+Membership for WooCommerce Plugin is the missing piece of your eCommerce store that allows you to create members-only space in your store. Get your membership website going with the smartest option of the Membership for WooCommerce plugin. 
 
-A few notes about the sections above:
+The absolute Membership for WooCommerce plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using membership plans.
 
-*   "Contributors" is a comma separated list of people who have contributed for this plugin
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
+It gets on directly to give you a way out of the three most customary pain points related to the WooCommerce membership store:
 
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
+ * Restriction on access for any facility
+ * Adding recurring revenue based on memberships
+ * Engaging customers using membership plans 
 
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+
+[youtube https://www.youtube.com/watch?v=Yf0pa_Fgn5s&w=560&h=315&rel=0]
+
+
+== MEMBERSHIP FOR WOOCOMMERCE PLUGIN FREE VERSION FEATURES AT A GLANCE ==
+
+* Different section for membership plans and members
+* Multiple language translation for WooCommerce memberships available
+* Assign membership to users manually 
+* Offer free shipping and discount on WooCommerce member cart total
+* Export/ Import WooCommerce membership site and user details
+* Efficient Shortcodes
+* No chaos of billing form or setting up payment gateways integrations 
+* Customize plan page using shortcodes
+* Complete WooCommerce members and plans details 
+* Assign or sell membership plans, restrict access facility to WooCommerce members only
+* Error Logging for handling WooCommerce membership errors
+* Delete Membership for WooCommerce free plugin data on uninstall
+* Show Woo membership history to WooCommerce store owner users as well
+* Offer membership categories to users 
+* Select limited or lifetime accessibility to WooCommerce members
+* Set different status for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
+
+**LIVE DEMO OF FREE VERSION**
+
+[**Membership for WooCommerce Free demo**](https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo)
+
+
+
+== FEATURES OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
+
+WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit you the most appropriate and must-have features for your membership website. This FREE Membership plugin brings you:
+
+**1)** **Complete User Membership History and WooCommerce Membership Details of Customers**
+Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users too can see their history in the ‘My Account’ section with entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
+
+
+
+**2)** **Membership User Data Export and Import**
+Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, admin can also import the details of all WooCommerce membership users as a CSV file. 
+
+Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin uninstall of the plugin from the database.  
+
+
+
+**3)** **Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization**
+We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for admin’s utter convenience.
+
+
+
+**4)** **Discount On Membership User Cart Total**
+Admin can apply discounts based on user roles. Give discounts only to the WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely admin’s choice. 
+
+
+**5)** **Membership Details and Plan Creation**
+Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
+
+
+**1-** Plan price
+**2-** Plan name
+**3-** Plan description
+**4-** Access Type (Lifetime or Limited accessibility) 
+
+== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+
+[**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
+Visit [**Membership For WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
+
+== PREMIUM MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
+
+The admin has enough features in the  Membership for WooCommerce free plugin, but things will get even better in the premium version of  Membership for WooCommerce. It will have the following features:  
+
+
+* Select Membership Products 
+* Include One Plan Benefits In Other Membership Plans
+* Select Access To Membership Pages and Posts 
+* Select Access To Exclusive Membership Products 
+* Override Access To Membership Plans
+* Better Membership Reports
+* Send Membership Plans Action Notifications via Email  
+* Sort Membership plans 
+
+== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN ==
+
+> Note:  Get [**MEMBERSHIP FOR WOOCOMMERCE PRO**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-membership-pro)
+
+
+== LIVE DEMO OF PREMIUM VERSION ==
+
+[**MEMBERSHIP FOR WOOCOMMERCE PRO FRONTEND DEMO**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=membership-frontend)
+ [**MEMBERSHIP FOR WOOCOMMERCE PRO BACKEND DEMO**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=membership-backend)
+
+
+
+== SUPPORT ==
+
+If you need support or have any question then kindly use our online chat window   [here](https://makewebbetter.com/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support) or  connect with us then [**Generate a Ticket**](https://makewebbetter.com/submit-query/?utm_source=MWB-membership-org&utm_medium=MWB-org-page&utm_campaign=MWB-membership-org)
+If our documentation doesn’t contain the solution to your problem, you can visit the [*MakeWebBetter Forums*](https://forums.makewebbetter.com/?utm_source=MWB-membership-org&utm_medium=MWB-org-page&utm_campaign=MWB-membership-org) with your question.
+
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+= Automatic installation =
 
-e.g.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Membership For WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-1. Upload the `membership-for-woocommerce` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+In the search field type "Membership For Woocommerce" and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
 
-== Frequently Asked Questions ==
+= Manual installation =
 
-= A question that someone might have =
+The manual installation method involves downloading our Membership For WooCommerce and uploading it to your webserver via your favourite FTP application. The WordPress contains [instructions on how to do this here](https://wordpress.org/support/article/managing-plugins/#manual-plugin-installation).
 
-An answer to that question.
+= Updating =
 
-= What about foo bar? =
+Automatic updates should work like a charm; as always though, ensure you backup your site just in case.
 
-Answer to foo bar dilemma.
+
+== FAQ ==
+
+= What is the basic purpose of using Membership for WooCommerce? =
+
+
+The Membership for WooCommerce plugin lets the WooCommerce store owners create and sell memberships and assign membership levels to their users. The store owner can give discounts to the WooCommerce members based on their memberships.
+
+
+= What are the features regarding the Membership Plans available using the WooCommerce Membership plugin? =
+
+The Admin panel will have the Memberships Menu. In this submenu, you can find the features regarding the Membership Plans, which allows the following:
+**1:**Create new plans for your membership customers
+**2:**Edit existing membership plans
+**3:**Find all the plans that you have ever created.
+
+ 
+= Where can you find complete user details of All the Members who have purchased the Membership Plans? =
+The Admin panel will have the Memberships Menu. In this submenu, you can find all Members. This space is for the admin where he can find complete user details like:
+**1.**Membership ID
+**2.**Membership Status
+**3.**User 
+**4.**Expiry date
+You can also Import and export members details & add new members
+
+
+= Are there also any shortcodes available in the Membership for WooCommerce extension? = 
+**Yes,** Membership for WooCommerceprovides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
+
+* Membership Action Shortcodes
+* Membership Plans Shortcodes
+
+For those shortcodes, you can check those in the Shortcodes Tab of the Membership for WooCommerce plugin.
+
+
+= From where can I enable the Membership for WooCommerce plans to show on the front end? =
+
+Admin can enable the Membership for WooCommerce plans from the General settings of Membership for WooCommerce plugin: Go to Dashboard > MakeWebBetter > Membership for WooCommerce > General Settings.
+Admin can enable/disable Membership for WooCommerce plugin functionality on the front end. The users won't see it if you disable it.
+
+= Is there any option in the plugin to show/hide the Membership plans history to the users? =
+**Yes**, Admin can enable the visibility of the user history from the General Settings of the Membership for WooCommerce plugin. This way, the user can visit and see their plan history in the membership tab on ‘My Account Page’.
+
+= Will this Membership for WooCommerce plugin be compatible with my current theme? =
+**Yes**The Membership for WooCommerce plugin is compatible with all popular themes that follow WooCommerce standards.
+
+
+= Does the Membership for WooCommerce plugin provide the Shortcode to display the membership plan/price? =
+
+**Yes**,The Membership for WooCommerce plugin has a shortcode section to display the Membership plan, price, and description.
+
+* Membership Plan Title : [mwb_membership_title]
+* Membership Plan Price : [mwb_membership_price]
+* Membership Plan Desc : [mwb_membership_desc]
+
+= Can I add as many levels of Membership as I want using the Membership for WooCommerce plugin? = 
+
+**Yes**, you can create as many levels as you want using the Membership for WooCommerce plugin.
+
+= Is there any option in a Membership for WooCommerce plugin to provide the user with lifetime membership or limited membership? =
+**Yes**, The admin can set the membership to lifetime or limited using the Membership for WooCommerce plugin. The admin can set either of two.
+
+= What should I do if I have any problems with the plugin? =
+We are always available to help our customers anytime. Our support team works 24*7 for any issue related to our products and services. Just [**Contact Us**](https://makewebbetter.com/contact-us/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=contact-us).
+
+
+= My question is not listed =
+
+  Please visit the  [**MakeWebBetter Knowledgebase**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)  and for more detailed visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)
+
+
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Note that the screenshot is taken from
-the /assets directory or the directory that contains the stable readme.txt (tags or trunk). Screenshots in the /assets
-directory take precedence. For example, `/assets/screenshot-1.png` would win over `/tags/4.3/screenshot-1.png`
-(or jpg, jpeg, gif).
-2. This is the second screen shot
+1. Membership Dashboard
+2. Shortcodes
+3. Membership Plans
+4. Membership Plan Offers
+5. Included Selections 
+6. Add members 
+7. Pro Settings Section
+8. Add Membership Plans
+9. Membership Plans Creation
+10. Add New Post 
+11. Members
+12. Membership Details 
+13. Membership Product 
+14. Membership Plan 
+15. Order Details 
+16. Membership Dashboard Details 
+
 
 == Changelog ==
 
-= 1.0 =
-* A change since the previous version.
-* Another change.
+= 1.1.0 - RELEASED ON 23 AUGUST 2021 =
+* New: Compatibility with WooCommerce 5.5.2  and WordPress 5.8
+* Fix: small bug fixes
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
+= 1.0.1 - RELEASED ON 13 APRIL 2021 =
+
+* New: Compatibility with WooCommerce 5.1.0 and WordPress 5.7
+
+= 1.0.0 - RELEASED ON 12 MARCH 2021 =
+
+* First version
 
 == Upgrade Notice ==
 
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
+= 1.1.0 - RELEASED ON 23 AUGUST 2021 =
+* New: Compatibility with WooCommerce 5.5.2  and WordPress 5.8
+* Fix: small bug fixes
 
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
 
-== Arbitrary section ==
-
-You may provide arbitrary sections, in the same format as the ones above.  This may be of use for extremely complicated
-plugins where more information needs to be conveyed that doesn't fit into the categories of "description" or
-"installation."  Arbitrary sections will be shown below the built-in sections outlined above.
-
-== A brief Markdown Example ==
-
-Ordered list:
-
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
-
-Here's a link to [WordPress](http://wordpress.org/ "Your favorite software") and one to [Markdown's Syntax Documentation][markdown syntax].
-Titles are optional, naturally.
-
-[markdown syntax]: http://daringfireball.net/projects/markdown/syntax
-            "Markdown is what the parser uses to process much of the readme file"
-
-Markdown uses email style notation for blockquotes and I've been told:
-> Asterisks for *emphasis*. Double it up  for **strong**.
-
-`<?php code(); // goes in backticks ?>`

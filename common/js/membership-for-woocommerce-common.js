@@ -48,7 +48,6 @@ $(".mwb_membership_buynow").on("click", function (e) {
 			plan_price: plan_price,
 			plan_id: plan_id,
 			plan_title: plan_title,
-		//	nonce: membership_public_obj.nonce,
 		},
 
 		success: function (response) {
@@ -57,107 +56,6 @@ $(".mwb_membership_buynow").on("click", function (e) {
 		}
 	});
 });
-
-
-//   // Import CSV modal.
-//   $("#import_all_membership").on("click", function(e) {
-//       e.preventDefault();
-
-//       $(".import_csv_field_wrapper").dialog("open");
-
-//       // Ajax call for import CSV.
-//       $("#upload_csv_file").on("click", function(e) {
-//           e.preventDefault();
-
-//           var empty_check = $("#mwb_membership_csv_file_upload").val();
-
-//           // If no file selected close the dialog box and show 'failure' sweet alert.
-//           if (empty_check.length == 0) {
-
-//               // CLose the import modal.
-//               $(".import_csv_field_wrapper").dialog("close");
-
-//               // Show "failure" response via sweet-alert.
-//               Swal.fire({
-//                   icon: 'error',
-//                   title: 'Oops..!!',
-//                   text: 'No file selected',
-//               });
-
-//           } else {
-
-//               var form = new FormData();
-//               var file = $(document).find("#mwb_membership_csv_file_upload");
-
-//               var single_file = file[0].files[0];
-
-//               form.append("file", single_file);
-//               form.append("action", "mwb_membership_csv_file_upload");
-//               form.append("nonce", admin_ajax_obj.nonce)
-// console.log(form);
-//               $.ajax({
-//                   url: admin_ajax_obj.ajaxurl,
-//                   type: "POST",
-//                   data: form,
-//                 //   dataType: 'json',
-//                 //   contentType: false,
-//                 //   processData: false,
-
-//                   success: function(response) {
-
-//                       // Close the import modal.
-//                       $(".import_csv_field_wrapper").dialog("close");
-
-//                       if ('success' == response['status']) {
-
-//                           // Show "success" response via sweet-alert.
-//                           Swal.fire({
-//                               icon: 'success',
-//                               title: response['message'],
-//                           });
-
-//                           // Reload page after click on ok in
-//                           $(".swal2-confirm").on("click", function() {
-//                               window.location.href = response['redirect'];
-//                           });
-//                       } else if ('failed' == response['status']) {
-
-//                           // Show "failure" response via sweet-alert.
-//                           Swal.fire({
-//                               icon: 'error',
-//                               title: 'Oops..!!',
-//                               text: response['message']
-//                           });
-//                       }
-//                   },
-
-//               });
-//           }
-
-//       });
-//   });
-
-
-// // Import CSV modal.
-// $("#import_all_membership").on("click", function(e) {
-// 	e.preventDefault();
-
-	
-// 	$(".import_csv_field_wrapper").dialog("open");
-// 			$.ajax({
-// 				url: mfw_common_param.ajaxurl,
-// 				type: "POST",
-// 				data: {
-// 					action: "mwb_membership_csv_file_upload",
-// 				//	nonce: membership_public_obj.nonce,
-// 				},
-		
-// 				success: function (response) {
-		
-// 				console.log(response);
-// 				}
-// 			});
-// });
 
 });
 

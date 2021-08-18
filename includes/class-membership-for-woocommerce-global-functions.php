@@ -61,7 +61,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$allowed_html  = '<div class="mwb-tool-tip">';
 			$allowed_html .= '	<span class="icon">?</span>';
-			$allowed_html .= '<span class="description">' . esc_attr( $description ) . '</span>';
+			$allowed_html .= '<span class="description_tool_tip">' . esc_attr( $description ) . '</span>';
 			$allowed_html .= '	</div>';
 
 			 echo wp_kses_post( $allowed_html );
@@ -480,7 +480,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function import_csv_modal_content() {
 		?>
-		<div class="import_csv_field_wrapper" style="display: none;">
+		<div class="import_csv_field_wrapper" >
 			<input type="file" name="csv_to_import" id="mwb_membership_csv_file_upload">
 			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
 		</div>

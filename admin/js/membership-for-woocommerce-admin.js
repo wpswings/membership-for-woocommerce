@@ -37,7 +37,7 @@ jQuery(document).ready(function($) {
 
 
 
-    jQuery( ".media-button" ).click(function() {
+    $(document).on('click','.media-button',function() {
         jQuery('.media-modal-close').trigger('click');
       });
 
@@ -365,8 +365,8 @@ $(document).ready(function() {
         return new MDCSwitch(el);
       }
     );
-
-    $(".mwb-password-hidden").click(function() {
+   
+    $(document).on('click','.mwb-password-hidden',function() {
       if ($(".mwb-form__password").attr("type") == "text") {
         $(".mwb-form__password").attr("type", "password");
       } else {

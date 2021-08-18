@@ -312,6 +312,9 @@ select#mwb_membership_plan_offer_price_type_id,
 div#mwb_membership_plan_time_duratin_display {
     margin: 10px 0px;
 }
+#mwb_membership_plan_time_duratin_display {
+   display:none;
+}
 
 select #mwb_membership_plan_duration_type {
     background: rgb(0 113 159 / 0.2);
@@ -667,6 +670,12 @@ td#mfw_free_shipping {
 
 .mwb_membership_free_shipping_link {
     margin-left: 30px;
+    display: none;;
+}
+
+
+.mwb_membership_notice_message {
+    display: none;;
 }
 
 span.title_warning {
@@ -1003,15 +1012,15 @@ div#TB_ajaxWindowTitle {
     text-align: center;
 }
 
-.mwb-tool-tip .description {
+.mwb-tool-tip .description_tool_tip {
     display: none;
 }
 
-.mwb-tool-tip .icon:hover+.description {
+.mwb-tool-tip .icon:hover+.description_tool_tip {
     display: inline-block;
 }
 
-.mwb-tool-tip .description {
+.mwb-tool-tip .description_tool_tip {
     background-color: #1a1a1a;
     position: absolute;
     top: 32px;
@@ -1024,7 +1033,7 @@ div#TB_ajaxWindowTitle {
     z-index: 9999;
 }
 
-.mwb-tool-tip .description::after {
+.mwb-tool-tip .description_tool_tip::after {
     content: "";
     position: absolute;
     border-bottom: 10px solid #1a1a1a;
@@ -1137,3 +1146,23 @@ div#wp-mwb_membership_email_content-wrap {
     color: #2196f3 !important;
     border-bottom: 3px solid var(--mdc-theme-primary);
   }
+
+
+
+  .mwb_membership_shortcode {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
+
+.mwb_membership_shortcode .mwb-tool-tip {
+    margin: 0 0 0 auto;
+}
+
+.mwb_membership_shortcode .mwb-tool-tip .description_tool_tip::after {
+    left: 50%;
+    right: unset;
+}
+
+/

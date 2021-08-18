@@ -584,23 +584,23 @@ class Membership_For_Woocommerce_Public {
 												}
 											}
 
-											echo '<div class="available_member" style="clear: both">
-	<div style="margin-top: 10px;">
+											echo '<div class="available_member" >
+	<div>
 		<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 	</div>
 </div>';
 										} else {
 												// Show options to buy plans.
-												echo '<div style="clear: both">
-		<div style="margin-top: 10px;">
+												echo '<div class="plan_suggestion" >
+		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 		</div>
 	</div>';
 										}
 									}
 								} else {
-									echo '<div style="clear: both">
-											<div style="margin-top: 10px;">
+									echo '<div  class="plan_suggestion" >
+											<div>
 												<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" >' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 											</div>
 										</div>';
@@ -676,23 +676,23 @@ class Membership_For_Woocommerce_Public {
 													}
 												}
 
-												echo '<div class="available_member" style="clear: both">
-		<div style="margin-top: 10px;">
+												echo '<div class="available_member">
+		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 		</div>
 	</div>';
 											} else {
 													// Show options to buy plans.
-													echo '<div style="clear: both">
-			<div style="margin-top: 10px;">
+													echo '<div class="plan_suggestion" >
+			<div>
 				<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 			</div>
 		</div>';
 											}
 										}
 									} else {
-										echo '<div style="clear: both">
-												<div style="margin-top: 10px;">
+										echo '<div>
+												<div class="plan_suggestion" >
 													<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" >' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 												</div>
 											</div>';
@@ -812,8 +812,8 @@ class Membership_For_Woocommerce_Public {
 
 										$page_link = $page_link . '?plan_id=' . $plan['ID'] . '&prod_id=' . $product->get_id();
 
-										echo '<div class="available_member" style="clear: both">
-									<div style="margin-top: 10px;">
+										echo '<div class="available_member" >
+									<div>
 										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membershipss	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 									</div>
 								</div>';
@@ -2230,7 +2230,9 @@ class Membership_For_Woocommerce_Public {
 
 						// Get Saved Plan Details.
 						$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
-						array_push( $all_member_plans, $membership_plan->ID );
+						if ( ! empty( $membership_plan->ID ) ) {
+							array_push( $all_member_plans, $membership_plan->ID );
+						}					
 						$membership_status = get_post_meta( $membership_id, 'member_status', true );
 
 						$accessible_prod = $membership_plan['mwb_membership_plan_target_ids'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
@@ -2421,6 +2423,7 @@ class Membership_For_Woocommerce_Public {
 	 * Check membership expiration on daily basis.
 	 */
 	public function mwb_membership_cron_expiry_check() {
+
 
 		// Get all limited memberships.
 		$delay_members = get_posts(

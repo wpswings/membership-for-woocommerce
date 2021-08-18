@@ -131,7 +131,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'desc_tip'          => true,
 				'options'           => $all_memberships,
 				'custom_attributes' => array(
-					'data-placeholder' => __( 'Select Membership Plans', 'woocommerce' ),
+					'data-placeholder' => __( 'Select Membership Plans', 'membership-for-woocommerce' ),
 				),
 			),
 

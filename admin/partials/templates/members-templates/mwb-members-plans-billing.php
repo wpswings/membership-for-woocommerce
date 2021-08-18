@@ -93,7 +93,7 @@ $country_class = new WC_Countries();
 		<div class="members_data_column" >
 			<h3><?php esc_html_e( 'Billing', 'membership-for-woocommerce' ); ?></h3>
 			<a href="#" class="edit_member_address"><span class="dashicons dashicons-edit"></span></a>
-			<a href="#" class="cancel_member_edit" style="display: none;"><span class="dashicons dashicons-no-alt"></span></a>
+			<a href="#" class="cancel_member_edit" ><span class="dashicons dashicons-no-alt"></span></a>
 
 			<div class="member_address">
 				<p>
@@ -108,7 +108,7 @@ $country_class = new WC_Countries();
 						<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
 						<?php
 					} else {
-						esc_html_e( 'No billing details', 'membershi-for-woocommerce' );
+						esc_html_e( 'No billing details', 'membership-for-woocommerce' );
 					}
 					?>
 				</p>
@@ -122,15 +122,11 @@ $country_class = new WC_Countries();
 					<strong><?php esc_html_e( 'Phone :', 'membership-for-woocommerce' ); ?></strong></br>
 					<?php echo esc_html( $phone ); ?>
 				</p>
-
-				<!-- <p>
 					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
 					<?php echo esc_html( $instance->get_payment_method_title( $payment ) ); ?>
-				</p> -->
-
 			</div>
 
-			<div class="member_edit_address" style="display: none;">
+			<div class="member_edit_address" >
 
 				<p class="form-field billing_first_name_field">
 					<label for="billing_first_name"><?php esc_html_e( 'First name', 'membership-for-woocommerce' ); ?></label>

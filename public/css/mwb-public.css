@@ -35,6 +35,9 @@
   max-width: 150px;
   vertical-align: top;
 }
+.available_member div {
+  margin-top: 10px;
+
 
 .available_member .button.alt.mfw-membership {
   background-color: unset;

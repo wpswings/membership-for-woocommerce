@@ -143,8 +143,6 @@ class Membership_For_Woocommerce_Common {
 		// Handling file upload using activity helper class..
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
 		// phpcs:disable
-		// $csv_file    = ! empty( $_FILES['file'] ) ? $_FILES['file'] : ''; // phpcs:ignore
-
 		$csv_file    = ! empty( $_FILES['file'] ) ? map_deep( wp_unslash( $_FILES['file'] ), 'sanitize_text_field' ) : ''; // phpcs:ignore
 
 		// phpcs:enable

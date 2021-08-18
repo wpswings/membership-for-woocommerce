@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.0.0';
+			$this->version = '1.1.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -647,9 +647,6 @@ class Membership_For_Woocommerce {
 		// Get the PHP maximum execution time.
 		$mfw_system_status['php_max_execution_time'] = function_exists( 'ini_get' ) ? ini_get( 'max_execution_time' ) : __( 'N/A (ini_get function does not exist)', 'membership-for-woocommerce' );
 
-		// Get outgoing IP address.
-		$mfw_system_status['outgoing_ip'] = function_exists( 'file_get_contents' ) ? file_get_contents( 'http://ipecho.net/plain' ) : __( 'N/A (file_get_contents function does not exist)', 'membership-for-woocommerce' );
-
 		$mfw_system_data['php'] = $mfw_system_status;
 		$mfw_system_data['wp'] = $mfw_wordpress_status;
 
@@ -703,7 +700,6 @@ class Membership_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
-									<!-- <div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div> -->
 								</div>
 							</div>
 						</div>
@@ -805,7 +801,6 @@ class Membership_For_Woocommerce {
 							}
 							?>
 									</select>
-									<!-- <label class="mdl-textfield__label" for="<?php echo esc_attr( $mfw_component['id'] ); ?>"><?php echo esc_html( $mfw_component['description'] ); ?><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></label> -->
 								</div>
 							</div>
 						</div>
@@ -842,7 +837,6 @@ class Membership_For_Woocommerce {
 										</div>
 										<div class="mdc-checkbox__ripple"></div>
 									</div>
-									<!-- <label for="checkbox-1"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></label> -->
 								</div>
 							</div>
 						</div>
@@ -922,7 +916,6 @@ class Membership_For_Woocommerce {
 									</div>
 								</div>
 								<div class="mdc-text-field-helper-line">
-									<!-- <div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div> -->
 								</div>
 							</div>
 						</div>
@@ -976,7 +969,6 @@ class Membership_For_Woocommerce {
 											</label>
 							<?php } ?>
 									<div class="mdc-text-field-helper-line">
-										<!-- <div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div> -->
 									</div>
 								</div>
 							</div>

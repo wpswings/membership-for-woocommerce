@@ -669,7 +669,19 @@ a.mwb-membership__header--close:focus {
     display: inline-block;
     max-width: 125px;
     vertical-align: bottom;
+    clear: both
 }
+.available_member div {
+  margin-top: 10px;
+}
+
+.plan_suggestion {
+  clear: both
+}
+.plan_suggestion div {
+margin-top: 10px;
+}
+
 
 .available_member .button.alt.mfw-membership {
     background-color: unset;

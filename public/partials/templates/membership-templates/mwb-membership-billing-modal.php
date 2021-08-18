@@ -154,7 +154,6 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 			</div>
 		</div>
 	</div>
-	<!-- </form> -->
 
 	<!-- additional HTML part for multilevel form-->
 	<div class="mwb_mfw_pre-next-btn">
