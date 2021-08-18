@@ -695,8 +695,8 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		$response = $this->mwb_mfw_hic_post( $url, $form_data, $headers );
 
-		if ( 200 == $response['status_code'] ) {
-			$result = json_decode( $response['response'], true );
+		if ( 200 == $response['status_code'] ) {		
+			$result            = json_decode( sanitize_text_field( wp_unslash( $response['response'] ) ), true );
 			$result['success'] = true;
 		} else {
 			$result = $response;
