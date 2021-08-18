@@ -473,7 +473,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		return $page_content;
 	}
 
-	/**
+	/** 
 	 * Returns Import CSV modal.
 	 *
 	 * @since 1.0.0
@@ -486,36 +486,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		</div>
 		<?php
 
-	}
-
-
-	/**
-	 * Returns payment modal content
-	 *
-	 * @param object $gateway An object of payment gateway.
-	 * @return void
-	 */
-	public function gateway_modal_content( $gateway ) {
-
-		?>
-		<li class="wc_payment_method payment_method_<?php echo esc_attr( $gateway->id ); ?>" data-id="<?php echo esc_attr( $gateway->id ); ?>">
-			<input id="payment_method_<?php echo esc_attr( $gateway->id ); ?>" type="radio" class="input-radio payment_method_select" name="payment_method" value="<?php echo esc_attr( $gateway->id ); ?>" <?php checked( $gateway->chosen, true ); ?> data-order_button_text="<?php echo esc_attr( $gateway->order_button_text ); ?> " required/>
-
-			<label for="payment_method_<?php echo esc_attr( $gateway->id ); ?>">
-				<?php echo esc_html( $gateway->get_title() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?> <?php echo esc_html( $gateway->get_icon() ); /* phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped */ ?>
-			</label>
-			<?php if ( $gateway->has_fields() || $gateway->get_description() ) : ?>
-				<div class="payment_box payment_method_<?php echo esc_attr( $gateway->id ); ?>" 
-				<?php
-				if ( ! $gateway->chosen ) :
-						/* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */
-					?>
-					style="display:none;"<?php endif; /* phpcs:ignore Squiz.ControlStructures.ControlSignature.NewlineAfterOpenBrace */ ?>>
-					<?php $gateway->payment_fields(); ?>
-				</div>
-			<?php endif; ?>
-		</li>
-		<?php
 	}
 
 
@@ -972,17 +942,12 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			ob_start();
 			?>
-			<style>
-				table, tr, td {
-				padding: 15px;
-				}
-			</style>
 
-			<table style="background-color: #222222; color: #fff">
+			<table id="mwb-mfw__invoice-table">
 				<tbody>
 					<tr>
 						<td><h1><?php esc_html_e( 'Membership Invoice #', 'membership-for-woocommerce' ); ?><strong><?php echo esc_html( $member_id ); ?></strong></h1></td>
-						<td align="right"><img src="<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '' ); ?>" height="50px"/><br/>
+						<td  id="mwb-mfw__invoice-table-td" align="right"><img src="<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '' ); ?>" height="50px"/><br/>
 							<?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/>
 							<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_address'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_address'] : $store_details ); ?><br/>
 							<br/>
@@ -1015,9 +980,9 @@ class Membership_For_Woocommerce_Global_Functions {
 				</tbody>
 			</table>
 
-			<table>
+			<table id="mwb-mfw__item-table">
 				<thead>
-					<tr style="font-weight:bold;">
+					<tr class="tr_1">
 						<th><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
 						<th><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
 						<th><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
@@ -1034,7 +999,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					</tr>
 
 					<tr align="right">
-						<td colspan="4" style="border-top: 1px solid #222"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
+						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -1059,29 +1024,18 @@ class Membership_For_Woocommerce_Global_Functions {
 				<meta charset="UTF-8">
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
 				<title><?php esc_html_e( 'Membership Invoice', 'membership-for-woocommerce' ); ?></title>
-				<style type="text/css">
-					table {
-						table-layout: auto;
-					}
-
-					a[href] {
-						color: #ffffff;
-						text-decoration: none;
-					}
-
-				</style>
 			</head>
 			<body>
-				<div style="width:600px; max-width: 100%;margin:0px auto;font-family:sans-serif; border: 1px solid #1f1f1f;">
-					<table border="0" cellpadding="0" cellspacing="0"  style="width:100%;padding:0;color:#fff;">
-						<tbody style="background-color:#1f1f1f;">
-							<tr style="vertical-align: top;">
-								<td class="hello" style="width: 50%; padding: 15px;">
-									<h1 style="display:block;font-size: 20px;margin: 0;">
-										<?php esc_html_e( 'Membership Invoice ', 'membership-for-woocommerce' ); ?><strong style="width:100%;padding:15px 0"><?php echo esc_html__( '#', 'membership-for-woocommerce' ) . esc_html( $member_id ); ?></strong>
+				<div id="mwb-mfw__member-invoice-container">
+					<table border="0" cellpadding="0" cellspacing="0" id="mwb-mfw__member-invoice-table-container">
+						<tbody>
+							<tr>
+								<td class="hello td_1">
+									<h1>
+										<?php esc_html_e( 'Membership Invoice ', 'membership-for-woocommerce' ); ?><strong><?php echo esc_html__( '#', 'membership-for-woocommerce' ) . esc_html( $member_id ); ?></strong>
 									</h1>
 								</td>
-								<td class="xyz" style="width: 50%; text-align: right; padding: 15px;">
+								<td class="xyz td_2">
 									<img src="<?php echo esc_html( ! empty( $mwb_membership_global_settings['mwb_membership_invoice_logo'] ) ? $mwb_membership_global_settings['mwb_membership_invoice_logo'] : '' ); ?>" height="50px" class="CToWUd">
 									<br>
 									<?php echo esc_html( get_bloginfo( 'name' ) ); ?><br>
@@ -1094,10 +1048,10 @@ class Membership_For_Woocommerce_Global_Functions {
 						</tbody>
 					</table>
 
-					<table border = "0" cellpadding = "0" cellspacing = "0" style="width:600px; max-width: 100%; padding:0 15px;">
+					<table border = "0" cellpadding = "0" cellspacing = "0" id="mwb-mfw__member-invoice-to-table">
 						<tbody>
-							<tr style="vertical-align: top;">
-								<td style="width: 50%;line-height:150%;padding-top: 15px;">
+							<tr>
+								<td class="td_1">
 									<b><?php esc_html_e( 'Invoice to : ', 'membership-for-woocommerce' ); ?></b><br>
 									<strong><?php echo esc_html( $first_name . ' ' . $last_name ); ?></strong>
 									<br>
@@ -1110,46 +1064,46 @@ class Membership_For_Woocommerce_Global_Functions {
 									<br/>
 									<?php echo esc_html( $email ); ?>
 								</td>
-								<td style="width:50%; text-align:right;">
-									<strong style=""><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br>
+								<td class="td_2">
+									<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br>
 									<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 
-					<div style="overflow-x:auto;border-top: 15px solid transparent">
-						<table border = "0" cellpadding = "0" cellspacing = "0" style="width:600px; max-width: 100%; line-height:200%;margin:0px auto;padding: 0 15px;">
+					<div id="mwb-mfw__member-item-container">
+						<table border = "0" cellpadding = "0" cellspacing = "0" id="mwb-mfw__member-item-table_a">
 							<thead>
-								<tr style="font-weight:bold">
-									<th style="text-align: left;"><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
-									<th style="text-align: left;"><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
-									<th style="text-align: center;"><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
-									<th style="text-align: right;"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+								<tr>
+									<th class="th_1"><?php esc_html_e( 'Item name', 'membership-for-woocommerce' ); ?></th>
+									<th class="th_2"><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?> </th>
+									<th class="th_3"><?php esc_html_e( 'Quantity', 'membership-for-woocommerce' ); ?></th>
+									<th class="th_4"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
 								</tr>
 							</thead>
 
 							<tbody>
 								<tr>
-									<td style="text-align: left;"><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
-									<td style="text-align: left;"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
-									<td style="text-align: center;"><?php esc_html_e( '1' ); ?></td>
-									<td style="text-align: right;"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+									<td class="td_1"><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
+									<td class="td_2"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
+									<td class="td_3"><?php esc_html_e( '1' ); ?></td>
+									<td class="td_4"><?php echo esc_html( ! empty( $plan_info['mwb_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] : '' ); ?></td>
 								</tr>
 
 								<tr align="right">
-									<td colspan="4" style="border-top:1px solid #1a3365;padding:10px 0">
+									<td colspan="4" class="td_5">
 										<strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
-					<table border = "0" cellpadding = "0" cellspacing = "0" style="text-align:center;width:100%;color:#1f1f1f">
+					<table border = "0" cellpadding = "0" cellspacing = "0" id="mwb-mfw__member-item-table_b">
 						<tbody>
 							<tr>
-								<td colspan="4" style="line-height:150%; padding: 15px; text-align: left;">
-									<h2 style="margin: 0;"><?php esc_html_e( 'Thank you for shopping with us', 'membership-for-woocommerce' ); ?></h2><br/>
+								<td colspan="4" class="td_1">
+									<h2><?php esc_html_e( 'Thank you for shopping with us', 'membership-for-woocommerce' ); ?></h2><br/>
 									<strong><?php echo esc_html( get_bloginfo( 'name' ) ); ?><br/></strong>
 									<?php echo esc_html( get_bloginfo( 'description' ) ); ?>
 								</td>

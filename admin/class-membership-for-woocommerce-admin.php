@@ -1054,6 +1054,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_membership( $column, $post_id ) {
+
 		switch ( $column ) {
 
 			case 'membership_view':
@@ -1608,7 +1609,7 @@ class Membership_For_Woocommerce_Admin {
 				} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
-					$today_date = get_the_date( 'Y-m-d' );
+					$today_date = gmdate( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
 					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
@@ -1638,7 +1639,7 @@ class Membership_For_Woocommerce_Admin {
 			$user = get_userdata( $post->post_author );
 			$expiry_date = '';
 			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
-			$today_date = get_the_date( 'Y-m-d' );
+			$today_date = gmdate( 'Y-m-d' );
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
@@ -1904,7 +1905,7 @@ class Membership_For_Woocommerce_Admin {
 
 				$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				update_post_meta( $member_id, 'membership_delay_date', $current_date );
-				$today_date = get_the_date( 'Y-m-d' );
+				$today_date = gmdate( 'Y-m-d' );
 			}
 
 			if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {

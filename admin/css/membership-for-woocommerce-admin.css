@@ -1165,4 +1165,67 @@ div#wp-mwb_membership_email_content-wrap {
     right: unset;
 }
 
-/
+
+/*tool tip modifications*/
+.mwb-tool-tip {
+    position: relative;
+    max-width: unset;
+    width: unset;
+    text-align: center;
+}
+
+.mwb-tool-tip .icon {
+    cursor: help;
+    background-color: #000000d1;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+}
+
+.mwb-tool-tip .description_tool_tip {
+    display: none;
+}
+
+.mwb-tool-tip .icon:hover+.description_tool_tip {
+    display: inline-block;
+}
+
+.mwb-tool-tip .description_tool_tip {
+    background-color: #1a1a1a;
+    position: absolute;
+    top: 32px;
+    padding: 5px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    overflow-wrap: anywhere;
+    min-width: 150px;
+    width: 100%;
+    font-size: 12px;
+    border-radius: 2px;
+    color: #fff;
+    z-index: 9999;
+}
+
+.mwb-tool-tip .description_tool_tip::after {
+    content: "";
+    position: absolute;
+    border-bottom: 10px solid #1a1a1a;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    left: 50%;
+    transform: translate(-30%, 0);
+    top: -10px;
+    z-index: 9999;
+}
+
+.form-field.billing_country_field .select2.select2-container {
+    min-width: unset;
+}
+
+
+.members_billing_details h1 {
+    width: 90%;
+}

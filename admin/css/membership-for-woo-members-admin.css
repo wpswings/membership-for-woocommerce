@@ -452,3 +452,12 @@ div#members_start_date {
         flex-wrap: wrap;
     }
 }
+
+
+.members_billing_details .members_data_column_container {
+    flex-wrap:wrap;
+}
+
+.members_billing_details .members_data_column {
+    flex: 1 0 calc(50% - 20px);
+}

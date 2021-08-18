@@ -189,13 +189,13 @@ class Membership_For_Woocommerce_Public {
 	 * Custom query handler.
 	 */
 	protected function custom_query_handler() {
-
+		global $wpdb;
 		$query = "SELECT   wp_posts.* FROM wp_posts  INNER JOIN wp_postmeta ON ( wp_posts.ID = wp_postmeta.post_id ) WHERE 1=1  
-					AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
-					AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
+		AND ( wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND wp_posts.post_type = 'mwb_cpt_membership' 
+		AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
-	}
+}
 
 	/**
 	 * Register Endpoint for Membership plans.
@@ -2423,8 +2423,7 @@ class Membership_For_Woocommerce_Public {
 	 * Check membership expiration on daily basis.
 	 */
 	public function mwb_membership_cron_expiry_check() {
-
-
+		
 		// Get all limited memberships.
 		$delay_members = get_posts(
 			array(
@@ -2515,7 +2514,7 @@ class Membership_For_Woocommerce_Public {
 				$user = get_userdata( $post->post_author );
 				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-				$today_date = get_the_date( 'Y-m-d' );
+				$today_date = gmdate( 'Y-m-d' );
 				$current_date = time();
 				$order = new WC_Order( get_post_meta( $plan_obj['ID'], 'member_order_id', true ) );
 				$order_status = $order->status;
@@ -2532,9 +2531,10 @@ class Membership_For_Woocommerce_Public {
 
 				$number_of_day_to_send_expiry_mail = get_option( 'mwb_membership_number_of_expiry_days' );
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $expiry_mail . '- ' . $number_of_day_to_send_expiry_mail . ' day' ) );
-
+			
 				if ( 'complete' == $member_status ) {
-
+								
+				
 					if ( $today_date >= $expiry_current ) {
 
 						$user_name = $user->data->display_name;

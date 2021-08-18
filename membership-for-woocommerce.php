@@ -212,6 +212,20 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	run_membership_for_woocommerce();
 
 	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
+	
+
+	function mwb_membership_schedule_hook() {
+		// Schedule cron for checking of membership expiration on daily basis.
+		if ( ! wp_next_scheduled( 'mwb_membership_expiry_check' ) ) {
+			wp_schedule_event( time(), 'daily', 'mwb_membership_expiry_check' );
+		}
+
+	}
+	add_action( 'init', 'mwb_membership_schedule_hook' );
+
+
+
+
 
 	/**
 	 * Register the JavaScript for the admin area.
