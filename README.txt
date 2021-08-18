@@ -5,7 +5,7 @@ Tags:Membership, WooCommerce, Memberships, Members, WooCommerce Membership
 Requires at least: 5.0
 Tested up to: 5.8.0
 WC requires at least: 4.0.0
-WC tested up to: 5.5.2
+WC tested up to: 5.6
 Stable tag: 1.1.0
 Requires PHP: 7.3.5
 License: GPLv3 or later 
