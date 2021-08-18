@@ -195,7 +195,7 @@ class Membership_For_Woocommerce_Public {
 		AND (wp_posts.post_status = 'publish') GROUP BY wp_posts.ID ORDER BY wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
-}
+	}
 
 	/**
 	 * Register Endpoint for Membership plans.
@@ -2232,7 +2232,7 @@ class Membership_For_Woocommerce_Public {
 						$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
 						if ( ! empty( $membership_plan->ID ) ) {
 							array_push( $all_member_plans, $membership_plan->ID );
-						}					
+						}
 						$membership_status = get_post_meta( $membership_id, 'member_status', true );
 
 						$accessible_prod = $membership_plan['mwb_membership_plan_target_ids'] ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
@@ -2423,7 +2423,7 @@ class Membership_For_Woocommerce_Public {
 	 * Check membership expiration on daily basis.
 	 */
 	public function mwb_membership_cron_expiry_check() {
-		
+
 		// Get all limited memberships.
 		$delay_members = get_posts(
 			array(
@@ -2531,10 +2531,9 @@ class Membership_For_Woocommerce_Public {
 
 				$number_of_day_to_send_expiry_mail = get_option( 'mwb_membership_number_of_expiry_days' );
 				$expiry_current = gmdate( 'Y-m-d', strtotime( $expiry_mail . '- ' . $number_of_day_to_send_expiry_mail . ' day' ) );
-			
+
 				if ( 'complete' == $member_status ) {
-								
-				
+
 					if ( $today_date >= $expiry_current ) {
 
 						$user_name = $user->data->display_name;

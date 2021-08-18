@@ -473,7 +473,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		return $page_content;
 	}
 
-	/** 
+	/**
 	 * Returns Import CSV modal.
 	 *
 	 * @since 1.0.0
