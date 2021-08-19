@@ -218,6 +218,34 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 *
 	 * @return void
 	 */
+	function mwb_membership_schedule_expiry() {
+		if ( false === as_next_scheduled_action( 'mwb_membership_expiry_check_action' ) ) {
+			as_schedule_recurring_action( strtotime( 'tomorrow' ), DAY_IN_SECONDS, 'mwb_membership_expiry_check_action' );
+		}
+	}
+
+	/**
+	 * Schedule action for expiry.
+	 *
+	 * @return void
+	 */
+	function mwb_membership_schedule_action_expiry_check() {
+		if ( class_exists( 'Membership_For_Woocommerce_Public' ) ) {
+			$mfw_plugin_public = new Membership_For_Woocommerce_Public( '', '' );
+			$mfw_plugin_public->mwb_membership_cron_expiry_check();
+		}
+
+	}
+
+	add_action( 'init', 'mwb_membership_schedule_expiry' );
+
+	add_action( 'mwb_membership_expiry_check_action', 'mwb_membership_schedule_action_expiry_check' );
+
+		/**
+		 * Schedule hook for member expiry.
+		 *
+		 * @return void
+		 */
 	function mwb_membership_schedule_hook() {
 		// Schedule cron for checking of membership expiration on daily basis.
 		if ( ! wp_next_scheduled( 'mwb_membership_expiry_check' ) ) {
@@ -226,8 +254,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 	}
 	add_action( 'init', 'mwb_membership_schedule_hook' );
-
-
 
 
 

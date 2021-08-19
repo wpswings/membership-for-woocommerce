@@ -282,7 +282,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_options_page() {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( __( 'MakeWebBetter', 'membership-for-woocommerce' ), __( 'MakeWebBetter', 'membership-for-woocommerce' ), 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
+			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
 			$mfw_menus =
 			// desc - filter for trial.
 			apply_filters( 'mwb_add_plugins_menus_array', array() );
@@ -1141,7 +1141,6 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
-
 		switch ( $column ) {
 
 			case 'membership_id':
@@ -1175,7 +1174,10 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
-
+				if ( filter_var( $expiry, FILTER_VALIDATE_INT ) === true ) {
+					echo 'Your variable is not an integer';
+					$expiry = gmdate( 'Y-m-d', $expiry );
+				}
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
@@ -1614,7 +1616,6 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
-
 				$post   = get_post( $post_id );
 				$user    = get_userdata( $post->post_author );
 

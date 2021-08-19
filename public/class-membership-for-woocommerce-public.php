@@ -2013,7 +2013,7 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $member_id ) {
 						$member_id = $member_data['member_id'];
 					}
-
+					update_post_meta( $member_id, 'member_order_id', $order_id );
 					$club_membership = get_post_meta( $plan_id, 'mwb_membership_club', true );
 
 					$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
@@ -2099,7 +2099,6 @@ class Membership_For_Woocommerce_Public {
 							}
 
 							update_post_meta( $member_id, 'plan_obj', $plan_obj );
-							update_post_meta( $member_id, 'member_order_id', $order_id );
 
 						}
 					}
@@ -2451,7 +2450,7 @@ class Membership_For_Woocommerce_Public {
 
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 				$member_status = get_post_meta( $member_id, 'member_status', true );
-				$order = new WC_Order( get_post_meta( $plan_obj['ID'], 'member_order_id', true ) );
+				$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
 				$order_status = $order->status;
 
 				if ( 'pending' == $member_status ) {
@@ -2470,7 +2469,9 @@ class Membership_For_Woocommerce_Public {
 							// Getting current activation date.
 							$current_date = gmdate( 'Y-m-d' );
 							if ( $current_date >= $delay_date ) {
+
 								if ( 'completed' == $order_status ) {
+
 									update_post_meta( $member_id, 'member_status', 'complete' );
 								}
 							}
@@ -2516,7 +2517,7 @@ class Membership_For_Woocommerce_Public {
 				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 				$today_date = gmdate( 'Y-m-d' );
 				$current_date = time();
-				$order = new WC_Order( get_post_meta( $plan_obj['ID'], 'member_order_id', true ) );
+				$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
 				$order_status = $order->status;
 
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
@@ -3048,7 +3049,34 @@ class Membership_For_Woocommerce_Public {
 		}
 
 	}
+
+
+	/**
+	 * Function to check admin mail id
+	 *
+	 * @param [type] $fields are the checkout fields.
+	 * @param [type] $errors are the errors to be return.
+	 * @return void
+	 */
+	public function mwb_membership_validate_email( $fields, $errors ) {
+		global $woocommerce;
+		$mwb_membership_default_product = get_option( 'mwb_membership_default_product' );
+		$is_membership_product = false;
+		$items = $woocommerce->cart->get_cart();
+
+		foreach ( $items as $item => $values ) {
+			if ( $mwb_membership_default_product == $values['data']->get_id() ) {
+				$is_membership_product = true;
+			}
+		}
+		if ( $is_membership_product ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				$errors->add( 'validation', 'Please try to place order with customer role!!' );
+			}
+		}
+
+	}
+
+
 }
 // End of class.
-
-
