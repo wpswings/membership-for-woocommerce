@@ -685,7 +685,7 @@ class Membership_For_Woocommerce {
 										<span class="mdc-notched-outline__leading"></span>
 										<span class="mdc-notched-outline__notch">
 							<?php if ( 'number' != $mfw_component['type'] ) { ?>
-												<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
+												<span class="mdc-floating-label" id="my-label-id"><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
 						<?php } ?>
 										</span>
 										<span class="mdc-notched-outline__trailing"></span>
