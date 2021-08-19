@@ -75,7 +75,10 @@ $country_class = new WC_Countries();
 							$user_info  = get_user_by( 'ID', $users->ID );
 							$user_meta  = get_userdata( $users->ID );
 							$user_roles = $user_meta->roles; // array of roles the user is part of.
-
+							$user_role = '';
+							if ( ! empty( $user_roles ) ) {
+								$user_role = $user_roles[0];
+							}
 							if ( 'administrator' != $user_roles[0] ) {
 
 

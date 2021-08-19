@@ -623,43 +623,7 @@
     pointer-events: none !important;
   }
   
-  .mwb-membership__header {
-    background-color: #f2f2f2;
-    position: relative;
-    text-align: center;
-  }
 
-  .mwb-membership__header {
-    background-color: #fff;
-    border-left: 6px solid #007aff;
-    max-width: 1140px;
-    width:90%;
-    margin: 25px auto;
-    box-shadow: 0 0 10px rgb(0 0 0 / 30%);
-}
-a.mwb-membership__header--close {
-  color: #007aff;
-}
-
-a.mwb-membership__header--close:focus {
-  color: #007aff;
-  outline:none;
-}
-  
-  .mwb-membership__header--msg {
-    font-size: 24px;
-    font-weight: 500;
-    text-transform: capitalize;
-  }
-  
-  .mwb-membership__header--close {
-    font-size: 24px;
-    font-weight: 700;
-    position: absolute;
-    right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
   
     
   /*other memberships style*/

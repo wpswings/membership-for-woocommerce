@@ -2552,29 +2552,26 @@ class Membership_For_Woocommerce_Public {
 					// Set member status to Expired.
 
 				if ( $today_date >= $expiry_mail ) {
+					print_r( $plan_obj );
 
 					if ( 'expired' != $member_status ) {
-						if ( 'completed' == $order_status ) {
-							update_post_meta( $member_id, 'member_status', 'expired' );
+						update_post_meta( $member_id, 'member_status', 'expired' );
 
-							$customer_email = '';
-							if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
-								$customer_email = WC()->mailer()->emails['membership_expired_email'];
-							}
-							$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
+						$customer_email = '';
+						if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
+							$customer_email = WC()->mailer()->emails['membership_expired_email'];
+						}
+						$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
-							$expiry = get_post_meta( $member_id, 'member_expiry', true );
+						$expiry = get_post_meta( $member_id, 'member_expiry', true );
 
-							if ( 'Lifetime' == $expiry ) {
-								$expiry_mail = 'Lifetime';
-							} else {
-								$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
-							}
-
-							if ( ! empty( $customer_email ) ) {
-
-								$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
-							}
+						if ( 'Lifetime' == $expiry ) {
+							$expiry_mail = 'Lifetime';
+						} else {
+							$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
+						}
+						if ( ! empty( $customer_email ) ) {
+							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
 						}
 					}
 				}
