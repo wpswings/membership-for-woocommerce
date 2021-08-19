@@ -234,7 +234,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			$mfw_plugin_public = new Membership_For_Woocommerce_Public( '', '' );
 			$mfw_plugin_public->mwb_membership_cron_expiry_check();
 		}
-
 	}
 
 	add_action( 'init', 'mwb_membership_schedule_expiry' );
