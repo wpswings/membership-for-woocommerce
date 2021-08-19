@@ -2552,7 +2552,6 @@ class Membership_For_Woocommerce_Public {
 					// Set member status to Expired.
 
 				if ( $today_date >= $expiry_mail ) {
-					print_r( $plan_obj );
 
 					if ( 'expired' != $member_status ) {
 						update_post_meta( $member_id, 'member_status', 'expired' );
