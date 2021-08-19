@@ -2553,7 +2553,7 @@ class Membership_For_Woocommerce_Public {
 
 				if ( $today_date >= $expiry_mail ) {
 
-					if ( 'expired' != $member_status || 'cancelled' != $member_status ) {
+					if ( 'expired' != $member_status && 'cancelled' != $member_status ) {
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
 						$customer_email = '';
