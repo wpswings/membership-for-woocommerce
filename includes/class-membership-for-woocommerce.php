@@ -381,7 +381,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
-			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2 );
+			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2);
 		}
 	}
 
@@ -952,7 +952,7 @@ class Membership_For_Woocommerce {
 													<span class="mdc-notched-outline__leading"></span>
 													<span class="mdc-notched-outline__notch">
 								<?php if ( 'number' != $component['type'] ) { ?>
-													<span class="mdc-floating-label" id="my-label-id" style=""><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
+													<span class="mdc-floating-label" id="my-label-id"><?php echo ( isset( $mfw_component['placeholder'] ) ? esc_attr( $mfw_component['placeholder'] ) : '' ); ?></span>
 							<?php } ?>
 													</span>
 													<span class="mdc-notched-outline__trailing"></span>
