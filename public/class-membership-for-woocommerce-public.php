@@ -2550,7 +2550,7 @@ class Membership_For_Woocommerce_Public {
 
 					// Set member status to Expired.
 
-				if ( $today_date == $expiry_mail ) {
+				if ( $today_date >= $expiry_mail ) {
 
 					if ( 'expired' != $member_status ) {
 						if ( 'completed' == $order_status ) {
