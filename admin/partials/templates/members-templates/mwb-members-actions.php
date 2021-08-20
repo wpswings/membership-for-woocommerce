@@ -42,7 +42,7 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 			$check_licence = check_membership_pro_plugin_is_active();
 			if ( $check_licence ) {
 				?>
-			<?php
+				<?php
 			}
 		}
 		?>
