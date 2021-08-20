@@ -44,7 +44,7 @@
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Advanced-report.png' ); ?>" alt="Advanced-report image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Complete Customer History.jpg' ); ?>" alt="Complete Customer History image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Complete Customer History', 'membership-for-woocommerce' ); ?></h3>
@@ -59,7 +59,7 @@
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Workflow.png' ); ?>" alt="Workflow image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Membership Details.jpg' ); ?>" alt="Membership Details image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></h3>
@@ -74,7 +74,7 @@
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Variable-product.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Data Export.jpg' ); ?>" alt="Data Export image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Data Export', 'membership-for-woocommerce' ); ?></h3>
@@ -89,7 +89,7 @@
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Variable-product.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Perfectly Neat Shortcodes For Customization.jpg' ); ?>" alt="Perfectly Neat Shortcodes For Customization image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Perfectly Neat Shortcodes For Customization', 'membership-for-woocommerce' ); ?></h3>
@@ -104,7 +104,7 @@
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
 					<div class="mwb-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Variable-product.png' ); ?>" alt="Variable product image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_User Cart Total Discount.jpg' ); ?>" alt="User Cart Total Discount image">
 					</div>
 					<div class="mwb-overview__keywords-text">
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'User Cart Total Discount', 'membership-for-woocommerce' ); ?></h3>
