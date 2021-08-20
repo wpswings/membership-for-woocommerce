@@ -1,3 +1,17 @@
+<?php
+/**
+ * Provide a admin area view for the plugin
+ *
+ * This file is used to markup the admin-facing aspects of the plugin.
+ *
+ * @link       https://makewebbetter.com
+ * @since      1.0.0
+ *
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/admin/partials
+ */
+
+?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
 	<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
