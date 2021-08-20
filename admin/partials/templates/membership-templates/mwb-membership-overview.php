@@ -36,6 +36,7 @@
 				<li><?php esc_html_e( 'Quick preview section for Membership plans on the plans listing page', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'A different status selection like pending, on hold, or completed as per their payment and plan expiry', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></li>
+				<?php	do_action( 'mwb_multi_currency_switcher_add_li_to_overview' ); ?>
 			</ul>
 		</div>
 		<h2> <?php esc_html_e( 'The Free Plugin Benefits', 'membership-for-woocommerce' ); ?></h2>
