@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Membership For WooCommerce 1.1.0\n"
-"POT-Creation-Date: 2021-08-20 12:18+0530\n"
+"POT-Creation-Date: 2021-08-21 09:27+0530\n"
 "PO-Revision-Date: 2021-08-18 10:04+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
@@ -873,7 +873,7 @@ msgid "The Free Plugin Benefits"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:47
-msgid "admin/image/Advanced-report.png"
+msgid "admin/image/Icons_1_Complete Customer History.jpg"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:50
@@ -888,7 +888,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:62
-msgid "admin/image/Workflow.png"
+msgid "admin/image/Icons_1_Membership Details.jpg"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:68
@@ -899,9 +899,7 @@ msgid ""
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:77
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:92
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:107
-msgid "admin/image/Variable-product.png"
+msgid "admin/image/Icons_1_Data Export.jpg"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:80
@@ -915,6 +913,10 @@ msgid ""
 "file."
 msgstr ""
 
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:92
+msgid "admin/image/Icons_1_Perfectly Neat Shortcodes For Customization.jpg"
+msgstr ""
+
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:95
 msgid "Perfectly Neat Shortcodes For Customization"
 msgstr ""
@@ -924,6 +926,10 @@ msgid ""
 "The admin is provided with a neat collection of shortcodes that work not "
 "only on the purchase of the default membership plan but also on the custom "
 "page. These shortcodes let admin to design their plan page at ease."
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:107
+msgid "admin/image/Icons_1_User Cart Total Discount.jpg"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/mwb-membership-overview.php:110
