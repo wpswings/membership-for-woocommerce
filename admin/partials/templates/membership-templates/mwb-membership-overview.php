@@ -53,7 +53,18 @@
 			</ul>
 			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
 		</div>
-		<h2> <?php esc_html_e( 'The Free Plugin Benefits', 'membership-for-woocommerce' ); ?></h2>
+		<h2> 
+		<?php
+		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+			$check_licence = check_membership_pro_plugin_is_active();
+			if ( $check_licence ) {
+				esc_html_e( 'The Free And Pro Plugin Benefits', 'membership-for-woocommerce' );
+			}
+		} else {
+			esc_html_e( 'The Free Plugin Benefits', 'membership-for-woocommerce' );
+		}
+		?>
+		</h2>
 		<div class="mwb-overview__keywords">
 			<div class="mwb-overview__keywords-item">
 				<div class="mwb-overview__keywords-card">
