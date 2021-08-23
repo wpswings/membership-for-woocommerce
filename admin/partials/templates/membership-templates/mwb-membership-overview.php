@@ -14,7 +14,20 @@
 ?>
 <div class="mwb-overview__wrapper">
 	<div class="mwb-overview__banner">
-	<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
+	<?php
+	if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+		$check_licence = check_membership_pro_plugin_is_active();
+		if ( $check_licence ) {
+			?>
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Membership-for-WooCommerce-PRO_Banner.png' ); ?>" alt="banner-image">
+			<?php
+		}
+	} else {
+		?>
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
+		<?php
+	}
+	?>
 	</div>
 	<div class="mwb-overview__content">
 		<div class="mwb-overview__content-description">
