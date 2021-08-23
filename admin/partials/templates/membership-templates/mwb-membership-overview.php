@@ -38,6 +38,7 @@
 				<li><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></li>
 				<?php	do_action( 'mwb_membership_li_to_overview' ); ?>
 			</ul>
+			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
 		</div>
 		<h2> <?php esc_html_e( 'The Free Plugin Benefits', 'membership-for-woocommerce' ); ?></h2>
 		<div class="mwb-overview__keywords">
