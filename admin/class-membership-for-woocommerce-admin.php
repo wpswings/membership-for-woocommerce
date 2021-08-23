@@ -1141,6 +1141,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
+
 		switch ( $column ) {
 
 			case 'membership_id':
@@ -1679,10 +1680,12 @@ class Membership_For_Woocommerce_Admin {
 
 			$user_name = $user->data->display_name;
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
-
+		//	$isfw_plugin_admin = new Invoice_System_For_Woocommerce_Admin('','');
+		//	$isfw_plugin_admin->isfw_send_attachment_with_email();
+		$order_id = get_post_meta( $member_id, 'member_order_id', true );
 			if ( ! empty( $customer_email ) ) {
 
-				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
+				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
 				update_option( 'email_status_cancle', $email_status );
 			}
 			update_post_meta( $post_id, 'member_expiry', '' );
