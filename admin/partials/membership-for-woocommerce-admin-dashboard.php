@@ -23,6 +23,14 @@ global $mfw_mwb_mfw_obj;
 
 $mfw_active_tab   = isset( $_GET['mfw_tab'] ) ? sanitize_key( $_GET['mfw_tab'] ) : 'membership-for-woocommerce-general';
 $mfw_default_tabs = $mfw_mwb_mfw_obj->mwb_mfw_plug_default_tabs();
+$plugin_name = $mfw_mwb_mfw_obj->mfw_get_plugin_name();
+if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+	$check_licence = check_membership_pro_plugin_is_active();
+	if ( $check_licence ) {
+		$plugin_name = $plugin_name . '-pro';
+
+	}
+}
 
 do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_default_tabs );
 
@@ -33,7 +41,8 @@ do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 		do_action( 'mwb_mfw_settings_saved_notice' );
 	?>
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $mfw_mwb_mfw_obj->mfw_get_plugin_name() ) ) ); ?></h1>
+		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
+		</h1>
 		<a href="https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>

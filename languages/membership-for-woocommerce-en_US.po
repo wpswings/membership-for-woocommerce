@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Membership For WooCommerce 1.1.0\n"
-"POT-Creation-Date: 2021-08-23 11:33+0530\n"
-"PO-Revision-Date: 2021-08-23 11:33+0530\n"
+"POT-Creation-Date: 2021-08-23 15:47+0530\n"
+"PO-Revision-Date: 2021-08-23 15:47+0530\n"
 "Last-Translator: \n"
 "Language-Team: MakeWebBetter\n"
 "Language: en_US\n"
@@ -160,7 +160,7 @@ msgid "members"
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:681
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:66
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:85
 #: public/class-membership-for-woocommerce-public.php:240
 #: public/class-membership-for-woocommerce-public.php:263
 msgid "Membership Details"
@@ -367,12 +367,12 @@ msgstr ""
 msgid "Select Membership Plans"
 msgstr ""
 
-#: admin/partials/membership-for-woocommerce-admin-dashboard.php:37
+#: admin/partials/membership-for-woocommerce-admin-dashboard.php:46
 #: membership-for-woocommerce.php:308
 msgid "Documentation"
 msgstr ""
 
-#: admin/partials/membership-for-woocommerce-admin-dashboard.php:39
+#: admin/partials/membership-for-woocommerce-admin-dashboard.php:48
 #: membership-for-woocommerce.php:309
 msgid "Support"
 msgstr ""
@@ -823,15 +823,19 @@ msgstr ""
 msgid "Timezone :"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:17
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:26
+msgid "admin/image/Membership-for-WooCommerce-PRO_Banner.png"
+msgstr ""
+
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:31
 msgid "admin/resources/icons/banner.png"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:21
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:40
 msgid "What Is Membership For WooCommerce?"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:25
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:44
 msgid ""
 "Membership for WooCommerce allows you to create membership plans for a "
 "segment of customers, thereby\n"
@@ -841,101 +845,101 @@ msgid ""
 "updates."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:32
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:51
 msgid "With our Membership for WooCommerce plugin, as a store owner you get:"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:34
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:53
 msgid "Control content access"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:35
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:54
 msgid "See complete customer history"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:36
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:55
 msgid "Quick preview section for Membership plans on the plans listing page"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:37
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:56
 msgid ""
 "A different status selection like pending, on hold, or completed as per "
 "their payment and plan expiry"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:38
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:57
 msgid "Manual assignment of membership to a customer"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:43
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:62
 msgid "The Free Plugin Benefits"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:48
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:67
 msgid "admin/image/Icons_1_Complete Customer History.jpg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:51
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:70
 msgid "Complete Customer History"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:54
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:73
 msgid ""
 "Admin gets a quick preview section for Membership plans on the plans listing "
 "page. The users too can see their history in the ‘My Account’ section with "
 "entire details of their membership plans."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:63
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:82
 msgid "admin/image/Icons_1_Membership Details.jpg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:69
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:88
 msgid ""
 "Admin can offer products/categories in a membership plan. Those products and "
 "categories can only be accessible to users if they have purchased the plan. "
 "Membership Details Tab on My Accounts Page has all the details of the plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:78
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:97
 msgid "admin/image/Icons_1_Data Export.jpg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:81
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:100
 msgid "Data Export"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:84
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:103
 msgid ""
 "Admin can effortlessly export all the membership plans along with the user "
 "data and settings. He can also import the details of all members as a CSV "
 "file."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:93
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:112
 msgid "admin/image/Icons_1_Perfectly Neat Shortcodes For Customization.jpg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:96
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:115
 msgid "Perfectly Neat Shortcodes For Customization"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:99
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:118
 msgid ""
 "The admin is provided with a neat collection of shortcodes that work not "
 "only on the purchase of the default membership plan but also on the custom "
 "page. These shortcodes let admin to design their plan page at ease."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:108
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:127
 msgid "admin/image/Icons_1_User Cart Total Discount.jpg"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:111
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:130
 msgid "User Cart Total Discount"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:114
+#: admin/partials/templates/membership-templates/mwb-membership-overview.php:133
 msgid ""
 "Admin can grant discounts to the customers on total cart value. Free "
 "shipping option is also available as per their membership plans. The "
