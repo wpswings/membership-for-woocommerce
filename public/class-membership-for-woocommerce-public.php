@@ -437,7 +437,6 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
 
-
 		$user = wp_get_current_user();
 
 		if ( $this->global_class->plans_exist_check() == true ) {
