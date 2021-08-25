@@ -1,5 +1,9 @@
 jQuery(document).ready(function ($) {
 
+
+	jQuery(jQuery('.not_accessible').parent().find('.add_to_cart_button')).hide();
+
+
 	var $payment_methods;
 
 	const resetform = async () => {
@@ -19,238 +23,6 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	// Opens modal when clicked on membership "buy now" button.
-	$(".mwb_membership_buynow").on("click", function (e) {
-		e.preventDefault();
-
-		// Ajax cal for states as per country on page ready.
-		get_states_for_country();
-
-		// Ajax call function for states as per country.
-		function get_states_for_country() {
-
-			$.ajax({
-				url: membership_public_obj.ajaxurl,
-				type: "POST",
-				data: {
-					action: "membership_get_states_public",
-					country: $("#membership_billing_country").val(),
-					nonce: membership_public_obj.nonce,
-				},
-
-				success: function (response) {
-
-					if (response.length >= 1) {
-
-						$("#mwb_billing_state_field").show(500);
-						$("#membership_billing_state").html(response);
-						$("#membership_billing_state").prop("required", true);
-
-					} else {
-
-						$("#mwb_billing_state_field").hide(500);
-						$("#membership_billing_state").empty();
-						$("#membership_billing_state").prop("required", false);
-					}
-				}
-			});
-		}
-
-		$("#mwb_membership_buy_now_modal_form").dialog("open");
-
-		// Validate all email fields.
-		let membership_modal = $("#mwb_membership_buy_now_modal_form");
-		if( membership_modal.length > 0 ) {
-			setTimeout(() => {
-				validate_email( $('#membership_billing_email').val() );
-			}, 500 );
-
-			$('input[type="email"]').on( 'keyup', function() {
-
-				validate_email( $(this).val() );
-			});
-		}
-
-		// Ajax call for states as per country change.
-		$("#membership_billing_country").on("change", function () {
-
-			get_states_for_country();
-		});
-
-		// Advancnce bank transfer receipt upload.
-		$(document).on("change", ".bacs_receipt_file", function () {
-
-			var file = $(".bacs_receipt_file").prop("files");
-
-			$(".bacs_receipt_attached").val("");
-			$("#progress-wrapper").removeClass("progress-complete");
-			$("#progress-wrapper").removeClass("progress-failed");
-			$(".mwb-mfw__progress-bar .status").css( 'display', 'block' );
-			$(".mwb-mfw__progress-bar .status").text("Processing");
-			$("#progress-wrapper").show();
-
-
-			var upload = new FormData();
-
-			upload.append("receipt", file[0]);
-			upload.append("auth_nonce", membership_public_obj.nonce);
-			upload.append("action", "upload_receipt");
-
-			$.ajax({
-				url: membership_public_obj.ajaxurl,
-				type: "POST",
-				dataType: "json",
-				data: upload,
-				processData: false,
-				contentType: false,
-
-				success: function (response) {
-
-					if (true == response["result"]) {
-
-						$(".bacs_receipt_remove_file").show(500);
-						$(".bacs_receipt_attached").val(response.url);
-						$("#progress-wrapper").addClass("progress-complete");
-						$(".bacs_receipt_field").removeClass("is_hidden");
-						$(".mwb-mfw__progress-bar .status").text("Completed");
-						$("#membership_proceed_payment").show();
-
-						// Add file removal script.
-						$(document).on("click", ".bacs_receipt_remove_file", function () {
-
-							var removal = new FormData();
-
-							removal.append("path", response.path);
-							removal.append("auth_nonce", membership_public_obj.nonce);
-							removal.append("action", "remove_current_receipt");
-
-							$.ajax({
-								url: membership_public_obj.ajaxurl,
-								type: "POST",
-								dataType: "json",
-								data: removal,
-								processData: false,
-								contentType: false,
-
-								success: function (response) {
-
-									if ("success" == response["result"]) {
-										$( 'input[name="bacs_receipt_file"]' ).val('');
-										$(".bacs_receipt_remove_file").hide();
-										$("#membership_proceed_payment").hide();
-										$("#progress-wrapper").removeClass("progress-complete");
-										$("#progress-wrapper").addClass("progress-failed");
-										$(".mwb-mfw__progress-bar .status").text("File removed");
-									}
-								}
-							});
-
-						});
-					} else if (false == response["result"]) {
-
-						$("#progress-wrapper").addClass("progress-failed");
-						$(".mwb-mfw__progress-bar .status").text(response["message"]);
-					}
-				}
-			});
-		});
-
-		// Opens payment fields in modal when selected.
-		$('.mwb_membership_payment_modal').on("change", ".payment_method_select", function (e) {
-
-			$payment_methods = $(this).val();
-
-			$(".payment_box").slideUp();
-			$("div.payment_method_" + $payment_methods).slideDown();
-			
-			if ($payment_methods == 'membership-paypal-smart-buttons') {
-	
-				$("#paypal-button-container").show();
-				$("#membership_proceed_payment").hide();
-				
-			} else {
-
-				let file_attached = jQuery( '.bacs_receipt_file' ).prop("files");
-				$("#paypal-button-container").hide();
-				if( file_attached.length > 0 ) {
-					// Show place order.
-					$("#membership_proceed_payment").show();
-				}
-				else {
-					$("#membership_proceed_payment").hide();
-				}
-			}
-
-		});
-
-		// Process checkout here.
-		$(document).on("submit", "#mwb_membership_buy_now_modal_form", function (e) {
-
-			e.preventDefault();
-			var form = $("#mwb_membership_buy_now_modal_form");
-
-			$( '#membership_proceed_payment' ).css( 'pointer-events', 'none' );
-
-			$.ajax({
-				url: membership_public_obj.ajaxurl,
-				type: form.attr("method"),
-				dataType: "json",
-				data: {
-					action: "membership_process_payment",
-					nonce: membership_public_obj.nonce,
-					form_data: form.serialize()
-				},
-
-				success: function (response) {
-					// Close payment modal.
-					$("#mwb_membership_buy_now_modal_form").dialog("close");
-
-					if ("payment_success" == response['result']) {
-
-						// Show "success" response via sweet-alert.
-						Swal.fire({
-							icon: 'success',
-							title: response['message'],
-						});
-
-						// Redirect to "shop" page on successful payment.
-						$(".swal2-confirm").on("click", function () {
-							window.location.href = response['redirect'];
-						});
-
-					} else if ("payment_failed" == response['result']) {
-
-						// Show "failure" response via sweet-alert.
-						Swal.fire({
-							icon: 'error',
-							title: 'Oops..!!',
-							text: response['message']
-						});
-
-						$(".swal2-confirm").on("click", function () {
-							location.reload();
-						});
-
-					} else {
-
-						// Show "validation failure" response via sweet-alert.
-						Swal.fire({
-							icon: 'error',
-							title: 'Oops..!!',
-							text: response['message']
-						});
-
-						$(".swal2-confirm").on("click", function () {
-							location.reload();
-						});
-					}
-				}
-
-			});
-
-		});
-
-	});
 
 	// Payment modal definition.
 	$("#mwb_membership_buy_now_modal_form").dialog({
@@ -364,5 +136,29 @@ jQuery(document).ready(function ($) {
 
 		$(this).children('.mwb_mfw_membership_tool_tip').css('display', 'none');
 	})
+
+	$(".mwb_membership_buynow").on("click", function (e) {
+		e.preventDefault();
+		let plan_price = $('#mwb_membership_plan_price').val();
+		let plan_id = $('#mwb_membership_plan_id').val();
+		let plan_title = $('#mwb_membership_title').val();
+
+		$.ajax({
+			url: membership_public_obj.ajaxurl,
+			type: "POST",
+			data: {
+				action: "mwb_membership_checkout",
+				plan_price: plan_price,
+				plan_id: plan_id,
+				plan_title: plan_title,
+				nonce: membership_public_obj.nonce,
+			},
+
+			success: function (response) {
+
+				window.location.replace('checkout');
+			}
+		});
+	});
 
  });

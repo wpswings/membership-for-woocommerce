@@ -1,5 +1,7 @@
 jQuery(document).ready(function($) {
 
+  
+
     // Display edit fields on edit click
     $(".members_data_column").on("click", ".edit_member_address", function(e) {
         e.preventDefault();
@@ -30,7 +32,7 @@ jQuery(document).ready(function($) {
             url: members_admin_obj.ajaxurl,
             type: "POST",
             data: {
-                action: "membership_get_states",
+                action: "mwb_membership_get_states",
                 country: $("#billing_country").val(),
                 nonce: members_admin_obj.nonce,
             },
@@ -72,6 +74,8 @@ jQuery(document).ready(function($) {
             $(this).css({ 'background-color': '#e5e5e5', 'color': '#777' }); // grey
         } else if ($(this).text() == 'expired') {
             $(this).css({ 'background-color': '#d46363', 'color': '#777' }); //red
+        } else if ($(this).text() == 'cancelled') {
+            $(this).css({ 'background-color': '#ffc863', 'color': '#777' }); //red
         }
 
     });
@@ -79,3 +83,6 @@ jQuery(document).ready(function($) {
             $(this).closest('.mwb_membership_plan_gateways tr').css('background','red');
         }
 });
+
+
+

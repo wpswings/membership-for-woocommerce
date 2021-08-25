@@ -11,7 +11,7 @@ jQuery( document ).ready( function( $ ){
             data: function( params ) {
                 return {
                     q: params.term,
-                    action: "search_products_for_membership",
+                    action: "mwb_membership_search_products_for_membership",
                 };
             },
             processResults: function( data ) {
@@ -33,6 +33,9 @@ jQuery( document ).ready( function( $ ){
         minimumInputLength: 3 // The minimum number of characters to input to perform a search.
     });
 
+
+
+
     // Target category search.
     jQuery( ".wc-membership-product-category-search" ).select2({
 
@@ -44,7 +47,7 @@ jQuery( document ).ready( function( $ ){
             data: function( params ) {
                 return {
                     q: params.term,
-                    action: "search_product_categories_for_membership",
+                    action: "mwb_membership_search_product_categories_for_membership",
                 };
             },
             processResults: function( data ) {
@@ -66,5 +69,7 @@ jQuery( document ).ready( function( $ ){
         },
         minimumInputLength: 3 // The minimum number of characters to input to perform a search.
     });
+
+
 
 });

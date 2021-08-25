@@ -18,30 +18,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 }
 
-$plan_title  = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
-$plan_price  = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
-$plan_desc   = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
-$plan_type   = ! empty( $plan['mwb_membership_plan_name_access_type'] ) ? $plan['mwb_membership_plan_name_access_type'] : '';
-$plan_dura   = ! empty( $plan['mwb_membership_plan_duration'] ) ? $plan['mwb_membership_plan_duration'] : '';
-$dura_type   = ! empty( $plan['mwb_membership_plan_duration_type'] ) ? $plan['mwb_membership_plan_duration_type'] : '';
-$plan_start  = ! empty( $plan['mwb_membership_plan_start'] ) ? $plan['mwb_membership_plan_start'] : '';
-$plan_end    = ! empty( $plan['mwb_membership_plan_end'] ) ? $plan['mwb_membership_plan_end'] : '';
-$plan_access = ! empty( $plan['mwb_membership_plan_user_access'] ) ? $plan['mwb_membership_plan_user_access'] : '';
-$access_type = ! empty( $plan['mwb_membership_plan_access_type'] ) ? $plan['mwb_membership_plan_access_type'] : '';
-$delay_dura  = ! empty( $plan['mwb_membership_plan_time_duration'] ) ? $plan['mwb_membership_plan_time_duration'] : '';
-$delay_type  = ! empty( $plan['mwb_membership_plan_time_duration_type'] ) ? $plan['mwb_membership_plan_time_duration_type'] : '';
-$discount    = ! empty( $plan['mwb_memebership_plan_discount_price'] ) ? $plan['mwb_memebership_plan_discount_price'] : '';
-$price_type  = ! empty( $plan['mwb_membership_plan_offer_price_type'] ) ? $plan['mwb_membership_plan_offer_price_type'] : '';
-$shipping    = ! empty( $plan['mwb_memebership_plan_free_shipping'] ) ? $plan['mwb_memebership_plan_free_shipping'] : '';
-$products    = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $plan['mwb_membership_plan_target_ids'] : '';
-$categories  = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
-
-
+$plan_title            = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
+$plan_price            = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
+$plan_desc             = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
+$plan_type             = ! empty( $plan['mwb_membership_plan_name_access_type'] ) ? $plan['mwb_membership_plan_name_access_type'] : '';
+$plan_dura             = ! empty( $plan['mwb_membership_plan_duration'] ) ? $plan['mwb_membership_plan_duration'] : '';
+$dura_type             = ! empty( $plan['mwb_membership_plan_duration_type'] ) ? $plan['mwb_membership_plan_duration_type'] : '';
+$plan_start            = ! empty( $plan['mwb_membership_plan_start'] ) ? $plan['mwb_membership_plan_start'] : '';
+$plan_end              = ! empty( $plan['mwb_membership_plan_end'] ) ? $plan['mwb_membership_plan_end'] : '';
+$plan_access           = ! empty( $plan['mwb_membership_plan_user_access'] ) ? $plan['mwb_membership_plan_user_access'] : '';
+$access_type           = ! empty( $plan['mwb_membership_plan_access_type'] ) ? $plan['mwb_membership_plan_access_type'] : '';
+$delay_dura            = ! empty( $plan['mwb_membership_plan_time_duration'] ) ? $plan['mwb_membership_plan_time_duration'] : '';
+$delay_type            = ! empty( $plan['mwb_membership_plan_time_duration_type'] ) ? $plan['mwb_membership_plan_time_duration_type'] : '';
+$discount              = ! empty( $plan['mwb_memebership_plan_discount_price'] ) ? $plan['mwb_memebership_plan_discount_price'] : '';
+$price_type            = ! empty( $plan['mwb_membership_plan_offer_price_type'] ) ? $plan['mwb_membership_plan_offer_price_type'] : '';
+$shipping              = ! empty( $plan['mwb_memebership_plan_free_shipping'] ) ? $plan['mwb_memebership_plan_free_shipping'] : '';
+$products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $plan['mwb_membership_plan_target_ids'] : '';
+$categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
+$discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
+$price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
+$club_membership = get_post_meta( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'mwb_membership_club', true );
 $args = array(
 	'post_type'   => 'mwb_cpt_membership',
 	'post_status' => array( 'publish' ),
 	'numberposts' => -1,
 );
+
 
 $existing_plans = get_posts( $args );
 
@@ -107,15 +109,21 @@ $existing_plans = get_posts( $args );
 						echo '<tr>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
 
 				}
-				?>
 
+				if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+					$check_licence = check_membership_pro_plugin_is_active();
+					if ( $check_licence ) {
+						?>
 				<tr>
 					<th><label><?php esc_html_e( 'Plan access', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php echo esc_html( $plan_access ); ?>
 					</td>
 				</tr>
-
+						<?php
+					}
+				}
+				?>
 				<tr>
 					<th><label><?php esc_html_e( 'Access Type', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
@@ -143,9 +151,32 @@ $existing_plans = get_posts( $args );
 				?>
 
 				<tr>
-					<th><label><?php esc_html_e( 'Discount', 'membership-for-woocommerce' ); ?></label></th>
+					<th><label><?php esc_html_e( 'Discount on cart', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php echo sprintf( ' %u %s ', esc_html( $discount ), esc_html( $price_type ) ); ?>
+					</td>
+				</tr>
+
+				<tr>
+					<th><label><?php esc_html_e( 'Discount on Product', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+						<?php echo sprintf( ' %u %s ', esc_html( $discount_on_product ), esc_html( $price_type_on_product ) ); ?>
+					</td>  
+				</tr>
+
+
+				
+				<tr>
+					<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+					<?php
+
+					if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
+						foreach ( $club_membership as $ids ) {
+							echo( esc_html( get_the_title( $ids ) ) );
+						}
+					}
+					?>
 					</td>
 				</tr>
 
@@ -179,11 +210,175 @@ $existing_plans = get_posts( $args );
 							foreach ( $cat_ids as $ids ) {
 								echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
 							}
+						} else {
+							esc_html_e( 'No categories Offered in this Plan', 'membership-for-woocommerce' );
 						}
 						?>
 					</td>
 				</tr>
+				<?php
+				if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+					$check_licence = check_membership_pro_plugin_is_active();
+					if ( $check_licence ) {
 
+						?>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_tags'] ) ? $plan['mwb_membership_plan_target_tags'] : array() );
+
+							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+								foreach ( $tag_ids as $ids ) {
+									$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+									$tag_name = $tagn->name;
+									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr></br>
+					
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Posts: ', 'membership-for-woocommerce' ); ?></label></th>
+					
+						<td>
+							<?php
+							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_post_target_ids'] ) ? $plan['mwb_membership_plan_post_target_ids'] : array() );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Posts Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$cat_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_post_categories'] ) ? $plan['mwb_membership_plan_target_post_categories'] : array() );
+
+							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+								foreach ( $cat_ids as $ids ) {
+									echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_post_tags'] ) ? $plan['mwb_membership_plan_target_post_tags'] : array() );
+
+							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+								foreach ( $tag_ids as $ids ) {
+									$tagn     = get_term_by( 'id', $ids, 'post_tag' );
+									$tag_name = $tagn->name;
+									echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Post Tags Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_page_target_ids'] ) ? $plan['mwb_membership_plan_page_target_ids'] : array() );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Page Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Product (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_ids'] ) ? $plan['mwb_membership_plan_target_disc_ids'] : array() );
+
+							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+								foreach ( $post_ids as $ids ) {
+
+									echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No Product Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Product Categories (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$cat_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_categories'] ) ? $plan['mwb_membership_plan_target_disc_categories'] : array() );
+
+							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+								foreach ( $cat_ids as $ids ) {
+									echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+								}
+							} else {
+								esc_html_e( 'No categories Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+					<tr>
+						<th><label><?php esc_html_e( 'Offered Product Tags (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+						<td>
+							<?php
+
+							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_tags'] ) ? $plan['mwb_membership_plan_target_disc_tags'] : array() );
+
+							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+								foreach ( $tag_ids as $ids ) {
+									$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+									if ( ! empty( $tagn ) ) {
+										$tag_name = $tagn->name;
+										echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+									}
+								}
+							} else {
+								esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+							}
+							?>
+						</td>
+					</tr>
+
+
+						<?php
+
+					}
+				}
+				?>
 			</table>
 		</div>
 	<?php } else { ?>

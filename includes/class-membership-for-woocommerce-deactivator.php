@@ -2,8 +2,8 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       https://makewebbetter.com
- * @since      1.0.0
+ * @link  https://makewebbetter.com/
+ * @since 1.0.0
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
@@ -17,18 +17,18 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
- * @author     MakeWebBetter <plugins@makewebbetter.com>
  */
 class Membership_For_Woocommerce_Deactivator {
+
 
 	/**
 	 * Short Description. (use period)
 	 *
 	 * Long Description.
 	 *
-	 * @since    1.0.0
+	 * @since 1.0.0
 	 */
-	public static function deactivate() {
+	public static function membership_for_woocommerce_deactivate() {
 
 	}
 

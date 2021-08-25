@@ -18,7 +18,7 @@
  * For more information, see the following discussion:
  * https://github.com/tommcfarlin/WordPress-Plugin-Boilerplate/pull/123#issuecomment-28541913
  *
- * @link       https://makewebbetter.com
+ * @link       https://makewebbetter.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -33,7 +33,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 $mwb_membership_global_settings = get_option( 'mwb_membership_global_options' );
 
 // Delete only if "Delete data at unistall" in Global settings set to true.
-if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) && 'on' === $mwb_membership_global_settings['mwb_membership_delete_data'] ) {
+if ( ! empty( $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) && 'on' === $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) {
 
 	// Deleting membership default page at plugin unistall.
 	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page' );
@@ -90,6 +90,10 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_delete_data'] ) &&
 		}
 	}
 	unregister_post_type( 'mwb_cpt_members' );
+
+	delete_option( 'mwb_membership_enable_plugin' );
+	delete_option( 'mwb_membership_for_woo_delete_data' );
+	delete_option( 'mwb_membership_plan_user_history' );
 
 	// Deleting options at last during plugin uninstall.
 	$plugin_options = array(

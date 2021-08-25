@@ -37,38 +37,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<td class="forminp forminp-text">
 					<div class="mwb_membership_shortcode_div">
-						<p class="mwb_membership_shortcode">
-
-							<?php
-
-							$shortcode_desc = esc_html__( 'This shortcode only returns the buy now button. Use it as [mwb_membership_yes].', 'membership-for-woocommerce' );
-
-							$instance->tool_tip( $shortcode_desc );
-
-							?>
-
+						<div class="mwb_membership_shortcode">
 							<span class="mwb_membership_shortcode_title"><?php esc_html_e( 'Buy Now &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_yes]' ); ?></span>
-
-						</p>
-
+							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_buy]' ); ?></span>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode only returns the buy now button. Use it as [mwb_membership_yes].', 'membership-for-woocommerce' );
+							 $instance = Membership_For_Woocommerce_Global_Functions::get();
+							 $instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
+						
 					</div>
 
 					<div class="mwb_membership_shortcode_div">
-						<p class="mwb_membership_shortcode">
-
-							<?php
-
-							$shortcode_desc = esc_html__( 'This shortcode only returns no thanks button. Use it as [mwb_membership_no].', 'membership-for-woocommerce' );
-
-							$instance->tool_tip( $shortcode_desc );
-
-							?>
-
+						<div class="mwb_membership_shortcode">
 							<span class="mwb_membership_shortcode_title"><?php esc_html_e( 'No Thanks &rarr;', 'membership-for-woocommerce' ); ?></span>
 							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_no]' ); ?></span>
-
-						</p>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode only returns no thanks button. Use it as [mwb_membership_no].', 'membership-for-woocommerce' );
+							 $instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
 
 					</div>
 				</td>
@@ -84,51 +73,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				<td class="forminp forminp-text">
 					<div class="mwb_membership_shortcode_div">
-						<p class="mwb_membership_shortcode">
-
-							<?php
-
-							$shortcode_desc = esc_html__( 'This shortcode returns the title of Membership Plan. Use it as [mwb_membership_title plan_id=your plan ID]', 'membership-for-woocommerce' );
-
-							$instance->tool_tip( $shortcode_desc );
-
-							?>
-
+						<div class="mwb_membership_shortcode">
 							<span class="mwb_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Title &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_title]' ); ?></span>
-						</p>
+							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_title_name]' ); ?></span>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode returns the title of Membership Plan. Use it as [mwb_membership_title plan_id=your plan ID]', 'membership-for-woocommerce' );
+							 $instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
 					</div>
 
 					<div class="mwb_membership_shortcode_div">
-						<p class="mwb_membership_shortcode">
-
-							<?php
-
-							$shortcode_desc = esc_html__( 'This shortcode returns the price of Membership Plan. Use it as [mwb_membership_price plan_id=your plan ID]', 'membership-for-woocommerce' );
-
-							$instance->tool_tip( $shortcode_desc );
-
-							?>
-
+						<div class="mwb_membership_shortcode">
 							<span class="mwb_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Price &rarr;', 'membership-for-woocommerce' ); ?></span>
 							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_price]' ); ?></span>
-						</p>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode returns the price of Membership Plan. Use it as [mwb_membership_price plan_id=your plan ID]', 'membership-for-woocommerce' );
+							 $instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
 					</div>
 
 					<div class="mwb_membership_shortcode_div">
-						<p class="mwb_membership_shortcode">
-
-							<?php
-
-							$shortcode_desc = esc_html__( 'This shortcode returns the description of Membership Plan. Use it as [mwb_membership_desc plan_id=your plan ID]', 'membership-for-woocommerce' );
-
-							$instance->tool_tip( $shortcode_desc );
-
-							?>
-
+						<div class="mwb_membership_shortcode">
 							<span class="mwb_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Desc &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_desc]' ); ?></span>
-						</p>
+							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_desc_data]' ); ?></span>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode returns the description of Membership Plan. Use it as [mwb_membership_desc plan_id=your plan ID]', 'membership-for-woocommerce' );
+							 $instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
 					</div>
 
 				</td>

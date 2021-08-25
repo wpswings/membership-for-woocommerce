@@ -102,7 +102,7 @@ jQuery( document ).ready( function( $ ) {
                 type : 'POST',
                 url  : paypal_sb_obj.ajax_url,
                 data : {
-                    action : 'membership_save_transaction',
+                    action : 'mwb_membership_save_transaction',
                     nonce : paypal_sb_obj.nonce,
                     details : tr_details,
                 },

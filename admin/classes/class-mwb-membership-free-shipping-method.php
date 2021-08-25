@@ -131,7 +131,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'desc_tip'          => true,
 				'options'           => $all_memberships,
 				'custom_attributes' => array(
-					'data-placeholder' => __( 'Select Membership Plans', 'woocommerce' ),
+					'data-placeholder' => __( 'Select Membership Plans', 'membership-for-woocommerce' ),
 				),
 			),
 
@@ -169,8 +169,10 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 					$product_ids       = get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true );
 					$cat_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true );
+					$tag_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_tags', true );
 					$cart_items_ids    = $this->global_class->cart_item_ids();
 					$cart_item_cat_ids = $this->global_class->cart_item_cat_ids();
+					$cart_item_tag_ids = $this->global_class->cart_item_tag_ids();
 
 					if ( ! empty( $product_ids ) && is_array( $product_ids ) && ! empty( $cart_items_ids ) && is_array( $cart_items_ids ) ) {
 
@@ -189,6 +191,19 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 						foreach ( $cat_ids as $cat_id ) {
 
 							if ( in_array( $cat_id, $cart_item_cat_ids ) ) {
+
+								$plan_active = true;
+								break;
+
+							}
+						}
+					}
+
+					if ( ! empty( $tag_ids ) && is_array( $tag_ids ) && ! empty( $cart_item_tag_ids ) && is_array( $cart_item_tag_ids ) ) {
+
+						foreach ( $tag_ids as $tag_id ) {
+
+							if ( in_array( $tag_id, $cart_item_tag_ids ) ) {
 
 								$plan_active = true;
 								break;

@@ -6,7 +6,7 @@
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
- * @subpackage Membership_For_Woocommerce/admin
+ * @subpackage Membership_For_Woocommerce/includes
  */
 
 // Exit is accessed directly.

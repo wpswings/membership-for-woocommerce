@@ -43,15 +43,20 @@ if ( ! empty( $post_id ) ) {
 
 					<td>' . sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_price ) ) . '</td>
 				</tr>';
+	if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+		$check_licence = check_membership_pro_plugin_is_active();
+		if ( $check_licence ) {
 
-	// Plan access type section.
-	$output .= '<tr>
+			// Plan access type section.
+			$output .= '<tr>
 					<th>
 						<label>' . __( 'Plan Access Type', 'membership-for-woocommerce' ) . ' </label>
 					</th>
 
 					<td>' . esc_html( $plan_access_type ) . '</td>
 				</tr>';
+		}
+	}
 
 	// Plan user access type.
 	$output .= '<tr>

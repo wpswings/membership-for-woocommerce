@@ -7,38 +7,43 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link    https://makewebbetter.com
+ * @link    https://makewebbetter.com/
  * @since   1.0.0
  * @package Membership_For_Woocommerce
  *
  * @wordpress-plugin
  * Plugin Name:       Membership For WooCommerce
- * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce
+ * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
- * Version:           1.0.1
+ * Version:           1.1.0
  * Author:            MakeWebBetter
- * Author URI:        https://makewebbetter.com
- * Requires at least:    4.0
- * Tested up to:         5.7
- * WC requires at least: 3.0.0
- * WC tested up to:      5.1.0
- * License:           GPL-3.0
- * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
+ * Author URI:        https://makewebbetter.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
+ *
+ * Requires at least: 5.0
+ * Tested up to:      5.8.0
+ * WC requires at least: 4.0
+ * WC tested up to:   5.6
+ *
+ * License:           GNU General Public License v3.0
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
  */
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+
+
+
 
 /**
  * Function to check for plugin activation.
  *
  * @param string $plugin_slug is the slug of the plugin.
  */
-function mwb_membership_for_woo_is_plugin_active( $plugin_slug = '' ) {
+function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
 	if ( empty( $plugin_slug ) ) {
 
 		return;
@@ -57,12 +62,12 @@ function mwb_membership_for_woo_is_plugin_active( $plugin_slug = '' ) {
 /**
  * Checking whether the dependent plugin is active or not.
  */
-function mwb_membership_for_woo_plugin_activation() {
+function mwb_membership_plugin_activation() {
 	$activation['status']  = true;
 	$activation['message'] = '';
 
 	// If dependent plugin is not active.
-	if ( ! mwb_membership_for_woo_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+	if ( ! mwb_membership_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 		$activation['status']  = false;
 		$activation['message'] = 'woo_inactive';
@@ -73,34 +78,90 @@ function mwb_membership_for_woo_plugin_activation() {
 }
 
 // The following code runs during the activation of the plugin.
-$mwb_membership_for_woo_plugin_activation = mwb_membership_for_woo_plugin_activation();
+$mwb_membership_plugin_activation = mwb_membership_plugin_activation();
 
-if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
+if ( true === $mwb_membership_plugin_activation['status'] ) {
 
-	// Define all the necessary details of the plugin.
-
-	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_URL', plugin_dir_url( __FILE__ ) ); // Plugin URL directory path.
-
-	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH', plugin_dir_path( __FILE__ ) ); // Plugin filesystem directory path.
-
-	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_ADMIN', plugin_dir_path( __FILE__ ) . 'admin/partials/' ); // Plugin filesystem directory path to admin templates.
-
-	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH_PUBLIC', plugin_dir_path( __FILE__ ) . 'public/partials/' ); // PLugin filesystem directory path to public templates.
 
 	/**
-	 * Currently plugin version.
-	 * Start at version 1.0.0 and use SemVer - https://semver.org
-	 * Rename this for your plugin and update it as you release new versions.
+	 * Define plugin constants.
+	 *
+	 * @since 1.0.0
 	 */
-	define( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '1.0.0' );
+	function define_membership_for_woocommerce_constants() {
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '1.1.0' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Membership For WooCommerce' );
+	}
+
+	/**
+	 * Define mwb-site update feature.
+	 *
+	 * @since 1.0.0
+	 */
+	function auto_update_membership_for_woocommerce() {
+		 $mwb_mfw_license_key = get_option( 'mwb_mfw_license_key', '' );
+		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY' ) ) {
+			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY', '59f32ad2f20102.74284991' );
+		}
+
+		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL' ) ) {
+			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL', 'https://makewebbetter.com' );
+		}
+
+		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE' ) ) {
+			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Membership For WooCommerce' );
+		}
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $mwb_mfw_license_key );
+
+	}
+
+
+
+
+
+
+
+	/**
+	 * Callable function for defining plugin constants.
+	 *
+	 * @param String $key   Key for contant.
+	 * @param String $value value for contant.
+	 * @since 1.0.0
+	 */
+	function membership_for_woocommerce_constants( $key, $value ) {
+		if ( ! defined( $key ) ) {
+
+			define( $key, $value );
+		}
+	}
 
 	/**
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-membership-for-woocommerce-activator.php
 	 */
 	function activate_membership_for_woocommerce() {
+
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
 		Membership_For_Woocommerce_Activator::activate();
+		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate();
+		$mwb_mfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
+		if ( is_array( $mwb_mfw_active_plugin ) && ! empty( $mwb_mfw_active_plugin ) ) {
+			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
+				'plugin_name' => __( 'Membership For WooCommerce', 'membership-for-woocommerce' ),
+				'active' => '1',
+			);
+		} else {
+			$mwb_mfw_active_plugin = array();
+			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
+				'plugin_name' => __( 'Membership For WooCommerce', 'membership-for-woocommerce' ),
+				'active' => '1',
+			);
+		}
+		update_option( 'mwb_all_plugins_active', $mwb_mfw_active_plugin );
 	}
 
 	/**
@@ -109,62 +170,27 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 */
 	function deactivate_membership_for_woocommerce() {
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-deactivator.php';
-		Membership_For_Woocommerce_Deactivator::deactivate();
-	}
-
-	// Add settings link in plugin action links.
-	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'mwb_membership_for_woo_plugin_settings_link' );
-
-	/**
-	 * Add settings link callback.
-	 *
-	 * @since 1.0.0
-	 * @param string $links link to the admin area of the plugin.
-	 */
-	function mwb_membership_for_woo_plugin_settings_link( $links ) {
-
-		$plugin_links = array(
-			'<a href="' . admin_url( 'edit.php?post_type=mwb_cpt_membership' ) . '">' . esc_html__( 'Settings', 'membership-for-woocommerce' ) . '</a>',
-		);
-
-		return array_merge( $plugin_links, $links );
-	}
-
-	add_filter( 'plugin_row_meta', 'mwb_membership_for_woo_important_links', 10, 2 );
-
-	/**
-	 * Add custom links.
-	 *
-	 * @param   string $links link to index file of plugin.
-	 * @param   string $file index file of plugin.
-	 *
-	 * @since    1.0.0
-	 */
-	function mwb_membership_for_woo_important_links( $links, $file ) {
-
-		if ( strpos( $file, 'membership-for-woocommerce.php' ) !== false ) {
-
-			$row_meta = array(
-				'demo'    => '<a href="https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-free_demo" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Demo.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Demo', 'membership-for-woocommerce' ) . '</a>',
-				'doc'     => '<a href="https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Documentation.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Documentation', 'membership-for-woocommerce' ) . '</a>',
-				'support' => '<a href="https://makewebbetter.com/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support" target="_blank"><img src="' . MEMBERSHIP_FOR_WOOCOMMERCE_URL . 'admin/resources/icons/Support.svg" class="mwb_mfw_plugin_extra_custom_tab" style="width: 20px;padding-right: 5px;"></i>' . esc_html__( 'Support', 'membership-for-woocommerce' ) . '</a>',
-			);
-
-			return array_merge( $links, $row_meta );
+		Membership_For_Woocommerce_Deactivator::membership_for_woocommerce_deactivate();
+		$mwb_mfw_deactive_plugin = get_option( 'mwb_all_plugins_active', false );
+		if ( is_array( $mwb_mfw_deactive_plugin ) && ! empty( $mwb_mfw_deactive_plugin ) ) {
+			foreach ( $mwb_mfw_deactive_plugin as $mwb_mfw_deactive_key => $mwb_mfw_deactive ) {
+				if ( 'membership-for-woocommerce' === $mwb_mfw_deactive_key ) {
+					$mwb_mfw_deactive_plugin[ $mwb_mfw_deactive_key ]['active'] = '0';
+				}
+			}
 		}
-
-		return (array) $links;
+		update_option( 'mwb_all_plugins_active', $mwb_mfw_deactive_plugin );
 	}
 
-	register_activation_hook( __FILE__, 'activate_membership_for_woocommerce' ); // plugin activation hook.
-
-	register_deactivation_hook( __FILE__, 'deactivate_membership_for_woocommerce' ); // plugin activation hook.
+	register_activation_hook( __FILE__, 'activate_membership_for_woocommerce' );
+	register_deactivation_hook( __FILE__, 'deactivate_membership_for_woocommerce' );
 
 	/**
 	 * The core plugin class that is used to define internationalization,
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
-	include plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce.php';
+	require plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce.php';
+
 
 	/**
 	 * Begins execution of the plugin.
@@ -176,46 +202,149 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function run_membership_for_woocommerce() {
-
-		$plugin = new Membership_For_Woocommerce();
-		$plugin->run();
+		 define_membership_for_woocommerce_constants();
+		auto_update_membership_for_woocommerce();
+		$mfw_plugin_standard = new Membership_For_Woocommerce();
+		$mfw_plugin_standard->mfw_run();
+		$GLOBALS['mfw_mwb_mfw_obj'] = $mfw_plugin_standard;
 
 	}
-
 	run_membership_for_woocommerce();
+
+	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
+
+	/**
+	 * Schedule hook for member expiry.
+	 *
+	 * @return void
+	 */
+	function mwb_membership_schedule_expiry() {
+		if ( false === as_next_scheduled_action( 'mwb_membership_expiry_check_action' ) ) {
+			as_schedule_recurring_action( strtotime( 'tomorrow' ), DAY_IN_SECONDS, 'mwb_membership_expiry_check_action' );
+		}
+	}
+
+	/**
+	 * Schedule action for expiry.
+	 *
+	 * @return void
+	 */
+	function mwb_membership_schedule_action_expiry_check() {
+		if ( class_exists( 'Membership_For_Woocommerce_Public' ) ) {
+			$mfw_plugin_public = new Membership_For_Woocommerce_Public( '', '' );
+			$mfw_plugin_public->mwb_membership_cron_expiry_check();
+		}
+	}
+
+	add_action( 'init', 'mwb_membership_schedule_expiry' );
+
+	add_action( 'mwb_membership_expiry_check_action', 'mwb_membership_schedule_action_expiry_check' );
+
+		/**
+		 * Schedule hook for member expiry.
+		 *
+		 * @return void
+		 */
+	function mwb_membership_schedule_hook() {
+		// Schedule cron for checking of membership expiration on daily basis.
+		if ( ! wp_next_scheduled( 'mwb_membership_expiry_check' ) ) {
+			wp_schedule_event( time(), 'daily', 'mwb_membership_expiry_check' );
+		}
+
+	}
+	add_action( 'init', 'mwb_membership_schedule_hook' );
+
+
+
+	/**
+	 * Register the JavaScript for the admin area.
+	 *
+	 * @since    1.0.0
+	 * @name mfw_admin_enqueue_styles.
+	 */
+	function mfw_admin_enqueue_styles() {
+		$screen = get_current_screen();
+		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
+
+			$pagescreen_post = $screen->post_type;
+			$pagescreen_id   = $screen->id;
+
+			if ( 'product' != $pagescreen_post ) {
+				wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
+			}
+		}
+	}
+
+	// Add settings link on plugin page.
+	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
+
+	/**
+	 * Settings link.
+	 *
+	 * @since 1.0.0
+	 * @param Array $links Settings link array.
+	 */
+	function membership_for_woocommerce_settings_link( $links ) {
+		$my_link = array(
+			'<a href="' . admin_url( 'admin.php?page=membership_for_woocommerce_menu' ) . '">' . __( 'Settings', 'membership-for-woocommerce' ) . '</a>',
+		);
+		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+
+			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'membership-for-woocommerce' ) . '</a>';
+		}
+		return array_merge( $my_link, $links );
+	}
+
+	/**
+	 * Adding custom setting links at the plugin activation list.
+	 *
+	 * @param  array  $links_array      array containing the links to plugin.
+	 * @param  string $plugin_file_name plugin file name.
+	 * @return array
+	 */
+	function membership_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
+		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
+			$links_array[] = '<a href="https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-demo" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __( 'Demo', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __( 'Documentation', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __( 'Support', 'membership-for-woocommerce' ) . '</a>';
+		}
+		return $links_array;
+	}
+	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
+
 
 } else {
 
 	// Deactivate the plugin if Woocommerce not active.
-	add_action( 'admin_init', 'mwb_membership_for_woo_plugin_activation_failure' );
+	add_action( 'admin_init', 'mwb_membership_plugin_activation_failure' );
 
 	/**
 	 * Deactivate the plugin.
 	 */
-	function mwb_membership_for_woo_plugin_activation_failure() {
+	function mwb_membership_plugin_activation_failure() {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	}
 
 	// Add admin error notice.
-	add_action( 'admin_notices', 'mwb_membership_for_woo_plugin_activation_notice' );
+	add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
 
 	/**
 	 * This function displays plugin activation error notices.
 	 */
-	function mwb_membership_for_woo_plugin_activation_notice() {
+	function mwb_membership_plugin_activation_notice() {
 
-		global $mwb_membership_for_woo_plugin_activation;
+		global $mwb_membership_plugin_activation;
 
 		// To hide Plugin activated notice.
 		unset( $_GET['activate'] );
 
 		?>
 
-		<?php if ( 'woo_inactive' === $mwb_membership_for_woo_plugin_activation['message'] ) { ?>
+		<?php if ( 'woo_inactive' === $mwb_membership_plugin_activation['message'] ) { ?>
 
 			<div class="notice notice-error is-dismissible">
-				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership for WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
+				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce-pro' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce-pro' ); ?></p>
 			</div>
 
 			<?php
@@ -223,4 +352,5 @@ if ( true === $mwb_membership_for_woo_plugin_activation['status'] ) {
 	}
 }
 
-?>
+
+
