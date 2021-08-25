@@ -1623,12 +1623,12 @@ class Membership_For_Woocommerce_Admin {
 				$user->set_role( 'member' ); // set them to whatever role you want using the full word.
 
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
+				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 
-				$user_name = $user->data->display_name;
-
+				$user_name = $user->data->display_name;				
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
-					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
+					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
 
 				}
 			}
@@ -1678,12 +1678,12 @@ class Membership_For_Woocommerce_Admin {
 			}
 
 			$user_name = $user->data->display_name;
-			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
+			$order_id = get_post_meta( $post_id, 'member_order_id', true );
+			$customer_email = WC()->mailer()->emails['membership_cancell_email'];	
 
 			if ( ! empty( $customer_email ) ) {
 
-				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date );
-				update_option( 'email_status_cancle', $email_status );
+				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
 			update_post_meta( $post_id, 'member_expiry', '' );
 			update_post_meta( $post_id, 'plan_obj', '' );

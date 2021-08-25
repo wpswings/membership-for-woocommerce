@@ -2147,10 +2147,11 @@ class Membership_For_Woocommerce_Public {
 				$user_id = get_current_user_id();
 				$user = get_userdata( $user_id );
 				$user_name = $user->data->display_name;
+				$order_id = get_post_meta( $member_id, 'member_order_id', true );
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
 
-					$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date );
+					$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
 
 				}
 			}
@@ -2520,7 +2521,7 @@ class Membership_For_Woocommerce_Public {
 				$current_date = time();
 				$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
 				$order_status = $order->status;
-
+				$order_id = get_post_meta( $member_id, 'member_order_id', true );
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
 				$expiry = get_post_meta( $member_id, 'member_expiry', true );
@@ -2543,7 +2544,7 @@ class Membership_For_Woocommerce_Public {
 
 						if ( ! empty( $customer_email ) ) {
 
-							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
+							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
 
 						}
 					}
@@ -2570,7 +2571,7 @@ class Membership_For_Woocommerce_Public {
 							$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
 						}
 						if ( ! empty( $customer_email ) ) {
-							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj );
+							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
 						}
 					}
 				}
@@ -2791,10 +2792,13 @@ class Membership_For_Woocommerce_Public {
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 						$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
+						if ( ! empty( $club_membership ) ) {
+							foreach ( $club_membership as $key => $value ) {
+								array_push( $existing_plan_id, $value );
+							}
 
-						foreach ( $club_membership as $key => $value ) {
-							array_push( $existing_plan_id, $value );
 						}
+						
 
 						array_push( $existing_plan_id, $active_plan['ID'] );
 						$target_ids      = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_ids', true );
