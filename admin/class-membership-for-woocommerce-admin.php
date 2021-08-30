@@ -1625,7 +1625,7 @@ class Membership_For_Woocommerce_Admin {
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 
-				$user_name = $user->data->display_name;				
+				$user_name = $user->data->display_name;
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
 					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
@@ -1679,7 +1679,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$user_name = $user->data->display_name;
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
-			$customer_email = WC()->mailer()->emails['membership_cancell_email'];	
+			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
 
 			if ( ! empty( $customer_email ) ) {
 
@@ -1957,51 +1957,6 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-
-	/**
-	 *  Adding distraction free mode to the offers page.
-	 *
-	 * @param mixed $page_template Default template for the page.
-	 *
-	 * @since 1.0.0
-	 */
-	public function mwb_membership_plan_page_template( $page_template ) {
-
-		$pages_available = get_posts(
-			array(
-				'post_type'      => 'any',
-				'post_status'    => 'publish',
-				'posts_per_page' => -1,
-				'pagename'       => 'membership-plans',
-				'order'          => 'ASC',
-				'orderby'        => 'ID',
-			)
-		);
-
-		$pages_available = array_merge(
-			get_posts(
-				array(
-					'post_type'      => 'any',
-					'post_status'    => 'publish',
-					'posts_per_page' => -1,
-					's'              => '[mwb_membership_default_page_identification]',
-					'order'          => 'ASC',
-					'orderby'        => 'ID',
-				)
-			),
-			$pages_available
-		);
-
-		foreach ( $pages_available as $single_page ) {
-
-			if ( is_page( $single_page->ID ) ) {
-
-				$page_template = plugin_dir_path( __FILE__ ) . '/partials/templates/membership-templates/mwb-membership-template.php';
-			}
-		}
-		$page_template = apply_filters( 'mwb_membership_plan_page_template', $page_template );
-		return $page_template;
-	}
 
 	/**
 	 * Creating shipping method for membership.

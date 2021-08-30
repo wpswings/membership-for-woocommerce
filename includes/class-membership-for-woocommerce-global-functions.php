@@ -251,14 +251,17 @@ class Membership_For_Woocommerce_Global_Functions {
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+		if ( ! empty(  $method_id ) ) {
+		
+			if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
 
-			// Loop through Woocommerce available payment gateways.
-			foreach ( $payment_gateways as $gateway ) {
+				// Loop through Woocommerce available payment gateways.
+				foreach ( $payment_gateways as $gateway ) {
 
-				if ( $method_id === $gateway->id ) {
+					if ( $method_id === $gateway->id ) {
 
-					$title = $gateway->method_title;
+						$title = $gateway->method_title;
+					}
 				}
 			}
 		}

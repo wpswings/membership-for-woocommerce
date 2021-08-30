@@ -265,8 +265,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
 
-		// Distraction free page for membership plans page.
-		$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
 
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );

@@ -726,9 +726,10 @@ class Membership_For_Woocommerce_Public {
 
 									$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 									$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-
-							foreach ( $club_membership as $key => $value ) {
-								array_push( $existing_plan_id, $value );
+							if ( ! empty( $club_membership ) ) {
+								foreach ( $club_membership as $key => $value ) {
+									array_push( $existing_plan_id, $value );
+								}
 							}
 									array_push( $existing_plan_id, $active_plan['ID'] );
 								break;
@@ -737,9 +738,10 @@ class Membership_For_Woocommerce_Public {
 
 							$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 							$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-
-							foreach ( $club_membership as $key => $value ) {
-								array_push( $existing_plan_id, $value );
+							if ( ! empty( $club_membership ) ) {
+								foreach ( $club_membership as $key => $value ) {
+									array_push( $existing_plan_id, $value );
+								}
 							}
 							array_push( $existing_plan_id, $active_plan['ID'] );
 
@@ -985,7 +987,7 @@ class Membership_For_Woocommerce_Public {
 
 			$plan_currency = get_woocommerce_currency_symbol();
 			if ( function_exists( 'mwb_mmcsfw_get_custom_currency_symbol' ) ) {
-				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol();
+				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
 			}
 			$plan_desc     = get_post_field( 'post_content', $plan_id );
 			$plan_info     = get_post_meta( $plan_id, 'mwb_membership_plan_info', true );
@@ -1087,7 +1089,7 @@ class Membership_For_Woocommerce_Public {
 			}
 			$plan_currency = get_woocommerce_currency_symbol();
 			if ( function_exists( 'mwb_mmcsfw_get_custom_currency_symbol' ) ) {
-				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol();
+				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
 			}
 			if ( ! empty( $plan_price ) ) {
 
@@ -1238,7 +1240,7 @@ class Membership_For_Woocommerce_Public {
 			}
 			$plan_currency = get_woocommerce_currency_symbol();
 			if ( function_exists( 'mwb_mmcsfw_get_custom_currency_symbol' ) ) {
-				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol();
+				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
 			}
 		}
 
@@ -1258,7 +1260,7 @@ class Membership_For_Woocommerce_Public {
 				$description .= '<div class="members_plans_details">  ';
 				if ( ! empty( $plan ) ) {
 					$description .= '<div class="mwb_members_plans"> 
-	<label>Membership Details </label>';
+						<label>Membership Details </label>';
 					$description .= '<div class="mwb_table_wrapper"><ul class="form-table">';
 
 					$description .= '<li><label>';
@@ -1578,9 +1580,10 @@ class Membership_For_Woocommerce_Public {
 									$active_plan   = get_post_meta( $membership_id, 'plan_obj', true );
 
 									$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-
-							foreach ( $club_membership as $key => $value ) {
-								array_push( $existing_plan_id, $value );
+							if ( ! empty( $club_membership ) ) {
+								foreach ( $club_membership as $key => $value ) {
+									array_push( $existing_plan_id, $value );
+								}
 							}
 
 									array_push( $existing_plan_id, $active_plan['ID'] );
@@ -1591,9 +1594,10 @@ class Membership_For_Woocommerce_Public {
 							$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 							$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-
-							foreach ( $club_membership as $key => $value ) {
-								array_push( $existing_plan_id, $value );
+							if ( ! empty( $club_membership ) ) {
+								foreach ( $club_membership as $key => $value ) {
+									array_push( $existing_plan_id, $value );
+								}
 							}
 
 							array_push( $existing_plan_id, $active_plan['ID'] );
@@ -1601,23 +1605,35 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 				}
-				$description .= '<ul>';
 				foreach ( $data as $plan ) {
 					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
 					if ( ! empty( $mwb_membership_default_plans_page_id ) && 'publish' == get_post_status( $mwb_membership_default_plans_page_id ) ) {
 						$page_link = get_page_link( $mwb_membership_default_plans_page_id );
 					}
+					$plan_price    = get_post_meta( $plan['ID'], 'mwb_membership_plan_price', true );
+
+					if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
+						$plan_price = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $plan_price );
+					}
+
+					$plan_currency = get_woocommerce_currency_symbol();
+					if ( function_exists( 'mwb_mmcsfw_get_custom_currency_symbol' ) ) {
+						$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
+					}
 
 					if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
-						$description .= '<li>' . $plan['post_name'] . '</li>';
+						$description .= '<h2>' . $plan['post_name'] . '</h2>';
+						$description .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
+
+						$description .= $this->get_plan_details( $plan['ID'] );
 
 					}
 				}
 			}
 
-			$description .= '</ul></div>';
+			$description .= '</div>';
 		}
 		$description = apply_filters( 'membership_plan_description_shortcode', $description );
 
@@ -2796,9 +2812,7 @@ class Membership_For_Woocommerce_Public {
 							foreach ( $club_membership as $key => $value ) {
 								array_push( $existing_plan_id, $value );
 							}
-
 						}
-						
 
 						array_push( $existing_plan_id, $active_plan['ID'] );
 						$target_ids      = get_post_meta( $active_plan['ID'], 'mwb_membership_plan_target_ids', true );
@@ -3005,9 +3019,10 @@ class Membership_For_Woocommerce_Public {
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 						$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-
-						foreach ( $club_membership as $key => $value ) {
-							array_push( $existing_plan_id, $value );
+						if ( ! empty( $club_membership ) ) {
+							foreach ( $club_membership as $key => $value ) {
+								array_push( $existing_plan_id, $value );
+							}
 						}
 
 						array_push( $existing_plan_id, $active_plan['ID'] );

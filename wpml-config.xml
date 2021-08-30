@@ -1,2 +1,6 @@
 <wpml-config>
+ 	<admin-texts>
+		<key name="mwb_membership_plan_info"/>
+		<key name="mwb_membership_notice_message" />
+	</admin-texts> 
 </wpml-config>

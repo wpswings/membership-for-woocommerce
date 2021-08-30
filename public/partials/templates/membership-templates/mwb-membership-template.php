@@ -20,9 +20,6 @@ if ( ! is_user_logged_in() ) {
 
 	wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
 
-} elseif ( ! isset( $_GET['plan_id'] ) && ! isset( $_GET['prod_id'] ) ) {
-
-	wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
 }
 
 
