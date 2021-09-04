@@ -1975,20 +1975,20 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
- 
+
 	/**
 	 * Creating shipping method for membership.
 	 *
-	 * @param array $user_id id of current user.
+	 * @param array  $user_id id of current user.
 	 * @param object $old_user_data old data of currentt user.
 	 *
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_update_profile_for_member( $user_id, $old_user_data ) {
-	
+
 		if ( in_array( 'member', (array) $old_user_data->roles ) ) {
-		$user = new WP_User( $user_id ); // create a new user object for this user.
-		$user->add_role( 'member' ); // set them to whatever role you want using the full word.
+			$user = new WP_User( $user_id ); // create a new user object for this user.
+			$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 		}
 	}
 
@@ -1999,8 +1999,8 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_membership_for_woo_add_to_trash_member( $post_id ) {	
+	public function mwb_membership_for_woo_add_to_trash_member( $post_id ) {
 		update_post_meta( $post_id, 'member_status', 'cancelled' );
-	}	
+	}
 
 }

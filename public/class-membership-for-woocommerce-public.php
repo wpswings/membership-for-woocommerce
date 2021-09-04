@@ -190,8 +190,8 @@ class Membership_For_Woocommerce_Public {
 	 */
 	protected function custom_query_handler() {
 		global $wpdb;
-		$wp_posts =  $wpdb->prefix . 'posts';
-		$wp_postmeta =  $wpdb->prefix . 'postmeta';
+		$wp_posts = $wpdb->prefix . 'posts';
+		$wp_postmeta = $wpdb->prefix . 'postmeta';
 
 		$query = "SELECT   $wp_posts.* FROM $wp_posts  INNER JOIN $wp_postmeta ON ( $wp_posts.ID = $wp_postmeta.post_id ) WHERE 1=1  
 		AND ( $wp_postmeta.meta_key = 'mwb_membership_plan_target_ids' ) AND $wp_posts.post_type = 'mwb_cpt_membership' 
@@ -2771,7 +2771,7 @@ class Membership_For_Woocommerce_Public {
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$membership_product = wc_get_product( $mwb_membership_default_product );
-if ( $membership_product ) {
+		if ( $membership_product ) {
 
 			if ( $mwb_membership_default_product == $product->get_id() ) {
 
@@ -3060,4 +3060,4 @@ if ( $membership_product ) {
 	}
 }
 // End of class.
- 
+

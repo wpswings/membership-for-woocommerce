@@ -251,8 +251,8 @@ class Membership_For_Woocommerce_Global_Functions {
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-		if ( ! empty(  $method_id ) ) {
-		
+		if ( ! empty( $method_id ) ) {
+
 			if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
 
 				// Loop through Woocommerce available payment gateways.

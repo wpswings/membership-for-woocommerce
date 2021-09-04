@@ -57,30 +57,29 @@ class Membership_For_Woocommerce_Activator {
 		$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
 		if ( empty( $mwb_membership_default_plans_page_id ) ) {
 
+			$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
 
-		$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
+			if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' !== get_post_status( $mwb_membership_default_plans_page_id ) ) {
 
-		if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' !== get_post_status( $mwb_membership_default_plans_page_id ) ) {
+				$mwb_membership_plans_page = array(
+					'comment_status' => 'closed',
+					'ping_status'    => 'closed',
+					'post_content'   => $page_content,
+					'post_name'      => 'membership-plans',
+					'post_status'    => 'publish',
+					'post_title'     => 'Membership Plans',
+					'post_type'      => 'page',
+				);
 
-			$mwb_membership_plans_page = array(
-				'comment_status' => 'closed',
-				'ping_status'    => 'closed',
-				'post_content'   => $page_content,
-				'post_name'      => 'membership-plans',
-				'post_status'    => 'publish',
-				'post_title'     => 'Membership Plans',
-				'post_type'      => 'page',
-			);
+				$mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
 
-			$mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
-
-			update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
+				update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
+			}
+		} else {
+			$current_post = get_post( $mwb_membership_default_plans_page_id, 'ARRAY_A' );
+			$current_post['post_status'] = 'publish';
+			wp_update_post( $current_post );
 		}
-	} else {
-		$current_post = get_post( $mwb_membership_default_plans_page_id, 'ARRAY_A' );
-		$current_post['post_status'] = 'publish';
-		wp_update_post($current_post);
-	}
 
 		/**
 		 * Generating default membership plans page at the time of plugin activation.
