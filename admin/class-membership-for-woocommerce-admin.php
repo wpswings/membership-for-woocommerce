@@ -625,6 +625,7 @@ class Membership_For_Woocommerce_Admin {
 				),
 			)
 		);
+
 	}
 
 	/**
@@ -646,7 +647,6 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function membership_for_woo_members_remove_bulkaction( $actions ) {
 		unset( $actions['edit'] );
-		unset( $actions['trash'] );
 		return $actions;
 	}
 
@@ -769,7 +769,6 @@ class Membership_For_Woocommerce_Admin {
 			'',
 			MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH
 		);
-
 	}
 
 
@@ -1620,7 +1619,7 @@ class Membership_For_Woocommerce_Admin {
 				$user    = get_userdata( $post->post_author );
 
 				$user = new WP_User( $post->post_author ); // create a new user object for this user.
-				$user->set_role( 'member' ); // set them to whatever role you want using the full word.
+				$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
@@ -1976,5 +1975,32 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
+ 
+	/**
+	 * Creating shipping method for membership.
+	 *
+	 * @param array $user_id id of current user.
+	 * @param object $old_user_data old data of currentt user.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_update_profile_for_member( $user_id, $old_user_data ) {
+	
+		if ( in_array( 'member', (array) $old_user_data->roles ) ) {
+		$user = new WP_User( $user_id ); // create a new user object for this user.
+		$user->add_role( 'member' ); // set them to whatever role you want using the full word.
+		}
+	}
+
+	/**
+	 * Creating shipping method for membership.
+	 *
+	 * @param array $post_id id of current post.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_add_to_trash_member( $post_id ) {	
+		update_post_meta( $post_id, 'member_status', 'cancelled' );
+	}	
 
 }

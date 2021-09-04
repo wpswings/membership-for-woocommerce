@@ -53,10 +53,10 @@ function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
 
 	if ( is_multisite() ) {
 
-		$active_plugins = array_merge( $active_plugins, get_option( 'active_sitewide_plugins', array() ) );
+		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 	}
 
-	return in_array( $plugin_slug, $active_plugins, true ) || array_key_exists( $plugin_slug, $active_plugins );
+	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
 
 /**

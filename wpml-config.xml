@@ -1,6 +1,8 @@
 <wpml-config>
- 	<admin-texts>
-		<key name="mwb_membership_plan_info"/>
-		<key name="mwb_membership_notice_message" />
-	</admin-texts> 
+<custom-fields>
+    <custom-field action="translate">mwb_membership_notice_message</custom-field>
+<custom-field action="translate">mwb_membership_plan_info</custom-field>
+</custom-fields>
 </wpml-config>
+
+

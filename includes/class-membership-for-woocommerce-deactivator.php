@@ -30,6 +30,10 @@ class Membership_For_Woocommerce_Deactivator {
 	 */
 	public static function membership_for_woocommerce_deactivate() {
 
+		$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page');
+		$current_post = get_post( $mwb_membership_default_plans_page_id, 'ARRAY_A' );
+		$current_post['post_status'] = 'draft';
+		wp_update_post($current_post);
 	}
 
 }

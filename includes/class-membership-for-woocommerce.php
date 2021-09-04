@@ -270,6 +270,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
 
+		// update member in user update.
+		$this->loader->add_action( 'profile_update', $mfw_plugin_admin, 'mwb_membership_for_woo_update_profile_for_member', 10, 2 );
+
+		$this->loader->add_action( 'wp_trash_post', $mfw_plugin_admin, 'mwb_membership_for_woo_add_to_trash_member' );
 	}
 
 	/**
@@ -379,7 +383,6 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
-			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2 );
 		}
 	}
 

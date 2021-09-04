@@ -54,7 +54,9 @@ class Membership_For_Woocommerce_Activator {
 		/**
 		 * Generating default membership plans page at the time of plugin activation.
 		 */
-		$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
+		$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
+		if ( empty( $mwb_membership_default_plans_page_id ) ) {
+
 
 		$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
 
@@ -74,6 +76,11 @@ class Membership_For_Woocommerce_Activator {
 
 			update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
 		}
+	} else {
+		$current_post = get_post( $mwb_membership_default_plans_page_id, 'ARRAY_A' );
+		$current_post['post_status'] = 'publish';
+		wp_update_post($current_post);
+	}
 
 		/**
 		 * Generating default membership plans page at the time of plugin activation.
