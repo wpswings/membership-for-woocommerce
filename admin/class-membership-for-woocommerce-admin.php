@@ -826,13 +826,14 @@ class Membership_For_Woocommerce_Admin {
 				'labels'               => $labels,
 				'public'               => true,
 				'has_archive'          => false,
+				'show_ui'              => true,
 				'publicly_queryable'   => true,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
 				'show_in_admin_bar'    => true,
 				'show_in_menu'         => true,
-				'menu_position'        => 56,
+				'menu_position'        => null,
 				'menu_icon'            => 'dashicons-buddicons-buddypress-logo',
 				'description'          => esc_html__( 'Membership Plans will be created here.', 'membership-for-woocommerce' ),
 				'register_meta_box_cb' => array( $this, 'mwb_membership_for_woo_meta_box' ),
@@ -846,6 +847,8 @@ class Membership_For_Woocommerce_Admin {
 				),
 			)
 		);
+
+
 	}
 
 	/**
@@ -1250,7 +1253,6 @@ class Membership_For_Woocommerce_Admin {
 				$post_type = get_post_type( $search_results->post->ID );
 
 				if ( 'product' !== $post_type && 'product_variation' !== $post_type ) {
-
 					continue;
 				}
 

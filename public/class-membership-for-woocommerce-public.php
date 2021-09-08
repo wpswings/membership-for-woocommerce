@@ -3061,3 +3061,11 @@ class Membership_For_Woocommerce_Public {
 }
 // End of class.
 
+
+add_action( 'init', 'use_user_role' );
+function use_user_role() {
+
+	//$current_user = wp_get_current_user();
+//print_r( $current_user->ID);
+	//wp_update_user( array( 'ID' => $current_user->ID, 'role' => 'wc_product_vendors_pending_vendor' ) );
+}
