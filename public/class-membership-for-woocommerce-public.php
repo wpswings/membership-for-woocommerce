@@ -387,7 +387,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		$user = wp_get_current_user();
-
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
 
 			$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
@@ -396,7 +396,7 @@ class Membership_For_Woocommerce_Public {
 			if ( true == $is_membership_product ) {
 
 				// Not a member.
-				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
+				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 					// If non logged in or not a member.
 					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
@@ -441,10 +441,10 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
 
 		$user = wp_get_current_user();
-
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
 
-			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
+			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
 					return '';
@@ -468,6 +468,7 @@ class Membership_For_Woocommerce_Public {
 
 		global $product;
 		$user = wp_get_current_user();
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		$already_included_plan = array();
 		$already_pending_plan = array();
 		$suggested_membership = false;
@@ -580,8 +581,8 @@ class Membership_For_Woocommerce_Public {
 											++$count;
 											if ( true === $is_membership_product ) {
 												$user = wp_get_current_user();
-
-												if ( is_user_logged_in() && in_array( 'member', (array) $user->roles ) ) {
+												$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+												if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
 
 													echo '<div class="mwb-mfwp__available--title">Other Available Membership</div>';
 													$suggested_membership = true;
@@ -672,8 +673,8 @@ class Membership_For_Woocommerce_Public {
 												++$count;
 												if ( true === $is_membership_product ) {
 													$user = wp_get_current_user();
-
-													if ( is_user_logged_in() && in_array( 'member', (array) $user->roles ) ) {
+													$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+													if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
 
 														echo '<div class="mwb-mfwp__available--title">Other Available Membership</div>';
 														$suggested_membership = true;
@@ -713,7 +714,7 @@ class Membership_For_Woocommerce_Public {
 		$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 		if ( true === $is_membership_product ) {
 
-			if ( is_user_logged_in() && in_array( 'member', (array) $user->roles ) ) {
+			if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
 				$data                = $this->custom_query_data;
 				$user_id             = get_current_user_id();
 				$existing_plan_id    = array();
@@ -806,8 +807,8 @@ class Membership_For_Woocommerce_Public {
 										if ( 0 == $count ) {
 											if ( true === $is_membership_product ) {
 												$user = wp_get_current_user();
-
-												if ( is_user_logged_in() && in_array( 'member', (array) $user->roles ) ) {
+												$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+												if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
 
 													echo '<div class="mwb-mfwp__available--title">Other Available Membership</div>';
 													$suggested_membership = true;
@@ -1567,7 +1568,8 @@ class Membership_For_Woocommerce_Public {
 
 			$description .= '<div class="mwb_membership_plan_content_desc">';
 			$user = wp_get_current_user();
-			if ( is_user_logged_in() || in_array( 'member', (array) $user->roles ) ) {
+			$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+			if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 				$data                = $this->custom_query_data;
 				$user_id             = get_current_user_id();
 				$existing_plan_id    = array();
@@ -1856,9 +1858,10 @@ class Membership_For_Woocommerce_Public {
 
 		$all_methods = array();
 		$user = wp_get_current_user();
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
 
-			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
+			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 				foreach ( $rates as $rate_key => $rate ) {
 					// Excluding membership shipping methods.
@@ -2782,7 +2785,8 @@ class Membership_For_Woocommerce_Public {
 		$is_purchasable = apply_filters( 'add_membership_product_price_to_is_purchasable', $is_purchasable );
 		$is_product_exclude = false;
 		$user = wp_get_current_user();
-		if ( is_user_logged_in() || in_array( 'member', (array) $user->roles ) ) {
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 			$data                = $this->custom_query_data;
 			$user_id             = get_current_user_id();
 			$existing_plan_id    = array();
@@ -2993,7 +2997,8 @@ class Membership_For_Woocommerce_Public {
 		global $product;
 
 		$user = wp_get_current_user();
-		if ( is_user_logged_in() || in_array( 'member', (array) $user->roles ) ) {
+		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 			$data                = $this->custom_query_data;
 			$user_id             = get_current_user_id();
 			$existing_plan_id    = array();
