@@ -2024,8 +2024,8 @@ class Membership_For_Woocommerce_Public {
 					update_user_meta( $member_data['user_id'], 'mfw_membership_id', $current_memberships );
 
 					$user = new WP_User( $member_data['user_id'] ); // create a new user object for this user.
-					$user->add_role( 'member' ); // set them to whatever role you want using the full word.
-
+					//$user->add_role( 'member' ); // set them to whatever role you want using the full word.
+					update_user_meta( $member_data['user_id'], 'is_member', 'member' );
 					wc_add_order_item_meta( $keys[0], '_member_id', $member_data['member_id'] );
 
 					if ( ! $member_id ) {
