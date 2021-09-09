@@ -1621,8 +1621,9 @@ class Membership_For_Woocommerce_Admin {
 				$user    = get_userdata( $post->post_author );
 
 				$user = new WP_User( $post->post_author ); // create a new user object for this user.
-				$user->add_role( 'member' ); // set them to whatever role you want using the full word.
-
+				$user->set_role( 'customer' ); // set them to whatever role you want using the full word.
+				update_user_meta( $post->post_author, 'is_member', 'member' );
+				
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 
@@ -1990,7 +1991,8 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( in_array( 'member', (array) $old_user_data->roles ) ) {
 			$user = new WP_User( $user_id ); // create a new user object for this user.
-			$user->add_role( 'member' ); // set them to whatever role you want using the full word.
+			$user->set_role( 'customer' ); // set them to whatever role you want using the full word.
+			update_user_meta( $user_id, 'is_member', 'member' );
 		}
 	}
 

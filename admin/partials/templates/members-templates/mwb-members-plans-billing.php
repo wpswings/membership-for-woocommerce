@@ -79,13 +79,12 @@ $country_class = new WC_Countries();
 							if ( ! empty( $user_roles ) ) {
 								$user_role = $user_roles[0];
 							}
-							if ( 'administrator' != $user_role ) {
-
+						//	if ( 'administrator' != $user_role ) {
 
 								?>
 							<option <?php echo esc_html( $users->ID === $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
 								<?php
-							}
+							//}
 						}
 					}
 					?>

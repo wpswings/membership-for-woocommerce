@@ -893,7 +893,7 @@ global $post;
 						<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
 
 						<?php
-						if ( 'publish' == $post->post_status ) {
+						//if ( 'publish' == $post->post_status ) {
 							?>
 						<!-- manage free shipping link start. -->
 						<div class="mwb_membership_free_shipping_link" >
@@ -902,7 +902,7 @@ global $post;
 							</p>
 						</div>
 						<!-- Manage free shipping link end. -->
-						<?php } ?>
+						<?php // } ?>
 					</td>
 				</tr>
 				<!-- Free shiping section end. -->
@@ -925,7 +925,7 @@ global $post;
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 							$check_licence = check_membership_pro_plugin_is_active();
 							if ( $check_licence ) {
-												$mwb_membership_plan_hide_products = $settings_fields['mwb_membership_plan_hide_products'];
+									$mwb_membership_plan_hide_products = $settings_fields['mwb_membership_plan_hide_products'];
 							}
 						}
 
