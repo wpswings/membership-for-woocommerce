@@ -227,12 +227,11 @@ if ( empty( $current_url ) ) {
 					$club_membership = get_post_meta( $membership_plan['ID'], 'mwb_membership_club', true );
 					if ( ! empty( $club_membership ) ) {
 						?>
+					<table>
 					<tr>
 					<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php
-
-
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
 								$include_membership_data = get_post( $ids );
@@ -279,7 +278,7 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
 					<?php
 					if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 						$check_licence = check_membership_pro_plugin_is_active();
@@ -338,9 +337,10 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
+
 					<tr>
-						<th><label><?php esc_html_e( 'Offered POst Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+						<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
 							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_tags'] );
@@ -356,7 +356,7 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
 
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
@@ -375,7 +375,7 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
 
 
 					<tr>
@@ -395,7 +395,7 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
 
 
 					<tr>
@@ -415,7 +415,7 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr></br>
 
 
 					<tr>
@@ -436,13 +436,14 @@ if ( empty( $current_url ) ) {
 							}
 							?>
 						</td>
-					</tr>
+					</tr>				
 
 							<?php
 						}
 					}
 					?>
 					</br>
+				</table>
 				</address>
 			</div>
 		</section>

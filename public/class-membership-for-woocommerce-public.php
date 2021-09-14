@@ -494,9 +494,9 @@ class Membership_For_Woocommerce_Public {
 					foreach ( $data as $plan ) {
 
 						$page_link_found = false;
-						$target_ids      = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
-						$target_cat_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
-						$target_tag_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
+						$target_ids      = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) : array();						
+						$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) : array();
+						$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) : array();
 
 						if ( $target_cat_ids ) {
 
@@ -504,14 +504,13 @@ class Membership_For_Woocommerce_Public {
 
 						}
 
-						if ( $target_tag_ids ) {
+						if ( $target_tag_ids && ! empty( $target_tag_ids  ) ) {
 
 							$target_ids = array_merge( $target_ids, $target_tag_ids );
-
 						}
-
-						$target_ids = array_unique( $target_ids );
-
+						if ( ! empty( $target_ids  ) && is_array( $target_ids )  ) {
+							$target_ids = array_unique( $target_ids );
+						}
 						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
 							if ( in_array( $product->get_id(), $target_ids ) ) {
@@ -765,10 +764,10 @@ class Membership_For_Woocommerce_Public {
 
 								if ( ! in_array( $plan['ID'], $already_included_plan ) ) {
 									$page_link_found = false;
-									$target_ids      = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
-									$target_cat_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
-									$target_tag_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
-
+									$target_ids      = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true ) : array();						
+									$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) : array();
+									$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) : array();
+			
 									if ( $target_cat_ids ) {
 
 										$target_ids = array_merge( $target_ids, $target_cat_ids );
@@ -780,8 +779,10 @@ class Membership_For_Woocommerce_Public {
 										$target_ids = array_merge( $target_ids, $target_tag_ids );
 
 									}
-
-									$target_ids = array_unique( $target_ids );
+									if ( ! empty( $target_ids  ) && is_array( $target_ids )  ) {
+										$target_ids = array_unique( $target_ids );
+									}
+								
 
 									if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
@@ -1149,7 +1150,7 @@ class Membership_For_Woocommerce_Public {
 				$title .= '<div class="mwb_membership_plan_content_title">' . $content . '</div>';
 			}
 		} else {
-			$title .= '<div class="mwb_membership_plan_content_title"> All Membership Plans </div>';
+			$title .= '<div class="mwb_membership_plan_content_title_for_all"> All Membership Plans </div>';
 		}
 		$title = apply_filters( 'membership_plan_title_shortcode', $title );
 
@@ -2859,6 +2860,22 @@ class Membership_For_Woocommerce_Public {
 							$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true ) : array();
 							$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true ) : array();
 
+							if ( $target_cat_ids ) {
+								foreach ( $target_cat_ids as $cat_id ) {
+									$term = get_the_category_by_ID( $cat_id );
+									$products = $this->get_category_query( $cat_id, 'product_cat' );
+									$target_ids = array_merge( $target_ids, $products );
+								}
+							}
+
+							if ( $target_tag_ids ) {
+								foreach ( $target_tag_ids as $tag_id ) {
+									$tag_name = get_the_category_by_ID( $tag_id );
+									$posts = $this->get_product_query( 'product', 'product_tag', $tag_name );
+									$included_products = array_merge( $target_ids, $posts->posts );
+								}
+							}
+
 							if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
 
 								if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
@@ -2885,6 +2902,62 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		return $is_purchasable;
+	}
+
+
+	/**
+	 * Get product data through query.
+	 *
+	 * @param mixed $cat_id category id.
+	 * @param mixed $taxonomy taxonomy.
+	 */
+	public function get_category_query( $cat_id, $taxonomy ) {
+		$all_ids = get_posts(
+			array(
+				'post_type' => 'product',
+				'numberposts' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+				'tax_query' => array(
+					array(
+						'taxonomy' => $taxonomy,
+						'terms' => $cat_id, /*category name*/
+					),
+				),
+			)
+		);
+
+		$all_ids = apply_filters( 'get_category_query', $all_ids );
+
+		return $all_ids;
+	}
+
+	/**
+	 * Get product data through query.
+	 *
+	 * @param mixed $post_type type of post.
+	 * @param mixed $taxonomy taxonomy.
+	 * @param mixed $term terms.
+	 */
+	public function get_product_query( $post_type, $taxonomy, $term ) {
+		$products = new WP_Query(
+			array(
+				'post_type'   => $post_type,
+				'post_status' => 'publish',
+				'fields'      => 'ids',
+				'tax_query'   => array(
+					'relation' => 'AND',
+					array(
+						'taxonomy' => $taxonomy,
+						'field'    => 'term_id',
+						'terms'    => $term,
+					),
+				),
+			)
+		);
+		$products = apply_filters( 'get_product_query', $products );
+
+		return $products;
 	}
 
 	/**
