@@ -121,10 +121,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 
 
-
-
-
-
 	/**
 	 * Callable function for defining plugin constants.
 	 *
@@ -328,7 +324,12 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	}
 
 	// Add admin error notice.
+	if ( is_multisite() ) {
+		add_action( 'network_admin_notices', 'mwb_membership_plugin_activation_notice' );
+	} else {
 	add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
+	}
+
 
 	/**
 	 * This function displays plugin activation error notices.

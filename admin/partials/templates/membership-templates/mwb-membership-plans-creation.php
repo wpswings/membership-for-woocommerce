@@ -892,9 +892,6 @@ global $post;
 
 						<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
 
-						<?php
-						if ( 'publish' == $post->post_status ) {
-							?>
 						<!-- manage free shipping link start. -->
 						<div class="mwb_membership_free_shipping_link" >
 							<p class="mwb_membership_free_shipping">
@@ -902,7 +899,7 @@ global $post;
 							</p>
 						</div>
 						<!-- Manage free shipping link end. -->
-						<?php } ?>
+
 					</td>
 				</tr>
 				<!-- Free shiping section end. -->
