@@ -1575,38 +1575,38 @@ class Membership_For_Woocommerce_Public {
 
 				if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
 
-					foreach ( $current_memberships as $key => $membership_id ) {
+					// foreach ( $current_memberships as $key => $membership_id ) {
 
-						$member_status = get_post_meta( $membership_id, 'member_status', true );
-						if ( 'pending' == $member_status || 'on-hold' == $member_status ) {
-									$plan_existing = true;
-									$active_plan   = get_post_meta( $membership_id, 'plan_obj', true );
+					// 	$member_status = get_post_meta( $membership_id, 'member_status', true );
+					// 	if ( 'pending' == $member_status || 'on-hold' == $member_status ) {
+					// 				$plan_existing = true;
+					// 				$active_plan   = get_post_meta( $membership_id, 'plan_obj', true );
 
-									$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-							if ( ! empty( $club_membership ) ) {
-								foreach ( $club_membership as $key => $value ) {
-									array_push( $existing_plan_id, $value );
-								}
-							}
+					// 				$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
+					// 		if ( ! empty( $club_membership ) ) {
+					// 			foreach ( $club_membership as $key => $value ) {
+					// 				array_push( $existing_plan_id, $value );
+					// 			}
+					// 		}
 
-									array_push( $existing_plan_id, $active_plan['ID'] );
-								break;
-						}
-						if ( ! empty( $member_status ) && 'complete' == $member_status ) {
+					// 				array_push( $existing_plan_id, $active_plan['ID'] );
+					// 			break;
+					// 	}
+					// 	if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
-							$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+					// 		$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
-							$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
-							if ( ! empty( $club_membership ) ) {
-								foreach ( $club_membership as $key => $value ) {
-									array_push( $existing_plan_id, $value );
-								}
-							}
+					// 		$club_membership = get_post_meta( $active_plan['ID'], 'mwb_membership_club', true );
+					// 		if ( ! empty( $club_membership ) ) {
+					// 			foreach ( $club_membership as $key => $value ) {
+					// 				array_push( $existing_plan_id, $value );
+					// 			}
+					// 		}
 
-							array_push( $existing_plan_id, $active_plan['ID'] );
+					// 		array_push( $existing_plan_id, $active_plan['ID'] );
 
-						}
-					}
+					// 	}
+					// }
 				}
 				foreach ( $data as $plan ) {
 					$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
