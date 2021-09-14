@@ -2003,4 +2003,27 @@ class Membership_For_Woocommerce_Admin {
 		update_post_meta( $post_id, 'member_status', 'cancelled' );
 	}
 
+
+	/**
+	 * Creating activation hook new blog.
+	 *
+	 * @param object $new_site id of current blog.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_for_woo_on_create_new_blog( $new_site ) {
+		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+		}
+		// check if the plugin has been activated on the network.
+		if ( is_plugin_active_for_network( 'membership-for-woocommerce/membership-for-woocommerce.php' ) ) {
+			$blog_id = $new_site->blog_id;
+			// switch to newly created site.
+			switch_to_blog( $blog_id );
+			include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
+			Membership_For_Woocommerce_Activator::activate( $network_wide );
+			restore_current_blog();
+		}
+	}
+
 }

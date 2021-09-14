@@ -146,8 +146,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	function activate_membership_for_woocommerce() {
 
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-		Membership_For_Woocommerce_Activator::activate();
-		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate();
+		Membership_For_Woocommerce_Activator::activate($network_wide);
+		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate($network_wide);
+
 		$mwb_mfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_mfw_active_plugin ) && ! empty( $mwb_mfw_active_plugin ) ) {
 			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
