@@ -27,7 +27,7 @@ $count_public = filtered_array( $mfw_developer_public_hooks );
 <!--  template file for admin settings. -->
 <div class="mfw-section-wrap">
 	<div class="mwb-col-wrap">
-		<div id="admin-hooks-listing" class="table-responsive mdc-data-table">
+		<div id="admin-hooks-listing" class="table-responsive ">
 			<table class="mwb-mfw-table mdc-data-table__table mwb-table"  id="mwb-mfw-wp">
 				<thead>
 				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Admin Hooks', 'membership-for-woocommerce' ); ?></th></tr>
@@ -62,7 +62,7 @@ $count_public = filtered_array( $mfw_developer_public_hooks );
 		</div>
 	</div>
 	<div class="mwb-col-wrap">
-		<div id="public-hooks-listing" class="table-responsive mdc-data-table">
+		<div id="public-hooks-listing" class="table-responsive ">
 			<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-sys">
 				<thead>
 				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Public Hooks', 'membership-for-woocommerce' ); ?></th></tr>

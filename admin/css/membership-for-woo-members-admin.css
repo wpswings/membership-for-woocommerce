@@ -160,9 +160,6 @@ table.plan_preview_table {
 }
 
 /*Billing Part styling starts*/
-.postbox-container {
-    font-family: sans-serif;
-}
 
 #poststuff div#post-body.columns-2 {
     margin: 0px;
@@ -188,7 +185,6 @@ table.plan_preview_table {
     color: #1a3365;
     border: none;
     border-left: 5px solid #1a3365;
-    box-shadow: 0px 2px 5px #c7c7c7;
 }
 
 .handle-actions.hide-if-no-js {
@@ -266,11 +262,6 @@ p.form-field.billing_state_field {
 
 .wc-wp-version-gte-53 .select2-container.select2-container--focus .select2-selection--single {
     box-shadow: none;
-    border: none;
-}
-
-.wc-wp-version-gte-53 .select2-container.select2-container--open .select2-selection--single {
-    border: none;
 }
 
 .member_edit_address p label {

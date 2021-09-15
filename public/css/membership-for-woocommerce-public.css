@@ -40,7 +40,7 @@
     font-weight: 600;
     letter-spacing: 0;
     line-height: 1.5;
-    margin: 10px auto;
+    margin: 0;
     max-width: 230px;
     padding: 10px 30px;
     text-align: center;
@@ -49,6 +49,10 @@
     width: 100%;
   }
   
+  .products .button.alt.mfw-membership {
+    margin: 10px auto;
+  }
+
   .button.alt.mfw-membership:hover {
     background-color: rgb(255 255 255 / 50%);
     color: #1a3365 !important;
@@ -734,6 +738,7 @@ margin-top: 10px;
     margin: 10px;
     padding: 0;
     height: 55px;
+    font-family: inherit;
 }
 
 .available_member {
