@@ -1179,14 +1179,11 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
-				if ( filter_var( $expiry, FILTER_VALIDATE_INT ) === true ) {
-					echo 'Your variable is not an integer';
-					$expiry = gmdate( 'Y-m-d', $expiry );
-				}
+			
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
-					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
+					echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
 				break;
@@ -1630,7 +1627,6 @@ class Membership_For_Woocommerce_Admin {
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
 					$today_date = gmdate( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
-					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 				$post   = get_post( $post_id );
@@ -1639,6 +1635,12 @@ class Membership_For_Woocommerce_Admin {
 				//$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 			
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
+				if ( 'Lifetime' == $expiry_date ) {
+					$expiry_date = 'Lifetime';
+				} else {
+					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
+					
+				}
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 				$user_name = $user->data->display_name;
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
@@ -1686,7 +1688,6 @@ class Membership_For_Woocommerce_Admin {
 						$expiry_date = strtotime( $date_exipary . $delay_duration );
 
 					}
-					$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 			}
@@ -1694,7 +1695,14 @@ class Membership_For_Woocommerce_Admin {
 			$user_name = $user->data->display_name;
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
+			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 
+			if ( 'Lifetime' == $expiry_date ) {
+				$expiry_date = 'Lifetime';
+			} else {
+				$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
+				
+			}
 			if ( ! empty( $customer_email ) ) {
 
 				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
@@ -1939,9 +1947,7 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = gmdate( strtotime( $today_date . $duration ) );
 					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
 					$expiry_date = strtotime( $date_exipary . $delay_duration );
-
 				}
-				$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}

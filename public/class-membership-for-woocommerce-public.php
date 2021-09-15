@@ -2429,10 +2429,14 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $discount_percentage ) || ! empty( $discount_fixed ) ) {
 			$discount = $discount_percentage > $discount_fixed ? $discount_percentage : $discount_fixed;
+			if ( ! empty( $discount_fixed ) ) {
+				if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' )) {
+					$discount = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
+				}			
+			}
 			round($discount);
 			$cart->add_fee( 'Membership Discount', -round($discount), false );
 		}
-
 	}
 
 	/**
@@ -2480,7 +2484,6 @@ class Membership_For_Woocommerce_Public {
 						if ( 'delay_type' == $access_type ) {
 								$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 								$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
-
 								$delay_date = get_post_meta( $member_id, 'membership_delay_date', true );
 
 							// Getting current activation date.
@@ -2544,7 +2547,7 @@ class Membership_For_Woocommerce_Public {
 				if ( 'Lifetime' == $expiry ) {
 					$expiry_mail = 'Lifetime';
 				} else {
-					$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
+					$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
 				$number_of_day_to_send_expiry_mail = get_option( 'mwb_membership_number_of_expiry_days' );
@@ -2583,7 +2586,7 @@ class Membership_For_Woocommerce_Public {
 						if ( 'Lifetime' == $expiry ) {
 							$expiry_mail = 'Lifetime';
 						} else {
-							$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
+							$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );	
 						}
 						if ( ! empty( $customer_email ) ) {
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
