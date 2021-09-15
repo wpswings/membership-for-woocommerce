@@ -1190,7 +1190,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_title ) ) {
 
-				$title .= '<div class="mwb_membership_plan_content_title">' . ucwords( $plan_title ) . '</div>';
+				$title .= '<div class="mwb_membership_plan_content_title_for_page">' . ucwords( $plan_title ) . '</div>';
 			} else {
 
 				$title .= '<div class="mwb_membership_plan_content_title">' . $content . '</div>';
@@ -1550,7 +1550,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_desc ) ) {
 
-				$description .= '<div class="mwb_membership_plan_content_desc">' . $plan_desc . '</div>';
+				$description .= '<div class="mwb_membership_plan_content_description">' . $plan_desc . '</div>';
 
 				$description .= $this->get_plan_details( $plan_id );
 
