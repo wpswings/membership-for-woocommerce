@@ -508,8 +508,10 @@ class Membership_For_Woocommerce_Public {
 							$target_ids = array_merge( $target_ids, $target_tag_ids );
 						
 						}
-						$target_ids = array_unique( $target_ids );
-					
+
+						if ( ! empty( $target_ids  ) && is_array( $target_ids )  ) {
+							$target_ids = array_unique( $target_ids );
+						}
 
 						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
@@ -780,7 +782,9 @@ class Membership_For_Woocommerce_Public {
 
 									}
 
-									$target_ids = array_unique( $target_ids );
+									if ( ! empty( $target_ids  ) && is_array( $target_ids )  ) {
+										$target_ids = array_unique( $target_ids );
+									}
 
 									if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
@@ -2426,6 +2430,13 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $discount_percentage ) || ! empty( $discount_fixed ) ) {
 			$discount = $discount_percentage > $discount_fixed ? $discount_percentage : $discount_fixed;
+
+			if ( ! empty( $discount_fixed ) ) {
+				if ( function_exists( 'mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency' )) {
+					$discount = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
+				}			
+			}								
+
 			$cart->add_fee( 'Membership Discount', -$discount, false );
 		}
 
@@ -2540,7 +2551,7 @@ class Membership_For_Woocommerce_Public {
 				if ( 'Lifetime' == $expiry ) {
 					$expiry_mail = 'Lifetime';
 				} else {
-					$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
+					$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 
 				$number_of_day_to_send_expiry_mail = get_option( 'mwb_membership_number_of_expiry_days' );
@@ -2579,7 +2590,8 @@ class Membership_For_Woocommerce_Public {
 						if ( 'Lifetime' == $expiry ) {
 							$expiry_mail = 'Lifetime';
 						} else {
-							$expiry_mail = esc_html( ! empty( $expiry ) ? $expiry : '' );
+							$expiry_mail = esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+							
 						}
 						if ( ! empty( $customer_email ) ) {
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
@@ -2861,7 +2873,13 @@ class Membership_For_Woocommerce_Public {
 									$target_ids = array_merge( $target_ids, $products );
 								}
 							}
-
+							if ( $target_tag_ids ) {
+								foreach ( $target_tag_ids as $tag_id ) {
+									$tag_name = get_the_category_by_ID( $tag_id );
+									$posts = $this->get_product_query( 'product', 'product_tag', $tag_name );
+									$target_ids = array_merge( $target_ids, $posts->posts );
+								}
+							}
 
 
 							if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) || ( ! empty( $target_tag_ids ) && has_term( $target_tag_ids, 'product_tag' ) ) ) {
@@ -2893,6 +2911,33 @@ class Membership_For_Woocommerce_Public {
 	}
 
 
+
+	/* Get product data through query.
+	*
+	* @param mixed $post_type type of post.
+	* @param mixed $taxonomy taxonomy.
+	* @param mixed $term terms.
+	*/
+   public function get_product_query( $post_type, $taxonomy, $term ) {
+	   $products = new WP_Query(
+		   array(
+			   'post_type'   => $post_type,
+			   'post_status' => 'publish',
+			   'fields'      => 'ids',
+			   'tax_query'   => array(
+				   'relation' => 'AND',
+				   array(
+					   'taxonomy' => $taxonomy,
+					   'field'    => 'term_id',
+					   'terms'    => $term,
+				   ),
+			   ),
+		   )
+	   );
+	   $products = apply_filters( 'get_product_query', $products );
+
+	   return $products;
+   }
 
 	/**
 	 * Get product data through query.
