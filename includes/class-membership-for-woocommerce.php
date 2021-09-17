@@ -660,7 +660,11 @@ class Membership_For_Woocommerce {
 	 * @since 1.0.0
 	 */
 	public function mwb_mfw_plug_generate_html( $mfw_components = array() ) {
+
 		if ( is_array( $mfw_components ) && ! empty( $mfw_components ) ) {
+			?>
+			    <div class="mwb-sm__modal"></div>
+			<?php
 			foreach ( $mfw_components as $mfw_component ) {
 				if ( ! empty( $mfw_component['type'] ) && ! empty( $mfw_component['id'] ) ) {
 
