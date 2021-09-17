@@ -1586,6 +1586,33 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
+
+			// When plans are assigned manually.
+			if ( isset( $_POST['members_plan_assign'] ) ) {
+
+				$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
+	
+				if ( ! empty( $plan_id ) ) {
+	
+					$plan_obj = get_post( $plan_id, ARRAY_A );
+	
+					$post_meta = get_post_meta( $plan_id );
+	
+					// Formatting array.
+					foreach ( $post_meta as $key => $value ) {
+	
+						$post_meta[ $key ] = reset( $value );
+					}
+	
+					$plan_meta = array_merge( $plan_obj, $post_meta );
+	
+					update_post_meta( $post_id, 'plan_obj', $plan_meta );
+				}
+			}
+
+
+
+
 		$post   = get_post( $post_id );
 
 		
@@ -1629,6 +1656,7 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = strtotime( $today_date . $duration );
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
+				
 				$post   = get_post( $post_id );
 				$user    = get_userdata( $post->post_author );
 				$user = new WP_User( $post->post_author ); // create a new user object for this user.
@@ -1749,28 +1777,7 @@ class Membership_For_Woocommerce_Admin {
 
 		update_post_meta( $post_id, 'billing_details', $fields );
 
-		// When plans are assigned manually.
-		if ( isset( $_POST['members_plan_assign'] ) ) {
-
-			$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
-
-			if ( ! empty( $plan_id ) ) {
-
-				$plan_obj = get_post( $plan_id, ARRAY_A );
-
-				$post_meta = get_post_meta( $plan_id );
-
-				// Formatting array.
-				foreach ( $post_meta as $key => $value ) {
-
-					$post_meta[ $key ] = reset( $value );
-				}
-
-				$plan_meta = array_merge( $plan_obj, $post_meta );
-
-				update_post_meta( $post_id, 'plan_obj', $plan_meta );
-			}
-		}
+	
 		
 	}
 

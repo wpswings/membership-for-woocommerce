@@ -75,13 +75,13 @@ textarea:focus {
 
 select,
 option {
-    color: rgba(0, 0, 0, 0.7) !important;
+    color: rgba(0, 0, 0, 0.7);
     box-shadow: none !important;
-    border-color: rgba(0, 0, 0, 0.38) !important;
+    border-color: rgba(0, 0, 0, 0.38);
 }
 
 select {
-    padding: 10px 30px 10px 15px !important;
+    padding: 10px 30px 10px 15px;
 }
 
 .mwb-link:focus {
@@ -112,15 +112,6 @@ select {
     &.active {
         position: relative;
         color: $c-doger-blue!important;
-    }
-    &:after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        border-bottom: 3px solid $c-doger-blue;
-        border-radius: 2px;
     }
 }
 
