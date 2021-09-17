@@ -1135,7 +1135,6 @@ class Membership_For_Woocommerce_Public {
 		if ( empty( $plan_id ) ) {
 
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
-
 		}
 
 		if ( ! empty( $plan_id ) ) {
@@ -1144,7 +1143,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_title ) ) {
 
-				$title .= '<div class="mwb_membership_plan_content_title">' . ucwords( $plan_title ) . '</div>';
+				$title .= '<div class="mwb_membership_plan_content_title_">' . ucwords( $plan_title ) . '</div>';
 			} else {
 
 				$title .= '<div class="mwb_membership_plan_content_title">' . $content . '</div>';
@@ -1181,7 +1180,6 @@ class Membership_For_Woocommerce_Public {
 		if ( empty( $plan_id ) ) {
 
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
-
 		}
 
 		if ( ! empty( $plan_id ) ) {

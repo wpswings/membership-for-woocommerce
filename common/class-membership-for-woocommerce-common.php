@@ -103,8 +103,8 @@ class Membership_For_Woocommerce_Common {
 
 		$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 
-		$redirect_url = wc_get_cart_url();
-		echo wp_json_encode( $redirect_url );
+	//	$redirect_url = wc_get_cart_url();
+		//echo wp_json_encode( $redirect_url );
 
 		wp_die();
 	}
