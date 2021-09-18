@@ -127,19 +127,6 @@ if ( empty( $current_url ) ) {
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
 		}
-
-		if ( 'lifetime' == $membership_plan['mwb_membership_plan_name_access_type'] ) {
-
-			update_post_meta( $membership_id, 'member_expiry', 'Lifetime' );
-
-		} elseif ( 'limited' == $membership_plan['mwb_membership_plan_name_access_type'] ) {
-
-			//$duration = $membership_plan['mwb_membership_plan_duration'] . ' ' . $membership_plan['mwb_membership_plan_duration_type'];
-
-			//$expiry_date = strtotime( $current_date . $duration );
-
-			//get_post_meta( $membership_id, 'member_expiry' );
-		}
 	}
 
 
@@ -157,7 +144,6 @@ if ( empty( $current_url ) ) {
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
 		<?php
 	} else {
-
 
 		?>
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', intval( $membership_expiry ) ) ); ?> </mark>.</p>
