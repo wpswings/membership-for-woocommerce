@@ -863,7 +863,7 @@ class Membership_For_Woocommerce {
 							foreach ( $mfw_component['options'] as $mfw_radio_key => $mfw_radio_val ) {
 								?>
 										<div class="mdc-form-field">
-										<div class="mwb-sm__modal"></div>
+									
 											<div class="mdc-radio">
 												<input
 												name="<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"

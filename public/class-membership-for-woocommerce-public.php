@@ -2049,7 +2049,7 @@ class Membership_For_Woocommerce_Public {
 								$plan_obj['mwb_membership_plan_target_ids'] = serialize( $plan_obj['mwb_membership_plan_target_ids'] );
 							}
 							$product_disc_ids = get_post_meta( $mem_ids, 'mwb_membership_plan_target_disc_ids', true );
-							if ( ! empty( $product_ids ) ) {
+							if ( ! empty( $product_disc_ids ) ) {
 								$plan_obj['mwb_membership_plan_target_disc_ids'] = unserialize( $plan_obj['mwb_membership_plan_target_disc_ids'] );
 								$plan_obj['mwb_membership_plan_target_disc_ids'] = array_merge( $plan_obj['mwb_membership_plan_target_disc_ids'], $product_disc_ids );
 								$plan_obj['mwb_membership_plan_target_disc_ids'] = serialize( $plan_obj['mwb_membership_plan_target_disc_ids'] );
@@ -2561,7 +2561,6 @@ class Membership_For_Woocommerce_Public {
 						if ( ! empty( $customer_email ) ) {
 
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
-
 						}
 					}
 				}
@@ -2570,7 +2569,7 @@ class Membership_For_Woocommerce_Public {
 
 				if ( $today_date >= $expiry_mail ) {
 
-					if ( 'expired' != $member_status && 'cancelled' != $member_status ) {
+					if ( 'completed' == $member_status ) {
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
 						$customer_email = '';

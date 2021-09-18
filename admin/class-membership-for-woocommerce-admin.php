@@ -1636,7 +1636,8 @@ class Membership_For_Woocommerce_Admin {
 
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
-
+echo  $plan_obj['ID'];
+die();
 				$access_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_access_type', true );
 
 				if ( 'delay_type' == $access_type ) {
