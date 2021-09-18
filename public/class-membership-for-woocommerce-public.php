@@ -2526,11 +2526,10 @@ class Membership_For_Woocommerce_Public {
 
 					if ( $today_date >= $expiry_current ) {
 
-						$user_name = $user->data->display_name;
+						$user_name      = $user->data->display_name;
 						$customer_email = WC()->mailer()->emails['membership_to_expire_email'];
 
 						if ( ! empty( $customer_email ) ) {
-
 							$email_status = $customer_email->trigger( $post->post_author, $member_id, $user_name, $expiry_mail, $plan_obj, $order_id );
 
 						}
