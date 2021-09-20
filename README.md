@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-20%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.6-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-40%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.6-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce
 ![Membership   for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2494227)
 * Contributors: MakeWebBetter
@@ -103,12 +103,12 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 * Send Membership Plans Action Notifications via Email  
 * Sort Membership plans 
 
-== TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN ==
+## TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN
 
 > Note:  Get [**Membership for WooCommerce**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=MWB-membership-pro)
 
 
-== LIVE DEMO OF PREMIUM VERSION ==
+## LIVE DEMO OF PREMIUM VERSION 
 
 * [**Membership for WooCommerce Frontend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=frontend)
 * [**Membership for WooCommerce Backend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/request-for-personal-demo/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=backend)
