@@ -804,3 +804,26 @@ margin-top: 10px;
     display: block;
   }
 }
+
+
+/* All plan Page fixes*/
+
+.mwb_all_plans_detail_wrapper{
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+.show__membership_details{
+  display:block !important;
+}
+
+.mwb_members_plans .mwb_table_wrapper{
+  display: none;
+}
+
+.mwb_members_plans label span {
+  transform: rotate(
+90deg);
+  display: inline-block;
+}

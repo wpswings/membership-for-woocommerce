@@ -1174,16 +1174,12 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
-				if ( filter_var( $expiry, FILTER_VALIDATE_INT ) === true ) {
-					echo 'Your variable is not an integer';
-					$expiry = gmdate( 'Y-m-d', $expiry );
-				}
+
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
-				echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
+					echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
-
 				break;
 		}
 
@@ -1583,33 +1579,31 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 
-
 			// When plans are assigned manually.
-			if ( isset( $_POST['members_plan_assign'] ) ) {
+		if ( isset( $_POST['members_plan_assign'] ) ) {
 
-				$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
-	
-				if ( ! empty( $plan_id ) ) {
-	
-					$plan_obj = get_post( $plan_id, ARRAY_A );
-	
-					$post_meta = get_post_meta( $plan_id );
-	
-					// Formatting array.
-					foreach ( $post_meta as $key => $value ) {
-	
-						$post_meta[ $key ] = reset( $value );
-					}
-	
-					$plan_meta = array_merge( $plan_obj, $post_meta );
-	
-					update_post_meta( $post_id, 'plan_obj', $plan_meta );
+			$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
+
+			if ( ! empty( $plan_id ) ) {
+
+				$plan_obj = get_post( $plan_id, ARRAY_A );
+
+				$post_meta = get_post_meta( $plan_id );
+
+				// Formatting array.
+				foreach ( $post_meta as $key => $value ) {
+
+					$post_meta[ $key ] = reset( $value );
 				}
+
+				$plan_meta = array_merge( $plan_obj, $post_meta );
+
+				update_post_meta( $post_id, 'plan_obj', $plan_meta );
 			}
+		}
 
 
-
-
+		
 
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
@@ -1622,6 +1616,8 @@ class Membership_For_Woocommerce_Admin {
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
+				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name,$this->version );
+				$membership_plubic->assign_club_membership_to_member($plan_obj['ID'], $plan_obj, $post_id );
 				$access_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_access_type', true );
 
 				if ( 'delay_type' == $access_type ) {
@@ -1641,20 +1637,19 @@ class Membership_For_Woocommerce_Admin {
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
 					$today_date = gmdate( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
-				
+
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
 				$post   = get_post( $post_id );
 				$user    = get_userdata( $post->post_author );
 
 				$user = new WP_User( $post->post_author ); // create a new user object for this user.
-				$user->add_role( 'member' ); // set them to whatever role you want using the full word.				
+				$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				if ( 'Lifetime' == $expiry_date ) {
 					$expiry_date = 'Lifetime';
 				} else {
 					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
-					
 				}
 
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
@@ -1663,7 +1658,6 @@ class Membership_For_Woocommerce_Admin {
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
 					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
-
 				}
 			}
 		}
@@ -1719,9 +1713,8 @@ class Membership_For_Woocommerce_Admin {
 				$expiry_date = 'Lifetime';
 			} else {
 				$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
-				
-			}
 
+			}
 
 			if ( ! empty( $customer_email ) ) {
 
@@ -2039,8 +2032,9 @@ class Membership_For_Woocommerce_Admin {
 			$blog_id = $new_site->blog_id;
 			// switch to newly created site.
 			switch_to_blog( $blog_id );
-			include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
+			include_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-membership-for-woocommerce-activator.php';
 			Membership_For_Woocommerce_Activator::activate( $network_wide );
+
 			restore_current_blog();
 		}
 	}
