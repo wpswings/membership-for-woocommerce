@@ -29,7 +29,7 @@
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Lorem Ipsum ', 'membership-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Lorem Ipsum ', 'membership-for-woocommerce' );
+							esc_html_e( 'Lorem Ipsum ', 'membership-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -44,7 +44,7 @@
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Lorem Ipsum ', 'membership-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Lorem Ipsum ', 'membership-for-woocommerce' );
+							esc_html_e( 'Lorem Ipsum ', 'membership-for-woocommerce' );
 							?>
 						</p>
 					</div>
@@ -59,7 +59,7 @@
 						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( ' Lorem Ipsum ', 'membership-for-woocommerce' ); ?></h3>
 						<p class="mwb-overview__keywords-description">
 							<?php
-							esc_html_e('Lorem Ipsum ', 'membership-for-woocommerce' );
+							esc_html_e( 'Lorem Ipsum ', 'membership-for-woocommerce' );
 							?>
 						</p>
 					</div>

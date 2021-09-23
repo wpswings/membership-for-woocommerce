@@ -319,7 +319,7 @@ $existing_plans = get_posts( $args );
 							<?php
 
 							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_ids'] ) ? $plan['mwb_membership_plan_target_disc_ids'] : array() );
-					
+
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
 

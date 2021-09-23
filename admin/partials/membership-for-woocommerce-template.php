@@ -15,9 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 global $mfw_mwb_mfw_obj;
-$mfw_template_settings = 
-//desc - filter for trial.
-apply_filters('mfw_template_settings_array', array());
+$mfw_template_settings =
+// desc - filter for trial.
+apply_filters( 'mfw_template_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
 <div class="mfw-section-wrap">

@@ -12,7 +12,7 @@
 			<th scope="row"><label for="puchase-code"><?php esc_html_e( 'Purchase Code : ', 'membership-for-woocommerce' ); ?></label></th>
 			<td>
 				<input type="text" id="mwb_mfw_license_key" name="purchase-code" required="" size="30" class="mwb-mfw-purchase-code" value="" placeholder="<?php _e( 'Enter your code here...', 'membership-for-woocommerce' ); ?>">
-				<!-- <div id="mwb_license_ajax_loader"><img src="<?php //echo 'images/spinner.gif'; ?>"></div>-->
+				<!-- <div id="mwb_license_ajax_loader"><img src="<?php // echo 'images/spinner.gif'; ?>"></div>-->
 			</td>
 			</tr>
 		</table>

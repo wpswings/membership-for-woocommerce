@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
 		let country = $('#membership_billing_country').val().length;
 		let pin = $('#membership_billing_postcode').val().length;
 
-		if (street == 0 || city == 0 || country == 0 || pin == 0) {
+		if ( street == 0 || city == 0 || country == 0 || pin == 0 ) {
 			alert('Something you have missed');
 			return false;
 		}
@@ -165,23 +165,13 @@ jQuery(document).ready(function ($) {
 
  jQuery(document).on('click','.mwb_members_plans label',function(obj = this ) {
 	debugger;
-
-	
 	var classes = jQuery(this.nextElementSibling).attr('class');
- var allclasses =classes.split(' ');
-if (allclasses.length>1) {
-	if( allclasses[1]=='show__membership_details' ){
-	
-		jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
+	var allclasses =classes.split(' ');
+	if (allclasses.length>1) {
+		if( allclasses[1]=='show__membership_details' ){
+			jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
+		}
+ 	} else {	
+		jQuery(this.nextElementSibling).addClass('show__membership_details');
 	}
- } else {
-		
-	jQuery(this.nextElementSibling).addClass('show__membership_details');
-	}
-
-
-	//jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
-	//jQuery(this.nextElementSibling).addClass('show__membership_details');
-
-	
  }); 
