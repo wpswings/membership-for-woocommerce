@@ -52,7 +52,7 @@ $(".mwb_membership_buynow").on("click", function (e) {
 
 		success: function (response) {
 
-			window.location.replace('checkout');
+			window.location.replace('cart');
 		}
 	});
 });

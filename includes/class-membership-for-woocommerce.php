@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.1.0';
+			$this->version = '1.2.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -234,8 +234,6 @@ class Membership_For_Woocommerce {
 
 		// Creating membership method.
 
-		// $this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
-
 		// Adding custom columns.
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
 		$this->loader->add_filter( 'manage_mwb_cpt_membership_posts_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
@@ -273,6 +271,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'profile_update', $mfw_plugin_admin, 'mwb_membership_for_woo_update_profile_for_member', 10, 2 );
 
 		$this->loader->add_action( 'wp_trash_post', $mfw_plugin_admin, 'mwb_membership_for_woo_add_to_trash_member' );
+		$this->loader->add_action( 'wp_initialize_site', $mfw_plugin_admin, 'mwb_membership_for_woo_on_create_new_blog', 900 );
 	}
 
 	/**

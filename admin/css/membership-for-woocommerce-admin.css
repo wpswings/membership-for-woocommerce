@@ -1289,3 +1289,21 @@ div#wp-mwb_membership_email_content-wrap {
     }
 
 }
+
+
+
+/*overview fixes*/
+.mfw_overview-video {
+    min-height: 450px;
+}
+@media screen and (max-width: 768px) {
+    .mwb-overview__wrapper {
+        width: 100%;
+    }
+    .mfw_overview-video {
+        min-height: 250px;
+    }
+}
+
+
+

@@ -124,9 +124,7 @@ if ( empty( $current_url ) ) {
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 		}
 	}
-
-
-		$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+	$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -140,7 +138,6 @@ if ( empty( $current_url ) ) {
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark>.</p>
 		<?php
 	} else {
-
 
 		?>
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', intval( $membership_expiry ) ) ); ?> </mark>.</p>
@@ -207,15 +204,18 @@ if ( empty( $current_url ) ) {
 					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_product_discount_price'] ), esc_html( $membership_plan['mwb_membership_product_offer_price_type'] ) ); ?></br>
 
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
-					<?php
-					$club_membership = get_post_meta( $membership_plan['ID'], 'mwb_membership_club', true );
-					if ( ! empty( $club_membership ) ) {
-						?>
+					</address>
+	</div>
 					<table>
+					
 					<tr>
 					<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
+				
 					<td>
 						<?php
+
+						$club_membership = get_post_meta( $membership_plan['ID'], 'mwb_membership_club', true );
+
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
 								$include_membership_data = get_post( $ids );
@@ -226,9 +226,7 @@ if ( empty( $current_url ) ) {
 						?>
 					</td>
 				</tr>
-						<?php
-					}
-					?>
+						
 					<tr>
 						<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
@@ -421,15 +419,12 @@ if ( empty( $current_url ) ) {
 							?>
 						</td>
 					</tr>				
-
 							<?php
 						}
 					}
 					?>
 					</br>
 				</table>
-				</address>
-			</div>
 		</section>
 	</section>
 	<?php

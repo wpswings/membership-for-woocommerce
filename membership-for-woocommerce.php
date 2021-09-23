@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
- * Version:           1.1.0
+ * Version:           1.2.0
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
  * Text Domain:       membership-for-woocommerce
@@ -89,7 +89,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '1.1.0' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '1.2.0' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
@@ -121,10 +121,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 
 
-
-
-
-
 	/**
 	 * Callable function for defining plugin constants.
 	 *
@@ -146,8 +142,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	function activate_membership_for_woocommerce() {
 
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-		Membership_For_Woocommerce_Activator::activate();
-		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate();
+		Membership_For_Woocommerce_Activator::activate($network_wide);
+		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate($network_wide);
+
 		$mwb_mfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_mfw_active_plugin ) && ! empty( $mwb_mfw_active_plugin ) ) {
 			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
