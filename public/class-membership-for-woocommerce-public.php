@@ -912,11 +912,9 @@ class Membership_For_Woocommerce_Public {
 					if ( $is_product_exclude ) {
 						break;
 					}
-
 					if ( in_array( $plan['ID'], $exclude_product ) && ! empty( $exclude_product ) ) {
 						break;
 					}
-
 					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
 					$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
 					$target_tag_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
@@ -970,9 +968,7 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 				}
-
 				$output = substr( $output, 0, -2 );
-
 				if ( $output ) {
 
 					if ( true == $return_status ) {
@@ -1056,8 +1052,8 @@ class Membership_For_Woocommerce_Public {
 			if ( function_exists( 'mwb_mmcsfw_get_custom_currency_symbol' ) ) {
 				$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
 			}
-			$plan_desc     = get_post_field( 'post_content', $plan_id );
-			$plan_info     = get_post_meta( $plan_id, 'mwb_membership_plan_info', true );
+			$plan_desc = get_post_field( 'post_content', $plan_id );
+			$plan_info = get_post_meta( $plan_id, 'mwb_membership_plan_info', true );
 
 			// Plans default text.
 			$offer_banner_text  = apply_filters( 'mwb_membership_plan_default_banner_txt', esc_html__( 'One Membership, Many Benefits', 'membership-for-woocommerce' ) );
@@ -1323,7 +1319,7 @@ class Membership_For_Woocommerce_Public {
 		);
 
 		$existing_plans = get_posts( $args );
-		$instance        = $plugin_admin->global_class;
+		$instance       = $plugin_admin->global_class;
 
 		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 			$check_licence = check_membership_pro_plugin_is_active();
@@ -1403,7 +1399,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '<li><label>';
 						$description .= __( 'Include Membership', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
-						$prod_ids = maybe_unserialize( $products );
+						$prod_ids     = maybe_unserialize( $products );
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
 								$description .= get_the_title( $ids );
@@ -1420,7 +1416,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '<li><label>';
 					$description .= __( 'Offered Products', 'membership-for-woocommerce' );
 					$description .= '</label><span>';
-					$prod_ids = maybe_unserialize( $products );
+					$prod_ids     = maybe_unserialize( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 						foreach ( $prod_ids as $ids ) {
 							$description .= ( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -1454,8 +1450,8 @@ class Membership_For_Woocommerce_Public {
 
 						if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 							foreach ( $tag_ids as $ids ) {
-								$tagn     = get_term_by( 'id', $ids, 'product_tag' );
-								$tag_name = $tagn->name;
+								$tagn         = get_term_by( 'id', $ids, 'product_tag' );
+								$tag_name     = $tagn->name;
 								$description .= ( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
@@ -1499,8 +1495,8 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</label><span>';
 						if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 							foreach ( $tag_ids as $ids ) {
-								$tagn     = get_term_by( 'id', $ids, 'post_tag' );
-								$tag_name = $tagn->name;
+								$tagn         = get_term_by( 'id', $ids, 'post_tag' );
+								$tag_name     = $tagn->name;
 								$description .= ( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
 							}
 						}
@@ -1514,7 +1510,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '<li><label>';
 						$description .= __( 'Offered Pages', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
-						$page_ids = maybe_unserialize( $plan['mwb_membership_plan_page_target_ids'] );
+						$page_ids     = maybe_unserialize( $plan['mwb_membership_plan_page_target_ids'] );
 
 						if ( ! empty( $page_ids ) && is_array( $page_ids ) ) {
 							foreach ( $page_ids as $ids ) {
@@ -1528,9 +1524,9 @@ class Membership_For_Woocommerce_Public {
 					$product_ids_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_ids'] );
 					if ( ! empty( $product_ids_discount ) ) {
 
-						$description .= '<li><label>';
-						$description .= __( 'Offered Product (under Product Discount)', 'membership-for-woocommerce' );
-						$description .= '</label><span>';
+						$description         .= '<li><label>';
+						$description         .= __( 'Offered Product (under Product Discount)', 'membership-for-woocommerce' );
+						$description         .= '</label><span>';
 						$product_ids_discount = maybe_unserialize( $plan['mwb_membership_plan_target_disc_ids'] );
 
 						if ( ! empty( $product_ids_discount ) && is_array( $product_ids_discount ) ) {
@@ -1637,7 +1633,7 @@ class Membership_For_Woocommerce_Public {
 			$description .= '<div class="mwb_membership_plan_content_desc">';
 			$user = wp_get_current_user();
 			$is_member_meta = get_user_meta( $user->ID, 'is_member' );
-			if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
+		//	if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 				$data                = $this->custom_query_data;
 				$user_id             = get_current_user_id();
 				$existing_plan_id    = array();
@@ -1668,7 +1664,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</div>';
 					}
 				}
-			}
+		//	}
 
 			$description .= '</div>';
 		}
@@ -1725,7 +1721,6 @@ class Membership_For_Woocommerce_Public {
 
 		return $description;
 	}
-
 
 
 	/**
@@ -1848,20 +1843,15 @@ class Membership_For_Woocommerce_Public {
 		 */
 
 		$plan_id = ! empty( $atts['plan_id'] ) ? $atts['plan_id'] : '';
-
 		if ( empty( $plan_id ) ) {
 
 			$plan_id = isset( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
 			$prod_id = isset( $_GET['prod_id'] ) ? sanitize_text_field( wp_unslash( $_GET['prod_id'] ) ) : '';
 		}
-
 		if ( empty( $content ) ) {
-
 			$content = apply_filters( 'mwb_mebership_no_thanks_btn_txt', esc_html__( 'No Thanks!', 'membership-for-woocommerce' ) );
-
 		}
-
 		$no_thanks_button .= '<a class="mwb_membership_no_thanks button alt thickbox" data-mode="' . $mode . '" href="' . ( ! empty( $prod_id ) ? get_permalink( $prod_id ) : wc_get_page_permalink( 'shop' ) ) . '">' . $content . '</a>';
 		$no_thanks_button  = apply_filters( 'membership_plan_no_thanks_button_shortcode', $no_thanks_button );
 
