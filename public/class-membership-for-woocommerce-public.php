@@ -447,6 +447,7 @@ class Membership_For_Woocommerce_Public {
 			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $user->roles ) ) {
 
 				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+
 					return '';
 				} else {
 					return $price_html;
@@ -861,7 +862,7 @@ class Membership_For_Woocommerce_Public {
 	public function get_product_terms( $product_id ) {
 		$term_related_to_product = array();
 		$terms = wp_get_post_terms( $product_id, 'product_tag' );
-		
+
 		if ( count( $terms ) > 0 ) {
 			foreach ( $terms as $term ) {
 				$term_id = $term->term_id; // Product tag Id
@@ -869,7 +870,7 @@ class Membership_For_Woocommerce_Public {
 			}
 				// Set the product tag names in an array
 		}
-		
+
 		$term_related_to_product = ! empty( $term_related_to_product ) ? $term_related_to_product : array();
 		return $term_related_to_product;
 	}
@@ -963,7 +964,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 					}
-		
+
 					$term_related_to_product = $this->get_product_terms( $product->get_id() );
 
 					if ( ! empty( $term_related_to_product ) ) {
@@ -2432,15 +2433,13 @@ class Membership_For_Woocommerce_Public {
 					$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
 					if ( ! empty( $club_membership ) ) {
 						$existing_plan_id = array_merge( $existing_plan_id, $club_membership );
-					}	
+					}
 					if ( ! empty( $active_plan['ID'] ) ) {
 						array_push( $existing_plan_id, $active_plan['ID'] );
 					}
-
 				}
 			}
 		}
-
 
 		if ( true == $plan_existing ) {
 
@@ -2449,23 +2448,19 @@ class Membership_For_Woocommerce_Public {
 				foreach ( $data as $plan ) {
 
 					if ( in_array( $plan['ID'], $existing_plan_id ) ) {
-				
-					$offer_type = get_post_meta( $plan['ID'], 'mwb_membership_plan_offer_price_type', true );
-					$offer_price = get_post_meta( $plan['ID'], 'mwb_memebership_plan_discount_price', true );
-					
-						if ('%' == $offer_type) {
+
+						$offer_type = get_post_meta( $plan['ID'], 'mwb_membership_plan_offer_price_type', true );
+						$offer_price = get_post_meta( $plan['ID'], 'mwb_memebership_plan_discount_price', true );
+
+						if ( '%' == $offer_type ) {
 							array_push( $applied_offer_price_percentage, floatval( $offer_price ) );
 						} else {
 							array_push( $applied_offer_price_fixed, floatval( $offer_price ) );
 						}
-
-					
+					}
 				}
 			}
-			}
 		}
-
-	
 
 		$discount_percentage = 0;
 		$discount_fixed = 0;
@@ -2475,15 +2470,15 @@ class Membership_For_Woocommerce_Public {
 
 			// Discount % is given( no negatives, not more than 100, if 100% then price zero ).
 			$applied_offer_price_percentage_on_cart = max( $applied_offer_price_percentage );
-			
+
 			// Range should be 0-100 only.
 			$applied_offer_price_percentage_on_cart = ( 100 < $applied_offer_price_percentage_on_cart ) ? 100 : $applied_offer_price_percentage_on_cart;
 			$applied_offer_price_percentage_on_cart = ( 0 > $applied_offer_price_percentage_on_cart ) ? 0 : $applied_offer_price_percentage_on_cart;
-		
+
 			$discount_percentage = floatval( $cart_total * ( $applied_offer_price_percentage_on_cart / 100 ) );
-	
+
 		}
-	
+
 			// If fixed discount is given.
 		if ( ! empty( $applied_offer_price_fixed ) ) {
 			// When fixed price is given.
@@ -2492,17 +2487,16 @@ class Membership_For_Woocommerce_Public {
 			$applied_offer_price_fixed_on_cart = ( 0 > $applied_offer_price_fixed_on_cart ) ? 0 : $applied_offer_price_fixed_on_cart;
 
 			$discount_fixed = floatval( $applied_offer_price_fixed_on_cart );
-		
-		
+
 		}
 
 		if ( ! empty( $discount_percentage ) || ! empty( $discount_fixed ) ) {
 
 			if ( $discount_percentage > $discount_fixed ) {
-				$discount = 	$discount_percentage;
+				$discount = $discount_percentage;
 			} else {
-				$discount = 	$applied_offer_price_fixed_on_cart;
-	
+				$discount = $applied_offer_price_fixed_on_cart;
+
 			}
 
 			if ( ! empty( $discount_fixed ) ) {
@@ -2510,10 +2504,9 @@ class Membership_For_Woocommerce_Public {
 					$discount = mwb_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
 				}
 			}
-			
+
 			$cart->add_fee( 'Membership Discount', -round( $discount ), false );
 		}
-
 
 	}
 

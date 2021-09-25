@@ -1918,10 +1918,10 @@ class Membership_For_Woocommerce_Admin {
 			if ( 'delay_type' == $access_type ) {
 				$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 				$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
-			
+
 				$current_date = gmdate( 'Y-m-d', strtotime( $today_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				update_post_meta( $member_id, 'membership_delay_date', $current_date );
-				
+
 			}
 
 			if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
