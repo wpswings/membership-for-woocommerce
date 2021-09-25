@@ -219,9 +219,9 @@ if ( empty( $current_url ) ) {
 				
 					<td>
 						<?php
-								
+
 						$club_membership = get_post_meta( $membership_plan['ID'], 'mwb_membership_club', true );
-									
+
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
 								$include_membership_data = get_post( $ids );

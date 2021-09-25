@@ -134,16 +134,16 @@ class Membership_For_Woocommerce {
 			$mfw_onboard_steps = new Membership_For_Woocommerce_Onboarding_Steps();
 		}
 				  // The class responsible for defining all actions that occur in the admin area.
-				  include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php';
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
-			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
 
-			/**
+		/**
 		 * The class responsible for defining all function for membership checkout validations.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';

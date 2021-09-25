@@ -139,11 +139,11 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * The code that runs during plugin activation.
 	 * This action is documented in includes/class-membership-for-woocommerce-activator.php
 	 */
-	function activate_membership_for_woocommerce() {
+	function activate_membership_for_woocommerce( $network_wide ) {
 
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-		Membership_For_Woocommerce_Activator::activate($network_wide);
-		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate($network_wide);
+		Membership_For_Woocommerce_Activator::activate( $network_wide );
+		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate( $network_wide );
 
 		$mwb_mfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
 		if ( is_array( $mwb_mfw_active_plugin ) && ! empty( $mwb_mfw_active_plugin ) ) {
@@ -261,15 +261,13 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 */
 	function mfw_admin_enqueue_styles() {
 		$screen = get_current_screen();
+
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
-			$pagescreen_post = $screen->post_type;
-			$pagescreen_id   = $screen->id;
 			$screen = get_current_screen();
-
 	
-			if ( 'product' != $pagescreen_post  ) {
-				if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ){
+			if ( 'product' != $screen->id  ) {
+				if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
 					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
 			
 				}

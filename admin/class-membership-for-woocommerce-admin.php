@@ -1602,9 +1602,6 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-
-		
-
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
 
@@ -1616,8 +1613,8 @@ class Membership_For_Woocommerce_Admin {
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
-				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name,$this->version );
-				$membership_plubic->assign_club_membership_to_member($plan_obj['ID'], $plan_obj, $post_id );
+				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
+				$membership_plubic->assign_club_membership_to_member( $plan_obj['ID'], $plan_obj, $post_id );
 				$access_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_access_type', true );
 
 				if ( 'delay_type' == $access_type ) {
@@ -1824,13 +1821,19 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'mwb_memebership_product_discount_price' == $field ) {
 					$product_discount = $post_data;
 				}
+				$mwb_membership_club = array();
+				$mwb_membership_club = get_post_meta( $post_id, 'mwb_membership_club', true );
 
+				$extra_data = '';
+				foreach ( $mwb_membership_club as $id ) {
+					$extra_data .= get_post_meta( $id, 'mwb_membership_plan_info', true );
+				}
+				$info_member = str_replace( $extra_data, '', ! empty( map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
-					update_post_meta( $post_id, 'mwb_membership_plan_info', map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) );
+					update_post_meta( $post_id, 'mwb_membership_plan_info', $info_member );
 				}
 			}
 			foreach ( $offered_product as $key => $product_id ) {
-				// code...
 
 				update_post_meta( $product_id, '_mwb_membership_discount_' . $post_id, $product_discount );
 			}
@@ -1906,7 +1909,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-
+		$today_date = gmdate( 'Y-m-d' );
 		// Save expiry date in post.
 		if ( ! empty( $plan_obj ) ) {
 
@@ -1915,10 +1918,10 @@ class Membership_For_Woocommerce_Admin {
 			if ( 'delay_type' == $access_type ) {
 				$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 				$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
-
-				$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+			
+				$current_date = gmdate( 'Y-m-d', strtotime( $today_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				update_post_meta( $member_id, 'membership_delay_date', $current_date );
-				$today_date = gmdate( 'Y-m-d' );
+				
 			}
 
 			if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
@@ -2030,12 +2033,113 @@ class Membership_For_Woocommerce_Admin {
 		// check if the plugin has been activated on the network.
 		if ( is_plugin_active_for_network( 'membership-for-woocommerce/membership-for-woocommerce.php' ) ) {
 			$blog_id = $new_site->blog_id;
+
 			// switch to newly created site.
 			switch_to_blog( $blog_id );
-			include_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'includes/class-membership-for-woocommerce-activator.php';
-			Membership_For_Woocommerce_Activator::activate( $network_wide );
+			global $wpdb;
+			$blog_ids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+			foreach ( $blog_ids as $blog_id ) {
+				switch_to_blog( $blog_id );
 
-			restore_current_blog();
+				// Creating Instance of the global functions class.
+				$global_class = Membership_For_Woocommerce_Global_Functions::get();
+
+				add_role(
+					'member',
+					__( 'Member', 'membership-for-woocommerce' ),
+					array(
+						'read' => true,
+					)
+				);
+
+				/**
+				 * Generating default membership plans page at the time of plugin activation.
+				 */
+				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
+				if ( empty( $mwb_membership_default_plans_page_id ) ) {
+
+					$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[mwb_membership_default_plans_page]';
+
+					if ( empty( $mwb_membership_default_plans_page_id ) || 'publish' !== get_post_status( $mwb_membership_default_plans_page_id ) ) {
+
+						$mwb_membership_plans_page = array(
+							'comment_status' => 'closed',
+							'ping_status'    => 'closed',
+							'post_content'   => $page_content,
+							'post_name'      => 'membership-plans',
+							'post_status'    => 'publish',
+							'post_title'     => 'Membership Plans',
+							'post_type'      => 'page',
+						);
+
+						$mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
+
+						update_option( 'mwb_membership_default_plans_page', $mwb_membership_plans_post );
+					}
+				} else {
+						  $current_post = get_post( $mwb_membership_default_plans_page_id, 'ARRAY_A' );
+						  $current_post['post_status'] = 'publish';
+						  wp_update_post( $current_post );
+				}
+
+				/**
+				 * Generating default membership plans page at the time of plugin activation.
+				 */
+				$mwb_membership_default_product = get_option( 'mwb_membership_default_product' );
+
+				if ( empty( $mwb_membership_default_product ) || 'private' !== get_post_status( $mwb_membership_default_product ) ) {
+
+						 $mwb_membership_product = array(
+							 'post_name'    => 'membership-product',
+							 'post_status'  => 'private',
+							 'post_title'   => 'Membership Product',
+							 'post_type'    => 'product',
+							 'post_author'  => 1,
+							 'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
+						 );
+
+						 $mwb_membership_product_id = wp_insert_post( $mwb_membership_product );
+
+						 if ( ! is_wp_error( $mwb_membership_product_id ) ) {
+
+							 $product = wc_get_product( $mwb_membership_product_id );
+
+							 wp_set_object_terms( $mwb_membership_product_id, 'simple', 'product_type' );
+							 update_post_meta( $mwb_membership_product_id, '_stock_status', 'instock' );
+							 update_post_meta( $mwb_membership_product_id, 'total_sales', '0' );
+							 update_post_meta( $mwb_membership_product_id, '_downloadable', 'no' );
+							 update_post_meta( $mwb_membership_product_id, '_virtual', 'yes' );
+							 update_post_meta( $mwb_membership_product_id, '_regular_price', '' );
+							 update_post_meta( $mwb_membership_product_id, '_sale_price', '' );
+							 update_post_meta( $mwb_membership_product_id, '_purchase_note', '' );
+							 update_post_meta( $mwb_membership_product_id, '_featured', 'no' );
+							 update_post_meta( $mwb_membership_product_id, '_weight', '' );
+							 update_post_meta( $mwb_membership_product_id, '_length', '' );
+							 update_post_meta( $mwb_membership_product_id, '_width', '' );
+							 update_post_meta( $mwb_membership_product_id, '_height', '' );
+							 update_post_meta( $mwb_membership_product_id, '_sku', '' );
+							 update_post_meta( $mwb_membership_product_id, '_product_attributes', array() );
+							 update_post_meta( $mwb_membership_product_id, '_sale_price_dates_from', '' );
+							 update_post_meta( $mwb_membership_product_id, '_sale_price_dates_to', '' );
+							 update_post_meta( $mwb_membership_product_id, '_price', '' );
+							 update_post_meta( $mwb_membership_product_id, '_sold_individually', 'yes' );
+							 update_post_meta( $mwb_membership_product_id, '_manage_stock', 'no' );
+							 update_post_meta( $mwb_membership_product_id, '_backorders', 'no' );
+							 update_post_meta( $mwb_membership_product_id, '_stock', '' );
+
+							 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
+
+								 $product->set_reviews_allowed( false );
+								 $product->set_catalog_visibility( 'hidden' );
+								 $product->save();
+							 }
+
+							 update_option( 'mwb_membership_default_product', $mwb_membership_product_id );
+						 }
+				}
+				restore_current_blog();
+
+			}
 		}
 	}
 

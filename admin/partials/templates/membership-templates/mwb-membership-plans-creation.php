@@ -127,7 +127,7 @@ global $post;
 						if ( $mwb_membership_club ) {
 							$extra_info = apply_filters( 'get_extra_info', $mwb_membership_club );
 
-							$mwb_membership_plan_info .= $extra_info;
+							$mwb_membership_plan_info .= ' ' . $extra_info;
 						}
 					}
 				}
