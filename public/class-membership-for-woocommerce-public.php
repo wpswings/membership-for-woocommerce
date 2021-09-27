@@ -2763,6 +2763,7 @@ class Membership_For_Woocommerce_Public {
 		$plan_title = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
 
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
+		$product = wc_get_product( $mwb_membership_default_product );
 
 		global $wp_session;
 
@@ -2786,8 +2787,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function add_membership_product_price_to_cart_item_data( $cart_item_data, $product_id ) {
-		$product = wc_get_product( $product_id );
-
+		
 		global $wp_session;
 
 		if ( empty( $wp_session ) ) {
@@ -2799,6 +2799,7 @@ class Membership_For_Woocommerce_Public {
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 		}
+	
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
 
 		return $cart_item_data;
@@ -2815,7 +2816,7 @@ class Membership_For_Woocommerce_Public {
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$product = wc_get_product( $mwb_membership_default_product );
-
+		
 		if ( ! $product && empty( $cart->cart_contents ) ) {
 			return;
 		}
@@ -2831,6 +2832,7 @@ class Membership_For_Woocommerce_Public {
 				// Set the new name (WooCommerce versions 2.5.x to 3+).
 				if ( method_exists( $value['data'], 'set_name' ) ) {
 					$value['data']->set_name( $value['plan_title'] );
+					
 				} else {
 					$value['data']->post->post_title = $value['plan_title'];
 				}
@@ -3070,13 +3072,17 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_membership_buy_now_add_to_cart() {
+
 		// select product ID.
 		if ( ! is_checkout() ) {
 			if ( WC()->session->__isset( 'product_id' ) ) {
 
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
+
+				//$product->set_price( $price );
 				// if cart empty, add it to cart.
 				WC()->cart->empty_cart();
+
 				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
 			}
 			WC()->session->__unset( 'product_id' );
@@ -3259,8 +3265,20 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
-
 	}
+
+	/**
+	 * Set session for membership purchase.
+	 *
+	 * @return void
+	 */
+	public function mwb_mfw_set_woocoomerce_session() {
+
+		if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
+			WC()->session->set_customer_session_cookie( true );
+		}
+	}
+	
 }
 // End of class.
 
