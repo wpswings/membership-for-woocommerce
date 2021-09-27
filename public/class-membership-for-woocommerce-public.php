@@ -3190,7 +3190,7 @@ class Membership_For_Woocommerce_Public {
 			$user_id             = get_current_user_id();
 			$existing_plan_id    = array();
 			$existing_plan_product   = array();
-
+			$page_link = '';
 			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 			if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
