@@ -22,7 +22,7 @@
 class Membership_For_Woocommerce_Public {
 
 	/**
-	 * The ID of this plugin.
+	 * The ID of this plugin.	
 	 *
 	 * @since    1.0.0
 	 * @var      string    $plugin_name    The ID of this plugin.
@@ -2816,7 +2816,8 @@ class Membership_For_Woocommerce_Public {
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$product = wc_get_product( $mwb_membership_default_product );
-		
+
+	
 		if ( ! $product && empty( $cart->cart_contents ) ) {
 			return;
 		}
