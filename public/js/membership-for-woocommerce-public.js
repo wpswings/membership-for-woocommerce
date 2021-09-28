@@ -180,8 +180,4 @@ if (allclasses.length>1) {
 	}
 
 
-	//jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
-	//jQuery(this.nextElementSibling).addClass('show__membership_details');
-
-	
  }); 

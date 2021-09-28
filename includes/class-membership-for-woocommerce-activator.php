@@ -103,6 +103,7 @@ class Membership_For_Woocommerce_Activator {
 							 'post_title'   => 'Membership Product',
 							 'post_type'    => 'product',
 							 'post_author'  => 1,
+							 'price'  => 1,
 							 'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
 						 );
 
@@ -117,7 +118,7 @@ class Membership_For_Woocommerce_Activator {
 							 update_post_meta( $mwb_membership_product_id, 'total_sales', '0' );
 							 update_post_meta( $mwb_membership_product_id, '_downloadable', 'no' );
 							 update_post_meta( $mwb_membership_product_id, '_virtual', 'yes' );
-							 update_post_meta( $mwb_membership_product_id, '_regular_price', '' );
+							 update_post_meta( $mwb_membership_product_id, '_regular_price', '1' );
 							 update_post_meta( $mwb_membership_product_id, '_sale_price', '' );
 							 update_post_meta( $mwb_membership_product_id, '_purchase_note', '' );
 							 update_post_meta( $mwb_membership_product_id, '_featured', 'no' );
@@ -129,7 +130,7 @@ class Membership_For_Woocommerce_Activator {
 							 update_post_meta( $mwb_membership_product_id, '_product_attributes', array() );
 							 update_post_meta( $mwb_membership_product_id, '_sale_price_dates_from', '' );
 							 update_post_meta( $mwb_membership_product_id, '_sale_price_dates_to', '' );
-							 update_post_meta( $mwb_membership_product_id, '_price', '' );
+							 update_post_meta( $mwb_membership_product_id, '_price', '1' );
 							 update_post_meta( $mwb_membership_product_id, '_sold_individually', 'yes' );
 							 update_post_meta( $mwb_membership_product_id, '_manage_stock', 'no' );
 							 update_post_meta( $mwb_membership_product_id, '_backorders', 'no' );
@@ -143,7 +144,9 @@ class Membership_For_Woocommerce_Activator {
 							 }
 
 							 update_option( 'mwb_membership_default_product', $mwb_membership_product_id );
-						 }
+									 
+						
+							}
 				}
 				restore_current_blog();
 			}
@@ -217,7 +220,7 @@ class Membership_For_Woocommerce_Activator {
 					 update_post_meta( $mwb_membership_product_id, 'total_sales', '0' );
 					 update_post_meta( $mwb_membership_product_id, '_downloadable', 'no' );
 					 update_post_meta( $mwb_membership_product_id, '_virtual', 'yes' );
-					 update_post_meta( $mwb_membership_product_id, '_regular_price', '' );
+					 update_post_meta( $mwb_membership_product_id, '_regular_price', '1' );
 					 update_post_meta( $mwb_membership_product_id, '_sale_price', '' );
 					 update_post_meta( $mwb_membership_product_id, '_purchase_note', '' );
 					 update_post_meta( $mwb_membership_product_id, '_featured', 'no' );

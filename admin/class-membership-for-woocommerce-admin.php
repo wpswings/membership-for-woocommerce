@@ -1820,17 +1820,9 @@ class Membership_For_Woocommerce_Admin {
 				}
 				if ( 'mwb_memebership_product_discount_price' == $field ) {
 					$product_discount = $post_data;
-				}
-				$mwb_membership_club = array();
-				$mwb_membership_club = get_post_meta( $post_id, 'mwb_membership_club', true );
-
-				$extra_data = '';
-				foreach ( $mwb_membership_club as $id ) {
-					$extra_data .= get_post_meta( $id, 'mwb_membership_plan_info', true );
-				}
-				$info_member = str_replace( $extra_data, '', ! empty( map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
+				}				
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
-					update_post_meta( $post_id, 'mwb_membership_plan_info', $info_member );
+					update_post_meta( $post_id, 'mwb_membership_plan_info', ! empty( map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
 				}
 			}
 			foreach ( $offered_product as $key => $product_id ) {

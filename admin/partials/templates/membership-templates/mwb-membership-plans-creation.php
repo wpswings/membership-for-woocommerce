@@ -124,11 +124,6 @@ global $post;
 					$check_licence = check_membership_pro_plugin_is_active();
 					if ( $check_licence ) {
 						$mwb_membership_plan_info = $settings_fields['mwb_membership_plan_info'];
-						if ( $mwb_membership_club ) {
-							$extra_info = apply_filters( 'get_extra_info', $mwb_membership_club );
-
-							$mwb_membership_plan_info .= ' ' . $extra_info;
-						}
 					}
 				}
 				$settings = array(
