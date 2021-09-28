@@ -84,6 +84,7 @@ global $post;
 									foreach ( $mwb_membership_club as $mwb_membership_club_ids ) {
 
 										$mem_id = $mwb_membership_club_ids;
+
 										?>
 
 								<option value="<?php echo esc_html( $mwb_membership_club_ids ); ?>" <?php echo ( in_array( $mwb_membership_club_ids, $mwb_membership_club, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $mem_id ) . '(#' . esc_html( $mwb_membership_club_ids ) . ')' ); ?></option>

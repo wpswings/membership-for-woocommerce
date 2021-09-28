@@ -3279,5 +3279,25 @@ class Membership_For_Woocommerce_Public {
 		}
 	}
 
+
+	/**
+	 * Set session for membership purchase.
+	 *
+	 * @return void
+	 */
+	public function mwb_membership_get_product_price_of_member( $product_id ) {
+
+		if ( ! is_cart() ) {
+			get_post_meta( $product_id, '_mwb_membership_discount_product_', 'true', true );
+			$member_product = get_post_meta( $product_id, '_mwb_membership_discount_product_price', true );
+			if ( ! empty( $member_product ) ) {
+				return $member_product;
+			}
+		}
+	}
+
+
+
+
 }
 // End of class.
