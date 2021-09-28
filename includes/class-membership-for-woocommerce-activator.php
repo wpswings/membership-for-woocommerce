@@ -144,9 +144,8 @@ class Membership_For_Woocommerce_Activator {
 							 }
 
 							 update_option( 'mwb_membership_default_product', $mwb_membership_product_id );
-									 
-						
-							}
+
+						 }
 				}
 				restore_current_blog();
 			}
@@ -215,11 +214,11 @@ class Membership_For_Woocommerce_Activator {
 
 					 $product = wc_get_product( $mwb_membership_product_id );
 
-					update_post_meta( $mwb_membership_product_id, '_regular_price', 0 );
-					update_post_meta( $mwb_membership_product_id, '_price', 0 );
-					update_post_meta( $mwb_membership_product_id, '_visibility', 'hidden' );
-					update_post_meta( $mwb_membership_product_id, '_virtual', 'yes' );
-					
+					 update_post_meta( $mwb_membership_product_id, '_regular_price', 0 );
+					 update_post_meta( $mwb_membership_product_id, '_price', 0 );
+					 update_post_meta( $mwb_membership_product_id, '_visibility', 'hidden' );
+					 update_post_meta( $mwb_membership_product_id, '_virtual', 'yes' );
+
 					 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
 
 						 $product->set_reviews_allowed( false );

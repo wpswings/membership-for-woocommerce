@@ -1820,7 +1820,7 @@ class Membership_For_Woocommerce_Admin {
 				}
 				if ( 'mwb_memebership_product_discount_price' == $field ) {
 					$product_discount = $post_data;
-				}				
+				}
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', ! empty( map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
 				}

@@ -22,7 +22,7 @@
 class Membership_For_Woocommerce_Public {
 
 	/**
-	 * The ID of this plugin.	
+	 * The ID of this plugin.
 	 *
 	 * @since    1.0.0
 	 * @var      string    $plugin_name    The ID of this plugin.
@@ -2787,7 +2787,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function add_membership_product_price_to_cart_item_data( $cart_item_data, $product_id ) {
-		
+
 		global $wp_session;
 
 		if ( empty( $wp_session ) ) {
@@ -2799,7 +2799,7 @@ class Membership_For_Woocommerce_Public {
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 		}
-	
+
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
 
 		return $cart_item_data;
@@ -2817,7 +2817,6 @@ class Membership_For_Woocommerce_Public {
 
 		$product = wc_get_product( $mwb_membership_default_product );
 
-	
 		if ( ! $product && empty( $cart->cart_contents ) ) {
 			return;
 		}
@@ -2833,7 +2832,7 @@ class Membership_For_Woocommerce_Public {
 				// Set the new name (WooCommerce versions 2.5.x to 3+).
 				if ( method_exists( $value['data'], 'set_name' ) ) {
 					$value['data']->set_name( $value['plan_title'] );
-					
+
 				} else {
 					$value['data']->post->post_title = $value['plan_title'];
 				}
@@ -3080,7 +3079,7 @@ class Membership_For_Woocommerce_Public {
 
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 
-				//$product->set_price( $price );
+				// $product->set_price( $price );
 				// if cart empty, add it to cart.
 				WC()->cart->empty_cart();
 
@@ -3279,6 +3278,6 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->set_customer_session_cookie( true );
 		}
 	}
-	
+
 }
 // End of class.
