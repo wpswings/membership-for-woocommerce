@@ -2823,6 +2823,8 @@ class Membership_For_Woocommerce_Public {
 
 		foreach ( $cart->cart_contents as $key => $value ) {
 
+
+
 			if ( isset( $value['plan_price'] ) && $value['plan_price'] && $product->get_id() == $value['product_id'] ) {
 				$value['data']->set_price( $value['plan_price'] );
 			}
@@ -2837,6 +2839,7 @@ class Membership_For_Woocommerce_Public {
 					$value['data']->post->post_title = $value['plan_title'];
 				}
 			}
+		
 		}
 	}
 
@@ -3286,18 +3289,24 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_membership_get_product_price_of_member( $product_id ) {
-
+	
+		$member_product = '';
+		if ( 'on' !== $mwb_membership_enable_plugin ) {
+			return $member_product;
+		}
 		if ( ! is_cart() ) {
-			get_post_meta( $product_id, '_mwb_membership_discount_product_', 'true', true );
-			$member_product = get_post_meta( $product_id, '_mwb_membership_discount_product_price', true );
+			$discount = get_post_meta( $product_id, '_mwb_membership_discount_product_', true );
+			if ( $discount == 'true' ) {
+				$member_product = get_post_meta( $product_id, '_mwb_membership_discount_product_price', true );
+
+			}
+		
 			if ( ! empty( $member_product ) ) {
 				return $member_product;
 			}
 		}
+		return $member_product;
 	}
-
-
-
 
 }
 // End of class.
