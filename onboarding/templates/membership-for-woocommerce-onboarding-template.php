@@ -7,8 +7,8 @@
  * @link       https://makewebbetter.com
  * @since      1.0.0
  *
- * @package    Makewebbetter_Onboarding
- * @subpackage Makewebbetter_Onboarding/admin/onboarding
+ * @package    Membership_For_Woocommerce
+ * @subpackage Membership_For_Woocommerce/onboarding
  */
 
 global $mfw_mwb_mfw_obj;

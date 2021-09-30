@@ -856,7 +856,7 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Common function to get terms realted to product.
 	 *
-	 * @param [type] $product_id is the id of the current product
+	 * @param [type] $product_id is the id of the current product.
 	 * @return array
 	 */
 	public function get_product_terms( $product_id ) {
@@ -865,10 +865,10 @@ class Membership_For_Woocommerce_Public {
 
 		if ( count( $terms ) > 0 ) {
 			foreach ( $terms as $term ) {
-				$term_id = $term->term_id; // Product tag Id
+				$term_id = $term->term_id; // Product tag Id.
 				array_push( $term_related_to_product, $term_id );
 			}
-				// Set the product tag names in an array
+				// Set the product tag names in an array.
 		}
 
 		$term_related_to_product = ! empty( $term_related_to_product ) ? $term_related_to_product : array();
@@ -2004,8 +2004,11 @@ class Membership_For_Woocommerce_Public {
 
 
 	/**
-	 * Undocumented function
+	 * Assign Club membership.
 	 *
+	 * @param [type] $plan_id is the id of current plan.
+	 * @param [type] $plan_obj is the object of current plan.
+	 * @param [type] $member_id is the id of member.
 	 * @return void
 	 */
 	public function assign_club_membership_to_member( $plan_id, $plan_obj, $member_id ) {
@@ -2872,7 +2875,6 @@ class Membership_For_Woocommerce_Public {
 		$page_link = '';
 		$membership_product = wc_get_product( $mwb_membership_default_product );
 		if ( $membership_product ) {
-
 			if ( $mwb_membership_default_product == $product->get_id() ) {
 
 				$is_purchasable = true;
@@ -3011,13 +3013,13 @@ class Membership_For_Woocommerce_Public {
 
 
 
-	/*
-	 Get product data through query.
-	*
-	* @param mixed $post_type type of post.
-	* @param mixed $taxonomy taxonomy.
-	* @param mixed $term terms.
-	*/
+	/**
+	 * Get product data through query.
+	 *
+	 * @param mixed $post_type type of post.
+	 * @param mixed $taxonomy taxonomy.
+	 * @param mixed $term terms.
+	 */
 	public function get_product_query( $post_type, $taxonomy, $term ) {
 		$products = new WP_Query(
 			array(
@@ -3280,10 +3282,13 @@ class Membership_For_Woocommerce_Public {
 	}
 
 
+
 	/**
 	 * Set session for membership purchase.
 	 *
-	 * @return void
+	 * @param [type] $member_product is the member price to be return.
+	 * @param [type] $product_id is the current product id.
+	 * @return mixed
 	 */
 	public function mwb_membership_get_product_price_of_member( $member_product, $product_id ) {
 
@@ -3293,7 +3298,7 @@ class Membership_For_Woocommerce_Public {
 
 				$discount = get_post_meta( $product_id, '_mwb_membership_discount_product_', true );
 
-				if ( $discount == 'true' ) {
+				if ( 'true' == $discount ) {
 					$member_product = get_post_meta( $product_id, '_mwb_membership_discount_product_price', true );
 				}
 

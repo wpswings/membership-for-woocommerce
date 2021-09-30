@@ -128,7 +128,6 @@ class Membership_For_Woocommerce_Common {
 		}
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
-
 		return $cart_item_data;
 	}
 

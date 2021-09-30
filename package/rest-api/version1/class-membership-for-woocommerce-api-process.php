@@ -20,8 +20,8 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 	 * This is used to define the functions and data manipulation for custom endpoints.
 	 *
 	 * @since      1.0.0
-	 * @package    Hydroshop_Api_Management
-	 * @subpackage Hydroshop_Api_Management/includes
+	 * @package    Membership_For_Woocommerce
+	 * @subpackage Membership_For_Woocommerce/includes
 	 * @author     MakeWebBetter <makewebbetter.com>
 	 */
 	class Membership_For_Woocommerce_Api_Process {

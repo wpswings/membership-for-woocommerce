@@ -25,6 +25,8 @@ class Membership_For_Woocommerce_Activator {
 	 *
 	 * Long Description.
 	 *
+	 * @param mixed $network_wide is used for multisite.
+	 *
 	 * @since    1.0.0
 	 */
 	public static function membership_for_woocommerce_activate( $network_wide ) {

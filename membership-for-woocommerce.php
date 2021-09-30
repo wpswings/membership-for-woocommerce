@@ -135,9 +135,12 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		}
 	}
 
+
 	/**
 	 * The code that runs during plugin activation.
-	 * This action is documented in includes/class-membership-for-woocommerce-activator.php
+	 *
+	 * @param [type] $network_wide is for multiple sites.
+	 * @return void
 	 */
 	function activate_membership_for_woocommerce( $network_wide ) {
 
@@ -265,13 +268,13 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
 			$screen = get_current_screen();
-	
-			if ( 'product' != $screen->id  ) {
+
+			if ( 'product' != $screen->id ) {
 				if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
 					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
-			
+
 				}
-			}	
+			}
 		}
 	}
 
@@ -330,7 +333,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	if ( is_multisite() ) {
 		add_action( 'network_admin_notices', 'mwb_membership_plugin_activation_notice' );
 	} else {
-	add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
+		add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
 	}
 
 

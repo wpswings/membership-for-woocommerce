@@ -2,7 +2,6 @@
 
 jQuery(document).ready(function() {
 
-    console.log('you entered');
     jQuery('#mfw-datatable').DataTable({
         stateSave: true,
         dom: '<"mwb-dt-buttons"fB>tr<"bottom"lip>',

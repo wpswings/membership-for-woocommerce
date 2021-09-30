@@ -1002,7 +1002,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					</tr>
 
 					<tr align="right">
-						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
+						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="4">

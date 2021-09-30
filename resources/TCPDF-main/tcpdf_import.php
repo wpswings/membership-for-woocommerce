@@ -89,9 +89,7 @@ class TCPDF_IMPORT extends TCPDF {
 		unset($rawdata);
 
 		// ...
-
-
-		print_r($data); // DEBUG
+	
 
 
 		unset($pdf);
