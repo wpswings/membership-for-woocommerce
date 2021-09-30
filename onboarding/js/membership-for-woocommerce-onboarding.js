@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
             dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('#' + mwb_onboarding_popup_id));   
         }
     }
-    console.log(dialog);
+
     /*if device is mobile*/
     if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         jQuery('body').addClass('mobile-device');
