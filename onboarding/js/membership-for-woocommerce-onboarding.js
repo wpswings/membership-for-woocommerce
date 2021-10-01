@@ -32,7 +32,6 @@ jQuery(document).ready(function($) {
     }
 
     var deactivate_url = '';
-
     // Add Select2.
     jQuery('.on-boarding-select2').select2({
         placeholder: 'Select All Suitable Options...',
@@ -130,8 +129,6 @@ jQuery(document).ready(function($) {
             jQuery('body').removeClass('mwb-on-boarding-wrapper-control');
         }
     }
-
-
 
     /* Apply deactivate in all the MWB plugins. */
     function mwb_mfw_add_deactivate_slugs_callback(all_slugs) {
