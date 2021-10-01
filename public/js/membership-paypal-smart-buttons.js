@@ -90,8 +90,6 @@ jQuery( document ).ready( function( $ ) {
                 });
             }
         }).render( '#paypal-button-container' );
-    } else {
-        console.log( 'PayPal Checkout( Membership ) not enabled' );
     }
 
 
@@ -110,7 +108,7 @@ jQuery( document ).ready( function( $ ) {
             }
         ).fail(
             ( response ) => {
-                console.log( response );
+
             }
         );
 
@@ -120,8 +118,6 @@ jQuery( document ).ready( function( $ ) {
             jQuery( '#membership_proceed_payment' ).val( 'Proceed' );
             jQuery( '#mwb_membership_buy_now_modal_form' ).append( '<div id="mwb_tnx_user"><input type="hidden" name="mwb_tnx_user_id" id="mwb_tnx_user_id" value="' + response.user_id + '"/></div>' );
             
-        } else if ( false == response.status || response.propertyError == true ) {
-            console.log( response );
         }
             
     }

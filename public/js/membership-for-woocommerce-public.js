@@ -174,4 +174,6 @@ jQuery(document).ready(function ($) {
  	} else {	
 		jQuery(this.nextElementSibling).addClass('show__membership_details');
 	}
+
+
  }); 
