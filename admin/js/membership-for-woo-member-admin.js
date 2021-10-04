@@ -86,3 +86,12 @@ jQuery(document).ready(function($) {
 
 
 
+
+jQuery('button').on('click', function() {
+    jQuery('.mwb-c-modal__cover').addClass('show-c_modal_cover');
+    jQuery('.mwb-c-modal__message').addClass('show-c_modal_message');
+    jQuery('.mwb-c-modal__cover, .mwb-c-modal__close,.mwb-c-modal__confirm-button').on('click', function() {
+        jQuery('.mwb-c-modal__cover').removeClass('show-c_modal_cover');
+        jQuery('.mwb-c-modal__message').removeClass('show-c_modal_message');
+    });
+})
