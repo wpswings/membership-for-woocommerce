@@ -826,14 +826,14 @@ class Membership_For_Woocommerce_Admin {
 				'labels'               => $labels,
 				'public'               => true,
 				'has_archive'          => false,
-				'show_ui'              => true,
 				'publicly_queryable'   => true,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
-				'show_in_admin_bar'    => false,
+				'show_in_admin_bar'   => false,
+				'show_in_nav_menus'   => false,
 				'show_in_menu'         => true,
-				'menu_position'        => null,
+				'menu_position'        => 56,
 				'menu_icon'            => 'dashicons-buddicons-buddypress-logo',
 				'description'          => esc_html__( 'Membership Plans will be created here.', 'membership-for-woocommerce' ),
 				'register_meta_box_cb' => array( $this, 'mwb_membership_for_woo_meta_box' ),
@@ -1141,11 +1141,6 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_for_woo_fill_columns_members( $column, $post_id ) {
-		$current_post = get_post( $post_id, 'ARRAY_A' );
-		$current_post['post_status'] = 'publish';
-
-		wp_update_post( $current_post );
-
 		switch ( $column ) {
 
 			case 'membership_id':
@@ -1607,18 +1602,6 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-		$post   = get_post( $post_id );
-
-		$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
-
-		$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
-		if ( ! in_array( $post_id, (array) $current_memberships ) ) {
-			array_push( $current_memberships, $post_id );
-		}
-
-		// Assign membership plan to user and assign 'member' role to it.
-		update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', $current_memberships );
-		update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'is_member', 'member' );
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
 
@@ -1637,7 +1620,9 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'delay_type' == $access_type ) {
 					$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 					$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
+
 					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
 				}
 
 				if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
@@ -1649,22 +1634,23 @@ class Membership_For_Woocommerce_Admin {
 					$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
 					$today_date = gmdate( 'Y-m-d' );
 					$expiry_date = strtotime( $today_date . $duration );
+
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
 				}
-
 				$post   = get_post( $post_id );
 				$user    = get_userdata( $post->post_author );
-				$user = new WP_User( $post->post_author ); // create a new user object for this user.
-				// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
 
+				$user = new WP_User( $post->post_author ); // create a new user object for this user.
+				$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				if ( 'Lifetime' == $expiry_date ) {
 					$expiry_date = 'Lifetime';
 				} else {
 					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
-
 				}
+
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
+
 				$user_name = $user->data->display_name;
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
@@ -1726,6 +1712,7 @@ class Membership_For_Woocommerce_Admin {
 				$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
 
 			}
+
 			if ( ! empty( $customer_email ) ) {
 
 				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
@@ -1839,6 +1826,7 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 			foreach ( $offered_product as $key => $product_id ) {
+
 				update_post_meta( $product_id, '_mwb_membership_discount_' . $post_id, $product_discount );
 			}
 		}
@@ -1894,9 +1882,12 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
 
 		$order = new WC_Order( $order_id );
+		$orderstatus = $order->status;
 
 		$items = $order->get_items();
+
 		$member_id = '';
+
 		$items = $order->get_items();
 
 		foreach ( $items as $item ) {
@@ -1942,6 +1933,7 @@ class Membership_For_Woocommerce_Admin {
 					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
 					$expiry_date = strtotime( $date_exipary . $delay_duration );
 				}
+
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}
@@ -1962,8 +1954,11 @@ class Membership_For_Woocommerce_Admin {
 				update_post_meta( $member_id, 'member_status', 'pending' );
 			}
 		} else {
+
 			update_post_meta( $member_id, 'member_status', $order_st );
+
 		}
+
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
 
 	}
@@ -2000,7 +1995,7 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( in_array( 'member', (array) $old_user_data->roles ) ) {
 			$user = new WP_User( $user_id ); // create a new user object for this user.
-			// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
+			$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 		}
 	}
 

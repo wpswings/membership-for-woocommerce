@@ -662,11 +662,7 @@ class Membership_For_Woocommerce {
 	 * @since 1.0.0
 	 */
 	public function mwb_mfw_plug_generate_html( $mfw_components = array() ) {
-
 		if ( is_array( $mfw_components ) && ! empty( $mfw_components ) ) {
-			?>
-	
-			<?php
 			foreach ( $mfw_components as $mfw_component ) {
 				if ( ! empty( $mfw_component['type'] ) && ! empty( $mfw_component['id'] ) ) {
 
@@ -865,7 +861,6 @@ class Membership_For_Woocommerce {
 							foreach ( $mfw_component['options'] as $mfw_radio_key => $mfw_radio_val ) {
 								?>
 										<div class="mdc-form-field">
-									
 											<div class="mdc-radio">
 												<input
 												name="<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
@@ -886,9 +881,7 @@ class Membership_For_Woocommerce {
 							}
 							?>
 								</div>
-							
 							</div>
-							
 						</div>
 							<?php
 							break;

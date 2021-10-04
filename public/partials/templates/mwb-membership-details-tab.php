@@ -114,6 +114,8 @@ if ( empty( $current_url ) ) {
 
 
 	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
+
+
 	if ( ! empty( $membership_plan ) ) {
 
 		$access_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_access_type', true );
@@ -121,10 +123,14 @@ if ( empty( $current_url ) ) {
 		if ( 'delay_type' == $access_type ) {
 			$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
 			$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
 		}
 	}
-	$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+
+
+		$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -425,6 +431,8 @@ if ( empty( $current_url ) ) {
 					?>
 					</br>
 				</table>
+				<!-- </address> -->
+			<!-- </div> -->
 		</section>
 	</section>
 	<?php
