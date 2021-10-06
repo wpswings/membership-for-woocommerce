@@ -2798,10 +2798,12 @@ class Membership_For_Woocommerce_Public {
 
 			$cart_item_data['plan_price'] = WC()->session->get( 'plan_price' );
 			$cart_item_data['plan_title'] = WC()->session->get( 'plan_title' );
+			$cart_item_data['plan_id'] = WC()->session->get( 'plan_id' ); // In case of subscription.
 		} else {
 
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
+			$cart_item_data['plan_id'] = $wp_session['plan_id']; // In case of subscription.
 		}
 
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
@@ -2824,13 +2826,26 @@ class Membership_For_Woocommerce_Public {
 		if ( ! $product && empty( $cart->cart_contents ) ) {
 			return;
 		}
-
+//mwb_sfw_subscription_number
+//mwb_sfw_subscription_interval
 		foreach ( $cart->cart_contents as $key => $value ) {
 
 			if ( isset( $value['plan_price'] ) && $value['plan_price'] && $product->get_id() == $value['product_id'] ) {
 				$value['data']->set_price( $value['plan_price'] );
 			}
+echo $value['plan_id']. $value['plan_price'];
 
+$access_type = get_post_meta( 66, 'mwb_membership_plan_access_type', true );
+
+echo $access_type.'------';
+die();
+// if ( 'delay_type' == $access_type ) {
+// 	$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
+// 	$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+
+// 	$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
+// }
 			if ( isset( $value['plan_title'] ) && $value['plan_title'] && $product->get_id() == $value['product_id'] ) {
 
 				// Set the new name (WooCommerce versions 2.5.x to 3+).
@@ -2887,12 +2902,12 @@ class Membership_For_Woocommerce_Public {
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
-			$data                = $this->custom_query_data;
-			$user_id             = get_current_user_id();
-			$existing_plan_id    = array();
-			$existing_plan_product   = array();
-			$plan_existing       = false;
-			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+			$data                  = $this->custom_query_data;
+			$user_id               = get_current_user_id();
+			$existing_plan_id      = array();
+			$existing_plan_product = array();
+			$plan_existing         = false;
+			$current_memberships   = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 			if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
 
