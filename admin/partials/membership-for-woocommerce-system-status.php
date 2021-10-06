@@ -22,7 +22,7 @@ $mfw_php_details = is_array( $mfw_default_status['php'] ) && ! empty( $mfw_defau
 ?>
 <div class="mwb-mfw-table-wrap">
 	<div class="mwb-col-wrap">
-		<div id="mwb-mfw-table-inner-container" class="table-responsive mdc-data-table">
+		<div id="mwb-mfw-table-inner-container" class="table-responsive ">
 			<div class="mdc-data-table__table-container">
 				<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-wp">
 					<thead>
@@ -48,7 +48,7 @@ $mfw_php_details = is_array( $mfw_default_status['php'] ) && ! empty( $mfw_defau
 		</div>
 	</div>
 	<div class="mwb-col-wrap">
-		<div id="mwb-mfw-table-inner-container" class="table-responsive mdc-data-table">
+		<div id="mwb-mfw-table-inner-container" class="table-responsive ">
 			<div class="mdc-data-table__table-container">
 				<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-sys">
 					<thead>

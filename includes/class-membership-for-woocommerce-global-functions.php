@@ -251,14 +251,17 @@ class Membership_For_Woocommerce_Global_Functions {
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+		if ( ! empty( $method_id ) ) {
 
-			// Loop through Woocommerce available payment gateways.
-			foreach ( $payment_gateways as $gateway ) {
+			if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
 
-				if ( $method_id === $gateway->id ) {
+				// Loop through Woocommerce available payment gateways.
+				foreach ( $payment_gateways as $gateway ) {
 
-					$title = $gateway->method_title;
+					if ( $method_id === $gateway->id ) {
+
+						$title = $gateway->method_title;
+					}
 				}
 			}
 		}
@@ -999,7 +1002,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					</tr>
 
 					<tr align="right">
-						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
+						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -1093,7 +1096,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 								<tr align="right">
 									<td colspan="4" class="td_5">
-										<strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membershrip-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong>
+										<strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['mwb_membership_plan_price'] ) ); ?></strong>
 									</td>
 								</tr>
 							</tbody>

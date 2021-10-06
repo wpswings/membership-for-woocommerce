@@ -79,7 +79,7 @@ $country_class = new WC_Countries();
 							if ( ! empty( $user_roles ) ) {
 								$user_role = $user_roles[0];
 							}
-							if ( 'administrator' != $user_roles[0] ) {
+							if ( 'administrator' != $user_role ) {
 
 
 								?>

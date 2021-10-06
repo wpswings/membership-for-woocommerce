@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.1.0';
+			$this->version = '1.2.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -134,16 +134,16 @@ class Membership_For_Woocommerce {
 			$mfw_onboard_steps = new Membership_For_Woocommerce_Onboarding_Steps();
 		}
 				  // The class responsible for defining all actions that occur in the admin area.
-				  include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php';
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
-			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
 
-			/**
+		/**
 		 * The class responsible for defining all function for membership checkout validations.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
@@ -234,8 +234,6 @@ class Membership_For_Woocommerce {
 
 		// Creating membership method.
 
-		// $this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
-
 		// Adding custom columns.
 		$this->loader->add_filter( 'manage_mwb_cpt_members_posts_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_columns_members' );
 		$this->loader->add_filter( 'manage_mwb_cpt_membership_posts_columns', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_columns_membership' );
@@ -265,13 +263,15 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'mwb_membership_woo_order_status_change_custom', 10, 3 );
 
-		// Distraction free page for membership plans page.
-		$this->loader->add_filter( 'page_template', $mfw_plugin_admin, 'mwb_membership_plan_page_template' );
-
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'mwb_membership_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'mwb_membership_for_woo_add_shipping_method' );
 
+		// update member in user update.
+		$this->loader->add_action( 'profile_update', $mfw_plugin_admin, 'mwb_membership_for_woo_update_profile_for_member', 10, 2 );
+
+		$this->loader->add_action( 'wp_trash_post', $mfw_plugin_admin, 'mwb_membership_for_woo_add_to_trash_member' );
+		$this->loader->add_action( 'wp_initialize_site', $mfw_plugin_admin, 'mwb_membership_for_woo_on_create_new_blog', 900 );
 	}
 
 	/**
@@ -381,7 +381,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_public, 'mwb_membership_for_woo_create_shipping_method' );
 			$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_public, 'mwb_membership_for_woo_add_shipping_method' );
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
-			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2 );
+			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'mwb_mfw_set_woocoomerce_session', 10 );
+			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'mwb_membership_get_product_price_of_member', 20, 2 );
+
 		}
 	}
 

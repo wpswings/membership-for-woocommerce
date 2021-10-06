@@ -158,6 +158,7 @@ a#post-preview:focus,
     font-size: 18px !important;
     justify-content: left;
     letter-spacing: 0.5px;
+    margin:0;
 }
 
 #wpbody-content .mwb_membership_Overview {
@@ -225,10 +226,6 @@ a#post-preview:focus,
 .mwb_membership_plans_creation_setting label {
     color: #1a3566;
     font-family: sans-serif;
-}
-
-.postbox .inside {
-    padding: 0;
 }
 
 .mwb_membership_table.mwb_membership_shortcodes tr,
@@ -321,7 +318,7 @@ select #mwb_membership_plan_duration_type {
 }
 
 span.select2.select2-container.select2-container--default {
-    min-width: 250px;
+    min-width: 100px;
 }
 
 
@@ -459,6 +456,15 @@ input#import_all_membership:hover,
     display: flex;
 }
 
+@media screen and (max-width: 768px){
+    #posts-filter .alignleft.actions {
+        flex-wrap: wrap;
+    }
+
+    #import_all_membership {
+        margin-left: 0px;
+    }
+}
 input#import_all_membership {
     order: 4;
 }
@@ -560,7 +566,6 @@ body.post-type-mwb_cpt_membership select,
     font-family: sans-serif;
     font-size: 16px;
     max-width: 250px;
-    padding: 13px 10px !important;
     resize: none;
     width: 100%;
 }
@@ -1229,3 +1234,76 @@ div#wp-mwb_membership_email_content-wrap {
 .members_billing_details h1 {
     width: 90%;
 }
+
+.mwb_membership_plans_creation_setting .select2-container .select2-search--inline .select2-search__field, 
+.mwb_membership_offers .select2-container .select2-search--inline .select2-search__field{
+    padding: 0 10px;
+    width: 100%!important;
+    max-width: 250px;
+}
+
+#mwb_membership_plan_immediate_type {
+    margin-left: 0;
+}
+
+#mwb_membership_plan_time_type {
+    margin-left: 15px;
+}
+
+.mwb_membership_plans_creation_setting td {
+    padding-left: 0px;
+    margin: 0;
+}
+
+.mwb_membership_plans_creation_setting tr {
+    align-items: center;
+}
+
+.mwb_membership_offers table th,
+.mwb_membership_plans_creation_setting th {
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .mwb_membership_offers table tr th,
+    .mwb_membership_plans_creation_setting tr th {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .mwb_membership_offers table tr td,
+    .mwb_membership_plans_creation_setting tr td {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    .mwb_membership_plans_creation_setting .select2-container, 
+    .mwb_membership_offers .select2-container{
+        width: 100%!important;
+    }
+
+    #mwb_membership_product_offer_price_type_id,
+    #mwb_membership_plan_offer_price_type_id {
+        margin-bottom: 10px;
+    }
+
+}
+
+
+
+/*overview fixes*/
+.mfw_overview-video {
+    min-height: 450px;
+}
+@media screen and (max-width: 768px) {
+    .mwb-overview__wrapper {
+        width: 100%;
+    }
+    .mfw_overview-video {
+        min-height: 250px;
+    }
+}
+
+
+

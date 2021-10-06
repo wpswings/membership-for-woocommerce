@@ -156,9 +156,28 @@ jQuery(document).ready(function ($) {
 
 			success: function (response) {
 
-				window.location.replace('checkout');
+				window.location.replace('cart');
 			}
 		});
 	});
 
  });
+
+ jQuery(document).on('click','.mwb_members_plans label',function(obj = this ) {
+	debugger;
+
+	
+	var classes = jQuery(this.nextElementSibling).attr('class');
+ var allclasses =classes.split(' ');
+if (allclasses.length>1) {
+	if( allclasses[1]=='show__membership_details' ){
+	
+		jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
+	}
+ } else {
+		
+	jQuery(this.nextElementSibling).addClass('show__membership_details');
+	}
+
+
+ }); 

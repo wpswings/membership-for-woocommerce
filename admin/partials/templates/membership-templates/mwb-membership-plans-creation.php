@@ -84,6 +84,7 @@ global $post;
 									foreach ( $mwb_membership_club as $mwb_membership_club_ids ) {
 
 										$mem_id = $mwb_membership_club_ids;
+
 										?>
 
 								<option value="<?php echo esc_html( $mwb_membership_club_ids ); ?>" <?php echo ( in_array( $mwb_membership_club_ids, $mwb_membership_club, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $mem_id ) . '(#' . esc_html( $mwb_membership_club_ids ) . ')' ); ?></option>
@@ -124,11 +125,6 @@ global $post;
 					$check_licence = check_membership_pro_plugin_is_active();
 					if ( $check_licence ) {
 						$mwb_membership_plan_info = $settings_fields['mwb_membership_plan_info'];
-						if ( $mwb_membership_club ) {
-							$extra_info = apply_filters( 'get_extra_info', $mwb_membership_club );
-
-							$mwb_membership_plan_info .= $extra_info;
-						}
 					}
 				}
 				$settings = array(
@@ -892,9 +888,6 @@ global $post;
 
 						<input type="checkbox"  class="mwb_membership_plan_offer_free_shipping" name="mwb_memebership_plan_free_shipping" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_shipping ); ?> >
 
-						<?php
-						if ( 'publish' == $post->post_status ) {
-							?>
 						<!-- manage free shipping link start. -->
 						<div class="mwb_membership_free_shipping_link" >
 							<p class="mwb_membership_free_shipping">
@@ -902,7 +895,7 @@ global $post;
 							</p>
 						</div>
 						<!-- Manage free shipping link end. -->
-						<?php } ?>
+
 					</td>
 				</tr>
 				<!-- Free shiping section end. -->

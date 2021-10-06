@@ -40,7 +40,7 @@
     font-weight: 600;
     letter-spacing: 0;
     line-height: 1.5;
-    margin: 10px auto;
+    margin: 0;
     max-width: 230px;
     padding: 10px 30px;
     text-align: center;
@@ -49,6 +49,10 @@
     width: 100%;
   }
   
+  .products .button.alt.mfw-membership {
+    margin: 10px auto;
+  }
+
   .button.alt.mfw-membership:hover {
     background-color: rgb(255 255 255 / 50%);
     color: #1a3365 !important;
@@ -734,6 +738,7 @@ margin-top: 10px;
     margin: 10px;
     padding: 0;
     height: 55px;
+    font-family: inherit;
 }
 
 .available_member {
@@ -798,4 +803,27 @@ margin-top: 10px;
   .mwb_table_wrapper li span {
     display: block;
   }
+}
+
+
+/* All plan Page fixes*/
+
+.mwb_all_plans_detail_wrapper{
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+}
+.show__membership_details{
+  display:block !important;
+}
+
+.mwb_members_plans .mwb_table_wrapper{
+  display: none;
+}
+
+.mwb_members_plans label span {
+  transform: rotate(
+90deg);
+  display: inline-block;
 }

@@ -117,13 +117,13 @@ textarea:focus {
 
 select,
 option {
-  color: rgba(0, 0, 0, 0.7) !important;
+  color: rgba(0, 0, 0, 0.7);
   box-shadow: none !important;
-  border-color: rgba(0, 0, 0, 0.38) !important;
+  border-color: rgba(0, 0, 0, 0.38);
 }
 
 select {
-  padding: 10px 30px 10px 15px !important;
+  padding: 10px 30px 10px 15px;
 }
 
 .mwb-link:focus {
@@ -150,9 +150,6 @@ select {
   transition: 0.3s ease;
 }
 
-
-
-
 .mwb-link:hover {
   color: #2196f3 !important;
 }
@@ -160,17 +157,6 @@ select {
 .mwb-link.active {
   position: relative;
   color: #2196f3 !important;
-  border-bottom: 0.5px solid var(--mdc-theme-primary);
-}
-
-.mwb-link:after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  border-bottom: 3px solid #2196f3;
-  border-radius: 2px;
 }
 
 .mwb-bg-white {
@@ -706,5 +692,3 @@ select {
     max-width: 50%;
   }
 }
-
-
