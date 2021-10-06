@@ -44,10 +44,6 @@ global $post;
 
 			<td class="forminp forminp-text">
 
-				
-			
-
-
 				<input type="number" step=".01" id="mwb_membership_plan_price" placeholder="<?php echo esc_attr( $description ); ?>" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
@@ -65,8 +61,6 @@ global $post;
 			</th>
 
 			<td class="forminp forminp-text">
-				
-
 				<select id="mwb_membership_club" class="wc-membership-search" multiple="multiple" name="mwb_membership_club[]" data-placeholder="<?php esc_attr_e( 'Search for a memberships&hellip;', 'membership-for-woocommerce' ); ?>">
 
 					<?php
@@ -205,6 +199,32 @@ global $post;
 		</tr>
 		<!-- Plan Duration End. -->
 
+			<!-- Plan Duration start. -->
+			<tr valign="top" id="mwb_membership_subscription" >
+
+				<th scope="row" class="titledesc">
+					<label for="mwb_membership_subscription"><?php esc_html_e( 'Subscription Membership', 'membership-for-woocommerce' ); ?></label>
+						<?php
+							$description = esc_html__( 'Enable it to make membership plan as subscription.', 'membership-for-woocommerce' );
+
+							$instance->tool_tip( $description );
+						?>
+				</th>
+
+				<td class="forminp forminp-text">
+
+					<?php
+
+						$mwb_membership_subscription = $settings_fields['mwb_membership_subscription'];
+					?>
+
+					<!-- <input type="number" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription'] ); ?>" > -->
+					<input type="checkbox"  class="mwb_membership_subscription_" name="mwb_membership_subscription" value="yes" <?php checked( 'yes', $mwb_membership_subscription ); ?> >
+
+</td>
+</tr>
+<!-- Plan Duration End. -->
+
 
 	</tbody>
 </table>
@@ -237,8 +257,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
-
 					<select id="mwb_membership_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_disc_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 
 						<?php
@@ -288,8 +306,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-					
-
 					<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_disc_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
@@ -338,8 +354,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-					
-
 					<select id="mwb_membership_plan_target_tags_search" class="wc-membership-product-tag-search" multiple="multiple" name="mwb_membership_plan_target_disc_tags[]" data-placeholder="<?php esc_attr_e( 'Search for a tag&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
@@ -440,8 +454,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
-
 					<select id="mwb_membership_plan_page_target_ids_search" class="wc-membership-page-search" multiple="multiple" name="mwb_membership_plan_page_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a page&hellip;', 'membership-for-woocommerce' ); ?>">
 
 						<?php
@@ -490,8 +502,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-					
-
 					<select id="mwb_membership_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 
 						<?php
@@ -535,8 +545,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
-
 					<select id="mwb_membership_plan_target_categories_search" class="wc-membership-product-category-search" multiple="multiple" name="mwb_membership_plan_target_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 
@@ -580,8 +588,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
-
 					<select id="mwb_membership_plan_target_tags_search" class="wc-membership-product-tag-search" multiple="multiple" name="mwb_membership_plan_target_tags[]" data-placeholder="<?php esc_attr_e( 'Search for a tag&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
@@ -629,8 +635,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
-
 					<select id="mwb_membership_plan_post_target_ids_search" class="wc-membership-post-search" multiple="multiple" name="mwb_membership_plan_post_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a post&hellip;', 'membership-for-woocommerce' ); ?>">
 
 						<?php
@@ -679,8 +683,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-					
-
 					<select id="mwb_membership_plan_target_post_categories_search" class="wc-membership-post-category-search" multiple="multiple" name="mwb_membership_plan_target_post_categories[]" data-placeholder="<?php esc_attr_e( 'Search for a post category&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
@@ -728,7 +730,6 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-				
 
 					<select id="mwb_membership_plan_target_post_tags_search" class="wc-membership-post-tag-search" multiple="multiple" name="mwb_membership_plan_target_post_tags[]" data-placeholder="<?php esc_attr_e( 'Search for a post tag&hellip;', 'membership-for-woocommerce' ); ?>">
 						<?php
@@ -775,7 +776,7 @@ global $post;
 						$instance->tool_tip( $description );
 					?>
 				</th>
-			
+
 				<td id="mfw_offer_access_type">
 
 				<?php
@@ -783,11 +784,6 @@ global $post;
 				$mwb_membership_plan_time_duration = '';
 
 				$mwb_membership_plan_time_duration_type = '';
-
-
-
-
-
 
 				if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 					$check_licence = check_membership_pro_plugin_is_active();
@@ -808,7 +804,6 @@ global $post;
 					<label for="mwb_membership_plan_time_type"><?php esc_html_e( 'Specify a time', 'membership-for-woocommerce' ); ?></label>
 
 					<div id="mwb_membership_plan_time_duratin_display">
-					
 						<input type="number" id="mwb_membership_plan_time_duration" name="mwb_membership_plan_time_duration" value="<?php echo esc_attr( $mwb_membership_plan_time_duration ); ?>" min="1" max="31" >
 						<select name="mwb_membership_plan_time_duration_type" id="mwb_membership_plan_time_duration_type" >
 							<option <?php echo esc_html( 'days' === $mwb_membership_plan_time_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>

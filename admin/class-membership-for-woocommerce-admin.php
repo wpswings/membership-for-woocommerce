@@ -902,7 +902,6 @@ class Membership_For_Woocommerce_Admin {
 
 				$data                          = get_post_meta( $post_id, $key, true );
 				$this->settings_fields[ $key ] = ! empty( $data ) ? $data : $default;
-
 			}
 		}
 	}
@@ -923,6 +922,7 @@ class Membership_For_Woocommerce_Admin {
 			'mwb_membership_plan_name_access_type'       => array( 'default' => 'lifetime' ),
 			'mwb_membership_plan_duration'               => array( 'default' => '0' ),
 			'mwb_membership_plan_duration_type'          => array( 'default' => 'days' ),
+			'mwb_membership_subscription'         		=>  array( 'default' => 'no' ),
 			'mwb_membership_plan_recurring'              => array( 'default' => '' ),
 			'mwb_membership_plan_access_type'            => array( 'default' => 'immediate_type' ),
 			'mwb_membership_plan_time_duration'          => array( 'default' => '0' ),
@@ -1824,6 +1824,7 @@ class Membership_For_Woocommerce_Admin {
 
 					}
 				}
+
 				update_post_meta( $post_id, $field, $post_data );
 				if ( 'mwb_membership_plan_hide_products' == $field ) {
 					update_post_meta( $post_id, $field . $post_id, $post_data );

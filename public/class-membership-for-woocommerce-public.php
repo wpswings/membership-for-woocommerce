@@ -2822,30 +2822,37 @@ class Membership_For_Woocommerce_Public {
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 
 		$product = wc_get_product( $mwb_membership_default_product );
+//mwb_sfw_subscription_number
+//mwb_sfw_subscription_interval
 
 		if ( ! $product && empty( $cart->cart_contents ) ) {
 			return;
 		}
-//mwb_sfw_subscription_number
-//mwb_sfw_subscription_interval
+
 		foreach ( $cart->cart_contents as $key => $value ) {
 
 			if ( isset( $value['plan_price'] ) && $value['plan_price'] && $product->get_id() == $value['product_id'] ) {
 				$value['data']->set_price( $value['plan_price'] );
 			}
-echo $value['plan_id']. $value['plan_price'];
 
-$access_type = get_post_meta( 66, 'mwb_membership_plan_access_type', true );
+			$mwb_sfw_product = get_post_meta( $value['plan_id'], 'mwb_membership_subscription', true );
+			if ( ! empty( $mwb_sfw_product ) ) {
+				$mwb_membership_plan_name_access_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_name_access_type', true );
 
-echo $access_type.'------';
-die();
-// if ( 'delay_type' == $access_type ) {
-// 	$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
-// 	$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+				if( $mwb_membership_plan_name_access_type == 'limited' ) {
+					$mwb_membership_plan_duration = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration', true );
+					$mwb_membership_plan_duration_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration_type', true );
+					update_post_meta( $mwb_membership_default_product, '_mwb_sfw_product', $mwb_sfw_product );
+			//	echo $mwb_membership_plan_duration_type.'----'.$mwb_membership_plan_duration ;
 
-// 	$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+					update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_number', $mwb_membership_plan_duration );
+					update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_interval', $mwb_membership_plan_duration_type );
+				//	update_post_meta( $mwb_membership_default_product, '_regular_price', $value['plan_price'] );
 
-// }
+				}
+
+		}
+
 			if ( isset( $value['plan_title'] ) && $value['plan_title'] && $product->get_id() == $value['product_id'] ) {
 
 				// Set the new name (WooCommerce versions 2.5.x to 3+).
