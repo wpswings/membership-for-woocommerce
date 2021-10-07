@@ -199,8 +199,8 @@ global $post;
 		</tr>
 		<!-- Plan Duration End. -->
 
-			<!-- Plan Duration start. -->
-			<tr valign="top" id="mwb_membership_subscription" >
+			<!-- Plan subscription start. -->
+			<tr valign="top" id="mwb_membership_subscription_tr" >
 
 				<th scope="row" class="titledesc">
 					<label for="mwb_membership_subscription"><?php esc_html_e( 'Subscription Membership', 'membership-for-woocommerce' ); ?></label>
@@ -221,10 +221,38 @@ global $post;
 					<!-- <input type="number" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription'] ); ?>" > -->
 					<input type="checkbox"  class="mwb_membership_subscription_" name="mwb_membership_subscription" value="yes" <?php checked( 'yes', $mwb_membership_subscription ); ?> >
 
+			</td>
+			</tr>
+			<!-- Plan subscription End. -->
+			<!-- Plan subscription expiry start. -->
+			<tr valign="top" id="mwb_membership_subscription_expiry_tr" >
+
+		<th scope="row" class="titledesc">
+	<label for="mwb_membership_subscription_expiry"><?php esc_html_e( 'Subscription expiry', 'membership-for-woocommerce' ); ?></label>
+<?php
+	$description = esc_html__( 'Subscription Expiry in terms of  \'DAYS\', \'WEEKS\', \'MONTHS\', \'YEARS\' for which the plan will be active.', 'membership-for-woocommerce' );
+
+	$instance->tool_tip( $description );
+?>
+</th>
+
+<td class="forminp forminp-text">
+
+	<?php
+
+	$mwb_membership_subscription_expiry_type = $settings_fields['mwb_membership_subscription_expiry_type'];
+	?>
+
+	<input type="number" id="mwb_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription_expiry'] ); ?>" >
+	<select name="mwb_membership_subscription_expiry_type" id="mwb_membership_subscription_expiry_type">
+		<option <?php echo esc_html( 'day' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="day"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+		<option <?php echo esc_html( 'week' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="week"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+		<option <?php echo esc_html( 'month' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="month"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+		<option <?php echo esc_html( 'year' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="year"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+	</select>
 </td>
 </tr>
-<!-- Plan Duration End. -->
-
+<!-- Plan subscription expiry End -->
 
 	</tbody>
 </table>

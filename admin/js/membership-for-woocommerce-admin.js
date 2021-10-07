@@ -72,15 +72,20 @@ jQuery(document).ready(function($) {
       var attch_inv = $( "input[name='mwb_membership_attach_invoice']:checked" ).val();
 
       switch (selection_access) {
-
+        
           case 'limited':
               $("#mwb_membership_duration").show('500');
+              $("#mwb_membership_subscription_tr").show('500');
+              $("#mwb_membership_subscription_expiry_tr").show('500');
+              
               $("#mwb_membership_recurring_plan").show('500');
               break;
 
           default:
               $("#mwb_membership_duration").hide('500');
+              $("#mwb_membership_subscription_tr").hide('500');
               $("#mwb_membership_recurring_plan").hide('500');
+              $("#mwb_membership_subscription_expiry_tr").hide('500');
 
       }
 
@@ -123,6 +128,8 @@ jQuery(document).ready(function($) {
 
           case 'limited':
               $("#mwb_membership_duration").show('500');
+              $("#mwb_membership_subscription_tr").show('500');
+              $("#mwb_membership_subscription_expiry_tr").show('500');
 
               $("#mwb_membership_plan_duration_type").on("change", function() {
                   var duration_type = $("#mwb_membership_plan_duration_type").val();
@@ -139,6 +146,8 @@ jQuery(document).ready(function($) {
 
           default:
               $("#mwb_membership_duration").hide('500');
+              $("#mwb_membership_subscription_tr").hide('500');
+              $("#mwb_membership_subscription_expiry_tr").hide('500');
               $("#mwb_membership_plan_duration").val("");
               $("#mwb_membership_plan_duration_type").prop("selectedIndex", 0);
               $("#mwb_membership_recurring_plan").hide('500');

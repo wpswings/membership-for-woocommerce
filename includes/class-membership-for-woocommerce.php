@@ -365,7 +365,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'mwb_membership_expiry_check', $mfw_plugin_public, 'mwb_membership_cron_expiry_check' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'mwb_membership_set_membership_product_price' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'mwb_membership_set_membership_product_price', 5 );
 
 			// Settin membership price in cart.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'mwb_membership_make_membership_product_purchasable', 10, 2 );
