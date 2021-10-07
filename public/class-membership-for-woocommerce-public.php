@@ -2845,9 +2845,9 @@ class Membership_For_Woocommerce_Public {
 					update_post_meta( $mwb_membership_default_product, '_mwb_sfw_product', $mwb_sfw_product );
 			//	echo $mwb_membership_plan_duration_type.'----'.$mwb_membership_plan_duration ;
 
-					update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_number', $mwb_membership_plan_duration );
+					update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_expiry_number', $mwb_membership_plan_duration );
 					update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_interval', $mwb_membership_plan_duration_type );
-				//	update_post_meta( $mwb_membership_default_product, '_regular_price', $value['plan_price'] );
+					update_post_meta( $mwb_membership_default_product, '_regular_price', $value['plan_price'] );
 
 				}
 
