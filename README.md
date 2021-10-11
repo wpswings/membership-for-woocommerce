@@ -1,9 +1,9 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-40%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.6-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
-# Membership for WooCommerce
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-50%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5..7.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+# Membership For WooCommerce- Perfect Membership Plugin For Offering Membership Plans, Offers & Discounts
 ![Membership   for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2494227)
 * Contributors: MakeWebBetter
-* Author URI: [MakeWebBetter](https://makewebbetter.com/?utm_source=github&utm_medium=github&utm_campaign=membership)
-* Tags: membership, memberships, woocommerce, woocommerce membership,members
+* Author URI: [MakeWebBetter](https://makewebbetter.com/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
+* Tags: membership, subscriptions, memberships, members, woocommerce membership, membership plugin, woocommerce
 *  License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 # Description
@@ -41,14 +41,33 @@ It gets on directly to give you a way out of the three most customary pain point
 * Offer membership categories to users 
 * Select limited or lifetime accessibility to WooCommerce members
 * Set different status for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
+* Bulk actions for the admin to edit plans and move them to trash
+* Display all membership plans available on your store on the Membership Plans Tab.
+* Compatibility with our other valuable plugins.
 
+
+## PLUGIN COMPATIBILITIES 
+
+ ### 1) [**WooCommerce Multi Currency Switcher**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git) ([**Free Download!!**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/))
+
+With our multi-currency switcher, the admin can now enable switching over to local currencies within their WooCommerce membership plans. Both free and premium plugins are compatible with each other.  
+
+
+ ### 2) [**Wishlist For WooCommerce Pro**](https://makewebbetter.com/product/wishlist-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git) ([**Free Download!!**](https://wordpress.org/plugins/ultimate-wishlist-for-woocommerce/))
+
+With the free Ultimate Wishlist for WooCommerce plugin compatibility, the users can now add memberships to their Wishlist. Both plugins work seamlessly.
+
+ ### 3) **Multisite**
+
+Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated from one place.
+
+### 4) **WPML Compatibility** 
+
+Membership for WooCommerce lets the admin add desired content and translate it in multiple languages. WPML compatibility gives you easy access to professional translation management.   
 
 **PLUGIN MEETS YOUR REQUIREMENT, SO**
 
 [**Download Now**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
-
-Visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce//?utm_source=MWB-membership-github&utm_medium=MWB-github-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin
-
 
 ## FEATURES OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN
 
@@ -84,9 +103,9 @@ Admin can display offered products and product categories in a membership plan. 
 * Plan description
 * Access Type (Lifetime or Limited accessibility) 
 
-Visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce//?utm_source=MWB-membership-github&utm_medium=MWB-github-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin
+Visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git) and learn more about the features and working of the plugin
 
-[**Membership for WooCommerce Free demo**](https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-github&utm_medium=MWB-github-Page&utm_campaign=MWB-free_demo)
+[**Membership for WooCommerce Free demo**](https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
 
 
 
@@ -102,16 +121,18 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 * Better Membership Reports
 * Send Membership Plans Action Notifications via Email  
 * Sort Membership plans 
-
-## TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN
-
-> Note:  Get [**Membership for WooCommerce**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=MWB-membership-pro)
+* Pro plugin compatible with [**Invoice System for WooCommerce**](https://wordpress.org/plugins/invoice-system-for-woocommerce/) which is sent along with membership emails.
 
 
-## LIVE DEMO OF PREMIUM VERSION 
+### TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN
 
-* [**Membership for WooCommerce Frontend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=frontend)
-* [**Membership for WooCommerce Backend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/request-for-personal-demo/?utm_source=MWB-membership-git&utm_medium=MWB-git-Page&utm_campaign=backend)
+> Note:  Get [**Membership for WooCommerce Pro**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
+
+
+### LIVE DEMO OF PREMIUM VERSION 
+
+* [**Membership for WooCommerce Frontend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
+* [**Membership for WooCommerce Backend Demo**](https://demo.makewebbetter.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
 
 
 
@@ -124,12 +145,14 @@ If our documentation doesn’t contain the solution to your problem, you can vis
 
 ### **MORE ABOUT MAKEWEBBETTER**
 
-- [**Our Official Website**](https://makewebbetter.com/?utm_source=github&utm_medium=github&utm_campaign=membership)
+- [**Our Official Website**](https://makewebbetter.com/?utm_source=MWB-membership-git&utm_medium=MWB-git-page&utm_campaign=MWB-membership-git)
 - [**Follow us on Facebook Page**](https://www.facebook.com/makewebbetter)
 - [**Tweet us on @MakeWebBetter**](https://twitter.com/makewebbetter)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
 - [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
+
 
 
 
