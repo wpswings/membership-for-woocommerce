@@ -265,4 +265,20 @@ class Membership_For_Woocommerce_Common {
 
 
 
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $mwb_new_order new order id.
+	 * @param mixed $subscription_id subscription id.
+	 * @param mixed $payment_method is the method for payment of subscription.
+	 * @return array
+	 */
+	public function mwb_membership_subscription_renewal( $mwb_new_order, $subscription_id, $payment_method ) {
+		
+		$next_payment_date = get_post_meta( $subscription_id, 'mwb_next_payment_date', true );
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+	}
+
+	
 }

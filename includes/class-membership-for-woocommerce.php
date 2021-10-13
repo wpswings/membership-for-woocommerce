@@ -272,6 +272,9 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_trash_post', $mfw_plugin_admin, 'mwb_membership_for_woo_add_to_trash_member' );
 		$this->loader->add_action( 'wp_initialize_site', $mfw_plugin_admin, 'mwb_membership_for_woo_on_create_new_blog', 900 );
+		$this->loader->add_action( 'mwb_sfw_subscription_cancel', $mfw_plugin_admin, 'mwb_membership_cancel_membership_acc_susbcription', 20, 2 );			
+			
+		
 	}
 
 	/**
@@ -293,7 +296,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' ); // Import CSV.
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
+		$this->loader->add_action( 'mwb_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'mwb_membership_subscription_renewal', 99, 3 );
 
+		
 	}
 
 	/**
@@ -383,7 +388,11 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'mwb_mfw_set_woocoomerce_session', 10 );
 			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'mwb_membership_get_product_price_of_member', 20, 2 );
-
+			$this->loader->add_filter( 'mwb_subscription_get_status', $mfw_plugin_public, 'mwb_membership_subscription_get_status', 20, 3 );
+			$this->loader->add_filter( 'mwb_sfw_next_payment_date', $mfw_plugin_public, 'mwb_membership_subscription_next_payment_date', 20, 2 );
+			$this->loader->add_filter( 'mwb_sfw_susbcription_end_date', $mfw_plugin_public, 'mwb_membership_susbcription_end_date', 20, 2 );
+			
+			
 		}
 	}
 

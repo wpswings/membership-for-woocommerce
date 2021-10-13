@@ -1636,9 +1636,7 @@ class Membership_For_Woocommerce_Admin {
 				if ( 'delay_type' == $access_type ) {
 					$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 					$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
-
 					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-
 				}
 
 				if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
@@ -1652,12 +1650,36 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = strtotime( $today_date . $duration );
 
 					update_post_meta( $post_id, 'member_expiry', $expiry_date );
+
+
+					$order_id = get_post_meta( $post_id, 'member_order_id', true );
+					if ( $plan_obj['mwb_membership_subscription'] == 'yes' ) {
+						$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+						if ( ! empty( $subscription_id ) ) {
+
+							update_post_meta( $subscription_id, 'mwb_subscription_status', 'active' );
+							update_post_meta( $subscription_id, 'mwb_next_payment_date', $expiry_date );
+
+							if ( ! empty( $plan_obj[ 'mwb_membership_subscription_expiry' ] ) ) {
+								if ( function_exists( 'mwb_sfw_susbcription_expiry_date' ) ) {
+									$current_time = current_time( 'timestamp' );
+									$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+									update_post_meta( $subscription_id, 'mwb_susbcription_end', $mwb_susbcription_end );
+								}
+							} else {
+								update_post_meta( $subscription_id, 'mwb_susbcription_end', '' );
+							}						
+						}
+					}
 				}
+				
+
+
 				$post   = get_post( $post_id );
 				$user    = get_userdata( $post->post_author );
 
 				$user = new WP_User( $post->post_author ); // create a new user object for this user.
-				$user->add_role( 'member' ); // set them to whatever role you want using the full word.
+			//	$user->add_role( 'member' ); // set them to whatever role you want using the full word.
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				if ( 'Lifetime' == $expiry_date ) {
 					$expiry_date = 'Lifetime';
@@ -1673,9 +1695,7 @@ class Membership_For_Woocommerce_Admin {
 					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
 				}
 			}
-		}
-		// If manually cancelling membership then remove its expiry date.
-		if ( 'cancelled' == $_POST['member_status'] ) {
+		} elseif ( 'cancelled' == $_POST['member_status'] ) {  // If manually cancelling membership then remove its expiry date.
 
 			$post   = get_post( $post_id );
 			$user = get_userdata( $post->post_author );
@@ -1722,6 +1742,16 @@ class Membership_For_Woocommerce_Admin {
 			$customer_email = WC()->mailer()->emails['membership_cancell_email'];
 			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 
+
+			if ( $plan_obj['mwb_membership_subscription'] == 'yes' ) {
+				$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+				if ( ! empty( $subscription_id ) ) {
+					update_post_meta( $subscription_id, 'mwb_subscription_status', 'cancelled' );
+	
+				}
+			}
+
+
 			if ( 'Lifetime' == $expiry_date ) {
 				$expiry_date = 'Lifetime';
 			} else {
@@ -1735,6 +1765,28 @@ class Membership_For_Woocommerce_Admin {
 			}
 			update_post_meta( $post_id, 'member_expiry', '' );
 			update_post_meta( $post_id, 'plan_obj', '' );
+		} else {
+
+			$order_id = get_post_meta( $post_id, 'member_order_id', true );
+			
+			$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+			if ( $plan_obj['mwb_membership_subscription'] == 'yes' || ! empty( $order_id ) ) {
+				$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+				if ( ! empty( $subscription_id ) ) {
+					update_post_meta( $subscription_id, 'mwb_subscription_status', sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) );
+					update_post_meta( $subscription_id, 'mwb_next_payment_date', $expiry_date );
+					if ( ! empty( $plan_obj[ 'mwb_membership_subscription_expiry' ] ) ) {
+						if ( function_exists( 'mwb_sfw_susbcription_expiry_date' ) ) {
+							$current_time = current_time( 'timestamp' );
+							$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+							update_post_meta( $subscription_id, 'mwb_susbcription_end', $mwb_susbcription_end );
+						}
+					} else {
+						update_post_meta( $subscription_id, 'mwb_susbcription_end', '' );
+					}						
+				}
+			}
+
 		}
 
 		foreach ( $actions as $action => $value ) {
@@ -1930,12 +1982,11 @@ class Membership_For_Woocommerce_Admin {
 
 				$current_date = gmdate( 'Y-m-d', strtotime( $today_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				update_post_meta( $member_id, 'membership_delay_date', $current_date );
-
 			}
 
 			if ( 'lifetime' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
-				update_post_meta( $member_id, 'member_expiry', 'Lifetime' );
+				update_post_meta( $member_id, 'member_expiry', 'Lifetime' ); 
 
 			} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
@@ -1969,11 +2020,54 @@ class Membership_For_Woocommerce_Admin {
 			if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
 
 				update_post_meta( $member_id, 'member_status', 'pending' );
+			
+				if ( $plan_obj['mwb_membership_subscription'] == 'yes' ) {
+					$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+					if ( ! empty( $subscription_id ) ) {
+						update_post_meta( $subscription_id, 'mwb_subscription_status', 'pending' );	
+					}
+				}
 			}
 		} else {
 
 			update_post_meta( $member_id, 'member_status', $order_st );
+			$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+			if ( 'complete' == $order_st ) {
+				if ( $plan_obj['mwb_membership_subscription'] == 'yes' ) {
+				if ( ! empty( $subscription_id ) ) {
+					update_post_meta( $subscription_id, 'mwb_subscription_status', 'active' );
+					update_post_meta( $subscription_id, 'mwb_next_payment_date', $expiry_date );
+						
+					
 
+					if ( ! empty( $plan_obj[ 'mwb_membership_subscription_expiry' ] ) ) {
+						if ( function_exists( 'mwb_sfw_susbcription_expiry_date' ) ) {
+							$access_type = get_post_meta( $plan_obj['plan_id'], 'mwb_membership_plan_access_type', true );
+							$current_date = gmdate( 'Y-m-d' );
+							if ( 'delay_type' == $access_type ) {
+								$time_duration      = get_post_meta( $plan_obj['plan_id'], 'mwb_membership_plan_time_duration', true );
+								$time_duration_type = get_post_meta( $plan_obj['plan_id'], 'mwb_membership_plan_time_duration_type', true );
+						   
+								$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+						   
+							}
+							$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_id, $current_date, '' );
+							update_post_meta( $subscription_id, 'mwb_susbcription_end', $mwb_susbcription_end );
+	
+						}
+					} else {
+							update_post_meta( $subscription_id, 'mwb_susbcription_end', '' );
+						}
+
+					}
+				}
+			} else {
+				if ( ! empty( $subscription_id ) ) {
+					update_post_meta( $subscription_id, 'mwb_subscription_status', $order_st );	
+				}
+			}
+
+		
 		}
 
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
@@ -2132,6 +2226,34 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
+	}
+
+
+
+	/**
+	 * Cancle membership acc to subscriptions.
+	 *
+	 * @param array $post_id id of current post.
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_cancel_membership_acc_susbcription( $mwb_subscription_id, $mwb_status ) {
+		$order_id = get_post_meta( $mwb_subscription_id, 'mwb_parent_order', true );
+		$order = wc_get_order( $order_id );
+		$member_id = '';
+
+		foreach ( $order->get_items() as $item_id => $item ) {
+
+			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
+				$member_id = $item->get_meta( '_member_id' );
+			}
+		}
+		
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'cancelled' );
+
+		}
+
 	}
 
 }
