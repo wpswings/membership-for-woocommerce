@@ -274,10 +274,34 @@ class Membership_For_Woocommerce_Common {
 	 * @return array
 	 */
 	public function mwb_membership_subscription_renewal( $mwb_new_order, $subscription_id, $payment_method ) {
-		
+		$expiry_date = '';
 		$next_payment_date = get_post_meta( $subscription_id, 'mwb_next_payment_date', true );
+		$end_payment_date =	get_post_meta( $subscription_id, 'mwb_susbcription_end' );
+		if ( ! empty( $next_payment_date ) ) {
+			$expiry_date = $next_payment_date;
+		} elseif ( ! empty( $end_payment_date ) ) {
+			$expiry_date = $end_payment_date;
+		}
 		$subscription = get_post( $subscription_id );
 		$parent_order_id  = $subscription->mwb_parent_order;
+	
+		$order_status  = $mwb_new_order->get_status();
+		if ( 'processing' == $order_status || 'complete' == $order_status ) {
+
+			$order = wc_get_order( $parent_order_id );
+			$member_id = '';
+			foreach ( $order->get_items() as $item_id => $item ) {
+	
+				if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
+					$member_id = $item->get_meta( '_member_id' );
+				}
+			}
+
+			if ( ! empty( $member_id ) ) {
+				update_post_meta( $member_id, 'member_status', 'complete' );
+				update_post_meta( $member_id, 'member_expiry', $expiry_date  );
+			}
+		}
 	}
 
 	

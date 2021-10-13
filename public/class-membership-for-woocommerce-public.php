@@ -2103,7 +2103,7 @@ class Membership_For_Woocommerce_Public {
 
 		$fields = array();
 		$order = wc_get_order( $order_id );
-
+		$plan_id = '';
 		foreach ( $order->get_items() as $item_id => $item ) {
 			$plan_id = $item->get_meta( '_mwb_plan_id' );
 			$member_id = $item->get_meta( '_member_id' );
@@ -2126,7 +2126,10 @@ class Membership_For_Woocommerce_Public {
 				update_post_meta( $member_id, 'member_status', $order_st );
 
 			} else {
-				$plan_id   = WC()->session->get( 'plan_id' );
+				if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
+					$plan_id   = WC()->session->get( 'plan_id' );
+				}
+			
 				$items    = $order->get_data()['line_items'];
 				$keys     = array_keys( $items );
 
@@ -2670,14 +2673,18 @@ class Membership_For_Woocommerce_Public {
 						$plan = get_post_meta( $member_id, 'plan_obj', true );
 						if ( $plan['mwb_membership_subscription'] == 'yes' ) {
 							$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
+							$end_payment_date =	get_post_meta( $subscription_id, 'mwb_susbcription_end' );
 							if ( ! empty( $subscription_id ) ) {
-								update_post_meta( $subscription_id, 'mwb_subscription_status', 'expired' );
+								if ( $today_date >= $end_payment_date ) {
+									update_post_meta( $subscription_id, 'mwb_subscription_status', 'expired' );
+								}
 							}
 						}
 						$customer_email = '';
 						if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
 							$customer_email = WC()->mailer()->emails['membership_expired_email'];
 						}
+
 						$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
 						$expiry = get_post_meta( $member_id, 'member_expiry', true );
@@ -3498,13 +3505,16 @@ class Membership_For_Woocommerce_Public {
 	
 
 }
-// End of class.
+//End of class.
 
 // add_action('init', 'functuion');
 // function functuion(){
 // 	echo 'xfxdgf----';
 
-// 	$subscription = get_post( 71 );
-// echo 	'---'.$parent_order_id  = $subscription->mwb_parent_order;	
-											
+// 	$subscription = get_post( 65 );
+// 	$parent_order_id  = $subscription->mwb_parent_order;	
+	
+// 	$order = wc_get_order( $parent_order_id );
+// 	$order_status  = $order->get_status();	
+								
 // }

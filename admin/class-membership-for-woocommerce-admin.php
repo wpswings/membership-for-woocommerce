@@ -2051,7 +2051,8 @@ class Membership_For_Woocommerce_Admin {
 								$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 						   
 							}
-							$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_id, $current_date, '' );
+							$current_time = current_time( 'timestamp' );
+							$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
 							update_post_meta( $subscription_id, 'mwb_susbcription_end', $mwb_susbcription_end );
 	
 						}
