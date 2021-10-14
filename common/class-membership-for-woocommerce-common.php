@@ -304,5 +304,62 @@ class Membership_For_Woocommerce_Common {
 		}
 	}
 
+
+
+	/**
+	 * Update the option for settings from the multistep form.
+	 * 
+	 * @name mwb_standard_save_settings_filter
+	 * @since 1.0.0
+	*/
+	public function mwb_standard_save_settings_filter() {
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+
+		$term_accpted = ! empty( $_POST['consetCheck'] ) ? sanitize_text_field( wp_unslash( $_POST['consetCheck'] ) ) : ' ';
+		if ( ! empty( $term_accpted ) && 'yes' == $term_accpted ) {
+			update_option( 'mfw_enable_tracking', 'on' );
+		}
+		//settings fields.
+		$first_name = ! empty( $_POST['firstName'] ) ? sanitize_text_field( wp_unslash( $_POST['firstName'] ) ) : '';
+		update_option( 'firstname', $first_name );
+
+		$email = ! empty( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
+		update_option( 'email', $email );
+
+		$desc = ! empty( $_POST['desc'] ) ? sanitize_text_field( wp_unslash( $_POST['desc'] ) ) : '';
+		update_option( 'desc', $desc );
+
+		$age = ! empty( $_POST['age'] ) ? sanitize_text_field( wp_unslash( $_POST['age'] ) ) : '';
+		update_option( 'age', $age );
+
+		$first_checkbox = ! empty( $_POST['FirstCheckbox'] ) ? sanitize_text_field( wp_unslash( $_POST['FirstCheckbox'] ) ) : '';
+		update_option( 'first_checkbox', $first_checkbox );
+
+		$checked_first_switch = ! empty( $_POST['checkedA'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedA'] ) ) : '';
+		if ( ! empty( $checked_first_switch ) && $checked_first_switch ) {
+			update_option( 'mfw_radio_switch_demo', 'on' );
+		}
+
+		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
+		if ( ! empty( $checked_second_switch ) &&  $checked_second_switch ) {
+			update_option( 'mfw_radio_reset_license', 'on' );
+		}
+		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
+
+		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
+
+		$response = self :: membership_for_woocommerce_license_code_update( $licenseCode );
+		if ( is_wp_error( $mwb_mfw_response ) ) {
+			wp_send_json('license_could_not_be_verified');
+		} else {
+			$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
+			if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
+				update_option( 'mwb_mfw_license_key', $mwb_mfw_purchase_code );
+				update_option( 'mwb_mfw_license_check', true );
+			} 
+		}
+		wp_send_json( 'yes' );
+	}
+
 	
 }

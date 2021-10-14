@@ -76,6 +76,18 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
 
+			// multistep form css.
+			if ( ! mwb_standard_check_multistep() ) {
+				$style_url        = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'build/style-index.css';
+				wp_enqueue_style(
+					'mwb-admin-react-styles',
+					$style_url,
+					array(),
+					time(),
+					false
+				);
+				return;
+			}
 			wp_enqueue_style( 'mwb-mfw-select2-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
 
 			wp_enqueue_style( 'mwb-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
@@ -133,6 +145,44 @@ class Membership_For_Woocommerce_Admin {
 
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
+		
+			if ( ! mwb_standard_check_multistep() ) {
+				// js for the multistep from.
+				$script_path      = '../../build/index.js';
+				$script_asset_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'build/index.asset.php';
+				$script_asset      = file_exists( $script_asset_path )
+					? require $script_asset_path
+					: array(
+						'dependencies' => array(
+							'wp-hooks',
+							'wp-element',
+							'wp-i18n',
+							'wc-components',
+						),
+						'version'      => filemtime( $script_path ),
+					);
+				$script_url        = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'build/index.js';
+				wp_register_script(
+					'react-app-block',
+					$script_url,
+					$script_asset['dependencies'],
+					$script_asset['version'],
+					true
+				);
+				wp_enqueue_script( 'react-app-block' );
+				wp_localize_script(
+					'react-app-block',
+					'frontend_ajax_object',
+					array(
+						'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+						'mwb_standard_nonce' => wp_create_nonce( 'ajax-nonce' ),
+						'redirect_url' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
+					)
+				);
+				return;
+			}
+		
+		
 			wp_enqueue_script( 'mwb-mfw-select2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
 
 			wp_enqueue_script( 'mwb-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -283,6 +333,9 @@ class Membership_For_Woocommerce_Admin {
 		global $submenu;
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
 			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
+			if ( mwb_standard_check_multistep() ) {
+				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ) );
+			}
 			$mfw_menus =
 			// desc - filter for trial.
 			apply_filters( 'mwb_add_plugins_menus_array', array() );
@@ -293,6 +346,20 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 	}
+
+
+	/**
+	 *
+	 * Adding the default menu into the wordpress menu
+	 *
+	 * @name makewebbetter_callback_function
+	 * @since 1.0.0
+	 */
+	public function makewebbetter_welcome_callback_function() {
+		include MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-welcome.php';
+	}
+
+
 
 	/**
 	 * Removing default submenu of parent menu in backend dashboard

@@ -111,7 +111,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		self::$mwb_mfw_store_url = home_url();
 		self::$mwb_mfw_plugin_name = 'Membership For WooCommerce';
 		self::$mwb_mfw_plugin_name_label = 'Membership For WooCommerce';
-
+		if ( ! mwb_standard_check_multistep() ) {
+			return;
+		}
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_onboarding_popup_screen' ) );

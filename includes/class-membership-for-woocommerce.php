@@ -298,6 +298,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
 		$this->loader->add_action( 'mwb_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'mwb_membership_subscription_renewal', 99, 3 );
 
+		// Save ajax request for the plugin's multistep.
+		$this->loader->add_action( 'wp_ajax_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
 		
 	}
 
