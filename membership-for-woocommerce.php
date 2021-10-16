@@ -328,7 +328,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	}
 	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 
-
 } else {
 
 	// Deactivate the plugin if Woocommerce not active.

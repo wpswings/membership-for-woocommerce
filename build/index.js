@@ -55884,7 +55884,31 @@ const SecondStep = props => {
     label: "Membership Plan Amount",
     variant: "outlined",
     className: classes.margin
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
+  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["FormControl"], {
+    component: "fieldset",
+    variant: "outlined",
+    fullWidth: true,
+    className: "fieldsetWrapper"
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["InputLabel"], {
+    id: "demo-simple-select-outlined-label"
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Age', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Select"], {
+    labelId: "demo-simple-select-outlined-label",
+    name: "age",
+    id: "demo-simple-select-outlined",
+    value: ctx.formFields['age'],
+    onChange: ctx.changeHandler,
+    class: "wc-membership-product-tag-search",
+    label: "Age",
+    className: classes.margin
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
+    value: ""
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('None', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
+    value: 10
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Ten', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
+    value: 20
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Twenty', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
+    value: 30
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Thirty', 'membership-for-woocommerce')))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
     value: ctx.formFields['memPlanProduct'],
     onChange: ctx.changeHandler,
     id: "memPlanProduct",

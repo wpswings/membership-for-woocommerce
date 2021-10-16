@@ -28,6 +28,9 @@ function App(props) {
         checkedA: false,
         checkedB: false,
         consetCheck:'yes',
+        memPlanAmount:'',
+        memPlanTitle:'',
+        memPlanProduct:'',        
     });
     
     const classes = useStyles();
