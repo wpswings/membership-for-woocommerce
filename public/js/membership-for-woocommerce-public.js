@@ -139,9 +139,9 @@ jQuery(document).ready(function ($) {
 
 	$(".mwb_membership_buynow").on("click", function (e) {
 		e.preventDefault();
-		let plan_price = $('#mwb_membership_plan_price').val();
-		let plan_id = $('#mwb_membership_plan_id').val();
-		let plan_title = $('#mwb_membership_title').val();
+		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_price')).val();
+		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_id')).val();
+		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_title')).val();
 
 		$.ajax({
 			url: membership_public_obj.ajaxurl,
@@ -165,7 +165,6 @@ jQuery(document).ready(function ($) {
 
  jQuery(document).on('click','.mwb_members_plans label',function(obj = this ) {
 	debugger;
-
 	
 	var classes = jQuery(this.nextElementSibling).attr('class');
  var allclasses =classes.split(' ');
@@ -178,6 +177,5 @@ if (allclasses.length>1) {
 		
 	jQuery(this.nextElementSibling).addClass('show__membership_details');
 	}
-
 
  }); 

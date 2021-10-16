@@ -1667,13 +1667,22 @@ class Membership_For_Woocommerce_Public {
 						$plan_currency = mwb_mmcsfw_get_custom_currency_symbol( '' );
 					}
 
-					if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
+					$mode = $this->mwb_membership_validate_mode();
+					$content = 'Buy Now';
+				//	if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 						$description .= '<div class="mwb_all_plans_detail_wrapper">';
 						$description .= '<h2>' . $plan['post_title'] . '</h2>';
 						$description .= '<div class="mwb_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
 						$description .= $this->get_plan_details( $plan['ID'] );
 						$description .= '</div>';
-					}
+
+						$description .= '<form method="post" class="mwb_membership_buy_now_btn">
+						<input type="hidden" id="mwb_membership_plan_id" name="plan_id" value="' . $plan['ID'] . '">
+						<input type="hidden" id="mwb_membership_plan_price" value="' . esc_html( $plan_price ) . '">
+						<input type="hidden" name="membership_title" id="mwb_membership_title" value="' . $plan['post_title'] . '">
+						<input type="button" data-mode="' . $mode . '" class="mwb_membership_buynow" name="mwb_membership_buynow" value="' . $content . '">
+						</form>';
+					//}
 				}
 			} else {
 				$description .= esc_html__( 'Plans not availble', 'membership-for-woocommerce' );
@@ -2126,9 +2135,9 @@ class Membership_For_Woocommerce_Public {
 				update_post_meta( $member_id, 'member_status', $order_st );
 
 			} else {
-				if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
+				//if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
 					$plan_id   = WC()->session->get( 'plan_id' );
-				}
+				//}
 			
 				$items    = $order->get_data()['line_items'];
 				$keys     = array_keys( $items );
@@ -3448,7 +3457,6 @@ class Membership_For_Woocommerce_Public {
 			if ( $plan['mwb_membership_subscription'] == 'yes' ) {
 				update_post_meta( $subscription_ID, 'mwb_next_payment_date', $expiry_date );
 			}
-
 		}
 		return $expiry_date;
 	}
@@ -3507,14 +3515,26 @@ class Membership_For_Woocommerce_Public {
 }
 //End of class.
 
-// add_action('init', 'functuion');
-// function functuion(){
-// 	echo 'xfxdgf----';
+add_action('init', 'functuion');
+function functuion(){
 
-// 	$subscription = get_post( 65 );
-// 	$parent_order_id  = $subscription->mwb_parent_order;	
+
 	
-// 	$order = wc_get_order( $parent_order_id );
-// 	$order_status  = $order->get_status();	
-								
-// }
+	// $post_id = wp_insert_post(array (
+	// 	'post_type' => 'mwb_cpt_membership',
+	// 	'post_title' => 'Membership Plans base',
+	// 	'post_content' => 'xdgxfg',
+	// 	'post_status' => 'publish',
+	// 	'comment_status' => 'closed',   // if you prefer
+	// 	'ping_status' => 'closed',      // if you prefer
+	// 	'meta_input' => array(
+	// 		'mwb_membership_plan_price' => 200,
+	// 		// and so on ;)
+	// 	)
+	// ));
+	
+	 // $mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
+	 // print_r( $post_id);
+	//  update_post_meta( $mwb_membership_plans_post ,'mwb_membership_plan_price',200 );
+		
+}
