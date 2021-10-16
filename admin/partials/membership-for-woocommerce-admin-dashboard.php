@@ -19,7 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $mfw_mwb_mfw_obj;
 
 
-
+if ( ! mwb_standard_check_multistep() ) {
+	?>
+	<div id="react-app"></div>
+	<?php
+	return;
+}
 
 $mfw_active_tab   = isset( $_GET['mfw_tab'] ) ? sanitize_key( $_GET['mfw_tab'] ) : 'membership-for-woocommerce-general';
 $mfw_default_tabs = $mfw_mwb_mfw_obj->mwb_mfw_plug_default_tabs();
