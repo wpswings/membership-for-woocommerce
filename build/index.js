@@ -55868,37 +55868,28 @@ const SecondStep = props => {
     component: "fieldset",
     fullWidth: true,
     className: "fieldsetWrapper"
-<<<<<<< HEAD
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['mem_plan_title'],
+    value: ctx.formFields['memPlanTitle'],
     onChange: ctx.changeHandler,
-    id: "mem_plan_title",
-    name: "mem_plan_title",
+    id: "memPlanTitle",
+    name: "memPlanTitle",
     label: "Membership Plan Name",
     variant: "outlined",
     className: classes.margin
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['mem_plan_amount'],
+    value: ctx.formFields['memPlanAmount'],
     onChange: ctx.changeHandler,
-    id: "mem_plan_amount",
-    name: "mem_plan_amount",
+    id: "memPlanAmount",
+    name: "memPlanAmount",
     label: "Membership Plan Amount",
     variant: "outlined",
     className: classes.margin
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['mem_plan_product'],
+    value: ctx.formFields['memPlanProduct'],
     onChange: ctx.changeHandler,
-    id: "mem_plan_product",
-    name: "mem_plan_product",
+    id: "memPlanProduct",
+    name: "memPlanProduct",
     label: "Include Product in Membership",
-=======
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(TextField, {
-    value: ctx.formFields['firstName'],
-    onChange: ctx.changeHandler,
-    id: "firstName",
-    name: "firstName",
-    label: "First Name",
->>>>>>> 76d80c5aa49693cf553970b69fc08c8fe8574563
     variant: "outlined",
     className: classes.margin
   })));
