@@ -1,5 +1,9 @@
 import React,{useContext} from 'react';
+<<<<<<< HEAD
 import { Select, FormGroup, InputLabel, MenuItem, Checkbox, FormControlLabel, FormControl, TextField } from '@material-ui/core';
+=======
+import { Select, FormGroup, InputLabel, MenuItem, Checkbox, FormControlLabel, FormControl } from '@material-ui/core';
+>>>>>>> 76d80c5aa49693cf553970b69fc08c8fe8574563
 import { makeStyles } from '@material-ui/core/styles';
 import { __ } from '@wordpress/i18n';
 import Context from '../store/store';

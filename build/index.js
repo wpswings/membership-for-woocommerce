@@ -55868,6 +55868,7 @@ const SecondStep = props => {
     component: "fieldset",
     fullWidth: true,
     className: "fieldsetWrapper"
+<<<<<<< HEAD
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
     value: ctx.formFields['mem_plan_title'],
     onChange: ctx.changeHandler,
@@ -55890,6 +55891,14 @@ const SecondStep = props => {
     id: "mem_plan_product",
     name: "mem_plan_product",
     label: "Include Product in Membership",
+=======
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(TextField, {
+    value: ctx.formFields['firstName'],
+    onChange: ctx.changeHandler,
+    id: "firstName",
+    name: "firstName",
+    label: "First Name",
+>>>>>>> 76d80c5aa49693cf553970b69fc08c8fe8574563
     variant: "outlined",
     className: classes.margin
   })));
