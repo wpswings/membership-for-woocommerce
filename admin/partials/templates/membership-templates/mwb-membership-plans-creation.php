@@ -539,7 +539,7 @@ global $post;
 
 							$mwb_membership_plan_target_product_ids = is_array( $settings_fields['mwb_membership_plan_target_ids'] ) ? array_map( 'absint', $settings_fields['mwb_membership_plan_target_ids'] ) : array();
 							$demo_plan_array = get_post_meta( $post->ID, 'mwb_membership_plan_target_ids_search', true );
-							print_r($demo_plan_array);
+
 							if ( ! empty( $demo_plan_array ) ) {
 								$demo_plan_array = get_post_meta( $post->ID, 'mwb_membership_plan_target_ids_search' );
 								$mwb_membership_plan_target_product_ids = array_merge( $mwb_membership_plan_target_product_ids, $demo_plan_array );
