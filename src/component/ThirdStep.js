@@ -11,8 +11,8 @@ const useStyles = makeStyles({
 const ThirdStep = (props) => {
     const classes = useStyles();
     const ctx = useContext(Context);
-    
-    return ( 
+   
+    return (
     <>
     <h3 className="mwb-title">{__( 'Setting', 'membership-for-woocommerce' ) }</h3>
     <FormGroup>
@@ -25,18 +25,7 @@ const ThirdStep = (props) => {
                 color="primary"
                  />
             }
-            label="General Settings"
-            className={classes.margin} />
-        <FormControlLabel
-            control={
-            <Switch
-                checked={ctx.formFields['checkedB']}
-                onChange={ctx.changeHandler}
-                name="checkedB"
-                color="primary"
-               />
-            }
-            label="Reset License"
+            label="Enable Membership Plans"
             className={classes.margin} />
         </FormGroup>
     </>

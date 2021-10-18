@@ -337,27 +337,41 @@ class Membership_For_Woocommerce_Common {
 
 		$checked_first_switch = ! empty( $_POST['checkedA'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedA'] ) ) : '';
 		if ( ! empty( $checked_first_switch ) && $checked_first_switch ) {
-			update_option( 'mfw_radio_switch_demo', 'on' );
+			update_option( 'mwb_membership_enable_plugin', 'on' );
 		}
 
-		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
-		if ( ! empty( $checked_second_switch ) &&  $checked_second_switch ) {
-			update_option( 'mfw_radio_reset_license', 'on' );
-		}
+		$MemPlanAmount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
+		update_option( 'Mem_Plan_Amount', $MemPlanAmount );
+
+		$MemPlanTitle = ! empty( $_POST['memPlanTitle'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanTitle'] ) ) : '';
+		update_option( 'Mem_Plan_Title', $MemPlanTitle );
+
+		$MemPlanProduct = ! empty( $_POST['memPlanProduct'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanProduct'] ) ) : '';
+		update_option( 'Mem_Plan_Product', $MemPlanProduct );
+
+
+		$post_id = wp_insert_post(array (
+		'post_type' => 'mwb_cpt_membership',
+		'post_title' => $MemPlanTitle,
+		'post_content' => '',
+		'post_status' => 'publish',
+		'comment_status' => 'closed',   // if you prefer
+		'ping_status' => 'closed',      // if you prefer
+		'meta_input' => array(
+			'mwb_membership_plan_price' => $MemPlanAmount,
+			// and so on ;)
+		)
+	));
+
+	$product_array = array();
+	array_push( $product_array, $MemPlanProduct );
+	update_post_meta( $post_id , 'mwb_membership_plan_target_ids_search', $MemPlanProduct );
+	
+	
+
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
-		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
-
-		$response = self :: membership_for_woocommerce_license_code_update( $licenseCode );
-		if ( is_wp_error( $mwb_mfw_response ) ) {
-			wp_send_json('license_could_not_be_verified');
-		} else {
-			$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
-			if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
-				update_option( 'mwb_mfw_license_key', $mwb_mfw_purchase_code );
-				update_option( 'mwb_mfw_license_check', true );
-			} 
-		}
+	
 		wp_send_json( 'yes' );
 	}
 

@@ -11,6 +11,17 @@ const useStyles = makeStyles({
 const SecondStep = (props) => {
     const classes = useStyles();
     const ctx = useContext(Context);
+    console.log(frontend_ajax_object.products_list);
+    let menuItems = [];
+    for( let key in frontend_ajax_object.products_list ) {
+      let singleItem = (
+        <MenuItem key={key} value={key}>{ frontend_ajax_object.products_list[key] }</MenuItem>
+      )
+      menuItems.push(singleItem);
+      console.log(key);
+      console.log(frontend_ajax_object.products_list[key])
+    }
+
     return ( 
     <>
           <h3 className="mwb-title">{ __( 'Membership plan Creation', 'membership-for-woocommerce' ) }</h3>
@@ -41,18 +52,16 @@ const SecondStep = (props) => {
                 class="wc-membership-product-tag-search"
                 label="memPlanProduct"
                 className={classes.margin}>
-                <MenuItem value="">{__('None', 'membership-for-woocommerce') }</MenuItem>
-                <MenuItem value={10}>{ __('Ten', 'membership-for-woocommerce') }</MenuItem>
-                <MenuItem value={20}>{ __( 'Twenty', 'membership-for-woocommerce' ) }</MenuItem>
-                <MenuItem value={30}>{ __( 'Thirty','membership-for-woocommerce' ) }</MenuItem>
+               
+               {menuItems}
             </Select>
         </FormControl>
-              <TextField 
+              {/* <TextField 
                 value={ctx.formFields['memPlanProduct']}
                 onChange={ctx.changeHandler} 
                 id="memPlanProduct" 
                 name="memPlanProduct" 
-                label="Include Product in Membership"  variant="outlined" className={classes.margin}/>
+                label="Include Product in Membership"  variant="outlined" className={classes.margin}/> */}
             </FormControl>
     </>
     )

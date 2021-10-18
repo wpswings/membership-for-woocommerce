@@ -21,14 +21,6 @@ export default function FinalStep(props) {
                     <FormControlLabel value="no" control={<Radio color="primary"/>} label="No" className="mwbFormRadio"/>
                 </RadioGroup>
             </FormControl>
-            <FormControl component="fieldset" fullWidth className="fieldsetWrapper">
-            <TextField 
-                value={ctx.formFields['licenseCode']}
-                onChange={ctx.changeHandler} 
-                id="licenseCode" 
-                name="licenseCode" 
-                label={__('Enter your license code')}  variant="outlined" className={classes.margin}/>
-            </FormControl>
         </Fragment> 
     );
 }

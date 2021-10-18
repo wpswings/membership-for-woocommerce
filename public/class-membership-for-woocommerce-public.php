@@ -3491,8 +3491,7 @@ class Membership_For_Woocommerce_Public {
 							$time_duration      = get_post_meta( $plan['plan_id'], 'mwb_membership_plan_time_duration', true );
 							$time_duration_type = get_post_meta( $plan['plan_id'], 'mwb_membership_plan_time_duration_type', true );
 					   
-							$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-					   
+							$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );		
 						}
 						$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_ID, $current_date, '' );
 						update_post_meta( $subscription_ID, 'mwb_susbcription_end', $mwb_susbcription_end );
@@ -3506,35 +3505,5 @@ class Membership_For_Woocommerce_Public {
 		}
 		return $expiry_date;
 	}
-
-
-
-	
-	
-
 }
 //End of class.
-
-add_action('init', 'functuion');
-function functuion(){
-
-
-	
-	// $post_id = wp_insert_post(array (
-	// 	'post_type' => 'mwb_cpt_membership',
-	// 	'post_title' => 'Membership Plans base',
-	// 	'post_content' => 'xdgxfg',
-	// 	'post_status' => 'publish',
-	// 	'comment_status' => 'closed',   // if you prefer
-	// 	'ping_status' => 'closed',      // if you prefer
-	// 	'meta_input' => array(
-	// 		'mwb_membership_plan_price' => 200,
-	// 		// and so on ;)
-	// 	)
-	// ));
-	
-	 // $mwb_membership_plans_post = wp_insert_post( $mwb_membership_plans_page );
-	 // print_r( $post_id);
-	//  update_post_meta( $mwb_membership_plans_post ,'mwb_membership_plan_price',200 );
-		
-}

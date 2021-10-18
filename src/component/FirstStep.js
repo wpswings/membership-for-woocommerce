@@ -27,7 +27,6 @@ const FirstStep = (props) => {
                 id="email" 
                 name="email" 
                 label="Email" variant="outlined" className={classes.margin}/>
-              
             <TextareaAutosize
                  name="desc" 
                  value={ctx.formFields['desc']}

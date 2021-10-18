@@ -177,7 +177,8 @@ class Membership_For_Woocommerce_Admin {
 						'ajaxurl'            => admin_url( 'admin-ajax.php' ),
 						'mwb_standard_nonce' => wp_create_nonce( 'ajax-nonce' ),
 						'redirect_url' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
-					)
+						'products_list' => $this->get_products_for_multistep(),
+						)
 				);
 			
 			}
@@ -321,6 +322,29 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
+
+	}
+
+
+	public function get_products_for_multistep() {
+		$products_array = array();
+		$args           = array(
+			'post_type'      => 'product',
+			'posts_per_page' => 10,
+		   // 'product_cat'    => 'hoodies'
+		   'post_status' => 'publish',
+		);
+	
+		$loop = new WP_Query( $args );
+		while ( $loop->have_posts() ) : $loop->the_post();
+		global $product;
+	$products_array [$product->get_id() ] = $product->get_name();
+//	array_push( $products_array, array( get_the_ID() => get_the_title() ) );
+
+
+	endwhile;
+	wp_reset_query();
+	return $products_array;
 
 	}
 
@@ -1960,11 +1984,13 @@ class Membership_For_Woocommerce_Admin {
 				if ( isset( $_POST['mwb_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'mwb_membership_plan_info', ! empty( map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['mwb_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
 				}
+				update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', '' );
 			}
 			foreach ( $offered_product as $key => $product_id ) {
 
 				update_post_meta( $product_id, '_mwb_membership_discount_' . $post_id, $product_discount );
 			}
+			
 		}
 
 	}

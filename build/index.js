@@ -55564,7 +55564,10 @@ function App(props) {
     FirstCheckbox: false,
     checkedA: false,
     checkedB: false,
-    consetCheck: 'yes'
+    consetCheck: 'yes',
+    memPlanAmount: '',
+    memPlanTitle: '',
+    memPlanProduct: ''
   });
   const classes = useStyles();
   const [activeStep, setActiveStep] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0);
@@ -55741,19 +55744,7 @@ function FinalStep(props) {
     }),
     label: "No",
     className: "mwbFormRadio"
-  }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControl"], {
-    component: "fieldset",
-    fullWidth: true,
-    className: "fieldsetWrapper"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["TextField"], {
-    value: ctx.formFields['licenseCode'],
-    onChange: ctx.changeHandler,
-    id: "licenseCode",
-    name: "licenseCode",
-    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Enter your license code'),
-    variant: "outlined",
-    className: classes.margin
-  })));
+  }))));
 }
 
 /***/ }),
@@ -55862,6 +55853,19 @@ const useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["
 const SecondStep = props => {
   const classes = useStyles();
   const ctx = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_store_store__WEBPACK_IMPORTED_MODULE_5__["default"]);
+  console.log(frontend_ajax_object.products_list);
+  let menuItems = [];
+
+  for (let key in frontend_ajax_object.products_list) {
+    let singleItem = Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
+      key: key,
+      value: key
+    }, frontend_ajax_object.products_list[key]);
+    menuItems.push(singleItem);
+    console.log(key);
+    console.log(frontend_ajax_object.products_list[key]);
+  }
+
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", {
     className: "mwb-title"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Membership plan Creation', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["FormControl"], {
@@ -55891,32 +55895,16 @@ const SecondStep = props => {
     className: "fieldsetWrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["InputLabel"], {
     id: "demo-simple-select-outlined-label"
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Age', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Select"], {
+  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Include Product in Membership', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Select"], {
     labelId: "demo-simple-select-outlined-label",
-    name: "age",
+    name: "memPlanProduct",
     id: "demo-simple-select-outlined",
-    value: ctx.formFields['age'],
-    onChange: ctx.changeHandler,
-    class: "wc-membership-product-tag-search",
-    label: "Age",
-    className: classes.margin
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
-    value: ""
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('None', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
-    value: 10
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Ten', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
-    value: 20
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Twenty', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["MenuItem"], {
-    value: 30
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Thirty', 'membership-for-woocommerce')))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
     value: ctx.formFields['memPlanProduct'],
     onChange: ctx.changeHandler,
-    id: "memPlanProduct",
-    name: "memPlanProduct",
-    label: "Include Product in Membership",
-    variant: "outlined",
+    class: "wc-membership-product-tag-search",
+    label: "memPlanProduct",
     className: classes.margin
-  })));
+  }, menuItems))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (SecondStep);
@@ -55993,16 +55981,7 @@ const ThirdStep = props => {
       name: "checkedA",
       color: "primary"
     }),
-    label: "General Settings",
-    className: classes.margin
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControlLabel"], {
-    control: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Switch"], {
-      checked: ctx.formFields['checkedB'],
-      onChange: ctx.changeHandler,
-      name: "checkedB",
-      color: "primary"
-    }),
-    label: "Reset License",
+    label: "Enable Membership Plans",
     className: classes.margin
   })));
 };
