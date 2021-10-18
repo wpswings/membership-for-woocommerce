@@ -827,3 +827,24 @@ margin-top: 10px;
 90deg);
   display: inline-block;
 }
+
+
+/* New Buy now button added */
+
+.mwb_membership_plan_content_desc .mwb_membership_buy_now_btn .mwb_membership_buynow {
+  background-color: #fff;
+  border: 2px solid #f37e21 !important;
+  color: #f37e21;
+  height: unset;
+  margin: 10px auto;
+  min-width: 125px;
+  padding: 8px 15px;
+}
+
+.mwb_all_plans_detail_wrapper h2 {
+  margin: 0;
+}
+
+.mwb_all_plans_detail_wrapper .mwb_membership_plan_content_price {
+  padding-bottom: 15px;
+}
