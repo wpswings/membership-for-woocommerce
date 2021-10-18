@@ -463,7 +463,7 @@ class Membership_For_Woocommerce_Global_Functions {
 						<!-- wp:group -->
 						<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
 						<div class="mwb_mfw_membership_front_page">
-						<i class="fas fa-award mwb_mfw_membership_icon"></i>
+						<span class="dashicons dashicons-awards mwb_mfw_membership_icon"></span>
 						<div class="mwb_membership_plan_content_title">[mwb_membership_title]</div>
 						<div class="mwb_membership_plan_content_price">[mwb_membership_price]</div>
 						<div class="mwb_membership_plan_content_desc">[mwb_membership_desc]</div>
