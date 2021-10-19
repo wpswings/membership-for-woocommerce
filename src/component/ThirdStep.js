@@ -11,8 +11,11 @@ const useStyles = makeStyles({
 const ThirdStep = (props) => {
     const classes = useStyles();
     const ctx = useContext(Context);
-   
-    return (
+    // const check = false;
+    // if ( frontend_ajax_object.is_pro_plugin == 'true' ) {
+    //     const   check = true;
+    // }
+    return ( 
     <>
     <h3 className="mwb-title">{__( 'Setting', 'membership-for-woocommerce' ) }</h3>
     <FormGroup>
@@ -25,8 +28,32 @@ const ThirdStep = (props) => {
                 color="primary"
                  />
             }
-            label="Enable Membership Plans"
+            label="Enable Membership Plan"
             className={classes.margin} />
+
+
+{(() => {
+     
+        if (frontend_ajax_object.is_pro_plugin == 'true') {
+          return (
+            <FormControlLabel
+            control={
+            <Switch
+            checked={ctx.formFields['checkedB']}
+            onChange={ctx.changeHandler}
+            name="checkedB"
+            color="primary"
+            />
+            }
+            label="Reset License"
+            className={classes.margin} />
+          )
+        }
+      })()}
+
+
+          
+
         </FormGroup>
     </>
     )

@@ -367,6 +367,19 @@ class Membership_For_Woocommerce_Common {
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
+		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
+
+		$response = self :: membership_for_woocommerce_license_code_update( $licenseCode );
+		if ( is_wp_error( $mwb_mfw_response ) ) {
+			wp_send_json('license_could_not_be_verified');
+		} else {
+			$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
+			if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
+				update_option( 'mwb_mfw_license_key', $mwb_mfw_purchase_code );
+				update_option( 'mwb_mfw_license_check', true );
+			} 
+		}
+
 		wp_send_json( 'yes' );
 	}
 

@@ -178,6 +178,7 @@ class Membership_For_Woocommerce_Admin {
 						'mwb_standard_nonce' => wp_create_nonce( 'ajax-nonce' ),
 						'redirect_url' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
 						'products_list' => $this->get_products_for_multistep(),
+						'is_pro_plugin' => $this->check_licence_of_pro_for_multistep(),
 					)
 				);
 
@@ -322,6 +323,24 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
+	}
+
+
+	/**
+	 * Check licence of pro for multistep.
+	 *
+	 * @return void
+	 */
+	public function check_licence_of_pro_for_multistep() {
+		$return = 'false';
+		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+			$check_licence = check_membership_pro_plugin_is_active();
+			if ( $check_licence ) {
+				$return = 'true';
+			
+			}
+		}
+		return $return;
 	}
 
 	/**
