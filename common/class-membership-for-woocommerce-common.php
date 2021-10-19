@@ -271,12 +271,12 @@ class Membership_For_Woocommerce_Common {
 	 * @param mixed $mwb_new_order new order id.
 	 * @param mixed $subscription_id subscription id.
 	 * @param mixed $payment_method is the method for payment of subscription.
-	 * @return array
+	 * @return void
 	 */
 	public function mwb_membership_subscription_renewal( $mwb_new_order, $subscription_id, $payment_method ) {
 		$expiry_date = '';
 		$next_payment_date = get_post_meta( $subscription_id, 'mwb_next_payment_date', true );
-		$end_payment_date =	get_post_meta( $subscription_id, 'mwb_susbcription_end' );
+		$end_payment_date = get_post_meta( $subscription_id, 'mwb_susbcription_end' );
 		if ( ! empty( $next_payment_date ) ) {
 			$expiry_date = $next_payment_date;
 		} elseif ( ! empty( $end_payment_date ) ) {
@@ -284,14 +284,14 @@ class Membership_For_Woocommerce_Common {
 		}
 		$subscription = get_post( $subscription_id );
 		$parent_order_id  = $subscription->mwb_parent_order;
-	
+
 		$order_status  = $mwb_new_order->get_status();
 		if ( 'processing' == $order_status || 'complete' == $order_status ) {
 
 			$order = wc_get_order( $parent_order_id );
 			$member_id = '';
 			foreach ( $order->get_items() as $item_id => $item ) {
-	
+
 				if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
 					$member_id = $item->get_meta( '_member_id' );
 				}
@@ -299,7 +299,7 @@ class Membership_For_Woocommerce_Common {
 
 			if ( ! empty( $member_id ) ) {
 				update_post_meta( $member_id, 'member_status', 'complete' );
-				update_post_meta( $member_id, 'member_expiry', $expiry_date  );
+				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}
 	}
@@ -308,10 +308,10 @@ class Membership_For_Woocommerce_Common {
 
 	/**
 	 * Update the option for settings from the multistep form.
-	 * 
+	 *
 	 * @name mwb_standard_save_settings_filter
 	 * @since 1.0.0
-	*/
+	 */
 	public function mwb_standard_save_settings_filter() {
 		check_ajax_referer( 'ajax-nonce', 'nonce' );
 
@@ -319,7 +319,7 @@ class Membership_For_Woocommerce_Common {
 		if ( ! empty( $term_accpted ) && 'yes' == $term_accpted ) {
 			update_option( 'mfw_enable_tracking', 'on' );
 		}
-		//settings fields.
+		// settings fields.
 		$first_name = ! empty( $_POST['firstName'] ) ? sanitize_text_field( wp_unslash( $_POST['firstName'] ) ) : '';
 		update_option( 'firstname', $first_name );
 
@@ -340,40 +340,35 @@ class Membership_For_Woocommerce_Common {
 			update_option( 'mwb_membership_enable_plugin', 'on' );
 		}
 
-		$MemPlanAmount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
-		update_option( 'Mem_Plan_Amount', $MemPlanAmount );
+		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
+		update_option( 'Mem_Plan_Amount', $mem_plan_amount );
 
-		$MemPlanTitle = ! empty( $_POST['memPlanTitle'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanTitle'] ) ) : '';
-		update_option( 'Mem_Plan_Title', $MemPlanTitle );
+		$mem_plan_title = ! empty( $_POST['memPlanTitle'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanTitle'] ) ) : '';
+		update_option( 'Mem_Plan_Title', $mem_plan_title );
 
-		$MemPlanProduct = ! empty( $_POST['memPlanProduct'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanProduct'] ) ) : '';
-		update_option( 'Mem_Plan_Product', $MemPlanProduct );
+		$mem_plan_product = ! empty( $_POST['memPlanProduct'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanProduct'] ) ) : '';
+		update_option( 'Mem_Plan_Product', $mem_plan_product );
 
+		$post_id = wp_insert_post(
+			array(
+				'post_type' => 'mwb_cpt_membership',
+				'post_title' => $mem_plan_title,
+				'post_content' => '',
+				'post_status' => 'publish',
+				'meta_input' => array(
+					'mwb_membership_plan_price' => $mem_plan_amount,
+				),
+			)
+		);
 
-		$post_id = wp_insert_post(array (
-		'post_type' => 'mwb_cpt_membership',
-		'post_title' => $MemPlanTitle,
-		'post_content' => '',
-		'post_status' => 'publish',
-		'comment_status' => 'closed',   // if you prefer
-		'ping_status' => 'closed',      // if you prefer
-		'meta_input' => array(
-			'mwb_membership_plan_price' => $MemPlanAmount,
-			// and so on ;)
-		)
-	));
-
-	$product_array = array();
-	array_push( $product_array, $MemPlanProduct );
-	update_post_meta( $post_id , 'mwb_membership_plan_target_ids_search', $MemPlanProduct );
-	
-	
+		$product_array = array();
+		array_push( $product_array, $mem_plan_product );
+		update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', $mem_plan_product );
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
-	
 		wp_send_json( 'yes' );
 	}
 
-	
+
 }
