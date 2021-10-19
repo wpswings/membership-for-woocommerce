@@ -368,8 +368,10 @@ class Membership_For_Woocommerce_Common {
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
 		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
+		
+		$mfwp_plugin_common = new Membership_For_Woocommerce_Pro_Common( '', '' );
 
-		$response = self :: membership_for_woocommerce_license_code_update( $licenseCode );
+		$response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $licenseCode );
 		if ( is_wp_error( $mwb_mfw_response ) ) {
 			wp_send_json('license_could_not_be_verified');
 		} else {
@@ -379,9 +381,7 @@ class Membership_For_Woocommerce_Common {
 				update_option( 'mwb_mfw_license_check', true );
 			} 
 		}
-
 		wp_send_json( 'yes' );
 	}
-
 
 }

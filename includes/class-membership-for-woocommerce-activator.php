@@ -215,6 +215,5 @@ class Membership_For_Woocommerce_Activator {
 				 }
 			}
 		}
-	}	
-
+	}
 }
