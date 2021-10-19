@@ -35,26 +35,26 @@ $mfw_tab_key = '';
 			do_action( 'mwb_mfw_before_common_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			// $mfw_genaral_settings = apply_filters(
-			// 	'mfw_home_settings_array',
-			// 	array(
-			// 		array(
-			// 			'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
-			// 			'type'  => 'radio-switch',
-			// 			'id'    => 'mfw_enable_tracking',
-			// 			'value' => get_option( 'mfw_enable_tracking' ),
-			// 			'class' => 'mfw-radio-switch-class',
-			// 			'options' => array(
-			// 				'yes' => __( 'YES', 'membership-for-woocommerce' ),
-			// 				'no' => __( 'NO', 'membership-for-woocommerce' ),
-			// 			),
-			// 		),
-			// 		array(
-			// 			'type'  => 'button',
-			// 			'id'    => 'mfw_button_demo',
-			// 			'button_text' => __( 'Save', 'membership-for-woocommerce' ),
-			// 			'class' => 'mfw-button-class',
-			// 		),
-			// 	)
+			// 'mfw_home_settings_array',
+			// array(
+			// array(
+			// 'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
+			// 'type'  => 'radio-switch',
+			// 'id'    => 'mfw_enable_tracking',
+			// 'value' => get_option( 'mfw_enable_tracking' ),
+			// 'class' => 'mfw-radio-switch-class',
+			// 'options' => array(
+			// 'yes' => __( 'YES', 'membership-for-woocommerce' ),
+			// 'no' => __( 'NO', 'membership-for-woocommerce' ),
+			// ),
+			// ),
+			// array(
+			// 'type'  => 'button',
+			// 'id'    => 'mfw_button_demo',
+			// 'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+			// 'class' => 'mfw-button-class',
+			// ),
+			// )
 			// );
 			?>
 			<!-- <form action="" method="POST" class="mwb-mfw-gen-section-form">

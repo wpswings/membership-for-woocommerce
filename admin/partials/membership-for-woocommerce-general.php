@@ -23,7 +23,7 @@ apply_filters( 'mfw_general_settings_array', array() );
 <form action="" method="POST" class="mwb-mfw-gen-section-form">
 	<div class="mfw-secion-wrap">
 <?php
-	do_action('mfw_general_settings_before');
+	do_action( 'mfw_general_settings_before' );
 ?>
 
 	<div class="mwb-sm__modal"></div>

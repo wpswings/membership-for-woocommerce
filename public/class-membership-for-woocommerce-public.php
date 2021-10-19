@@ -2133,9 +2133,10 @@ class Membership_For_Woocommerce_Public {
 				update_post_meta( $member_id, 'member_status', $order_st );
 
 			} else {
-				// if ( ! empty( WC()->session ) && ! WC()->session->has_session() ) {
+
+				if ( ! empty( WC()->session ) && WC()->session->has_session() ) {
 					$plan_id   = WC()->session->get( 'plan_id' );
-				// }
+				}
 
 				$items    = $order->get_data()['line_items'];
 				$keys     = array_keys( $items );
@@ -2230,9 +2231,7 @@ class Membership_For_Woocommerce_Public {
 				$order_id = get_post_meta( $member_id, 'member_order_id', true );
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
-
 					$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
-
 				}
 			}
 		}
@@ -2579,7 +2578,7 @@ class Membership_For_Woocommerce_Public {
 									update_post_meta( $member_id, 'member_status', 'complete' );
 									$order_id = get_post_meta( $member_id, 'member_order_id', true );
 									$plan = get_post_meta( $member_id, 'plan_obj', true );
-									if ( $plan['mwb_membership_subscription'] == 'yes' ) {
+									if ( 'yes' == $plan['mwb_membership_subscription'] ) {
 										$subscription_i_d = get_post_meta( $order_id, 'mwb_subscription_id', true );
 										if ( ! empty( $subscription_i_d ) ) {
 											update_post_meta( $subscription_i_d, 'mwb_subscription_status', 'active' );
@@ -2678,7 +2677,7 @@ class Membership_For_Woocommerce_Public {
 						update_post_meta( $member_id, 'member_status', 'expired' );
 
 						$plan = get_post_meta( $member_id, 'plan_obj', true );
-						if ( $plan['mwb_membership_subscription'] == 'yes' ) {
+						if ( 'yes' == $plan['mwb_membership_subscription'] ) {
 							$subscription_i_d = get_post_meta( $order_id, 'mwb_subscription_id', true );
 							$end_payment_date = get_post_meta( $subscription_i_d, 'mwb_susbcription_end' );
 							if ( ! empty( $subscription_i_d ) ) {
@@ -2875,11 +2874,11 @@ class Membership_For_Woocommerce_Public {
 
 				$mwb_sfw_product = get_post_meta( $value['plan_id'], 'mwb_membership_subscription', true );
 
-				if ( ! empty( $mwb_sfw_product ) && $mwb_sfw_product == 'yes' ) {
+				if ( ! empty( $mwb_sfw_product ) && 'yes' == $mwb_sfw_product ) {
 
 					$mwb_membership_plan_name_access_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_name_access_type', true );
 
-					if ( $mwb_membership_plan_name_access_type == 'limited' ) {
+					if ( 'limited' == $mwb_membership_plan_name_access_type ) {
 						$mwb_membership_plan_duration = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration', true );
 						$mwb_membership_plan_duration_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration_type', true );
 
@@ -3398,7 +3397,9 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Updating subscription status according membership status.
 	 *
-	 * @param array $post_id id of current post.
+	 * @param mixed $subscription_status is the subscription status.
+	 * @param mixed $subscription_i_d id of current subscription id.
+	 * @param mixed $order_id is the order id.
 	 *
 	 * @since 1.0.0
 	 */
@@ -3415,7 +3416,7 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $member_id ) ) {
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
-			if ( $plan['mwb_membership_subscription'] == 'yes' ) {
+			if ( 'yes' == $plan['mwb_membership_subscription'] ) {
 				$subscription_status = $order->get_status();
 			}
 		}
@@ -3426,7 +3427,8 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Updating subscription status according membership status.
 	 *
-	 * @param array $post_id id of current post.
+	 * @param mixed $mwb_next_payment_date is the next payment date.
+	 * @param mixed $subscription_i_d id of current subscription id.
 	 *
 	 * @since 1.0.0
 	 */
@@ -3444,7 +3446,7 @@ class Membership_For_Woocommerce_Public {
 		if ( ! empty( $member_id ) ) {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
-			if ( $plan['mwb_membership_subscription'] == 'yes' ) {
+			if ( 'yes' == $plan['mwb_membership_subscription'] ) {
 				update_post_meta( $subscription_i_d, 'mwb_next_payment_date', $expiry_date );
 			}
 		}
@@ -3454,8 +3456,8 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Updating subscription status according membership status.
 	 *
-	 * @param mixed $subscription_i_d id of current subscription id.
 	 * @param mixed $mwb_susbcription_end is the subscription end date.
+	 * @param mixed $subscription_i_d id of current subscription id.
 	 *
 	 * @since 1.0.0
 	 */

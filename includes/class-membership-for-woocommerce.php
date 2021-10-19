@@ -274,7 +274,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_initialize_site', $mfw_plugin_admin, 'mwb_membership_for_woo_on_create_new_blog', 900 );
 		$this->loader->add_action( 'mwb_sfw_subscription_cancel', $mfw_plugin_admin, 'mwb_membership_cancel_membership_acc_susbcription', 20, 2 );			
 			
+		// Add new column in user table at admin side.
+		$this->loader->add_filter( 'manage_users_custom_column', $mfw_plugin_admin, 'mwb_membership_new_modify_user_table_add_user', 10, 3 );
 		
+		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'mwb_membership_new_modify_user_table_value' );
+		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'mwb_membership_new_column_value_assign', 10, 1 );
+
 	}
 
 	/**
