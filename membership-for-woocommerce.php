@@ -119,18 +119,23 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 	}
 
-	if ( !function_exists( 'mwb_standard_check_multistep' ) ) {
+	if ( ! function_exists( 'mwb_standard_check_multistep' ) ) {
+		/**
+		 * Function to check multistep function.
+		 *
+		 * @return bool
+		 */
 		function mwb_standard_check_multistep() {
 			$bool = false;
 			$mwb_standard_check = get_option( 'mfw_mfw_plugin_standard_multistep_done', false );
-			if ( !empty( $mwb_standard_check) ) {
+			if ( ! empty( $mwb_standard_check ) ) {
 				$bool = true;
 			}
-			$bool = apply_filters('mwb_standard_multistep_done', $bool );
+			$bool = apply_filters( 'mwb_standard_multistep_done', $bool );
 			return $bool;
 		}
 	}
-	
+
 
 
 

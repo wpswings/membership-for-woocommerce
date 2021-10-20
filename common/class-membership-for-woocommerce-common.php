@@ -266,14 +266,15 @@ class Membership_For_Woocommerce_Common {
 
 	/**
 	 * Function is used for the sending the track data
-	 * 
+	 *
+	 * @param bool $override is the bool value to override tracking value.
 	 * @name mfw_makewebbetter_tracker_send_event
 	 * @since 1.0.0
-	*/
+	 */
 	public function mfw_makewebbetter_tracker_send_event( $override = false ) {
 		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
-		$last_send = get_option('makewebbetter_tracker_last_send');
+		$last_send = get_option( 'makewebbetter_tracker_last_send' );
 		if ( ! apply_filters( 'makewebbetter_tracker_send_override', $override ) ) {
 			// Send a maximum of once per week by default.
 			$last_send = $this->mwb_mfw_last_send_time();
@@ -290,7 +291,7 @@ class Membership_For_Woocommerce_Common {
 		// Update time first before sending to ensure it is set.
 		update_option( 'makewebbetter_tracker_last_send', time() );
 		$params = WC_Tracker::get_tracking_data();
-		$params = apply_filters( 'makewebbetter_tracker_params' , $params );
+		$params = apply_filters( 'makewebbetter_tracker_params', $params );
 		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
 		$sucess = wp_safe_remote_post(
 			$api_url,
@@ -303,11 +304,11 @@ class Membership_For_Woocommerce_Common {
 
 	/**
 	 * Get the updated time.
-	 * 
+	 *
 	 * @name mwb_mfw_last_send_time
-	 * 
+	 *
 	 * @since 1.0.0
-	*/
+	 */
 	public function mwb_mfw_last_send_time() {
 		return apply_filters( 'makewebbetter_tracker_last_send_time', get_option( 'makewebbetter_tracker_last_send', false ) );
 	}
@@ -390,7 +391,7 @@ class Membership_For_Woocommerce_Common {
 		}
 
 		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
-		if ( ! empty( $checked_second_switch ) &&  $checked_second_switch ) {
+		if ( ! empty( $checked_second_switch ) && $checked_second_switch ) {
 			update_option( 'mfw_radio_reset_license', 'on' );
 		}
 
@@ -421,13 +422,13 @@ class Membership_For_Woocommerce_Common {
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
-		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
-	
+		$license_code = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
+
 		if ( class_exists( 'Membership_For_Woocommerce_Pro_Common' ) ) {
-			
+
 			$mfwp_plugin_common = new Membership_For_Woocommerce_Pro_Common( '', '' );
 
-			$mwb_mfw_response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $licenseCode );
+			$mwb_mfw_response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $license_code );
 
 			if ( is_wp_error( $mwb_mfw_response ) ) {
 				wp_send_json( 'license_could_not_be_verified' );
@@ -442,12 +443,12 @@ class Membership_For_Woocommerce_Common {
 						foreach ( $blogids as $blog_id ) {
 
 							switch_to_blog( $blog_id );
-							update_option( 'mwb_mfwp_license_key', $licenseCode );
+							update_option( 'mwb_mfwp_license_key', $license_code );
 							update_option( 'mwb_mfwp_license_check', true );
 							restore_current_blog();
 						}
 					} else {
-						update_option( 'mwb_mfwp_license_key', $licenseCode );
+						update_option( 'mwb_mfwp_license_key', $license_code );
 						update_option( 'mwb_mfwp_license_check', true );
 					}
 				}

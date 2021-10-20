@@ -329,7 +329,7 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Check licence of pro for multistep.
 	 *
-	 * @return void
+	 * @return string
 	 */
 	public function check_licence_of_pro_for_multistep() {
 		$return = 'false';
@@ -337,7 +337,7 @@ class Membership_For_Woocommerce_Admin {
 			$check_licence = check_membership_pro_plugin_is_active();
 			if ( $check_licence ) {
 				$return = 'true';
-			
+
 			}
 		}
 		return $return;
