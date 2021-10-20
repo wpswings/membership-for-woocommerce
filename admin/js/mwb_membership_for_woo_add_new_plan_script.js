@@ -35,7 +35,6 @@ jQuery( document ).ready( function( $ ){
 
 
 
-
     // Target category search.
     jQuery( ".wc-membership-product-category-search" ).select2({
 
