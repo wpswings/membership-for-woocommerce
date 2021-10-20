@@ -134,6 +134,9 @@ class Membership_For_Woocommerce_Activator {
 				}
 				restore_current_blog();
 			}
+
+			wp_clear_scheduled_hook( 'makewebbetter_tracker_send_event' );
+			wp_schedule_event( time() + 10, apply_filters( 'makewebbetter_tracker_event_recurrence', 'daily' ), 'makewebbetter_tracker_send_event' );
 		} else {
 
 			// Creating Instance of the global functions class.
@@ -214,6 +217,8 @@ class Membership_For_Woocommerce_Activator {
 					 update_option( 'mwb_membership_default_product', $mwb_membership_product_id );
 				 }
 			}
+			wp_clear_scheduled_hook( 'makewebbetter_tracker_send_event' );
+			wp_schedule_event( time() + 10, apply_filters( 'makewebbetter_tracker_event_recurrence', 'daily' ), 'makewebbetter_tracker_send_event' );
 		}
 	}
 }

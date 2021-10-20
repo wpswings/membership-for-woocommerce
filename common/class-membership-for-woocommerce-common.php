@@ -264,6 +264,55 @@ class Membership_For_Woocommerce_Common {
 	}
 
 
+	/**
+	 * Function is used for the sending the track data
+	 * 
+	 * @name mfw_makewebbetter_tracker_send_event
+	 * @since 1.0.0
+	*/
+	public function mfw_makewebbetter_tracker_send_event( $override = false ) {
+		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
+
+		$last_send = get_option('makewebbetter_tracker_last_send');
+		if ( ! apply_filters( 'makewebbetter_tracker_send_override', $override ) ) {
+			// Send a maximum of once per week by default.
+			$last_send = $this->mwb_mfw_last_send_time();
+			if ( $last_send && $last_send > apply_filters( 'makewebbetter_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
+				return;
+			}
+		} else {
+			// Make sure there is at least a 1 hour delay between override sends, we don't want duplicate calls due to double clicking links.
+			$last_send = $this->mwb_mfw_last_send_time();
+			if ( $last_send && $last_send > strtotime( '-1 hours' ) ) {
+				return;
+			}
+		}
+		// Update time first before sending to ensure it is set.
+		update_option( 'makewebbetter_tracker_last_send', time() );
+		$params = WC_Tracker::get_tracking_data();
+		$params = apply_filters( 'makewebbetter_tracker_params' , $params );
+		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
+		$sucess = wp_safe_remote_post(
+			$api_url,
+			array(
+				'method'      => 'POST',
+				'body'        => wp_json_encode( $params ),
+			)
+		);
+	}
+
+	/**
+	 * Get the updated time.
+	 * 
+	 * @name mwb_mfw_last_send_time
+	 * 
+	 * @since 1.0.0
+	*/
+	public function mwb_mfw_last_send_time() {
+		return apply_filters( 'makewebbetter_tracker_last_send_time', get_option( 'makewebbetter_tracker_last_send', false ) );
+	}
+
+
 
 	/**
 	 * Membership status update according to subscription renewal.
@@ -340,6 +389,11 @@ class Membership_For_Woocommerce_Common {
 			update_option( 'mwb_membership_enable_plugin', 'on' );
 		}
 
+		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
+		if ( ! empty( $checked_second_switch ) &&  $checked_second_switch ) {
+			update_option( 'mfw_radio_reset_license', 'on' );
+		}
+
 		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
 		update_option( 'Mem_Plan_Amount', $mem_plan_amount );
 
@@ -368,18 +422,36 @@ class Membership_For_Woocommerce_Common {
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
 		$licenseCode = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
-		
-		$mfwp_plugin_common = new Membership_For_Woocommerce_Pro_Common( '', '' );
+	
+		if ( class_exists( 'Membership_For_Woocommerce_Pro_Common' ) ) {
+			
+			$mfwp_plugin_common = new Membership_For_Woocommerce_Pro_Common( '', '' );
 
-		$response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $licenseCode );
-		if ( is_wp_error( $mwb_mfw_response ) ) {
-			wp_send_json('license_could_not_be_verified');
-		} else {
-			$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
-			if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
-				update_option( 'mwb_mfw_license_key', $mwb_mfw_purchase_code );
-				update_option( 'mwb_mfw_license_check', true );
-			} 
+			$mwb_mfw_response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $licenseCode );
+
+			if ( is_wp_error( $mwb_mfw_response ) ) {
+				wp_send_json( 'license_could_not_be_verified' );
+			} else {
+				$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
+				if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
+
+					global $wpdb;
+					if ( is_multisite() ) {
+						$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+
+						foreach ( $blogids as $blog_id ) {
+
+							switch_to_blog( $blog_id );
+							update_option( 'mwb_mfwp_license_key', $licenseCode );
+							update_option( 'mwb_mfwp_license_check', true );
+							restore_current_blog();
+						}
+					} else {
+						update_option( 'mwb_mfwp_license_key', $licenseCode );
+						update_option( 'mwb_mfwp_license_check', true );
+					}
+				}
+			}
 		}
 		wp_send_json( 'yes' );
 	}

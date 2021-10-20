@@ -302,7 +302,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' ); // Import CSV.
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
 		$this->loader->add_action( 'mwb_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'mwb_membership_subscription_renewal', 99, 3 );
-
+		if ( self::is_enbale_usage_tracking() ) {
+			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'mfw_makewebbetter_tracker_send_event' );
+		}
 		// Save ajax request for the plugin's multistep.
 		$this->loader->add_action( 'wp_ajax_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
@@ -416,6 +418,17 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'rest_api_init', $mfw_plugin_api, 'mwb_mfw_add_endpoint' );
 
+	}
+
+	/**
+	 * Check is usage tracking is enable
+	 *
+	 * @version 1.0.0
+	 * @name is_enbale_usage_tracking
+	 */
+	public static function is_enbale_usage_tracking() {
+		$check_is_enable = get_option( 'mfw_enable_tracking', false );
+		return ! empty( $check_is_enable ) ? true : false;
 	}
 
 
@@ -693,10 +706,7 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group mwb-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-							<?php
-								$instance = Membership_For_Woocommerce_Global_Functions::get();
-								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+							
 							</div>
 							<div class="mwb-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined">
@@ -719,6 +729,7 @@ class Membership_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -909,10 +920,7 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php
-								$instance = Membership_For_Woocommerce_Global_Functions::get();
-								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-								?>
+							
 							</div>
 							<div class="mwb-form-group__control">
 								<div>
@@ -935,7 +943,9 @@ class Membership_For_Woocommerce {
 									</div>
 								</div>
 								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
+								
 							</div>
 						</div>
 							<?php

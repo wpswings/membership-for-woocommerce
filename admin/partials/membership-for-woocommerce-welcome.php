@@ -33,14 +33,39 @@ $mfw_tab_key = '';
 			<?php
 				// desc - This hook is used for trial.
 			do_action( 'mwb_mfw_before_common_settings_form' );
+				// if submenu is directly clicked on woocommerce.
+			$mfw_genaral_settings = apply_filters(
+				'mfw_home_settings_array',
+				array(
+					array(
+						'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
+						'type'  => 'radio-switch',
+						'id'    => 'mfw_enable_tracking',
+						'value' => get_option( 'mfw_enable_tracking' ),
+						'class' => 'mfw-radio-switch-class',
+						'options' => array(
+							'yes' => __( 'YES', 'membership-for-woocommerce' ),
+							'no' => __( 'NO', 'membership-for-woocommerce' ),
+						),
+					),
+					array(
+						'type'  => 'button',
+						'id'    => 'mfw_button_demo',
+						'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+						'class' => 'mfw-button-class',
+					),
+				)
+			);
 			?>
+			<form action="" method="POST" class="mwb-mfw-gen-section-form">
+				<div class="mfw-secion-wrap">
 					<?php
 					$mfw_general_html = $mfw_mwb_mfw_obj->mwb_mfw_plug_generate_html( $mfw_genaral_settings );
 					echo esc_html( $mfw_general_html );
 					wp_nonce_field( 'admin_save_data', 'mwb_tabs_nonce' );
 					?>
 				</div>
-
+			</form>
 			<?php
 			do_action( 'mwb_mfw_before_common_settings_form' );
 			$all_plugins = get_plugins();

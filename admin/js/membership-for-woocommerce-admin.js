@@ -374,6 +374,16 @@ $(document).ready(function() {
         return new MDCSwitch(el);
       }
     );
+
+    jQuery('#mwb_membership_enable_invoice').on('change', function() {
+        debugger;
+        jQuery('.mwb-c-modal__cover').addClass('show-c_modal_cover');
+        jQuery('.mwb-c-modal__message').addClass('show-c_modal_message');
+        jQuery('.mwb-c-modal__cover, .mwb-c-modal__close,.mwb-c-modal__confirm-button').on('click', function() {
+            jQuery('.mwb-c-modal__cover').removeClass('show-c_modal_cover');
+            jQuery('.mwb-c-modal__message').removeClass('show-c_modal_message');
+        });
+    })
    
     $(document).on('click','.mwb-password-hidden',function() {
       if ($(".mwb-form__password").attr("type") == "text") {
@@ -394,3 +404,45 @@ $(document).ready(function() {
   });
 })(jQuery);
 // License.
+
+
+
+// jQuery(document).ready(function($) {
+//     function mwb_mfwp_send_license_request_multi(license_key) {
+//         debugger;
+//         $.ajax({
+//           type: "POST",
+//           dataType: "JSON",
+//           url: mfwp_admin_param.ajaxurl,
+//           data: {
+//             action: "mfwp_membership_validate_license_key",
+//             purchase_code: license_key,
+//           },
+    
+//           success: function(data) {
+    
+//             if (data.status == true) {
+//               $("#mwb_mfwp_license_activation_status").css("color", "#42b72a");
+//               alert(data.msg);
+//               jQuery("#mwb_mfwp_license_activation_status").html(data.msg);
+    
+//               location = mfwp_admin_param.mfwp_admin_param_location;
+//             } else {
+//               $("#mwb_mfwp_license_activation_status").css("color", "#ff3333");
+    
+//               jQuery("#mwb_mfwp_license_activation_status").html(data.msg);
+    
+//               jQuery("#mwb_mfwp_license_key").val("");
+//             }
+//           },
+//         });
+//       }
+    
+//       $("#button_licence").on("click", function(e) {
+//         e.preventDefault();
+    
+//         var license_key = $('#licenseCode').val()
+//         mwb_mfwp_send_license_request_multi(license_key);
+//       });
+    
+//     });

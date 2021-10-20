@@ -1,6 +1,6 @@
 import React,{useContext,Fragment} from 'react';
 import Context from '../store/store';
-import {Radio,RadioGroup, FormControlLabel, FormControl, FormLabel, TextField } from '@material-ui/core';
+import {Radio,RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { __ } from '@wordpress/i18n';
 const useStyles = makeStyles({
@@ -32,9 +32,12 @@ export default function FinalStep(props) {
                         id="licenseCode" 
                         name="licenseCode" 
                         label={__('Enter your license code')}  variant="outlined" className={classes.margin}/>
-                    )
+
+                        )
                 }
           })()}
+          <div id="div_licence"></div>
+              <Button id="button_licence" value="buttomn" fullWidth="100%" border="20%" theme="pink" color="black">{ __( 'Validate Licence Key', 'membership-for-woocommerce' ) }</Button>
                 </FormControl>
         </Fragment> 
     );

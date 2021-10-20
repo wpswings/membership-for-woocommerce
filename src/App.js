@@ -33,6 +33,51 @@ function App(props) {
         memPlanProduct:'',        
     });
     
+  
+
+jQuery(document).ready(function($) {
+    console.log('byee');
+    function mwb_mfwp_send_license_request_multi(license_key) {
+        debugger;
+        $.ajax({
+          type: "POST",
+          dataType: "JSON",
+          url: mfwp_admin_param.ajaxurl,
+          data: {
+            action: "mfwp_membership_validate_license_key",
+            purchase_code: license_key,
+          },
+    
+          success: function(data) {
+    console.log(data);
+            if (data.status == true) {
+              $("#div_licence").css("color", "#42b72a");
+              alert(data.msg);
+              jQuery("#div_licence").html(data.msg);
+    
+            //  location = mfwp_admin_param.mfwp_admin_param_location;
+            } else {
+              $("#div_licence").css("color", "#ff3333");
+    
+              jQuery("#div_licence").html(data.msg);
+
+             // jQuery("#licenseCode").val("");
+            }
+          },
+        });
+      }
+      $("#button_licence").on("click", function(e) {
+        $("#div_licence").html("");
+      });
+      $("#button_licence").on("click", function(e) {
+        e.preventDefault();
+    console.log('hello');
+        var license_key = $('#licenseCode').val()
+        mwb_mfwp_send_license_request_multi(license_key);
+      });
+    
+    });
+
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
     const steps = [ __( 'General Settings', 'membership-for-woocommerce' ), __( 'Industry', 'membership-for-woocommerce' ), __( 'Accept consent', 'membership-for-woocommerce' ), __( 'Final Step', 'membership-for-woocommerce' )];
@@ -138,3 +183,4 @@ function App(props) {
 }
 
 export default App;
+

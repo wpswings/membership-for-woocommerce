@@ -645,6 +645,8 @@ class Membership_For_Woocommerce_Admin {
 			&& ( ! empty( $_POST['mwb_tabs_nonce'] )
 			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mwb_tabs_nonce'] ) ), 'admin_save_data' ) )
 		) {
+			$enable_tracking = ! empty( $_POST['mfw_enable_tracking'] ) ? sanitize_text_field( wp_unslash( $_POST['mfw_enable_tracking'] ) ) : '';
+			update_option( 'mfw_enable_tracking', $enable_tracking );
 
 			$mwb_mfw_gen_flag     = false;
 			$mfw_genaral_settings =
@@ -2363,7 +2365,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return [type]
 	 */
 	public function mwb_membership_new_column_value_assign( $contactmethods ) {
-		$contactmethods['user'] = 'User';
+		$contactmethods['member_type'] = 'Member Type';
 		return $contactmethods;
 	}
 
@@ -2374,7 +2376,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return [type]
 	 */
 	public function mwb_membership_new_modify_user_table_value( $column ) {
-		$column['user'] = 'User';
+		$column['member_type'] = 'Member Type';
 		return $column;
 	}
 
@@ -2388,7 +2390,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mwb_membership_new_modify_user_table_add_user( $val, $column_name, $user_id ) {
 		switch ( $column_name ) {
-			case 'user':
+			case 'member_type':
 				$is_member = get_user_meta( $user_id, 'is_member', true );
 				$member_label = '';
 				if ( 'member' == $is_member ) {
