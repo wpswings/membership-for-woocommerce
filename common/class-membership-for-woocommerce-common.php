@@ -404,21 +404,25 @@ class Membership_For_Woocommerce_Common {
 		$mem_plan_product = ! empty( $_POST['memPlanProduct'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanProduct'] ) ) : '';
 		update_option( 'Mem_Plan_Product', $mem_plan_product );
 
-		$post_id = wp_insert_post(
-			array(
-				'post_type' => 'mwb_cpt_membership',
-				'post_title' => $mem_plan_title,
-				'post_content' => '',
-				'post_status' => 'publish',
-				'meta_input' => array(
-					'mwb_membership_plan_price' => $mem_plan_amount,
-				),
-			)
-		);
+		if ( ! empty( $mem_plan_title ) || ! empty( $mem_plan_amount ) ) {
+			$post_id = wp_insert_post(
+				array(
+					'post_type' => 'mwb_cpt_membership',
+					'post_title' => $mem_plan_title,
+					'post_content' => '',
+					'post_status' => 'publish',
+					'meta_input' => array(
+						'mwb_membership_plan_price' => $mem_plan_amount,
+					),
+				)
+			);
+			$product_array = array();
+			array_push( $product_array, $mem_plan_product );
+			update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', $mem_plan_product );
+		}
+		
 
-		$product_array = array();
-		array_push( $product_array, $mem_plan_product );
-		update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', $mem_plan_product );
+	
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
