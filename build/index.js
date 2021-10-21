@@ -55522,18 +55522,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
 /* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
 /* harmony import */ var _component_Stepper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./component/Stepper */ "./src/component/Stepper.js");
-/* harmony import */ var _component_FirstStep__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./component/FirstStep */ "./src/component/FirstStep.js");
-/* harmony import */ var _component_SecondStep__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./component/SecondStep */ "./src/component/SecondStep.js");
-/* harmony import */ var _component_ThirdStep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./component/ThirdStep */ "./src/component/ThirdStep.js");
-/* harmony import */ var _component_FinalStep__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./component/FinalStep */ "./src/component/FinalStep.js");
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./store/store */ "./src/store/store.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
-/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_12__);
-
+/* harmony import */ var _component_SecondStep__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./component/SecondStep */ "./src/component/SecondStep.js");
+/* harmony import */ var _component_ThirdStep__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./component/ThirdStep */ "./src/component/ThirdStep.js");
+/* harmony import */ var _component_FinalStep__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./component/FinalStep */ "./src/component/FinalStep.js");
+/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store/store */ "./src/store/store.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! qs */ "./node_modules/qs/lib/index.js");
+/* harmony import */ var qs__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(qs__WEBPACK_IMPORTED_MODULE_11__);
 
 
 
@@ -55609,7 +55607,7 @@ function App(props) {
   });
   const classes = useStyles();
   const [activeStep, setActiveStep] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0);
-  const steps = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('General Settings', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Industry', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Accept consent', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Final Step', 'membership-for-woocommerce')];
+  const steps = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Membership Creation', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('General Setting', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Final Step', 'membership-for-woocommerce')];
 
   const onFormFieldHandler = event => {
     let value = 'checkbox' === event.target.type ? event.target.checked : event.target.value;
@@ -55621,22 +55619,19 @@ function App(props) {
   const getStepContent = stepIndex => {
     switch (stepIndex) {
       case 0:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_FirstStep__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_SecondStep__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
       case 1:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_SecondStep__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_ThirdStep__WEBPACK_IMPORTED_MODULE_6__["default"], null);
 
       case 2:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_ThirdStep__WEBPACK_IMPORTED_MODULE_7__["default"], null);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_FinalStep__WEBPACK_IMPORTED_MODULE_7__["default"], null);
 
       case 3:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_FinalStep__WEBPACK_IMPORTED_MODULE_8__["default"], null);
-
-      case 4:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h1", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Thanks for your details', 'membership-for-woocommerce'));
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h1", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Thanks for your details', 'membership-for-woocommerce'));
 
       default:
-        return Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Unknown stepIndex', 'membership-for-woocommerce');
+        return Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Unknown stepIndex', 'membership-for-woocommerce');
     }
   };
 
@@ -55656,7 +55651,7 @@ function App(props) {
       nonce: frontend_ajax_object.mwb_standard_nonce // pass the nonce here
 
     };
-    axios__WEBPACK_IMPORTED_MODULE_10___default.a.post(frontend_ajax_object.ajaxurl, qs__WEBPACK_IMPORTED_MODULE_12___default.a.stringify(user)).then(res => {
+    axios__WEBPACK_IMPORTED_MODULE_9___default.a.post(frontend_ajax_object.ajaxurl, qs__WEBPACK_IMPORTED_MODULE_11___default.a.stringify(user)).then(res => {
       setLoading(false);
       console.log(res.data);
       handleNext();
@@ -55685,7 +55680,7 @@ function App(props) {
     }, "Finish");
   }
 
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_store_store__WEBPACK_IMPORTED_MODULE_9__["default"].Provider, {
+  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_store_store__WEBPACK_IMPORTED_MODULE_8__["default"].Provider, {
     value: {
       formFields: state,
       changeHandler: onFormFieldHandler
@@ -55697,7 +55692,7 @@ function App(props) {
     steps: steps
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "mwbHeadingWrap"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Welcome to Makewebbetter', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_11__["__"])('Complete The steps to get started', 'membership-for-woocommerce'))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Container"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Welcome to Makewebbetter', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Complete The steps to get started', 'membership-for-woocommerce'))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Container"], {
     maxWidth: "sm"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("form", {
     className: "mwbMsf"
@@ -55809,77 +55804,6 @@ function FinalStep(props) {
     color: "black"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Validate Licence Key', 'membership-for-woocommerce'))));
 }
-
-/***/ }),
-
-/***/ "./src/component/FirstStep.js":
-/*!************************************!*\
-  !*** ./src/component/FirstStep.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/element */ "@wordpress/element");
-/* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
-/* harmony import */ var _store_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/store */ "./src/store/store.js");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/i18n */ "@wordpress/i18n");
-/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__);
-
-
-
-
-
-
-const useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["makeStyles"])({
-  margin: {
-    marginBottom: '20px'
-  }
-});
-
-const FirstStep = props => {
-  const classes = useStyles();
-  const ctx = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_store_store__WEBPACK_IMPORTED_MODULE_4__["default"]);
-  return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", {
-    className: "mwb-title"
-  }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_5__["__"])('Personal Detail', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["FormControl"], {
-    component: "fieldset",
-    fullWidth: true,
-    className: "fieldsetWrapper"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['firstName'],
-    onChange: ctx.changeHandler,
-    id: "firstName",
-    name: "firstName",
-    label: "First Name",
-    variant: "outlined",
-    className: classes.margin
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['email'],
-    onChange: ctx.changeHandler,
-    id: "email",
-    name: "email",
-    label: "Email",
-    variant: "outlined",
-    className: classes.margin
-  }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextareaAutosize"], {
-    name: "desc",
-    value: ctx.formFields['desc'],
-    onChange: ctx.changeHandler,
-    "aria-label": "minimum height",
-    minRows: 4,
-    placeholder: "Minimum 3 rows",
-    variant: "outlined",
-    className: classes.margin
-  })));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (FirstStep);
 
 /***/ }),
 

@@ -2,7 +2,6 @@ import {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Typography, Container, CircularProgress} from '@material-ui/core';
 import Stepper from './component/Stepper';
-import FirstStep from './component/FirstStep';
 import SecondStep from './component/SecondStep';
 import ThirdStep from './component/ThirdStep';
 import FinalStep from './component/FinalStep';
@@ -80,7 +79,7 @@ jQuery(document).ready(function($) {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
-    const steps = [ __( 'General Settings', 'membership-for-woocommerce' ), __( 'Industry', 'membership-for-woocommerce' ), __( 'Accept consent', 'membership-for-woocommerce' ), __( 'Final Step', 'membership-for-woocommerce' )];
+    const steps = [  __( 'Membership Creation', 'membership-for-woocommerce' ), __( 'General Setting', 'membership-for-woocommerce' ), __( 'Final Step', 'membership-for-woocommerce' )];
 
     
     const onFormFieldHandler = (event) => {
@@ -90,14 +89,12 @@ jQuery(document).ready(function($) {
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
             case 0:
-                return (<FirstStep />);
-            case 1:
                 return (<SecondStep/>);
-            case 2:
+            case 1:
                 return <ThirdStep />;
-            case 3:
+            case 2:
             return <FinalStep />;
-            case 4:
+            case 3:
                 return <h1>{__( 'Thanks for your details', 'membership-for-woocommerce' )}</h1>;
             default:
                 return __( 'Unknown stepIndex', 'membership-for-woocommerce' );
