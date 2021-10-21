@@ -55607,7 +55607,7 @@ function App(props) {
   });
   const classes = useStyles();
   const [activeStep, setActiveStep] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(0);
-  const steps = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Membership Creation', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('General Setting', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Final Step', 'membership-for-woocommerce')];
+  const steps = [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('General Setting', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Membership Creation', 'membership-for-woocommerce'), Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Final Step', 'membership-for-woocommerce')];
 
   const onFormFieldHandler = event => {
     let value = 'checkbox' === event.target.type ? event.target.checked : event.target.value;
@@ -55619,10 +55619,10 @@ function App(props) {
   const getStepContent = stepIndex => {
     switch (stepIndex) {
       case 0:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_SecondStep__WEBPACK_IMPORTED_MODULE_5__["default"], null);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_ThirdStep__WEBPACK_IMPORTED_MODULE_6__["default"], null);
 
       case 1:
-        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_ThirdStep__WEBPACK_IMPORTED_MODULE_6__["default"], null);
+        return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_SecondStep__WEBPACK_IMPORTED_MODULE_5__["default"], null);
 
       case 2:
         return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_FinalStep__WEBPACK_IMPORTED_MODULE_7__["default"], null);

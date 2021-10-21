@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 
     const classes = useStyles();
     const [activeStep, setActiveStep] = useState(0);
-    const steps = [  __( 'Membership Creation', 'membership-for-woocommerce' ), __( 'General Setting', 'membership-for-woocommerce' ), __( 'Final Step', 'membership-for-woocommerce' )];
+    const steps = [  __( 'General Setting', 'membership-for-woocommerce' ), __( 'Membership Creation', 'membership-for-woocommerce' ), __( 'Final Step', 'membership-for-woocommerce' )];
 
     
     const onFormFieldHandler = (event) => {
@@ -89,9 +89,10 @@ jQuery(document).ready(function($) {
     const getStepContent = (stepIndex) => {
         switch (stepIndex) {
             case 0:
-                return (<SecondStep/>);
-            case 1:
                 return <ThirdStep />;
+            case 1:
+                return (<SecondStep/>);   
+           
             case 2:
             return <FinalStep />;
             case 3:
