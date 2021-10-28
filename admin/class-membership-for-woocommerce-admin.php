@@ -1324,8 +1324,6 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-
-
 	/**
 	 * Select2 search for membership target products.
 	 *
@@ -1397,8 +1395,6 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-
-
 	/**
 	 * Select2 search for membership target product categories.
 	 *
@@ -1431,7 +1427,6 @@ class Membership_For_Woocommerce_Admin {
 
 		wp_die();
 	}
-
 
 	/**
 	 * Add export to csv button on Members CPT
@@ -1614,11 +1609,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-
-
-
-
-
 	/**
 	 * Add export to csv button on Membership CPT
 	 *
@@ -1639,6 +1629,7 @@ class Membership_For_Woocommerce_Admin {
 			<?php
 		}
 	}
+
 	/**
 	 * Members schedule metabox callback.
 	 *
@@ -1934,7 +1925,6 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-
 	/**
 	 * Save meta box fields value.
 	 *
@@ -2044,7 +2034,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-
 	/**
 	 * Remove add-on payment gateways from checkout page.
 	 *
@@ -2107,7 +2096,6 @@ class Membership_For_Woocommerce_Admin {
 					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
 					$expiry_date = strtotime( $date_exipary . $delay_duration );
 				}
-
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}
@@ -2171,11 +2159,8 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 		}
-
 		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
-
 	}
-
 
 	/**
 	 * Creating shipping method for membership.
@@ -2194,7 +2179,6 @@ class Membership_For_Woocommerce_Admin {
 			new Mwb_Membership_Free_Shipping_Method();
 		}
 	}
-
 
 	/**
 	 * Creating shipping method for membership.
@@ -2222,7 +2206,6 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_for_woo_add_to_trash_member( $post_id ) {
 		update_post_meta( $post_id, 'member_status', 'cancelled' );
 	}
-
 
 	/**
 	 * Creating activation hook new blog.
@@ -2330,8 +2313,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-
-
 	/**
 	 * Cancle membership acc to subscriptions.
 	 *
@@ -2404,7 +2385,5 @@ class Membership_For_Woocommerce_Admin {
 		}
 		return $val;
 	}
-
-
 
 }

@@ -263,7 +263,6 @@ class Membership_For_Woocommerce_Common {
 		wp_die();
 	}
 
-
 	/**
 	 * Function is used for the sending the track data
 	 *
@@ -312,8 +311,6 @@ class Membership_For_Woocommerce_Common {
 	public function mwb_mfw_last_send_time() {
 		return apply_filters( 'makewebbetter_tracker_last_send_time', get_option( 'makewebbetter_tracker_last_send', false ) );
 	}
-
-
 
 	/**
 	 * Membership status update according to subscription renewal.
@@ -420,7 +417,9 @@ class Membership_For_Woocommerce_Common {
 			$product_array = array();
 			array_push( $product_array, $mem_plan_product );
 
-			update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', $mem_plan_product );
+			update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $mem_plan_product );
+			$mfw_plugin_admin = new Membership_For_Woocommerce_Admin( '', '' );
+			$mfw_plugin_admin->set_plan_creation_fields( $post_id );
 		}
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );

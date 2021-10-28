@@ -1750,7 +1750,7 @@ msgid "Offered Product Tags (under Product Discount)"
 msgstr ""
 
 #: public/class-membership-for-woocommerce-public.php:1679
-msgid "Plans not availble"
+msgid "Plans Not Available"
 msgstr ""
 
 #: public/class-membership-for-woocommerce-public.php:1870

@@ -196,6 +196,7 @@ class Membership_For_Woocommerce_Public {
 		AND ($wp_posts.post_status = 'publish') GROUP BY $wp_posts.ID ORDER BY $wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
+		
 	}
 
 	/**
@@ -1683,7 +1684,7 @@ class Membership_For_Woocommerce_Public {
 						</form>';
 				}
 			} else {
-				$description .= esc_html__( 'Plans not availble', 'membership-for-woocommerce' );
+				$description .= esc_html__( 'Plans Not Available', 'membership-for-woocommerce' );
 			}
 
 			$description .= '</div>';
@@ -3581,22 +3582,3 @@ class Membership_For_Woocommerce_Public {
 
 
 }
-// End of class.
-
-// add_action('init', 'jhkhhk');
-// function jhkhhk(){
-// $my_post = array(
-// 'post_type' => 'mwb_cpt_membership',
-// 'post_title'    => 'My post',
-// 'post_content'  => 'This is my post.',
-// 'post_status'   => 'publish',
-// 'post_author'   => 1,
-// 'post_category' => array( 8,39 ),
-// 'meta_input' => array(
-// 'mwb_membership_plan_price' => 500,
-// ),
-// );
-
-// Insert the post into the database.
-// wp_insert_post( $my_post );
-// }

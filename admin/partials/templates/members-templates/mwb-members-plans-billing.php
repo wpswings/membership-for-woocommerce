@@ -30,7 +30,8 @@ $country    = ! empty( $member_details['membership_billing_country'] ) ? $member
 $email      = ! empty( $member_details['membership_billing_email'] ) ? $member_details['membership_billing_email'] : '';
 $phone      = ! empty( $member_details['membership_billing_phone'] ) ? $member_details['membership_billing_phone'] : '';
 $payment    = ! empty( $member_details['payment_method'] ) ? $member_details['payment_method'] : '';
-
+$order = new WC_Order( get_post_meta( $post->ID, 'member_order_id', true ) );
+$payment = $order->get_payment_method_title();
 // Getting all user ID's.
 $all_users = get_users(
 	array(
@@ -43,7 +44,7 @@ $all_users = get_users(
 $wc_gateways      = new WC_Payment_Gateways();
 $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
-// $supported_gateways = $instance->supported_gateways();
+// $supported_gateways = $instance->supported_gateways();.
 
 
 // Creating Instance of the WC_Countries class.
@@ -126,7 +127,7 @@ $country_class = new WC_Countries();
 					<?php echo esc_html( $phone ); ?>
 				</p>
 					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo esc_html( $instance->get_payment_method_title( $payment ) ); ?>
+					<?php echo esc_html( $payment ); ?>
 			</div>
 
 			<div class="member_edit_address" >

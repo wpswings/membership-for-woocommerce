@@ -17,7 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $output = '';
-
+$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
+$payment = $order->get_payment_method_title();
 $output .= '<div class="members_preview_content">';
 
 if ( ! empty( $member_id ) ) {
@@ -45,7 +46,7 @@ if ( ! empty( $member_id ) ) {
 				<strong>' . esc_html__( 'Phone :', 'membership-for-woocommerce' ) . '</strong>
 				' . esc_html( $billing_info['membership_billing_phone'] ) . '</br>
 				<strong>' . esc_html__( 'Payment Method', 'membership-for-woocommerce' ) . '</strong>
-				' . esc_html( $instance->get_payment_method_title( $billing_info['payment_method'] ) );
+				' . esc_html( $payment );
 
 	$output .= '</div>';
 
