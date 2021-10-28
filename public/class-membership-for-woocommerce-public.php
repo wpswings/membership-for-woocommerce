@@ -3582,3 +3582,13 @@ class Membership_For_Woocommerce_Public {
 
 
 }
+add_action('init','hgyugjk');
+function hgyugjk(){
+	$product_array = array();
+	array_push( $product_array, 25 );
+	if ( is_array( $product_array ) ) {
+		$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
+	}
+	update_option('jhjji',$post_data);
+	// update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $post_data );
+}
