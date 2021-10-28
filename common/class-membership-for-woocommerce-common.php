@@ -416,13 +416,36 @@ class Membership_For_Woocommerce_Common {
 			);
 			$product_array = array();
 			array_push( $product_array, $mem_plan_product );
+			if ( is_array( $product_array ) ) {
+				$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
+			}
+			update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $post_data );
+			//$mfw_plugin_admin = new Membership_For_Woocommerce_Admin( '', '' );
+			//$mfw_plugin_admin->set_plan_creation_fields( $post_id );
 
-			update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $mem_plan_product );
-			$mfw_plugin_admin = new Membership_For_Woocommerce_Admin( '', '' );
-			$mfw_plugin_admin->set_plan_creation_fields( $post_id );
+			// foreach ( $mfw_plugin_admin->get_plans_default_value() as $field => $value ) {
+
+			// 	$default = ! empty( $value['default'] ) ? $value['default'] : '';
+
+			// 	$post_data = '';
+
+			// 	if ( ! empty( $_POST[ $field ] ) ) {
+
+			// 		if ( is_array( $_POST[ $field ] ) ) {
+
+			// 			$post_data = ! empty( $_POST[ $field ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) ) : $default;
+
+			// 		} else {
+
+			// 			$post_data = ! empty( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : $default;
+
+			// 		}
+			// 		update_post_meta( $post_id, $field, $post_data );
+			// 	}
+			// }
 		}
 
-		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
+	//		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
 		$license_code = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
 
