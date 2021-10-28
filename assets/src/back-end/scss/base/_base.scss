@@ -1,0 +1,283 @@
+@import 'colors',
+'typography',
+'abstracts/placeholders',
+'abstracts/mixins',
+'abstracts/functions';
+/* Enter Your Global CSS here */
+
+    :root {
+    --mdc-theme-primary: #2196f3;
+    --mdc-theme-secondary: #2196f3;
+}
+
+.makewebbetter_page_membership_for_woocommerce_menu #sswpbody-content {
+    font-family: "NunitoSans-Regular", sans-serif;
+    margin: 0;
+    
+}
+
+body {
+    background-color: #e5f4fe;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+a,
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+a:focus {
+    box-shadow: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+input[type="checkbox"]:focus,
+input[type="color"]:focus,
+input[type="date"]:focus,
+input[type="datetime-local"]:focus,
+input[type="datetime"]:focus,
+input[type="email"]:focus,
+input[type="month"]:focus,
+input[type="number"]:focus,
+input[type="password"]:focus,
+input[type="radio"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="text"]:focus,
+input[type="time"]:focus,
+input[type="url"]:focus,
+input[type="week"]:focus,
+select:focus,
+textarea:focus {
+    box-shadow: none !important;
+}
+
+select,
+option {
+    color: rgba(0, 0, 0, 0.7);
+    box-shadow: none !important;
+    border-color: rgba(0, 0, 0, 0.38);
+}
+
+select {
+    padding: 10px 30px 10px 15px;
+}
+
+.mwb-link:focus {
+    outline: none;
+    border: none;
+}
+
+.mwb-info-img {
+    display: inline-block;
+    margin-right: 6px;
+    margin-top: -3px;
+    max-width: 15px;
+}
+
+.mwb-link {
+    font-family: "NunitoSans-Bold";
+    font-style: normal;
+    font-weight: bold;
+    font-size: $fs-xm-small;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+    color: #000000;
+    display: inline-block;
+    transition: 0.3s ease;
+    &:hover {
+        color: $c-doger-blue!important;
+    }
+    &.active {
+        position: relative;
+        color: $c-doger-blue!important;
+    }
+}
+
+.mwb-bg-white {
+    background-color: $c-white;
+    margin-right: 15px;
+}
+
+.mwb-r-8 {
+    border-radius: 8px;
+}
+
+.mwb-pl-4 {
+    padding: 0 4px !important;
+}
+
+.mwb-section {
+    padding: 28px 32px;
+}
+
+.mwb-header-container {
+    padding: 28px 32px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    margin-right: 15px;
+    @include media (mwb-phone) {
+        justify-content: flex-start;
+    }
+
+    .mwb-header-title {
+        font-family: "NunitoSans-ExtraBold";
+        font-style: normal;
+        font-weight: 800;
+        font-size: $fs-xmedium;
+        line-height: 24px;
+        letter-spacing: 0.3px;
+        color: $c-doger-blue;
+        flex: 0 0 100%;
+        max-width: calc(100% - 200px);
+        @include media (mwb-phone) {
+            max-width: 100%;
+        }
+    }
+
+    .mwb-link {
+        @include media (mwb-phone) {
+            margin-top: 15px;
+        }
+    }
+
+    span {
+        @include media (mwb-phone) {
+            margin: 15px 5px 0;
+        }
+    }
+}
+
+.mwb-form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px 35px;
+
+    .mwb-form-group__label {
+        flex: 0 0 100%;
+        max-width: 200px;
+        padding: 0 15px;
+
+        .mwb-form-label {
+            font-family: "NunitoSans-SemiBold";
+            font-size: $fs-xm-small;
+            line-height: 24px;
+            letter-spacing: 0.3px;
+        }
+    }
+
+    .mwb-form-group__control {
+        flex: 0 0 100%;
+        max-width: calc(100% - 200px);
+        padding: 0 15px;
+
+        .mwb-form-select {
+            &:hover {
+                select {
+                    border-color: rgba(0, 0, 0, 0.87) !important;
+                    color: rgba(0, 0, 0, 0.87);
+                }
+            }
+
+            &:focus {
+                select {
+                    border-color: #2196f3 !important;
+                }
+            }
+
+            .mdl-textfield__label {
+                display: block;
+                max-width: 450px;
+                padding-right: 16px;
+                padding-left: 16px;
+            }
+        }
+        .mdc-switch__native-control {
+            width: 68px;
+            height: 48px;
+        }
+    }
+    .mwb-password-hidden {
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s linear;
+        user-select: none;
+        
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
+
+.select2 {
+    &.select2-container {
+        max-width: 100%;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background: $c-white;
+    box-shadow: 0px 2px 5px rgba(63, 71, 86, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.mwb-col-wrap {
+    margin-bottom: 35px;
+}
+
+.mwb-options {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
+}
+
+.mdc-button {
+    border-radius: 35px !important;
+    padding: 12px 24px !important;
+    height: 100%;
+}
+
+.mdc-floating-label {
+    color: $c-doger-blue;
+}
+
+.mdc-floating-label--float-above,
+.mdc-floating-label--shake {
+    color: $c-doger-blue !important;
+}
+
+#mwb-mfw-table-inner-container,
+#public-hooks-listing,
+#admin-hooks-listing {
+    width: 100%;
+    table thead th {
+        font-size: $fs-medium;
+        font-family: "NunitoSans-ExtraBold";
+    }
+}

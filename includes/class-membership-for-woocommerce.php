@@ -143,6 +143,8 @@ class Membership_For_Woocommerce {
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-common.php';
+
 		/**
 		 * The class responsible for defining all function for membership checkout validations.
 		 */
@@ -401,7 +403,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'mwb_subscription_get_status', $mfw_plugin_public, 'mwb_membership_subscription_get_status', 20, 3 );
 			$this->loader->add_filter( 'mwb_sfw_next_payment_date', $mfw_plugin_public, 'mwb_membership_subscription_next_payment_date', 20, 2 );
 			$this->loader->add_filter( 'mwb_sfw_susbcription_end_date', $mfw_plugin_public, 'mwb_membership_susbcription_end_date', 20, 2 );
-
+			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'mwb_membership_hide_quantity_fields_for_membership', 10, 2 );
+			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2 );
 		}
 	}
 
@@ -580,9 +583,8 @@ class Membership_For_Woocommerce {
 		echo wp_kses_post( $mfw_notice );
 	}
 
-
 	/**
-	 * Show wordpress and server info.
+	 * Show WordPress and server info.
 	 *
 	 * @return Array $mfw_system_data returns array of all wordpress and server related information.
 	 * @since  1.0.0

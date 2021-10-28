@@ -39,7 +39,7 @@ const SecondStep = (props) => {
                   label="Membership Plan Amount"  variant="outlined" className={classes.margin}/>
 
                 <FormControl component="fieldset" variant="outlined" fullWidth className="fieldsetWrapper">
-                   <InputLabel id="demo-simple-select-outlined-label">{__('Include Product in Membership','membership-for-woocommerce') }</InputLabel>
+                   <InputLabel  className={classes.margin} id="demo-simple-select-outlined-label">{__('Include Product in Membership','membership-for-woocommerce') }</InputLabel>
                    <Select
                     labelId="demo-simple-select-outlined-label"
                     name="memPlanProduct"
@@ -47,7 +47,7 @@ const SecondStep = (props) => {
                     value={ctx.formFields['memPlanProduct']}
                     onChange={ctx.changeHandler}
                     class="wc-membership-product-tag-search"
-                    label="memPlanProduct"
+                    label="Include Product in Membership"
                     className={classes.margin}>
                     {menuItems}
                    </Select>

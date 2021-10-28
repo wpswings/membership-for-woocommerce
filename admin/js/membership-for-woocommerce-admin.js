@@ -29,18 +29,11 @@
    * practising this, we should strive to set a better example in our own work.
    */
 
-  
-
-
-
 jQuery(document).ready(function($) {
-
-
 
     $(document).on('click','.media-button',function() {
         jQuery('.media-modal-close').trigger('click');
       });
-
     
   // Avoid negative values for amount/discount and convert it to zero.
   $('input[name="mwb_membership_plan_price"]').keyup(function() {
@@ -56,7 +49,6 @@ jQuery(document).ready(function($) {
           $(this).val(0);
       }
   });
-
 
   // Display already selected option field.
   function selected() {
@@ -377,12 +369,14 @@ $(document).ready(function() {
 
     jQuery('#mwb_membership_enable_invoice').on('change', function() {
         debugger;
-        jQuery('.mwb-c-modal__cover').addClass('show-c_modal_cover');
-        jQuery('.mwb-c-modal__message').addClass('show-c_modal_message');
-        jQuery('.mwb-c-modal__cover, .mwb-c-modal__close,.mwb-c-modal__confirm-button').on('click', function() {
-            jQuery('.mwb-c-modal__cover').removeClass('show-c_modal_cover');
-            jQuery('.mwb-c-modal__message').removeClass('show-c_modal_message');
-        });
+        if ( jQuery('#mwb_membership_enable_invoice').prop('checked') == true ) {
+            jQuery('.mwb-c-modal__cover').addClass('show-c_modal_cover');
+            jQuery('.mwb-c-modal__message').addClass('show-c_modal_message');
+            jQuery('.mwb-c-modal__cover, .mwb-c-modal__close,.mwb-c-modal__confirm-button').on('click', function() {
+                jQuery('.mwb-c-modal__cover').removeClass('show-c_modal_cover');
+                jQuery('.mwb-c-modal__message').removeClass('show-c_modal_message');
+            });
+        }
     })
    
     $(document).on('click','.mwb-password-hidden',function() {

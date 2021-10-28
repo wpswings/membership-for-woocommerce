@@ -196,6 +196,11 @@ global $post;
 					<option <?php echo esc_html( 'years' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
 				</select>
 			</td>
+			<?php
+			if (  mwb_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+
+			
+			?>
 		</tr>
 		<!-- Plan Duration End. -->
 
@@ -253,7 +258,9 @@ global $post;
 </td>
 </tr>
 <!-- Plan subscription expiry End -->
-
+<?php 
+}
+?>
 	</tbody>
 </table>
 

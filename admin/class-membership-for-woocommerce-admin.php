@@ -536,7 +536,7 @@ class Membership_For_Woocommerce_Admin {
 						$all_hooks[ $key ]['desc'] = $myfile[ $key - 1 ];
 					}
 				}
-			} else if ( strpos( $file, '.' ) == '' && strpos( $file, '.' ) !== 0 ) {
+			} elseif ( strpos( $file, '.' ) == '' && strpos( $file, '.' ) !== 0 ) {
 				$response['files'][] = $file;
 			}
 		}
@@ -689,9 +689,9 @@ class Membership_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function mwb_sanitize_array( $mwb_input_array ) {
-		foreach ( $mwb_input_array as $key => $value ) {
-			$key   = sanitize_text_field( $key );
-			$value = sanitize_text_field( $value );
+		foreach ( $mwb_input_array as $mwb_input_array_key => $mwb_input_array_value ) {
+			$mwb_input_array_key   = sanitize_text_field( $mwb_input_array_key );
+			$mwb_input_array_value = sanitize_text_field( $mwb_input_array_value );
 		}
 		return $mwb_input_array;
 	}
@@ -1007,12 +1007,12 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( ! empty( $this->get_plans_default_value() && is_array( $this->get_plans_default_value() ) ) ) {
 
-			foreach ( $this->get_plans_default_value() as $key => $value ) {
+			foreach ( $this->get_plans_default_value() as $plan_key => $plan_value ) {
 
-				$default = ! empty( $value['default'] ) ? $value['default'] : '';
+				$default = ! empty( $plan_value['default'] ) ? $plan_value['default'] : '';
 
-				$data                          = get_post_meta( $post_id, $key, true );
-				$this->settings_fields[ $key ] = ! empty( $data ) ? $data : $default;
+				$data                          = get_post_meta( $post_id, $plan_key, true );
+				$this->settings_fields[ $plan_key ] = ! empty( $data ) ? $data : $default;
 			}
 		}
 	}
@@ -1704,9 +1704,9 @@ class Membership_For_Woocommerce_Admin {
 				$post_meta = get_post_meta( $plan_id );
 
 				// Formatting array.
-				foreach ( $post_meta as $key => $value ) {
+				foreach ( $post_meta as $post_meta_key => $post_meta_value ) {
 
-					$post_meta[ $key ] = reset( $value );
+					$post_meta[ $post_meta_key ] = reset( $post_meta_value );
 				}
 
 				$plan_meta = array_merge( $plan_obj, $post_meta );
@@ -1726,8 +1726,7 @@ class Membership_For_Woocommerce_Admin {
 
 		// Assign membership plan to user and assign 'member' role to it.
 		update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', $current_memberships );
-		update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'is_member', 'member' );
-
+		
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
 
@@ -1802,6 +1801,8 @@ class Membership_For_Woocommerce_Admin {
 					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
 				}
 			}
+			update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'is_member', 'member' );
+
 		} elseif ( 'cancelled' == $_POST['member_status'] ) {  // If manually cancelling membership then remove its expiry date.
 
 			$post   = get_post( $post_id );

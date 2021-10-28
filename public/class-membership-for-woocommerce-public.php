@@ -506,8 +506,8 @@ class Membership_For_Woocommerce_Public {
 						$product_terms = $this->get_product_terms( $product->get_id() );
 
 						if ( ! empty( $product_terms ) ) {
-							foreach ( $product_terms as $key => $value ) {
-								if ( in_array( $value, (array) $target_tag_ids ) ) {
+							foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+								if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 									array_push( $target_ids, $product->get_id() );
 								}
 							}
@@ -625,8 +625,8 @@ class Membership_For_Woocommerce_Public {
 							$product_terms = $this->get_product_terms( get_the_ID() );
 
 							if ( ! empty( $product_terms ) ) {
-								foreach ( $product_terms as $key => $value ) {
-									if ( in_array( $value, (array) $target_tag_ids ) ) {
+								foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+									if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 										array_push( $is_has_target_id, $product->get_id() );
 									}
 								}
@@ -789,8 +789,8 @@ class Membership_For_Woocommerce_Public {
 									}
 									$product_terms = $this->get_product_terms( $product->get_id() );
 									if ( ! empty( $product_terms ) ) {
-										foreach ( $product_terms as $key => $value ) {
-											if ( in_array( $value, (array) $target_tag_ids ) ) {
+										foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+											if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 												array_push( $target_ids, $product->get_id() );
 											}
 										}
@@ -969,8 +969,8 @@ class Membership_For_Woocommerce_Public {
 
 					if ( ! empty( $term_related_to_product ) ) {
 
-						foreach ( $term_related_to_product as $key => $value ) {
-							if ( in_array( $value, $term_related_to_plan ) ) { // checking if the product does not exist in target id of a plan.
+						foreach ( $term_related_to_product as $term_related_to_product_key => $term_related_to_product_value ) {
+							if ( in_array( $term_related_to_product_value, $term_related_to_plan ) ) { // checking if the product does not exist in target id of a plan.
 								$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 							}
 						}
@@ -1923,16 +1923,16 @@ class Membership_For_Woocommerce_Public {
 
 				return $rates;
 			}
-		}
 
-		$all_methods = array();
+			$all_methods = array();
 
-		foreach ( $rates as $rate_id => $rate ) {
+			foreach ( $rates as $rate_id => $rate ) {
 
-			if ( 'mwb_membership_shipping' == $rate->method_id ) {
+				if ( 'mwb_membership_shipping' == $rate->method_id ) {
 
-				$all_methods[ $rate_id ] = $rate;
-				break;
+					$all_methods[ $rate_id ] = $rate;
+					break;
+				}
 			}
 		}
 
@@ -2174,7 +2174,7 @@ class Membership_For_Woocommerce_Public {
 
 					$user = new WP_User( $member_data['user_id'] ); // create a new user object for this user.
 					// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
-					update_user_meta( $member_data['user_id'], 'is_member', 'member' );
+					// update_user_meta( $member_data['user_id'], 'is_member', 'member' );
 					wc_add_order_item_meta( $keys[0], '_member_id', $member_data['member_id'] );
 
 					if ( ! $member_id ) {
@@ -2348,9 +2348,9 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 
-			foreach ( $all_member_tag as $key => $value ) {
+			foreach ( $all_member_tag as $memeber_tag_key => $memeber_tag_value ) {
 
-				foreach ( array_keys( $this->under_review_products, $value ) as $keys ) {
+				foreach ( array_keys( $this->under_review_products, $memeber_tag_value ) as $keys ) {
 					unset( $this->under_review_products[ $keys ] );
 				}
 			}
@@ -2583,7 +2583,7 @@ class Membership_For_Woocommerce_Public {
 										if ( ! empty( $subscription_i_d ) ) {
 											update_post_meta( $subscription_i_d, 'mwb_subscription_status', 'active' );
 											update_post_meta( $subscription_i_d, 'mwb_next_payment_date', $expiry_date );
-											if ( ! empty( $plan_obj['mwb_membership_subscription_expiry'] ) ) {
+											if ( ! empty( $plan['mwb_membership_subscription_expiry'] ) ) {
 												if ( function_exists( 'mwb_sfw_susbcription_expiry_date' ) ) {
 													$current_time = current_time( 'timestamp' );
 													$mwb_susbcription_end = mwb_sfw_susbcription_expiry_date( $subscription_i_d, $current_time, '' );
@@ -2864,26 +2864,26 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		foreach ( $cart->cart_contents as $key => $value ) {
+		foreach ( $cart->cart_contents as $cart_contents_key => $cart_contents_value ) {
 
-			if ( isset( $value['plan_price'] ) && $value['plan_price'] && $product->get_id() == $value['product_id'] ) {
-				$value['data']->set_price( $value['plan_price'] );
+			if ( isset( $cart_contents_value['plan_price'] ) && $cart_contents_value['plan_price'] && $product->get_id() == $cart_contents_value['product_id'] ) {
+				$cart_contents_value['data']->set_price( $cart_contents_value['plan_price'] );
 			}
 
-			if ( $product->get_id() == $value['product_id'] ) {
+			if ( $product->get_id() == $cart_contents_value['product_id'] ) {
 
-				$mwb_sfw_product = get_post_meta( $value['plan_id'], 'mwb_membership_subscription', true );
+				$mwb_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_subscription', true );
 
 				if ( ! empty( $mwb_sfw_product ) && 'yes' == $mwb_sfw_product ) {
 
-					$mwb_membership_plan_name_access_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_name_access_type', true );
+					$mwb_membership_plan_name_access_type = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_plan_name_access_type', true );
 
 					if ( 'limited' == $mwb_membership_plan_name_access_type ) {
-						$mwb_membership_plan_duration = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration', true );
-						$mwb_membership_plan_duration_type = get_post_meta( $value['plan_id'], 'mwb_membership_plan_duration_type', true );
+						$mwb_membership_plan_duration = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_plan_duration', true );
+						$mwb_membership_plan_duration_type = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_plan_duration_type', true );
 
-						$mwb_membership_subscription_expiry = get_post_meta( $value['plan_id'], 'mwb_membership_subscription_expiry', true );
-						$mwb_membership_subscription_expiry_type = get_post_meta( $value['plan_id'], 'mwb_membership_subscription_expiry_type', true );
+						$mwb_membership_subscription_expiry = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_subscription_expiry', true );
+						$mwb_membership_subscription_expiry_type = get_post_meta( $cart_contents_value['plan_id'], 'mwb_membership_subscription_expiry_type', true );
 
 						update_post_meta( $mwb_membership_default_product, '_mwb_sfw_product', $mwb_sfw_product );
 
@@ -2893,7 +2893,7 @@ class Membership_For_Woocommerce_Public {
 						update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_expiry_number', intval( $mwb_membership_subscription_expiry ) );
 						update_post_meta( $mwb_membership_default_product, 'mwb_sfw_subscription_expiry_interval', $mwb_membership_subscription_expiry_type );
 
-						update_post_meta( $mwb_membership_default_product, '_regular_price', $value['plan_price'] );
+						update_post_meta( $mwb_membership_default_product, '_regular_price', $cart_contents_value['plan_price'] );
 
 					}
 				} else {
@@ -2908,14 +2908,14 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 
-			if ( isset( $value['plan_title'] ) && $value['plan_title'] && $product->get_id() == $value['product_id'] ) {
+			if ( isset( $cart_contents_value['plan_title'] ) && $cart_contents_value['plan_title'] && $product->get_id() == $cart_contents_value['product_id'] ) {
 
 				// Set the new name (WooCommerce versions 2.5.x to 3+).
-				if ( method_exists( $value['data'], 'set_name' ) ) {
-					$value['data']->set_name( $value['plan_title'] );
+				if ( method_exists( $cart_contents_value['data'], 'set_name' ) ) {
+					$cart_contents_value['data']->set_name( $cart_contents_value['plan_title'] );
 
 				} else {
-					$value['data']->post->post_title = $value['plan_title'];
+					$cart_contents_value['data']->post->post_title = $cart_contents_value['plan_title'];
 				}
 			}
 		}
@@ -2933,8 +2933,8 @@ class Membership_For_Woocommerce_Public {
 		$included_membership = array();
 		$club_membership = get_post_meta( $active_plan_id, 'mwb_membership_club', true );
 		if ( ! empty( $club_membership ) ) {
-			foreach ( $club_membership as $key => $value ) {
-				array_push( $included_membership, $value );
+			foreach ( $club_membership as $club_membership_key => $club_membership_value ) {
+				array_push( $included_membership, $club_membership_value );
 			}
 		}
 		return $included_membership;
@@ -2997,8 +2997,8 @@ class Membership_For_Woocommerce_Public {
 						$product_terms = $this->get_product_terms( $product->get_id() );
 
 						if ( ! empty( $product_terms ) ) {
-							foreach ( $product_terms as $key => $value ) {
-								if ( in_array( $value, (array) $target_tag_ids ) ) {
+							foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+								if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 									array_push( $existing_plan_product, $product->get_id() );
 								}
 							}
@@ -3055,8 +3055,8 @@ class Membership_For_Woocommerce_Public {
 							$product_terms = $this->get_product_terms( $product->get_id() );
 
 							if ( ! empty( $product_terms ) ) {
-								foreach ( $product_terms as $key => $value ) {
-									if ( in_array( $value, (array) $target_tag_ids ) ) {
+								foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+									if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 										array_push( $target_ids, $product->get_id() );
 									}
 								}
@@ -3070,10 +3070,8 @@ class Membership_For_Woocommerce_Public {
 									if ( $product->is_type( 'variable' ) ) {
 										$product = wc_get_product( $product->get_id() );
 										$current_products = $product->get_children();
-										foreach ( $current_products as $key => $value ) {
-											// code...
-
-											array_push( $this->exclude_other_plan_products, $value );
+										foreach ( $current_products as $key => $current_products_value ) {
+											array_push( $this->exclude_other_plan_products, $current_products_value );
 										}
 									}
 								}
@@ -3159,7 +3157,6 @@ class Membership_For_Woocommerce_Public {
 			if ( WC()->session->__isset( 'product_id' ) ) {
 
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
-
 				// $product->set_price( $price );
 				// if cart empty, add it to cart.
 				WC()->cart->empty_cart();
@@ -3167,7 +3164,7 @@ class Membership_For_Woocommerce_Public {
 				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
 			}
 			WC()->session->__unset( 'product_id' );
-			global $post;
+
 
 		}
 
@@ -3300,8 +3297,8 @@ class Membership_For_Woocommerce_Public {
 						$product_terms = $this->get_product_terms( get_the_ID() );
 
 						if ( ! empty( $product_terms ) ) {
-							foreach ( $product_terms as $key => $value ) {
-								if ( in_array( $value, (array) $target_tag_ids ) ) {
+							foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+								if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 									array_push( $existing_plan_product, get_the_ID() );
 								}
 							}
@@ -3329,8 +3326,8 @@ class Membership_For_Woocommerce_Public {
 							$product_terms = $this->get_product_terms( get_the_ID() );
 
 					if ( ! empty( $product_terms ) ) {
-						foreach ( $product_terms as $key => $value ) {
-							if ( in_array( $value, (array) $target_tag_ids ) ) {
+						foreach ( $product_terms as $product_terms_key => $product_terms_value ) {
+							if ( in_array( $product_terms_value, (array) $target_tag_ids ) ) {
 								array_push( $target_ids, get_the_ID() );
 							}
 						}
@@ -3476,7 +3473,7 @@ class Membership_For_Woocommerce_Public {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
 			if ( 'yes' == $plan['mwb_membership_subscription'] ) {
-				if ( ! empty( $plan_obj['mwb_membership_subscription_expiry'] ) ) {
+				if ( ! empty( $plan['mwb_membership_subscription_expiry'] ) ) {
 					if ( function_exists( 'mwb_sfw_susbcription_expiry_date' ) ) {
 						$access_type = get_post_meta( $plan['plan_id'], 'mwb_membership_plan_access_type', true );
 						$current_date = gmdate( 'Y-m-d' );
@@ -3497,5 +3494,109 @@ class Membership_For_Woocommerce_Public {
 		}
 		return $expiry_date;
 	}
+
+	/**
+	 * This function is used to set single quantity for susbcription product.
+	 *
+	 * @name mwb_sfw_hide_quantity_fields_for_subscription
+	 * @param bool   $return return.
+	 * @param object $product product.
+	 * @since 1.0.0
+	 */
+	public function mwb_membership_hide_quantity_fields_for_membership( $return, $product ) {
+
+		if ( mwb_membership_check_plugin_enable() && mwb_membership_check_product_is_membership( $product ) ) {
+
+			$return = true;
+
+		}
+
+		return apply_filters( 'mwb_membership_show_quantity_fields_for_membership', $return, $product );
+	}
+
+
+	/**
+	 * Function to check admin mail id
+	 *
+	 * @param [type] $fields are the checkout fields.
+	 * @param [type] $errors are the errors to be return.
+	 * @return void
+	 */
+	public function mwb_membership_validate_email( $fields, $errors ) {
+		global $woocommerce;
+		echo 'xdgfxdgfxdg';
+		$membership_name = '';
+		$the_user = get_user_by( 'email', $fields['billing_email'] );
+		$the_user_id = $the_user->ID;
+		$is_not_membership_applicable = false;
+		$is_membership_product = false;
+
+		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
+		foreach ( WC()->cart->get_cart() as $cart_item ) {
+			$product = $cart_item['data'];
+			if ( ! empty( $product ) ) {
+
+				if ( $product->get_id() == $mwb_membership_default_product ) {
+					$membership_name = $product->get_title();
+					$is_membership_product = true;
+				}
+			}
+		}
+
+		if ( $is_membership_product == true ) {
+			if ( empty( $the_user ) ) {
+				$errors->add( 'validation', 'Please try to place order with existing customer!!' );
+			}
+		}
+
+		$is_member_meta = get_user_meta( $the_user->ID, 'is_member' );
+		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
+			$data                = $this->custom_query_data;
+			$user_id             = $the_user->ID;
+
+			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+
+			if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+
+				foreach ( $current_memberships as $key => $membership_id ) {
+
+					$member_status = get_post_meta( $membership_id, 'member_status', true );
+
+					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status ) {
+						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						if ( $active_plan['post_title'] == $membership_name ) {
+							$is_not_membership_applicable = true;
+						}
+					}
+				}
+			}
+		}
+
+		if ( $is_not_membership_applicable ) {
+			   $errors->add( 'validation', 'Please place order with non existing membership plan!!' );
+		}
+
+	}
+
+
+
 }
 // End of class.
+
+// add_action('init', 'jhkhhk');
+// function jhkhhk(){
+// $my_post = array(
+// 'post_type' => 'mwb_cpt_membership',
+// 'post_title'    => 'My post',
+// 'post_content'  => 'This is my post.',
+// 'post_status'   => 'publish',
+// 'post_author'   => 1,
+// 'post_category' => array( 8,39 ),
+// 'meta_input' => array(
+// 'mwb_membership_plan_price' => 500,
+// ),
+// );
+
+// Insert the post into the database.
+// wp_insert_post( $my_post );
+// }

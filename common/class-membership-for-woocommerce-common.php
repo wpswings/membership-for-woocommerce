@@ -176,17 +176,17 @@ class Membership_For_Woocommerce_Common {
 
 			if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
 
-				foreach ( $csv_prod_title as $key => $value ) {
+				foreach ( $csv_prod_title as $csv_prod_title_key => $csv_prod_title_value ) {
 
-					if ( in_array( $value, $all_prod_title, true ) ) {
+					if ( in_array( $csv_prod_title_value, $all_prod_title, true ) ) {
 
 						$prd_check = true;
 					}
 				}
 
-				foreach ( $csv_cate_title as $key => $value ) {
+				foreach ( $csv_cate_title as $csv_cate_title_key => $csv_cate_title_value ) {
 
-					if ( in_array( $value, $all_cat_title, true ) ) {
+					if ( in_array( $csv_cate_title_value, $all_cat_title, true ) ) {
 
 						$cat_check = true;
 					}
@@ -209,17 +209,17 @@ class Membership_For_Woocommerce_Common {
 
 			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
 			if ( true === $prd_check || true === $cat_check ) {
-				foreach ( $formatted_csv_data as $key => $value ) {
-					if ( in_array( $value['post_title'], (array) $all_plan_array ) ) {
-						$value['post_title'] = $value['post_title'] . '-copied';
+				foreach ( $formatted_csv_data as $formatted_csv_data_key => $formatted_csv_data_value ) {
+					if ( in_array( $formatted_csv_data_value['post_title'], (array) $all_plan_array ) ) {
+						$formatted_csv_data_value['post_title'] = $formatted_csv_data_value['post_title'] . '-copied';
 					}
-					if ( ! empty( $value['post_title'] ) ) {
+					if ( ! empty( $formatted_csv_data_value['post_title'] ) ) {
 						$plan_id = wp_insert_post(
 							array(
 								'post_type'    => 'mwb_cpt_membership',
-								'post_title'   => $value['post_title'],
-								'post_status'  => $value['post_status'],
-								'post_content' => $value['post_content'],
+								'post_title'   => $formatted_csv_data_value['post_title'],
+								'post_status'  => $formatted_csv_data_value['post_status'],
+								'post_content' => $formatted_csv_data_value['post_content'],
 							),
 							true
 						);
@@ -334,10 +334,11 @@ class Membership_For_Woocommerce_Common {
 		}
 		$subscription = get_post( $subscription_id );
 		$parent_order_id  = $subscription->mwb_parent_order;
-
+		update_option( 'cvf gxcfgcfg', $order_status );
+		update_option( 'cvf gxcfggggcfg', $mwb_new_order );
 		$order_status  = $mwb_new_order->get_status();
-		if ( 'processing' == $order_status || 'complete' == $order_status ) {
-
+		if ( 'processing' == $order_status || 'complete' == $order_status || 'failed' == $order_status ) {
+			update_option( 'cvf gxcfgccgfcfgcfg', $order_status );
 			$order = wc_get_order( $parent_order_id );
 			$member_id = '';
 			foreach ( $order->get_items() as $item_id => $item ) {
@@ -418,11 +419,9 @@ class Membership_For_Woocommerce_Common {
 			);
 			$product_array = array();
 			array_push( $product_array, $mem_plan_product );
+
 			update_post_meta( $post_id, 'mwb_membership_plan_target_ids_search', $mem_plan_product );
 		}
-		
-
-	
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
