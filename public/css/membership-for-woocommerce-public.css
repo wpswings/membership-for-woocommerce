@@ -187,9 +187,12 @@
     border-radius: 5px;
   }
   
-  .mwb_mfw_membership_icon {
+  .mwb_mfw_membership_front_page .dashicons.dashicons-awards.mwb_mfw_membership_icon {
     font-size: 65px;
     color: #f37e21;
+    display: inline-block;
+    width: 65px;
+    height: 65px;
   }
   
   .mwb_membership_plan_content_title,

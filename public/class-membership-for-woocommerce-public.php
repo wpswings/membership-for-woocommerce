@@ -889,19 +889,13 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
+	public function mwb_membership_products_on_shop_page( $return_status = false, $product = false ) {
 
-		global $product;
-
-		if ( empty( $product ) ) {
-
-			$product = $_product;
-		}
-
+	
 		$is_product_exclude = false;
 
 		if ( $this->global_class->plans_exist_check() == true ) {
-
+			
 			$data = $this->custom_query_data;
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
@@ -910,6 +904,9 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $data as $plan ) {
 
+					if ( empty( $product ) ) {
+						return;
+					}
 					$exclude_product = array();
 					$exclude_product = apply_filters( 'mwb_membership_exclude_product', $exclude_product, $product->get_id() );
 

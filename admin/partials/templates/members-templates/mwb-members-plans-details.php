@@ -76,7 +76,7 @@ $existing_plans = get_posts( $args );
 				<tr>
 					<th><label><?php esc_html_e( 'Description', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
-						<?php echo $plan_desc ; ?>
+						<?php echo wp_kses_post( $plan_desc ); ?>
 					</td>
 				</tr>
 
