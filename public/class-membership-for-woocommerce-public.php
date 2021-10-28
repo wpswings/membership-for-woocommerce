@@ -1303,6 +1303,10 @@ class Membership_For_Woocommerce_Public {
 		$club_membership       = ! empty( $plan['mwb_membership_club'] ) ? $plan['mwb_membership_club'] : '';
 		$discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
 		$price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
+		$plan_subscription = ! empty( $plan['mwb_membership_subscription'] ) ? $plan['mwb_membership_subscription'] : '';
+		$plan_subscription_duration = ! empty( $plan['mwb_membership_subscription_expiry'] ) ? $plan['mwb_membership_subscription_expiry'] : '';
+		$plan_subscription_duration_type = ! empty( $plan['mwb_membership_subscription_expiry_type'] ) ? $plan['mwb_membership_subscription_expiry_type'] : '';
+
 		$plan_currency = '';
 
 		if ( 'fixed' == $price_type ) {
@@ -1373,6 +1377,14 @@ class Membership_For_Woocommerce_Public {
 							$description .= '<li>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</li></br>';
 
 					}
+
+					$description .= '<li><label>';
+					$description .= __( 'Subscription Membership', 'membership-for-woocommerce' );
+					$description .= '</label><span>' . $plan_subscription . '</span></li>';
+
+					$description .= '<li><label>';
+					$description .= __( 'Subscription Membership Duration', 'membership-for-woocommerce' );
+					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type . 's' ) ) . '</span></li>';
 					if ( ! empty( $plan_access ) ) {
 						$description .= '<li><label>';
 						$description .= __( 'Plan access', 'membership-for-woocommerce' );
@@ -2126,9 +2138,9 @@ class Membership_For_Woocommerce_Public {
 					$order_st = 'complete';
 				} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
 					$order_st = 'hold';
-				} elseif ( 'pending' == $order->get_status() || 'failed' == $order->get_status() || 'processing' == $order->get_status() ) {
+				} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() ) {
 					$order_st = 'pending';
-				} elseif ( 'cancelled' == $order->get_status() ) {
+				} elseif ( 'cancelled' == $order->get_status() || 'failed' == $order->get_status() ) {
 					$order_st = 'cancelled';
 				}
 				update_post_meta( $member_id, 'member_status', $order_st );
@@ -3401,14 +3413,16 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_membership_subscription_get_status( $subscription_status, $subscription_i_d, $order_id ) {
-		$order = wc_get_order( $order_id );
+	public function mwb_membership_subscription_get_status( $subscription_status, $subscription_i_d ) {
+		
 		$member_id = '';
-		foreach ( $order->get_items() as $item_id => $item ) {
+		$subscription = get_post( $subscription_i_d );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		foreach ( $order->get_items() as $item_id => $order_item ) {
 
-			$plan_id = $item->get_meta( 'mwb_sfw_parent_order_id' );
-			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
-				$member_id = $item->get_meta( '_member_id' );
+			if ( ! empty( $order_item->get_meta( '_member_id' ) ) ) {
+				$member_id = $order_item->get_meta( '_member_id' );
 			}
 		}
 
@@ -3420,7 +3434,6 @@ class Membership_For_Woocommerce_Public {
 		}
 		return $subscription_status;
 	}
-
 
 	/**
 	 * Updating subscription status according membership status.
@@ -3525,7 +3538,6 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mwb_membership_validate_email( $fields, $errors ) {
 		global $woocommerce;
-		echo 'xdgfxdgfxdg';
 		$membership_name = '';
 		$the_user = get_user_by( 'email', $fields['billing_email'] );
 		$the_user_id = $the_user->ID;
@@ -3576,19 +3588,43 @@ class Membership_For_Woocommerce_Public {
 		if ( $is_not_membership_applicable ) {
 			   $errors->add( 'validation', 'Please place order with non existing membership plan!!' );
 		}
-
 	}
 
+}
 
 
-}
-add_action('init','hgyugjk');
-function hgyugjk(){
-	$product_array = array();
-	array_push( $product_array, 25 );
-	if ( is_array( $product_array ) ) {
-		$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
-	}
-	update_option('jhjji',$post_data);
-	// update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $post_data );
-}
+
+// add_action('init','hgyugjk');
+// function hgyugjk(){
+// var_dump('cfhgcf gh');
+// 	die();
+// 	$new_status = 'mwb_renewal';
+// 	$subscription = get_post( 75 );
+// 	$user_id = $subscription->mwb_customer_id;
+// 	$args = array(
+// 		'status'      => $new_status,
+// 		'customer_id' => $user_id,
+// 	);
+// 	$mwb_new_order = wc_create_order( $args );
+// 	print_r($mwb_new_order);
+// 	echo 'xdfgcf g';
+// 	// $order_status  = $mwb_new_order->get_status();
+// 	// 	if ( 'processing' == $order_status || 'complete' == $order_status || 'failed' == $order_status ) {
+// 	// 		update_option( 'cvf gxcfgccgfcfgcfg', $order_status );
+// 	// 		$order = wc_get_order( $parent_order_id );
+// 	// 		$member_id = '';
+// 	// 		foreach ( $order->get_items() as $item_id => $item ) {
+
+// 	// 			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
+// 	// 				$member_id = $item->get_meta( '_member_id' );
+// 	// 			}
+// 	// 		}
+
+// 	// 		if ( ! empty( $member_id ) ) {
+// 	// 			update_post_meta( $member_id, 'member_status', 'complete' );
+// 	// 			update_post_meta( $member_id, 'member_expiry', $expiry_date );
+// 	// 		}
+// 	// 	}
+// }
+
+

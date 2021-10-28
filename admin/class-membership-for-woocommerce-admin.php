@@ -287,23 +287,7 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_script( 'mwb_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
 
 			}
-
-			if ( isset( $_GET['section'] ) && 'membership-paypal-gateway' === $_GET['section'] ) {
-
-				wp_enqueue_script( 'mwb-membership-paypal-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-paypal.js', array( 'jquery' ), $this->version, false );
-
-			} elseif ( isset( $_GET['section'] ) && 'membership-for-woo-stripe-gateway' === $_GET['section'] ) {
-
-				wp_enqueue_script( 'mwb-membership-stripe-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-stripe.js', array( 'jquery' ), $this->version, false );
-
-			} elseif ( isset( $_GET['section'] ) && 'membership-adv-bank-transfer' === $_GET['section'] ) {
-
-				wp_enqueue_script( 'mwb-membership-ad-bacs-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-ad-bacs.js', array( 'jquery' ), $this->version, false );
-
-			} elseif ( isset( $_GET['section'] ) && 'membership-paypal-smart-buttons' === $_GET['section'] ) {
-
-				wp_enqueue_script( 'mwb-membership-paypal-sb-script', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-express-checkout.js', array( 'jquery' ), $this->version, false );
-			}
+	
 
 			if ( 'mwb_cpt_members' === $pagescreen_post || 'mwb_cpt_members' === $pagescreen_id ) {
 
@@ -324,7 +308,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 	}
-
 
 	/**
 	 * Check licence of pro for multistep.
@@ -373,10 +356,17 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_options_page() {
 		global $submenu;
+	
+		if (  ! in_array( 'Home', (array) $submenu['mwb-plugins'] ) ) {
+			if ( mwb_standard_check_multistep() ) {
+				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),1 );
+			}
+		}
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
 			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
+
 			if ( mwb_standard_check_multistep() ) {
-				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ) );
+				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),0 );
 			}
 			$mfw_menus =
 			// desc - filter for trial.
@@ -385,14 +375,13 @@ class Membership_For_Woocommerce_Admin {
 				foreach ( $mfw_menus as $mfw_key => $mfw_value ) {
 					add_submenu_page( 'mwb-plugins', $mfw_value['name'], $mfw_value['name'], 'manage_options', $mfw_value['menu_link'], array( $mfw_value['instance'], $mfw_value['function'] ) );
 				}
-			}
+			}	
 		}
 	}
 
-
 	/**
 	 *
-	 * Adding the default menu into the wordpress menu
+	 * Adding the default menu into the WordPress menu.
 	 *
 	 * @name makewebbetter_callback_function
 	 * @since 1.0.0
@@ -1948,6 +1937,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( empty( $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
 			return;
 		}
+	
 
 		// Nonce verification.
 		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
@@ -2387,3 +2377,4 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 }
+

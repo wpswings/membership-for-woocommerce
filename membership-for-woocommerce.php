@@ -128,6 +128,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		function mwb_standard_check_multistep() {
 			$bool = false;
 			$mwb_standard_check = get_option( 'mfw_mfw_plugin_standard_multistep_done', false );
+		
 			if ( ! empty( $mwb_standard_check ) ) {
 				$bool = true;
 			}

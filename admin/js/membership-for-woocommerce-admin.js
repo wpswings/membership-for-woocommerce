@@ -314,10 +314,14 @@ jQuery(document).ready(function($) {
   // Display warning if plan title field is empty.
   $('input[name="post_title"]').on('keyup', function() {
       var post_title = $('input[name="post_title"]').val();
-
+     var title_warning = jQuery('.title_warning').html()
+debugger;
       if (!post_title) {
-          var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
-          $('div#titlewrap').append(title_msg);
+          if ( title_warning == undefined ) {
+            var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
+            $('div#titlewrap').append(title_msg);
+          }
+         
       }
   });
 

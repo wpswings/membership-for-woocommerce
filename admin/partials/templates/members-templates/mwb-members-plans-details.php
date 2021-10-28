@@ -37,6 +37,10 @@ $products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $p
 $categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
 $discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
 $price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
+$plan_subscription = ! empty( $plan['mwb_membership_subscription'] ) ? $plan['mwb_membership_subscription'] : '';
+$plan_subscription_duration = ! empty( $plan['mwb_membership_subscription_expiry'] ) ? $plan['mwb_membership_subscription_expiry'] : '';
+$plan_subscription_duration_type = ! empty( $plan['mwb_membership_subscription_expiry_type'] ) ? $plan['mwb_membership_subscription_expiry_type'] : '';
+
 $club_membership = get_post_meta( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'mwb_membership_club', true );
 $args = array(
 	'post_type'   => 'mwb_cpt_membership',
@@ -72,7 +76,7 @@ $existing_plans = get_posts( $args );
 				<tr>
 					<th><label><?php esc_html_e( 'Description', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
-						<?php echo esc_html( $plan_desc ); ?>
+						<?php echo $plan_desc ; ?>
 					</td>
 				</tr>
 
@@ -109,6 +113,23 @@ $existing_plans = get_posts( $args );
 						echo '<tr>' . esc_html__( 'Plan duration not defined', 'membership-for-woocommerce' ) . '</tr></br>';
 
 				}
+				?>
+
+				<tr>
+					<th><label><?php esc_html_e( 'Subscription Membership', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+						<?php echo esc_html( $plan_subscription ); ?>
+					</td>
+				</tr>
+				
+				<tr>
+					<th><label><?php esc_html_e( 'Subscription Membership Duration', 'membership-for-woocommerce' ); ?></label></th>
+					<td>
+						<?php echo sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type . 's' ) ); ?>
+					</td>
+				</tr>
+
+				<?php
 
 				if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 					$check_licence = check_membership_pro_plugin_is_active();

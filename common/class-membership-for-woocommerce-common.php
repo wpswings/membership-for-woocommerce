@@ -331,11 +331,12 @@ class Membership_For_Woocommerce_Common {
 		}
 		$subscription = get_post( $subscription_id );
 		$parent_order_id  = $subscription->mwb_parent_order;
-		update_option( 'cvf gxcfgcfg', $order_status );
-		update_option( 'cvf gxcfggggcfg', $mwb_new_order );
+
 		$order_status  = $mwb_new_order->get_status();
+		$order = new WC_Order( $mwb_new_order->get_id() );
+		$order_status = $order->status;
 		if ( 'processing' == $order_status || 'complete' == $order_status || 'failed' == $order_status ) {
-			update_option( 'cvf gxcfgccgfcfgcfg', $order_status );
+
 			$order = wc_get_order( $parent_order_id );
 			$member_id = '';
 			foreach ( $order->get_items() as $item_id => $item ) {
@@ -344,15 +345,12 @@ class Membership_For_Woocommerce_Common {
 					$member_id = $item->get_meta( '_member_id' );
 				}
 			}
-
 			if ( ! empty( $member_id ) ) {
 				update_post_meta( $member_id, 'member_status', 'complete' );
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}
 	}
-
-
 
 	/**
 	 * Update the option for settings from the multistep form.
