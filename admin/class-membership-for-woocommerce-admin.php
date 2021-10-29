@@ -357,16 +357,11 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_options_page() {
 		global $submenu;
 	
-		if (  ! in_array( 'Home', (array) $submenu['mwb-plugins'] ) ) {
-			if ( mwb_standard_check_multistep() ) {
-				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),1 );
-			}
-		}
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
 			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
 
 			if ( mwb_standard_check_multistep() ) {
-				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),0 );
+				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),1 );
 			}
 			$mfw_menus =
 			// desc - filter for trial.
@@ -376,7 +371,18 @@ class Membership_For_Woocommerce_Admin {
 					add_submenu_page( 'mwb-plugins', $mfw_value['name'], $mfw_value['name'], 'manage_options', $mfw_value['menu_link'], array( $mfw_value['instance'], $mfw_value['function'] ) );
 				}
 			}	
+		} else {
+			if (! empty($submenu['mwb-plugins'])) {
+
+				if (  ! in_array( 'Home', (array) $submenu['mwb-plugins'] ) ) {
+					if ( mwb_standard_check_multistep() ) {
+						add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ),1 );
+					}
+				}
+			}
 		}
+
+		
 	}
 
 	/**
@@ -1799,7 +1805,7 @@ class Membership_For_Woocommerce_Admin {
 					$time_duration      = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration', true );
 					$time_duration_type = get_post_meta( $plan_obj['ID'], 'mwb_membership_plan_time_duration_type', true );
 
-					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+					$current_date = gmdate( 'Y-m-d', strtotime( $today_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
 				}
 
@@ -1854,7 +1860,7 @@ class Membership_For_Woocommerce_Admin {
 		} else {
 
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
-
+			$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 			$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
 			if ( 'yes' == $plan_obj['mwb_membership_subscription'] || ! empty( $order_id ) ) {
 				$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );

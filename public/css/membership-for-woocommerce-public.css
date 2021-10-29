@@ -74,6 +74,21 @@
   .mfw-product-meta-membership {
     text-align: center;
   }
+
+  .product-inner {
+    position: relative;
+  }
+
+  .product-inner .mfw-product-meta-membership-wrap {
+    position: absolute;
+    top: 280px;
+    left: 0;
+    right: 0;
+  }
+  
+  .product-inner .woo-entry-image + .mfw-product-meta-membership-wrap + .woo-entry-inner li.image-wrap {
+    margin-bottom: 60px !important;
+  }
   
   .mwb_mfw_membership_tool_tip_wrapper {
     position: relative;

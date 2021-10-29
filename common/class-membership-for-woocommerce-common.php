@@ -335,20 +335,40 @@ class Membership_For_Woocommerce_Common {
 		$order_status  = $mwb_new_order->get_status();
 		$order = new WC_Order( $mwb_new_order->get_id() );
 		$order_status = $order->status;
-		if ( 'processing' == $order_status || 'complete' == $order_status || 'failed' == $order_status ) {
+		if ( 'processing' == $order_status || 'complete' == $order_status ) {
 
 			$order = wc_get_order( $parent_order_id );
-			$member_id = '';
-			foreach ( $order->get_items() as $item_id => $item ) {
-
-				if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
-					$member_id = $item->get_meta( '_member_id' );
-				}
-			}
+			$member_id = get_member_id_from_order( $order );
+			
 			if ( ! empty( $member_id ) ) {
 				update_post_meta( $member_id, 'member_status', 'complete' );
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
+		}
+		if ( 'failed' == $order_status ) {
+			$member_id = get_member_id_from_order( $order );
+			
+			if ( ! empty( $member_id ) ) {
+				update_post_meta( $member_id, 'member_status', 'cancelled' );
+				update_post_meta( $member_id, 'member_expiry', $expiry_date );
+			}
+		}
+	}
+
+
+		/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_expire( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'expired' );
 		}
 	}
 

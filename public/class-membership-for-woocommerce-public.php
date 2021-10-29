@@ -298,7 +298,7 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_shortcodes() {
 
 		// Buy now button shortcode.
-		add_shortcode( 'mwb_membership_yes', array( $this, 'buy_now_shortcode_yes' ) );
+		add_shortcode( 'mwb_membership_buy_now', array( $this, 'buy_now_shortcode_yes' ) );
 		add_shortcode( 'mwb_membership_buy', array( $this, 'buy_now_shortcode_content' ) );
 
 		// No thanks button shortcode.
@@ -969,6 +969,7 @@ class Membership_For_Woocommerce_Public {
 						}
 
 						?>
+						 <div class="mfw-product-meta-membership-wrap">
 							<div class="product-meta mfw-product-meta-membership">
 								<span><b><?php esc_html_e( 'Membership Product', 'membership-for-woocommerce' ); ?></b></span>
 							</div>
@@ -977,6 +978,7 @@ class Membership_For_Woocommerce_Public {
 									<?php echo esc_html( $output ); ?>
 								</div>
 							</i>
+						</div>
 						<?php
 					}
 				}
@@ -3419,14 +3421,8 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_subscription_next_payment_date( $mwb_next_payment_date, $subscription_i_d ) {
 		$order_id = get_post_meta( $subscription_i_d, 'mwb_parent_order', true );
 		$order = wc_get_order( $order_id );
-		$member_id = '';
-		foreach ( $order->get_items() as $item_id => $item ) {
-
-			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
-				$member_id = $item->get_meta( '_member_id' );
-			}
-		}
-
+		$member_id = get_member_id_from_order( $order );
+		
 		if ( ! empty( $member_id ) ) {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
@@ -3448,14 +3444,8 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_susbcription_end_date( $mwb_susbcription_end, $subscription_i_d ) {
 		$order_id = get_post_meta( $subscription_i_d, 'mwb_parent_order', true );
 		$order = wc_get_order( $order_id );
-		$member_id = '';
-		foreach ( $order->get_items() as $item_id => $item ) {
-
-			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
-				$member_id = $item->get_meta( '_member_id' );
-			}
-		}
-
+		$member_id = get_member_id_from_order( $order );
+	
 		if ( ! empty( $member_id ) ) {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
@@ -3531,7 +3521,7 @@ class Membership_For_Woocommerce_Public {
 
 		if ( $is_membership_product == true ) {
 			if ( empty( $the_user ) ) {
-				$errors->add( 'validation', 'Please try to place order with existing customer!!' );
+				$errors->add( 'validation', 'User with this mail not found try to place order with existing user!!' );
 			}
 		}
 
@@ -3559,7 +3549,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		if ( $is_not_membership_applicable ) {
-			   $errors->add( 'validation', 'Please place order with non existing membership plan!!' );
+			   $errors->add( 'validation', 'Membership plan already exists Buy a new plan !!' );
 		}
 	}
 
