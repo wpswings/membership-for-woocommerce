@@ -895,8 +895,6 @@ class Membership_For_Woocommerce_Public {
 
 			$product = $_product;
 		}
-
-
 		
 		$is_product_exclude = false;
 
