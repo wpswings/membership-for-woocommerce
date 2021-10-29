@@ -305,6 +305,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
 		$this->loader->add_action( 'mwb_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'mwb_membership_subscription_renewal', 99, 3 );
 		$this->loader->add_action( 'mwb_sfw_expire_subscription_scheduler', $mfw_plugin_common, 'mwb_membership_subscription_expire', 99, 1 );
+		$this->loader->add_action( 'mwb_sfw_subscription_active_renewal', $mfw_plugin_common, 'mwb_membership_subscription_active_renewal', 99, 1 );
+		$this->loader->add_action( 'mwb_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'mwb_membership_subscription_on_hold_renewal', 99, 1 );
+		
 		if ( self::is_enbale_usage_tracking() ) {
 			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'mfw_makewebbetter_tracker_send_event' );
 		}

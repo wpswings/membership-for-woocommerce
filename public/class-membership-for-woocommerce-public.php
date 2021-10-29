@@ -2113,9 +2113,9 @@ class Membership_For_Woocommerce_Public {
 					$order_st = 'complete';
 				} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
 					$order_st = 'hold';
-				} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() ) {
+				} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() || 'failed' == $order->get_status() ) {
 					$order_st = 'pending';
-				} elseif ( 'cancelled' == $order->get_status() || 'failed' == $order->get_status() ) {
+				} elseif ( 'cancelled' == $order->get_status() ) {
 					$order_st = 'cancelled';
 				}
 				update_post_meta( $member_id, 'member_status', $order_st );

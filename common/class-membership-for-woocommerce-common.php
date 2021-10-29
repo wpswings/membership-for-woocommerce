@@ -349,14 +349,45 @@ class Membership_For_Woocommerce_Common {
 			$member_id = get_member_id_from_order( $order );
 			
 			if ( ! empty( $member_id ) ) {
-				update_post_meta( $member_id, 'member_status', 'cancelled' );
+				update_post_meta( $member_id, 'member_status', 'pending' );
 				update_post_meta( $member_id, 'member_expiry', $expiry_date );
 			}
 		}
 	}
 
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_active_renewal( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'complete' );
+		}
+	}
 
-		/**
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_on_hold_renewal( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'pending' );
+		}
+	}
+
+	/**
 	 * Membership status update according to subscription renewal.
 	 *
 	 * @param mixed $subscription_id subscription id.
