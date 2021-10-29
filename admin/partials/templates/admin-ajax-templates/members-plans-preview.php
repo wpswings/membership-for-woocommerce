@@ -54,7 +54,7 @@ if ( ! empty( $member_id ) ) {
 					<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
 					' . esc_html( $plan_info['post_title'] ) . '
 					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
-					' . esc_html( $plan_info['post_content'] ) . '
+					' . wp_kses_post( $plan_info['post_content'] ) . '
 					<div class="member_plan_status ' . $plan_status . '">' . esc_html( $plan_status ) . '</div>';
 
 	$output .= '</div>

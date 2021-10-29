@@ -876,11 +876,6 @@ class Membership_For_Woocommerce_Public {
 		return $term_related_to_product;
 	}
 
-
-
-
-
-
 	/**
 	 * Display membership tag on products which are offered in any membership on shop page.
 	 *
@@ -889,13 +884,24 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @since 1.0.0
 	 */
-	public function mwb_membership_products_on_shop_page( $return_status = false, $product = false ) {
+	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
-	
+		global $product;
+
+		if ( ! is_shop() ) {
+			return ;
+		}
+		if ( empty( $product ) ) {
+
+			$product = $_product;
+		}
+
+
+		
 		$is_product_exclude = false;
 
 		if ( $this->global_class->plans_exist_check() == true ) {
-			
+
 			$data = $this->custom_query_data;
 
 			if ( ! empty( $data ) && is_array( $data ) ) {
@@ -904,9 +910,6 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $data as $plan ) {
 
-					if ( empty( $product ) ) {
-						return;
-					}
 					$exclude_product = array();
 					$exclude_product = apply_filters( 'mwb_membership_exclude_product', $exclude_product, $product->get_id() );
 
@@ -922,7 +925,7 @@ class Membership_For_Woocommerce_Public {
 
 					$target_ids     = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_ids', true );
 					$target_cat_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_categories', true );
-					$target_tag_ids = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
+					$target_tag_ids  = get_post_meta( $plan['ID'], 'mwb_membership_plan_target_tags', true );
 
 					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
@@ -932,9 +935,9 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 
-					if ( ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) ) {
+					if ( ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) {
 
-						if ( has_term( $target_cat_ids, 'product_cat', get_post( $product->get_id() ) ) ) {
+						if ( has_term( $target_cat_ids, 'product_cat', get_post( $product->get_id() ) ) || has_term( $target_tag_ids, 'product_tag', get_post( $product->get_id() ) ) ) {
 
 							if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
 
@@ -945,31 +948,6 @@ class Membership_For_Woocommerce_Public {
 
 								$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 
-							}
-						}
-					}
-
-					$term_related_to_product = array();
-					$term_related_to_plan    = array();
-
-					if ( ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) {
-
-						if ( $target_tag_ids ) {
-							foreach ( $target_tag_ids as $tag_id ) {
-								$tag_name = get_the_category_by_ID( $tag_id );
-								array_push( $term_related_to_plan, $tag_id );
-
-							}
-						}
-					}
-
-					$term_related_to_product = $this->get_product_terms( $product->get_id() );
-
-					if ( ! empty( $term_related_to_product ) ) {
-
-						foreach ( $term_related_to_product as $term_related_to_product_key => $term_related_to_product_value ) {
-							if ( in_array( $term_related_to_product_value, $term_related_to_plan ) ) { // checking if the product does not exist in target id of a plan.
-								$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 							}
 						}
 					}
