@@ -716,7 +716,7 @@ class Membership_For_Woocommerce_Admin {
 				'labels'               => $labels,
 				'public'               => true,
 				'has_archive'          => false,
-				'publicly_queryable'   => false,
+				'publicly_queryable'   => true,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
@@ -933,7 +933,7 @@ class Membership_For_Woocommerce_Admin {
 				'public'               => true,
 				'has_archive'          => false,
 				'show_ui'              => true,
-				'publicly_queryable'   => false,
+				'publicly_queryable'   => true,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
@@ -1176,6 +1176,11 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_status':
 				$plan_status = get_post_status( $post_id );
 
+				if ( ! mwb_membership_check_plugin_enable() ) {
+
+					echo esc_html__( 'Disabled from settings', 'membership-for-woocommerce' );
+					break;
+				}
 				if ( ! empty( $plan_status ) ) {
 
 					// Display Sandbox mode if visibility is private.
@@ -1239,7 +1244,6 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-
 	/**
 	 * Populating custom columns with content.
 	 *
@@ -1253,7 +1257,7 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'membership_id':
 				$author_id    = get_post_field( 'post_author', $post_id );
-				$display_name = get_the_author_meta( 'display_name', $author_id );
+				$display_name = get_the_author_meta( 'display_name', get_post_meta( $post_id, 'mwb_member_user', true ) );
 				?>
 				<strong><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
 				<?php
@@ -1266,7 +1270,7 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'membership_user':
 				$author_id   = get_post_field( 'post_author', $post_id );
-				$author_name = get_the_author_meta( 'user_nicename', $author_id );
+				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'mwb_member_user', true ) );
 
 				echo esc_html( $author_name );
 				break;
