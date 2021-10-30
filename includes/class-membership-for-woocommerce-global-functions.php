@@ -467,7 +467,7 @@ class Membership_For_Woocommerce_Global_Functions {
 						<div class="mwb_membership_plan_content_title">[mwb_membership_title]</div>
 						<div class="mwb_membership_plan_content_price">[mwb_membership_price]</div>
 						<div class="mwb_membership_plan_content_desc">[mwb_membership_desc]</div>
-						<div class="mwb_mfw_buy_button">[mwb_membership_yes] [mwb_membership_no]</div>
+						<div class="mwb_mfw_buy_button">[mwb_membership_buy_now] [mwb_membership_no]</div>
 						</div>
 						<!-- /wp:html --></div></div>
 						<!-- /wp:group --></div></div>

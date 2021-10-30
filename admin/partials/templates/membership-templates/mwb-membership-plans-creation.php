@@ -53,7 +53,7 @@ global $post;
 		<tr class="mwb-membership__plan--pro-disabled">
 
 			<th scope="row" class="titledesc">
-				<label for="mwb_membership_club"><?php esc_html_e( 'Include Memberships', 'membership-for-woocommerce' ); ?></label>
+				<label for="mwb_membership_club"><?php esc_html_e( 'Include other Memberships', 'membership-for-woocommerce' ); ?></label>
 				<?php
 				$description = esc_html__( 'Select the membership plans you want to include with this membership', 'membership-for-woocommerce' );
 				$instance->tool_tip( $description );
