@@ -49,7 +49,7 @@ $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
-
+$current_user_assigned =get_post_meta( $post->ID , 'mwb_member_user', true );
 ?>
 
 <!-- Members billing metabox start -->
@@ -70,6 +70,8 @@ $country_class = new WC_Countries();
 				</label><br>
 				<select name="mwb_member_user" id="mwb_member_user">
 					<?php
+				
+					
 					if ( ! empty( $all_users ) && is_array( $all_users ) ) {
 
 						foreach ( $all_users as $users ) {
@@ -80,13 +82,13 @@ $country_class = new WC_Countries();
 							if ( ! empty( $user_roles ) ) {
 								$user_role = $user_roles[0];
 							}
-							if ( 'administrator' != $user_role ) {
+						
 
 
 								?>
-							<option <?php echo esc_html( $users->ID === $post->post_author ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
+							<option <?php echo esc_html( $users->ID === $current_user_assigned ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
 								<?php
-							}
+						
 						}
 					}
 					?>

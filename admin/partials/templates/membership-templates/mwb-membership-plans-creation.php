@@ -188,7 +188,7 @@ global $post;
 				$mwb_membership_plan_duration_type = $settings_fields['mwb_membership_plan_duration_type'];
 				?>
 
-				<input type="number" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" >
+				<input type="number" min="0" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_duration'] ); ?>" >
 				<select name="mwb_membership_plan_duration_type" id="mwb_membership_plan_duration_type">
 					<option <?php echo esc_html( 'days' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 					<option <?php echo esc_html( 'weeks' === $mwb_membership_plan_duration_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
@@ -248,7 +248,7 @@ global $post;
 	$mwb_membership_subscription_expiry_type = $settings_fields['mwb_membership_subscription_expiry_type'];
 	?>
 
-	<input type="number" id="mwb_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription_expiry'] ); ?>" >
+	<input type="number" min="0" id="mwb_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription_expiry'] ); ?>" >
 	<select name="mwb_membership_subscription_expiry_type" id="mwb_membership_subscription_expiry_type">
 		<option <?php echo esc_html( 'day' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="day"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 		<option <?php echo esc_html( 'week' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="week"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
@@ -455,7 +455,7 @@ global $post;
 						<option <?php echo esc_html( 'fixed' === $mwb_membership_product_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 					</select>
-					<input type="number" step=".01" class="mwb_membership product_offer_input_type" id="mwb_membership_product_offer_price" name="mwb_memebership_product_discount_price" value="<?php echo esc_attr( $mwb_membership_product_discount_price ); ?>">
+					<input type="number" min="0" step=".01" class="mwb_membership product_offer_input_type" id="mwb_membership_product_offer_price" name="mwb_memebership_product_discount_price" value="<?php echo esc_attr( $mwb_membership_product_discount_price ); ?>">
 
 				</td>
 			</tr>
@@ -897,7 +897,7 @@ global $post;
 							<option <?php echo esc_html( 'fixed' === $mwb_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 						</select>
-						<input type="number" step=".01" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
+						<input type="number" min="0" step=".01" class="mwb_membership plan_offer_input_type" id="mwb_membership_plan_offer_price" name="mwb_memebership_plan_discount_price" value="<?php echo esc_attr( $mwb_membership_plan_discount_price ); ?>">
 
 					</td>
 				</tr>

@@ -716,7 +716,7 @@ class Membership_For_Woocommerce_Admin {
 				'labels'               => $labels,
 				'public'               => true,
 				'has_archive'          => false,
-				'publicly_queryable'   => true,
+				'publicly_queryable'   => false,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
@@ -933,7 +933,7 @@ class Membership_For_Woocommerce_Admin {
 				'public'               => true,
 				'has_archive'          => false,
 				'show_ui'              => true,
-				'publicly_queryable'   => true,
+				'publicly_queryable'   => false,
 				'query_var'            => true,
 				'capability_type'      => 'post',
 				'hierarchical'         => false,
@@ -1702,8 +1702,10 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		$post   = get_post( $post_id );
+		$current_assigned_user = ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '';
+		update_post_meta( $post_id, 'mwb_member_user', $current_assigned_user );
 
-		$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
+$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
 
 		$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
 		if ( ! in_array( $post_id, (array) $current_memberships ) ) {
@@ -1768,9 +1770,9 @@ class Membership_For_Woocommerce_Admin {
 				}
 
 				$post   = get_post( $post_id );
-				$user    = get_userdata( $post->post_author );
+				$user    = get_userdata( $current_assigned_user );
 
-				$user = new WP_User( $post->post_author ); // create a new user object for this user.
+				$user = new WP_User( $current_assigned_user ); // create a new user object for this user.
 				// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				if ( 'Lifetime' == $expiry_date ) {
@@ -1784,15 +1786,16 @@ class Membership_For_Woocommerce_Admin {
 				$user_name = $user->data->display_name;
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
-					$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
+					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 				}
 			}
+		
 			update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'is_member', 'member' );
 
 		} elseif ( 'cancelled' == $_POST['member_status'] ) {  // If manually cancelling membership then remove its expiry date.
 
 			$post   = get_post( $post_id );
-			$user = get_userdata( $post->post_author );
+			$user = get_userdata( $current_assigned_user );
 			$expiry_date = '';
 			$plan_obj = get_post_meta( $post_id, 'plan_obj', true );
 			$today_date = gmdate( 'Y-m-d' );
@@ -1853,7 +1856,7 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( ! empty( $customer_email ) ) {
 
-				$email_status = $customer_email->trigger( $post->post_author, $plan_obj, $user_name, $expiry_date, $order_id );
+				$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
 			update_post_meta( $post_id, 'member_expiry', '' );
 			update_post_meta( $post_id, 'plan_obj', '' );
