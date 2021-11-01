@@ -31,6 +31,43 @@
 
 jQuery(document).ready(function($) {
 
+    jQuery('#preview-action').hide();
+    jQuery('#edit-slug-box').hide();
+    jQuery('#message').hide();
+
+     // Remove image button.
+  $(document).on('change', '#mwb_membership_plan_duration_type', function(e) {
+    e.preventDefault();
+
+    var duration_type = jQuery('#mwb_membership_plan_duration_type option:selected').val();
+    var duration_text = jQuery('#mwb_membership_plan_duration_type option:selected').text();
+    duration_type =  duration_type.substring(0,duration_type.length - 1)
+    jQuery('#mwb_membership_subscription_expiry_type option:selected').val(duration_type);
+    jQuery('#mwb_membership_subscription_expiry_type option:selected').text(duration_text);
+
+    });
+    $(document).on('blur', '#mwb_membership_subscription_expiry', function(e) {
+     e.preventDefault();
+
+     var duration = jQuery('#mwb_membership_plan_duration').val();
+     var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+     if ( duration > subscription ) {
+        alert('Please enter subscription expiry value greater or equal to duration ');
+        var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+     }
+    });
+
+    $(document).on('blur', '#mwb_membership_plan_duration', function(e) {
+        e.preventDefault();
+   
+        var duration = jQuery('#mwb_membership_plan_duration').val();
+        var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+        if ( duration > subscription ) {
+           var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+        }
+       });
+
+
     $(document).on('click','.media-button',function() {
         jQuery('.media-modal-close').trigger('click');
       });

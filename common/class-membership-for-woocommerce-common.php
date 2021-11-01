@@ -383,7 +383,7 @@ class Membership_For_Woocommerce_Common {
 		$order = wc_get_order( $parent_order_id );
 		$member_id = get_member_id_from_order( $order );
 		if ( ! empty( $member_id ) ) {
-			update_post_meta( $member_id, 'member_status', 'pending' );
+			update_post_meta( $member_id, 'member_status', 'hold' );
 		}
 	}
 

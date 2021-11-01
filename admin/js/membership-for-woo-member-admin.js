@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 
   
-
+$('#message').hide();
     // Display edit fields on edit click
     $(".members_data_column").on("click", ".edit_member_address", function(e) {
         e.preventDefault();

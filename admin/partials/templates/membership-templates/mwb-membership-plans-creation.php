@@ -32,18 +32,14 @@ global $post;
 
 		<!-- Memberhship plan price start  -->
 		<tr valign="top">
-
 			<th scope="row" class="titledesc">
 				<label for="mwb_membership_plan_price"><?php esc_html_e( 'Membership Plan Amount', 'membership-for-woocommerce' ); ?></label>
 				<?php
-
 				$description = esc_html__( 'Provide the amount at which Membership Plan will be available for Users.', 'membership-for-woocommerce' );
 				$instance->tool_tip( $description );
 				?>
 			</th>
-
 			<td class="forminp forminp-text">
-
 				<input type="number" required step=".01" min="0" id="mwb_membership_plan_price" placeholder="<?php echo esc_attr( $description ); ?>" name="mwb_membership_plan_price" value="<?php echo esc_attr( $settings_fields['mwb_membership_plan_price'] ); ?>">
 			</td>
 		</tr>
@@ -249,7 +245,7 @@ global $post;
 	?>
 
 	<input type="number" min="0" id="mwb_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription_expiry'] ); ?>" >
-	<select name="mwb_membership_subscription_expiry_type" id="mwb_membership_subscription_expiry_type">
+	<select disabled="disabled" name="mwb_membership_subscription_expiry_type" id="mwb_membership_subscription_expiry_type">
 		<option <?php echo esc_html( 'day' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="day"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
 		<option <?php echo esc_html( 'week' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="week"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
 		<option <?php echo esc_html( 'month' === $mwb_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="month"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>

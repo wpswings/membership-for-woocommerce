@@ -134,7 +134,7 @@ jQuery(document).ready(function ($) {
 
 	}).on('mouseleave', function () {
 
-		$(this).children('.mwsb_mfw_membership_tool_tip').css('display', 'none');
+		$(this).children('.mwb_mfw_membership_tool_tip').css('display', 'none');
 	})
 
 	$('.mwb_membership_buynow').on("click", function (e) {

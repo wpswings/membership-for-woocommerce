@@ -26,6 +26,14 @@ if ( ! empty( $member_id ) ) {
 	$billing_info = get_post_meta( $member_id, 'billing_details', true );
 	$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
 	$plan_status  = get_post_meta( $member_id, 'member_status', true );
+$post_title='';
+$mwb_membership_plan_price ='';	
+$post_content = '';	
+	if ( ! empty( $plan_info ) ) {
+		$post_title=	$plan_info['post_title'] ;
+		$mwb_membership_plan_price =	$plan_info['mwb_membership_plan_price'] ;
+		$post_content = 	$plan_info['post_content'] ;
+	}
 
 	$output .= '<div class="members_billing_preview_wrapper">
 				<div class="members_billing_preview">
@@ -52,9 +60,9 @@ if ( ! empty( $member_id ) ) {
 
 	$output .= '<div class="members_plan_preview" >
 					<h2>' . esc_html__( 'Plan details', 'membership-for-woocommerce' ) . '</h2>
-					' . esc_html( $plan_info['post_title'] ) . '
-					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '
-					' . wp_kses_post( $plan_info['post_content'] ) . '
+					' . esc_html( $post_title ) . '
+					' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $mwb_membership_plan_price ) ) . '
+					' . wp_kses_post( $post_content ) . '
 					<div class="member_plan_status ' . $plan_status . '">' . esc_html( $plan_status ) . '</div>';
 
 	$output .= '</div>
@@ -70,8 +78,8 @@ if ( ! empty( $member_id ) ) {
 						</thead>
 						<tbody>
 							<tr>
-								<td>' . esc_html( $plan_info['post_title'] ) . '</td>
-								<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $plan_info['mwb_membership_plan_price'] ) ) . '</td>
+								<td>' . esc_html( $post_title ) . '</td>
+								<td>' . sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $mwb_membership_plan_price ) ) . '</td>
 							</tr>
 						</tbody>
 					</table>';

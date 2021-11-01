@@ -70,6 +70,10 @@
     text-align: center;
     margin: 0px auto -5px;
   }
+  .product .product-meta.product-meta-review {
+    margin: 10px 0 10px 0;
+    max-width: 230px;
+}
   
   .mfw-product-meta-membership {
     text-align: center;
@@ -225,6 +229,7 @@
   .mwb_membership_plan_content_title {
     font-size: 30px;
     border-bottom: 2px solid #f37e21;
+    line-height: 1.25 !important;
   }
   
   .mwb_membership_plan_content_price {

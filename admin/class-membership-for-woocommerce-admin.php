@@ -1950,7 +1950,6 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 		if ( empty( $_POST['action'] ) || 'editpost' != $_POST['action'] ) {
 			return;
 		}
-	
 
 		// Nonce verification.
 		check_admin_referer( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' );
@@ -1998,7 +1997,19 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 				update_post_meta( $product_id, '_mwb_membership_discount_' . $post_id, $product_discount );
 			}
 		}
+		if ( ! empty( $_POST[ 'mwb_membership_plan_duration_type' ] ) ) {
 
+			if ( is_array( $_POST[ 'mwb_membership_plan_duration_type' ] ) ) {
+
+				$post_data = ! empty( $_POST[ 'mwb_membership_plan_duration_type' ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ 'mwb_membership_plan_duration_type' ] ) ) : $default;
+
+			} else {
+
+				$post_data = ! empty( $_POST[ 'mwb_membership_plan_duration_type' ] ) ? sanitize_text_field( wp_unslash( $_POST[ 'mwb_membership_plan_duration_type' ] ) ) : $default;
+
+			}
+		}
+		update_post_meta( $post_id, 'mwb_membership_subscription_expiry_type', substr( $post_data, 0, -1 ) );
 	}
 
 	/**
