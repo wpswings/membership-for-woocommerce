@@ -97,41 +97,6 @@ $count_public = filtered_array( $mfw_developer_public_hooks );
 		</div>
 	</div>
 </div>
-<?php
-$mwb_tracking_fields_array = apply_filters(
-	'mwb_tracking_fields_array',
-	array(
-		array(
-			'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
-			'type'  => 'radio-switch',
-			'description'  => __( 'Allow usage of this plugin to be tracked', 'membership-for-woocommerce' ),
-			'id'    => 'mfw_enable_tracking',
-			'value' => get_option( 'mfw_enable_tracking' ),
-			'class' => 'mfw-radio-switch-class',
-			'options' => array(
-				'yes' => __( 'YES', 'membership-for-woocommerce' ),
-				'no' => __( 'NO', 'membership-for-woocommerce' ),
-			),
-		),
-		array(
-			'type'  => 'button',
-			'id'    => 'mfw_button_demo',
-			'button_text' => __( 'Save', 'membership-for-woocommerce' ),
-			'class' => 'mfw-button-class',
-		),
-	)
-);
-?>
-<form action="" method="POST" class="mwb-mfw-gen-section-form">
-	<div class="mfw-secion-wrap">
-		<?php
-		$mfw_tracking_html = $mfw_mwb_mfw_obj->mwb_mfw_plug_generate_html( $mwb_tracking_fields_array );
-		echo esc_html( $mfw_tracking_html );
-		wp_nonce_field( 'admin_save_data', 'mwb_tabs_nonce' );
-		?>
-	</div>
-</form>
-
 
 <?php
 /**

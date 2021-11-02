@@ -2175,6 +2175,13 @@ class Membership_For_Woocommerce_Public {
 
 					$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 
+
+					if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
+						$available_plan = get_option( 'all_subscription_plan' );
+						$available_plan = $available_plan . '-' . $member_id;
+						update_option( 'all_subscription_plan', $available_plan );
+					}
+
 					$this->assign_club_membership_to_member( $plan_id, $plan_obj, $member_id );
 
 				}
@@ -2766,7 +2773,7 @@ class Membership_For_Woocommerce_Public {
 
 					if ( 1 == count( $memberships ) ) {
 						if ( false == $other_member_exists ) {
-							$user->remove_role( 'member' );
+						 update_user_meta( $author_id, 'is_member', '' );
 						}
 					} else {
 
@@ -2785,7 +2792,7 @@ class Membership_For_Woocommerce_Public {
 
 						// If removal required then remove role.
 						if ( false == $other_member_exists ) {
-							$user->remove_role( 'member' );
+							update_user_meta( $author_id, 'is_member', '' );
 						}
 					}
 				}

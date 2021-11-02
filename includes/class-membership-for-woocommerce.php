@@ -136,7 +136,6 @@ class Membership_For_Woocommerce {
 				  // The class responsible for defining all actions that occur in the admin area.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
 
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php';
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';

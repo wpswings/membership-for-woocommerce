@@ -287,7 +287,6 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_script( 'mwb_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
 
 			}
-	
 
 			if ( 'mwb_cpt_members' === $pagescreen_post || 'mwb_cpt_members' === $pagescreen_id ) {
 
@@ -1629,26 +1628,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-	/**
-	 * Members schedule metabox callback.
-	 *
-	 * @param object $post is the post object.
-	 * @since 1.0.0
-	 */
-	public function mwb_members_metabox_schedule( $post ) {
-
-		$member = $post;
-
-		wc_get_template(
-			'admin/partials/templates/members-templates/mwb-members-plans-schedule.php',
-			array(
-				'post' => $member,
-			),
-			'',
-			MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH
-		);
-
-	}
 
 	/**
 	 * Members billing metabox save.
@@ -1709,7 +1688,7 @@ class Membership_For_Woocommerce_Admin {
 		$current_assigned_user = ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '';
 		update_post_meta( $post_id, 'mwb_member_user', $current_assigned_user );
 
-$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
+		$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
 
 		$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
 		if ( ! in_array( $post_id, (array) $current_memberships ) ) {
@@ -1864,6 +1843,29 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 			}
 			update_post_meta( $post_id, 'member_expiry', '' );
 			update_post_meta( $post_id, 'plan_obj', '' );
+
+
+			$other_member_exists = false;
+			$mwb_membership_posts = get_post_field( 'post_author', $post_id );
+			
+			$memberships = get_user_meta( $mwb_membership_posts, 'mfw_membership_id', true );
+
+			
+			foreach ( $memberships as $key => $m_id ) {
+			
+				$status = get_post_meta( $m_id, 'member_status', true );
+			
+				if ( 'complete' == $status ) {
+			
+					$other_member_exists = true;
+				}
+			}
+
+			
+			if ( false == $other_member_exists ) {
+				update_user_meta( $current_assigned_user, 'is_member', '' );
+			   }
+
 		} else {
 
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
@@ -2062,6 +2064,7 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 		$order = new WC_Order( $order_id );
 		$orderstatus = $order->status;
 
+
 		$items = $order->get_items();
 
 		$member_id = '';
@@ -2077,6 +2080,8 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 				}
 			}
 		}
+
+	
 
 		$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
 		$today_date = gmdate( 'Y-m-d' );
@@ -2137,10 +2142,13 @@ $current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? san
 				}
 			}
 		} else {
-
+		
 			update_post_meta( $member_id, 'member_status', $order_st );
 			$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
 			if ( 'complete' == $order_st ) {
+
+				$mwb_membership_posts = get_post_field( 'post_author', $member_id );
+				update_user_meta( $mwb_membership_posts, 'is_member', 'member' );
 				if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
 					if ( ! empty( $subscription_id ) ) {
 						update_post_meta( $subscription_id, 'mwb_subscription_status', 'active' );
