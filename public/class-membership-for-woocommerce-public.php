@@ -1899,41 +1899,48 @@ class Membership_For_Woocommerce_Public {
 
 		$all_methods = array();
 		$user = wp_get_current_user();
+		$is_allowed_membership_shipping = false;
+
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
 
-			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
+			$user_id = get_current_user_id();
 
-				foreach ( $rates as $rate_key => $rate ) {
-					// Excluding membership shipping methods.
+			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
-					if ( 'mwb_membership_shipping' === $rate->get_method_id() ) {
-						unset( $rates[ $rate_key ] );
+			if ( ! empty( $current_memberships && is_array( $current_memberships ) ) ) {
+
+				foreach ( $current_memberships as $key => $membership_id ) {
+
+					$membership_status = get_post_meta( $membership_id, 'member_status', true );
+					if ( ! empty( $membership_status ) && 'complete' == $membership_status ) {
+						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+
+						if ( 'yes' == $active_plan['mwb_memebership_plan_free_shipping'] ) {
+							$is_allowed_membership_shipping = true;
+						}
 					}
+					
 				}
+			}
 
+			if ( $is_allowed_membership_shipping ) {
 				return $rates;
+			} else {
+				foreach ( $rates as $rate_key => $rate ) {
+							// Excluding membership shipping methods.
+							if ( 'mwb_membership_shipping' === $rate->get_method_id() ) {
+								unset( $rates[ $rate_key ] );
+							}
+						}
+		
+					return $rates;
+
 			}
 
-			$all_methods = array();
-
-			foreach ( $rates as $rate_id => $rate ) {
-
-				if ( 'mwb_membership_shipping' == $rate->method_id ) {
-
-					$all_methods[ $rate_id ] = $rate;
-					break;
-				}
-			}
 		}
 
-		if ( empty( $all_methods ) ) {
-
-			return $rates;
-		} else {
-
-			return $all_methods;
-		}
+	
 	}
 
 

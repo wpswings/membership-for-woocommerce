@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
 
      var duration = jQuery('#mwb_membership_plan_duration').val();
      var subscription = jQuery('#mwb_membership_subscription_expiry').val();
-     if ( duration > subscription ) {
+     if ( parseInt(duration)  > parseInt(subscription) ) {
         alert('Please enter subscription expiry value greater or equal to duration ');
         var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
      }
@@ -62,11 +62,10 @@ jQuery(document).ready(function($) {
    
         var duration = jQuery('#mwb_membership_plan_duration').val();
         var subscription = jQuery('#mwb_membership_subscription_expiry').val();
-        if ( duration > subscription ) {
+        if ( parseInt(duration)  > parseInt(subscription) ) {
            var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
         }
-       });
-
+    });
 
     $(document).on('click','.media-button',function() {
         jQuery('.media-modal-close').trigger('click');
@@ -337,25 +336,23 @@ jQuery(document).ready(function($) {
       $('#upload_img').removeClass('button_hide');
       $('#remove_img').addClass('button_hide');
   });
-
  
-
   // Add default plan title.
   var post_title = $('input[name="post_title"]').val();
   var post_id = $('input[name="post_ID"]').val();
 
   if (!post_title) {
-      $('input[name="post_title"]').val('Plan ' + '#' + post_id);
+      $('input[name="post_title"]').val( admin_ajax_obj.Plan + '#' + post_id);
   }
 
   // Display warning if plan title field is empty.
   $('input[name="post_title"]').on('keyup', function() {
       var post_title = $('input[name="post_title"]').val();
      var title_warning = jQuery('.title_warning').html()
-debugger;
+
       if (!post_title) {
           if ( title_warning == undefined ) {
-            var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
+            var title_msg = '<span class="title_warning">*'+ admin_ajax_obj.Plan_warning +'</span>';
             $('div#titlewrap').append(title_msg);
           }
          

@@ -263,6 +263,9 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'nonce'   => wp_create_nonce( 'plan-import-nonce' ),
+						'Plan'  => __( 'Plan ', 'membership-for-woocommerce' ),
+						'Plan_warning'  => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
+						
 					)
 				);
 
@@ -1660,6 +1663,7 @@ class Membership_For_Woocommerce_Admin {
 			'member_status'  => ! empty( $_POST['member_status'] ) ? sanitize_text_field( wp_unslash( $_POST['member_status'] ) ) : '',
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
+		$plan_id = '';
 
 			// When plans are assigned manually.
 		if ( isset( $_POST['members_plan_assign'] ) ) {
@@ -1682,6 +1686,10 @@ class Membership_For_Woocommerce_Admin {
 
 				update_post_meta( $post_id, 'plan_obj', $plan_meta );
 			}
+		}
+
+		if ( 'yes' == get_post_meta( $plan_id, 'mwb_membership_subscription', true) ) {
+			Update_post_meta( $plan_id, 'is_subscription_plan_member', 'yes' );
 		}
 
 		$post   = get_post( $post_id );
@@ -1860,7 +1868,6 @@ class Membership_For_Woocommerce_Admin {
 					$other_member_exists = true;
 				}
 			}
-
 			
 			if ( false == $other_member_exists ) {
 				update_user_meta( $current_assigned_user, 'is_member', '' );
