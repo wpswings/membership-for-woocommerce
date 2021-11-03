@@ -59,14 +59,13 @@ $current_user_assigned = get_post_meta( $post->ID, 'mwb_member_user', true );
 
 	<span class="mwb_member_notice">
 	<?php
+	if ( mwb_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
 
-	esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
-
-
+		esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
+	}
 	?>
 	
 	</span>
-
 
 	<div class="members_data_column_container">
 
