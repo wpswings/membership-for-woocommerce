@@ -17,8 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $output = '';
-$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
-$payment = $order->get_payment_method_title();
+$order_val = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
+$payment = $order_val->get_payment_method_title();
 $output .= '<div class="members_preview_content">';
 
 if ( ! empty( $member_id ) ) {
@@ -26,13 +26,13 @@ if ( ! empty( $member_id ) ) {
 	$billing_info = get_post_meta( $member_id, 'billing_details', true );
 	$plan_info    = get_post_meta( $member_id, 'plan_obj', true );
 	$plan_status  = get_post_meta( $member_id, 'member_status', true );
-$post_title='';
-$mwb_membership_plan_price ='';	
-$post_content = '';	
+	$post_title = '';
+	$mwb_membership_plan_price = '';
+	$post_content = '';
 	if ( ! empty( $plan_info ) ) {
-		$post_title=	$plan_info['post_title'] ;
-		$mwb_membership_plan_price =	$plan_info['mwb_membership_plan_price'] ;
-		$post_content = 	$plan_info['post_content'] ;
+		$post_title = $plan_info['post_title'];
+		$mwb_membership_plan_price = $plan_info['mwb_membership_plan_price'];
+		$post_content = $plan_info['post_content'];
 	}
 
 	$output .= '<div class="members_billing_preview_wrapper">

@@ -196,7 +196,7 @@ class Membership_For_Woocommerce_Public {
 		AND ($wp_posts.post_status = 'publish') GROUP BY $wp_posts.ID ORDER BY $wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
-		
+
 	}
 
 	/**
@@ -465,7 +465,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mwb_membership_product_membership_purchase_html() {
-	
+
 		global $product;
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
@@ -475,7 +475,7 @@ class Membership_For_Woocommerce_Public {
 		$count = 0;
 		$is_pending = 'not pending';
 		$page_link = '';
-		
+		$disable_required = false;
 		$is_membership_product = $this->mwb_membership_products_on_shop_page( true, $product );
 
 		if ( ! $product->is_purchasable() && $this->global_class->plans_exist_check() == true ) {
@@ -542,7 +542,7 @@ class Membership_For_Woocommerce_Public {
 								);
 
 								if ( is_user_logged_in() ) {
-									$disable_required = false;
+
 									// Show plans under review.
 
 									if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
@@ -888,7 +888,7 @@ class Membership_For_Woocommerce_Public {
 	public function mwb_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
 		global $product;
-		
+
 		if ( empty( $product ) ) {
 
 			$product = $_product;
@@ -1920,7 +1920,6 @@ class Membership_For_Woocommerce_Public {
 							$is_allowed_membership_shipping = true;
 						}
 					}
-					
 				}
 			}
 
@@ -1929,18 +1928,16 @@ class Membership_For_Woocommerce_Public {
 			} else {
 				foreach ( $rates as $rate_key => $rate ) {
 							// Excluding membership shipping methods.
-							if ( 'mwb_membership_shipping' === $rate->get_method_id() ) {
-								unset( $rates[ $rate_key ] );
-							}
-						}
-		
+					if ( 'mwb_membership_shipping' === $rate->get_method_id() ) {
+						unset( $rates[ $rate_key ] );
+					}
+				}
+
 					return $rates;
 
 			}
-
 		}
 
-	
 	}
 
 
@@ -2172,7 +2169,6 @@ class Membership_For_Woocommerce_Public {
 
 					$user = new WP_User( $member_data['user_id'] ); // create a new user object for this user.
 					// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
-					// update_user_meta( $member_data['user_id'], 'is_member', 'member' );
 					wc_add_order_item_meta( $keys[0], '_member_id', $member_data['member_id'] );
 
 					if ( ! $member_id ) {
@@ -2181,7 +2177,6 @@ class Membership_For_Woocommerce_Public {
 					update_post_meta( $member_id, 'member_order_id', $order_id );
 
 					$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-
 
 					if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
 						$available_plan = get_option( 'all_subscription_plan' );
@@ -2319,7 +2314,7 @@ class Membership_For_Woocommerce_Public {
 							array_push( $all_member_plans, $membership_plan->ID );
 						}
 						$membership_status = get_post_meta( $membership_id, 'member_status', true );
-						
+
 						$accessible_prod = ! empty( $membership_plan['mwb_membership_plan_target_ids'] ) ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] ) : array();
 						$accessible_cat  = ! empty( $membership_plan['mwb_membership_plan_target_categories'] ) ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] ) : array();
 						$accessible_tag  = ! empty( $membership_plan['mwb_membership_plan_target_tags'] ) ? maybe_unserialize( $membership_plan['mwb_membership_plan_target_tags'] ) : array();
@@ -2649,7 +2644,7 @@ class Membership_For_Woocommerce_Public {
 				$order_status = $order->status;
 				$order_id = get_post_meta( $member_id, 'member_order_id', true );
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
-				update_option('xfgxfg'.$member_id, 	'cfgcg');
+				update_option( 'xfgxfg' . $member_id, 'cfgcg' );
 				$expiry = get_post_meta( $member_id, 'member_expiry', true );
 
 				if ( 'Lifetime' == $expiry ) {
@@ -2680,26 +2675,15 @@ class Membership_For_Woocommerce_Public {
 				if ( $today_date >= $expiry_mail ) {
 
 					if ( 'complete' == $member_status ) {
-						
-						
 
 						$plan = get_post_meta( $member_id, 'plan_obj', true );
-						
+
 						$plan = get_post_meta( $member_id, 'plan_obj', true );
 						$is_subscription = $plan['mwb_membership_subscription'];
 
-						update_option('xfgxfg'.$member_id, 	$is_subscription.'--');
-						
-						if ( 'yes' == $is_subscription ) {
+						update_option( 'xfgxfg' . $member_id, $is_subscription . '--' );
 
-							// $subscription_i_d = get_post_meta( $order_id, 'mwb_subscription_id', true );
-							// $end_payment_date = get_post_meta( $subscription_i_d, 'mwb_susbcription_end' );
-							// if ( ! empty( $subscription_i_d ) ) {
-							// 	if ( $today_date >= $end_payment_date ) {
-							// 		update_post_meta( $subscription_i_d, 'mwb_subscription_status', 'expired' );
-							// 	}
-							// }
-						} else {
+						if ( 'yes' != $is_subscription ) {
 							update_post_meta( $member_id, 'member_status', 'expired' );
 						}
 						$customer_email = '';
@@ -2780,7 +2764,7 @@ class Membership_For_Woocommerce_Public {
 
 					if ( 1 == count( $memberships ) ) {
 						if ( false == $other_member_exists ) {
-						 update_user_meta( $author_id, 'is_member', '' );
+							update_user_meta( $author_id, 'is_member', '' );
 						}
 					} else {
 
@@ -3173,14 +3157,12 @@ class Membership_For_Woocommerce_Public {
 			if ( WC()->session->__isset( 'product_id' ) ) {
 
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
-				// $product->set_price( $price );
 				// if cart empty, add it to cart.
 				WC()->cart->empty_cart();
 
 				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
 			}
 			WC()->session->__unset( 'product_id' );
-
 
 		}
 
@@ -3412,12 +3394,11 @@ class Membership_For_Woocommerce_Public {
 	 *
 	 * @param mixed $subscription_status is the subscription status.
 	 * @param mixed $subscription_i_d id of current subscription id.
-	 * @param mixed $order_id is the order id.
 	 *
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_subscription_get_status( $subscription_status, $subscription_i_d ) {
-		
+
 		$member_id = '';
 		$subscription = get_post( $subscription_i_d );
 		$parent_order_id  = $subscription->mwb_parent_order;
@@ -3450,7 +3431,7 @@ class Membership_For_Woocommerce_Public {
 		$order_id = get_post_meta( $subscription_i_d, 'mwb_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
-		
+
 		if ( ! empty( $member_id ) ) {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
@@ -3473,7 +3454,7 @@ class Membership_For_Woocommerce_Public {
 		$order_id = get_post_meta( $subscription_i_d, 'mwb_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
-	
+
 		if ( ! empty( $member_id ) ) {
 			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
 			$plan = get_post_meta( $member_id, 'plan_obj', true );
@@ -3545,7 +3526,7 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 
-		if ( $is_membership_product == true ) {
+		if ( true == $is_membership_product ) {
 			if ( empty( $the_user ) ) {
 				$errors->add( 'validation', 'User with this mail not found try to place order with existing user!!' );
 			}

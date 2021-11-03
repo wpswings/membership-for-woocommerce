@@ -29,27 +29,6 @@ const ThirdStep = (props) => {
             className={classes.margin} />
 
 
-{(() => {
-     
-        if (frontend_ajax_object.is_pro_plugin == 'true') {
-          return (
-            <FormControlLabel
-            control={
-            <Switch
-            checked={ctx.formFields['checkedB']}
-            onChange={ctx.changeHandler}
-            name="checkedB"
-            color="primary"
-            />
-            }
-            label="Reset License"
-            className={classes.margin} />
-          )
-        }
-      })()}
-
-
-          
 
         </FormGroup>
     </>

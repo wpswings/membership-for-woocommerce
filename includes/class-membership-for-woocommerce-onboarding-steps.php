@@ -557,7 +557,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		check_ajax_referer( 'mwb_mfw_onboarding_nonce', 'nonce' );
 
 		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( wp_unslash( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) ), 'sanitize_text_field' ) : '';
-		
+
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
 
 			foreach ( $form_data as $key => $input ) {

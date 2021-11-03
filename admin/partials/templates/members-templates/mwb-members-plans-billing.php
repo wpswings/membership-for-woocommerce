@@ -30,8 +30,8 @@ $country    = ! empty( $member_details['membership_billing_country'] ) ? $member
 $email      = ! empty( $member_details['membership_billing_email'] ) ? $member_details['membership_billing_email'] : '';
 $phone      = ! empty( $member_details['membership_billing_phone'] ) ? $member_details['membership_billing_phone'] : '';
 $payment    = ! empty( $member_details['payment_method'] ) ? $member_details['payment_method'] : '';
-$order = new WC_Order( get_post_meta( $post->ID, 'member_order_id', true ) );
-$payment = $order->get_payment_method_title();
+$order_val = new WC_Order( get_post_meta( $post->ID, 'member_order_id', true ) );
+$payment = $order_val->get_payment_method_title();
 // Getting all user ID's.
 $all_users = get_users(
 	array(
@@ -49,13 +49,24 @@ $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
-$current_user_assigned =get_post_meta( $post->ID , 'mwb_member_user', true );
+$current_user_assigned = get_post_meta( $post->ID, 'mwb_member_user', true );
 ?>
 
 <!-- Members billing metabox start -->
 <div class="members_billing_details">
 
 	<h1><?php echo sprintf( 'Member #%u details', esc_html( $post->ID ) ); ?></h1>
+
+	<span class="mwb_member_notice">
+	<?php
+
+	esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
+
+
+	?>
+	
+	</span>
+
 
 	<div class="members_data_column_container">
 
@@ -70,8 +81,8 @@ $current_user_assigned =get_post_meta( $post->ID , 'mwb_member_user', true );
 				</label><br>
 				<select name="mwb_member_user" id="mwb_member_user">
 					<?php
-				
-					
+
+
 					if ( ! empty( $all_users ) && is_array( $all_users ) ) {
 
 						foreach ( $all_users as $users ) {
@@ -82,13 +93,13 @@ $current_user_assigned =get_post_meta( $post->ID , 'mwb_member_user', true );
 							if ( ! empty( $user_roles ) ) {
 								$user_role = $user_roles[0];
 							}
-						
 
 
-								?>
+
+							?>
 							<option <?php echo esc_html( $users->ID === $current_user_assigned ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
 								<?php
-						
+
 						}
 					}
 					?>

@@ -193,10 +193,10 @@ global $post;
 				</select>
 			</td>
 			<?php
-			if (  mwb_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+			if ( mwb_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
 
-			
-			?>
+
+				?>
 		</tr>
 		<!-- Plan Duration End. -->
 
@@ -230,19 +230,19 @@ global $post;
 
 		<th scope="row" class="titledesc">
 	<label for="mwb_membership_subscription_expiry"><?php esc_html_e( 'Subscription expiry', 'membership-for-woocommerce' ); ?></label>
-<?php
-	$description = esc_html__( 'Subscription Expiry in terms of  \'DAYS\', \'WEEKS\', \'MONTHS\', \'YEARS\' for which the plan will be active.', 'membership-for-woocommerce' );
+				<?php
+				$description = esc_html__( 'Subscription Expiry in terms of  \'DAYS\', \'WEEKS\', \'MONTHS\', \'YEARS\' for which the plan will be active.', 'membership-for-woocommerce' );
 
-	$instance->tool_tip( $description );
-?>
+				$instance->tool_tip( $description );
+				?>
 </th>
 
 <td class="forminp forminp-text">
 
-	<?php
+				<?php
 
-	$mwb_membership_subscription_expiry_type = $settings_fields['mwb_membership_subscription_expiry_type'];
-	?>
+				$mwb_membership_subscription_expiry_type = $settings_fields['mwb_membership_subscription_expiry_type'];
+				?>
 
 	<input type="number" min="0" id="mwb_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription_expiry'] ); ?>" >
 	<select disabled="disabled" name="mwb_membership_subscription_expiry_type" id="mwb_membership_subscription_expiry_type">
@@ -254,9 +254,9 @@ global $post;
 </td>
 </tr>
 <!-- Plan subscription expiry End -->
-<?php 
-}
-?>
+				<?php
+			}
+			?>
 	</tbody>
 </table>
 

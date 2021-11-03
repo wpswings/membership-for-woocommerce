@@ -55991,20 +55991,7 @@ const ThirdStep = props => {
     }),
     label: "Enable Membership Plan",
     className: classes.margin
-  }), (() => {
-    if (frontend_ajax_object.is_pro_plugin == 'true') {
-      return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControlLabel"], {
-        control: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Switch"], {
-          checked: ctx.formFields['checkedB'],
-          onChange: ctx.changeHandler,
-          name: "checkedB",
-          color: "primary"
-        }),
-        label: "Reset License",
-        className: classes.margin
-      });
-    }
-  })()));
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (ThirdStep);

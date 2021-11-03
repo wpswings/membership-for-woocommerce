@@ -93,7 +93,6 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		$this->instance_form_fields = array(
 
-		
 			'title'              => array(
 				'title'       => __( 'Title', 'membership-for-woocommerce' ),
 				'type'        => 'text',
@@ -101,8 +100,6 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				'desc_tip'    => true,
 				'default'     => __( 'Membership Shipping', 'membership-for-woocommerce' ),
 			),
-
-			
 
 		);
 
