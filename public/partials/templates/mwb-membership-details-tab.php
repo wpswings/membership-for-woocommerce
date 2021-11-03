@@ -432,8 +432,6 @@ if ( empty( $current_url ) ) {
 					?>
 					</br>
 				</table>
-				<!-- </address> -->
-			<!-- </div> -->
 		</section>
 	</section>
 	<?php

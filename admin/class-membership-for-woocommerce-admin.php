@@ -1764,7 +1764,6 @@ class Membership_For_Woocommerce_Admin {
 				$user    = get_userdata( $current_assigned_user );
 
 				$user = new WP_User( $current_assigned_user ); // create a new user object for this user.
-				// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
 				$expiry_date = get_post_meta( $post_id, 'member_expiry', true );
 				if ( 'Lifetime' == $expiry_date ) {
 					$expiry_date = 'Lifetime';

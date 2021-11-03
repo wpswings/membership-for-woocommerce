@@ -563,7 +563,6 @@ class Membership_For_Woocommerce_Public {
 
 													if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 														$is_pending = 'pending';
-														// $disable_required = 'disable_required';
 														if ( ! in_array( $active_plan['ID'], $already_pending_plan ) ) {
 															array_push( $already_pending_plan, $active_plan['ID'] );
 
@@ -2168,7 +2167,6 @@ class Membership_For_Woocommerce_Public {
 					update_user_meta( $member_data['user_id'], 'mfw_membership_id', $current_memberships );
 
 					$user = new WP_User( $member_data['user_id'] ); // create a new user object for this user.
-					// $user->add_role( 'member' ); // set them to whatever role you want using the full word.
 					wc_add_order_item_meta( $keys[0], '_member_id', $member_data['member_id'] );
 
 					if ( ! $member_id ) {

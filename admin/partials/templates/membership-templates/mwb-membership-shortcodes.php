@@ -55,7 +55,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<span class="mwb_membership_shortcode_content"><?php echo esc_html__( '[mwb_membership_no]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode only returns no thanks button. Use it as [mwb_membership_no].', 'membership-for-woocommerce' );
-							 $instance->tool_tip( $shortcode_desc );
+							$instance->tool_tip( $shortcode_desc );
 							?>
 						</div>
 

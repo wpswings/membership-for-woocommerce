@@ -219,7 +219,7 @@ global $post;
 						$mwb_membership_subscription = $settings_fields['mwb_membership_subscription'];
 					?>
 
-					<!-- <input type="number" id="mwb_membership_plan_duration" maxlenght="4" step="1" pattern="[0-9]" name="mwb_membership_plan_duration" value="<?php echo esc_attr( $settings_fields['mwb_membership_subscription'] ); ?>" > -->
+				
 					<input type="checkbox"  class="mwb_membership_subscription_" name="mwb_membership_subscription" value="yes" <?php checked( 'yes', $mwb_membership_subscription ); ?> >
 
 			</td>
