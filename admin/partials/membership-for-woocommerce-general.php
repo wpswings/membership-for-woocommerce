@@ -23,29 +23,7 @@ apply_filters( 'mfw_general_settings_array', array() );
 <form action="" method="POST" class="mwb-mfw-gen-section-form">
 	<div class="mfw-secion-wrap">
 <?php
-$value = false;
-if ( class_exists( 'Invoice_System_For_Woocommerce_Common' ) ) {
-	$value = true;
-}
-if ( $value == false ) {
-
-
-	?>
-	<div class="mwb-c-modal">
-		<div class="mwb-c-modal__cover"></div>
-		<div class="mwb-c-modal__message">
-			<span class="mwb-c-modal__close">+</span>
-			<div class="mwb-c-modal__content">
-				<span class="mwb-c-modal__content-text"> <?php esc_html_e( 'To use this feature please install Invoice Plugin', 'membership-for-woocommerce' ); ?> <a href="https://wordpress.org/plugins/invoice-system-for-woocommerce/"> <?php esc_html_e( 'click here', 'membership-for-woocommerce' ); ?> </a>   </span>
-			</div>
-			<div class="mwb-c-modal__confirm">
-			<span class="mwb-c-modal__confirm-button mwb-c-modal__yes">Close</span>
-			</div>
-		</div>
-	</div>
-	<?php
-}
-
+	do_action( 'mfw_general_settings_before' );
 ?>
 
 	<div class="mwb-sm__modal"></div>

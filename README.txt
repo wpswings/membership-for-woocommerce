@@ -1,18 +1,18 @@
-=== Membership for WooCommerce ===
+=== Membership For WooCommerce- Perfect Membership Plugin For Offering Membership Plans, Offers & Discounts ===
 Contributors: MakeWebBetter
 Donate link:  https://makewebbetter.com/
-Tags:Membership, WooCommerce, Memberships, Members, WooCommerce Membership
+Tags: membership, subscriptions, memberships, members, woocommerce membership, membership plugin, woocommerce 
 Requires at least: 5.0
-Tested up to: 5.8.0
+Tested up to: 5.8.1
 WC requires at least: 4.0.0
-WC tested up to: 5.6
+WC tested up to: 5.7.1
 Stable tag: 1.1.0
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-
 The Membership for WooCommerce plugin provides a restriction on access for any facility and adds recurring revenue with engaging customers.
+
 
 == Description ==
 
@@ -51,6 +51,9 @@ It gets on directly to give you a way out of the three most customary pain point
 * Offer membership categories to users 
 * Select limited or lifetime accessibility to WooCommerce members
 * Set different status for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
+* Bulk actions for the admin to edit plans and move them to trash
+* Display all membership plans available on your store on the Membership Plans Tab.
+* Compatibility with our other valuable plugins.
 
 **LIVE DEMO OF FREE VERSION**
 
@@ -92,9 +95,34 @@ Admin can display offered products and product categories in a membership plan. 
 **3-** Plan description
 **4-** Access Type (Lifetime or Limited accessibility) 
 
+== PLUGIN COMPATIBILITIES ==
+
+
+
+ **1)** [**MWB Multi-Currency Switcher For WooCommerce**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download!!**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/))
+
+With our multi-currency switcher, the admin can now enable switching over to local currencies within their WooCommerce membership plans. Both free and premium plugins are compatible with each other.  
+
+
+ **2)** [**Wishlist For WooCommerce Pro**](https://makewebbetter.com/product/wishlist-for-woocommerce-pro/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download!!**](https://wordpress.org/plugins/ultimate-wishlist-for-woocommerce/))
+
+With the free Ultimate Wishlist for WooCommerce plugin compatibility, the users can now add memberships to their Wishlist. Both plugins work seamlessly.
+
+ **3)** **Multisite**
+
+Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated from one place.
+
+**4)** **WPML Compatibility** 
+
+Membership for WooCommerce lets the admin add desired content and translate it in multiple languages. WPML compatibility gives you easy access to professional translation management.   
+
+
+
+
 == PLUGIN MEETS YOUR REQUIREMENT, SO ==
 
 [**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
+
 Visit [**Membership For WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc) and learn more about the features and working of the plugin.
 
 == PREMIUM MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
@@ -110,6 +138,7 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 * Better Membership Reports
 * Send Membership Plans Action Notifications via Email  
 * Sort Membership plans 
+* Pro plugin compatible with [**Invoice System for WooCommerce**](https://wordpress.org/plugins/invoice-system-for-woocommerce/) which is sent along with membership emails.
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN ==
 
@@ -135,7 +164,7 @@ If our documentation doesn’t contain the solution to your problem, you can vis
 
 Automatic installation is the easiest option as WordPress handles the file transfers itself and you don't need to leave your web browser. To do an automatic install of Membership For WooCommerce, log in to your WordPress dashboard, navigate to the Plugins menu, and click Add New.
 
-In the search field type "Membership For Woocommerce" and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
+In the search field type "Membership For WooCommerce" and click Search Plugins. Once you've found our plugin you can view details about it such as the point release, rating, and description. Most importantly, of course, you can install it by simply clicking "Install Now".
 
 = Manual installation =
 
@@ -172,7 +201,7 @@ You can also Import and export members details & add new members
 
 
 = Are there also any shortcodes available in the Membership for WooCommerce extension? = 
-**Yes,** Membership for WooCommerceprovides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
+**Yes,** Membership for WooCommerce provides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
 
 * Membership Action Shortcodes
 * Membership Plans Shortcodes
@@ -213,7 +242,7 @@ We are always available to help our customers anytime. Our support team works 24
 
 = My question is not listed =
 
-  Please visit the  [**MakeWebBetter Knowledgebase**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)  and for more detailed visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)
+  Please visit the  [**MakeWebBetter Knowledgebase**](https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)  and for more detailed visit [**Membership for WooCommerce Documentation.**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc)
 
 
 
@@ -235,12 +264,30 @@ We are always available to help our customers anytime. Our support team works 24
 14. Membership Plan 
 15. Order Details 
 16. Membership Dashboard Details 
+17. Move to trash 
+18. Super Premium Plans
 
 
 == Changelog ==
 
+= 1.2.0 - RELEASED ON 1 OCTOBER 2021 =
+
+* NEW: Compatible with  [**Invoice System for WooCommerce**](https://wordpress.org/plugins/invoice-system-for-woocommerce/)
+* NEW: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/))
+* NEW: Compatible with  [**Wishlist For WooCommerce Pro
+**](https://makewebbetter.com/product/wishlist-for-woocommerce-pro/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download**](https://wordpress.org/plugins/ultimate-wishlist-for-woocommerce/))
+* NEW: Compatible with **Multisite**
+* NEW: Compatible with **WPML Compatibility** 
+* New: Compatibility with WooCommerce 5.7.1 and WordPress 5.8.1
+* NEW: Add to trash button on all members tab in bulk edit
+* NEW: Membership plan tab will reflect all plans
+* FIX: Minor bug fixes
+
+
+
 = 1.1.0 - RELEASED ON 23 AUGUST 2021 =
-* New: Compatibility with WooCommerce 5.5.2  and WordPress 5.8
+* New: Compatible with  [**Membership for WooCommerce Pro Version**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-membership-pro)
+* New: Compatibility with WooCommerce 5.6  and WordPress 5.8
 * Fix: small bug fixes
 
 = 1.0.1 - RELEASED ON 13 APRIL 2021 =
@@ -253,8 +300,15 @@ We are always available to help our customers anytime. Our support team works 24
 
 == Upgrade Notice ==
 
-= 1.1.0 - RELEASED ON 23 AUGUST 2021 =
-* New: Compatibility with WooCommerce 5.5.2  and WordPress 5.8
-* Fix: small bug fixes
+= 1.2.0 - RELEASED ON 1 OCTOBER 2021 =
 
-
+* NEW: Compatible with  [**Invoice System for WooCommerce**](https://wordpress.org/plugins/invoice-system-for-woocommerce/)
+* NEW: Compatible with [**MWB Multi-Currency Switcher For WooCommerce**](https://makewebbetter.com/product/woocommerce-multi-currency-switcher/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download**](https://wordpress.org/plugins/mwb-multi-currency-switcher-for-woocommerce/))
+* NEW: Compatible with  [**Wishlist For WooCommerce Pro
+**](https://makewebbetter.com/product/wishlist-for-woocommerce-pro/?utm_source=membership-org&utm_medium=membership+plugin&utm_campaign=membership-page) ([**Free Download**](https://wordpress.org/plugins/ultimate-wishlist-for-woocommerce/))
+* NEW: Compatible with **Multisite**
+* NEW: Compatible with **WPML Compatibility** 
+* New: Compatibility with WooCommerce 5.7.1 and WordPress 5.8.1
+* NEW: Add to trash button on all members tab in bulk edit
+* NEW: Membership plan tab will reflect all plans
+* FIX: Minor bug fixes
