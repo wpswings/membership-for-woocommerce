@@ -135,9 +135,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		}
 	}
 
-
-
-
 	/**
 	 * Callable function for defining plugin constants.
 	 *
