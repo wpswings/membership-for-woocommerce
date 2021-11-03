@@ -114,6 +114,8 @@ if ( empty( $current_url ) ) {
 
 
 	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
+
+
 	if ( ! empty( $membership_plan ) ) {
 
 		$access_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_access_type', true );
@@ -121,10 +123,14 @@ if ( empty( $current_url ) ) {
 		if ( 'delay_type' == $access_type ) {
 			$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
 			$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+
 		}
 	}
-	$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+
+
+		$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -202,7 +208,8 @@ if ( empty( $current_url ) ) {
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
 					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_plan_discount_price'] ), esc_html( $membership_plan['mwb_membership_plan_offer_price_type'] ) ); ?></br>
 					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_product_discount_price'] ), esc_html( $membership_plan['mwb_membership_product_offer_price_type'] ) ); ?></br>
-
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Subscription Membership: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_membership_subscription'] ) ); ?></br>
+					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Subscription Membership Duration: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_membership_subscription_expiry'] ), esc_html( $membership_plan['mwb_membership_subscription_expiry_type'] . 's' ) ); ?></br>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
 					</address>
 	</div>

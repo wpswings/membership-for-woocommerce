@@ -111,7 +111,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		self::$mwb_mfw_store_url = home_url();
 		self::$mwb_mfw_plugin_name = 'Membership For WooCommerce';
 		self::$mwb_mfw_plugin_name_label = 'Membership For WooCommerce';
-
+		if ( ! mwb_standard_check_multistep() ) {
+			return;
+		}
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_scripts' ) );
 		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_onboarding_popup_screen' ) );
@@ -554,9 +556,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		check_ajax_referer( 'mwb_mfw_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
-
-		$formatted_data = array();
+		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( wp_unslash( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) ), 'sanitize_text_field' ) : '';
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
 
@@ -752,15 +752,15 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
-		} else if ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_X_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_X_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_X_FORWARDED' );
-		} else if ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED_FOR' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED_FOR' );
-		} else if ( getenv( 'HTTP_FORWARDED' ) ) {
+		} elseif ( getenv( 'HTTP_FORWARDED' ) ) {
 			$ipaddress = getenv( 'HTTP_FORWARDED' );
-		} else if ( getenv( 'REMOTE_ADDR' ) ) {
+		} elseif ( getenv( 'REMOTE_ADDR' ) ) {
 			$ipaddress = getenv( 'REMOTE_ADDR' );
 		} else {
 			$ipaddress = 'UNKNOWN';

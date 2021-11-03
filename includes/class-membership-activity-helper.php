@@ -215,63 +215,6 @@ class Membership_Activity_Helper {
 	}
 
 	/**
-	 * Create pdf and upload.
-	 *
-	 * @param string $content   Content to show on pdf file.
-	 * @param string $file_name Name of the file.
-	 *
-	 * @since 1.0.0
-	 */
-	public function create_pdf_n_upload( $content = '', $file_name = '' ) {
-
-		$this->active_file = $file_name . gmdate( 'd-m-y-his' );
-		$location          = $this->active_folder . $this->active_file . '.pdf';
-
-		// TCPDF library.
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIRPATH . 'resources/TCPDF-main/tcpdf.php';
-
-		if ( ! class_exists( 'TCPDF' ) ) {
-			return;
-		}
-
-		/**
-		 *  Creating pdf using TCPDF library.
-		 */
-		$pdf = new TCPDF( PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false );
-		$pdf->SetMargins( -1, 0, -1 );
-		$pdf->setPrintHeader( false );
-		$pdf->setPrintFooter( false );
-		$pdf->SetFont( 'times', '', 12, '', false );
-		$pdf->SetAutoPageBreak( true, PDF_MARGIN_BOTTOM );
-		$pdf->AddPage();
-
-		// Output the HTML content.
-		$pdf->writeHTMLCell( 0, 0, '', '', $content, 0, 0, 0, true, '', true );
-		$pdf->lastPage();
-
-		try {
-
-			if ( $this->active_file ) {
-				ob_get_clean();
-				$pdf->Output( $location, 'F' );
-
-				return array(
-					'status'  => true,
-					'message' => $location,
-				);
-			}
-		} catch ( Exception $e ) {
-
-			return array(
-				'status'  => false,
-				'message' => esc_html( $e->getMessage() ),
-			);
-
-		}
-
-	}
-
-	/**
 	 * Library functions :: Check/create folder.
 	 *
 	 * @param string $path Path to create folder.

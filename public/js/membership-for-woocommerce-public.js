@@ -97,7 +97,7 @@ jQuery(document).ready(function ($) {
 		let country = $('#membership_billing_country').val().length;
 		let pin = $('#membership_billing_postcode').val().length;
 
-		if ( street == 0 || city == 0 || country == 0 || pin == 0 ) {
+		if (street == 0 || city == 0 || country == 0 || pin == 0) {
 			alert('Something you have missed');
 			return false;
 		}
@@ -137,11 +137,11 @@ jQuery(document).ready(function ($) {
 		$(this).children('.mwb_mfw_membership_tool_tip').css('display', 'none');
 	})
 
-	$(".mwb_membership_buynow").on("click", function (e) {
+	$('.mwb_membership_buynow').on("click", function (e) {
 		e.preventDefault();
-		let plan_price = $('#mwb_membership_plan_price').val();
-		let plan_id = $('#mwb_membership_plan_id').val();
-		let plan_title = $('#mwb_membership_title').val();
+		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_price')).val();
+		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_id')).val();
+		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_title')).val();
 
 		$.ajax({
 			url: membership_public_obj.ajaxurl,
@@ -165,13 +165,17 @@ jQuery(document).ready(function ($) {
 
  jQuery(document).on('click','.mwb_members_plans label',function(obj = this ) {
 	debugger;
+	
 	var classes = jQuery(this.nextElementSibling).attr('class');
-	var allclasses =classes.split(' ');
-	if (allclasses.length>1) {
-		if( allclasses[1]=='show__membership_details' ){
-			jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
-		}
- 	} else {	
-		jQuery(this.nextElementSibling).addClass('show__membership_details');
+ var allclasses =classes.split(' ');
+if ( allclasses.length>1 ) {
+	if( allclasses[1]=='show__membership_details' ){
+	
+		jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
 	}
+ } else {
+		
+	jQuery(this.nextElementSibling).addClass('show__membership_details');
+	}
+
  }); 

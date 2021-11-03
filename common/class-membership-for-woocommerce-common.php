@@ -127,7 +127,7 @@ class Membership_For_Woocommerce_Common {
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 		}
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
-
+		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
 		return $cart_item_data;
 	}
 
@@ -176,17 +176,17 @@ class Membership_For_Woocommerce_Common {
 
 			if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
 
-				foreach ( $csv_prod_title as $key => $value ) {
+				foreach ( $csv_prod_title as $csv_prod_title_key => $csv_prod_title_value ) {
 
-					if ( in_array( $value, $all_prod_title, true ) ) {
+					if ( in_array( $csv_prod_title_value, $all_prod_title, true ) ) {
 
 						$prd_check = true;
 					}
 				}
 
-				foreach ( $csv_cate_title as $key => $value ) {
+				foreach ( $csv_cate_title as $csv_cate_title_key => $csv_cate_title_value ) {
 
-					if ( in_array( $value, $all_cat_title, true ) ) {
+					if ( in_array( $csv_cate_title_value, $all_cat_title, true ) ) {
 
 						$cat_check = true;
 					}
@@ -209,17 +209,17 @@ class Membership_For_Woocommerce_Common {
 
 			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
 			if ( true === $prd_check || true === $cat_check ) {
-				foreach ( $formatted_csv_data as $key => $value ) {
-					if ( in_array( $value['post_title'], (array) $all_plan_array ) ) {
-						$value['post_title'] = $value['post_title'] . '-copied';
+				foreach ( $formatted_csv_data as $formatted_csv_data_key => $formatted_csv_data_value ) {
+					if ( in_array( $formatted_csv_data_value['post_title'], (array) $all_plan_array ) ) {
+						$formatted_csv_data_value['post_title'] = $formatted_csv_data_value['post_title'] . '-copied';
 					}
-					if ( ! empty( $value['post_title'] ) ) {
+					if ( ! empty( $formatted_csv_data_value['post_title'] ) ) {
 						$plan_id = wp_insert_post(
 							array(
 								'post_type'    => 'mwb_cpt_membership',
-								'post_title'   => $value['post_title'],
-								'post_status'  => $value['post_status'],
-								'post_content' => $value['post_content'],
+								'post_title'   => $formatted_csv_data_value['post_title'],
+								'post_status'  => $formatted_csv_data_value['post_status'],
+								'post_content' => $formatted_csv_data_value['post_content'],
 							),
 							true
 						);
@@ -263,6 +263,249 @@ class Membership_For_Woocommerce_Common {
 		wp_die();
 	}
 
+	/**
+	 * Function is used for the sending the track data
+	 *
+	 * @param bool $override is the bool value to override tracking value.
+	 * @name mfw_makewebbetter_tracker_send_event
+	 * @since 1.0.0
+	 */
+	public function mfw_makewebbetter_tracker_send_event( $override = false ) {
+		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
+		$last_send = get_option( 'makewebbetter_tracker_last_send' );
+		if ( ! apply_filters( 'makewebbetter_tracker_send_override', $override ) ) {
+			// Send a maximum of once per week by default.
+			$last_send = $this->mwb_mfw_last_send_time();
+			if ( $last_send && $last_send > apply_filters( 'makewebbetter_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
+				return;
+			}
+		} else {
+			// Make sure there is at least a 1 hour delay between override sends, we don't want duplicate calls due to double clicking links.
+			$last_send = $this->mwb_mfw_last_send_time();
+			if ( $last_send && $last_send > strtotime( '-1 hours' ) ) {
+				return;
+			}
+		}
+		// Update time first before sending to ensure it is set.
+		update_option( 'makewebbetter_tracker_last_send', time() );
+		$params = WC_Tracker::get_tracking_data();
+		$params = apply_filters( 'makewebbetter_tracker_params', $params );
+		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
+		$sucess = wp_safe_remote_post(
+			$api_url,
+			array(
+				'method'      => 'POST',
+				'body'        => wp_json_encode( $params ),
+			)
+		);
+	}
+
+	/**
+	 * Get the updated time.
+	 *
+	 * @name mwb_mfw_last_send_time
+	 *
+	 * @since 1.0.0
+	 */
+	public function mwb_mfw_last_send_time() {
+		return apply_filters( 'makewebbetter_tracker_last_send_time', get_option( 'makewebbetter_tracker_last_send', false ) );
+	}
+
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $mwb_new_order new order id.
+	 * @param mixed $subscription_id subscription id.
+	 * @param mixed $payment_method is the method for payment of subscription.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_renewal( $mwb_new_order, $subscription_id, $payment_method ) {
+		$expiry_date = '';
+		$next_payment_date = get_post_meta( $subscription_id, 'mwb_next_payment_date', true );
+		$end_payment_date = get_post_meta( $subscription_id, 'mwb_susbcription_end' );
+		if ( ! empty( $next_payment_date ) ) {
+			$expiry_date = $next_payment_date;
+		} elseif ( ! empty( $end_payment_date ) ) {
+			$expiry_date = $end_payment_date;
+		}
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+
+		$order_status  = $mwb_new_order->get_status();
+		$order = new WC_Order( $mwb_new_order->get_id() );
+		$order_status = $order->status;
+		if ( 'processing' == $order_status || 'complete' == $order_status ) {
+
+			$order = wc_get_order( $parent_order_id );
+			$member_id = get_member_id_from_order( $order );
+
+			if ( ! empty( $member_id ) ) {
+				update_post_meta( $member_id, 'member_status', 'complete' );
+				update_post_meta( $member_id, 'member_expiry', $expiry_date );
+			}
+		}
+		if ( 'failed' == $order_status ) {
+			$member_id = get_member_id_from_order( $order );
+
+			if ( ! empty( $member_id ) ) {
+				update_post_meta( $member_id, 'member_status', 'hold' );
+				update_post_meta( $member_id, 'member_expiry', $expiry_date );
+			}
+		}
+	}
+
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_active_renewal( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'complete' );
+		}
+	}
+
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_on_hold_renewal( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'hold' );
+		}
+	}
+
+	/**
+	 * Membership status update according to subscription renewal.
+	 *
+	 * @param mixed $subscription_id subscription id.
+	 * @return void
+	 */
+	public function mwb_membership_subscription_expire( $subscription_id ) {
+		$subscription = get_post( $subscription_id );
+		$parent_order_id  = $subscription->mwb_parent_order;
+		$order = wc_get_order( $parent_order_id );
+		$member_id = get_member_id_from_order( $order );
+		if ( ! empty( $member_id ) ) {
+			update_post_meta( $member_id, 'member_status', 'expired' );
+		}
+	}
+
+	/**
+	 * Update the option for settings from the multistep form.
+	 *
+	 * @name mwb_standard_save_settings_filter
+	 * @since 1.0.0
+	 */
+	public function mwb_standard_save_settings_filter() {
+		check_ajax_referer( 'ajax-nonce', 'nonce' );
+
+		$term_accpted = ! empty( $_POST['consetCheck'] ) ? sanitize_text_field( wp_unslash( $_POST['consetCheck'] ) ) : ' ';
+		if ( ! empty( $term_accpted ) && 'yes' == $term_accpted ) {
+			update_option( 'mfw_enable_tracking', 'on' );
+		}
+		// settings fields.
+		$first_name = ! empty( $_POST['firstName'] ) ? sanitize_text_field( wp_unslash( $_POST['firstName'] ) ) : '';
+		update_option( 'firstname', $first_name );
+
+		$email = ! empty( $_POST['email'] ) ? sanitize_text_field( wp_unslash( $_POST['email'] ) ) : '';
+		update_option( 'email', $email );
+
+		$desc = ! empty( $_POST['desc'] ) ? sanitize_text_field( wp_unslash( $_POST['desc'] ) ) : '';
+		update_option( 'desc', $desc );
+
+		$age = ! empty( $_POST['age'] ) ? sanitize_text_field( wp_unslash( $_POST['age'] ) ) : '';
+		update_option( 'age', $age );
+
+		$first_checkbox = ! empty( $_POST['FirstCheckbox'] ) ? sanitize_text_field( wp_unslash( $_POST['FirstCheckbox'] ) ) : '';
+		update_option( 'first_checkbox', $first_checkbox );
+
+		$checked_first_switch = ! empty( $_POST['checkedA'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedA'] ) ) : '';
+		if ( ! empty( $checked_first_switch ) && $checked_first_switch ) {
+			update_option( 'mwb_membership_enable_plugin', 'on' );
+		}
+
+		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
+		if ( ! empty( $checked_second_switch ) && $checked_second_switch ) {
+			update_option( 'mfw_radio_reset_license', 'on' );
+		}
+
+		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
+		update_option( 'Mem_Plan_Amount', $mem_plan_amount );
+
+		$mem_plan_title = ! empty( $_POST['memPlanTitle'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanTitle'] ) ) : '';
+		update_option( 'Mem_Plan_Title', $mem_plan_title );
+
+		$mem_plan_product = ! empty( $_POST['memPlanProduct'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanProduct'] ) ) : '';
+		update_option( 'Mem_Plan_Product', $mem_plan_product );
+
+		if ( ! empty( $mem_plan_title ) || ! empty( $mem_plan_amount ) ) {
+			$post_id = wp_insert_post(
+				array(
+					'post_type' => 'mwb_cpt_membership',
+					'post_title' => $mem_plan_title,
+					'post_content' => '',
+					'post_status' => 'publish',
+					'meta_input' => array(
+						'mwb_membership_plan_price' => $mem_plan_amount,
+					),
+				)
+			);
+			$product_array = array();
+			array_push( $product_array, $mem_plan_product );
+			if ( is_array( $product_array ) ) {
+				$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
+			}
+			update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $post_data );
+		}
+
+		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
+
+		$license_code = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
+
+		if ( class_exists( 'Membership_For_Woocommerce_Pro_Common' ) ) {
+
+			$mfwp_plugin_common = new Membership_For_Woocommerce_Pro_Common( '', '' );
+
+			$mwb_mfw_response = $mfwp_plugin_common->mfwp_membership_validate_license_key( $license_code );
+
+			if ( is_wp_error( $mwb_mfw_response ) ) {
+				wp_send_json( 'license_could_not_be_verified' );
+			} else {
+				$mwb_mfw_license_data = json_decode( wp_remote_retrieve_body( $mwb_mfw_response ) );
+				if ( isset( $mwb_mfw_license_data->result ) && 'success' === $mwb_mfw_license_data->result ) {
+
+					global $wpdb;
+					if ( is_multisite() ) {
+						$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
+
+						foreach ( $blogids as $blog_id ) {
+
+							switch_to_blog( $blog_id );
+							update_option( 'mwb_mfwp_license_key', $license_code );
+							update_option( 'mwb_mfwp_license_check', true );
+							restore_current_blog();
+						}
+					} else {
+						update_option( 'mwb_mfwp_license_key', $license_code );
+						update_option( 'mwb_mfwp_license_check', true );
+					}
+				}
+			}
+		}
+		wp_send_json( 'yes' );
+	}
 
 }
