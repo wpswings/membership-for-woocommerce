@@ -2188,7 +2188,7 @@ class Membership_For_Woocommerce_Public {
 			}
 
 			$member_status = get_post_meta( $member_id, 'member_status' );
-
+			update_option( 'cfgcfggmm', $member_status[0] );
 			// If manually completing membership then set its expiry date.
 			if ( 'complete' == $member_status[0] ) {
 

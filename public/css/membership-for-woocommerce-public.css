@@ -871,3 +871,6 @@ margin-top: 10px;
 .mwb_all_plans_detail_wrapper .mwb_membership_plan_content_price {
   padding-bottom: 15px;
 }
+.related.products .product .product-meta.product-meta-review {
+  margin: 10px auto;
+}

@@ -469,6 +469,8 @@ class Membership_For_Woocommerce_Common {
 				$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
 			}
 			update_post_meta( $post_id, 'mwb_membership_plan_target_ids', $post_data );
+			update_post_meta( $post_id, 'mwb_membership_plan_offer_price_type', '%' );
+			update_post_meta( $post_id, 'mwb_memebership_plan_discount_price', '10' );
 		}
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
