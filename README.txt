@@ -28,7 +28,7 @@ It gets on directly to give you a way out of the three most customary pain point
  * Engaging customers using membership plans 
 
 
-[youtube https://www.youtube.com/watch?v=Yf0pa_Fgn5s&w=560&h=315&rel=0]
+[youtube https://www.youtube.com/watch?v==FaSbkUi17WI&w=560&h=315&rel=0]
 
 
 == MEMBERSHIP FOR WOOCOMMERCE PLUGIN FREE VERSION FEATURES AT A GLANCE ==
@@ -282,7 +282,7 @@ We are always available to help our customers anytime. Our support team works 24
 
 == Changelog ==
 
-= 2.0.0 - RELEASED ON 10 NOVEMBER 2021 =
+= 2.0.0 - RELEASED ON 11 NOVEMBER 2021 =
 * New: Compatible with  [**Subscriptions For WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/)
 * New: Compatible with [**Mautic WooCommerce Integration**](https://makewebbetter.com/product/mautic-woocommerce-integration-pro/?utm_source=membership-org&utm_medium=membership-plugin&utm_campaign=membership-page) ([**Free Download!!**](https://wordpress.org/plugins/enhanced-woocommerce-mautic-integration/))
 * New: Compatibility with WooCommerce 5.9 and WordPress 5.8.1
@@ -324,7 +324,7 @@ We are always available to help our customers anytime. Our support team works 24
 
 == Upgrade Notice ==
 
-= 2.0.0 - RELEASED ON 10 NOVEMBER 2021 =
+= 2.0.0 - RELEASED ON 11 NOVEMBER 2021 =
 * New: Compatible with  [**Subscriptions For WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/)
 * New: Compatible with [**Mautic WooCommerce Integration**](https://makewebbetter.com/product/mautic-woocommerce-integration-pro/?utm_source=membership-org&utm_medium=membership-plugin&utm_campaign=membership-page) ([**Free Download!!**](https://wordpress.org/plugins/enhanced-woocommerce-mautic-integration/))
 * New: Compatibility with WooCommerce 5.9 and WordPress 5.8.1
@@ -333,4 +333,3 @@ We are always available to help our customers anytime. Our support team works 24
 * New: User Table for Admin 
 * New: Multi-Step Configuration of Membership for WooCommerce
 * New: Display All Membership Plans Together With Option to Buy Them
-
