@@ -5,7 +5,7 @@ jQuery( document ).ready( function( $ ){
 
         ajax:{
 
-            url:      add_new_obj.ajax_url,
+            url: add_new_obj.ajax_url,
             dataType: "json",
             delay:    200,
             data: function( params ) {
@@ -32,8 +32,6 @@ jQuery( document ).ready( function( $ ){
         },
         minimumInputLength: 3 // The minimum number of characters to input to perform a search.
     });
-
-
 
 
     // Target category search.

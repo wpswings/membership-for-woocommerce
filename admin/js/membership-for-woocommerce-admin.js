@@ -29,18 +29,47 @@
    * practising this, we should strive to set a better example in our own work.
    */
 
-  
-
-
-
 jQuery(document).ready(function($) {
 
+    jQuery('#preview-action').hide();
+    jQuery('#edit-slug-box').hide();
+    jQuery('#message').hide();
 
+     // Remove image button.
+  $(document).on('change', '#mwb_membership_plan_duration_type', function(e) {
+    e.preventDefault();
+
+    var duration_type = jQuery('#mwb_membership_plan_duration_type option:selected').val();
+    var duration_text = jQuery('#mwb_membership_plan_duration_type option:selected').text();
+    duration_type =  duration_type.substring(0,duration_type.length - 1)
+    jQuery('#mwb_membership_subscription_expiry_type option:selected').val(duration_type);
+    jQuery('#mwb_membership_subscription_expiry_type option:selected').text(duration_text);
+
+    });
+    $(document).on('blur', '#mwb_membership_subscription_expiry', function(e) {
+     e.preventDefault();
+
+     var duration = jQuery('#mwb_membership_plan_duration').val();
+     var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+     if ( parseInt(duration)  > parseInt(subscription) ) {
+        alert('Please enter subscription expiry value greater or equal to duration ');
+        var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+     }
+    });
+
+    $(document).on('blur', '#mwb_membership_plan_duration', function(e) {
+        e.preventDefault();
+   
+        var duration = jQuery('#mwb_membership_plan_duration').val();
+        var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+        if ( parseInt(duration)  > parseInt(subscription) ) {
+           var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+        }
+    });
 
     $(document).on('click','.media-button',function() {
         jQuery('.media-modal-close').trigger('click');
       });
-
     
   // Avoid negative values for amount/discount and convert it to zero.
   $('input[name="mwb_membership_plan_price"]').keyup(function() {
@@ -57,7 +86,6 @@ jQuery(document).ready(function($) {
       }
   });
 
-
   // Display already selected option field.
   function selected() {
 
@@ -72,15 +100,20 @@ jQuery(document).ready(function($) {
       var attch_inv = $( "input[name='mwb_membership_attach_invoice']:checked" ).val();
 
       switch (selection_access) {
-
+        
           case 'limited':
               $("#mwb_membership_duration").show('500');
+              $("#mwb_membership_subscription_tr").show('500');
+              $("#mwb_membership_subscription_expiry_tr").show('500');
+              
               $("#mwb_membership_recurring_plan").show('500');
               break;
 
           default:
               $("#mwb_membership_duration").hide('500');
+              $("#mwb_membership_subscription_tr").hide('500');
               $("#mwb_membership_recurring_plan").hide('500');
+              $("#mwb_membership_subscription_expiry_tr").hide('500');
 
       }
 
@@ -123,6 +156,8 @@ jQuery(document).ready(function($) {
 
           case 'limited':
               $("#mwb_membership_duration").show('500');
+              $("#mwb_membership_subscription_tr").show('500');
+              $("#mwb_membership_subscription_expiry_tr").show('500');
 
               $("#mwb_membership_plan_duration_type").on("change", function() {
                   var duration_type = $("#mwb_membership_plan_duration_type").val();
@@ -139,6 +174,8 @@ jQuery(document).ready(function($) {
 
           default:
               $("#mwb_membership_duration").hide('500');
+              $("#mwb_membership_subscription_tr").hide('500');
+              $("#mwb_membership_subscription_expiry_tr").hide('500');
               $("#mwb_membership_plan_duration").val("");
               $("#mwb_membership_plan_duration_type").prop("selectedIndex", 0);
               $("#mwb_membership_recurring_plan").hide('500');
@@ -299,24 +336,26 @@ jQuery(document).ready(function($) {
       $('#upload_img').removeClass('button_hide');
       $('#remove_img').addClass('button_hide');
   });
-
  
-
   // Add default plan title.
   var post_title = $('input[name="post_title"]').val();
   var post_id = $('input[name="post_ID"]').val();
 
   if (!post_title) {
-      $('input[name="post_title"]').val('Plan ' + '#' + post_id);
+      $('input[name="post_title"]').val( admin_ajax_obj.Plan + '#' + post_id);
   }
 
   // Display warning if plan title field is empty.
   $('input[name="post_title"]').on('keyup', function() {
       var post_title = $('input[name="post_title"]').val();
+     var title_warning = jQuery('.title_warning').html()
 
       if (!post_title) {
-          var title_msg = '<span class="title_warning">*Title field cant\'t be empty</span>';
-          $('div#titlewrap').append(title_msg);
+          if ( title_warning == undefined ) {
+            var title_msg = '<span class="title_warning">*'+ admin_ajax_obj.Plan_warning +'</span>';
+            $('div#titlewrap').append(title_msg);
+          }
+         
       }
   });
 
@@ -365,6 +404,8 @@ $(document).ready(function() {
         return new MDCSwitch(el);
       }
     );
+
+  
    
     $(document).on('click','.mwb-password-hidden',function() {
       if ($(".mwb-form__password").attr("type") == "text") {
@@ -385,3 +426,4 @@ $(document).ready(function() {
   });
 })(jQuery);
 // License.
+

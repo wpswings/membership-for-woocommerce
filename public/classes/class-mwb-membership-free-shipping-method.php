@@ -93,46 +93,12 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		$this->instance_form_fields = array(
 
-			'enabled'            => array(
-				'title'       => __( 'Enable', 'membership-for-woocommerce' ),
-				'type'        => 'checkbox',
-				'description' => __( 'Enable the membership shipping method.', 'membership-for-woocommerce' ),
-				'desc_tip'    => true,
-				'default'     => '',
-			),
-
 			'title'              => array(
 				'title'       => __( 'Title', 'membership-for-woocommerce' ),
 				'type'        => 'text',
 				'description' => __( 'Title to be displayed on front-end.', 'membership-for-woocommerce' ),
 				'desc_tip'    => true,
 				'default'     => __( 'Membership Shipping', 'membership-for-woocommerce' ),
-			),
-
-			'requires'           => array(
-				'title'       => __( 'Membership Free Shipping Requires', 'membership-for-woocommerce' ),
-				'type'        => 'select',
-				'class'       => 'wc-enhanced-select',
-				'default'     => '',
-				'options'     => array(
-					''            => __( 'N/A', 'membership-for-woocommerce' ),
-					'active_plan' => __( 'An Active Membership', 'membership-for-woocommerce' ),
-				),
-				'description' => __( 'Enter cost for membership shipping method', 'membership-for-woocommerce' ),
-				'desc_tip'    => true,
-			),
-
-			'allowed_membership' => array(
-				'title'             => __( 'Allowed Memberships', 'membership-for-woocommerce' ),
-				'type'              => 'multiselect',
-				'class'             => 'wc-enhanced-select mwb-membership-shipping-method',
-				'default'           => '',
-				'description'       => __( 'Select the active membership plans on which you want to offer free shipping', 'membership-for-woocommerce' ),
-				'desc_tip'          => true,
-				'options'           => $all_memberships,
-				'custom_attributes' => array(
-					'data-placeholder' => __( 'Select Membership Plans', 'woocommerce' ),
-				),
 			),
 
 		);

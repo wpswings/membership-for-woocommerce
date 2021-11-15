@@ -141,3 +141,8 @@
 .available_member .button.alt.mfw-membership {
   width: unset;
 }
+.mwb_membership_plan_content_description img {
+  margin: 20px auto;
+  max-width: 200px;
+  height: auto;
+}

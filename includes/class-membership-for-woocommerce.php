@@ -136,12 +136,12 @@ class Membership_For_Woocommerce {
 				  // The class responsible for defining all actions that occur in the admin area.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
 
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/partials/templates/membership-templates/mwb-membership-global-settings.php';
-
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-common.php';
 
 		/**
 		 * The class responsible for defining all function for membership checkout validations.
@@ -272,6 +272,14 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_trash_post', $mfw_plugin_admin, 'mwb_membership_for_woo_add_to_trash_member' );
 		$this->loader->add_action( 'wp_initialize_site', $mfw_plugin_admin, 'mwb_membership_for_woo_on_create_new_blog', 900 );
+		$this->loader->add_action( 'mwb_sfw_subscription_cancel', $mfw_plugin_admin, 'mwb_membership_cancel_membership_acc_susbcription', 20, 2 );
+
+		// Add new column in user table at admin side.
+		$this->loader->add_filter( 'manage_users_custom_column', $mfw_plugin_admin, 'mwb_membership_new_modify_user_table_add_user', 10, 3 );
+
+		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'mwb_membership_new_modify_user_table_value' );
+		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'mwb_membership_new_column_value_assign', 10, 1 );
+
 	}
 
 	/**
@@ -293,6 +301,17 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_checkout', $mfw_plugin_common, 'mwb_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' ); // Import CSV.
 		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_csv_file_upload', $mfw_plugin_common, 'mwb_membership_csv_file_upload' );
+		$this->loader->add_action( 'mwb_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'mwb_membership_subscription_renewal', 99, 3 );
+		$this->loader->add_action( 'mwb_sfw_expire_subscription_scheduler', $mfw_plugin_common, 'mwb_membership_subscription_expire', 99, 1 );
+		$this->loader->add_action( 'mwb_sfw_subscription_active_renewal', $mfw_plugin_common, 'mwb_membership_subscription_active_renewal', 99, 1 );
+		$this->loader->add_action( 'mwb_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'mwb_membership_subscription_on_hold_renewal', 99, 1 );
+
+		if ( self::is_enbale_usage_tracking() ) {
+			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'mfw_makewebbetter_tracker_send_event' );
+		}
+		// Save ajax request for the plugin's multistep.
+		$this->loader->add_action( 'wp_ajax_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
 
 	}
 
@@ -365,7 +384,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'mwb_membership_expiry_check', $mfw_plugin_public, 'mwb_membership_cron_expiry_check' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'mwb_membership_set_membership_product_price' );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'mwb_membership_set_membership_product_price', 5 );
 
 			// Settin membership price in cart.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'mwb_membership_make_membership_product_purchasable', 10, 2 );
@@ -383,7 +402,11 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'mwb_membership_add_to_cart_url', 20, 1 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'mwb_mfw_set_woocoomerce_session', 10 );
 			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'mwb_membership_get_product_price_of_member', 20, 2 );
-
+			$this->loader->add_filter( 'mwb_sfw_set_subscription_status', $mfw_plugin_public, 'mwb_membership_subscription_get_status', 20, 2 );
+			$this->loader->add_filter( 'mwb_sfw_next_payment_date', $mfw_plugin_public, 'mwb_membership_subscription_next_payment_date', 20, 2 );
+			$this->loader->add_filter( 'mwb_sfw_susbcription_end_date', $mfw_plugin_public, 'mwb_membership_susbcription_end_date', 20, 2 );
+			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'mwb_membership_hide_quantity_fields_for_membership', 10, 2 );
+			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'mwb_membership_validate_email', 10, 2 );
 		}
 	}
 
@@ -399,6 +422,17 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'rest_api_init', $mfw_plugin_api, 'mwb_mfw_add_endpoint' );
 
+	}
+
+	/**
+	 * Check is usage tracking is enable
+	 *
+	 * @version 1.0.0
+	 * @name is_enbale_usage_tracking
+	 */
+	public static function is_enbale_usage_tracking() {
+		$check_is_enable = get_option( 'mfw_enable_tracking', false );
+		return ! empty( $check_is_enable ) ? true : false;
 	}
 
 
@@ -551,9 +585,8 @@ class Membership_For_Woocommerce {
 		echo wp_kses_post( $mfw_notice );
 	}
 
-
 	/**
-	 * Show wordpress and server info.
+	 * Show WordPress and server info.
 	 *
 	 * @return Array $mfw_system_data returns array of all wordpress and server related information.
 	 * @since  1.0.0
@@ -676,10 +709,7 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group mwb-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
 							<div class="mwb-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-							<?php
-								$instance = Membership_For_Woocommerce_Global_Functions::get();
-								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-							?>
+							
 							</div>
 							<div class="mwb-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined">
@@ -702,6 +732,7 @@ class Membership_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>
@@ -892,10 +923,7 @@ class Membership_For_Woocommerce {
 						<div class="mwb-form-group">
 							<div class="mwb-form-group__label">
 								<label for="" class="mwb-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-								<?php
-								$instance = Membership_For_Woocommerce_Global_Functions::get();
-								$instance->tool_tip( ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ) );
-								?>
+							
 							</div>
 							<div class="mwb-form-group__control">
 								<div>
@@ -918,7 +946,9 @@ class Membership_For_Woocommerce {
 									</div>
 								</div>
 								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent mwb-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
+								
 							</div>
 						</div>
 							<?php

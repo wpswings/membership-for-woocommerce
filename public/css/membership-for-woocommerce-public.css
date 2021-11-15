@@ -70,9 +70,28 @@
     text-align: center;
     margin: 0px auto -5px;
   }
+  .product .product-meta.product-meta-review {
+    margin: 10px 0 10px 0;
+    max-width: 230px;
+}
   
   .mfw-product-meta-membership {
     text-align: center;
+  }
+
+  .product-inner {
+    position: relative;
+  }
+
+  .product-inner .mfw-product-meta-membership-wrap {
+    position: absolute;
+    top: 280px;
+    left: 0;
+    right: 0;
+  }
+  
+  .product-inner .woo-entry-image + .mfw-product-meta-membership-wrap + .woo-entry-inner li.image-wrap {
+    margin-bottom: 60px !important;
   }
   
   .mwb_mfw_membership_tool_tip_wrapper {
@@ -187,9 +206,12 @@
     border-radius: 5px;
   }
   
-  .mwb_mfw_membership_icon {
+  .mwb_mfw_membership_front_page .dashicons.dashicons-awards.mwb_mfw_membership_icon {
     font-size: 65px;
     color: #f37e21;
+    display: inline-block;
+    width: 65px;
+    height: 65px;
   }
   
   .mwb_membership_plan_content_title,
@@ -207,6 +229,7 @@
   .mwb_membership_plan_content_title {
     font-size: 30px;
     border-bottom: 2px solid #f37e21;
+    line-height: 1.25 !important;
   }
   
   .mwb_membership_plan_content_price {
@@ -826,4 +849,25 @@ margin-top: 10px;
   transform: rotate(
 90deg);
   display: inline-block;
+}
+
+
+/* New Buy now button added */
+
+.mwb_membership_plan_content_desc .mwb_membership_buy_now_btn .mwb_membership_buynow {
+  background-color: #fff;
+  border: 2px solid #f37e21 !important;
+  color: #f37e21;
+  height: unset;
+  margin: 10px auto;
+  min-width: 125px;
+  padding: 8px 15px;
+}
+
+.mwb_all_plans_detail_wrapper h2 {
+  margin: 0;
+}
+
+.mwb_all_plans_detail_wrapper .mwb_membership_plan_content_price {
+  padding-bottom: 15px;
 }
