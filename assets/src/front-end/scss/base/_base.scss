@@ -1,0 +1,18 @@
+@import 
+    'colors',
+    'typography',
+    'abstracts/placeholders',
+    'abstracts/mixins',
+    'abstracts/functions';
+
+
+/* Enter Your Global CSS here */
+
+* {
+    box-sizing: border-box;
+
+    &:after,
+    &:before {
+        box-sizing: border-box;
+    }
+}

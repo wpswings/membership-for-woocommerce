@@ -1,0 +1,57 @@
+/* Create Typo variables here
+ * use $ff prefix for font family
+ * use $fs for font size
+ i.e $ff-roboto-b: Roboto-bold;
+ * $fs-large: 40px; */
+  /*==========================================================
+=            Typography Variable and Declaration            =
+============================================================*/
+@font-face {
+    font-family: 'NunitoSans-ExtraBold';
+    src: url('../fonts/nunito-sans/NunitoSans-ExtraBold.ttf');
+    font-style: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-SemiBold';
+    src: url('../fonts/nunito-sans/NunitoSans-SemiBold.ttf');
+    font-style: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Bold';
+    src: url('../fonts/nunito-sans/NunitoSans-Bold.ttf');
+    font-style: bold;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Regular';
+    src: url('../fonts/nunito-sans/NunitoSans-Regular.ttf');
+    font-style: normal;
+    font-display: swap;
+}
+
+/*----------  Font Family Variable  ----------*/
+
+$ff-nunitosans-e:   'NunitoSans-ExtraBold';
+$ff-nunitosans-s:   'NunitoSans-SemiBold';
+$ff-nunitosans-b:   'NunitoSans-Bold';
+$ff-nunitosans-r:   'NunitoSans-Regular';
+
+/*----------  Font Size Variable  ----------*/
+
+$fs-xxx-large      : 42px;
+$fs-xlarge         : 30px;
+$fs-large          : 28px;
+$fs-xmedium        : 20px;
+$fs-medium         : 18px;
+$fs-normal         : 16px;
+$fs-xm-small       : 14px;
+$fs-xxsmall        : 12px;
+
+
+
+/*=====  End of Typography Variable and Declaration  ======*/

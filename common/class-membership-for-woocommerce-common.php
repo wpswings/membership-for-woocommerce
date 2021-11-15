@@ -140,7 +140,7 @@ class Membership_For_Woocommerce_Common {
 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
 
-		// Handling file upload using activity helper class..
+		// Handling file upload using activity helper class..s
 		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
 		// phpcs:disable
 		$csv_file    = ! empty( $_FILES['file'] ) ? map_deep( wp_unslash( $_FILES['file'] ), 'sanitize_text_field' ) : ''; // phpcs:ignore

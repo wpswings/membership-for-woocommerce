@@ -530,9 +530,7 @@ class Membership_For_Woocommerce_Public {
 										return;
 									}
 								}
-
 								$page_link_found = true;
-
 								$page_link = add_query_arg(
 									array(
 										'plan_id' => $plan['ID'],
@@ -540,7 +538,6 @@ class Membership_For_Woocommerce_Public {
 									),
 									$page_link
 								);
-
 								if ( is_user_logged_in() ) {
 
 									// Show plans under review.
@@ -594,7 +591,6 @@ class Membership_For_Woocommerce_Public {
 													$suggested_membership = true;
 												}
 											}
-
 											echo '<div class="available_member" >
 	<div>
 		<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
