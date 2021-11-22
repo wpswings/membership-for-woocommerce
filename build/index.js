@@ -56890,19 +56890,7 @@ function App(props) {
   };
 
   const [error, setError] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
-  const [success, setSuccess] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])(''); // const handleFormSubmit = (e) => {
-  //     e.preventDefault();
-  //     setLoading(true);
-  //  let val =   buttonclickhandler();
-  //  console.log( val );
-  //  if (val.data.status == true) {
-  //      setSuccess(res);
-  //      savedatakhandler();
-  //  } else {
-  //      setError(res);
-  //      savedatakhandler();
-  //  }
-  // }
+  const [success, setSuccess] = Object(react__WEBPACK_IMPORTED_MODULE_1__["useState"])('');
 
   const savedatakhandler = e => {
     const user = { ...state,
@@ -56924,7 +56912,6 @@ function App(props) {
   };
 
   const handleFormSubmit = e => {
-    // let LicenceCode = ctx.formFields['licenseCode'];
     setError('');
     setSuccess('');
     const user = { ...state,
@@ -56940,12 +56927,12 @@ function App(props) {
         setState({ ...state,
           ['licenseData']: res.data.msg
         });
+        savedatakhandler();
       } else {
         setError(res.data.msg);
         setState({ ...state,
           ['licenseData']: res.data.msg
         });
-        savedatakhandler();
       }
     }).catch(er => {
       setError(er);

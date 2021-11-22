@@ -469,6 +469,7 @@ class Membership_For_Woocommerce_Public {
 		global $product;
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
+	
 		$already_included_plan = array();
 		$already_pending_plan = array();
 		$suggested_membership = false;
@@ -2111,6 +2112,7 @@ class Membership_For_Woocommerce_Public {
 		if ( $product_id == $mwb_membership_default_product ) {
 			if ( $plan_id ) {
 
+
 				if ( 'completed' == $order->get_status() ) {
 					$order_st = 'complete';
 				} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
@@ -2120,9 +2122,10 @@ class Membership_For_Woocommerce_Public {
 				} elseif ( 'cancelled' == $order->get_status() ) {
 					$order_st = 'cancelled';
 				}
+
 				update_post_meta( $member_id, 'member_status', $order_st );
 
-			} else {
+			} else {				
 
 				if ( ! empty( WC()->session ) && WC()->session->has_session() ) {
 					$plan_id   = WC()->session->get( 'plan_id' );
@@ -2177,6 +2180,17 @@ class Membership_For_Woocommerce_Public {
 						$available_plan = $available_plan . '-' . $member_id;
 						update_option( 'all_subscription_plan', $available_plan );
 					}
+
+					if ( 'yes' == $plan_obj['mwb_membership_trial_membership'] ) {
+						update_user_meta( $member_data['user_id'], 'is_trial_membership', true );
+						update_post_meta( $member_id, 'member_status', 'complete' );
+					}
+
+					$order_val = new WC_Order( $order_id );
+				$payment = $order_val->get_payment_method_title();
+
+				update_option('dxfxdfd', $payment);
+				die();
 
 					$this->assign_club_membership_to_member( $plan_id, $plan_obj, $member_id );
 
@@ -2334,7 +2348,6 @@ class Membership_For_Woocommerce_Public {
 								array_push( $this->under_review_products, $product->get_id() );
 								array_unique( $this->under_review_products, $product->get_id() );
 								$access = true;
-
 							}
 						} else {
 							$access = false;
@@ -3505,7 +3518,7 @@ class Membership_For_Woocommerce_Public {
 		$membership_name = '';
 		$the_user = get_user_by( 'email', $fields['billing_email'] );
 		$the_user_id = $the_user->ID;
-		$is_not_membership_applicable = false;
+		$is_not_membership_applicable = 'false';
 		$is_membership_product = false;
 
 		$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
@@ -3519,12 +3532,9 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
-
-		if ( true == $is_membership_product ) {
-			if ( empty( $the_user ) ) {
-				$errors->add( 'validation', 'User with this mail not found try to place order with existing user!!' );
-			}
-		}
+		$is_plan_trial = false;
+		$is_already_trial = get_user_meta( $the_user->ID, 'is_trial_membership', true );
+		
 
 		$is_member_meta = get_user_meta( $the_user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
@@ -3538,18 +3548,29 @@ class Membership_For_Woocommerce_Public {
 				foreach ( $current_memberships as $key => $membership_id ) {
 
 					$member_status = get_post_meta( $membership_id, 'member_status', true );
-
 					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status ) {
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 						if ( $active_plan['post_title'] == $membership_name ) {
-							$is_not_membership_applicable = true;
+							$is_not_membership_applicable = 'true';
+						}
+						if ( 'yes' == $active_plan['mwb_membership_trial_membership'] ) {
+							$is_plan_trial =true;
 						}
 					}
 				}
 			}
 		}
 
-		if ( $is_not_membership_applicable ) {
+		if ( $is_plan_trial ) {
+			if ( $is_already_trial ) {
+				$errors->add( 'validation', 'Membership Trial plan can be purchased only once per user !!' );
+
+			}
+
+		}
+
+
+		if ( $is_not_membership_applicable == 'true' ) {
 			   $errors->add( 'validation', 'Membership plan already exists Buy a new plan !!' );
 		}
 	}

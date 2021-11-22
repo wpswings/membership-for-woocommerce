@@ -30,6 +30,32 @@ global $post;
 		<!-- Nonce Field -->
 		<?php wp_nonce_field( 'mwb_membership_plans_creation_nonce', 'mwb_membership_plans_nonce' ); ?>	
 
+
+
+		<!-- Trial Membership section start-->
+		<tr>
+			<th scope="row" class="titledesc">
+				<label for="mwb_membership_trial_membership"><?php esc_html_e( 'Is Trial Membership', 'membership-for-woocommerce' ); ?></label>
+				<?php
+					$description = esc_html__( 'Enable it if you want to make your membership as trial membership.', 'membership-for-woocommerce' );
+
+					$instance->tool_tip( $description );
+				?>
+			</th>
+
+				<td id="mfw_trial_shipping" class="forminp forminp-text">
+					<?php
+						$mwb_membership_plan_free_trial = $settings_fields['mwb_membership_trial_membership'];
+					?>
+				<input type="checkbox"  class="mwb_membership_plan_offer_trial_membership" name="mwb_membership_trial_membership" value="yes" <?php checked( 'yes', $mwb_membership_plan_free_trial ); ?> >
+		<!-- Trial Membership  shipping link end. -->
+
+				</td>
+		</tr>
+
+
+
+
 		<!-- Memberhship plan price start  -->
 		<tr valign="top">
 			<th scope="row" class="titledesc">

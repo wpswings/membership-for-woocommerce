@@ -94,7 +94,7 @@ export default function FinalStep(props) {
                 if (frontend_ajax_object.is_pro_plugin == 'true') {
                      return (
                          <div>
-                      
+                    
                         <Button id="button_licence" value="buttomn" fullWidth="100%" border="20%" theme="pink" color="black">{ __( 'Validate Licence Key', 'membership-for-woocommerce' ) }</Button>
                </div>
                         )
