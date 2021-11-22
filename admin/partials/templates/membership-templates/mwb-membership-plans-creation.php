@@ -533,7 +533,7 @@ global $post;
 				</th>
 
 				<td class="forminp forminp-text">
-					<select id="mwb_membership_plan_target_ids_search" required class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
+					<select id="mwb_membership_plan_target_ids_search" class="wc-membership-product-search" multiple="multiple" name="mwb_membership_plan_target_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 
 						<?php
 

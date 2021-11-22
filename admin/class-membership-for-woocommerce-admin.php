@@ -1687,10 +1687,19 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		$post   = get_post( $post_id );
-		$current_assigned_user = ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '';
+		$current_assigned_user = '';
+		$member_details = get_post_meta( $post_id, 'billing_details', true );
+		$email      = ! empty( $member_details['membership_billing_email'] ) ? $member_details['membership_billing_email'] : '';
+		if ( ! empty( $email ) ) {
+			$user = get_user_by( 'email', $email );
+			$current_assigned_user = $user->ID;
+		} else {
+			$current_assigned_user = ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '';
+		
+		}
 		update_post_meta( $post_id, 'mwb_member_user', $current_assigned_user );
 
-		$current_memberships = get_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', true );
+		$current_memberships = get_user_meta( $current_assigned_user, 'mfw_membership_id', true );
 
 		$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
 		if ( ! in_array( $post_id, (array) $current_memberships ) ) {
@@ -1704,7 +1713,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		// Assign membership plan to user and assign 'member' role to it.
-		update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'mfw_membership_id', $current_memberships );
+		update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
 
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $_POST['member_status'] ) {
@@ -1780,7 +1789,7 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 
-			update_user_meta( ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '', 'is_member', 'member' );
+			update_user_meta( $current_assigned_user, 'is_member', 'member' );
 
 		} elseif ( 'cancelled' == $_POST['member_status'] ) {  // If manually cancelling membership then remove its expiry date.
 
