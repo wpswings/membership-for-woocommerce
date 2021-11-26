@@ -2180,7 +2180,7 @@ class Membership_For_Woocommerce_Public {
 						$available_plan = get_option( 'all_subscription_plan' );
 						$available_plan = $available_plan . '-' . $member_id;
 						update_option( 'all_subscription_plan', $available_plan );
-					}
+					}					
 
 					$this->assign_club_membership_to_member( $plan_id, $plan_obj, $member_id );
 
@@ -2216,9 +2216,7 @@ class Membership_For_Woocommerce_Public {
 					} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 						$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
-
 						$expiry_date = strtotime( $today_date . $duration );
-						$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 						update_post_meta( $member_id, 'member_expiry', $expiry_date );
 					}
 				}
@@ -3305,6 +3303,7 @@ class Membership_For_Woocommerce_Public {
 					}
 				}
 			}
+
 			foreach ( $data as $plan ) {
 				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
@@ -3524,12 +3523,7 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 
-		if ( true == $is_membership_product ) {
-			if ( empty( $the_user ) ) {
-				$errors->add( 'validation', 'User with this mail not found try to place order with existing user!!' );
-			}
-		}
-
+		
 		$is_member_meta = get_user_meta( $the_user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 			$data                = $this->custom_query_data;

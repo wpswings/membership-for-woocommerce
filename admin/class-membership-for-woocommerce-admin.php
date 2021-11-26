@@ -1012,7 +1012,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-
 	/**
 	 * Define Membership default settings fields.
 	 *
@@ -1286,10 +1285,11 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
-
+			
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
+
 					echo esc_html( ! empty( $expiry ) ? gmdate( 'Y-m-d', $expiry ) : '' );
 				}
 				break;
@@ -1864,20 +1864,23 @@ class Membership_For_Woocommerce_Admin {
 			$mwb_membership_posts = get_post_field( 'post_author', $post_id );
 
 			$memberships = get_user_meta( $mwb_membership_posts, 'mfw_membership_id', true );
-
 			foreach ( $memberships as $key => $m_id ) {
 
 				$status = get_post_meta( $m_id, 'member_status', true );
-
 				if ( 'complete' == $status ) {
+					if ( $m_id == $post_id ) {
+						$other_member_exists = false;
+					} else {
+						$other_member_exists = true;
+					}
 
-					$other_member_exists = true;
 				}
 			}
 
 			if ( false == $other_member_exists ) {
 				update_user_meta( $current_assigned_user, 'is_member', '' );
 			}
+
 		} else {
 
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
@@ -2245,6 +2248,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
+
 	public function mwb_membership_for_woo_on_create_new_blog( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
