@@ -609,6 +609,18 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Create User after payment done', 'membership-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this to create user when payment is done.', 'membership-for-woocommerce' ),
+				'id'    => 'mwb_membership_create_user_after_payment',
+				'value' => get_option( 'mwb_membership_create_user_after_payment' ),
+				'class' => 'mfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			)
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );
