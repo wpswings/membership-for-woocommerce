@@ -438,19 +438,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param object $product Product object.
 	 */
 	public function mwb_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
-echo 'xcgfxcgf';
-try {
-//	$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
-} catch ( \Throwable $th ) {
-	throw new Exception( $th->getMessage() );
-}
 
-if ( $_user ) {
-
-	$user_id   = $_user;
-	$user_ob   = get_user_by( 'id', $user_id );
-	$user_name = $user_ob->display_name;
-}
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
@@ -2192,7 +2180,7 @@ if ( $_user ) {
 						$available_plan = get_option( 'all_subscription_plan' );
 						$available_plan = $available_plan . '-' . $member_id;
 						update_option( 'all_subscription_plan', $available_plan );
-					}					
+					}
 
 					$this->assign_club_membership_to_member( $plan_id, $plan_obj, $member_id );
 
@@ -3535,7 +3523,6 @@ if ( $_user ) {
 			}
 		}
 
-		
 		$is_member_meta = get_user_meta( $the_user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 			$data                = $this->custom_query_data;

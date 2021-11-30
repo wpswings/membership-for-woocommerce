@@ -834,18 +834,37 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			} else {
 
-				// Create user.
-				try {
-					$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
-				} catch ( \Throwable $th ) {
-					throw new Exception( $th->getMessage() );
-				}
+				$is_user_created = get_option( 'mwb_membership_create_user_after_payment', true );
 
-				if ( $_user ) {
+				if ( 'on' == $is_user_created ) {
+					$users = get_users();
+					$max_user_id = '';
+					foreach ( $users as $key => $value ) {
+						// code...
 
-					$user_id   = $_user;
-					$user_ob   = get_user_by( 'id', $user_id );
-					$user_name = $user_ob->display_name;
+						if ( $value->ID > $max_user_id ) {
+							$max_user_id = $value->ID;
+						}
+					}
+
+								$user_id   = $max_user_id + 1;
+								$user_name = '---';
+
+				} else {
+
+					// Create user.
+					try {
+						$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
+					} catch ( \Throwable $th ) {
+						throw new Exception( $th->getMessage() );
+					}
+
+					if ( $_user ) {
+
+						$user_id   = $_user;
+						$user_ob   = get_user_by( 'id', $user_id );
+						$user_name = $user_ob->display_name;
+					}
 				}
 			}
 

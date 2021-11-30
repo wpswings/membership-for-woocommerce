@@ -620,7 +620,7 @@ class Membership_For_Woocommerce_Admin {
 					'yes' => __( 'YES', 'membership-for-woocommerce' ),
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
-			)
+			),
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'mwb_membership_set_attach_invoice_data_after_email', $after_email );
@@ -1297,7 +1297,7 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'expiration':
 				$expiry = get_post_meta( $post_id, 'member_expiry', true );
-			
+
 				if ( 'Lifetime' == $expiry ) {
 					echo esc_html( ! empty( $expiry ) ? $expiry : '' );
 				} else {
@@ -1707,7 +1707,7 @@ class Membership_For_Woocommerce_Admin {
 			$current_assigned_user = $user->ID;
 		} else {
 			$current_assigned_user = ! empty( $_POST['mwb_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['mwb_member_user'] ) ) : '';
-		
+
 		}
 		update_post_meta( $post_id, 'mwb_member_user', $current_assigned_user );
 
@@ -1885,14 +1885,12 @@ class Membership_For_Woocommerce_Admin {
 					} else {
 						$other_member_exists = true;
 					}
-
 				}
 			}
 
 			if ( false == $other_member_exists ) {
 				update_user_meta( $current_assigned_user, 'is_member', '' );
 			}
-
 		} else {
 
 			$order_id = get_post_meta( $post_id, 'member_order_id', true );
@@ -2084,12 +2082,23 @@ class Membership_For_Woocommerce_Admin {
 	 * @param mixed $old_status order old status.
 	 * @param mixed $new_status order new status.
 	 *
+	 * @throws  Exception Error.
+	 *
 	 * @since 1.0.0
 	 */
 	public function mwb_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
 
 		$order = new WC_Order( $order_id );
 		$orderstatus = $order->status;
+		$user_id = get_post_meta( $order_id, '_customer_user', true );
+		$customer = new WC_Customer( $user_id );
+		$billing_first_name = $customer->get_billing_first_name();
+		$billing_email  = $customer->get_billing_email();
+		$is_user_created = get_option( 'mwb_membership_create_user_after_payment', true );
+
+		$_user = get_user_by( 'email', $billing_email );
+
+		// If user exist, get the required details.
 
 		$items = $order->get_items();
 
@@ -2144,6 +2153,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		if ( 'completed' == $order->get_status() ) {
+
 			$order_st = 'complete';
 		} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() || 'failed' == $order->get_status() ) {
 			$order_st = 'hold';
@@ -2171,7 +2181,33 @@ class Membership_For_Woocommerce_Admin {
 			$subscription_id = get_post_meta( $order_id, 'mwb_subscription_id', true );
 			if ( 'complete' == $order_st ) {
 
-				$mwb_membership_posts = get_post_field( 'post_author', $member_id );
+				if ( ! $_user ) {
+
+					if ( 'on' == $is_user_created ) {
+
+						try {
+							$_user = wp_create_user( $billing_first_name . '-' . rand(), '', $billing_email );
+						} catch ( \Throwable $th ) {
+							throw new Exception( $th->getMessage() );
+						}
+
+						if ( $_user ) {
+
+							$user_id   = $_user->ID;
+							$user_ob   = get_user_by( 'id', $user_id );
+							$user_name = $user_ob->display_name;
+						}
+					}
+				}
+
+				if ( ! empty( $_user ) ) {
+					$mwb_membership_posts = $_user->ID;
+				} else {
+					$mwb_membership_posts = get_post_field( 'post_author', $member_id );
+				}
+
+				// $mwb_membership_posts = get_post_field( 'post_author', $member_id );
+
 				update_user_meta( $mwb_membership_posts, 'is_member', 'member' );
 				if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
 					if ( ! empty( $subscription_id ) ) {
@@ -2260,7 +2296,6 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @since 1.0.0
 	 */
-
 	public function mwb_membership_for_woo_on_create_new_blog( $new_site ) {
 		if ( ! function_exists( 'is_plugin_active_for_network' ) ) {
 			require_once ABSPATH . '/wp-admin/includes/plugin.php';
