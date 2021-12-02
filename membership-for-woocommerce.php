@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            MakeWebBetter
  * Author URI:        https://makewebbetter.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      5.8.1
+ * Tested up to:      5.8.2
  * WC requires at least: 4.0
- * WC tested up to:   5.8
+ * WC tested up to:   5.9
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -87,7 +87,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.0.0' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.0.1' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
@@ -117,13 +117,13 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 
 	}
 
-	if ( ! function_exists( 'mwb_standard_check_multistep' ) ) {
+	if ( ! function_exists( 'mwb_mfw_standard_check_multistep' ) ) {
 		/**
 		 * Function to check multistep function.
 		 *
 		 * @return bool
 		 */
-		function mwb_standard_check_multistep() {
+		function mwb_mfw_standard_check_multistep() {
 			$bool = false;
 			$mwb_standard_check = get_option( 'mfw_mfw_plugin_standard_multistep_done', false );
 
@@ -311,7 +311,23 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		}
 		return array_merge( $my_link, $links );
 	}
+	if ( ! function_exists( 'mwb_membership_check_plugin_enable' ) ) {
+		/**
+		 * This function is used to check plugin is enable.
+		 *
+		 * @name mwb_membership_check_plugin_enable
+		 * @since 1.0.0
+		 */
+		function mwb_membership_check_plugin_enable() {
+			$is_enable = false;
+			$mwb_membership_enable_plugin = get_option( 'mwb_membership_enable_plugin', '' );
+			if ( 'on' == $mwb_membership_enable_plugin ) {
+				$is_enable = true;
+			}
 
+			return $is_enable;
+		}
+	}
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *

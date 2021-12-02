@@ -267,11 +267,11 @@ class Membership_For_Woocommerce_Common {
 	 * Function is used for the sending the track data
 	 *
 	 * @param bool $override is the bool value to override tracking value.
-	 * @name mfw_makewebbetter_tracker_send_event
+	 * @name mwb_membership_mfw_makewebbetter_tracker_send_event
 	 * @since 1.0.0
 	 */
-	public function mfw_makewebbetter_tracker_send_event( $override = false ) {
-		require WC()->plugin_path() . '/includes/class-wc-tracker.php';
+	public function mwb_membership_mfw_makewebbetter_tracker_send_event( $override = false ) {
+		require_once WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
 		$last_send = get_option( 'makewebbetter_tracker_last_send' );
 		if ( ! apply_filters( 'makewebbetter_tracker_send_override', $override ) ) {
@@ -290,8 +290,16 @@ class Membership_For_Woocommerce_Common {
 		// Update time first before sending to ensure it is set.
 		update_option( 'makewebbetter_tracker_last_send', time() );
 		$params = WC_Tracker::get_tracking_data();
+		$params['extensions']['subscriptions_for_woocommerce'] = array(
+			'version' => MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+			'site_url' => home_url(),
+			'membership_plans' => $this->mwb_mfw_membership_plan_count(),
+			'members_data' => $this->mwb_mfw_membership_get_all_members(),
+		);
 		$params = apply_filters( 'makewebbetter_tracker_params', $params );
+
 		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
+
 		$sucess = wp_safe_remote_post(
 			$api_url,
 			array(
@@ -300,6 +308,84 @@ class Membership_For_Woocommerce_Common {
 			)
 		);
 	}
+
+	/**
+	 * Get All number of Membership Plan
+	 *
+	 * @return int
+	 * @since 2.0.1
+	 */
+	public function mwb_mfw_membership_plan_count() {
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_membership',
+			'post_status' => array( 'publish' ),
+			'numberposts' => -1,
+		);
+
+		$tag_ids = array();
+
+		$all_posts = get_posts( $args );
+
+		$total_membership_plan = count( $all_posts );
+		return $total_membership_plan;
+	}
+
+
+	 /**
+	  * Function is used get all members details
+	  *
+	  * @name mwb_mfw_membership_get_all_members
+	  * @since 2.0.1
+	  */
+	public function mwb_mfw_membership_get_all_members() {
+		$membership_details = array();
+		// Get all limited memberships.
+
+		$args = array(
+			'post_type'   => 'mwb_cpt_members',
+			'post_status' => array( 'private', 'draft', 'pending', 'publish', 'cancelled' ),
+			'numberposts' => -1,
+		);
+		$delay_members = get_posts( $args );
+		$all_posts = get_posts( $args );
+
+		if ( ! empty( $delay_members ) && is_array( $delay_members ) && count( $delay_members ) ) {
+			echo 'xfgcfg';
+			$user_id = '';
+			$user_name = '';
+			$active_count = 0;
+			$pending_count = 0;
+			$cancel_count = 0;
+			$expired_count = 0;
+			$paused_count = 0;
+			foreach ( $delay_members as $member ) {
+
+				$plan_obj = get_post_meta( $member->ID, 'plan_obj', true );
+				$status = get_post_meta( $member->ID, 'member_status', true );
+
+				if ( 'complete' == $status ) {
+					$active_count++;
+					$membership_details['complete_membership'] = $active_count;
+				} elseif ( 'pending' == $status ) {
+					$pending_count++;
+					$membership_details['pending_membership'] = $pending_count;
+				} elseif ( 'cancelled' == $status ) {
+					$cancel_count++;
+					$membership_details['cancelled_membership'] = $cancel_count;
+				} elseif ( 'expired' == $status ) {
+					$expired_count++;
+					$membership_details['expired_membership'] = $expired_count;
+				} elseif ( 'paused' == $status ) {
+					$paused_count++;
+					$membership_details['paused_membership'] = $paused_count;
+				}
+			}
+		}
+
+		return $membership_details;
+	}
+
 
 	/**
 	 * Get the updated time.
@@ -406,10 +492,10 @@ class Membership_For_Woocommerce_Common {
 	/**
 	 * Update the option for settings from the multistep form.
 	 *
-	 * @name mwb_standard_save_settings_filter
+	 * @name mwb_membership_save_settings_filter
 	 * @since 1.0.0
 	 */
-	public function mwb_standard_save_settings_filter() {
+	public function mwb_membership_save_settings_filter() {
 		check_ajax_referer( 'ajax-nonce', 'nonce' );
 
 		$term_accpted = ! empty( $_POST['consetCheck'] ) ? sanitize_text_field( wp_unslash( $_POST['consetCheck'] ) ) : ' ';
@@ -433,13 +519,8 @@ class Membership_For_Woocommerce_Common {
 		update_option( 'first_checkbox', $first_checkbox );
 
 		$checked_first_switch = ! empty( $_POST['checkedA'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedA'] ) ) : '';
-		if ( ! empty( $checked_first_switch ) && $checked_first_switch ) {
+		if ( ! empty( $checked_first_switch ) && 'true' == $checked_first_switch ) {
 			update_option( 'mwb_membership_enable_plugin', 'on' );
-		}
-
-		$checked_second_switch = ! empty( $_POST['checkedB'] ) ? sanitize_text_field( wp_unslash( $_POST['checkedB'] ) ) : '';
-		if ( ! empty( $checked_second_switch ) && $checked_second_switch ) {
-			update_option( 'mfw_radio_reset_license', 'on' );
 		}
 
 		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
@@ -506,6 +587,41 @@ class Membership_For_Woocommerce_Common {
 			}
 		}
 		wp_send_json( 'yes' );
+	}
+
+	/**
+	 * Undocumented function
+	 *
+	 * @param [type] $user_id is the id of new registered user.
+	 * @return void
+	 */
+	public function mwb_membership_sen_email_to_new_registered_user( $user_id ) {
+
+		$user = get_userdata( $user_id );
+		$user_email = $user->user_email;
+		$user_login = $user->user_login;
+
+		// for simplicity, lets assume that user has typed their first and last name when they sign up.
+		$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
+		$user_password = get_option( 'user_password', true );
+		// Now we are ready to build our welcome email.
+		$to = $user_email;
+		$subject = 'Hi ' . $user_full_name . ', welcome to our site!';
+		$body = '
+				  <h1>Dear ' . $user_full_name . ',</h1></br>
+				  <p>Thank you for joining our site. Your account is now active.</p>
+				  <p>Please go ahead and navigate around your account.</p>
+				  <p>Here is your Credentials </p>
+				  <p> User ID - ' . $user_login . ' </p>
+				  <p> Password - ' . $user_password . ' </p>
+		';
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+		if ( wp_mail( $to, $subject, $body, $headers ) ) {
+			error_log( 'email has been successfully sent to user whose email is ' . $user_email );
+			$user_password = get_option( 'user_password', '' );
+		} else {
+			error_log( 'email failed to sent to user whose email is ' . $user_email );
+		}
 	}
 
 }

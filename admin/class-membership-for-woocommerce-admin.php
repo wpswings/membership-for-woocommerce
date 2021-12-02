@@ -77,7 +77,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 			// multistep form css.
-			if ( ! mwb_standard_check_multistep() ) {
+			if ( ! mwb_mfw_standard_check_multistep() ) {
 				$style_url        = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'build/style-index.css';
 				wp_enqueue_style(
 					'mwb-admin-react-styles',
@@ -146,7 +146,7 @@ class Membership_For_Woocommerce_Admin {
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
 
-			if ( ! mwb_standard_check_multistep() ) {
+			if ( ! mwb_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
 				$script_path      = '../../build/index.js';
 				$script_asset_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'build/index.asset.php';
@@ -361,7 +361,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
 			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
 
-			if ( mwb_standard_check_multistep() ) {
+			if ( mwb_mfw_standard_check_multistep() ) {
 				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
 			}
 			$mfw_menus =
@@ -376,7 +376,7 @@ class Membership_For_Woocommerce_Admin {
 			if ( ! empty( $submenu['mwb-plugins'] ) ) {
 
 				if ( ! in_array( 'Home', (array) $submenu['mwb-plugins'] ) ) {
-					if ( mwb_standard_check_multistep() ) {
+					if ( mwb_mfw_standard_check_multistep() ) {
 						add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
 					}
 				}
@@ -2093,7 +2093,10 @@ class Membership_For_Woocommerce_Admin {
 		$user_id = get_post_meta( $order_id, '_customer_user', true );
 		$customer = new WC_Customer( $user_id );
 		$billing_first_name = $customer->get_billing_first_name();
+		$billing_last_name = $customer->get_billing_last_name();
 		$billing_email  = $customer->get_billing_email();
+		$billing_phone  = $customer->get_billing_phone();
+
 		$is_user_created = get_option( 'mwb_membership_create_user_after_payment', true );
 
 		$_user = get_user_by( 'email', $billing_email );
@@ -2185,11 +2188,25 @@ class Membership_For_Woocommerce_Admin {
 
 					if ( 'on' == $is_user_created ) {
 
-						try {
-							$_user = wp_create_user( $billing_first_name . '-' . rand(), '', $billing_email );
-						} catch ( \Throwable $th ) {
-							throw new Exception( $th->getMessage() );
-						}
+						$website = get_site_url();
+
+						$user_name = $billing_first_name . '-' . rand();
+						$password = $billing_first_name . substr( $billing_phone, -4, 4 );
+						update_option( 'user_password', $password );
+						$userdata = array(
+							'user_login' => $user_name,
+							'user_url'   => $website,
+							'user_pass'  => $password, // When creating an user, `user_pass` is expected.
+							'user_email' => $billing_email,
+							'first_name' => $billing_first_name,
+							'last_name' => $billing_last_name,
+							'display_name' => $billing_first_name,
+							'nickname' => $billing_first_name,
+						);
+
+						$_user = wp_insert_user( $userdata );
+
+						update_option( 'user_name', $user_name );
 
 						if ( $_user ) {
 
