@@ -1208,9 +1208,7 @@ class Membership_For_Woocommerce_Admin {
 						echo esc_html__( 'Live', 'membership-for-woocommerce' );
 					}
 				}
-
 				break;
-
 			case 'membership_cost':
 				$plan_cost = get_post_meta( $post_id, 'mwb_membership_plan_price', true );
 				$currency  = get_woocommerce_currency_symbol();
