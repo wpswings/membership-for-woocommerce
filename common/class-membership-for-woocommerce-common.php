@@ -290,7 +290,7 @@ class Membership_For_Woocommerce_Common {
 		// Update time first before sending to ensure it is set.
 		update_option( 'makewebbetter_tracker_last_send', time() );
 		$params = WC_Tracker::get_tracking_data();
-		$params['extensions']['subscriptions_for_woocommerce'] = array(
+		$params['extensions']['membership_for_woocommerce'] = array(
 			'version' => MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
 			'site_url' => home_url(),
 			'membership_plans' => $this->mwb_mfw_membership_plan_count(),
