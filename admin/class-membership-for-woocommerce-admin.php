@@ -2089,13 +2089,12 @@ class Membership_For_Woocommerce_Admin {
 	public function mwb_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
 
 		$order = new WC_Order( $order_id );
-		$orderstatus = $order->status;
-		$user_id = get_post_meta( $order_id, '_customer_user', true );
-		$customer = new WC_Customer( $user_id );
-		$billing_first_name = $customer->get_billing_first_name();
-		$billing_last_name = $customer->get_billing_last_name();
-		$billing_email  = $customer->get_billing_email();
-		$billing_phone  = $customer->get_billing_phone();
+		$order_data = $order->get_data(); // The Order data.
+		$billing_email = $order_data['billing']['email'];
+		$billing_first_name = $order_data['billing']['first_name'];
+		$billing_last_name = $order_data['billing']['last_name'];
+
+		$billing_phone = $order_data['billing']['phone'];
 
 		$is_user_created = get_option( 'mwb_membership_create_user_after_payment', true );
 
@@ -2222,8 +2221,6 @@ class Membership_For_Woocommerce_Admin {
 				} else {
 					$mwb_membership_posts = get_post_field( 'post_author', $member_id );
 				}
-
-				// $mwb_membership_posts = get_post_field( 'post_author', $member_id );
 
 				update_user_meta( $mwb_membership_posts, 'is_member', 'member' );
 				if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {

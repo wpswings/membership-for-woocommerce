@@ -346,16 +346,21 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 
 	add_action( 'activated_plugin', 'membership_for_woocommerce_redirect_on_settings' );
-	if ( ! function_exists('membership_for_woocommerce_redirect_on_settings') ) {
-		function membership_for_woocommerce_redirect_on_settings ( $plugin ) {
+	if ( ! function_exists( 'membership_for_woocommerce_redirect_on_settings' ) ) {
+		/**
+		 * Redirect plugin as plugin get activated function.
+		 *
+		 * @param [type] $plugin is the currenct plugin.
+		 * @return void
+		 */
+		function membership_for_woocommerce_redirect_on_settings( $plugin ) {
 			if ( plugin_basename( __FILE__ ) === $plugin ) {
 				$general_settings_url = admin_url( 'admin.php?page=membership_for_woocommerce_menu' );
-				wp_redirect(  esc_url( $general_settings_url ) );
-				exit(); 
+				wp_redirect( esc_url( $general_settings_url ) );
+				exit();
 			}
 		}
 	}
-
 } else {
 
 	// Deactivate the plugin if Woocommerce not active.

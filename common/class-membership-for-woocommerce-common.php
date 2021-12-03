@@ -351,7 +351,6 @@ class Membership_For_Woocommerce_Common {
 		$all_posts = get_posts( $args );
 
 		if ( ! empty( $delay_members ) && is_array( $delay_members ) && count( $delay_members ) ) {
-			echo 'xfgcfg';
 			$user_id = '';
 			$user_name = '';
 			$active_count = 0;
