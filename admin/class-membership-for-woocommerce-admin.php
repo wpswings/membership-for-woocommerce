@@ -1280,6 +1280,7 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'membership_user':
+				echo $post_id;
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'mwb_member_user', true ) );
 
@@ -2217,12 +2218,13 @@ class Membership_For_Woocommerce_Admin {
 				}
 
 				if ( ! empty( $_user ) ) {
-					$mwb_membership_posts = $_user->ID;
+					$mwb_membership_posts = $_user;
 				} else {
 					$mwb_membership_posts = get_post_field( 'post_author', $member_id );
 				}
 
 				update_user_meta( $mwb_membership_posts, 'is_member', 'member' );
+				update_post_meta( $member_id, 'mwb_member_user', $mwb_membership_posts );
 				if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
 					if ( ! empty( $subscription_id ) ) {
 						update_post_meta( $subscription_id, 'mwb_subscription_status', 'active' );
