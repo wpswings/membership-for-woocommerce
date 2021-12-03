@@ -1280,7 +1280,6 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'membership_user':
-				echo $post_id;
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'mwb_member_user', true ) );
 
