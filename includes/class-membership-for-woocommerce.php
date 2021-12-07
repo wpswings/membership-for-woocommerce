@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '1.2.0';
+			$this->version = '2.0.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -225,7 +225,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'bulk_actions-edit-mwb_cpt_members', $mfw_plugin_admin, 'membership_for_woo_members_remove_bulkaction' );
 		// Add custom post type.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_members' );
-		$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_membership' );
+		if ( mwb_mfw_standard_check_multistep() ) {
+			$this->loader->add_action( 'init', $mfw_plugin_admin, 'mwb_membership_for_woo_cpt_membership' );
+		}
 		// Remove submenu page.
 		$this->loader->add_action( 'admin_menu', $mfw_plugin_admin, 'mwb_membership_remove_submenu' );
 
@@ -307,12 +309,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'mwb_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'mwb_membership_subscription_on_hold_renewal', 99, 1 );
 
 		if ( self::is_enbale_usage_tracking() ) {
-			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'mfw_makewebbetter_tracker_send_event' );
+			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'mwb_membership_mfw_makewebbetter_tracker_send_event' );
 		}
 		// Save ajax request for the plugin's multistep.
-		$this->loader->add_action( 'wp_ajax_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
-		$this->loader->add_action( 'wp_ajax_nopriv_mwb_standard_save_settings_filter', $mfw_plugin_common, 'mwb_standard_save_settings_filter' );
-
+		$this->loader->add_action( 'wp_ajax_mwb_membership_save_settings_filter', $mfw_plugin_common, 'mwb_membership_save_settings_filter' );
+		$this->loader->add_action( 'wp_ajax_nopriv_mwb_membership_save_settings_filter', $mfw_plugin_common, 'mwb_membership_save_settings_filter' );
+		$this->loader->add_action( 'user_register', $mfw_plugin_common, 'mwb_membership_sen_email_to_new_registered_user' );
 	}
 
 	/**

@@ -38,23 +38,7 @@ if ( ! function_exists( 'mwb_membership_check_product_is_membership' ) ) {
 }
 
 
-if ( ! function_exists( 'mwb_sfw_check_plugin_enable' ) ) {
-	/**
-	 * This function is used to check plugin is enable.
-	 *
-	 * @name mwb_sfw_check_plugin_enable
-	 * @since 1.0.0
-	 */
-	function mwb_membership_check_plugin_enable() {
-		$is_enable = false;
-		$mwb_membership_enable_plugin = get_option( 'mwb_membership_enable_plugin', '' );
-		if ( 'on' == $mwb_membership_enable_plugin ) {
-			$is_enable = true;
-		}
 
-		return $is_enable;
-	}
-}
 
 
 /**

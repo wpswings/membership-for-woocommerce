@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $mfw_mwb_mfw_obj;
 
 
-if ( ! mwb_standard_check_multistep() ) {
+if ( ! mwb_mfw_standard_check_multistep() ) {
 	?>
 	<div id="react-app"></div>
 	<?php

@@ -852,15 +852,27 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				} else {
 
-					// Create user.
-					try {
-						$_user = wp_create_user( $fields['membership_billing_first_name'] . '-' . rand(), '', $fields['membership_billing_email'] );
-					} catch ( \Throwable $th ) {
-						throw new Exception( $th->getMessage() );
-					}
+					$website = get_site_url();
+
+					$user_name = $fields['membership_billing_first_name'] . '-' . rand();
+					$password = $fields['membership_billing_first_name'] . substr( $fields['membership_billing_phone'], -4, 4 );
+					update_option( 'user_password', $password );
+					$userdata = array(
+						'user_login' => $user_name,
+						'user_url'   => $website,
+						'user_pass'  => $password, // When creating an user, `user_pass` is expected.
+						'user_email' => $fields['membership_billing_email'],
+						'first_name' => $fields['membership_billing_first_name'],
+						'last_name' => $fields['membership_billing_last_name'],
+						'display_name' => $fields['membership_billing_first_name'],
+						'nickname' => $fields['membership_billing_first_name'],
+					);
+
+					$_user = wp_insert_user( $userdata );
+
+					update_option( 'user_name', $user_name );
 
 					if ( $_user ) {
-
 						$user_id   = $_user;
 						$user_ob   = get_user_by( 'id', $user_id );
 						$user_name = $user_ob->display_name;

@@ -71,7 +71,7 @@ function App(props) {
         setLoading(true);
         const user = {
             ...state,
-            'action': 'mwb_standard_save_settings_filter',
+            'action': 'mwb_membership_save_settings_filter',
             nonce: frontend_ajax_object.mwb_standard_nonce,   // pass the nonce here
         };
         
