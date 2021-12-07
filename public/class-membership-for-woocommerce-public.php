@@ -349,9 +349,7 @@ class Membership_For_Woocommerce_Public {
 			'mwb_membership_invoice_logo'      => '',
 
 		);
-
 		return $default_global_settings;
-
 	}
 	/**
 	 * Restrict purchase of product to non-members.
@@ -374,7 +372,6 @@ class Membership_For_Woocommerce_Public {
 		if ( $membership_product ) {
 
 			if ( $mwb_membership_default_product == $product->get_id() ) {
-
 				$is_purchasable = true;
 			}
 		}
@@ -670,6 +667,7 @@ class Membership_For_Woocommerce_Public {
 														$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 
 														if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
+															$is_pending = 'pending';
 															$disable_required = 'disable_required';
 															?>
 															<div class="product-meta product-meta-review">
@@ -681,6 +679,7 @@ class Membership_For_Woocommerce_Public {
 												}
 											}
 										}
+
 										array_push( $already_included_plan, $plan['ID'] );
 										// Show options to buy plans.
 										if ( 'not pending' === $is_pending ) {
@@ -1931,9 +1930,7 @@ class Membership_For_Woocommerce_Public {
 						unset( $rates[ $rate_key ] );
 					}
 				}
-
-					return $rates;
-
+				return $rates;
 			}
 		}
 
@@ -2172,18 +2169,15 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $member_id ) {
 						$member_id = $member_data['member_id'];
 					}
+
 					update_post_meta( $member_id, 'member_order_id', $order_id );
-
 					$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-
 					if ( 'yes' == $plan_obj['mwb_membership_subscription'] ) {
 						$available_plan = get_option( 'all_subscription_plan' );
 						$available_plan = $available_plan . '-' . $member_id;
 						update_option( 'all_subscription_plan', $available_plan );
 					}
-
 					$this->assign_club_membership_to_member( $plan_id, $plan_obj, $member_id );
-
 				}
 			}
 
@@ -2216,13 +2210,10 @@ class Membership_For_Woocommerce_Public {
 					} elseif ( 'limited' == $plan_obj['mwb_membership_plan_name_access_type'] ) {
 
 						$duration = $plan_obj['mwb_membership_plan_duration'] . ' ' . $plan_obj['mwb_membership_plan_duration_type'];
-
 						$expiry_date = strtotime( $today_date . $duration );
-						$expiry_date = gmdate( 'Y-m-d', $expiry_date );
 						update_post_meta( $member_id, 'member_expiry', $expiry_date );
 					}
 				}
-
 				$user_id = get_current_user_id();
 				$user = get_userdata( $user_id );
 				$user_name = $user->data->display_name;
@@ -3305,6 +3296,7 @@ class Membership_For_Woocommerce_Public {
 					}
 				}
 			}
+
 			foreach ( $data as $plan ) {
 				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page', '' );
 
@@ -3521,12 +3513,6 @@ class Membership_For_Woocommerce_Public {
 					$membership_name = $product->get_title();
 					$is_membership_product = true;
 				}
-			}
-		}
-
-		if ( true == $is_membership_product ) {
-			if ( empty( $the_user ) ) {
-				$errors->add( 'validation', 'User with this mail not found try to place order with existing user!!' );
 			}
 		}
 
