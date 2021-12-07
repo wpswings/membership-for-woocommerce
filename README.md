@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-50%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.9.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-40%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.8.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-5.9-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership For WooCommerce- Perfect Membership Plugin For Offering Membership Plans, Offers & Discounts
 ![Membership   for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2494227)
 * Contributors: MakeWebBetter
@@ -29,6 +29,7 @@ It gets on directly to give you a way out of the three most customary pain point
 * Different section for membership plans and members
 * Multiple language translation for WooCommerce memberships available
 * Assign membership to users manually 
+* Create user after membership payment is made
 * Offer free shipping and discount on WooCommerce member cart total
 * Display all membership plans together and options to buy them  
 * Offer membership subscriptions for limited access to membership plans.
@@ -47,6 +48,7 @@ It gets on directly to give you a way out of the three most customary pain point
 * Bulk actions for the admin to edit plans and move them to trash
 * Display all membership plans available on your store on the Membership Plans Tab.
 * Compatibility with our other valuable plugins.
+
 
 
 ## PLUGIN COMPATIBILITIES 
@@ -125,6 +127,11 @@ Admin can display offered products and product categories in a membership plan. 
 * Plan description
 * Access Type (Lifetime or Limited accessibility) 
 
+### Create User After Payment Done
+
+Using the free Membership for WooCommerce plugin, the admin can create a user after the complete payment. No default user will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting    
+
+
 Visit [**Membership for WooCommerce Documentation**](https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=git&utm_medium=membership-git&utm_campaign=membership-page) and learn more about the features and working of the plugin
 
 [**Membership for WooCommerce Free demo**](https://demo.makewebbetter.com/membership-for-woocommerce/?utm_source=git&utm_medium=membership-git&utm_campaign=membership-page)
@@ -175,6 +182,8 @@ If our documentation doesn’t contain the solution to your problem, you can vis
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/makewebbetter)
 - [**Subscribe To Our YouTube Channel**](https://www.youtube.com/channel/UC7nYNf0JETOwW3GOD_EW2Ag)
 - [**Follow Our SlideShare**](https://www.slideshare.net/MakeWebBetter)
+
+
 
 
 
