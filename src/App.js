@@ -113,7 +113,7 @@ function App(props) {
             <div className="mwbMsfWrapper">
                 <Stepper activeStep={activeStep} steps={steps}/>
                 <div className="mwbHeadingWrap">
-                    <h2>{__( 'Welcome to Makewebbetter', 'membership-for-woocommerce' ) }</h2>
+                    <h2>{__( 'Welcome to WP Swings', 'membership-for-woocommerce' ) }</h2>
                     <p>{__('Complete The steps to get started','membership-for-woocommerce') }</p>
                 </div>
                 <Container maxWidth="sm">

@@ -776,7 +776,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	public function mwb_mfw_valid_page_screen_check() {
 		$mwb_mfw_screen = get_current_screen();
 		$mwb_mfw_is_flag = false;
-		if ( isset( $mwb_mfw_screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' == $mwb_mfw_screen->id ) {
+		if ( isset( $mwb_mfw_screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' == $mwb_mfw_screen->id ) {
 			$mwb_mfw_is_flag = true;
 		}
 

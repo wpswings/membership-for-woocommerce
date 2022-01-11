@@ -27,7 +27,7 @@ apply_filters( 'mwb_mfw_on_boarding_form_fields', array() );
 					<div class="mwb-mfw-on-boarding-close-btn">
 						<a href="#"><span class="mfw-close-form material-icons mwb-mfw-close-icon mdc-dialog__button" data-mdc-dialog-action="close">clear</span></a>
 					</div>
-					<h3 class="mwb-mfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to MakeWebBetter', 'membership-for-woocommerce' ); ?> </h3>
+					<h3 class="mwb-mfw-on-boarding-heading mdc-dialog__title"><?php esc_html_e( 'Welcome to WP Swings', 'membership-for-woocommerce' ); ?> </h3>
 					<p class="mwb-mfw-on-boarding-desc"><?php esc_html_e( 'We love making new friends! Subscribe below and we promise to keep you up-to-date with our latest new plugins, updates, awesome deals and a few special offers.', 'membership-for-woocommerce' ); ?></p>
 
 					<form action="#" method="post" class="mwb-mfw-on-boarding-form">

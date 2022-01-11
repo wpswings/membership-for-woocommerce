@@ -16,7 +16,7 @@
  * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
  * Version:           2.0.1
- * Author:            MakeWebBetter
+ * Author:            WP Swings
  * Author URI:        https://makewebbetter.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
@@ -283,13 +283,49 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			$screen = get_current_screen();
 
 			if ( 'product' != $screen->id ) {
-				if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
+				if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
 					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
 
 				}
 			}
 		}
 	}
+
+
+// Upgrade notice.
+add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mfw_upgrade_notice', 0, 3 );
+
+/**
+* Displays notice to upgrade to membership.
+*
+* @param string $plugin_file Path to the plugin file relative to the plugins directory.
+* @param array $plugin_data An array of plugin data.
+* @param string $status Status filter currently applied to the plugin list.
+*/
+function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+?>
+
+<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-error inline update-message notice-alt">
+			<div class='ppec-notice-title ppec-notice-section'>
+				<p><strong>IMPORTANT NOTICE-</strong></p>
+			</div>
+			<div class='ppec-notice-content ppec-notice-section'>
+				<p>From this update[here]onwards, the plugin and its support will be handled by WP Swings. WP Swings is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.</p>
+				<p>Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+			
+		</div>
+	</td>
+</tr>
+
+<?php
+
+}// Upgrade notice.
+
+
 
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
@@ -379,6 +415,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	} else {
 		add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
 	}
+
+
+
 
 
 	/**

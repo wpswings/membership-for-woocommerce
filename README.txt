@@ -1,5 +1,5 @@
 === Membership For WooCommerce- Perfect Membership Plugin For Offering Membership Plans, Offers & Discounts ===
-Contributors: MakeWebBetter
+Contributors: WP Swings
 Donate link:  https://makewebbetter.com/
 Tags: membership, subscriptions, memberships, members, woocommerce membership, membership plugin, woocommerce 
 Requires at least: 5.0
