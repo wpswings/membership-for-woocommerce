@@ -342,7 +342,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'startups'              => 'Startups',
 					'restaurant'            => 'Restaurant',
 					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
+					'jewellery'             => 'jewellery',
 					'beauty'                => 'Beauty',
 					'celebrity'             => 'Celebrity',
 					'gaming'                => 'Gaming',
