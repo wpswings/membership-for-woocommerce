@@ -80,7 +80,6 @@ $mwb_membership_plugin_activation = mwb_membership_plugin_activation();
 
 if ( true === $mwb_membership_plugin_activation['status'] ) {
 
-
 	/**
 	 * Define plugin constants.
 	 *
