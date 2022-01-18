@@ -13,11 +13,11 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Membership For WooCommerce
- * Plugin URI:        https://makewebbetter.com/product/membership-for-woocommerce/
+ * Plugin URI:        https://wpswings.com/product/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            WP Swings
- * Author URI:        https://makewebbetter.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
+ * Author URI:        https://wpswings.com/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-site
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
@@ -34,7 +34,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
-
 
 /**
  * Function to check for plugin activation.
@@ -86,10 +85,10 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.0.1' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.0.2' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://makewebbetter.com' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Membership For WooCommerce' );
 	}
 
@@ -105,7 +104,7 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		}
 
 		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL' ) ) {
-			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL', 'https://makewebbetter.com' );
+			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_SERVER_URL', 'https://wpswings.com/' );
 		}
 
 		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE' ) ) {
@@ -147,7 +146,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			define( $key, $value );
 		}
 	}
-
 
 	/**
 	 * The code that runs during plugin activation.
@@ -203,7 +201,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 * admin-specific hooks, and public-facing site hooks.
 	 */
 	require plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce.php';
-
 
 	/**
 	 * Begins execution of the plugin.
@@ -267,8 +264,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	}
 	add_action( 'init', 'mwb_membership_schedule_hook' );
 
-
-
 	/**
 	 * Register the JavaScript for the admin area.
 	 *
@@ -329,9 +324,7 @@ function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 }// Upgrade notice.
 
-
-
-	// Add settings link on plugin page.
+// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
 
 	/**
@@ -367,6 +360,7 @@ function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 			return $is_enable;
 		}
 	}
+
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *
@@ -419,10 +413,6 @@ function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 	} else {
 		add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
 	}
-
-
-
-
 
 	/**
 	 * This function displays plugin activation error notices.

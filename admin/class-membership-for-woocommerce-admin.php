@@ -359,7 +359,7 @@ class Membership_For_Woocommerce_Admin {
 		global $submenu;
 
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
 
 			if ( mwb_mfw_standard_check_multistep() ) {
 				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
@@ -1071,7 +1071,6 @@ class Membership_For_Woocommerce_Admin {
 
 		return $fields;
 	}
-
 
 	/**
 	 * Remove "Add Plans" submenu from Membership CPT.
@@ -2498,7 +2497,7 @@ public function mfw_upgrade_notice( $plugin_file ) {
 				<p><strong>IMPORTANT NOTICE:</strong></p>
 			</div>
 			<div class='wps-notice-content wps-notice-section'>
-				<p>From this update [here] onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				<p>From this update <strong>Version 2.0.2</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
 				Please connect with us for all setup, support, and update related queries without hesitation.</p>
 			</div>
 		</div>
