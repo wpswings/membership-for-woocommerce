@@ -48,9 +48,9 @@ do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
 		</h1>
-		<a href="https://docs.makewebbetter.com/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-doc" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
+		<a href="ttps://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="https://support.makewebbetter.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=MWB-membership-backend&utm_medium=MWB-ORG-Page&utm_campaign=MWB-support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
+		<a href="hhttps://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
 	</div>
 </header>
 <main class="mwb-main mwb-bg-white mwb-r-8">
