@@ -298,7 +298,7 @@ class Membership_For_Woocommerce_Common {
 		);
 		$params = apply_filters( 'makewebbetter_tracker_params', $params );
 
-		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
+		$api_url = 'http://demo.wpswings.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
 
 		$sucess = wp_safe_remote_post(
 			$api_url,

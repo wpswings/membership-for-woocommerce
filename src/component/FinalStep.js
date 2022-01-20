@@ -58,7 +58,7 @@ export default function FinalStep(props) {
         }}>
         <Fragment>
             <FormControl component="fieldset" fullWidth className="fieldsetWrapper">
-            <FormLabel component="legend" className="mwbFormLabel">{ __('Bingo! You are all set to take advantage of your business. Lastly, we urge you to allow us collect some','subscriptions-for-woocommerce')} <a href='https://makewebbetter.com/plugin-usage-tracking/' target="_blank" >{__('information','subscriptions-for-woocommerce') }</a> { __( 'in order to improve this plugin and provide better support. If you want, you can dis-allow anytime settings, We never track down your personal data. Promise!', 'membership-for-woocommerce' ) }
+            <FormLabel component="legend" className="mwbFormLabel">{ __('Bingo! You are all set to take advantage of your business. Lastly, we urge you to allow us collect some','subscriptions-for-woocommerce')} <a href='https://wpswings.com/plugin-usage-tracking/' target="_blank" >{__('information','subscriptions-for-woocommerce') }</a> { __( 'in order to improve this plugin and provide better support. If you want, you can dis-allow anytime settings, We never track down your personal data. Promise!', 'membership-for-woocommerce' ) }
                 </FormLabel>
                 <RadioGroup aria-label="gender" name="consetCheck" value={ctx.formFields['consetCheck']} onChange={ctx.changeHandler} className={classes.margin}>
                     <FormControlLabel value="yes" control={<Radio color="primary"/>} label="Yes" className="mwbFormRadio"/>

@@ -677,9 +677,11 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_mfw_portal_id . '/' . $form_id;
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-		);
+		// $headers = array(
+		// 	'Content-Type' => 'application/json',
+		// );
+
+		$headers = 'Content-Type: application/json';
 
 		$form_data = json_encode(
 			array(
