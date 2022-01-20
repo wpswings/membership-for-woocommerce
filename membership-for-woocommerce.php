@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Membership For WooCommerce
- * Plugin URI:        https://wpswings.com/product/membership-for-woocommerce/
+ * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       Membership for WooCommerce plugin provides restrictions on access for any facility with recurring revenue to engage more customers.
  * Version:           2.0.2
  * Author:            WP Swings
