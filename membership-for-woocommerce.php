@@ -286,19 +286,20 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		}
 	}
 
-// Upgrade notice.
-add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mfw_upgrade_notice', 0, 3 );
+	// Upgrade notice.
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mfw_upgrade_notice', 0, 3 );
 
-/**
-* Displays notice to upgrade to membership.
-*
-* @param string $plugin_file Path to the plugin file relative to the plugins directory.
-* @param array $plugin_data An array of plugin data.
-* @param string $status Status filter currently applied to the plugin list.
-*/
-function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
-?>
+	/**
+	 * Displays notice to upgrade to membership.
+	 *
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 * @return void
+	 */
+	function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+		?>
 
 <tr class="plugin-update-tr active notice-warning notice-alt">
 	<td colspan="4" class="plugin-update colspanchange">
@@ -319,11 +320,11 @@ function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 	}
 </style>
 
-<?php
+		<?php
 
-}// Upgrade notice.
+	}//end mfw_upgrade_notice()
 
-// Add settings link on plugin page.
+	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
 
 	/**

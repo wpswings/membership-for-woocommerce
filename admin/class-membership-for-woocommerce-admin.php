@@ -2478,16 +2478,16 @@ class Membership_For_Woocommerce_Admin {
 		return $val;
 	}
 
-/**
-* Displays notice to upgrade for membership plugin.
-*
-* @param string $plugin_file Path to the plugin file relative to the plugins directory.
-* @param array $plugin_data An array of plugin data.
-* @param string $status Status filter currently applied to the plugin list.
-*/
-public function mfw_upgrade_notice( $plugin_file ) {
+	/**
+	 * Displays notice to upgrade for membership plugin.
+	 *
+	 * @param [mixed] $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @return void
+	 */
+	public function mfw_upgrade_notice( $plugin_file ) {
 
-	?>	
+		?>
+		
 	<tr class="plugin-update-tr active notice-warning notice-alt">
 	<td colspan="4" class="plugin-update colspanchange">
 		<div class="notice notice-success inline update-message notice-alt">
@@ -2507,8 +2507,8 @@ public function mfw_upgrade_notice( $plugin_file ) {
 	}
 </style>
 	
-	<?php
-	
-	}// Upgrade notice.
+		<?php
+
+	}//end mfw_upgrade_notice()
 
 }
