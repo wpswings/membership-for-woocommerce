@@ -1,10 +1,10 @@
 {
-    "name": "makewebbetter/membership-for-woocommerce",
+    "name": "wpswings/membership-for-woocommerce",
     "type": "wordpress-plugin",
     "authors": [
         {
             "name": "WP Swings",
-            "email": "support@makewebbetter.com"
+            "email": "support@wpswings.com"
         }
     ],
     "require-dev": {

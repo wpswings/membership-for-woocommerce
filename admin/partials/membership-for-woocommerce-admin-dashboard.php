@@ -4,7 +4,7 @@
  *
  * This file is used to markup the admin-facing aspects of the plugin.
  *
- * @link  https://makewebbetter.com/
+ * @link  https://wpswings.com/
  * @since 1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -48,9 +48,9 @@ do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<div class="mwb-header-container mwb-bg-white mwb-r-8">
 		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
 		</h1>
-		<a href="ttps://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
+		<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="hhttps://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
+		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
 	</div>
 </header>
 <main class="mwb-main mwb-bg-white mwb-r-8">

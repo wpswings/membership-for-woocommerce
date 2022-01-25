@@ -190,7 +190,7 @@ For these shortcodes, you can check them in the Shortcodes tab of the Membership
 
 
 = From where can I enable the Membership for WooCommerce plans to show on the frontend? =
-Admin can enable the Membership plans from the General settings of Membership for WooCommerce plugin: Go to Dashboard > MakeWebBetter > Membership for WooCommerce > General Settings.
+Admin can enable the Membership plans from the General settings of Membership for WooCommerce plugin: Go to Dashboard > WP Swings > Membership for WooCommerce > General Settings.
 Admin can enable/disable Membership for WooCommerce plugin functionality on the frontend. The users won't see it if you disable it.
 
 = Is there any option in the free Membership plugin to show/hide the Membership plans history to the users? =
@@ -235,11 +235,11 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 == Changelog ==
 
-= 2.0.2 - RELEASED ON 20 January 2022 =
+= 2.0.2 - RELEASED ON 27 January 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
-* Fix: Minor Bug fixes
 * New: Compatible with latest WP and WC
+* Fix: Minor Bug fixes
 
 = 2.0.1 - RELEASED ON 4 DECEMBER 2021 =
 * New: Setting to Create membership after the payment done
@@ -248,7 +248,7 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 = 2.0.0 - RELEASED ON 11 NOVEMBER 2021 =
 * New: Compatible with  [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/)
-* New: Compatible with [**Mautic WooCommerce Integration**](https://makewebbetter.com/product/mautic-woocommerce-integration-pro/?utm_source=membership-org&utm_medium=membership-plugin&utm_campaign=membership-page) ([**Free Download!!**](https://wordpress.org/plugins/enhanced-woocommerce-mautic-integration/))
+* New: Compatible with [**Mautic WooCommerce Integration**](https://wordpress.org/plugins/enhanced-woocommerce-mautic-integration/)
 * New: Compatibility with WooCommerce 5.9 and WordPress 5.8.1
 * New: Display all membership plans together and options to buy them  
 * New: Offer membership subscriptions for limited access to membership plans
@@ -271,7 +271,7 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 
 = 1.1.0 - RELEASED ON 23 AUGUST 2021 =
-* New: Compatible with  [**Membership for WooCommerce Pro Version**](https://makewebbetter.com/product/membership-for-woocommerce-pro/?utm_source=MWB-membership-org&utm_medium=MWB-ORG-Page&utm_campaign=MWB-membership-pro)
+* New: Compatible with  [**Membership for WooCommerce Pro Version**]https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
 * New: Compatibility with WooCommerce 5.6  and WordPress 5.8
 * Fix: small bug fixes
 
@@ -285,9 +285,10 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 == Upgrade Notice ==
 
-= 2.0.2 - RELEASED ON 20 January 2022 =
+= 2.0.2 - RELEASED ON 27 January 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
-* Fix: Minor Bug fixes
 * New: Compatible with latest WP and WC
+* Fix: Minor Bug fixes
+
 

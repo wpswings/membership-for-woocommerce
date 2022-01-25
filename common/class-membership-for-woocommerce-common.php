@@ -2,7 +2,7 @@
 /**
  * The common functionality of the plugin.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -330,7 +330,6 @@ class Membership_For_Woocommerce_Common {
 		$total_membership_plan = count( $all_posts );
 		return $total_membership_plan;
 	}
-
 
 	 /**
 	  * Function is used get all members details

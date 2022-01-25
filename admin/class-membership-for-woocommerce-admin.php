@@ -2,7 +2,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link  https://makewebbetter.com/
+ * @link  https://wpswings.com/
  * @since 1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -1223,7 +1223,6 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-
 	/**
 	 * Get membership post data ( Ajax handler)
 	 *
@@ -1303,7 +1302,6 @@ class Membership_For_Woocommerce_Admin {
 				}
 				break;
 		}
-
 	}
 
 	/**

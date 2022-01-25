@@ -2,7 +2,7 @@
 /**
  * Members plans preview template.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce

@@ -7,7 +7,7 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link    https://makewebbetter.com/
+ * @link    https://wpswings.com/
  * @since   1.0.0
  * @package Membership_For_Woocommerce
  *
@@ -285,7 +285,6 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			}
 		}
 	}
-
 
 // Upgrade notice.
 add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mfw_upgrade_notice', 0, 3 );
