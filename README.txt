@@ -5,7 +5,7 @@ Tags: membership, memberships, member, user registration, woocommerce
 Requires at least: 5.0
 Tested up to: 5.8.3
 WC requires at least: 4.0.0
-WC tested up to: 6.1.0
+WC tested up to: 6.1.1
 Stable tag: 2.0.2
 Requires PHP: 7.3.5
 License: GPLv3 or later 
