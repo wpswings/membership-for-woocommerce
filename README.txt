@@ -3,7 +3,7 @@ Contributors: WP Swings
 Donate link:  https://wpswings.com/
 Tags: membership, memberships, member, user registration, woocommerce 
 Requires at least: 5.0
-Tested up to: 5.8.3
+Tested up to: 5.9
 WC requires at least: 4.0.0
 WC tested up to: 6.1.1
 Stable tag: 2.0.2
