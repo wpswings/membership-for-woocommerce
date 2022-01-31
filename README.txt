@@ -105,7 +105,7 @@ Admin can display offered products and product categories in a membership plan. 
 **9) Create User After Payment Done** 
 Using the free Membership for WooCommerce plugin, the admin can create a user after the complete payment. No default user will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.
 
-[**Free demo of Membership for WooCommerce**](https://demo.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=membership-demo)
+[**Free demo of Membership for WooCommerce**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=membership-demo)
 
 Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) and learn more about the features and working of the plugin. 
 
