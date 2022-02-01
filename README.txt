@@ -105,8 +105,6 @@ Admin can display offered products and product categories in a membership plan. 
 **9) Create User After Payment Done** 
 Using the free Membership for WooCommerce plugin, the admin can create a user after the complete payment. No default user will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.
 
-[**Free demo of Membership for WooCommerce**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=membership-demo)
-
 Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) and learn more about the features and working of the plugin. 
 
 Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=wpswings-membership-kb&utm_medium=membership-org-page&utm_campaign=membership-kb)
@@ -215,7 +213,7 @@ Admin can enable/disable Membership for WooCommerce plugin functionality on the 
 
 
 = My question is not listed =
-Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc)
+Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=wpswings-membership-kb&utm_medium=membership-org-page&utm_campaign=membership-kb) and for more detailed visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc).
 
 == Screenshots ==
 
@@ -235,7 +233,7 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 == Changelog ==
 
-= 2.0.2 - RELEASED ON 27 January 2022 =
+= 2.0.2 - RELEASED ON 2 February 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
 * New: Compatible with latest WP and WC
@@ -285,10 +283,9 @@ Please visit the  [**Membership for WooCommerce Documentation.**](https://docs.w
 
 == Upgrade Notice ==
 
-= 2.0.2 - RELEASED ON 27 January 2022 =
+= 2.0.2 - RELEASED ON 2 February 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
 * New: Compatible with latest WP and WC
 * Fix: Minor Bug fixes
-
 
