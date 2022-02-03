@@ -2,7 +2,7 @@
 /**
  * The admin-specific on-boarding functionality of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package     membership_for_woocommerce
@@ -48,7 +48,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Portal id.
 	 */
-	private static $mwb_mfw_portal_id = '6493626';
+	private static $mwb_mfw_portal_id = '25444144';
 
 	/**
 	 * Form id of hubspot api for membership-for-woocommerce.
@@ -56,7 +56,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mfw_onboarding_form_id = 'd94dcb10-c9c1-4155-a9ad-35354f2c3b52';
+	private static $mwb_mfw_onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
 
 	/**
 	 * Form id of hubspot api for membership-for-woocommerce.
@@ -64,7 +64,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mfw_deactivation_form_id = '329ffc7a-0e8c-4e11-8b41-960815c31f8d';
+	private static $mwb_mfw_deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
 
 	/**
 	 * Define some variables for membership-for-woocommerce.
@@ -114,8 +114,10 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		if ( ! mwb_mfw_standard_check_multistep() ) {
 			return;
 		}
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_styles' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_scripts' ) );
+
 		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_onboarding_popup_screen' ) );
 		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_deactivation_popup_screen' ) );
 
@@ -169,6 +171,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			$is_valid = true;
 		}
 		if ( $this->mwb_mfw_valid_page_screen_check() || $is_valid ) {
+
 			// comment the line of code Only when your plugin doesn't uses the Select2.
 			wp_enqueue_style( 'mwb-mfw-onboarding-select2-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -200,7 +203,6 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			$is_valid = true;
 		}
 		if ( $this->mwb_mfw_valid_page_screen_check() || $is_valid ) {
-
 			wp_enqueue_script( 'mwb-mfw-onboarding-select2-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
 
 			wp_enqueue_script( 'mwb-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
@@ -342,7 +344,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'startups'              => 'Startups',
 					'restaurant'            => 'Restaurant',
 					'fitness'               => 'Fitness',
-					'jewelry'               => 'Jewelry',
+					'jewellery'             => 'jewellery',
 					'beauty'                => 'Beauty',
 					'celebrity'             => 'Celebrity',
 					'gaming'                => 'Gaming',
@@ -546,7 +548,6 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		return $fields;
 	}
 
-
 	/**
 	 * Send the data to Hubspot crm.
 	 *
@@ -556,7 +557,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		check_ajax_referer( 'mwb_mfw_onboarding_nonce', 'nonce' );
 
-		$form_data = ! empty( $_POST['form_data'] ) ? map_deep( wp_unslash( json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) ), 'sanitize_text_field' ) : '';
+		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
+
+		$formatted_data = array();
 
 		if ( ! empty( $form_data ) && is_array( $form_data ) ) {
 
@@ -678,9 +681,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		$url = 'submissions/v3/integration/submit/' . self::$mwb_mfw_portal_id . '/' . $form_id;
 
-		$headers = array(
-			'Content-Type' => 'application/json',
-		);
+		$headers = 'Content-Type: application/json';
 
 		$form_data = json_encode(
 			array(
@@ -774,9 +775,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function mwb_mfw_valid_page_screen_check() {
-		$mwb_mfw_screen = get_current_screen();
+		$mwb_mfw_screen  = get_current_screen();
 		$mwb_mfw_is_flag = false;
-		if ( isset( $mwb_mfw_screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' == $mwb_mfw_screen->id ) {
+		if ( isset( $mwb_mfw_screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' == $mwb_mfw_screen->id ) {
 			$mwb_mfw_is_flag = true;
 		}
 

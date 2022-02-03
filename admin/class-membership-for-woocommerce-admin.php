@@ -2,7 +2,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link  https://makewebbetter.com/
+ * @link  https://wpswings.com/
  * @since 1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -74,7 +74,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
 
-		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 			// multistep form css.
 			if ( ! mwb_mfw_standard_check_multistep() ) {
@@ -144,7 +144,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 			if ( ! mwb_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
@@ -212,7 +212,7 @@ class Membership_For_Woocommerce_Admin {
 			$pagescreen_post = $screen->post_type;
 			$pagescreen_id   = $screen->id;
 
-			if ( 'mwb_cpt_membership' === $pagescreen_post || 'mwb_cpt_membership' === $pagescreen_id || 'makewebbetter_page_membership_for_woocommerce_menu' === $screen->id ) {
+			if ( 'mwb_cpt_membership' === $pagescreen_post || 'mwb_cpt_membership' === $pagescreen_id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 				wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
@@ -359,7 +359,7 @@ class Membership_For_Woocommerce_Admin {
 		global $submenu;
 
 		if ( empty( $GLOBALS['admin_page_hooks']['mwb-plugins'] ) ) {
-			add_menu_page( 'MakeWebBetter', 'MakeWebBetter', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/MWB_Grey-01.svg', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'mwb-plugins', array( $this, 'mwb_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
 
 			if ( mwb_mfw_standard_check_multistep() ) {
 				add_submenu_page( 'mwb-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
@@ -1072,7 +1072,6 @@ class Membership_For_Woocommerce_Admin {
 		return $fields;
 	}
 
-
 	/**
 	 * Remove "Add Plans" submenu from Membership CPT.
 	 */
@@ -1224,7 +1223,6 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
-
 	/**
 	 * Get membership post data ( Ajax handler)
 	 *
@@ -1304,7 +1302,6 @@ class Membership_For_Woocommerce_Admin {
 				}
 				break;
 		}
-
 	}
 
 	/**
@@ -2481,5 +2478,37 @@ class Membership_For_Woocommerce_Admin {
 		return $val;
 	}
 
-}
+	/**
+	 * Displays notice to upgrade for membership plugin.
+	 *
+	 * @param [mixed] $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @return void
+	 */
+	public function mfw_upgrade_notice( $plugin_file ) {
 
+		?>
+		
+	<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-success inline update-message notice-alt">
+			<div class='wps-notice-title wps-notice-section'>
+				<p><strong>IMPORTANT NOTICE:</strong></p>
+			</div>
+			<div class='wps-notice-content wps-notice-section'>
+				<p>From this update <strong>Version 2.0.2</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
+				Please connect with us for all setup, support, and update related queries without hesitation.</p>
+			</div>
+		</div>
+	</td>
+</tr>
+<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
+	
+		<?php
+
+	}//end mfw_upgrade_notice()
+
+}

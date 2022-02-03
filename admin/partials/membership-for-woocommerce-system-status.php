@@ -4,7 +4,7 @@
  *
  * This file is used to markup the html for system status.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce

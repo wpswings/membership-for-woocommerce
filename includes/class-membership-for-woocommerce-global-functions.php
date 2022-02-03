@@ -2,7 +2,7 @@
 /**
  * The global helper class of the plugin.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -14,7 +14,7 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     MakeWebBetter <plugins@makewebbetter.com>
+ * @author     WP Swings <plugins@wpswings.com>
  */
 class Membership_For_Woocommerce_Global_Functions {
 

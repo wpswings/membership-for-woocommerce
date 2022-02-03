@@ -1,16 +1,16 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Membership For WooCommerce 2.0.1\n"
-"POT-Creation-Date: 2021-12-04 13:12+0530\n"
+"Project-Id-Version: Membership For WooCommerce 2.0.2\n"
+"POT-Creation-Date: 2022-01-20 19:16+0530\n"
 "PO-Revision-Date: 2021-08-18 10:04+0530\n"
 "Last-Translator: \n"
-"Language-Team: MakeWebBetter\n"
+"Language-Team: WP Swings\n"
 "Language: en_US\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -67,8 +67,8 @@ msgid "Title field can't be empty "
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:424
-#: membership-for-woocommerce.php:168 membership-for-woocommerce.php:174
-#: membership-for-woocommerce.php:400
+#: membership-for-woocommerce.php:165 membership-for-woocommerce.php:171
+#: membership-for-woocommerce.php:432
 msgid "Membership For WooCommerce"
 msgstr ""
 
@@ -140,7 +140,7 @@ msgid "Members"
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:715
-#: admin/class-membership-for-woocommerce-admin.php:2332
+#: admin/class-membership-for-woocommerce-admin.php:2331
 #: includes/class-membership-for-woocommerce-activator.php:59
 #: includes/class-membership-for-woocommerce-activator.php:147
 msgid "Member"
@@ -256,68 +256,68 @@ msgstr ""
 msgid "Create Plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1101
+#: admin/class-membership-for-woocommerce-admin.php:1100
 msgid "Membership Default Page"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1137
+#: admin/class-membership-for-woocommerce-admin.php:1136
 msgid "Membership Plan Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1138
+#: admin/class-membership-for-woocommerce-admin.php:1137
 msgid "Membership Plan Cost"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1156
+#: admin/class-membership-for-woocommerce-admin.php:1155
 msgid "Membership ID"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1157
+#: admin/class-membership-for-woocommerce-admin.php:1156
 msgid "Membership Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1158
+#: admin/class-membership-for-woocommerce-admin.php:1157
 msgid "User"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1160
+#: admin/class-membership-for-woocommerce-admin.php:1159
 msgid "Expiry Date"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1182
+#: admin/class-membership-for-woocommerce-admin.php:1181
 msgid "Membership ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1192
+#: admin/class-membership-for-woocommerce-admin.php:1191
 msgid "Disabled from settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1200
-#: admin/class-membership-for-woocommerce-admin.php:1204
+#: admin/class-membership-for-woocommerce-admin.php:1199
+#: admin/class-membership-for-woocommerce-admin.php:1203
 msgid "Sandbox"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1208
+#: admin/class-membership-for-woocommerce-admin.php:1207
 msgid "Live"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1290
+#: admin/class-membership-for-woocommerce-admin.php:1289
 msgid "Member ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1452
+#: admin/class-membership-for-woocommerce-admin.php:1451
 msgid "Export Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1635
+#: admin/class-membership-for-woocommerce-admin.php:1634
 msgid "Export Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1636
+#: admin/class-membership-for-woocommerce-admin.php:1635
 msgid "Import Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2066
+#: admin/class-membership-for-woocommerce-admin.php:2065
 msgid ""
 "Membership plan published successfully, Now you can manage membership free "
 "shipping "
@@ -349,12 +349,12 @@ msgid "Title to be displayed on front-end."
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:51
-#: membership-for-woocommerce.php:341
+#: membership-for-woocommerce.php:374
 msgid "Documentation"
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:53
-#: membership-for-woocommerce.php:342
+#: membership-for-woocommerce.php:375
 msgid "Support"
 msgstr ""
 
@@ -413,7 +413,7 @@ msgid "System Values"
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-welcome.php:27
-msgid "MakeWebBetter"
+msgid "WP Swings"
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-welcome.php:41
@@ -1332,148 +1332,148 @@ msgstr ""
 msgid "Actions"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:303
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:302
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:322
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:321
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:328
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:327
 msgid "Industry Type"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:359
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:358
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:363
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:362
 #: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:100
 msgid "Email"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:371
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:370
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:376
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:375
 msgid "Contact Number"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:487
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:486
 msgid "Let us know why you are deactivating "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:487
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:486
 msgid " so we can improve the plugin"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:491
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:490
 msgid "Reason"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:731
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:728
 msgid "Unexpected Error Occured"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:501
+#: includes/class-membership-for-woocommerce.php:502
 msgid "Overview"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:506
+#: includes/class-membership-for-woocommerce.php:507
 msgid "General Settings"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:511
+#: includes/class-membership-for-woocommerce.php:512
 msgid "Shortcodes"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:517
+#: includes/class-membership-for-woocommerce.php:518
 msgid "System Status"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:523
+#: includes/class-membership-for-woocommerce.php:524
 msgid "Developer"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:549
+#: includes/class-membership-for-woocommerce.php:550
 #, php-format
 msgid ""
 "Unable to locate file at location \"%s\". Some features may not work "
 "properly in this plugin. Please contact us!"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:606
+#: includes/class-membership-for-woocommerce.php:607
 msgid "N/A (phpversion function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:615
+#: includes/class-membership-for-woocommerce.php:616
 msgid "N/A (make sure exec function is enabled)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:618
+#: includes/class-membership-for-woocommerce.php:619
 msgid "N/A (ABSPATH constant not defined)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:621
+#: includes/class-membership-for-woocommerce.php:622
 msgid "N/A (php_uname function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:624
+#: includes/class-membership-for-woocommerce.php:625
 msgid "N/A (get_bloginfo function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:627
+#: includes/class-membership-for-woocommerce.php:628
 msgid "N/A (get_option function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:630
-#: includes/class-membership-for-woocommerce.php:633
-#: includes/class-membership-for-woocommerce.php:636
+#: includes/class-membership-for-woocommerce.php:631
+#: includes/class-membership-for-woocommerce.php:634
+#: includes/class-membership-for-woocommerce.php:637
 msgid "Yes"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:630
-#: includes/class-membership-for-woocommerce.php:633
-#: includes/class-membership-for-woocommerce.php:636
+#: includes/class-membership-for-woocommerce.php:631
+#: includes/class-membership-for-woocommerce.php:634
+#: includes/class-membership-for-woocommerce.php:637
 msgid "No"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:639
+#: includes/class-membership-for-woocommerce.php:640
 msgid "N/A (count_users function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:642
+#: includes/class-membership-for-woocommerce.php:643
 msgid "0"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:645
-#: includes/class-membership-for-woocommerce.php:651
-#: includes/class-membership-for-woocommerce.php:654
-#: includes/class-membership-for-woocommerce.php:682
-#: includes/class-membership-for-woocommerce.php:685
+#: includes/class-membership-for-woocommerce.php:646
+#: includes/class-membership-for-woocommerce.php:652
+#: includes/class-membership-for-woocommerce.php:655
+#: includes/class-membership-for-woocommerce.php:683
+#: includes/class-membership-for-woocommerce.php:686
 msgid "N/A (ini_get function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:648
+#: includes/class-membership-for-woocommerce.php:649
 msgid "N/A"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:666
+#: includes/class-membership-for-woocommerce.php:667
 msgid "N/A (gethostname function does not exist)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:669
-#: includes/class-membership-for-woocommerce.php:678
+#: includes/class-membership-for-woocommerce.php:670
+#: includes/class-membership-for-woocommerce.php:679
 msgid "N/A (make sure exec is enabled)"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1093
+#: includes/class-membership-for-woocommerce.php:1094
 msgid "Upload Logo"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1094
+#: includes/class-membership-for-woocommerce.php:1095
 msgid "Remove Logo"
 msgstr ""
 
@@ -1481,610 +1481,28 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: membership-for-woocommerce.php:306
+#: membership-for-woocommerce.php:338
 msgid "Settings"
 msgstr ""
 
-#: membership-for-woocommerce.php:310
+#: membership-for-woocommerce.php:342
 msgid "GO PRO"
 msgstr ""
 
-#: membership-for-woocommerce.php:340
+#: membership-for-woocommerce.php:373
 msgid "Demo"
 msgstr ""
 
-#: membership-for-woocommerce.php:400
+#: membership-for-woocommerce.php:432
 msgid "WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:400
+#: membership-for-woocommerce.php:432
 msgid " is not activated, Please activate WooCommerce first to activate "
 msgstr ""
 
-#: membership-for-woocommerce.php:400
+#: membership-for-woocommerce.php:432
 msgid "."
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:20
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:26
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:32
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:38
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:48
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:61
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-collapsible-whitespace.js:20
-msgid "Hello World…"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:23
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:43
-msgid "HelloWorld…"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:29
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:53
-msgid "Singular…"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:37
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:47
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:60
-msgid "Hello World..."
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:42
-msgid "HelloWorld..."
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-ellipsis.js:52
-msgid "Singular..."
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:20
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:23
-#, javascript-format
-msgid "Hello %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:26
-#, javascript-format
-msgid "%d%%"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:31
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:43
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:26
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:29
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:32
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:35
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:60
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:101
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:105
-#, javascript-format
-msgid "%s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:35
-#, javascript-format
-msgid "%s%s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-placeholders-only.js:39
-#, javascript-format
-msgid "%1$s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:20
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:26
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:35
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:38
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:47
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:64
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:20
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:23
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:26
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:30
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:42
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:46
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:58
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:64
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:65
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:70
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:71
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:88
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:89
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:94
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:95
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:112
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:116
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:128
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:129
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:140
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:141
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:158
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:159
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:164
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:165
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:170
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:171
-msgid "Hello World"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:23
-msgid "HelloWorld"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:29
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:32
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:41
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:44
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:72
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:80
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-no-variables.js:84
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:34
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:38
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:50
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:54
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:76
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:77
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:82
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:83
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:100
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:101
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:106
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:107
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:120
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:124
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:146
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:147
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:152
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:153
-msgid "Singular"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:134
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-text-domain.js:135
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:211
-#: node_modules/yargs/build/lib/usage.js:213
-msgid "default"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:22
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:35
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:41
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:80
-#, javascript-format
-msgid "Color: %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:28
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:47
-#, javascript-format
-msgid "Address: %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:56
-#, javascript-format
-msgid "Name: %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:63
-#, javascript-format
-msgid "Surname: %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/i18n-translator-comments.js:72
-#, javascript-format
-msgid "Preference: %s"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:48
-#, javascript-format
-msgid "This author has %1$d block, with an average rating of %2$d."
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:97
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:127
-#, javascript-format
-msgid "%%"
-msgstr ""
-
-#: node_modules/@wordpress/eslint-plugin/rules/__tests__/valid-sprintf.js:113
-#, javascript-format
-msgid "This author has %d block, with an average rating of %d."
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:105
-msgid "is not a finite number"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:172
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:188
-msgid "is not a finite floating-point value"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:198
-msgid "is outside the range of a single-precision floating-point value"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:228
-msgid "is a symbol, which cannot be converted to a string"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:239
-msgid "is not a valid ByteString"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:276
-msgid "is not an object"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:288
-msgid "is not a function"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:308
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:343
-msgid "is not a view on an ArrayBuffer object"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:320
-msgid "is not a view on an DataView object"
-msgstr ""
-
-#: node_modules/domexception/node_modules/webidl-conversions/lib/index.js:351
-msgid "is not an ArrayBuffer object or a view on one"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs-parser/index.js:302
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:428
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:442
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:495
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:428
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:442
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:495
-#: node_modules/webpack-cli/node_modules/yargs-parser/index.js:367
-#: node_modules/yargs-parser/index.js:382
-#: node_modules/yargs-parser/index.js:392
-#: node_modules/yargs-parser/index.js:446
-#, javascript-format
-msgid "Not enough arguments following: %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs-parser/index.js:450
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:634
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:634
-#: node_modules/webpack-cli/node_modules/yargs-parser/index.js:541
-#: node_modules/yargs-parser/index.js:591
-#, javascript-format
-msgid "Invalid JSON config file: %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:169
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:193
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:203
-#: node_modules/yargs/build/lib/usage.js:198
-msgid "Commands:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:177
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:407
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:473
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:223
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:458
-#: node_modules/yargs/build/lib/usage.js:457
-msgid "default:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:179
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:213
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:225
-#: node_modules/yargs/build/lib/usage.js:215
-msgid "aliases:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:241
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:311
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:288
-#: node_modules/yargs/build/lib/usage.js:290
-msgid "boolean"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:242
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:313
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:289
-#: node_modules/yargs/build/lib/usage.js:292
-msgid "count"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:243
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:244
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:315
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:317
-#: node_modules/terser/dist/bundle.min.js:1
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:290
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:291
-#: node_modules/yargs/build/lib/usage.js:294
-#: node_modules/yargs/build/lib/usage.js:296
-msgid "string"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:245
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:319
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:292
-#: node_modules/yargs/build/lib/usage.js:298
-msgid "array"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:246
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:321
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:293
-#: node_modules/yargs/build/lib/usage.js:300
-msgid "number"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:250
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:330
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:297
-#: node_modules/yargs/build/lib/usage.js:307
-msgid "required"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:251
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:332
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:298
-#: node_modules/yargs/build/lib/usage.js:308
-msgid "choices:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:270
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:351
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:317
-#: node_modules/yargs/build/lib/usage.js:321
-msgid "Examples:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/usage.js:385
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:456
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:436
-#: node_modules/yargs/build/lib/usage.js:438
-msgid "generated-value"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:26
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:49
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:29
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:52
-#, javascript-format
-msgid "Not enough non-option arguments: got %s, need at least %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:37
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:40
-#, javascript-format
-msgid "Too many non-option arguments: got %s, maximum of %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:185
-#: node_modules/localtunnel/node_modules/yargs/build/lib/validation.js:160
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:147
-#: node_modules/yargs/build/lib/validation.js:155
-msgid "Invalid values:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:188
-#: node_modules/localtunnel/node_modules/yargs/build/lib/validation.js:162
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:150
-#: node_modules/yargs/build/lib/validation.js:157
-#, javascript-format
-msgid "Argument: %s, Given: %s, Choices: %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:218
-#: node_modules/localtunnel/node_modules/yargs/build/lib/yargs-factory.js:174
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:180
-#: node_modules/yargs/build/lib/validation.js:181
-#, javascript-format
-msgid "Argument check failed: %s"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:283
-#: node_modules/localtunnel/node_modules/yargs/build/lib/validation.js:221
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:256
-#: node_modules/yargs/build/lib/validation.js:248
-msgid "Implications failed:"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:313
-#: node_modules/localtunnel/node_modules/yargs/build/lib/validation.js:255
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:295
-#: node_modules/yargs/build/lib/validation.js:284
-#, javascript-format
-msgid "Arguments %s and %s are mutually exclusive"
-msgstr ""
-
-#: node_modules/gulp-cli/node_modules/yargs/lib/validation.js:332
-#: node_modules/localtunnel/node_modules/yargs/build/lib/validation.js:274
-#: node_modules/webpack-cli/node_modules/yargs/lib/validation.js:316
-#: node_modules/yargs/build/lib/validation.js:303
-#, javascript-format
-msgid "Did you mean %s?"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:419
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:419
-#: node_modules/yargs-parser/index.js:372
-#, javascript-format
-msgid "Argument unexpected for: %s"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:963
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:963
-#: node_modules/yargs-parser/index.js:941
-#, javascript-format
-msgid "Invalid configuration: %s, opts.count excludes opts.array."
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs-parser/build/lib/yargs-parser.js:967
-#: node_modules/stylelint/node_modules/yargs-parser/build/lib/yargs-parser.js:967
-#: node_modules/yargs-parser/index.js:944
-#, javascript-format
-msgid "Invalid configuration: %s, opts.count excludes opts.narg."
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:90
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:92
-#: node_modules/yargs/build/lib/usage.js:90
-msgid "Positionals:"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:184
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:187
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:192
-#: node_modules/webpack-cli/node_modules/yargs/lib/usage.js:194
-#: node_modules/yargs/build/lib/usage.js:187
-#: node_modules/yargs/build/lib/usage.js:190
-msgid "command"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:217
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:323
-#: node_modules/yargs/build/lib/usage.js:219
-#: node_modules/yargs/build/lib/usage.js:302
-#, javascript-format
-msgid "deprecated: %s"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:220
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:324
-#: node_modules/yargs/build/lib/usage.js:222
-#: node_modules/yargs/build/lib/usage.js:303
-msgid "deprecated"
-msgstr ""
-
-#: node_modules/localtunnel/node_modules/yargs/build/lib/usage.js:239
-#: node_modules/yargs/build/lib/usage.js:241
-msgid "Options:"
-msgstr ""
-
-#: node_modules/prettier/parser-glimmer.js:1
-msgid "Broken"
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid "Error in decoding base64VLQFormatDecode, past the mapping string"
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid "Invalid character in VLQ"
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid "Elapsed:: "
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid "Project: "
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid " TS"
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-msgid "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces"
-msgstr ""
-
-#: node_modules/prettier/parser-typescript.js:1
-#, javascript-format
-msgid "parserOptions.project (excluding ignored) matched projects: %s"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "big_int"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "num"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "template_head"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "comment2"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "regexp"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "operator"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "eof"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "expand"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "punc"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "arrow"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "name"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "atom"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "keyword"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "("
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid ")"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid ":"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid ";"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid ","
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "]"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "}"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "{"
-msgstr ""
-
-#: node_modules/terser/dist/bundle.min.js:1
-msgid "["
 msgstr ""
 
 #: onboarding/templates/membership-for-woocommerce-deactivation-template.php:40
@@ -2096,7 +1514,8 @@ msgid "Skip and Deactivate Now"
 msgstr ""
 
 #: onboarding/templates/membership-for-woocommerce-onboarding-template.php:30
-msgid "Welcome to MakeWebBetter"
+#: src/App.js:116
+msgid "Welcome to WP Swings"
 msgstr ""
 
 #: onboarding/templates/membership-for-woocommerce-onboarding-template.php:31
@@ -2418,10 +1837,6 @@ msgstr ""
 
 #: src/App.js:58
 msgid "Unknown stepIndex"
-msgstr ""
-
-#: src/App.js:116
-msgid "Welcome to Makewebbetter"
 msgstr ""
 
 #: src/App.js:117

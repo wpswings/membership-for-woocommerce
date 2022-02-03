@@ -1,0 +1,13 @@
+@import 
+    'buttons',
+    'form',
+    'table';
+    
+        
+.mwb-btn {
+    @extend %mwb-btn;
+}
+
+.mwb-btn__filled {
+    @extend %mwb-btn__filled;
+}

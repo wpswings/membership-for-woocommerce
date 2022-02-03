@@ -4,7 +4,7 @@
  *
  * This file is used to list all the hooks and filter with their descriptions.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce

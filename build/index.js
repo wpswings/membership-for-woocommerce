@@ -55654,7 +55654,7 @@ function App(props) {
     steps: steps
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
     className: "mwbHeadingWrap"
-  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Welcome to Makewebbetter', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Complete The steps to get started', 'membership-for-woocommerce'))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Container"], {
+  }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Welcome to WP Swings', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Complete The steps to get started', 'membership-for-woocommerce'))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Container"], {
     maxWidth: "sm"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("form", {
     className: "mwbMsf"
@@ -55763,7 +55763,7 @@ function FinalStep(props) {
     component: "legend",
     className: "mwbFormLabel"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Bingo! You are all set to take advantage of your business. Lastly, we urge you to allow us collect some', 'subscriptions-for-woocommerce'), " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
-    href: "https://makewebbetter.com/plugin-usage-tracking/",
+    href: "https://wpswings.com/plugin-usage-tracking/",
     target: "_blank"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('information', 'subscriptions-for-woocommerce')), " ", Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('in order to improve this plugin and provide better support. If you want, you can dis-allow anytime settings, We never track down your personal data. Promise!', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["RadioGroup"], {
     "aria-label": "gender",

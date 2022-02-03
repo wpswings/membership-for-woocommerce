@@ -2,7 +2,7 @@
 /**
  * Registers a new shipping method for memberships.
  *
- * @link       https://makewebbetter.com
+ * @link       https://wpswings.com
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -17,7 +17,7 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
- * @author     MakeWebBetter <plugins@makewebbetter.com>
+ * @author     WP Swings <plugins@wpswings.com>
  */
 class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 

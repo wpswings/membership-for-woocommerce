@@ -2,7 +2,7 @@
 /**
  * The common functionality of the plugin.
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -298,7 +298,7 @@ class Membership_For_Woocommerce_Common {
 		);
 		$params = apply_filters( 'makewebbetter_tracker_params', $params );
 
-		$api_url = 'http://demo.makewebbetter.com/wordpress-testing/wp-json/mfw-route/v1/mfw-testing-data/';
+		$api_url = 'https://tracking.wpswings.com/wp-json/mps-route/v1/mps-testing-data/';
 
 		$sucess = wp_safe_remote_post(
 			$api_url,
@@ -330,7 +330,6 @@ class Membership_For_Woocommerce_Common {
 		$total_membership_plan = count( $all_posts );
 		return $total_membership_plan;
 	}
-
 
 	 /**
 	  * Function is used get all members details

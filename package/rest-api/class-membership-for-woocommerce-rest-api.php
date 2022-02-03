@@ -4,7 +4,7 @@
  *
  * A class definition that includes api's endpoints and functions used across the plugin
  *
- * @link       https://makewebbetter.com/
+ * @link       https://wpswings.com/
  * @since      1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -23,7 +23,7 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/package/rest-api/version1
- * @author     makewebbetter <webmaster@makewebbetter.com>
+ * @author     WP Swings <webmaster@wpswings.com>
  */
 class Membership_For_Woocommerce_Rest_Api {
 

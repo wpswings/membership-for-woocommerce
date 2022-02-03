@@ -5,7 +5,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link  https://makewebbetter.com/
+ * @link  https://wpswings.com/
  * @since 1.0.0
  *
  * @package    Membership_For_Woocommerce
@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.0.1';
+			$this->version = '2.0.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -281,6 +281,7 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'mwb_membership_new_modify_user_table_value' );
 		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'mwb_membership_new_column_value_assign', 10, 1 );
+		$this->loader->add_filter( 'mwb_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_upgrade_notice', 10, 1 );
 
 	}
 
