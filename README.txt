@@ -109,9 +109,23 @@ Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/m
 
 Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=wpswings-membership-kb&utm_medium=membership-org-page&utm_campaign=membership-kb)
 
-== PREMIUM MEMBERSHIP FOR WOOCOMMERCE PLUGIN FEATURES ==
+== LIVE DEMO OF MEMBERSHIP FOR WOOCOMMERCE  PLUGIN ==
 
-The admin has enough features in the  Membership for WooCommerce free plugin, but things will get even better in the premium version of  Membership for WooCommerce. It will have the following features:  
+* [**Membership Frontend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=frontend-demo)
+* [**Membership Backend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=backend-demo)
+
+== PLUGIN COMPATIBILITIES == 
+
+* [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/) with our free subscriptions plugin, the admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
+
+* **Multisite**
+Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated from one place.
+
+* **WPML Compatibility** 
+Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management.  
+
+
+== PREMIUM MEMBERSHIP FOR WOOCOMMERCE PLUGIN FEATURES == 
 
 * Select Membership Products 
 * Include One Plan Benefits In Other Membership Plans
@@ -125,14 +139,13 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF MEMBERSHIP PRO PLUGIN ==
 
+The admin has enough features in the  Membership for WooCommerce free plugin, but things will get even better in the premium version of  Membership for WooCommerce Pro. 
+
 > Note:  Get [**MEMBERSHIP FOR WOOCOMMERCE PRO**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
 
+== DOCUMENTATION OF PREMIUM VERSION ==
 
-== LIVE DEMO OF PREMIUM VERSION ==
-
-* [**MEMBERSHIP FOR WOOCOMMERCE PRO FRONTEND DEMO**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=frontend-demo)
-* [**MEMBERSHIP FOR WOOCOMMERCE PRO BACKEND DEMO**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=backend-demo)
-
+* [**Membership for WooCommerce Pro Documentation**](https://docs.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro-doc)
 
 == SUPPORT ==
 
@@ -233,9 +246,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 2.0.2 - RELEASED ON 2 February 2022 =
+= 2.0.2 - RELEASED ON 3 February 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
+* New: Change author from MakeWebBetter to WP Swings
 * New: Compatible with latest WP and WC
 * Fix: Minor Bug fixes
 
@@ -269,7 +283,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 
 = 1.1.0 - RELEASED ON 23 AUGUST 2021 =
-* New: Compatible with  [**Membership for WooCommerce Pro Version**]https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
+* New: Compatible with  [**Membership for WooCommerce Pro Version**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
 * New: Compatibility with WooCommerce 5.6  and WordPress 5.8
 * Fix: small bug fixes
 
@@ -283,9 +297,9 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.0.2 - RELEASED ON 2 February 2022 =
+= 2.0.2 - RELEASED ON 3 February 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
+* New: Change author from MakeWebBetter to WP Swings
 * New: Compatible with latest WP and WC
 * Fix: Minor Bug fixes
-
