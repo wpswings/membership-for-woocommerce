@@ -85,7 +85,7 @@ We provide the admin with a remarkable collection of shortcodes that work not on
 
 Admin can apply discounts based on user roles. Give discounts only to the WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely admin’s choice. 
 
-User Table for Admin
+* User Table for Admin
 
 Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
 
