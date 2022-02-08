@@ -65,39 +65,39 @@ It gets on directly to give you a way out of the three most customary pain point
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
 
-### Complete User Membership History and WooCommerce Membership Details of Customers
+* Complete User Membership History and WooCommerce Membership Details of Customers
 
 Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users too can see their history in the ‘My Account’ section with entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
 
 
-### Membership User Data Export and Import
+* Membership User Data Export and Import
 
 Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all WooCommerce membership users as a CSV file. 
 
 Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin uninstall of the plugin from the database. 
 
-### Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization
+* Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization
 
 We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
 
 
-### Discount On Membership User Cart Total
+* Discount On Membership User Cart Total
 
 Admin can apply discounts based on user roles. Give discounts only to the WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely admin’s choice. 
 
-### User Table for Admin
+User Table for Admin
 
 Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
 
-### Multi-Step Configuration of Membership for WooCommerce
+* Multi-Step Configuration of Membership for WooCommerce
 
 With a multi-step configuration on installing the plugin, the admin gets assistance in creating his first membership plan. The home tab is also included according to the plugin configuration concept.
 
-### Display All Membership Plans Together With Option to Buy Them
+* Display All Membership Plans Together With Option to Buy Them
 The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here. 
 
 
-### Membership Details and Plan Creation
+* Membership Details and Plan Creation
 
 Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
 
@@ -106,7 +106,7 @@ Admin can display offered products and product categories in a membership plan. 
 * Plan description
 * Access Type (Lifetime or Limited accessibility) 
 
-### Create User After Payment Done
+* Create User After Payment Done
 
 Using the free Membership for WooCommerce plugin, the admin can create a user after the complete payment. No default user will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.    
 
@@ -151,7 +151,7 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 
 > Note:  Get [**Membership for WooCommerce Pro**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-github-page&utm_campaign=membership-pro)
 
-== DOCUMENTATION OF PREMIUM VERSION ==
+## DOCUMENTATION OF PREMIUM VERSION 
 
 * [**Membership for WooCommerce Pro Documentation**](https://docs.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-doc&utm_medium=membership-github-page&utm_campaign=membership-pro-doc)
 
@@ -162,10 +162,28 @@ If you need support or have any questions then kindly use our online chat window
 ### **MORE ABOUT WP SWINGS**
 
 - [**Our Official Website**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-github-page&utm_campaign=official)
-- [**Follow us on Facebook Page**](https://www.facebook.com/wpswingsofficial)
+- [**Follow us on Facebook Page**](https://www.facebook.com/wpswings)
 - [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 - [**SuscribeTo Our Youtube Channel**](https://www.youtube.com/c/wpswings)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
