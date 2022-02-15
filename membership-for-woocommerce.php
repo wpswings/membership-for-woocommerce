@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @param string $plugin_slug is the slug of the plugin.
  */
-function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
+function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 	if ( empty( $plugin_slug ) ) {
 
 		return;
@@ -59,12 +59,12 @@ function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
 /**
  * Checking whether the dependent plugin is active or not.
  */
-function mwb_membership_plugin_activation() {
+function wps_membership_plugin_activation() {
 	$activation['status']  = true;
 	$activation['message'] = '';
 
 	// If dependent plugin is not active.
-	if ( ! mwb_membership_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+	if ( ! wps_membership_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 
 		$activation['status']  = false;
 		$activation['message'] = 'woo_inactive';
@@ -75,9 +75,9 @@ function mwb_membership_plugin_activation() {
 }
 
 // The following code runs during the activation of the plugin.
-$mwb_membership_plugin_activation = mwb_membership_plugin_activation();
+$wps_membership_plugin_activation = wps_membership_plugin_activation();
 
-if ( true === $mwb_membership_plugin_activation['status'] ) {
+if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	/**
 	 * Define plugin constants.
@@ -93,12 +93,12 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	}
 
 	/**
-	 * Define mwb-site update feature.
+	 * Define wps-site update feature.
 	 *
 	 * @since 1.0.0
 	 */
 	function auto_update_membership_for_woocommerce() {
-		 $mwb_mfw_license_key = get_option( 'mwb_mfw_license_key', '' );
+		 $wps_mfw_license_key = get_option( 'wps_mfw_license_key', '' );
 		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY' ) ) {
 			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY', '59f32ad2f20102.74284991' );
 		}
@@ -111,24 +111,24 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_ITEM_REFERENCE', 'Membership For WooCommerce' );
 		}
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $mwb_mfw_license_key );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $wps_mfw_license_key );
 
 	}
 
-	if ( ! function_exists( 'mwb_mfw_standard_check_multistep' ) ) {
+	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
 		/**
 		 * Function to check multistep function.
 		 *
 		 * @return bool
 		 */
-		function mwb_mfw_standard_check_multistep() {
+		function wps_mfw_standard_check_multistep() {
 			$bool = false;
-			$mwb_standard_check = get_option( 'mfw_mfw_plugin_standard_multistep_done', false );
+			$wps_standard_check = get_option( 'mfw_mfw_mfw_plugin_standard_multistep_done', false );
 
-			if ( ! empty( $mwb_standard_check ) ) {
+			if ( ! empty( $wps_standard_check ) ) {
 				$bool = true;
 			}
-			$bool = apply_filters( 'mwb_standard_multistep_done', $bool );
+			$bool = apply_filters( 'wps_standard_multistep_done', $bool );
 			return $bool;
 		}
 	}
@@ -159,20 +159,20 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		Membership_For_Woocommerce_Activator::activate( $network_wide );
 		Membership_For_Woocommerce_Activator::membership_for_woocommerce_activate( $network_wide );
 
-		$mwb_mfw_active_plugin = get_option( 'mwb_all_plugins_active', false );
-		if ( is_array( $mwb_mfw_active_plugin ) && ! empty( $mwb_mfw_active_plugin ) ) {
-			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
+		$wps_mfw_active_plugin = get_option( 'wps_all_plugins_active', false );
+		if ( is_array( $wps_mfw_active_plugin ) && ! empty( $wps_mfw_active_plugin ) ) {
+			$wps_mfw_active_plugin['membership-for-woocommerce'] = array(
 				'plugin_name' => __( 'Membership For WooCommerce', 'membership-for-woocommerce' ),
 				'active' => '1',
 			);
 		} else {
-			$mwb_mfw_active_plugin = array();
-			$mwb_mfw_active_plugin['membership-for-woocommerce'] = array(
+			$wps_mfw_active_plugin = array();
+			$wps_mfw_active_plugin['membership-for-woocommerce'] = array(
 				'plugin_name' => __( 'Membership For WooCommerce', 'membership-for-woocommerce' ),
 				'active' => '1',
 			);
 		}
-		update_option( 'mwb_all_plugins_active', $mwb_mfw_active_plugin );
+		update_option( 'wps_all_plugins_active', $wps_mfw_active_plugin );
 	}
 
 	/**
@@ -182,15 +182,15 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	function deactivate_membership_for_woocommerce() {
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-deactivator.php';
 		Membership_For_Woocommerce_Deactivator::membership_for_woocommerce_deactivate();
-		$mwb_mfw_deactive_plugin = get_option( 'mwb_all_plugins_active', false );
-		if ( is_array( $mwb_mfw_deactive_plugin ) && ! empty( $mwb_mfw_deactive_plugin ) ) {
-			foreach ( $mwb_mfw_deactive_plugin as $mwb_mfw_deactive_key => $mwb_mfw_deactive ) {
-				if ( 'membership-for-woocommerce' === $mwb_mfw_deactive_key ) {
-					$mwb_mfw_deactive_plugin[ $mwb_mfw_deactive_key ]['active'] = '0';
+		$wps_mfw_deactive_plugin = get_option( 'wps_all_plugins_active', false );
+		if ( is_array( $wps_mfw_deactive_plugin ) && ! empty( $wps_mfw_deactive_plugin ) ) {
+			foreach ( $wps_mfw_deactive_plugin as $wps_mfw_deactive_key => $wps_mfw_deactive ) {
+				if ( 'membership-for-woocommerce' === $wps_mfw_deactive_key ) {
+					$wps_mfw_deactive_plugin[ $wps_mfw_deactive_key ]['active'] = '0';
 				}
 			}
 		}
-		update_option( 'mwb_all_plugins_active', $mwb_mfw_deactive_plugin );
+		update_option( 'wps_all_plugins_active', $wps_mfw_deactive_plugin );
 	}
 
 	register_activation_hook( __FILE__, 'activate_membership_for_woocommerce' );
@@ -214,9 +214,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	function run_membership_for_woocommerce() {
 		 define_membership_for_woocommerce_constants();
 		auto_update_membership_for_woocommerce();
-		$mfw_plugin_standard = new Membership_For_Woocommerce();
-		$mfw_plugin_standard->mfw_run();
-		$GLOBALS['mfw_mwb_mfw_obj'] = $mfw_plugin_standard;
+		$mfw_mfw_plugin_standard = new Membership_For_Woocommerce();
+		$mfw_mfw_plugin_standard->mfw_run();
+		$GLOBALS['mfw_wps_mfw_obj'] = $mfw_mfw_plugin_standard;
 
 	}
 	run_membership_for_woocommerce();
@@ -228,9 +228,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 *
 	 * @return void
 	 */
-	function mwb_membership_schedule_expiry() {
-		if ( false === as_next_scheduled_action( 'mwb_membership_expiry_check_action' ) ) {
-			as_schedule_recurring_action( strtotime( 'tomorrow' ), DAY_IN_SECONDS, 'mwb_membership_expiry_check_action' );
+	function wps_membership_schedule_expiry() {
+		if ( false === as_next_scheduled_action( 'wps_membership_expiry_check_action' ) ) {
+			as_schedule_recurring_action( strtotime( 'tomorrow' ), DAY_IN_SECONDS, 'wps_membership_expiry_check_action' );
 		}
 	}
 
@@ -239,30 +239,30 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 *
 	 * @return void
 	 */
-	function mwb_membership_schedule_action_expiry_check() {
+	function wps_membership_schedule_action_expiry_check() {
 		if ( class_exists( 'Membership_For_Woocommerce_Public' ) ) {
 			$mfw_plugin_public = new Membership_For_Woocommerce_Public( '', '' );
-			$mfw_plugin_public->mwb_membership_cron_expiry_check();
+			$mfw_plugin_public->wps_membership_cron_expiry_check();
 		}
 	}
 
-	add_action( 'init', 'mwb_membership_schedule_expiry' );
+	add_action( 'init', 'wps_membership_schedule_expiry' );
 
-	add_action( 'mwb_membership_expiry_check_action', 'mwb_membership_schedule_action_expiry_check' );
+	add_action( 'wps_membership_expiry_check_action', 'wps_membership_schedule_action_expiry_check' );
 
 		/**
 		 * Schedule hook for member expiry.
 		 *
 		 * @return void
 		 */
-	function mwb_membership_schedule_hook() {
+	function wps_membership_schedule_hook() {
 		// Schedule cron for checking of membership expiration on daily basis.
-		if ( ! wp_next_scheduled( 'mwb_membership_expiry_check' ) ) {
-			wp_schedule_event( time(), 'daily', 'mwb_membership_expiry_check' );
+		if ( ! wp_next_scheduled( 'wps_membership_expiry_check' ) ) {
+			wp_schedule_event( time(), 'daily', 'wps_membership_expiry_check' );
 		}
 
 	}
-	add_action( 'init', 'mwb_membership_schedule_hook' );
+	add_action( 'init', 'wps_membership_schedule_hook' );
 
 	/**
 	 * Register the JavaScript for the admin area.
@@ -339,21 +339,21 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 		);
 		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 
-			$my_link['goPro'] = '<a class="mwb-wpr-go-pro" target="_blank" href="https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'membership-for-woocommerce' ) . '</a>';
+			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'membership-for-woocommerce' ) . '</a>';
 		}
 		return array_merge( $my_link, $links );
 	}
-	if ( ! function_exists( 'mwb_membership_check_plugin_enable' ) ) {
+	if ( ! function_exists( 'wps_membership_check_plugin_enable' ) ) {
 		/**
 		 * This function is used to check plugin is enable.
 		 *
-		 * @name mwb_membership_check_plugin_enable
+		 * @name wps_membership_check_plugin_enable
 		 * @since 1.0.0
 		 */
-		function mwb_membership_check_plugin_enable() {
+		function wps_membership_check_plugin_enable() {
 			$is_enable = false;
-			$mwb_membership_enable_plugin = get_option( 'mwb_membership_enable_plugin', '' );
-			if ( 'on' == $mwb_membership_enable_plugin ) {
+			$wps_membership_enable_plugin = get_option( 'wps_membership_enable_plugin', '' );
+			if ( 'on' == $wps_membership_enable_plugin ) {
 				$is_enable = true;
 			}
 
@@ -370,9 +370,9 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 	 */
 	function membership_for_woocommerce_custom_settings_at_plugin_tab( $links_array, $plugin_file_name ) {
 		if ( strpos( $plugin_file_name, basename( __FILE__ ) ) ) {
-			$links_array[] = '<a href="https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Demo.svg" class="mwb-info-img" alt="Demo image">' . __( 'Demo', 'membership-for-woocommerce' ) . '</a>';
-			$links_array[] = '<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Documentation.svg" class="mwb-info-img" alt="documentation image">' . __( 'Documentation', 'membership-for-woocommerce' ) . '</a>';
-			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Support.svg" class="mwb-info-img" alt="support image">' . __( 'Support', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Demo.svg" class="wps-info-img" alt="Demo image">' . __( 'Demo', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Documentation.svg" class="wps-info-img" alt="documentation image">' . __( 'Documentation', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Support.svg" class="wps-info-img" alt="support image">' . __( 'Support', 'membership-for-woocommerce' ) . '</a>';
 		}
 		return $links_array;
 	}
@@ -397,36 +397,36 @@ if ( true === $mwb_membership_plugin_activation['status'] ) {
 } else {
 
 	// Deactivate the plugin if Woocommerce not active.
-	add_action( 'admin_init', 'mwb_membership_plugin_activation_failure' );
+	add_action( 'admin_init', 'wps_membership_plugin_activation_failure' );
 
 	/**
 	 * Deactivate the plugin.
 	 */
-	function mwb_membership_plugin_activation_failure() {
+	function wps_membership_plugin_activation_failure() {
 
 		deactivate_plugins( plugin_basename( __FILE__ ) );
 	}
 
 	// Add admin error notice.
 	if ( is_multisite() ) {
-		add_action( 'network_admin_notices', 'mwb_membership_plugin_activation_notice' );
+		add_action( 'network_admin_notices', 'wps_membership_plugin_activation_notice' );
 	} else {
-		add_action( 'admin_notices', 'mwb_membership_plugin_activation_notice' );
+		add_action( 'admin_notices', 'wps_membership_plugin_activation_notice' );
 	}
 
 	/**
 	 * This function displays plugin activation error notices.
 	 */
-	function mwb_membership_plugin_activation_notice() {
+	function wps_membership_plugin_activation_notice() {
 
-		global $mwb_membership_plugin_activation;
+		global $wps_membership_plugin_activation;
 
 		// To hide Plugin activated notice.
 		unset( $_GET['activate'] );
 
 		?>
 
-		<?php if ( 'woo_inactive' === $mwb_membership_plugin_activation['message'] ) { ?>
+		<?php if ( 'woo_inactive' === $wps_membership_plugin_activation['message'] ) { ?>
 
 			<div class="notice notice-error is-dismissible">
 				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce-pro' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce-pro' ); ?></p>

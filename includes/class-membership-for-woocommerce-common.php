@@ -13,27 +13,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'mwb_membership_check_product_is_membership' ) ) {
+if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 	/**
 	 * This function is used to check susbcripton product.
 	 *
-	 * @name mwb_sfw_check_product_is_subscription
+	 * @name wps_sfw_check_product_is_subscription
 	 * @param Object $product product.
 	 * @since 1.0.0
 	 */
-	function mwb_membership_check_product_is_membership( $product ) {
+	function wps_membership_check_product_is_membership( $product ) {
 
-		$mwb_is_membership = false;
+		$wps_is_membership = false;
 		if ( is_object( $product ) ) {
 			$product_id = $product->get_id();
-			$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
+			$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 
-			if ( $mwb_membership_default_product == $product_id ) {
-				$mwb_is_membership = true;
+			if ( $wps_membership_default_product == $product_id ) {
+				$wps_is_membership = true;
 			}
 		}
 
-		return apply_filters( 'mwb_membership_check_membership_product_type', $mwb_is_membership, $product );
+		return apply_filters( 'wps_membership_check_membership_product_type', $wps_is_membership, $product );
 	}
 }
 

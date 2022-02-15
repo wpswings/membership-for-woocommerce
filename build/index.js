@@ -1,4 +1,4 @@
-(window["webpackJsonp_MWB_Boilerplate"] = window["webpackJsonp_MWB_Boilerplate"] || []).push([["style-index"],{
+(window["webpackJsonp_WPS_Boilerplate"] = window["webpackJsonp_WPS_Boilerplate"] || []).push([["style-index"],{
 
 /***/ "./src/style.css":
 /*!***********************!*\
@@ -157,7 +157,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	var jsonpArray = window["webpackJsonp_MWB_Boilerplate"] = window["webpackJsonp_MWB_Boilerplate"] || [];
+/******/ 	var jsonpArray = window["webpackJsonp_WPS_Boilerplate"] = window["webpackJsonp_WPS_Boilerplate"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
 /******/ 	jsonpArray.push = webpackJsonpCallback;
 /******/ 	jsonpArray = jsonpArray.slice();
@@ -19618,7 +19618,7 @@ function handleContainer(containerInfo, props) {
 
   if (!props.disableScrollLock) {
     if (isOverflowing(container)) {
-      // Compute the size before applying overflow hidden to avoid any scroll jumps.
+      // Compute the size before applying overflow hidden to avoid any scroll jumfw.
       var scrollbarSize = Object(_utils_getScrollbarSize__WEBPACK_IMPORTED_MODULE_3__["default"])();
       restoreStyle.push({
         value: container.style.paddingRight,
@@ -55609,8 +55609,8 @@ function App(props) {
     e.preventDefault();
     setLoading(true);
     const user = { ...state,
-      'action': 'mwb_membership_save_settings_filter',
-      nonce: frontend_ajax_object.mwb_standard_nonce // pass the nonce here
+      'action': 'wps_membership_save_settings_filter',
+      nonce: frontend_ajax_object.wps_standard_nonce // pass the nonce here
 
     };
     axios__WEBPACK_IMPORTED_MODULE_9___default.a.post(frontend_ajax_object.ajaxurl, qs__WEBPACK_IMPORTED_MODULE_11___default.a.stringify(user)).then(res => {
@@ -55648,22 +55648,22 @@ function App(props) {
       changeHandler: onFormFieldHandler
     }
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "mwbMsfWrapper"
+    className: "wpsMsfWrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_component_Stepper__WEBPACK_IMPORTED_MODULE_4__["default"], {
     activeStep: activeStep,
     steps: steps
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "mwbHeadingWrap"
+    className: "wpsHeadingWrap"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h2", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Welcome to WP Swings', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_10__["__"])('Complete The steps to get started', 'membership-for-woocommerce'))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Container"], {
     maxWidth: "sm"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("form", {
-    className: "mwbMsf"
+    className: "wpsMsf"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Typography"], {
     className: classes.instructions
   }, loading ? Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["CircularProgress"], {
-    className: "mwbCircularProgress"
+    className: "wpsCircularProgress"
   }) : getStepContent(activeStep)), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-    className: "mwbButtonWrap"
+    className: "wpsButtonWrap"
   }, activeStep !== steps.length && Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Button"], {
     disabled: activeStep === 0,
     onClick: handleBack,
@@ -55731,7 +55731,7 @@ function FinalStep(props) {
     setSuccess('');
     const user = {
       'action': 'mfwp_membership_validate_license_key',
-      nonce: frontend_ajax_object.mwb_standard_nonce,
+      nonce: frontend_ajax_object.wps_standard_nonce,
       // pass the nonce here
       purchase_code: LicenceCode
     };
@@ -55761,7 +55761,7 @@ function FinalStep(props) {
     className: "fieldsetWrapper"
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormLabel"], {
     component: "legend",
-    className: "mwbFormLabel"
+    className: "wpsFormLabel"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Bingo! You are all set to take advantage of your business. Lastly, we urge you to allow us collect some', 'subscriptions-for-woocommerce'), " ", Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("a", {
     href: "https://wpswings.com/plugin-usage-tracking/",
     target: "_blank"
@@ -55777,14 +55777,14 @@ function FinalStep(props) {
       color: "primary"
     }),
     label: "Yes",
-    className: "mwbFormRadio"
+    className: "wpsFormRadio"
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControlLabel"], {
     value: "no",
     control: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Radio"], {
       color: "primary"
     }),
     label: "No",
-    className: "mwbFormRadio"
+    className: "wpsFormRadio"
   }))), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControl"], {
     component: "fieldset",
     fullWidth: true,
@@ -55874,7 +55874,7 @@ const SecondStep = props => {
   }
 
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", {
-    className: "mwb-title"
+    className: "wps-title"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Membership plan Creation', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["FormControl"], {
     component: "fieldset",
     fullWidth: true,
@@ -55937,7 +55937,7 @@ __webpack_require__.r(__webpack_exports__);
 const stepper = props => {
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Stepper"], {
     activeStep: props.activeStep,
-    className: "mwbStepper"
+    className: "wpsStepper"
   }, props.steps.map(label => Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["Step"], {
     key: label
   }, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_1__["StepLabel"], null, label))));
@@ -55981,7 +55981,7 @@ const ThirdStep = props => {
   const classes = useStyles();
   const ctx = Object(react__WEBPACK_IMPORTED_MODULE_1__["useContext"])(_store_store__WEBPACK_IMPORTED_MODULE_2__["default"]);
   return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("h3", {
-    className: "mwb-title"
+    className: "wps-title"
   }, Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Setting', 'membership-for-woocommerce')), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormGroup"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["FormControlLabel"], {
     control: Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_3__["Switch"], {
       checked: ctx.formFields['checkedA'],

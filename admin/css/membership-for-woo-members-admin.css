@@ -9,11 +9,11 @@ table.wp-list-table {
     font-family: sans-serif;
 }
 
-.mwb_membership_preview_table table tr:nth-child(even) {
+.wps_membership_preview_table table tr:nth-child(even) {
     background-color: #f1f6ff;
 }
 
-.mwb_membership_preview_table table tr th {
+.wps_membership_preview_table table tr th {
     padding-left: 15px;
 }
 
@@ -317,7 +317,7 @@ p.form-field.membership-customer a:hover {
     padding: 8px;
 }
 
-.mwb_members_plan_select {
+.wps_members_plan_select {
     display: block;
     color: #F37E21;
 }
@@ -453,7 +453,7 @@ div#members_start_date {
     flex: 1 0 calc(50% - 20px);
 }
 
-span.mwb_member_notice {
+span.wps_member_notice {
     padding: 10px 15px;
     text-align: center;
     margin: 10px auto;

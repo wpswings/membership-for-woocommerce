@@ -10,12 +10,12 @@
 
 /*Appearance Section start*/
 
-.mwb_membership_card_div_wrapper {
+.wps_membership_card_div_wrapper {
     display: flex;
     flex-wrap: wrap;
 }
 
-.mwb-membership-appearance-section-hidden {
+.wps-membership-appearance-section-hidden {
     display: none;
 }
 
@@ -28,17 +28,17 @@
 
 /*Removing Focus*/
 
-select#mwb_membership_plan_offer_price_type_id:focus,
-#mwb_membership_plan_access_type:focus,
-#mwb_membership_plan_duration_type:focus,
+select#wps_membership_plan_offer_price_type_id:focus,
+#wps_membership_plan_access_type:focus,
+#wps_membership_plan_duration_type:focus,
 #poststuff .toggle-indicator:focus,
 #poststuff .handlediv:focus,
 td.membership_view.column-membership_view a:focus,
 .import_csv_field_wrapper>input:focus,
-#mwb_membership_manage_content:focus,
+#wps_membership_manage_content:focus,
 ul.select2-selection__rendered:focus,
 button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:focus,
-.mwb_membership_free_shipping_link a.button:focus,
+.wps_membership_free_shipping_link a.button:focus,
 a#post-preview:focus,
 #posts-filter input[type="submit"]:focus,
 .wrap a.page-title-action:focus,
@@ -51,8 +51,8 @@ a#post-preview:focus,
 #wpbody-content textarea:focus,
 #wpbody-content select:focus,
 #wpbody-content input[type="number"]:focus,
-.mwb_membership_gateway_div .button:focus,
-.mwb_membership_manage_gateways a:focus,
+.wps_membership_gateway_div .button:focus,
+.wps_membership_manage_gateways a:focus,
 .mfw_overview_help a:focus,
 .mfw_overview-contact a:focus {
     box-shadow: none;
@@ -64,13 +64,13 @@ a#post-preview:focus,
 
 .meta-box-sortables input[type="text"]:focus,
 .meta-box-sortables input[type="checkbox"]:focus,
-.mwb_membership_plans_creation_setting input[type="checkbox"]:focus,
-.mwb_membership_plans_creation_setting input[type="text"]:focus {
+.wps_membership_plans_creation_setting input[type="checkbox"]:focus,
+.wps_membership_plans_creation_setting input[type="text"]:focus {
     box-shadow: none;
 }
 
 .postbox-container input[type="checkbox"],
-.mwb_membership_plans_creation_setting input[type="checkbox"] {
+.wps_membership_plans_creation_setting input[type="checkbox"] {
     background-color: #1a3365;
     border-radius: 35px;
     border: none;
@@ -80,7 +80,7 @@ a#post-preview:focus,
 }
 
 .postbox-container input[type="checkbox"]:before,
-.mwb_membership_plans_creation_setting input[type="checkbox"]:before {
+.wps_membership_plans_creation_setting input[type="checkbox"]:before {
     background-color: #fff;
     border-radius: 50%;
     box-shadow: 1px 0px 3px #1a3365;
@@ -95,18 +95,18 @@ a#post-preview:focus,
 }
 
 .postbox-container input[type="checkbox"]:before,
-.mwb_membership_plans_creation_setting input[type="checkbox"]:before {
+.wps_membership_plans_creation_setting input[type="checkbox"]:before {
     left: 0px;
 }
 
 .postbox-container input[type="checkbox"]:checked:before,
-.mwb_membership_plans_creation_setting input[type="checkbox"]:checked:before {
+.wps_membership_plans_creation_setting input[type="checkbox"]:checked:before {
     margin: 0;
     left: 15px;
 }
 
 .postbox-container input[type="checkbox"]:checked,
-.mwb_membership_plans_creation_setting input[type="checkbox"]:checked {
+.wps_membership_plans_creation_setting input[type="checkbox"]:checked {
     background-color: #f37e21;
 }
 
@@ -120,8 +120,8 @@ a#post-preview:focus,
 
 /*Headings in Admin pannel*/
 
-.mwb_membership_plan_products h1,
-.mwb_membership_shortcodes h2 {
+.wps_membership_plan_products h1,
+.wps_membership_shortcodes h2 {
     display: flex;
     font-family: sans-serif;
     font-size: 25px !important;
@@ -129,13 +129,13 @@ a#post-preview:focus,
     letter-spacing: 2px;
 }
 
-.postbox-container .mwb_membership_plan_products h1 {
+.postbox-container .wps_membership_plan_products h1 {
     color: #1a3365;
     font-size: 32px;
     font-weight: 600;
 }
 
-#poststuff h2.mwb_membership_offer_title {
+#poststuff h2.wps_membership_offer_title {
     border-bottom: 2px solid #1a3365;
     border-left: 6px solid #f37e21;
     color: #1a3365;
@@ -148,10 +148,10 @@ a#post-preview:focus,
 }
 
 #members_meta_box .postbox-header h2,
-.mwb_membership_global_settings h2,
-.mwb_membership_supported_gateways h2,
-.mwb_membership_shortcodes h2,
-.mwb_membership_Overview h2 {
+.wps_membership_global_settings h2,
+.wps_membership_supported_gateways h2,
+.wps_membership_shortcodes h2,
+.wps_membership_Overview h2 {
     border: none;
     color: #1a3365;
     font-family: sans-serif;
@@ -161,16 +161,16 @@ a#post-preview:focus,
     margin:0;
 }
 
-#wpbody-content .mwb_membership_Overview {
+#wpbody-content .wps_membership_Overview {
     margin: -10px 0 0 -10px;
     width: calc(100% - 10px);
 }
 
 #members_meta_box .postbox-header,
-.mwb_membership_global_settings,
-.mwb_membership_supported_gateways,
-.mwb_membership_shortcodes,
-.mwb_membership_Overview {
+.wps_membership_global_settings,
+.wps_membership_supported_gateways,
+.wps_membership_shortcodes,
+.wps_membership_Overview {
     background-color: #ffffff;
     border-left: 5px solid #1a3365;
     box-shadow: 0px 2px 5px #c7c7c7;
@@ -194,17 +194,17 @@ a#post-preview:focus,
 
 /*Table row In admin pannel*/
 
-#mwb_membership_recurring_plan,
+#wps_membership_recurring_plan,
 #mfw_membership_access_type {
     position: relative;
 }
 
-.mwb_membership_shortcodes_table tbody {
+.wps_membership_shortcodes_table tbody {
     display: flex;
     justify-content: space-around;
 }
 
-.mwb_membership_shortcodes_table tr {
+.wps_membership_shortcodes_table tr {
     background: #ffffff;
     border-radius: 5px;
     box-shadow: 0px 2px 10px #c7c7c7;
@@ -215,7 +215,7 @@ a#post-preview:focus,
     padding: 10px;
 }
 
-.mwb_membership_shortcodes_table th {
+.wps_membership_shortcodes_table th {
     border-bottom: 2px solid #1a3365;
     color: #1a3365;
     font-family: sans-serif;
@@ -223,14 +223,14 @@ a#post-preview:focus,
     width: 95%;
 }
 
-.mwb_membership_plans_creation_setting label {
+.wps_membership_plans_creation_setting label {
     color: #1a3566;
     font-family: sans-serif;
 }
 
-.mwb_membership_table.mwb_membership_shortcodes tr,
-.mwb_membership_offers table tr,
-.mwb_membership_plans_creation_setting tr {
+.wps_membership_table.wps_membership_shortcodes tr,
+.wps_membership_offers table tr,
+.wps_membership_plans_creation_setting tr {
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -238,18 +238,18 @@ a#post-preview:focus,
     margin-bottom: 20px;
 }
 
-.mwb_membership_plans_creation_setting tr th,
-.mwb_membership_offers table tr th,
-.mwb_membership_table.mwb_membership_shortcodes tr th {
+.wps_membership_plans_creation_setting tr th,
+.wps_membership_offers table tr th,
+.wps_membership_table.wps_membership_shortcodes tr th {
     flex: 0 0 100%;
     max-width: 25%;
     padding: 15px;
     text-align: left;
 }
 
-.mwb_membership_plans_creation_setting tr td,
-.mwb_membership_offers table tr td,
-.mwb_membership_table.mwb_membership_shortcodes tr {
+.wps_membership_plans_creation_setting tr td,
+.wps_membership_offers table tr td,
+.wps_membership_table.wps_membership_shortcodes tr {
     max-width: 75%;
     flex: 0 0 100%;
 }
@@ -270,18 +270,18 @@ a#post-preview:focus,
     display: block;
 }
 
-.mwb_membership_offers table tr #mfw_show_notice.forminp {
+.wps_membership_offers table tr #mfw_show_notice.forminp {
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
 
-.mwb_membership_offers table tr #mfw_show_notice.forminp .mwb_membership_show_notice {
+.wps_membership_offers table tr #mfw_show_notice.forminp .wps_membership_show_notice {
     margin-right: 20px;
 }
 
-.mwb_membership_offers table tr #mfw_show_notice.forminp p {
+.wps_membership_offers table tr #mfw_show_notice.forminp p {
     margin: 0;
 }
 
@@ -294,26 +294,26 @@ a#post-preview:focus,
     padding: 10px 0px;
 }
 
-select#mwb_membership_plan_offer_price_type_id,
-#mwb_membership_plan_duration_type,
-#mwb_membership_manage_content,
-.mwb_membership_table.mwb_membership_shortcodes .woocommerce-help-tip {
+select#wps_membership_plan_offer_price_type_id,
+#wps_membership_plan_duration_type,
+#wps_membership_manage_content,
+.wps_membership_table.wps_membership_shortcodes .woocommerce-help-tip {
     border: none;
     margin-right: 10px;
 }
 
-#mwb_membership_plan_time_duration_type {
+#wps_membership_plan_time_duration_type {
     margin: 0px 0px 0px 20px;
 }
 
-div#mwb_membership_plan_time_duratin_display {
+div#wps_membership_plan_time_duratin_display {
     margin: 10px 0px;
 }
-#mwb_membership_plan_time_duratin_display {
+#wps_membership_plan_time_duratin_display {
    display:none;
 }
 
-select #mwb_membership_plan_duration_type {
+select #wps_membership_plan_duration_type {
     background: rgb(0 113 159 / 0.2);
 }
 
@@ -343,14 +343,14 @@ span.select2.select2-container.select2-container--default {
 
 /*button styling*/
 
-.mwb_membership_free_shipping_link a.button {
+.wps_membership_free_shipping_link a.button {
     background-color: #1a3365;
     border: 1px solid #ffffff;
     color: #ffffff;
     transition: linear background-color 0.2s;
 }
 
-.mwb_membership_free_shipping_link a.button:hover {
+.wps_membership_free_shipping_link a.button:hover {
     background-color: inherit;
     border: 1px solid #1a3365;
     color: #1a3365;
@@ -413,11 +413,11 @@ div #TB_ajaxWindowTitle {
     text-align: center;
 }
 
-.mwb_membership_preview_table table tr:nth-child(even) {
+.wps_membership_preview_table table tr:nth-child(even) {
     background-color: #f1f6ff;
 }
 
-.mwb_membership_preview_table table tr th {
+.wps_membership_preview_table table tr th {
     font-family: sans-serif;
     padding-left: 15px;
 }
@@ -427,9 +427,9 @@ div #TB_ajaxWindowTitle {
 
 input#export_all_membership,
 input#import_all_membership,
-.mwb_membership_plans_creation_setting input[type="button"],
-.mwb_membership_gateway_div .button,
-.mwb_membership_gateway_div a {
+.wps_membership_plans_creation_setting input[type="button"],
+.wps_membership_gateway_div .button,
+.wps_membership_gateway_div a {
     background-color: inherit;
     border: 1px solid #0071a1;
     color: #0071a1;
@@ -440,9 +440,9 @@ input#import_all_membership,
 
 input#export_all_membership:hover,
 input#import_all_membership:hover,
-.mwb_membership_plans_creation_setting input[type="button"]:hover,
-.mwb_membership_gateway_div .button:hover,
-.mwb_membership_gateway_div a:hover {
+.wps_membership_plans_creation_setting input[type="button"]:hover,
+.wps_membership_gateway_div .button:hover,
+.wps_membership_gateway_div a:hover {
     background-color: #0071a1;
     border-color: transparent;
     color: #ffffff;
@@ -529,37 +529,37 @@ input#upload_csv_file:hover {
 
 /*Global Setting page styling*/
 
-.mwb_membership_plans_creation_setting th,
-.mwb_membership_plans_creation_setting td {
+.wps_membership_plans_creation_setting th,
+.wps_membership_plans_creation_setting td {
     padding-left: 15px;
 }
 
-.mwb_membership_plans_creation_setting tr {
+.wps_membership_plans_creation_setting tr {
     align-items: baseline;
     display: flex;
 }
 
-.mwb_membership_plans_creation_setting th {
+.wps_membership_plans_creation_setting th {
     max-width: 200px;
     width: 100%;
 }
 
-.mwb_membership_plans_creation_setting td {
+.wps_membership_plans_creation_setting td {
     align-items: center;
     display: inline-flex;
     flex-grow: 1;
 }
 
-.mwb_membership_plans_creation_setting .woocommerce-help-tip {
+.wps_membership_plans_creation_setting .woocommerce-help-tip {
     margin-right: 10px;
 }
 
-body.post-type-mwb_cpt_membership input[type="text"],
-body.post-type-mwb_cpt_membership input[type="email"],
-body.post-type-mwb_cpt_membership input[type="tel"],
-body.post-type-mwb_cpt_membership input[type="number"],
-body.post-type-mwb_cpt_membership select,
-.mwb_membership_plans_creation_setting textarea {
+body.post-type-wps_cpt_membership input[type="text"],
+body.post-type-wps_cpt_membership input[type="email"],
+body.post-type-wps_cpt_membership input[type="tel"],
+body.post-type-wps_cpt_membership input[type="number"],
+body.post-type-wps_cpt_membership select,
+.wps_membership_plans_creation_setting textarea {
     border-radius: 5px;
     border: 1px solid #1a3365;
     color: #1a3365;
@@ -570,18 +570,18 @@ body.post-type-mwb_cpt_membership select,
     width: 100%;
 }
 
-body.post-type-mwb_cpt_membership select {
+body.post-type-wps_cpt_membership select {
     overflow: auto;
     border: 1px solid #1a3365 !important;
     max-height: 60px;
 }
 
-body.post-type-mwb_cpt_membership .select2-container .select2-selection--multiple {
+body.post-type-wps_cpt_membership .select2-container .select2-selection--multiple {
     border: 1px solid #1a3365;
     padding: 0;
 }
 
-body.post-type-mwb_cpt_membership .select2-container .select2-selection--multiple .select2-selection__rendered {
+body.post-type-wps_cpt_membership .select2-container .select2-selection--multiple .select2-selection__rendered {
     overflow: visible !important;
     padding: 0;
 }
@@ -595,15 +595,15 @@ body.post-type-mwb_cpt_membership .select2-container .select2-selection--multipl
     max-width: unset;
 }
 
-#mwb_membership_email_content_ifr {
+#wps_membership_email_content_ifr {
     height: fit-content !important;
 }
 
 
 /*Gateway page*/
 
-.mwb_membership_manage_gateways a,
-.mwb_membership_gateways .mwb_membership_plan_gateways {
+.wps_membership_manage_gateways a,
+.wps_membership_gateways .wps_membership_plan_gateways {
     font-family: sans-serif;
     letter-spacing: 1px;
     padding: 10px;
@@ -611,7 +611,7 @@ body.post-type-mwb_cpt_membership .select2-container .select2-selection--multipl
     word-spacing: 1px;
 }
 
-.mwb_membership_manage_gateways a {
+.wps_membership_manage_gateways a {
     color: #1a3365;
     font-family: sans-serif;
     font-size: 15px;
@@ -621,13 +621,13 @@ body.post-type-mwb_cpt_membership .select2-container .select2-selection--multipl
     display: none !important;
 }
 
-.mwb_membership_plan_gateways tbody {
+.wps_membership_plan_gateways tbody {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.mwb_membership_plan_gateways tr {
+.wps_membership_plan_gateways tr {
     background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0px 2px 15px #c7c7c7;
@@ -637,22 +637,22 @@ body.post-type-mwb_cpt_membership .select2-container .select2-selection--multipl
     padding: 10px 20px;
 }
 
-.mwb_membership_plan_gateways th {
+.wps_membership_plan_gateways th {
     border-bottom: 1px solid #1a3365;
     margin: 0px 0px 30px 0px;
     padding: 0px 0px 10px;
 }
 
-.mwb_membership_plan_gateways th label {
+.wps_membership_plan_gateways th label {
     color: #1a3365;
 }
 
-.mwb_membership_plan_gateways td {
+.wps_membership_plan_gateways td {
     margin: 0px;
     padding: 5px;
 }
 
-.mwb_membership_manage_gateways a {
+.wps_membership_manage_gateways a {
     border-radius: 5px;
     border: 2px solid #1a3365;
     color: #1a3365;
@@ -662,7 +662,7 @@ body.post-type-mwb_cpt_membership .select2-container .select2-selection--multipl
     padding: 5px;
 }
 
-.mwb_membership_manage_gateways a:hover {
+.wps_membership_manage_gateways a:hover {
     border: 2px solid #f37e21;
     color: #f37e21;
 }
@@ -673,13 +673,13 @@ td#mfw_free_shipping {
     min-height: 60px;
 }
 
-.mwb_membership_free_shipping_link {
+.wps_membership_free_shipping_link {
     margin-left: 30px;
     display: none;;
 }
 
 
-.mwb_membership_notice_message {
+.wps_membership_notice_message {
     display: none;;
 }
 
@@ -882,7 +882,7 @@ span.title_warning {
     border-right-color: transparent;
 }
 
-img.mwb_mfw_plugin_extra_custom_tab {
+img.wps_mfw_plugin_extra_custom_tab {
     width: 20px;
     padding-right: 5px;
 }
@@ -894,14 +894,14 @@ img.mwb_mfw_plugin_extra_custom_tab {
     padding: 15px 0;
 }
 
-.mwb-membership__plan--pro-disabled {
+.wps-membership__plan--pro-disabled {
     background-color: #f2f2f2;
     pointer-events: none;
     position: relative;
     overflow: hidden;
 }
 
-.mwb-membership__plan--pro-disabled::before {
+.wps-membership__plan--pro-disabled::before {
     color: #ffffff;
     content: "PRO";
     font-family: sans-serif;
@@ -915,7 +915,7 @@ img.mwb_mfw_plugin_extra_custom_tab {
     z-index: 1;
 }
 
-.mwb-membership__plan--pro-disabled::after {
+.wps-membership__plan--pro-disabled::after {
     background: #772bff;
     clip-path: polygon(50% 0, 100% 100%, 0 100%);
     content: "";
@@ -968,24 +968,24 @@ div#TB_ajaxWindowTitle {
         max-width: 300px;
     }
 
-    .mwb_membership_preview {
+    .wps_membership_preview {
         text-align: right;
     }
 }
 /*Media Query for small screen devices*/
 
 @media screen and (max-width: 992px) {
-    .mwb_membership_plans_creation_setting tr {
+    .wps_membership_plans_creation_setting tr {
         display: block;
         padding: 10px 0px;
     }
-    .mwb_membership_plans_creation_setting td {
+    .wps_membership_plans_creation_setting td {
         padding: 10px;
     }
-    .mwb_membership_shortcodes_table tbody {
+    .wps_membership_shortcodes_table tbody {
         flex-wrap: wrap;
     }
-    .mwb_membership_shortcodes_table tr {
+    .wps_membership_shortcodes_table tr {
         flex: 0 0 80%;
     }
     .mfw_overview_content>ul>li {
@@ -999,14 +999,14 @@ div#TB_ajaxWindowTitle {
     }
 }
 
-.mwb-tool-tip {
+.wps-tool-tip {
     position: relative;
     max-width: 200px;
     width: 100%;
     text-align: center;
 }
 
-.mwb-tool-tip .icon {
+.wps-tool-tip .icon {
     cursor: help;
     background-color: #000000d1;
     color: #fff;
@@ -1017,15 +1017,15 @@ div#TB_ajaxWindowTitle {
     text-align: center;
 }
 
-.mwb-tool-tip .description_tool_tip {
+.wps-tool-tip .description_tool_tip {
     display: none;
 }
 
-.mwb-tool-tip .icon:hover+.description_tool_tip {
+.wps-tool-tip .icon:hover+.description_tool_tip {
     display: inline-block;
 }
 
-.mwb-tool-tip .description_tool_tip {
+.wps-tool-tip .description_tool_tip {
     background-color: #1a1a1a;
     position: absolute;
     top: 32px;
@@ -1038,7 +1038,7 @@ div#TB_ajaxWindowTitle {
     z-index: 9999;
 }
 
-.mwb-tool-tip .description_tool_tip::after {
+.wps-tool-tip .description_tool_tip::after {
     content: "";
     position: absolute;
     border-bottom: 10px solid #1a1a1a;
@@ -1050,7 +1050,7 @@ div#TB_ajaxWindowTitle {
     z-index: 9999;
 }
 
-.mwb_membership_offers table tr th {
+.wps_membership_offers table tr th {
     flex: 0 0 100%;
     max-width: 25%;
     padding: 15px;
@@ -1059,7 +1059,7 @@ div#TB_ajaxWindowTitle {
     justify-content: space-between;
 }
 
-.mwb_membership_plans_creation_setting tr th {
+.wps_membership_plans_creation_setting tr th {
     flex: 0 0 100%;
     max-width: 25%;
     padding: 15px;
@@ -1069,7 +1069,7 @@ div#TB_ajaxWindowTitle {
 }
 
 
-a.mwb-wpr-go-pro {
+a.wps-wpr-go-pro {
     background: #05d5d8;
     color: white;
     font-weight: 700;
@@ -1081,16 +1081,16 @@ a.mwb-wpr-go-pro {
 
   /*issue fixes*/
 
-.mwb-mfw-gen-section-form .mwb-form-group {
+.wps-mfw-gen-section-form .wps-form-group {
     flex-wrap: nowrap;
     align-items: center;
 }
 
-.mwb-mfw-gen-section-form .mwb-form-group__control {
+.wps-mfw-gen-section-form .wps-form-group__control {
     flex: 1;
 }
 
-.mwb-mfw-gen-section-form .mwb-form-group__label {
+.wps-mfw-gen-section-form .wps-form-group__label {
     display: flex;
     width: 100%;
     max-width: 300px;
@@ -1099,11 +1099,11 @@ a.mwb-wpr-go-pro {
     margin-bottom: 10px;
 }
 
-.mwb-mfw-gen-section-form .mwb-form-group__label .mwb-form-label {
+.wps-mfw-gen-section-form .wps-form-group__label .wps-form-label {
     flex: 1;
 }
 
-.mwb-mfw-gen-section-form .mwb-form-group__label .mwb-tool-tip {
+.wps-mfw-gen-section-form .wps-form-group__label .wps-tool-tip {
     max-width: unset;
     width: unset;
     position: unset;
@@ -1111,42 +1111,42 @@ a.mwb-wpr-go-pro {
 
 }
 
-.mwb-tool-tip .description {
+.wps-tool-tip .description {
     left: 0;
     right: 0;
     max-width: unset;
 }
 
-.mwb-tool-tip .description::after {
+.wps-tool-tip .description::after {
     left: unset;
     right: 10px;
 }
 
 
 @media screen and (max-width:768px) {
-    .mwb-mfw-gen-section-form .mwb-form-group {
+    .wps-mfw-gen-section-form .wps-form-group {
         flex-wrap: wrap;
         flex-direction: column;
         align-items: flex-start;
     }
 
-    .mwb-mfw-gen-section-form .mwb-form-group__control {
+    .wps-mfw-gen-section-form .wps-form-group__control {
         flex: 1;
         max-width: unset;
     }
-    .mwb-mfw-gen-section-form .mwb-form-group__label {
+    .wps-mfw-gen-section-form .wps-form-group__label {
         max-width: unset;  
     }
-    .mwb-header-container .mwb-header-title {
+    .wps-header-container .wps-header-title {
         max-width: unset;
     }
 }
 
-div#wp-mwb_membership_email_content-wrap {
+div#wp-wps_membership_email_content-wrap {
     max-width: 450px;
 }
 
-.mwb-link.active {
+.wps-link.active {
     position: relative;
     color: #2196f3 !important;
     border-bottom: 3px solid var(--mdc-theme-primary);
@@ -1154,32 +1154,32 @@ div#wp-mwb_membership_email_content-wrap {
 
 
 
-  .mwb_membership_shortcode {
+  .wps_membership_shortcode {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     flex-wrap: wrap;
 }
 
-.mwb_membership_shortcode .mwb-tool-tip {
+.wps_membership_shortcode .wps-tool-tip {
     margin: 0 0 0 auto;
 }
 
-.mwb_membership_shortcode .mwb-tool-tip .description_tool_tip::after {
+.wps_membership_shortcode .wps-tool-tip .description_tool_tip::after {
     left: 50%;
     right: unset;
 }
 
 
 /*tool tip modifications*/
-.mwb-tool-tip {
+.wps-tool-tip {
     position: relative;
     max-width: unset;
     width: unset;
     text-align: center;
 }
 
-.mwb-tool-tip .icon {
+.wps-tool-tip .icon {
     cursor: help;
     background-color: #000000d1;
     color: #fff;
@@ -1190,15 +1190,15 @@ div#wp-mwb_membership_email_content-wrap {
     text-align: center;
 }
 
-.mwb-tool-tip .description_tool_tip {
+.wps-tool-tip .description_tool_tip {
     display: none;
 }
 
-.mwb-tool-tip .icon:hover+.description_tool_tip {
+.wps-tool-tip .icon:hover+.description_tool_tip {
     display: inline-block;
 }
 
-.mwb-tool-tip .description_tool_tip {
+.wps-tool-tip .description_tool_tip {
     background-color: #1a1a1a;
     position: absolute;
     top: 32px;
@@ -1214,7 +1214,7 @@ div#wp-mwb_membership_email_content-wrap {
     z-index: 9999;
 }
 
-.mwb-tool-tip .description_tool_tip::after {
+.wps-tool-tip .description_tool_tip::after {
     content: "";
     position: absolute;
     border-bottom: 10px solid #1a1a1a;
@@ -1235,56 +1235,56 @@ div#wp-mwb_membership_email_content-wrap {
     width: 90%;
 }
 
-.mwb_membership_plans_creation_setting .select2-container .select2-search--inline .select2-search__field, 
-.mwb_membership_offers .select2-container .select2-search--inline .select2-search__field{
+.wps_membership_plans_creation_setting .select2-container .select2-search--inline .select2-search__field, 
+.wps_membership_offers .select2-container .select2-search--inline .select2-search__field{
     padding: 0 10px;
     width: 100%!important;
     max-width: 250px;
 }
 
-#mwb_membership_plan_immediate_type {
+#wps_membership_plan_immediate_type {
     margin-left: 0;
 }
 
-#mwb_membership_plan_time_type {
+#wps_membership_plan_time_type {
     margin-left: 15px;
 }
 
-.mwb_membership_plans_creation_setting td {
+.wps_membership_plans_creation_setting td {
     padding-left: 0px;
     margin: 0;
 }
 
-.mwb_membership_plans_creation_setting tr {
+.wps_membership_plans_creation_setting tr {
     align-items: center;
 }
 
-.mwb_membership_offers table th,
-.mwb_membership_plans_creation_setting th {
+.wps_membership_offers table th,
+.wps_membership_plans_creation_setting th {
     align-items: center;
 }
 
 @media screen and (max-width: 768px) {
-    .mwb_membership_offers table tr th,
-    .mwb_membership_plans_creation_setting tr th {
+    .wps_membership_offers table tr th,
+    .wps_membership_plans_creation_setting tr th {
         flex: 0 0 100%;
         max-width: 100%;
     }
 
-    .mwb_membership_offers table tr td,
-    .mwb_membership_plans_creation_setting tr td {
+    .wps_membership_offers table tr td,
+    .wps_membership_plans_creation_setting tr td {
         flex: 0 0 100%;
         max-width: 100%;
         padding: 15px;
     }
 
-    .mwb_membership_plans_creation_setting .select2-container, 
-    .mwb_membership_offers .select2-container{
+    .wps_membership_plans_creation_setting .select2-container, 
+    .wps_membership_offers .select2-container{
         width: 100%!important;
     }
 
-    #mwb_membership_product_offer_price_type_id,
-    #mwb_membership_plan_offer_price_type_id {
+    #wps_membership_product_offer_price_type_id,
+    #wps_membership_plan_offer_price_type_id {
         margin-bottom: 10px;
     }
 
@@ -1297,7 +1297,7 @@ div#wp-mwb_membership_email_content-wrap {
     min-height: 450px;
 }
 @media screen and (max-width: 768px) {
-    .mwb-overview__wrapper {
+    .wps-overview__wrapper {
         width: 100%;
     }
     .mfw_overview-video {

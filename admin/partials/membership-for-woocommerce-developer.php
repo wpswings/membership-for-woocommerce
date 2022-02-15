@@ -14,7 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
-global $mfw_mwb_mfw_obj;
+global $mfw_wps_mfw_obj;
 $mfw_developer_admin_hooks =
 // desc - filter for trial.
 apply_filters( 'mfw_developer_admin_hooks_array', array() );
@@ -26,9 +26,9 @@ $count_public = filtered_array( $mfw_developer_public_hooks );
 ?>
 <!--  template file for admin settings. -->
 <div class="mfw-section-wrap">
-	<div class="mwb-col-wrap">
+	<div class="wps-col-wrap">
 		<div id="admin-hooks-listing" class="table-responsive ">
-			<table class="mwb-mfw-table mdc-data-table__table mwb-table"  id="mwb-mfw-wp">
+			<table class="wps-mfw-table mdc-data-table__table wps-table"  id="wps-mfw-wp">
 				<thead>
 				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Admin Hooks', 'membership-for-woocommerce' ); ?></th></tr>
 				<tr>
@@ -61,9 +61,9 @@ $count_public = filtered_array( $mfw_developer_public_hooks );
 			</table>
 		</div>
 	</div>
-	<div class="mwb-col-wrap">
+	<div class="wps-col-wrap">
 		<div id="public-hooks-listing" class="table-responsive ">
-			<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-sys">
+			<table class="wps-mfw-table mdc-data-table__table wps-table" id="wps-mfw-sys">
 				<thead>
 				<tr><th class="mdc-data-table__header-cell"><?php esc_html_e( 'Public Hooks', 'membership-for-woocommerce' ); ?></th></tr>
 				<tr>

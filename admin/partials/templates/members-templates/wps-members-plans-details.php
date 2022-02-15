@@ -19,31 +19,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $plan_title            = ! empty( $plan['post_title'] ) ? $plan['post_title'] : '';
-$plan_price            = ! empty( $plan['mwb_membership_plan_price'] ) ? $plan['mwb_membership_plan_price'] : '';
+$plan_price            = ! empty( $plan['wps_membership_plan_price'] ) ? $plan['wps_membership_plan_price'] : '';
 $plan_desc             = ! empty( $plan['post_content'] ) ? $plan['post_content'] : '';
-$plan_type             = ! empty( $plan['mwb_membership_plan_name_access_type'] ) ? $plan['mwb_membership_plan_name_access_type'] : '';
-$plan_dura             = ! empty( $plan['mwb_membership_plan_duration'] ) ? $plan['mwb_membership_plan_duration'] : '';
-$dura_type             = ! empty( $plan['mwb_membership_plan_duration_type'] ) ? $plan['mwb_membership_plan_duration_type'] : '';
-$plan_start            = ! empty( $plan['mwb_membership_plan_start'] ) ? $plan['mwb_membership_plan_start'] : '';
-$plan_end              = ! empty( $plan['mwb_membership_plan_end'] ) ? $plan['mwb_membership_plan_end'] : '';
-$plan_access           = ! empty( $plan['mwb_membership_plan_user_access'] ) ? $plan['mwb_membership_plan_user_access'] : '';
-$access_type           = ! empty( $plan['mwb_membership_plan_access_type'] ) ? $plan['mwb_membership_plan_access_type'] : '';
-$delay_dura            = ! empty( $plan['mwb_membership_plan_time_duration'] ) ? $plan['mwb_membership_plan_time_duration'] : '';
-$delay_type            = ! empty( $plan['mwb_membership_plan_time_duration_type'] ) ? $plan['mwb_membership_plan_time_duration_type'] : '';
-$discount              = ! empty( $plan['mwb_memebership_plan_discount_price'] ) ? $plan['mwb_memebership_plan_discount_price'] : '';
-$price_type            = ! empty( $plan['mwb_membership_plan_offer_price_type'] ) ? $plan['mwb_membership_plan_offer_price_type'] : '';
-$shipping              = ! empty( $plan['mwb_memebership_plan_free_shipping'] ) ? $plan['mwb_memebership_plan_free_shipping'] : '';
-$products              = ! empty( $plan['mwb_membership_plan_target_ids'] ) ? $plan['mwb_membership_plan_target_ids'] : '';
-$categories            = ! empty( $plan['mwb_membership_plan_target_categories'] ) ? $plan['mwb_membership_plan_target_categories'] : '';
-$discount_on_product   = ! empty( $plan['mwb_memebership_product_discount_price'] ) ? $plan['mwb_memebership_product_discount_price'] : '';
-$price_type_on_product = ! empty( $plan['mwb_membership_product_offer_price_type'] ) ? $plan['mwb_membership_product_offer_price_type'] : '';
-$plan_subscription = ! empty( $plan['mwb_membership_subscription'] ) ? $plan['mwb_membership_subscription'] : '';
-$plan_subscription_duration = ! empty( $plan['mwb_membership_subscription_expiry'] ) ? $plan['mwb_membership_subscription_expiry'] : '';
-$plan_subscription_duration_type = ! empty( $plan['mwb_membership_subscription_expiry_type'] ) ? $plan['mwb_membership_subscription_expiry_type'] : '';
+$plan_type             = ! empty( $plan['wps_membership_plan_name_access_type'] ) ? $plan['wps_membership_plan_name_access_type'] : '';
+$plan_dura             = ! empty( $plan['wps_membership_plan_duration'] ) ? $plan['wps_membership_plan_duration'] : '';
+$dura_type             = ! empty( $plan['wps_membership_plan_duration_type'] ) ? $plan['wps_membership_plan_duration_type'] : '';
+$plan_start            = ! empty( $plan['wps_membership_plan_start'] ) ? $plan['wps_membership_plan_start'] : '';
+$plan_end              = ! empty( $plan['wps_membership_plan_end'] ) ? $plan['wps_membership_plan_end'] : '';
+$plan_access           = ! empty( $plan['wps_membership_plan_user_access'] ) ? $plan['wps_membership_plan_user_access'] : '';
+$access_type           = ! empty( $plan['wps_membership_plan_access_type'] ) ? $plan['wps_membership_plan_access_type'] : '';
+$delay_dura            = ! empty( $plan['wps_membership_plan_time_duration'] ) ? $plan['wps_membership_plan_time_duration'] : '';
+$delay_type            = ! empty( $plan['wps_membership_plan_time_duration_type'] ) ? $plan['wps_membership_plan_time_duration_type'] : '';
+$discount              = ! empty( $plan['wps_memebership_plan_discount_price'] ) ? $plan['wps_memebership_plan_discount_price'] : '';
+$price_type            = ! empty( $plan['wps_membership_plan_offer_price_type'] ) ? $plan['wps_membership_plan_offer_price_type'] : '';
+$shipping              = ! empty( $plan['wps_memebership_plan_free_shipping'] ) ? $plan['wps_memebership_plan_free_shipping'] : '';
+$products              = ! empty( $plan['wps_membership_plan_target_ids'] ) ? $plan['wps_membership_plan_target_ids'] : '';
+$categories            = ! empty( $plan['wps_membership_plan_target_categories'] ) ? $plan['wps_membership_plan_target_categories'] : '';
+$discount_on_product   = ! empty( $plan['wps_memebership_product_discount_price'] ) ? $plan['wps_memebership_product_discount_price'] : '';
+$price_type_on_product = ! empty( $plan['wps_membership_product_offer_price_type'] ) ? $plan['wps_membership_product_offer_price_type'] : '';
+$plan_subscription = ! empty( $plan['wps_membership_subscription'] ) ? $plan['wps_membership_subscription'] : '';
+$plan_subscription_duration = ! empty( $plan['wps_membership_subscription_expiry'] ) ? $plan['wps_membership_subscription_expiry'] : '';
+$plan_subscription_duration_type = ! empty( $plan['wps_membership_subscription_expiry_type'] ) ? $plan['wps_membership_subscription_expiry_type'] : '';
 
-$club_membership = get_post_meta( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'mwb_membership_club', true );
+$club_membership = get_post_meta( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'wps_membership_club', true );
 $args = array(
-	'post_type'   => 'mwb_cpt_membership',
+	'post_type'   => 'wps_cpt_membership',
 	'post_status' => array( 'publish' ),
 	'numberposts' => -1,
 );
@@ -57,7 +57,7 @@ $existing_plans = get_posts( $args );
 	<?php
 	if ( ! empty( $plan ) ) {
 		?>
-		<div class="mwb_members_plans">
+		<div class="wps_members_plans">
 			<table class="form-table">
 				<tr>
 					<th><label><?php esc_html_e( 'Title', 'membership-for-woocommerce' ); ?></label></th>
@@ -247,7 +247,7 @@ $existing_plans = get_posts( $args );
 						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_tags'] ) ? $plan['mwb_membership_plan_target_tags'] : array() );
+							$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_tags'] ) ? $plan['wps_membership_plan_target_tags'] : array() );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
@@ -267,7 +267,7 @@ $existing_plans = get_posts( $args );
 					
 						<td>
 							<?php
-							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_post_target_ids'] ) ? $plan['mwb_membership_plan_post_target_ids'] : array() );
+							$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_post_target_ids'] ) ? $plan['wps_membership_plan_post_target_ids'] : array() );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -284,7 +284,7 @@ $existing_plans = get_posts( $args );
 						<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$cat_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_post_categories'] ) ? $plan['mwb_membership_plan_target_post_categories'] : array() );
+							$cat_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_post_categories'] ) ? $plan['wps_membership_plan_target_post_categories'] : array() );
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
@@ -300,7 +300,7 @@ $existing_plans = get_posts( $args );
 						<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_post_tags'] ) ? $plan['mwb_membership_plan_target_post_tags'] : array() );
+							$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_post_tags'] ) ? $plan['wps_membership_plan_target_post_tags'] : array() );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
@@ -320,7 +320,7 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_page_target_ids'] ) ? $plan['mwb_membership_plan_page_target_ids'] : array() );
+							$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_page_target_ids'] ) ? $plan['wps_membership_plan_page_target_ids'] : array() );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -339,7 +339,7 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_ids'] ) ? $plan['mwb_membership_plan_target_disc_ids'] : array() );
+							$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_ids'] ) ? $plan['wps_membership_plan_target_disc_ids'] : array() );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -359,7 +359,7 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$cat_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_categories'] ) ? $plan['mwb_membership_plan_target_disc_categories'] : array() );
+							$cat_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_categories'] ) ? $plan['wps_membership_plan_target_disc_categories'] : array() );
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
@@ -377,7 +377,7 @@ $existing_plans = get_posts( $args );
 						<td>
 							<?php
 
-							$tag_ids = maybe_unserialize( ! empty( $plan['mwb_membership_plan_target_disc_tags'] ) ? $plan['mwb_membership_plan_target_disc_tags'] : array() );
+							$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_tags'] ) ? $plan['wps_membership_plan_target_disc_tags'] : array() );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
@@ -404,7 +404,7 @@ $existing_plans = get_posts( $args );
 		</div>
 	<?php } else { ?>
 
-		<div class="mwb_members_plan_select">
+		<div class="wps_members_plan_select">
 
 			<p><strong><?php esc_html_e( 'No membership details found', 'membership-for-woocommerce' ); ?></strong></p>
 			<select name="members_plan_assign" id="members_plan_assign">

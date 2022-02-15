@@ -7,8 +7,8 @@ jQuery(document).ready(function ($) {
 	var $payment_methods;
 
 	const resetform = async () => {
-		$('.membership_customer_details,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-a, .mwb_mfw_billing-heading h3, .mwb_mfw_form-field-wrapper-part-a').show();
-		$('#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b, .mwb_mfw_btn-back-a').hide();
+		$('.membership_customer_details,.wps_mfw_btn-back-a, .wps_mfw_btn-next-a, .wps_mfw_billing-heading h3, .wps_mfw_form-field-wrapper-part-a').show();
+		$('#wps_proceed_payment, .wps_membership_payment_modal,.wps_mfw_btn-back-b, .wps_mfw_btn-back-a').hide();
 	}
 
 	const validate_email = ( val ) => {
@@ -25,7 +25,7 @@ jQuery(document).ready(function ($) {
 
 
 	// Payment modal definition.
-	$("#mwb_membership_buy_now_modal_form").dialog({
+	$("#wps_membership_buy_now_modal_form").dialog({
 		modal: true,
 		autoOpen: false,
 		show: { effect: "blind", duration: 800 },
@@ -34,7 +34,7 @@ jQuery(document).ready(function ($) {
 
 
 	// multi-step form for woo-commerce
-	$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_form-field-wrapper-part-b, #mwb_proceed_payment, .mwb_membership_payment_modal, .mwb_mfw_btn-back-a,.mwb_mfw_btn-back-b, .mwb_mfw_btn-next-b, .mwb_mfw_order-confirm, .mwb_mfw_purchase-again').hide();
+	$('.wps_mfw_form-field-wrapper-part-a, .wps_mfw_form-field-wrapper-part-b, #wps_proceed_payment, .wps_membership_payment_modal, .wps_mfw_btn-back-a,.wps_mfw_btn-back-b, .wps_mfw_btn-next-b, .wps_mfw_order-confirm, .wps_mfw_purchase-again').hide();
 	
 	// Reset form on modal close.
 	$('.ui-dialog-titlebar-close').on( 'click', function () {
@@ -45,19 +45,19 @@ jQuery(document).ready(function ($) {
 	$(document).keyup(function (e) {
 
 		if (e.key === "Escape") { // escape key maps to keycode `27`
-			$("#mwb_membership_buy_now_modal_form").dialog("close");
+			$("#wps_membership_buy_now_modal_form").dialog("close");
 			resetform();
 		}
 	});
 
-	$('.mwb_membership_buynow').on( 'click', function () {
+	$('.wps_membership_buynow').on( 'click', function () {
 	
-		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
-		$('.mwb_mfw_form-field-wrapper-part-a, .mwb_mfw_btn-next-a').show('300');
+		$('#wps_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#wps_mfw_progress-bar-b, #wps_mfw_progress-bar-c, #wps_mfw_progress-bar-d').css({ 'background-color': '' });
+		$('.wps_mfw_form-field-wrapper-part-a, .wps_mfw_btn-next-a').show('300');
 	});
 
-	$('.mwb_mfw_btn-next-a').on( 'click', function () {
+	$('.wps_mfw_btn-next-a').on( 'click', function () {
 
 		//Personal Details form validation 
 		let f_name = $('#membership_billing_first_name').val().length;
@@ -73,23 +73,23 @@ jQuery(document).ready(function ($) {
 
 		// end
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
-		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
-		$('.mwb_mfw_form-field-wrapper-part-a').hide();
-		$('.mwb_mfw_form-field-wrapper-part-b,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-b').show('500');
+		$('#wps_mfw_progress-bar-a, #wps_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#wps_mfw_progress-bar-c, #wps_mfw_progress-bar-d').css({ 'background-color': '' });
+		$('.wps_mfw_form-field-wrapper-part-a').hide();
+		$('.wps_mfw_form-field-wrapper-part-b,.wps_mfw_btn-back-a, .wps_mfw_btn-next-b').show('500');
 
 	});
 
-	$('.mwb_mfw_btn-back-a').on( 'click', function () {
+	$('.wps_mfw_btn-back-a').on( 'click', function () {
 
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
-		$('.mwb_mfw_btn-next-a, .mwb_mfw_form-field-wrapper-part-a').show()
-		$('.mwb_mfw_form-field-wrapper-part-b, .mwb_mfw_btn-next-b').hide();
+		$('#wps_mfw_progress-bar-a').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#wps_mfw_progress-bar-b, #wps_mfw_progress-bar-c, #wps_mfw_progress-bar-d').css({ 'background-color': '' });
+		$('.wps_mfw_btn-next-a, .wps_mfw_form-field-wrapper-part-a').show()
+		$('.wps_mfw_form-field-wrapper-part-b, .wps_mfw_btn-next-b').hide();
 	});
 
-	$('.mwb_mfw_btn-next-b').on( 'click', function () {
+	$('.wps_mfw_btn-next-b').on( 'click', function () {
 
 		//Address Details form validation 
 		let street = $('#membership_billing_address_1').val().length;
@@ -104,29 +104,29 @@ jQuery(document).ready(function ($) {
 
 		// end
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-b, #mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-c').css({ 'background-color': '#1a3365' }); //progress bar
-		$('#mwb_mfw_progress-bar-d').css({ 'background-color': '' });
-		$('.mwb_mfw_form-field-wrapper-part-b, .membership_customer_details,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-a, .mwb_mfw_billing-heading h3, .mwb_mfw_btn-next-b, .mwb_mfw_form-field-wrapper-part-a').hide();
-		$('#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b').show();
+		$('#wps_mfw_progress-bar-b, #wps_mfw_progress-bar-a, #wps_mfw_progress-bar-c').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#wps_mfw_progress-bar-d').css({ 'background-color': '' });
+		$('.wps_mfw_form-field-wrapper-part-b, .membership_customer_details,.wps_mfw_btn-back-a, .wps_mfw_btn-next-a, .wps_mfw_billing-heading h3, .wps_mfw_btn-next-b, .wps_mfw_form-field-wrapper-part-a').hide();
+		$('#wps_proceed_payment, .wps_membership_payment_modal,.wps_mfw_btn-back-b').show();
 	});
 
-	$('.mwb_mfw_btn-back-b').on( 'click', function () {
+	$('.wps_mfw_btn-back-b').on( 'click', function () {
 
 		$(this).hide();
-		$('#mwb_mfw_progress-bar-a, #mwb_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
-		$('#mwb_mfw_progress-bar-c, #mwb_mfw_progress-bar-d').css({ 'background-color': '' });
-		$('.mwb_mfw_billing-heading h3, .membership_customer_details, .mwb_mfw_form-field-wrapper-part-b,.mwb_mfw_btn-back-a, .mwb_mfw_btn-next-b').show();
-		$('.mwb_mfw_btn-next-a,.mwb_mfw_form-field-wrapper-part-a,#mwb_proceed_payment, .mwb_membership_payment_modal,.mwb_mfw_btn-back-b').hide();
+		$('#wps_mfw_progress-bar-a, #wps_mfw_progress-bar-b').css({ 'background-color': '#1a3365' }); //progress bar
+		$('#wps_mfw_progress-bar-c, #wps_mfw_progress-bar-d').css({ 'background-color': '' });
+		$('.wps_mfw_billing-heading h3, .membership_customer_details, .wps_mfw_form-field-wrapper-part-b,.wps_mfw_btn-back-a, .wps_mfw_btn-next-b').show();
+		$('.wps_mfw_btn-next-a,.wps_mfw_form-field-wrapper-part-a,#wps_proceed_payment, .wps_membership_payment_modal,.wps_mfw_btn-back-b').hide();
 	});
 
 	// Hover abbreviation on the shop catelogue
-	$('.mwb_mfw_membership_tool_tip_wrapper').on('mouseenter', function () {
+	$('.wps_mfw_membership_tool_tip_wrapper').on('mouseenter', function () {
 
-		let abbr_content = $(this).children('.mwb_mfw_membership_tool_tip').html().length;
+		let abbr_content = $(this).children('.wps_mfw_membership_tool_tip').html().length;
 
 		if (abbr_content >= 6) {
 
-			$(this).children('.mwb_mfw_membership_tool_tip').css({ 'display': 'block', 'animation': 'visible 0.2s linear 1' });
+			$(this).children('.wps_mfw_membership_tool_tip').css({ 'display': 'block', 'animation': 'visible 0.2s linear 1' });
 		} else {
 
 			$(this).css('cursor', 'alias');
@@ -134,20 +134,20 @@ jQuery(document).ready(function ($) {
 
 	}).on('mouseleave', function () {
 
-		$(this).children('.mwb_mfw_membership_tool_tip').css('display', 'none');
+		$(this).children('.wps_mfw_membership_tool_tip').css('display', 'none');
 	})
 
-	$('.mwb_membership_buynow').on("click", function (e) {
+	$('.wps_membership_buynow').on("click", function (e) {
 		e.preventDefault();
-		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_price')).val();
-		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_plan_id')).val();
-		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#mwb_membership_title')).val();
+		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_price')).val();
+		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_id')).val();
+		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_title')).val();
 
 		$.ajax({
 			url: membership_public_obj.ajaxurl,
 			type: "POST",
 			data: {
-				action: "mwb_membership_checkout",
+				action: "wps_membership_checkout",
 				plan_price: plan_price,
 				plan_id: plan_id,
 				plan_title: plan_title,
@@ -163,7 +163,7 @@ jQuery(document).ready(function ($) {
 
  });
 
- jQuery(document).on('click','.mwb_members_plans label',function(obj = this ) {
+ jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {
 	debugger;
 	
 	var classes = jQuery(this.nextElementSibling).attr('class');
@@ -171,7 +171,7 @@ jQuery(document).ready(function ($) {
 if ( allclasses.length>1 ) {
 	if( allclasses[1]=='show__membership_details' ){
 	
-		jQuery('.mwb_members_plans .mwb_table_wrapper').removeClass('show__membership_details');
+		jQuery('.wps_members_plans .wps_table_wrapper').removeClass('show__membership_details');
 	}
  } else {
 		

@@ -1,7 +1,7 @@
 <wpml-config>
 <custom-fields>
-    <custom-field action="translate">mwb_membership_notice_message</custom-field>
-<custom-field action="translate">mwb_membership_plan_info</custom-field>
+    <custom-field action="translate">wps_membership_notice_message</custom-field>
+<custom-field action="translate">wps_membership_plan_info</custom-field>
 </custom-fields>
 </wpml-config>
 

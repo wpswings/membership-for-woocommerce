@@ -20,17 +20,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 <!-- Heading start-->
-<div class="mwb_membership_supported_gateways">
+<div class="wps_membership_supported_gateways">
 	<h2><?php esc_html_e( 'Membership Supported Gateways', 'membership-for-woocommerce' ); ?></h2>
 </div>
 <!-- Heading end. -->
 
 <!-- Gateway start. -->
-<div class="mwb_membership_manage_gateways">
+<div class="wps_membership_manage_gateways">
 	<a href="<?php echo esc_html( admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ); ?>"><?php esc_html_e( 'Setup Membership Supported Gateways', 'membership-for-woocommerce' ); ?></a>
 </div>
-<div class="mwb_membership_table mwb_membership_gateways">
-	<table class="form-table mwb_membership_plan_gateways">
+<div class="wps_membership_table wps_membership_gateways">
+	<table class="form-table wps_membership_plan_gateways">
 		<tbody>
 			<?php
 
@@ -57,8 +57,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						if ( in_array( $gateway, $available_gateways, true ) ) {
 
 							?>
-							<div class="mwb_membership_gateway_div">
-								<p class="mwb_membership_gateway">
+							<div class="wps_membership_gateway_div">
+								<p class="wps_membership_gateway">
 
 									<a class="button" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=checkout&section=' . $gateway ); ?>"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
 								</p>
@@ -68,8 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<?php
 						} else {
 							?>
-							<div class="mwb_membership_gateway_div">
-								<p class="mwb_membership_gateway">
+							<div class="wps_membership_gateway_div">
+								<p class="wps_membership_gateway">
 
 									<a class="button disabled" href="javascript:void(0)"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
 								</p>

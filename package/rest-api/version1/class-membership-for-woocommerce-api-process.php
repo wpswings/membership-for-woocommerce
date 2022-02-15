@@ -40,16 +40,16 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 		 *
 		 * @since    1.0.0
 		 * @param   Array $mfw_request  data of requesting headers and other information.
-		 * @return  Array $mwb_mfw_rest_response    returns processed data and status of operations.
+		 * @return  Array $wps_mfw_rest_response    returns processed data and status of operations.
 		 */
-		public function mwb_mfw_default_process( $mfw_request ) {
-			$mwb_mfw_rest_response = array();
+		public function wps_mfw_default_process( $mfw_request ) {
+			$wps_mfw_rest_response = array();
 
 			// Write your custom code here.
 
-			$mwb_mfw_rest_response['status'] = 200;
-			$mwb_mfw_rest_response['data'] = $mfw_request->get_headers();
-			return $mwb_mfw_rest_response;
+			$wps_mfw_rest_response['status'] = 200;
+			$wps_mfw_rest_response['data'] = $mfw_request->get_headers();
+			return $wps_mfw_rest_response;
 		}
 	}
 }

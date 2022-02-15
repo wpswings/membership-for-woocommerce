@@ -1,9 +1,9 @@
 /* Overview page css */
 
-.mwb-overview__wrapper {
+.wps-overview__wrapper {
     width: calc(100% - 20px);
 
-    .mwb-overview__banner {
+    .wps-overview__banner {
         background-color: $c-white;
         margin: 10px 0 25px;
         overflow: hidden;
@@ -14,8 +14,8 @@
         }
     }
 
-    .mwb-overview__content {
-        .mwb-overview__content-description {
+    .wps-overview__content {
+        .wps-overview__content-description {
             background-color: $c-white;
             margin-bottom: $fs-xlarge;
             padding: 25px 0;
@@ -43,7 +43,7 @@
                 margin-bottom: 15px;
                 margin-top: 25px;
             }
-            .mwb-overview__features {
+            .wps-overview__features {
                 list-style: none;
 
                 li {
@@ -72,12 +72,12 @@
             margin: 10px 0px;
             text-align: left;
         }
-        .mwb-overview__keywords {
+        .wps-overview__keywords {
             display: flex;
             flex-wrap: wrap;
             margin: 0 -15px;
 
-            .mwb-overview__keywords-item {
+            .wps-overview__keywords-item {
                 display: flex;
                 flex-wrap: wrap;
                 flex: 0 0 33.33%;
@@ -85,17 +85,17 @@
                 max-width: 33.33%;
                 padding: 0 15px;
 
-                @include media(mwb-tablet) { 
+                @include media(wps-tablet) { 
                     flex: 0 0 50%;
                     max-width: 50%;
                 }
 
-                @include media(mwb-phone) { 
+                @include media(wps-phone) { 
                     flex: 0 0 100%;
                     max-width: 100%;
                 }
                 
-                .mwb-overview__keywords-card {
+                .wps-overview__keywords-card {
                     background-color: $c-white;
                     border-radius: 10px;
                     border: 1px solid $c-alto;
@@ -104,7 +104,7 @@
                     flex-grow: 1;
                     padding: $fs-xlarge;
 
-                    .mwb-overview__keywords-image {
+                    .wps-overview__keywords-image {
                         overflow: hidden;
 
                         img {
@@ -113,8 +113,8 @@
                             width: auto;
                         }
                     }
-                    .mwb-overview__keywords-text {
-                        .mwb-overview__keywords-heading {
+                    .wps-overview__keywords-text {
+                        .wps-overview__keywords-heading {
                             color: $c-biscay;
                             font-size: $fs-large;
                             font-weight: 600;
@@ -122,7 +122,7 @@
                             line-height: 38px;
                             margin: 15px 0;
                         }
-                        .mwb-overview__keywords-description {
+                        .wps-overview__keywords-description {
                             color: $c-nandor;
                             font-size: $fs-normal;
                             letter-spacing: 0.5px;

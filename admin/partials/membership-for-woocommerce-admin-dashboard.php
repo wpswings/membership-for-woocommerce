@@ -16,10 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
 
-global $mfw_mwb_mfw_obj;
+global $mfw_wps_mfw_obj;
 
 
-if ( ! mwb_mfw_standard_check_multistep() ) {
+if ( ! wps_mfw_standard_check_multistep() ) {
 	?>
 	<div id="react-app"></div>
 	<?php
@@ -27,8 +27,8 @@ if ( ! mwb_mfw_standard_check_multistep() ) {
 }
 
 $mfw_active_tab   = isset( $_GET['mfw_tab'] ) ? sanitize_key( $_GET['mfw_tab'] ) : 'membership-for-woocommerce-general';
-$mfw_default_tabs = $mfw_mwb_mfw_obj->mwb_mfw_plug_default_tabs();
-$plugin_name = $mfw_mwb_mfw_obj->mfw_get_plugin_name();
+$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
+$plugin_name = $mfw_wps_mfw_obj->mfw_get_plugin_name();
 if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 	$check_licence = check_membership_pro_plugin_is_active();
 	if ( $check_licence ) {
@@ -37,30 +37,30 @@ if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 	}
 }
 
-do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_default_tabs );
+do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_default_tabs );
 
 ?>
 <header>
 	<?php
 		// desc - This hook is used for trial.
-		do_action( 'mwb_mfw_settings_saved_notice' );
+		do_action( 'wps_mfw_settings_saved_notice' );
 	?>
-	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
+	<div class="wps-header-container wps-bg-white wps-r-8">
+		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
 		</h1>
-		<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="mwb-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
+		<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="mwb-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
+		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
 	</div>
 </header>
-<main class="mwb-main mwb-bg-white mwb-r-8">
-	<nav class="mwb-navbar">
-		<ul class="mwb-navbar__items">
+<main class="wps-main wps-bg-white wps-r-8">
+	<nav class="wps-navbar">
+		<ul class="wps-navbar__items">
 			<?php
 			if ( is_array( $mfw_default_tabs ) && ! empty( $mfw_default_tabs ) ) {
 				foreach ( $mfw_default_tabs as $mfw_tab_key => $mfw_default_tabs ) {
 
-					$mfw_tab_classes = 'mwb-link ';
+					$mfw_tab_classes = 'wps-link ';
 					if ( ! empty( $mfw_active_tab ) && $mfw_active_tab === $mfw_tab_key ) {
 						$mfw_tab_classes .= 'active';
 					}
@@ -74,22 +74,22 @@ do_action( 'mwb_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 			?>
 		</ul>
 	</nav>
-	<section class="mwb-section">
+	<section class="wps-section">
 		<div>
 			<?php
 				// desc - This hook is used for trial.
-				do_action( 'mwb_mfw_before_general_settings_form' );
+				do_action( 'wps_mfw_before_general_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			if ( empty( $mfw_active_tab ) ) {
-				$mfw_active_tab = 'mwb_mfw_plug_general';
+				$mfw_active_tab = 'wps_mfw_plug_general';
 			}
 
 				// look for the path based on the tab id in the admin templates.
-				$mfw_default_tabs = $mfw_mwb_mfw_obj->mwb_mfw_plug_default_tabs();
+				$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
 				$mfw_tab_content_path = $mfw_default_tabs[ $mfw_active_tab ]['file_path'];
-				$mfw_mwb_mfw_obj->mwb_mfw_plug_load_template( $mfw_tab_content_path );
+				$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $mfw_tab_content_path );
 				// desc - This hook is used for trial.
-				do_action( 'mwb_mfw_after_general_settings_form' );
+				do_action( 'wps_mfw_after_general_settings_form' );
 			?>
 		</div>
 	</section>

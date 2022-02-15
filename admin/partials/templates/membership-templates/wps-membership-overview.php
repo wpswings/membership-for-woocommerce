@@ -12,8 +12,8 @@
  */
 
 ?>
-<div class="mwb-overview__wrapper">
-	<div class="mwb-overview__banner">
+<div class="wps-overview__wrapper">
+	<div class="wps-overview__banner">
 	<?php
 	if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 		$check_licence = check_membership_pro_plugin_is_active();
@@ -29,8 +29,8 @@
 	}
 	?>
 	</div>
-	<div class="mwb-overview__content">
-		<div class="mwb-overview__content-description">
+	<div class="wps-overview__content">
+		<div class="wps-overview__content-description">
 			<h2><?php echo esc_html_e( 'What Is Membership For WooCommerce?', 'membership-for-woocommerce' ); ?></h2>
 			<p>
 				<?php
@@ -43,13 +43,13 @@
 				?>
 			</p>
 			<h3><?php esc_html_e( 'With our Membership for WooCommerce plugin, as a store owner you get:', 'membership-for-woocommerce' ); ?></h3>
-			<ul class="mwb-overview__features">
+			<ul class="wps-overview__features">
 				<li><?php esc_html_e( 'Control content access', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'See complete customer history', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Quick preview section for Membership plans on the plans listing page', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'A different status selection like pending, on hold, or completed as per their payment and plan expiry', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></li>
-				<?php	do_action( 'mwb_membership_li_to_overview' ); ?>
+				<?php	do_action( 'wps_membership_li_to_overview' ); ?>
 			</ul>
 			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
 		</div>
@@ -65,15 +65,15 @@
 		}
 		?>
 		</h2>
-		<div class="mwb-overview__keywords">
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
+		<div class="wps-overview__keywords">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
 						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Complete Customer History.jpg' ); ?>" alt="Complete Customer History image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Complete Customer History', 'membership-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Complete Customer History', 'membership-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e( 'Admin gets a quick preview section for Membership plans on the plans listing page. The users too can see their history in the ‘My Account’ section with entire details of their membership plans.', 'membership-for-woocommerce' );
 							?>
@@ -81,14 +81,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
 						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Membership Details.jpg' ); ?>" alt="Membership Details image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e( 'Admin can offer products/categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the plan. Membership Details Tab on My Accounts Page has all the details of the plan.', 'membership-for-woocommerce' );
 							?>
@@ -96,14 +96,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
 						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Data Export.jpg' ); ?>" alt="Data Export image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Data Export', 'membership-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Data Export', 'membership-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e( 'Admin can effortlessly export all the membership plans along with the user data and settings. He can also import the details of all members as a CSV file.', 'membership-for-woocommerce' );
 							?>
@@ -111,14 +111,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
 						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Perfectly Neat Shortcodes For Customization.jpg' ); ?>" alt="Perfectly Neat Shortcodes For Customization image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'Perfectly Neat Shortcodes For Customization', 'membership-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Perfectly Neat Shortcodes For Customization', 'membership-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e( 'The admin is provided with a neat collection of shortcodes that work not only on the purchase of the default membership plan but also on the custom page. These shortcodes let admin to design their plan page at ease.', 'membership-for-woocommerce' );
 							?>
@@ -126,14 +126,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="mwb-overview__keywords-item">
-				<div class="mwb-overview__keywords-card">
-					<div class="mwb-overview__keywords-image">
+			<div class="wps-overview__keywords-item">
+				<div class="wps-overview__keywords-card">
+					<div class="wps-overview__keywords-image">
 						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_User Cart Total Discount.jpg' ); ?>" alt="User Cart Total Discount image">
 					</div>
-					<div class="mwb-overview__keywords-text">
-						<h3 class="mwb-overview__keywords-heading"><?php echo esc_html_e( 'User Cart Total Discount', 'membership-for-woocommerce' ); ?></h3>
-						<p class="mwb-overview__keywords-description">
+					<div class="wps-overview__keywords-text">
+						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'User Cart Total Discount', 'membership-for-woocommerce' ); ?></h3>
+						<p class="wps-overview__keywords-description">
 							<?php
 							esc_html_e( "Admin can grant discounts to the customers on total cart value. Free shipping option is also available as per their membership plans. The discount can be a fixed amount or percentage discount based on the admin's choice.", 'membership-for-woocommerce' );
 							?>
@@ -141,7 +141,7 @@
 					</div>
 				</div>
 			</div>
-			<?php	do_action( 'mwb_membership_add_icons_with_desc' ); ?>
+			<?php	do_action( 'wps_membership_add_icons_with_desc' ); ?>
 		</div>
 	</div>
 </div>

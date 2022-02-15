@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
             url: members_admin_obj.ajaxurl,
             type: "POST",
             data: {
-                action: "mwb_membership_get_states",
+                action: "wps_membership_get_states",
                 country: $("#billing_country").val(),
                 nonce: members_admin_obj.nonce,
             },
@@ -58,12 +58,12 @@ jQuery(document).ready(function($) {
 
     $("#billing_country").select2();
     $("#billing_state").select2();
-    $("#mwb_member_user").select2();
+    $("#wps_member_user").select2();
     $("#members_plan_assign").select2();
     $("#payment_gateway_select").select2();
 
     // Applying script to admin part in all Members list page
-    var mwb_status = $('.members_status, .member_plan_status').each(function() {
+    var wps_status = $('.members_status, .member_plan_status').each(function() {
 
         if ($(this).text() == 'complete') {
             $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' }); // green
@@ -79,7 +79,7 @@ jQuery(document).ready(function($) {
 
     });
         if ($('a').has('.disabled')) {
-            $(this).closest('.mwb_membership_plan_gateways tr').css('background','red');
+            $(this).closest('.wps_membership_plan_gateways tr').css('background','red');
         }
 });
 

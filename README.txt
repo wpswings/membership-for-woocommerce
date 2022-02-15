@@ -214,9 +214,9 @@ Admin can enable/disable Membership for WooCommerce plugin functionality on the 
 = Does the Membership for WooCommerce plugin provide the Shortcode to display the membership plan/price? =
 **Yes**, The Membership for WooCommerce plugin has a shortcode section to display the Membership plan, price, and description.
 
-* Membership Plan Title : [mwb_membership_title]
-* Membership Plan Price : [mwb_membership_price]
-* Membership Plan Desc : [mwb_membership_desc]
+* Membership Plan Title : [wps_membership_title]
+* Membership Plan Price : [wps_membership_price]
+* Membership Plan Desc : [wps_membership_desc]
 
 = Can I add as many levels of Membership as I want using the Membership for WooCommerce plugin? = 
 **Yes**, you can create as many levels as you want using the Membership for WooCommerce plugin.

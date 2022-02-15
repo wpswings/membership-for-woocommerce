@@ -1,15 +1,15 @@
 /* Mixins */
 @mixin media($size) {
 
-	@if $size == mwb-phone {
+	@if $size == wps-phone {
 		@media (max-width: 768px) { @content; }
 	} 
 
-	@else if $size == mwb-tablet {
+	@else if $size == wps-tablet {
 		@media (max-width: 992px) { @content; }
 	} 
 
-	@else if $size == mwb-desktop {
+	@else if $size == wps-desktop {
 		@media (max-width: 1100px) { @content; }
 	} 
 }
