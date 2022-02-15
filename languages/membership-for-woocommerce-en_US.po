@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Membership For WooCommerce 2.0.2\n"
+"Project-Id-Version: Membership For WooCommerce 2.0.3\n"
 "POT-Creation-Date: 2022-01-20 18:52+0530\n"
 "PO-Revision-Date: 2022-01-20 18:53+0530\n"
 "Last-Translator: \n"
