@@ -134,6 +134,8 @@ class Membership_For_Woocommerce_Activator {
 				}
 				self::mfw_upgrade_wp_postmeta();
 				self::mfw_upgrade_wp_options();
+				self::mfw_migrate_membership_post_type();
+				self::mfw_migrate_members_post_type();
 				restore_current_blog();
 			}
 
@@ -223,7 +225,9 @@ class Membership_For_Woocommerce_Activator {
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
 			self::mfw_upgrade_wp_postmeta();
-				self::mfw_upgrade_wp_options();
+			self::mfw_upgrade_wp_options();
+			self::mfw_migrate_membership_post_type();
+			self::mfw_migrate_members_post_type();
 		}
 	}
 
@@ -364,5 +368,58 @@ class Membership_For_Woocommerce_Activator {
 				}
 			}
 		}
+
+	
+	/**
+	 * Replacement for mwb_membership post type to WPS.
+	 *
+	 * @return void
+	 */	
+	public static function mfw_migrate_membership_post_type() {
+		$all_feeds = get_posts(
+			array(
+				'post_type'      => 'mwb_cpt_membership',
+				'post_status'    => array( 'publish', 'draft' ),
+				'fields'         => 'ids',
+				'posts_per_page' => -1,
+			)
+		);
+
+		if ( ! empty( $all_feeds ) && is_array( $all_feeds ) ) {
+			foreach ( $all_feeds as $key => $feed_id ) {
+				$args = array(
+					'ID'        => $feed_id,
+					'post_type' => 'wps_cpt_membership',
+				);
+				wp_update_post( $args );
+			}
+		}
+	}
+
+	/**
+	 * Replacement for mwb_members post type to WPS.
+	 *
+	 * @return void
+	 */	
+	public static function mfw_migrate_members_post_type() {
+		$all_feeds = get_posts(
+			array(
+				'post_type'      => 'mwb_cpt_members',
+				'post_status'    => array( 'publish', 'draft' ),
+				'fields'         => 'ids',
+				'posts_per_page' => -1,
+			)
+		);
+
+		if ( ! empty( $all_feeds ) && is_array( $all_feeds ) ) {
+			foreach ( $all_feeds as $key => $feed_id ) {
+				$args = array(
+					'ID'        => $feed_id,
+					'post_type' => 'wps_cpt_members',
+				);
+				wp_update_post( $args );
+			}
+		}
+	}
 
 }
