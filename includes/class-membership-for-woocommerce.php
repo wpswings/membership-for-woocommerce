@@ -310,7 +310,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'wps_membership_subscription_on_hold_renewal', 99, 1 );
 
 		if ( self::is_enbale_usage_tracking() ) {
-			$this->loader->add_action( 'makewebbetter_tracker_send_event', $mfw_plugin_common, 'wps_membership_mfw_makewebbetter_tracker_send_event' );
+			$this->loader->add_action( 'wpswings_tracker_send_event', $mfw_plugin_common, 'wps_membership_mfw_makewebbetter_tracker_send_event' );
 		}
 		// Save ajax request for the plugin's multistep.
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );

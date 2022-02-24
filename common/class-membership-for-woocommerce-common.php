@@ -83,7 +83,7 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_membership_checkout() {
-
+	
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 		$plan_id    = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
 		$plan_price = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
@@ -92,7 +92,7 @@ class Membership_For_Woocommerce_Common {
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 
 		global $wp_session;
-
+		WC()->cart->empty_cart();
 		$wp_session['plan_price'] = $plan_price;
 		$wp_session['plan_title'] = $plan_title;
 		$wp_session['plan_id']    = $plan_id;
@@ -108,7 +108,6 @@ class Membership_For_Woocommerce_Common {
 
 		wp_die();
 	}
-
 
 	/**
 	 * WooCommerce add cart item data.
@@ -267,17 +266,17 @@ class Membership_For_Woocommerce_Common {
 	 * Function is used for the sending the track data
 	 *
 	 * @param bool $override is the bool value to override tracking value.
-	 * @name wps_membership_mfw_makewebbetter_tracker_send_event
+	 * @name wps_membership_mfw_wpswings_tracker_send_event
 	 * @since 1.0.0
 	 */
-	public function wps_membership_mfw_makewebbetter_tracker_send_event( $override = false ) {
+	public function wps_membership_mfw_wpswings_tracker_send_event( $override = false ) {
 		require_once WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
-		$last_send = get_option( 'makewebbetter_tracker_last_send' );
-		if ( ! apply_filters( 'makewebbetter_tracker_send_override', $override ) ) {
+		$last_send = get_option( 'wpswings_tracker_last_send' );
+		if ( ! apply_filters( 'wpswings_tracker_send_override', $override ) ) {
 			// Send a maximum of once per week by default.
 			$last_send = $this->wps_mfw_last_send_time();
-			if ( $last_send && $last_send > apply_filters( 'makewebbetter_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
+			if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
 				return;
 			}
 		} else {
@@ -288,7 +287,7 @@ class Membership_For_Woocommerce_Common {
 			}
 		}
 		// Update time first before sending to ensure it is set.
-		update_option( 'makewebbetter_tracker_last_send', time() );
+		update_option( 'wpswings_tracker_last_send', time() );
 		$params = WC_Tracker::get_tracking_data();
 		$params['extensions']['membership_for_woocommerce'] = array(
 			'version' => MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
@@ -296,7 +295,7 @@ class Membership_For_Woocommerce_Common {
 			'membership_plans' => $this->wps_mfw_membership_plan_count(),
 			'members_data' => $this->wps_mfw_membership_get_all_members(),
 		);
-		$params = apply_filters( 'makewebbetter_tracker_params', $params );
+		$params = apply_filters( 'wpswings_tracker_params', $params );
 
 		$api_url = 'https://tracking.wpswings.com/wp-json/mfw-route/v1/mfw-testing-data/';
 
@@ -393,7 +392,7 @@ class Membership_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function wps_mfw_last_send_time() {
-		return apply_filters( 'makewebbetter_tracker_last_send_time', get_option( 'makewebbetter_tracker_last_send', false ) );
+		return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
 	}
 
 	/**

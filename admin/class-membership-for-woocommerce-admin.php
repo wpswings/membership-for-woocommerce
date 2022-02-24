@@ -362,7 +362,7 @@ class Membership_For_Woocommerce_Admin {
 			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
 
 			if ( wps_mfw_standard_check_multistep() ) {
-				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
+				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 			}
 			$mfw_menus =
 			// desc - filter for trial.
@@ -377,7 +377,7 @@ class Membership_For_Woocommerce_Admin {
 
 				if ( ! in_array( 'Home', (array) $submenu['wps-plugins'] ) ) {
 					if ( wps_mfw_standard_check_multistep() ) {
-						add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'makewebbetter_welcome_callback_function' ), 1 );
+						add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 					}
 				}
 			}
@@ -389,10 +389,10 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * Adding the default menu into the WordPress menu.
 	 *
-	 * @name makewebbetter_callback_function
+	 * @name wpswings_callback_function
 	 * @since 1.0.0
 	 */
-	public function makewebbetter_welcome_callback_function() {
+	public function wpswings_welcome_callback_function() {
 		include MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-welcome.php';
 	}
 
@@ -990,6 +990,7 @@ class Membership_For_Woocommerce_Admin {
 		$this->set_plan_creation_fields( get_the_ID() );
 
 		$settings_fields = $this->settings_fields;
+		//print_r($settings_fields);
 		$instance        = $this->global_class;
 
 		wc_get_template(

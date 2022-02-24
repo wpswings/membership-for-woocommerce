@@ -113,7 +113,6 @@ class Membership_For_Woocommerce_Public {
 
 			wp_enqueue_style( 'membership-plan', plugin_dir_url( __FILE__ ) . 'css/membership-plan.css', array(), $this->version, false );
 		}
-
 	}
 
 	/**
@@ -196,7 +195,6 @@ class Membership_For_Woocommerce_Public {
 		AND ($wp_posts.post_status = 'publish') GROUP BY $wp_posts.ID ORDER BY $wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
-
 	}
 
 	/**
@@ -270,7 +268,6 @@ class Membership_For_Woocommerce_Public {
 		return $title;
 	}
 
-
 	/**
 	 * Add content to Membership details tab.
 	 */
@@ -328,6 +325,8 @@ class Membership_For_Woocommerce_Public {
 		// Default Gutenberg offer.
 		add_shortcode( 'wps_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
 	}
+
+
 	/**
 	 * Membership default global options.
 	 *
@@ -351,6 +350,8 @@ class Membership_For_Woocommerce_Public {
 		);
 		return $default_global_settings;
 	}
+
+
 	/**
 	 * Restrict purchase of product to non-members.
 	 *
@@ -427,6 +428,7 @@ class Membership_For_Woocommerce_Public {
 
 		return $is_purchasable;
 	}
+
 
 	/**
 	 * Hide price of selected product on shop page.
@@ -2821,12 +2823,12 @@ class Membership_For_Woocommerce_Public {
 		global $wp_session;
 
 		if ( empty( $wp_session ) ) {
-
+// echo 'ndf------';
 			$cart_item_data['plan_price'] = WC()->session->get( 'plan_price' );
 			$cart_item_data['plan_title'] = WC()->session->get( 'plan_title' );
 			$cart_item_data['plan_id'] = WC()->session->get( 'plan_id' ); // In case of subscription.
 		} else {
-
+			// echo 'ttt-----------';
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 			$cart_item_data['plan_id'] = $wp_session['plan_id']; // In case of subscription.
@@ -3140,7 +3142,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_buy_now_add_to_cart() {
-
+	//	WC()->cart->empty_cart();
 		// select product ID.
 		if ( ! is_checkout() ) {
 			if ( WC()->session->__isset( 'product_id' ) ) {
@@ -3150,11 +3152,12 @@ class Membership_For_Woocommerce_Public {
 				WC()->cart->empty_cart();
 
 				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
+			//	print_r( WC()->session->get( 'product_id' ) );
+		
 			}
 			WC()->session->__unset( 'product_id' );
 
 		}
-
 	}
 
 	/**
