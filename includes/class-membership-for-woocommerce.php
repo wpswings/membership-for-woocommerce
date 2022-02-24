@@ -513,7 +513,7 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-shortcodes',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
 			);
-			$mfw_default_tabs = apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
+			$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
 			$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
 				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-system-status',
