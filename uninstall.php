@@ -30,17 +30,17 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 }
 
 // Getting global options.
-$mwb_membership_global_settings = get_option( 'mwb_membership_global_options' );
+$wps_membership_global_settings = get_option( 'wps_membership_global_options' );
 
 // Delete only if "Delete data at unistall" in Global settings set to true.
-if ( ! empty( $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) && 'on' === $mwb_membership_global_settings['mwb_membership_for_woo_delete_data'] ) {
+if ( ! empty( $wps_membership_global_settings['wps_membership_for_woo_delete_data'] ) && 'on' === $wps_membership_global_settings['wps_membership_for_woo_delete_data'] ) {
 
 	// Deleting membership default page at plugin unistall.
-	$mwb_membership_default_page = get_option( 'mwb_membership_default_plans_page' );
+	$wps_membership_default_page = get_option( 'wps_membership_default_plans_page' );
 
-	if ( ! empty( $mwb_membership_default_page ) ) {
+	if ( ! empty( $wps_membership_default_page ) ) {
 
-			wp_delete_post( $mwb_membership_default_page, true );
+			wp_delete_post( $wps_membership_default_page, true );
 	}
 
 	// Deleting "member" user role at plugin uninstall.
@@ -58,48 +58,48 @@ if ( ! empty( $mwb_membership_global_settings['mwb_membership_for_woo_delete_dat
 	}
 
 	// Delete all membership plans(post) & unregister post type at plugin uninstall.
-	$mwb_membership_cpt = array(
-		'post_type'      => 'mwb_cpt_membership',
+	$wps_membership_cpt = array(
+		'post_type'      => 'wps_cpt_membership',
 		'posts_per_page' => -1,
 	);
 
-	$mwb_membership_posts = get_posts( $mwb_membership_cpt );
+	$wps_membership_posts = get_posts( $wps_membership_cpt );
 
-	if ( is_array( $mwb_membership_posts ) && ! empty( $mwb_membership_posts ) ) {
+	if ( is_array( $wps_membership_posts ) && ! empty( $wps_membership_posts ) ) {
 
-		foreach ( $mwb_membership_posts as $membership_post ) {
+		foreach ( $wps_membership_posts as $membership_post ) {
 
 			wp_delete_post( $membership_post->ID, true );
 		}
 	}
-	unregister_post_type( 'mwb_cpt_membership' );
+	unregister_post_type( 'wps_cpt_membership' );
 
 	// Delete all members (post) & unregister post type at plugin uninstall.
-	$mwb_members_cpt = array(
-		'post_type'      => 'mwb_cpt_members',
+	$wps_members_cpt = array(
+		'post_type'      => 'wps_cpt_members',
 		'posts_per_page' => -1,
 	);
 
-	$mwb_members_posts = get_posts( $mwb_members_cpt );
+	$wps_members_posts = get_posts( $wps_members_cpt );
 
-	if ( is_array( $mwb_members_posts ) && ! empty( $mwb_members_posts ) ) {
+	if ( is_array( $wps_members_posts ) && ! empty( $wps_members_posts ) ) {
 
-		foreach ( $mwb_members_posts as $members_post ) {
+		foreach ( $wps_members_posts as $members_post ) {
 
 			wp_delete_post( $members_post->ID, true );
 		}
 	}
-	unregister_post_type( 'mwb_cpt_members' );
+	unregister_post_type( 'wps_cpt_members' );
 
-	delete_option( 'mwb_membership_enable_plugin' );
-	delete_option( 'mwb_membership_for_woo_delete_data' );
-	delete_option( 'mwb_membership_plan_user_history' );
-	delete_option( 'mfw_mfw_plugin_standard_multistep_done' );
+	delete_option( 'wps_membership_enable_plugin' );
+	delete_option( 'wps_membership_for_woo_delete_data' );
+	delete_option( 'wps_membership_plan_user_history' );
+	delete_option( 'mfw_mfw_mfw_plugin_standard_multistep_done' );
 
 	// Deleting options at last during plugin uninstall.
 	$plugin_options = array(
-		'mwb_membership_default_plans_page',
-		'mwb_membership_global_options',
+		'wps_membership_default_plans_page',
+		'wps_membership_global_options',
 	);
 
 	foreach ( $plugin_options as $option ) {

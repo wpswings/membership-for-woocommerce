@@ -19,7 +19,7 @@
  * @subpackage Membership_For_Woocommerce/includes
  * @author     WP Swings <plugins@wpswings.com>
  */
-class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
+class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 	/**
 	 * Requires option.
@@ -73,7 +73,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		// Save settings in admin if you have any defined.
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'admin_footer', array( 'Mwb_Membership_Free_Shipping_Method', 'wps_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
+		add_action( 'admin_footer', array( 'wps_Membership_Free_Shipping_Method', 'wps_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
 
 		// Define user set variables.
 		$this->enabled            = ! empty( $this->get_option( 'enabled' ) ) ? $this->get_option( 'enabled' ) : 'no';
