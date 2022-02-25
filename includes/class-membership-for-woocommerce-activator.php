@@ -286,7 +286,7 @@ class Membership_For_Woocommerce_Activator {
 					$products = get_posts(
 						array(
 							'numberposts' => -1,
-							'post_status' => 'publish',
+							'post_status' => array('publish', 'draft', 'trash'),
 							'fields'      => 'ids', // return only ids.
 							'meta_key'    => $meta_keys, //phpcs:ignore
 							'post_type'   => 'product',
@@ -323,7 +323,7 @@ class Membership_For_Woocommerce_Activator {
 				$products = get_posts(
 					array(
 						'numberposts' => -1,
-						'post_status' => 'publish',
+						'post_status' => array('publish', 'draft', 'trash'),
 						'fields'      => 'ids', // return only ids.
 						'meta_key'    => $meta_keys, //phpcs:ignore
 						'post_type'   => 'mwb_cpt_membership',
@@ -360,7 +360,7 @@ class Membership_For_Woocommerce_Activator {
 				$products = get_posts(
 					array(
 						'numberposts' => -1,
-						'post_status' => 'publish',
+						'post_status' => array('publish', 'draft', 'trash'),
 						'fields'      => 'ids', // return only ids.
 						'meta_key'    => $meta_keys, //phpcs:ignore
 						'post_type'   => 'mwb_cpt_members',
