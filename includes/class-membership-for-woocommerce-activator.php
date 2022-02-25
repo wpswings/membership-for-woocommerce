@@ -65,6 +65,12 @@ class Membership_For_Woocommerce_Activator {
 				/**
 				 * Generating default membership plans page at the time of plugin activation.
 				 */
+
+				$wps_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
+				if( ! empty(	$wps_membership_default_plans_page_id)){
+					wp_delete_post( $wps_membership_default_plans_page_id );
+					delete_option(  'mwb_membership_default_plans_page' );
+				}
 				$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page' );
 				if ( empty( $wps_membership_default_plans_page_id ) ) {
 
@@ -158,6 +164,13 @@ class Membership_For_Woocommerce_Activator {
 			/**
 			 * Generating default membership plans page at the time of plugin activation.
 			 */
+
+			$wps_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
+			if( ! empty(	$wps_membership_default_plans_page_id)){
+				wp_delete_post( $wps_membership_default_plans_page_id );
+				delete_option(  'mwb_membership_default_plans_page' );
+			}
+
 			$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page' );
 		
 			if ( empty( $wps_membership_default_plans_page_id ) ) {
@@ -537,6 +550,12 @@ class Membership_For_Woocommerce_Activator {
 				wp_update_post( $args );
 			}
 		}
+	}
+
+	public static function demo(){
+echo 'jzd,z------------------';
+die;
+
 	}
 
 }
