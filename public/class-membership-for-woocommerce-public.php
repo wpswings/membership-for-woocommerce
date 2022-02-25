@@ -195,6 +195,8 @@ class Membership_For_Woocommerce_Public {
 		AND ($wp_posts.post_status = 'publish') GROUP BY $wp_posts.ID ORDER BY $wp_posts.post_date DESC";
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
+
+
 	}
 
 	/**

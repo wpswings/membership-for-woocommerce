@@ -132,6 +132,7 @@ class Membership_For_Woocommerce_Activator {
 
 						 }
 				}
+				self::mfw_upgrade_plan_obj();
 				self::mfw_upgrade_wp_postmeta();
 				self::mfw_upgrade_wp_options();
 				self::mfw_migrate_membership_post_type();
@@ -224,6 +225,7 @@ class Membership_For_Woocommerce_Activator {
 			}
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
+			self::mfw_upgrade_plan_obj();
 			self::mfw_upgrade_wp_postmeta();
 			self::mfw_upgrade_wp_options();
 			self::mfw_migrate_membership_post_type();
@@ -316,7 +318,122 @@ class Membership_For_Woocommerce_Activator {
 					}
 				}
 			}
+
+			foreach ( $post_meta_keys as $key => $meta_keys ) {
+				$products = get_posts(
+					array(
+						'numberposts' => -1,
+						'post_status' => 'publish',
+						'fields'      => 'ids', // return only ids.
+						'meta_key'    => $meta_keys, //phpcs:ignore
+						'post_type'   => 'mwb_cpt_membership',
+						'order'       => 'ASC',
+					)
+				);
+
+				if ( ! empty( $products ) && is_array( $products ) ) {
+					foreach ( $products as $k => $product_id ) {
+						$values   = get_post_meta( $product_id, $meta_keys, true );
+						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+
+						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+							continue;
+						}
+				
+						$arr_val_post = array();
+						if ( is_array( $values  )) {
+							foreach ( $values  as $key => $value){
+								$keys = str_replace( 'mwb_', 'wps_', $key );
+					
+								$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+								$arr_val_post[ $key ] = $new_key1;
+							}
+							update_post_meta( $product_id, $new_key, $arr_val_post );
+						} else {
+							update_post_meta( $product_id, $new_key, $values );
+						}
+					}
+				}
+			}
+
+			foreach ( $post_meta_keys as $key => $meta_keys ) {
+				$products = get_posts(
+					array(
+						'numberposts' => -1,
+						'post_status' => 'publish',
+						'fields'      => 'ids', // return only ids.
+						'meta_key'    => $meta_keys, //phpcs:ignore
+						'post_type'   => 'mwb_cpt_members',
+						'order'       => 'ASC',
+					)
+				);
+
+				if ( ! empty( $products ) && is_array( $products ) ) {
+					foreach ( $products as $k => $product_id ) {
+						$values   = get_post_meta( $product_id, $meta_keys, true );
+						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+
+						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+							continue;
+						}
+				
+						$arr_val_post = array();
+						if ( is_array( $values  )) {
+							foreach ( $values  as $key => $value){
+								$keys = str_replace( 'mwb_', 'wps_', $key );
+					
+								$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+								$arr_val_post[ $key ] = $new_key1;
+							}
+							update_post_meta( $product_id, $new_key, $arr_val_post );
+						} else {
+							update_post_meta( $product_id, $new_key, $values );
+						}
+					}
+				}
+			}
 		}
+
+		/**
+		 * Function for update plan object values
+		 *
+		 * @return void
+		 */
+		public static function mfw_upgrade_plan_obj() {
+
+			$products = get_posts(
+				array(
+					'numberposts' => -1,
+					'post_status' => array( 'publish', 'draft','trash' ),
+					'fields'      => 'ids', // return only ids.
+					'post_type'   => 'mwb_cpt_members',
+					'order'       => 'ASC',
+				)
+			);
+			
+			if ( ! empty( $products ) && is_array( $products ) ) {
+				foreach ( $products as $k => $product_id ) { 
+	
+					$plan_obj_array = get_post_meta( $product_id, 'plan_obj',true );
+				
+					$plan_obj_array2 = array();
+					foreach( $plan_obj_array as $key => $values ) {
+						if( ! is_array( $values ) && $key && $values) {
+							$new_key = str_replace( 'mwb_', 'wps_', $key );
+							$new_value = str_replace( 'mwb_', 'wps_', $values );
+							$plan_obj_array2[$new_key] = $new_value;
+						}
+					}
+					update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+					
+				} 
+	
+			}
+			
+
+		}
+
+
 
 		/**
 		 * Upgrade_wp_options. (use period)
