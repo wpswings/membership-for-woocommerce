@@ -659,7 +659,6 @@ class Membership_For_Woocommerce_Admin {
 				return;
 			}
 
-			
 			$wps_mfw_gen_flag     = false;
 			$mfw_genaral_settings =
 			// desc - filter for trial.
@@ -995,7 +994,6 @@ class Membership_For_Woocommerce_Admin {
 		$this->set_plan_creation_fields( get_the_ID() );
 
 		$settings_fields = $this->settings_fields;
-		//print_r($settings_fields);
 		$instance        = $this->global_class;
 
 		wc_get_template(
@@ -2523,17 +2521,17 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wps_membership_code_migrate(){
-	
-		$is_migration_done = get_option( 'is_wps_migration_done', 'not_done');
-		
-		if( 'done' != $is_migration_done ){
-			
+	public function wps_membership_code_migrate() {
+
+		$is_migration_done = get_option( 'is_wps_migration_done', 'not_done' );
+
+		if ( 'done' != $is_migration_done ) {
+
 			include_once plugin_dir_path( __FILE__ ) . '../includes/class-membership-for-woocommerce-activator.php';
-			Membership_For_Woocommerce_Activator::activate( $network_wide);
+			Membership_For_Woocommerce_Activator::activate( $network_wide );
 			update_option( 'is_wps_migration_done', 'done', true );
 		}
-		
+
 	}
 
 }

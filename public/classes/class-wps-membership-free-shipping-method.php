@@ -19,7 +19,7 @@
  * @subpackage Membership_For_Woocommerce/includes
  * @author     WP Swings <plugins@wpswings.com>
  */
-class wps_Membership_Free_Shipping_Method extends WC_Shipping_Method {
+class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 	/**
 	 * Requires option.

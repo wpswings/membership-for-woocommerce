@@ -196,7 +196,6 @@ class Membership_For_Woocommerce_Public {
 
 		$this->custom_query_data = $this->global_class->run_query( $query );
 
-
 	}
 
 	/**
@@ -2825,12 +2824,10 @@ class Membership_For_Woocommerce_Public {
 		global $wp_session;
 
 		if ( empty( $wp_session ) ) {
-// echo 'ndf------';
 			$cart_item_data['plan_price'] = WC()->session->get( 'plan_price' );
 			$cart_item_data['plan_title'] = WC()->session->get( 'plan_title' );
 			$cart_item_data['plan_id'] = WC()->session->get( 'plan_id' ); // In case of subscription.
 		} else {
-			// echo 'ttt-----------';
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 			$cart_item_data['plan_id'] = $wp_session['plan_id']; // In case of subscription.
@@ -3144,8 +3141,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_buy_now_add_to_cart() {
-	//	WC()->cart->empty_cart();
-		// select product ID.
+
 		if ( ! is_checkout() ) {
 			if ( WC()->session->__isset( 'product_id' ) ) {
 
@@ -3154,8 +3150,6 @@ class Membership_For_Woocommerce_Public {
 				WC()->cart->empty_cart();
 
 				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
-			//	print_r( WC()->session->get( 'product_id' ) );
-		
 			}
 			WC()->session->__unset( 'product_id' );
 
@@ -3217,12 +3211,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_for_woo_create_shipping_method( $methods ) {
 
-		if ( ! class_exists( 'wps_Membership_free_shipping_method' ) ) {
+		if ( ! class_exists( 'WPS_Membership_Free_Shipping_Method' ) ) {
 			/**
 			 * Custom shipping class for membership.
 			 */
 			require_once plugin_dir_path( __FILE__ ) . '/classes/class-wps-membership-free-shipping-method.php'; // Including class file.
-			new wps_Membership_Free_Shipping_Method();
+			new WPS_Membership_Free_Shipping_Method();
 		}
 	}
 
