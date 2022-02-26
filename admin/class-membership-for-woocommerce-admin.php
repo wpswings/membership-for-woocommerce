@@ -868,7 +868,6 @@ class Membership_For_Woocommerce_Admin {
 		wp_die();
 	}
 
-
 	/**
 	 * Members publish metabox callback.
 	 *

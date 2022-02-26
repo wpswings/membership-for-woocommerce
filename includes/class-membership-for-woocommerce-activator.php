@@ -194,7 +194,7 @@ class Membership_For_Woocommerce_Activator {
 					update_option( 'wps_membership_default_plans_page', $wps_membership_plans_post );
 				}
 			} else {
-				$current_post = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
+				$current_post                = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
 				$current_post['post_status'] = 'publish';
 				wp_update_post( $current_post );
 			}
@@ -308,7 +308,7 @@ class Membership_For_Woocommerce_Activator {
 
 			if ( ! empty( $products ) && is_array( $products ) ) {
 				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
+					$values  = get_post_meta( $product_id, $meta_keys, true );
 					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
 					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
@@ -320,7 +320,7 @@ class Membership_For_Woocommerce_Activator {
 						foreach ( $values  as $key => $value ) {
 							$keys = str_replace( 'mwb_', 'wps_', $key );
 
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+							$new_key1             = str_replace( 'mwb_', 'wps_', $value );
 							$arr_val_post[ $key ] = $new_key1;
 						}
 						update_post_meta( $product_id, $new_key, $arr_val_post );
@@ -345,7 +345,7 @@ class Membership_For_Woocommerce_Activator {
 
 			if ( ! empty( $products ) && is_array( $products ) ) {
 				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
+					$values  = get_post_meta( $product_id, $meta_keys, true );
 					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
 					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
@@ -357,7 +357,7 @@ class Membership_For_Woocommerce_Activator {
 						foreach ( $values  as $key => $value ) {
 							$keys = str_replace( 'mwb_', 'wps_', $key );
 
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+							$new_key1             = str_replace( 'mwb_', 'wps_', $value );
 							$arr_val_post[ $key ] = $new_key1;
 						}
 						update_post_meta( $product_id, $new_key, $arr_val_post );
@@ -382,7 +382,7 @@ class Membership_For_Woocommerce_Activator {
 
 			if ( ! empty( $products ) && is_array( $products ) ) {
 				foreach ( $products as $k => $product_id ) {
-					$values   = get_post_meta( $product_id, $meta_keys, true );
+					$values  = get_post_meta( $product_id, $meta_keys, true );
 					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
 					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
@@ -394,7 +394,7 @@ class Membership_For_Woocommerce_Activator {
 						foreach ( $values  as $key => $value ) {
 							$keys = str_replace( 'mwb_', 'wps_', $key );
 
-							$new_key1 = str_replace( 'mwb_', 'wps_', $value );
+							$new_key1             = str_replace( 'mwb_', 'wps_', $value );
 							$arr_val_post[ $key ] = $new_key1;
 						}
 						update_post_meta( $product_id, $new_key, $arr_val_post );
