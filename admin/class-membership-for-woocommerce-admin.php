@@ -38,7 +38,7 @@ class Membership_For_Woocommerce_Admin {
 	private $version;
 
 	/**
-	 * Mwb Membership Plans field.
+	 * WPS Membership Plans field.
 	 *
 	 * @var array
 	 */
@@ -73,8 +73,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-
-		if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
 
 			// multistep form css.
 			if ( ! wps_mfw_standard_check_multistep() ) {
@@ -144,7 +143,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
 
 			if ( ! wps_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
@@ -652,9 +651,15 @@ class Membership_For_Woocommerce_Admin {
 			&& ( ! empty( $_POST['wps_tabs_nonce'] )
 			&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) )
 		) {
-			$enable_tracking = ! empty( $_POST['mfw_enable_tracking'] ) ? sanitize_text_field( wp_unslash( $_POST['mfw_enable_tracking'] ) ) : '';
-			update_option( 'mfw_enable_tracking', $enable_tracking );
 
+			$screen = get_current_screen();
+			if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
+				$enable_tracking = ! empty( $_POST['mfw_enable_tracking'] ) ? sanitize_text_field( wp_unslash( $_POST['mfw_enable_tracking'] ) ) : '';
+				update_option( 'mfw_enable_tracking', $enable_tracking );
+				return;
+			}
+
+			
 			$wps_mfw_gen_flag     = false;
 			$mfw_genaral_settings =
 			// desc - filter for trial.
