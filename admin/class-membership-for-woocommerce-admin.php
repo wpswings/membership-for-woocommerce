@@ -73,7 +73,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 			// multistep form css.
 			if ( ! wps_mfw_standard_check_multistep() ) {
@@ -87,6 +87,7 @@ class Membership_For_Woocommerce_Admin {
 				);
 				return;
 			}
+
 			wp_enqueue_style( 'wps-mfw-select2-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
 
 			wp_enqueue_style( 'wps-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
@@ -131,7 +132,6 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
-
 	}
 
 	/**
@@ -143,7 +143,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id ) {
+		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id  ) {
 
 			if ( ! wps_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
@@ -203,7 +203,19 @@ class Membership_For_Woocommerce_Admin {
 			);
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 			wp_enqueue_script( 'wps-admin-min-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin.min.js', array(), time(), false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
 
+			wp_localize_script(
+				$this->plugin_name,
+				'admin_ajax_obj',
+				array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'plan-import-nonce' ),
+					'Plan'  => __( 'Plan ', 'membership-for-woocommerce' ),
+					'Plan_warning'  => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
+
+				)
+			);
 		}
 
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
