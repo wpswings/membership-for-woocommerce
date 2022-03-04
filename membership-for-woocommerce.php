@@ -523,8 +523,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			wpg_mfw_replace_mwb_to_wps_in_shortcodes();		
 		}
 			update_option( 'is_wps_migration_done', 'done', true );
-			
 		}
+	}
 
 		/**
 	 * Upgrade_wp_postmeta. (use period)
@@ -904,7 +904,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		<?php if ( 'woo_inactive' === $wps_membership_plugin_activation['message'] ) { ?>
 
 			<div class="notice notice-error is-dismissible">
-				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce-pro' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce-pro' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce-pro' ); ?></p>
+				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
 			</div>
 
 			<?php
