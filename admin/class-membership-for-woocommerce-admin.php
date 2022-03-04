@@ -2527,22 +2527,5 @@ class Membership_For_Woocommerce_Admin {
 	}//end mfw_upgrade_notice()
 
 
-	/**
-	 * Function to migrate code.
-	 *
-	 * @return void
-	 */
-	public function wps_membership_code_migrate() {
-
-		$is_migration_done = get_option( 'is_wps_migration_done', 'not_done' );
-
-		if ( 'done' != $is_migration_done ) {
-
-			include_once plugin_dir_path( __FILE__ ) . '../includes/class-membership-for-woocommerce-activator.php';
-			Membership_For_Woocommerce_Activator::activate( $network_wide );
-			update_option( 'is_wps_migration_done', 'done', true );
-		}
-
-	}
 
 }
