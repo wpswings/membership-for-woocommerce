@@ -549,7 +549,7 @@ class Membership_For_Woocommerce_Common {
 			update_post_meta( $post_id, 'wps_membership_plan_target_ids', $post_data );
 		}
 
-		update_option( 'mfw_mfw_mfw_plugin_standard_multistep_done', 'yes' );
+		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
 
 		$license_code = ! empty( $_POST['licenseCode'] ) ? sanitize_text_field( wp_unslash( $_POST['licenseCode'] ) ) : '';
 

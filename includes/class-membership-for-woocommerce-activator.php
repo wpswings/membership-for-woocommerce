@@ -548,4 +548,48 @@ class Membership_For_Woocommerce_Activator {
 		}
 	}
 
+	public static function wpg_mfw_replace_mwb_to_wps_in_shortcodes() {
+		$all_product_ids = get_posts(
+			array(
+				'post_type' => 'product',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_post_ids = get_posts(
+			array(
+				'post_type' => 'post',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_page_ids = get_posts(
+			array(
+				'post_type' => 'page',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_ids = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
+		foreach ( $all_ids as $id ) {
+			$post = get_post( $id );
+			$content = $post->post_content;
+
+			$array = explode( ' ', $content );
+
+			foreach ( $array as $key => $val ) {
+
+				$content = str_replace( 'MWB_', 'WPS_', $content );
+				$my_post = array(
+					'ID'           => $id,
+					'post_content' => $content,
+				);
+				wp_update_post( $my_post );
+			}
+		}
+	}
+
 }

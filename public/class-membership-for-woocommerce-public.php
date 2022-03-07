@@ -3528,7 +3528,7 @@ class Membership_For_Woocommerce_Public {
 
 					$member_status = get_post_meta( $membership_id, 'member_status', true );
 
-					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status ) {
+					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status || 'hold' == $member_status ) {
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 						if ( $active_plan['post_title'] == $membership_name ) {
 							$is_not_membership_applicable = true;
