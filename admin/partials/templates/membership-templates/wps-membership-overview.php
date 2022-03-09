@@ -19,12 +19,12 @@
 		$check_licence = check_membership_pro_plugin_is_active();
 		if ( $check_licence ) {
 			?>
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Membership-for-WooCommerce-PRO_Banner.png' ); ?>" alt="banner-image">
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Banner-pro.jpg' ); ?>" alt="banner-image">
 			<?php
 		}
 	} else {
 		?>
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/banner.png' ); ?>" alt="banner-image">
+		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/org-banner.jpg' ); ?>" alt="banner-image">
 		<?php
 	}
 	?>
