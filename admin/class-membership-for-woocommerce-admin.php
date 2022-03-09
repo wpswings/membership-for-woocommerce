@@ -1131,7 +1131,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_membership_for_woo_add_shipping_method( $methods ) {
 
-		$methods['wps_membership_shipping'] = 'Mwb_Membership_Free_Shipping_Method';
+		$methods['wps_membership_shipping'] = 'WPS_Membership_Free_Shipping_Method';
 
 		$methods = apply_filters( 'wps_membership_for_woo_add_shipping_method', $methods );
 
@@ -2278,12 +2278,12 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_membership_for_woo_create_shipping_method( $methods ) {
 
-		if ( ! class_exists( 'Mwb_Membership_free_shipping_method' ) ) {
+		if ( ! class_exists( 'WPS_Membership_Free_Shipping_Method' ) ) {
 			/**
 			 * Custom shipping class for membership.
 			 */
 			require_once plugin_dir_path( __FILE__ ) . '/classes/class-wps-membership-free-shipping-method.php'; // Including class file.
-			new Mwb_Membership_Free_Shipping_Method();
+			new WPS_Membership_Free_Shipping_Method();
 		}
 	}
 
