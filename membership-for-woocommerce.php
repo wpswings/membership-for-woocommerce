@@ -531,6 +531,25 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
 
+			$all_feeds = get_posts(
+				array(
+					'post_type'      => 'mwb_cpt_members',
+					'post_status'    => array( 'publish', 'draft' ),
+					'fields'         => 'ids',
+					'posts_per_page' => -1,
+				)
+			);
+	
+			if ( ! empty( $all_feeds ) && is_array( $all_feeds ) ) {
+				foreach ( $all_feeds as $key => $feed_id ) {
+					$args = array(
+						'ID'        => $feed_id,
+						'post_type' => 'wps_cpt_members',
+					);
+					wp_update_post( $args );
+				}
+			}
+
 			include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
 			Membership_For_Woocommerce_Activator::mfw_upgrade_wp_postmeta();
 			Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
