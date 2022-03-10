@@ -34,15 +34,17 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
+
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$plugins = get_plugins();
 	if( isset( $plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
 		if ( $plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2') {
-			deactivate_plugins( plugin_basename('membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) );
-			$general_settings_url = admin_url( 'admin.php?page=plugins.php' );
+			deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+			$general_settings_url = admin_url( 'admin.php?page=membership_for_woocommerce_menu' );
 			header( 'Location: ' . $general_settings_url );
+			exit();
 		}
 	}
 }
