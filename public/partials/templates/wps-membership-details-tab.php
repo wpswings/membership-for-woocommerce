@@ -112,8 +112,8 @@ if ( empty( $current_url ) ) {
 
 	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
 
-	if( ! array_key_exists( 'payment_method', $membership_billing ) ) {
-		$membership_billing['payment_method'] =  ! empty( get_post_meta( $membership_id, 'billing_details_payment', true ) ) ? get_post_meta( $membership_id, 'billing_details_payment', true ) : '';
+	if ( ! array_key_exists( 'payment_method', $membership_billing ) ) {
+		$membership_billing['payment_method'] = ! empty( get_post_meta( $membership_id, 'billing_details_payment', true ) ) ? get_post_meta( $membership_id, 'billing_details_payment', true ) : '';
 	}
 	$temp_array = array(
 		'wps_memebership_product_discount_price' => '',
@@ -127,16 +127,16 @@ if ( empty( $current_url ) ) {
 		'wps_membership_plan_target_disc_ids' => '',
 		'wps_membership_plan_target_disc_categories' => '',
 		'wps_membership_plan_target_disc_tags' => '',
-		
+
 	);
-	foreach( $temp_array as $m_keys => $m_values ) {
-		if( ! array_key_exists( $m_keys, $membership_plan ) ) {
+	foreach ( $temp_array as $m_keys => $m_values ) {
+		if ( ! array_key_exists( $m_keys, $membership_plan ) ) {
 			$membership_plan[ $m_keys ] = $m_values;
 		}
 	}
 
 	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
-	
+
 	if ( ! empty( $membership_plan ) ) {
 
 		$access_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_access_type', true );
@@ -223,7 +223,7 @@ if ( empty( $current_url ) ) {
 			</div>
 
 			<div class="woocommerce-column woocommerce-column--2 woocommerce-column--plan-details col-2">
-				<h2 class="woocommerce-column__title"><?php esc_html_e( 'Plan details', 'membership-for-woocommerce' );  ?></h2>
+				<h2 class="woocommerce-column__title"><?php esc_html_e( 'Plan details', 'membership-for-woocommerce' ); ?></h2>
 				<address>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>

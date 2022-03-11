@@ -548,6 +548,11 @@ class Membership_For_Woocommerce_Activator {
 		}
 	}
 
+	/**
+	 * Function for shortcode migration.
+	 *
+	 * @return void
+	 */
 	public static function wpg_mfw_replace_mwb_to_wps_in_shortcodes() {
 		$all_product_ids = get_posts(
 			array(
