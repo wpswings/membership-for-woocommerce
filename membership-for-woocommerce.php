@@ -567,8 +567,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 		function wps_membership_plugin_updation_notice() {
 			$plugins = get_plugins();
-			global $wp;
-			$current_url = home_url( add_query_arg( array(), $wp->request ) );
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
 				if ( ! empty( $screen->id ) && 'plugins' === $screen->id ) {
@@ -580,9 +578,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 					}	
 
 				}
-			}
-		
-			
+			}	
 			
 		}
 	}
