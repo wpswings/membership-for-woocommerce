@@ -1719,7 +1719,10 @@ class Membership_For_Woocommerce_Admin {
 			$current_assigned_user = ! empty( $_POST['wps_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_member_user'] ) ) : '';
 
 		}
-		update_post_meta( $post_id, 'wps_member_user', $current_assigned_user );
+		if( $current_assigned_user ) {
+
+			update_post_meta( $post_id, 'wps_member_user', $current_assigned_user );
+		}
 
 		$current_memberships = get_user_meta( $current_assigned_user, 'mfw_membership_id', true );
 
@@ -2188,13 +2191,13 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 		} else {
-
+			
 			update_post_meta( $member_id, 'member_status', $order_st );
 			$subscription_id = get_post_meta( $order_id, 'wps_subscription_id', true );
 			if ( 'complete' == $order_st ) {
-
+				
 				if ( ! $_user ) {
-
+					
 					if ( 'on' == $is_user_created ) {
 
 						$website = get_site_url();
@@ -2227,11 +2230,11 @@ class Membership_For_Woocommerce_Admin {
 				}
 
 				if ( ! empty( $_user ) ) {
-					$wps_membership_posts = $_user;
+					$wps_membership_posts = $_user->ID;
 				} else {
 					$wps_membership_posts = get_post_field( 'post_author', $member_id );
 				}
-
+				
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
 				update_post_meta( $member_id, 'wps_member_user', $wps_membership_posts );
 				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {

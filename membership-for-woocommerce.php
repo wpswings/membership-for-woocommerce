@@ -42,8 +42,9 @@ if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerc
 	if( isset( $plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
 		if ( $plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2') {
 			deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-			$general_settings_url = admin_url( 'admin.php?page=membership_for_woocommerce_menu' );
+			$general_settings_url = admin_url( 'plugins.php' );
 			header( 'Location: ' . $general_settings_url );
+		
 			exit();
 		}
 	}
@@ -561,6 +562,20 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 			
 		}
+
+		add_action( 'admin_notices', 'wps_membership_plugin_updation_notice' );
+
+		function wps_membership_plugin_updation_notice() {
+			$plugins = get_plugins();
+			
+			if ( $plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2') { ?>
+				<div class="notice notice-error is-dismissible">
+					<p><strong><?php esc_html_e( 'Version 2.0.2 of Membership for Woocommerce Pro ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
+				</div><?php
+					
+			}	
+			
+		}
 	}
 	
 } else {
@@ -603,6 +618,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 			<?php
 		}
+
 	}
 }
 
