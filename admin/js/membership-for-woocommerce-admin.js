@@ -423,7 +423,10 @@ $(document).ready(function() {
         .find(".wps-defaut-multiselect")
         .select2();
     }
+    
   });
+
+  
 })(jQuery);
 // License.
 

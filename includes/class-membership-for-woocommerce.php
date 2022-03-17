@@ -282,6 +282,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'wps_membership_new_modify_user_table_value' );
 		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'wps_membership_new_column_value_assign', 10, 1 );
 		$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_upgrade_notice', 10, 1 );
+		$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_migrate_db_keys_notice', 10, 1 );
+
+		
+		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
+		
 
 
 	}

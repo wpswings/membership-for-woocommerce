@@ -102,7 +102,9 @@ class Membership_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 			wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
 
+			
 		}
+		wp_enqueue_style( $this->plugin_name .'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), $this->version, 'all' );
 
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
@@ -131,7 +133,10 @@ class Membership_For_Woocommerce_Admin {
 				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
 
 			}
-		}
+			
+			}
+		
+		
 	}
 
 	/**
@@ -318,6 +323,20 @@ class Membership_For_Woocommerce_Admin {
 
 			}
 		}
+		wp_enqueue_script( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-migrator-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'cdn', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-cdn-admin.js', array( 'jquery' ), $this->version, false );
+		wp_localize_script(
+			$this->plugin_name . 'migrator',
+				'localised',
+				array(
+					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+					'nonce'            => wp_create_nonce( 'wps_membership_nonce' ),
+					'callback'         => 'wps_membership_ajax_callbacks',
+					'pending_count'    => $this->wps_membership_get_count( 'pending' ),
+					'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
+					'completed_products' => $this->wps_membership_get_count( 'done', 'products' ),
+					)
+				);
 
 	}
 
@@ -2529,6 +2548,218 @@ class Membership_For_Woocommerce_Admin {
 
 	}//end mfw_upgrade_notice()
 
+	/**
+	 * Displays notice to upgrade for membership plugin.
+	 *
+	 * @param [mixed] $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @return void
+	 */
+	public function mfw_migrate_db_keys_notice( $plugin_file ) {
 
+		?>
+		
+	<tr class="plugin-update-tr active notice-warning notice-alt">
+	<td colspan="4" class="plugin-update colspanchange">
+		<div class="notice notice-warning inline update-message notice-alt">
+			<div class='wps-notice-title wps-notice-section'>
+				<p><strong>Membership Database Update Required!</strong></p>
+			</div>
+			<div class='wps-notice-content wps-notice-section'>
+				<p>The latest update includes some substantial changes across different areas of plugin.<strong> Please Migrate Your Data </strong>by clicking on <strong>Start Import </strong>Button.</p>
+			</div>
+			<div class="treat-wrapper">
+				<button class="treat-button"><?php esc_html_e( 'Start Import!', 'membership-for-woocommerce' ) ; ?></button>
+			</div>
+		</div>
+	</td>
+</tr>
+<style>
+	.wps-notice-section > p:before {
+		content: none;
+	}
+</style>
+	
+		<?php
+
+	}//end mfw_upgrade_notice()
+
+
+	/**
+	 * Ajax callback.
+	 *
+	 * @return void
+	 */
+	public function wps_membership_ajax_callbacks() {
+		check_ajax_referer( 'wps_membership_nonce', 'nonce' );
+		$event = ! empty( $_POST['event'] ) ? sanitize_text_field( wp_unslash( $_POST['event'] ) ) : '';
+		if ( method_exists( $this, $event ) ) {
+			$data = $this->$event( $_POST );
+		} else {
+			$data = esc_html__( 'method not found', 'membership-for-woocommerce' );
+		}
+		echo wp_json_encode( $data );
+		wp_die();
+	}
+
+
+	/**
+	 * Order count.
+	 *
+	 * @param string $type type.
+	 * @param string $action action.
+	 * @since    2.1.0
+	 */
+	public function wps_membership_get_count( $type = 'all', $action = 'count' ) {
+
+		switch ( $type ) {
+			case 'pending':
+				$sql = "SELECT (`post_id`)
+				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' ";
+				break;
+
+			case 'done':
+				$sql = "SELECT (`post_id`) FROM `wp_postmeta` WHERE `meta_key` = 'wps-mfw_migrated' AND `meta_value` IS NOT NULL";
+				break;
+
+			default:
+				$sql = false;
+				break;
+		}
+
+		if ( empty( $sql ) ) {
+			return 0;
+		}
+
+		global $wpdb;
+		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+		if ( 'count' === $action ) {
+			$result = ! empty( $result ) ? count( $result ) : 0;
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Import product callback.
+	 *
+	 * @param array $product_data The $_POST data.
+	 */
+	public function wps_sfw_import_single_product( $product_data = array() ) {
+
+		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
+		// return $products;
+		if ( empty( $products ) ) {
+			return array();
+		}
+
+		// Remove this product from request.
+		foreach ( $products as $key => $product ) {
+			$product_id = ! empty( $product['post_id'] ) ? $product['post_id'] : false;
+			unset( $products[ $key ] );
+			break;
+		}
+
+		// Attempt for one product.
+		if ( ! empty( $product_id ) ) {
+
+			try {
+
+				$post_meta_keys = array(
+					'mwb_membership_plan_price',
+					'mwb_membership_plan_info',
+					'mwb_membership_plan_name_access_type',
+					'mwb_membership_plan_duration',
+					'mwb_membership_plan_duration_type',
+					'mwb_membership_subscription',
+					'mwb_membership_subscription_expiry',
+					'mwb_membership_subscription_expiry_type',
+					'mwb_membership_plan_recurring',
+					'mwb_membership_plan_access_type',
+					'mwb_membership_plan_time_duration',
+					'mwb_membership_plan_time_duration_type',
+					'mwb_membership_plan_offer_price_type',
+					'mwb_memebership_plan_discount_price',
+					'mwb_memebership_plan_free_shipping',
+					'mwb_membership_show_notice',
+					'mwb_membership_notice_message',
+					'mwb_membership_plan_target_categories',
+					'mwb_membership_plan_target_ids',
+					'mwb_membership_plan_post_target_ids',
+					'mwb_membership_plan_target_tags',
+					'mwb_membership_plan_target_post_categories',
+					'mwb_membership_club',
+					'mwb_membership_plan_page_target_ids',
+					'mwb_membership_plan_target_disc_categories',
+					'mwb_membership_plan_target_disc_tags',
+					'mwb_membership_plan_target_disc_ids',
+					'mwb_membership_product_offer_price_type',
+					'mwb_memebership_product_discount_price',
+					'mwb_member_user',
+					'_mwb_membership_discount_',
+					'_mwb_membership_exclude',
+					'_mwb_membership_discount_product_',
+					'_mwb_membership_discount_product_price',
+					'mwb_membership_plan_hide_products',
+					'mwb_membership_plan_target_post_tags',
+				);
+		
+				$post_type = get_post_type( $product_id ); 
+				if(  'mwb_cpt_members' == $post_type ) {
+					$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
+
+					$plan_obj_array2 = array();
+					if( ! empty( $plan_obj_array ) ) {
+
+						foreach ( $plan_obj_array as $key => $values ) {
+							if ( ! is_array( $values ) && $key && $values ) {
+								$new_key = str_replace( 'mwb_', 'wps_', $key );
+								$new_value = str_replace( 'mwb_', 'wps_', $values );
+								$plan_obj_array2[ $new_key ] = $new_value;
+							}
+						}
+						update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+					}
+
+					$args = array(
+						'ID'        => $product_id,
+						'post_type' => 'wps_cpt_members',
+					);
+					wp_update_post( $args );
+
+				}
+
+
+				
+				foreach ( $post_meta_keys as $key => $meta_keys ) { 
+					$values  = get_post_meta( $product_id, $meta_keys, true );
+					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+
+					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+						continue;
+					}
+
+					$arr_val_post = array();
+					if ( is_array( $values ) ) {
+						foreach ( $values  as $key => $value ) {
+							$keys = str_replace( 'mwb_', 'wps_', $key );
+
+							$new_key1             = str_replace( 'mwb_', 'wps_', $value );
+							$arr_val_post[ $key ] = $new_key1;
+						}
+						update_post_meta( $product_id, $new_key, $arr_val_post );
+					} else {
+						update_post_meta( $product_id, $new_key, $values );
+					}	
+			}
+
+			update_post_meta( $product_id, 'wps-mfw_migrated', true );
+			} catch ( \Throwable $th ) {
+				wp_die( esc_html( $th->getMessage() ) );
+			}
+		}
+		return compact( 'products' );
+	}
+	
 
 }

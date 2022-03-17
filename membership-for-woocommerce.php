@@ -536,10 +536,10 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				}
 
 				include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_postmeta();
+				// Membership_For_Woocommerce_Activator::mfw_upgrade_wp_postmeta();
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				Membership_For_Woocommerce_Activator::mfw_upgrade_plan_obj();
+				// Membership_For_Woocommerce_Activator::mfw_upgrade_plan_obj();
 				Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 
 				update_option( 'is_wps_migration_done', 'done', true );
