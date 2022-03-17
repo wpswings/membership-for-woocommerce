@@ -58,4 +58,25 @@ function get_member_id_from_order( $order ) {
 	return $member_id;
 }
 
+/**
+ * Function to check for plugin activation.
+ *
+ * @param string $plugin_slug is the slug of the plugin.
+ */
+function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
+	if ( empty( $plugin_slug ) ) {
+
+		return;
+	}
+
+	$active_plugins = (array) get_option( 'active_plugins', array() );
+
+	if ( is_multisite() ) {
+
+		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+	}
+
+	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
+}
+
 
