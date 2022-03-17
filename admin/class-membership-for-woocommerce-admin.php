@@ -2614,7 +2614,7 @@ class Membership_For_Woocommerce_Admin {
 		switch ( $type ) {
 			case 'pending':
 				$sql = "SELECT (`post_id`)
-				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' ";
+				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' AND `meta_value` != '' ";
 				break;
 
 
@@ -2729,28 +2729,31 @@ class Membership_For_Woocommerce_Admin {
 
 				
 				foreach ( $post_meta_keys as $key => $meta_keys ) { 
-					$values  = get_post_meta( $product_id, $meta_keys, true );
-					$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+					if ( ! empty( $product_id ) ) {
+						$values  = get_post_meta( $product_id, $meta_keys, true );
+						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
-					if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-						continue;
-					}
-
-					$arr_val_post = array();
-					if ( is_array( $values ) ) {
-						foreach ( $values  as $key => $value ) {
-							$keys = str_replace( 'mwb_', 'wps_', $key );
-
-							$new_key1             = str_replace( 'mwb_', 'wps_', $value );
-							$arr_val_post[ $key ] = $new_key1;
+						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+							continue;
 						}
-						update_post_meta( $product_id, $new_key, $arr_val_post );
-					} else {
-						update_post_meta( $product_id, $new_key, $values );
+
+						$arr_val_post = array();
+						if ( is_array( $values ) ) {
+							foreach ( $values  as $key => $value ) {
+								$keys = str_replace( 'mwb_', 'wps_', $key );
+
+								$new_key1             = str_replace( 'mwb_', 'wps_', $value );
+								$arr_val_post[ $key ] = $new_key1;
+							}
+							update_post_meta( $product_id, $new_key, $arr_val_post );
+						} else {
+							update_post_meta( $product_id, $new_key, $values );
+						}
+						delete_post_meta( $product_id, $meta_keys );
 					}	
 			}
 
-			update_post_meta( $product_id, 'wps-mfw_migrated', true );
+		
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );
 			}
