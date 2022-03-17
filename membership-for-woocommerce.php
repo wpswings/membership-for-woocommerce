@@ -37,18 +37,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
-	$mfw_plugins = get_plugins();
-	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
-		if ( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2' ) {
-			deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-			$general_settings_url = admin_url( 'plugins.php' );
-			header( 'Location: ' . $general_settings_url );
+// if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+// 	$mfw_plugins = get_plugins();
+// 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
+// 		if ( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2' ) {
+// 			deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+// 			$general_settings_url = admin_url( 'plugins.php' );
+// 			header( 'Location: ' . $general_settings_url );
 
-			exit();
-		}
-	}
-}
+// 			exit();
+// 		}
+// 	}
+// }
 
 
 /**
@@ -71,6 +71,8 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 
 	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
+
+
 
 /**
  * Checking whether the dependent plugin is active or not.
