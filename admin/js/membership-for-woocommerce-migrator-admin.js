@@ -48,7 +48,7 @@ jQuery(document).ready( function($) {
 
 	
 	const startImport = ( products ) => {
-		var event   = 'wps_sfw_import_single_product';
+		var event   = 'wps_mfw_import_single_product';
 		var request = { action, event, nonce, products };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 			products = JSON.parse( response );

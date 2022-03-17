@@ -2617,9 +2617,6 @@ class Membership_For_Woocommerce_Admin {
 				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' ";
 				break;
 
-			case 'done':
-				$sql = "SELECT (`post_id`) FROM `wp_postmeta` WHERE `meta_key` = 'wps-mfw_migrated' AND `meta_value` IS NOT NULL";
-				break;
 
 			default:
 				$sql = false;
@@ -2645,7 +2642,7 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array $product_data The $_POST data.
 	 */
-	public function wps_sfw_import_single_product( $product_data = array() ) {
+	public function wps_mfw_import_single_product( $product_data = array() ) {
 
 		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
 		// return $products;
