@@ -138,11 +138,10 @@ class Membership_For_Woocommerce_Activator {
 
 						 }
 				}
-				// self::mfw_upgrade_plan_obj();
-				// self::mfw_upgrade_wp_postmeta();
+				
 				self::mfw_upgrade_wp_options();
 				self::mfw_migrate_membership_post_type();
-				// self::mfw_migrate_members_post_type();
+				
 				self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 				restore_current_blog();
 			}
@@ -239,12 +238,11 @@ class Membership_For_Woocommerce_Activator {
 			}
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
-			// self::mfw_upgrade_plan_obj();
-			// self::mfw_upgrade_wp_postmeta();
+			
 			self::mfw_upgrade_wp_options();
 			self::mfw_migrate_membership_post_type();
 			self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
-			// self::mfw_migrate_members_post_type();
+			
 		}
 	}
 

@@ -2634,6 +2634,7 @@ class Membership_For_Woocommerce_Admin {
 			$result = ! empty( $result ) ? count( $result ) : 0;
 		}
 
+		// return apply_filters( 'wps_membership_pro_get_pro_data', $result, $type, $action  );
 		return $result;
 	}
 
@@ -2694,7 +2695,6 @@ class Membership_For_Woocommerce_Admin {
 					'mwb_membership_product_offer_price_type',
 					'mwb_memebership_product_discount_price',
 					'mwb_member_user',
-					'_mwb_membership_discount_',
 					'_mwb_membership_exclude',
 					'_mwb_membership_discount_product_',
 					'_mwb_membership_discount_product_price',
@@ -2704,30 +2704,7 @@ class Membership_For_Woocommerce_Admin {
 					'mwb_membership_plan_target_post_tags',
 				);
 		
-				// $post_type = get_post_type( $product_id ); 
-				// if(  'mwb_cpt_members' == $post_type ) {
-				// 	$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
-
-				// 	$plan_obj_array2 = array();
-				// 	if( ! empty( $plan_obj_array ) ) {
-
-				// 		foreach ( $plan_obj_array as $key => $values ) {
-				// 			if ( ! is_array( $values ) && $key && $values ) {
-				// 				$new_key = str_replace( 'mwb_', 'wps_', $key );
-				// 				$new_value = str_replace( 'mwb_', 'wps_', $values );
-				// 				$plan_obj_array2[ $new_key ] = $new_value;
-				// 			}
-				// 		}
-				// 		update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
-				// 	}
-
-				// 	$args = array(
-				// 		'ID'        => $product_id,
-				// 		'post_type' => 'wps_cpt_members',
-				// 	);
-				// 	wp_update_post( $args );
-
-				// }
+				
 
 
 				
@@ -2759,20 +2736,6 @@ class Membership_For_Woocommerce_Admin {
 								}
 							}
 							update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
-						} elseif( 'mwb_membership_plan_hide_products' == $meta_keys ) {
-
-
-
-							$value   = get_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id, true );
-							$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
-							
-							if ( ! empty( $value ) ) {
-								
-								update_post_meta( $product_id, $new_key . $product_id, $value  );
-								delete_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id );
-								
-								
-							}
 						} else {
 
 							$values  = get_post_meta( $product_id, $meta_keys, true );
@@ -2801,6 +2764,7 @@ class Membership_For_Woocommerce_Admin {
 					}	
 			}
 
+			do_action( 'wps_membership_postmeta_data_migrate_for_pro', $product_id );
 		
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );

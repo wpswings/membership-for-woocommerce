@@ -37,40 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-// $type='pending';
-// $action='count';
-
-// switch ( $type ) {
-// 	case 'pending':
-// 		$sql = "SELECT (`post_id`)
-// 		FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
-// 		break;
-
-
-// 	default:
-// 		$sql = false;
-// 		break;
-// }
-
-// if ( empty( $sql ) ) {
-// 	return 0;
-// }
-
-// global $wpdb;
-// $result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
-
-// if ( 'count' === $action ) {
-// 	$result = ! empty( $result ) ? count( $result ) : 0;
-// }
-
-// print_r($result);
-
-
-
-// die;
-
-
-
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$mfw_plugins = get_plugins();
 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
@@ -389,7 +355,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		$my_link = array(
 			'<a href="' . admin_url( 'admin.php?page=membership_for_woocommerce_menu' ) . '">' . __( 'Settings', 'membership-for-woocommerce' ) . '</a>',
 		);
-		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+		$mfw_plugins = get_plugins();
+		if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
 
 			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'membership-for-woocommerce' ) . '</a>';
 		}
@@ -572,10 +539,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				}
 
 				include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-				// Membership_For_Woocommerce_Activator::mfw_upgrade_wp_postmeta();
+				
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				// Membership_For_Woocommerce_Activator::mfw_upgrade_plan_obj();
 				Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 
 				update_option( 'is_wps_migration_done', 'done', true );
