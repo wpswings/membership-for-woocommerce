@@ -54,7 +54,7 @@ jQuery(document).ready( function($) {
 			products = JSON.parse( response );
 		}).then(
 		function( products ) {
-			orders = JSON.parse( products ).products;
+			products = JSON.parse( products ).products;
 			count = Object.keys(products).length;
 			jQuery('.order-progress-report').text( count + ' are left to import' );
 			if( ! jQuery.isEmptyObject(products) ) {

@@ -332,9 +332,9 @@ class Membership_For_Woocommerce_Admin {
 					'ajaxurl'          => admin_url( 'admin-ajax.php' ),
 					'nonce'            => wp_create_nonce( 'wps_membership_nonce' ),
 					'callback'         => 'wps_membership_ajax_callbacks',
-					'pending_count'    => $this->wps_membership_get_count( 'pending' ),
+					'pending_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
 					'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
-					'completed_products' => $this->wps_membership_get_count( 'done', 'products' ),
+					
 					)
 				);
 
@@ -2614,7 +2614,7 @@ class Membership_For_Woocommerce_Admin {
 		switch ( $type ) {
 			case 'pending':
 				$sql = "SELECT (`post_id`)
-				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' AND `meta_value` != '' ";
+				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
 				break;
 
 
@@ -2664,6 +2664,7 @@ class Membership_For_Woocommerce_Admin {
 
 				$post_meta_keys = array(
 					'mwb_membership_plan_price',
+					'plan_obj',
 					'mwb_membership_plan_info',
 					'mwb_membership_plan_name_access_type',
 					'mwb_membership_plan_duration',
@@ -2697,59 +2698,106 @@ class Membership_For_Woocommerce_Admin {
 					'_mwb_membership_exclude',
 					'_mwb_membership_discount_product_',
 					'_mwb_membership_discount_product_price',
+					'mwb_membership_plan_target_ids_search',
 					'mwb_membership_plan_hide_products',
+					'_mwb_membership_percentage',
 					'mwb_membership_plan_target_post_tags',
 				);
 		
-				$post_type = get_post_type( $product_id ); 
-				if(  'mwb_cpt_members' == $post_type ) {
-					$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
+				// $post_type = get_post_type( $product_id ); 
+				// if(  'mwb_cpt_members' == $post_type ) {
+				// 	$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
 
-					$plan_obj_array2 = array();
-					if( ! empty( $plan_obj_array ) ) {
+				// 	$plan_obj_array2 = array();
+				// 	if( ! empty( $plan_obj_array ) ) {
 
-						foreach ( $plan_obj_array as $key => $values ) {
-							if ( ! is_array( $values ) && $key && $values ) {
-								$new_key = str_replace( 'mwb_', 'wps_', $key );
-								$new_value = str_replace( 'mwb_', 'wps_', $values );
-								$plan_obj_array2[ $new_key ] = $new_value;
-							}
-						}
-						update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
-					}
+				// 		foreach ( $plan_obj_array as $key => $values ) {
+				// 			if ( ! is_array( $values ) && $key && $values ) {
+				// 				$new_key = str_replace( 'mwb_', 'wps_', $key );
+				// 				$new_value = str_replace( 'mwb_', 'wps_', $values );
+				// 				$plan_obj_array2[ $new_key ] = $new_value;
+				// 			}
+				// 		}
+				// 		update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+				// 	}
 
-					$args = array(
-						'ID'        => $product_id,
-						'post_type' => 'wps_cpt_members',
-					);
-					wp_update_post( $args );
+				// 	$args = array(
+				// 		'ID'        => $product_id,
+				// 		'post_type' => 'wps_cpt_members',
+				// 	);
+				// 	wp_update_post( $args );
 
-				}
+				// }
 
 
 				
 				foreach ( $post_meta_keys as $key => $meta_keys ) { 
 					if ( ! empty( $product_id ) ) {
-						$values  = get_post_meta( $product_id, $meta_keys, true );
-						$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
 
-						if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
-							continue;
-						}
 
-						$arr_val_post = array();
-						if ( is_array( $values ) ) {
-							foreach ( $values  as $key => $value ) {
-								$keys = str_replace( 'mwb_', 'wps_', $key );
-
-								$new_key1             = str_replace( 'mwb_', 'wps_', $value );
-								$arr_val_post[ $key ] = $new_key1;
+						if( 'mwb_member_user' == $meta_keys ){
+							$post_type_data=get_post($product_id);
+							$post_type=$post_type_data->post_type;
+							if( 'mwb_cpt_members' == $post_type ) {
+								$args = array(
+									'ID'        => $product_id,
+									'post_type' => 'wps_cpt_members',
+								);
+								wp_update_post( $args );
 							}
-							update_post_meta( $product_id, $new_key, $arr_val_post );
-						} else {
-							update_post_meta( $product_id, $new_key, $values );
 						}
-						delete_post_meta( $product_id, $meta_keys );
+
+
+						if( 'plan_obj' == $meta_keys ) {
+							$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
+							$plan_obj_array2 = array();
+							foreach ( $plan_obj_array as $key => $values ) {
+								if ( ! is_array( $values ) && $key && $values ) {
+									$new_key = str_replace( 'mwb_', 'wps_', $key );
+									$new_value = str_replace( 'mwb_', 'wps_', $values );
+									$plan_obj_array2[ $new_key ] = $new_value;
+								}
+							}
+							update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+						} elseif( 'mwb_membership_plan_hide_products' == $meta_keys ) {
+
+
+
+							$value   = get_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id, true );
+							$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+							
+							if ( ! empty( $value ) ) {
+								
+								update_post_meta( $product_id, $new_key . $product_id, $value  );
+								delete_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id );
+								
+								
+							}
+						} else {
+
+							$values  = get_post_meta( $product_id, $meta_keys, true );
+							$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+	
+							if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+								continue;
+							}
+	
+							$arr_val_post = array();
+							if ( is_array( $values ) ) {
+								foreach ( $values  as $key => $value ) {
+									$keys = str_replace( 'mwb_', 'wps_', $key );
+	
+									$new_key1             = str_replace( 'mwb_', 'wps_', $value );
+									$arr_val_post[ $key ] = $new_key1;
+								}
+								update_post_meta( $product_id, $new_key, $arr_val_post );
+							} else {
+								update_post_meta( $product_id, $new_key, $values );
+							}
+							delete_post_meta( $product_id, $meta_keys );
+						}
+
+
 					}	
 			}
 

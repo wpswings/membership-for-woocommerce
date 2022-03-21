@@ -37,6 +37,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
+// $type='pending';
+// $action='count';
+
+// switch ( $type ) {
+// 	case 'pending':
+// 		$sql = "SELECT (`post_id`)
+// 		FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
+// 		break;
+
+
+// 	default:
+// 		$sql = false;
+// 		break;
+// }
+
+// if ( empty( $sql ) ) {
+// 	return 0;
+// }
+
+// global $wpdb;
+// $result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+
+// if ( 'count' === $action ) {
+// 	$result = ! empty( $result ) ? count( $result ) : 0;
+// }
+
+// print_r($result);
+
+
+
+// die;
+
+
+
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$mfw_plugins = get_plugins();
 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
