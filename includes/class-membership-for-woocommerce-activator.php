@@ -142,7 +142,7 @@ class Membership_For_Woocommerce_Activator {
 				self::mfw_upgrade_wp_options();
 				self::mfw_migrate_membership_post_type();
 				
-				self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+				// self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 				restore_current_blog();
 			}
 
@@ -241,7 +241,7 @@ class Membership_For_Woocommerce_Activator {
 			
 			self::mfw_upgrade_wp_options();
 			self::mfw_migrate_membership_post_type();
-			self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+			// self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 			
 		}
 	}

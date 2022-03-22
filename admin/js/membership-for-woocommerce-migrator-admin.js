@@ -5,8 +5,9 @@ jQuery(document).ready( function($) {
 	const action          = localised.callback;
 	const pending_count  = localised.pending_count;
 	const pending_products = localised.pending_products;
-	const completed_products = localised.completed_products;
-	const searchHTML = '<style>input[type=number], select, numberarea{width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 6px; margin-bottom: 16px; resize: vertical;}input[type=submit]{background-color: #04AA6D; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer;}.container{border-radius: 5px; background-color: #f2f2f2; padding: 20px;}</style></head><div class="container"> <label for="ordername">Order Id</label> <input type="number" id="ordername" name="firstname" placeholder="Order ID to search.."></div>';
+	const shortcode_count  = localised.shortcode_count;
+	const shortcode_products = localised.shortcode_products;
+	
 
 	/* Close Button Click */
 	jQuery( document ).on( 'click','.treat-button',function(e){
@@ -14,7 +15,7 @@ jQuery(document).ready( function($) {
 		
 		Swal.fire({
 			icon: 'warning',
-			title: 'We Have got ' + pending_count + ' Products!',
+			title: 'We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes !',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
@@ -39,6 +40,7 @@ jQuery(document).ready( function($) {
 				});
 			
 				startImport( pending_products );
+				start_shortcode_Import( shortcode_products );
 			} else if (result.isDismissed) {
 			  Swal.fire('Import Stopped', '', 'info');
 			}
@@ -59,6 +61,27 @@ jQuery(document).ready( function($) {
 			jQuery('.order-progress-report').text( count + ' are left to import' );
 			if( ! jQuery.isEmptyObject(products) ) {
 				startImport(products);
+			} else {
+				// All orders imported!
+				location.reload();
+			}
+		}, function(error) {
+			console.error(error);
+		});
+	}
+
+	const start_shortcode_Import = ( products ) => {
+		var event   = 'wps_mfw_import_shortcode';
+		var request = { action, event, nonce, products };
+		jQuery.post( ajaxUrl , request ).done(function( response ){
+			products = JSON.parse( response );
+		}).then(
+		function( products ) {
+			products = JSON.parse( products ).products;
+			count = Object.keys(products).length;
+			jQuery('.order-progress-report').text( count + ' are left to import' );
+			if( ! jQuery.isEmptyObject(products) ) {
+				start_shortcode_Import(products);
 			} else {
 				// All orders imported!
 				location.reload();

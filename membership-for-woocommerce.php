@@ -37,6 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
+
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$mfw_plugins = get_plugins();
 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
@@ -542,7 +543,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+				// Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 
 				update_option( 'is_wps_migration_done', 'done', true );
 			}

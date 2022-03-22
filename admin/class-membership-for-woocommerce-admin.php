@@ -334,6 +334,8 @@ class Membership_For_Woocommerce_Admin {
 					'callback'         => 'wps_membership_ajax_callbacks',
 					'pending_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
 					'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
+					'shortcode_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
+					'shortcode_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
 					
 					)
 				);
@@ -2617,6 +2619,12 @@ class Membership_For_Woocommerce_Admin {
 				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
 				break;
 
+			case 'shortcode' :
+				$sql = "SELECT ( 'ID' )
+				FROM `wp_posts`
+				WHERE (  (wp_posts.post_type = 'page' OR wp_posts.post_type = 'product' OR wp_posts.post_type = 'post')
+				AND ( wp_posts.post_status = 'publish' ) ) ";
+				break;
 
 			default:
 				$sql = false;
@@ -2765,6 +2773,56 @@ class Membership_For_Woocommerce_Admin {
 			}
 
 			do_action( 'wps_membership_postmeta_data_migrate_for_pro', $product_id );
+		
+			} catch ( \Throwable $th ) {
+				wp_die( esc_html( $th->getMessage() ) );
+			}
+		}
+		return compact( 'products' );
+	}
+
+	public function wps_mfw_import_shortcode( $product_data = array() ) {
+
+
+	/**
+	 * Import product callback.
+	 *
+	 * @param array $product_data The $_POST data.
+	 */
+	public function wps_mfw_import_single_product( $product_data = array() ) {
+
+		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
+		// return $products;
+		if ( empty( $products ) ) {
+			return array();
+		}
+
+		// Remove this product from request.
+		foreach ( $products as $key => $product ) {
+			$product_id = ! empty( $product['post_id'] ) ? $product['post_id'] : false;
+			unset( $products[ $key ] );
+			break;
+		}
+
+		// Attempt for one product.
+		if ( ! empty( $product_id ) ) {
+
+			try {
+
+				$post = get_post( $product_id );
+				$content = $post->post_content;
+
+				$array = explode( ' ', $content );
+
+				foreach ( $array as $key => $val ) {
+
+					$content = str_replace( 'MWB_', 'WPS_', $content );
+					$my_post = array(
+						'ID'           => $product_id,
+						'post_content' => $content,
+					);
+					wp_update_post( $my_post );
+				}
 		
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );
