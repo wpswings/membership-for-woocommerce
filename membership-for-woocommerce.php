@@ -36,8 +36,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
+//   echo"<pre>";
 
-
+// $sql = "SELECT  ID
+// 				FROM `wp_posts`
+// 				WHERE ( wp_posts.post_type = 'page' OR wp_posts.post_type = 'post' ) AND ( wp_posts.post_content LIKE '%mwb%' OR wp_posts.post_content LIKE '%MWB%' )";
+// global $wpdb;
+// $result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+// print_r( $result ); 
+// // $sql = "SELECT (`post_id`)
+// // 				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
+// // 				$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
+// // 				print_r( $result ); die;
+// foreach ( $result as $key => $product ) {
+// 	$product_id = ! empty( $product['ID'] ) ? $product['ID'] : false;
+// 	unset( $result[ $key ] );
+// 	break;
+// }
+// print_r( $result );
+// die;
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$mfw_plugins = get_plugins();
 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
@@ -416,6 +433,10 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 
 		add_action( 'admin_init', 'wps_membership_code_migrate' );
+
+
+		
+
 		/**
 		 * Function for codebase migration.
 		 *

@@ -334,8 +334,8 @@ class Membership_For_Woocommerce_Admin {
 					'callback'         => 'wps_membership_ajax_callbacks',
 					'pending_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
 					'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
-					'shortcode_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
-					'shortcode_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
+					'shortcode_count'    => $this->wps_membership_get_count( 'shortcode', 'count' ),
+					'shortcode_products'   => $this->wps_membership_get_count( 'shortcode', 'Shortcodes' ),
 					
 					)
 				);
@@ -2620,10 +2620,9 @@ class Membership_For_Woocommerce_Admin {
 				break;
 
 			case 'shortcode' :
-				$sql = "SELECT ( 'ID' )
+				$sql = "SELECT  ID
 				FROM `wp_posts`
-				WHERE (  (wp_posts.post_type = 'page' OR wp_posts.post_type = 'product' OR wp_posts.post_type = 'post')
-				AND ( wp_posts.post_status = 'publish' ) ) ";
+				WHERE ( wp_posts.post_type = 'page' OR wp_posts.post_type = 'post' ) AND ( wp_posts.post_content LIKE '%mwb%' OR wp_posts.post_content LIKE '%MWB%' )";
 				break;
 
 			default:
@@ -2654,9 +2653,10 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_mfw_import_single_product( $product_data = array() ) {
 
 		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
+		
 		// return $products;
 		if ( empty( $products ) ) {
-			return array();
+			return compact( 'products' );
 		}
 
 		// Remove this product from request.
@@ -2781,7 +2781,7 @@ class Membership_For_Woocommerce_Admin {
 		return compact( 'products' );
 	}
 
-	public function wps_mfw_import_shortcode( $product_data = array() ) {
+	
 
 
 	/**
@@ -2789,18 +2789,23 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @param array $product_data The $_POST data.
 	 */
-	public function wps_mfw_import_single_product( $product_data = array() ) {
-
-		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
+	public function wps_mfw_import_shortcode( $product_data = array() ) {
+		
+		$Shortcodes = ! empty( $product_data['Shortcodes'] ) ? $product_data['Shortcodes'] : array();
+		
+		// $products = array_shift( $products );
+		// echo"<pre>";
+		// print_r( $products ); die;
 		// return $products;
-		if ( empty( $products ) ) {
-			return array();
+		if ( empty( $Shortcodes ) ) {
+			return compact( 'Shortcodes' );
 		}
+		
 
 		// Remove this product from request.
-		foreach ( $products as $key => $product ) {
-			$product_id = ! empty( $product['post_id'] ) ? $product['post_id'] : false;
-			unset( $products[ $key ] );
+		foreach ( $Shortcodes as $key => $product ) {
+			$product_id = ! empty( $product['ID'] ) ? $product['ID'] : false;
+			unset( $Shortcodes[ $key ] );
 			break;
 		}
 
@@ -2812,23 +2817,24 @@ class Membership_For_Woocommerce_Admin {
 				$post = get_post( $product_id );
 				$content = $post->post_content;
 
-				$array = explode( ' ', $content );
+				$content = str_replace( 'MWB_', 'WPS_', $content );
+				$content = str_replace( 'mwb_', 'wps_', $content );
+				$my_post = array(
+					'ID'           => $product_id,
+					'post_content' => $content,
+				);
+		
+				wp_update_post( $my_post );
 
-				foreach ( $array as $key => $val ) {
 
-					$content = str_replace( 'MWB_', 'WPS_', $content );
-					$my_post = array(
-						'ID'           => $product_id,
-						'post_content' => $content,
-					);
-					wp_update_post( $my_post );
-				}
+					
+				
 		
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );
 			}
 		}
-		return compact( 'products' );
+		return compact( 'Shortcodes' );
 	}
 	
 
