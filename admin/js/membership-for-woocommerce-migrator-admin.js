@@ -16,7 +16,7 @@ jQuery(document).ready( function($) {
 		
 		Swal.fire({
 			icon: 'warning',
-			title: 'We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes !',
+			title: 'To Import All the keys Please Update  Pro Plugin also if You have! We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes ! ',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
