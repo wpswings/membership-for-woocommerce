@@ -35,26 +35,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-require_once ABSPATH . 'wp-admin/includes/plugin.php';
-//   echo"<pre>";
 
-// $sql = "SELECT  ID
-// 				FROM `wp_posts`
-// 				WHERE ( wp_posts.post_type = 'page' OR wp_posts.post_type = 'post' ) AND ( wp_posts.post_content LIKE '%mwb%' OR wp_posts.post_content LIKE '%MWB%' )";
-// global $wpdb;
-// $result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
-// print_r( $result ); 
-// // $sql = "SELECT (`post_id`)
-// // 				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
-// // 				$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
-// // 				print_r( $result ); die;
-// foreach ( $result as $key => $product ) {
-// 	$product_id = ! empty( $product['ID'] ) ? $product['ID'] : false;
-// 	unset( $result[ $key ] );
-// 	break;
-// }
-// print_r( $result );
-// die;
+require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
 if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 	$mfw_plugins = get_plugins();
 	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
@@ -564,7 +547,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				// Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+				
 
 				update_option( 'is_wps_migration_done', 'done', true );
 			}

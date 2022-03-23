@@ -2615,14 +2615,18 @@ class Membership_For_Woocommerce_Admin {
 
 		switch ( $type ) {
 			case 'pending':
-				$sql = "SELECT (`post_id`)
-				FROM `wp_postmeta` WHERE `meta_key` LIKE '%mwb_member%' OR 'meta_key' LIKE '%plan_obj%' ";
+				global $wpdb;
+				$table = $wpdb->prefix . 'postmeta';
+				$sql = "SELECT DISTINCT ( `post_id` )
+				FROM $table WHERE ( (`meta_key` LIKE '%mwb_member%') OR ( `meta_key` LIKE '%plan_obj%' AND `meta_value` LIKE '%mwb%') ) ";
 				break;
 
 			case 'shortcode' :
-				$sql = "SELECT  ID
-				FROM `wp_posts`
-				WHERE ( wp_posts.post_type = 'page' OR wp_posts.post_type = 'post' ) AND ( wp_posts.post_content LIKE '%mwb%' OR wp_posts.post_content LIKE '%MWB%' )";
+				global $wpdb;
+				$table = $wpdb->prefix . 'posts';
+				$sql = "SELECT DISTINCT (`ID`)
+				FROM $table
+				WHERE ( $table.post_type = 'page' OR $table.post_type = 'post' ) AND ( $table.post_content LIKE '%mwb%' OR $table.post_content LIKE '%MWB%' )";
 				break;
 
 			default:
@@ -2736,14 +2740,20 @@ class Membership_For_Woocommerce_Admin {
 						if( 'plan_obj' == $meta_keys ) {
 							$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
 							$plan_obj_array2 = array();
-							foreach ( $plan_obj_array as $key => $values ) {
-								if ( ! is_array( $values ) && $key && $values ) {
-									$new_key = str_replace( 'mwb_', 'wps_', $key );
-									$new_value = str_replace( 'mwb_', 'wps_', $values );
-									$plan_obj_array2[ $new_key ] = $new_value;
+							if( ! empty( $plan_obj_array ) ) {
+
+								foreach ( $plan_obj_array as $key => $values ) {
+									if ( ! is_array( $values ) && $key && $values ) {
+										$new_key = str_replace( 'mwb_', 'wps_', $key );
+										$new_value = str_replace( 'mwb_', 'wps_', $values );
+										$plan_obj_array2[ $new_key ] = $new_value;
+									}
 								}
+								update_option( 'plan_obj', 'migrated' );
+								update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+								continue;
 							}
-							update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+							
 						} else {
 
 							$values  = get_post_meta( $product_id, $meta_keys, true );
@@ -2793,10 +2803,7 @@ class Membership_For_Woocommerce_Admin {
 		
 		$Shortcodes = ! empty( $product_data['Shortcodes'] ) ? $product_data['Shortcodes'] : array();
 		
-		// $products = array_shift( $products );
-		// echo"<pre>";
-		// print_r( $products ); die;
-		// return $products;
+		
 		if ( empty( $Shortcodes ) ) {
 			return compact( 'Shortcodes' );
 		}
