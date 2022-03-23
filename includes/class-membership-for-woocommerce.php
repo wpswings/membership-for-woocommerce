@@ -261,6 +261,7 @@ class Membership_For_Woocommerce {
 
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post_wps_cpt_membership', $mfw_plugin_admin, 'wps_membership_for_woo_save_fields' );
+		
 		$this->loader->add_action( 'edit_post_wps_cpt_members', $mfw_plugin_admin, 'wps_membership_save_member_fields' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'wps_membership_woo_order_status_change_custom', 10, 3 );

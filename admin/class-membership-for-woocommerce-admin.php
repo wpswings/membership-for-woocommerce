@@ -1083,7 +1083,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_time_duration'          => array( 'default' => '0' ),
 			'wps_membership_plan_time_duration_type'     => array( 'default' => 'days' ),
 			'wps_membership_plan_offer_price_type'       => array( 'default' => '%' ),
-			'wps_memebership_plan_discount_price'        => array( 'default' => '10' ),
+			'wps_memebership_plan_discount_price'        => array( 'default' => '0' ),
 			'wps_memebership_plan_free_shipping'         => array( 'default' => 'no' ),
 			'wps_membership_plan_hide_products'          => array( 'default' => 'no' ),
 			'wps_membership_show_notice'                 => array( 'default' => 'no' ),
@@ -1101,7 +1101,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
 			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
 			'wps_membership_product_offer_price_type'    => array( 'default' => '%' ),
-			'wps_memebership_product_discount_price'     => array( 'default' => '10' ),
+			'wps_memebership_product_discount_price'     => array( 'default' => '0' ),
 		);
 		$fields = apply_filters( 'get_plans_default_value', $fields );
 
@@ -2046,7 +2046,13 @@ class Membership_For_Woocommerce_Admin {
 					$offered_product = $post_data;
 				}
 				if ( 'wps_memebership_product_discount_price' == $field ) {
-					$product_discount = $post_data;
+					if( ! empty( $post_data ) ) {
+
+						$product_discount = $post_data;
+					} else {
+						$product_discount = 0;
+					}
+					
 				}
 				if ( isset( $_POST['wps_membership_plan_info'] ) ) {
 					update_post_meta( $post_id, 'wps_membership_plan_info', ! empty( map_deep( wp_unslash( $_POST['wps_membership_plan_info'] ), 'sanitize_text_field' ) ) ? map_deep( wp_unslash( $_POST['wps_membership_plan_info'] ), 'sanitize_text_field' ) : '' );
