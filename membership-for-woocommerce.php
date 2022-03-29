@@ -38,18 +38,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
-if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
-	$mfw_plugins = get_plugins();
-	if ( isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
-		if ( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0' ) {
-			deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-			$general_settings_url = admin_url( 'plugins.php' );
-			header( 'Location: ' . $general_settings_url );
 
-			exit();
-		}
-	}
-}
+
 
 
 /**
@@ -74,6 +64,69 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 }
 
 
+$old_mfw_pro_present   = false;
+$installed_plugins = get_plugins();
+
+// if ( array_key_exists( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $installed_plugins ) ) {
+// 	$pro_plugin = $installed_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'];
+// 	if ( version_compare( $pro_plugin['Version'], '2.1.1', '<' ) ) {
+// 		$old_mfw_pro_present = true;
+// 	}
+// }
+
+if ( true === $old_mfw_pro_present ) {
+
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_lite_add_updatenow_notice', 0, 3 );
+
+	/**
+	 * Add update now notice.
+	 *
+	 * @param string $v version.
+	 * @param string $f version.
+	 * @param string $d version.
+	 */
+	function wps_mfw_lite_add_updatenow_notice( $v = false, $f = false, $d = false ) {
+		?>
+			<div class="notice notice-error is-dismissible">
+				<p><?php esc_html_e( 'Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via plugins page.', 'membership-for-woocommerce' ); ?></p>
+			</div>
+		<?php
+	}
+
+	add_action( 'admin_notices', 'wps_mfw_check_and_inform_update' );
+
+	/**
+	 * Check update if pro is old.
+	 */
+	function wps_mfw_check_and_inform_update() {
+		$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'membership-for-woocommerce-pro/class-membership-for-woocommerce-pro-update.php';
+
+		// If present but not active.
+		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+			if ( file_exists( $update_file ) ) {
+				$wps_mfw_pro_license_key = get_option( 'mwb_mfwp_license_check', '' );
+				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_mfw_pro_license_key );
+				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+			}
+			require_once $update_file;
+		}
+
+		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
+			do_action( 'mwb_membership_for_woocommerce_pro_check_event' );
+			// $is_update_fetched = get_option( 'mwb_mfw_plugin_update', 'false' );
+			$plugin_transient  = get_site_transient( 'update_plugins' );
+			$update_obj        = ! empty( $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] ) ? $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] : false;
+
+			if ( ! empty( $update_obj ) ) :
+				?>
+				<div class="notice notice-error is-dismissible">
+					<p><?php esc_html_e( 'Your Memebership For Woocommerce Pro plugin update is here! Please Update it now.', 'membership-for-woocommerce' ); ?></p>
+				</div>
+				<?php
+			endif;
+		}
+	}
+}
 
 /**
  * Checking whether the dependent plugin is active or not.
