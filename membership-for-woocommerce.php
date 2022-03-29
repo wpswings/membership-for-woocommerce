@@ -67,32 +67,51 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 $old_mfw_pro_present   = false;
 $installed_plugins = get_plugins();
 
-// if ( array_key_exists( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $installed_plugins ) ) {
-// 	$pro_plugin = $installed_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'];
-// 	if ( version_compare( $pro_plugin['Version'], '2.1.1', '<' ) ) {
-// 		$old_mfw_pro_present = true;
-// 	}
-// }
+if ( array_key_exists( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $installed_plugins ) ) {
+	$pro_plugin = $installed_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'];
+	if ( version_compare( $pro_plugin['Version'], '2.1.0', '<' ) ) {
+		$old_mfw_pro_present = true;
+	}
+}
 
 if ( true === $old_mfw_pro_present ) {
 
-	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_lite_add_updatenow_notice', 0, 3 );
+	add_action( 'wps_mfw_settings_saved_notice' , 'wps_mfw_lite_add_updatenow_notice' );
 
-	/**
-	 * Add update now notice.
+	
+
+		/**
+	 * Displays notice to upgrade to membership.
 	 *
-	 * @param string $v version.
-	 * @param string $f version.
-	 * @param string $d version.
+	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param array  $plugin_data An array of plugin data.
+	 * @param string $status Status filter currently applied to the plugin list.
+	 * @return void
 	 */
-	function wps_mfw_lite_add_updatenow_notice( $v = false, $f = false, $d = false ) {
+	function wps_mfw_lite_add_updatenow_notice() {
 		?>
-			<div class="notice notice-error is-dismissible">
-				<p><?php esc_html_e( 'Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via plugins page.', 'membership-for-woocommerce' ); ?></p>
-			</div>
-		<?php
-	}
 
+		<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<div class='wps-notice-title wps-notice-section'>
+						<p><strong>IMPORTANT NOTICE:</strong></p>
+					</div>
+					<div class='wps-notice-content wps-notice-section'>
+						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via plugins page.</strong></p>
+					</div>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+
+				<?php
+
+	}//end mfw_upgrade_notice()
 	add_action( 'admin_notices', 'wps_mfw_check_and_inform_update' );
 
 	/**
