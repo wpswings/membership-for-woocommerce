@@ -39,6 +39,45 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 
+$old_mfw_pro_exists = false;
+$plug           = get_plugins();
+if ( isset( $plug['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
+	if ( version_compare( $plug['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'], '2.1.0', '<' ) ) {
+		$old_mfw_pro_exists = true;
+	}
+}
+add_action( 'after_plugin_row_membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', 'wps_mfw_old_upgrade_notice', 0, 3 );
+/**
+ * Migration to ofl pro plugin.
+ *
+ * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+ * @param array  $plugin_data An array of plugin data.
+ * @param string $status Status filter currently applied to the plugin list.
+ */
+function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
+
+		global $old_mfw_pro_exists;
+		if ( $old_mfw_pro_exists ) {
+			?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+			<td colspan="4" class="plugin-update colspanchange">
+				<div class="notice notice-error inline update-message notice-alt">
+					<p class='wps-notice-title wps-notice-section'>
+						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'membership-for-woocommerce' ); ?></strong><br>
+						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'membership-for-woocommerce' ); ?><br>
+						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'membership-for-woocommerce' ); ?>
+					</p>
+				</div>
+			</td>
+		</tr>
+		<style>
+			.wps-notice-section > p:before {
+				content: none;
+			}
+		</style>
+			<?php
+		}
+	}
 
 
 
@@ -143,6 +182,12 @@ if ( true === $old_mfw_pro_present ) {
 				</div>
 				<?php
 			endif;
+			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+				$sfw_plugins= get_plugins();
+				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
+					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+				}
+			}
 		}
 	}
 }
@@ -642,7 +687,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 						?>
 						
 						<div class="notice notice-error is-dismissible">
-							<p><strong><?php esc_html_e( 'Version 2.0.2 of Membership for Woocommerce Pro ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
+							<p><strong><?php esc_html_e( 'Version 2.1.0 of Membership for Woocommerce Pro ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
 						</div>
 						<?php
 					}
