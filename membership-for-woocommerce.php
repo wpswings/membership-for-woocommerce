@@ -731,7 +731,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 				$sfw_plugins= get_plugins();
 				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
-					
+					sleep(60);
 					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
 				}
 			}
