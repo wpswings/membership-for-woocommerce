@@ -80,6 +80,36 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 	}
 
 
+	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
+		/**
+		 * Migration to new domain notice.
+		 *
+		 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
+		 * @param array  $plugin_data An array of plugin data.
+		 * @param string $status Status filter currently applied to the plugin list.
+		 */
+		function wps_mfw_org_migrate_notice( $plugin_file, $plugin_data, $status ) {
+
+			?>
+			<tr class="plugin-update-tr active notice-warning notice-alt">
+				<td colspan="4" class="plugin-update colspanchange">
+					<div class="notice notice-error inline update-message notice-alt">
+						<p class='wps-notice-title wps-notice-section'>
+							<?php esc_html_e( 'Heads up. The latest update includes some substantial changes across different areas of the plugin. Please ', 'membership-for-woocommerce-pro' ); ?>
+							<a href="<?php echo esc_url( admin_url( 'admin.php?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ) ); ?>"><?php esc_html_e( 'Click Here', 'membership-for-woocommerce' ); ?></a>
+							<?php esc_html_e( 'to goto migration panel.', 'membership-for-woocommerce-pro' ); ?>
+						</p>
+					</div>
+				</td>
+			</tr>
+			<style>
+				.wps-notice-section > p:before {
+					content: none;
+				}
+			</style>
+			<?php
+		}
+
 
 /**
  * Function to check for plugin activation.
@@ -182,12 +212,7 @@ if ( true === $old_mfw_pro_present ) {
 				</div>
 				<?php
 			endif;
-			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
-				$sfw_plugins= get_plugins();
-				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
-					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-				}
-			}
+			
 		}
 	}
 }
@@ -697,6 +722,17 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				}
 			}
 
+		}
+		add_action( 'init', 'wps_mfw_deactivate_plugin' );
+		function wps_mfw_deactivate_plugin() {
+			
+			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+				$sfw_plugins= get_plugins();
+				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
+					sleep( 60 );
+					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+				}
+			}
 		}
 	}
 } else {
