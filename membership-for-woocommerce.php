@@ -200,8 +200,10 @@ if ( true === $old_mfw_pro_present ) {
 		}
 
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
-			do_action( 'mwb_membership_for_woocommerce_pro_check_event' );
+			// do_action( 'mwb_membership_for_woocommerce_pro_check_event' );
 			// $is_update_fetched = get_option( 'mwb_mfw_plugin_update', 'false' );
+			$wps_mfw_pro = new Membership_For_Woocommerce_Pro_Update();
+			$wps_mfw_pro->mwb_check_update();
 			$plugin_transient  = get_site_transient( 'update_plugins' );
 			$update_obj        = ! empty( $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] ) ? $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] : false;
 
@@ -729,7 +731,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 				$sfw_plugins= get_plugins();
 				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
-					sleep( 60 );
+					
 					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
 				}
 			}
