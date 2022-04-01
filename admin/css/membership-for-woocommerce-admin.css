@@ -7,6 +7,9 @@
     box-sizing: border-box;
 }
 
+a:hover ,a:focus{
+    color:inherit !important;
+}
 
 /*Appearance Section start*/
 
