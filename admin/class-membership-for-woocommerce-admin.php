@@ -2728,6 +2728,26 @@ class Membership_For_Woocommerce_Admin {
 					'mwb_membership_plan_hide_products',
 					'_mwb_membership_percentage',
 					'mwb_membership_plan_target_post_tags',
+					'mwb_membership_plan_price',
+					'plan_obj',
+					'_mwb_membership_percentage_',
+					'mwb_membership_plan_target_disc_ids',
+					'mwb_membership_plan_target_disc_categories',
+					'mwb_membership_plan_target_disc_tags',
+					'_mwb_membership_discount_',
+					'mwb_membership_exclude',
+					'mwb_membership_plan_info',
+					'mwb_memebership_product_discount_price',
+					'mwb_membership_product_offer_price_type',
+					'mwb_membership_club',
+					'mwb_membership_plan_target_ids',
+					'mwb_membership_plan_target_categories',
+					'mwb_membership_plan_target_tags',
+					'mwb_membership_plan_hide_products',
+					'_mwb_membership_discount',
+					'mwb_membership_product_offer_price_type',
+					'_mwb_membership_discount_product_',
+					'_mwb_membership_discount_product_price',
 				);
 		
 				
@@ -2791,6 +2811,78 @@ class Membership_For_Woocommerce_Admin {
 							}
 							delete_post_meta( $product_id, $meta_keys );
 						}
+
+
+
+						if( 'mwb_membership_plan_hide_products' == $meta_keys ) {
+		
+							$value   = get_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id, true );
+							$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+				
+							if ( ! empty( $value ) ) {
+				
+								update_post_meta( $product_id, 'wps_membership_plan_hide_products' . $product_id, $value  );
+								
+								
+							}
+							delete_post_meta( $product_id, 'mwb_membership_plan_hide_products' . $product_id );
+						} else if( '_mwb_membership_discount_' == $meta_keys ) {
+							$temp_array = get_post_meta( $product_id );
+							if( is_array( $temp_array ) && ! empty( $temp_array ) ) {
+								
+								foreach( $temp_array as $temp_key => $temp_value ) {
+									if( strpos($temp_key, $meta_keys ) !== false ) {
+										
+										$value   = get_post_meta( $product_id, $temp_key , true );
+										$new_key = str_replace( 'mwb_', 'wps_', $temp_key );
+										if ( ! empty( $value ) ) {
+				
+											update_post_meta( $product_id, $new_key, $value  );
+										}
+										delete_post_meta( $product_id, $temp_key );
+									}
+									
+								}
+							}
+						} else if( 'plan_obj' == $meta_keys ) {
+							$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
+							$plan_obj_array2 = array();
+							if( ! empty( $plan_obj_array ) ) {
+		
+								foreach ( $plan_obj_array as $key => $values ) {
+									if ( ! is_array( $values ) && $key && $values ) {
+										$new_key = str_replace( 'mwb_', 'wps_', $key );
+										$new_value = str_replace( 'mwb_', 'wps_', $values );
+										$plan_obj_array2[ $new_key ] = $new_value;
+									}
+								}
+								update_option( 'plan_obj', 'migrated' );
+								update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
+								continue;
+							}
+							
+						} else {
+									$values  = get_post_meta( $product_id, $meta_keys, true );
+									$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
+			
+									if ( ! empty( get_post_meta( $product_id, $new_key, true ) ) ) {
+										continue;
+									}
+			
+									$arr_val_post = array();
+									if ( is_array( $values ) ) {
+										foreach ( $values  as $key => $value ) {
+			
+											$new_key1             = str_replace( 'mwb_', 'wps_', $value );
+											$arr_val_post[ $key ] = $new_key1;
+										}
+										update_post_meta( $product_id, $new_key, $arr_val_post );
+									} else {
+										update_post_meta( $product_id, $new_key, $values );
+									}
+									delete_post_meta( $product_id, $meta_keys );
+						}
+
 
 
 					}	
