@@ -16,7 +16,7 @@ jQuery(document).ready( function($) {
 		
 		Swal.fire({
 			icon: 'warning',
-			title: 'To Import All the keys Please Update  Pro Plugin also if You have! We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes ! ',
+			title: ' We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes ! ',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
@@ -82,7 +82,7 @@ jQuery(document).ready( function($) {
 		var event   = 'wps_mfw_import_shortcode';
 		var request = { action, event, nonce, Shortcodes };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
-			console.log( response );
+			
 			posts = JSON.parse( response );
 		}).then(
 		function( Shortcodes ) {
@@ -93,8 +93,8 @@ jQuery(document).ready( function($) {
 				start_shortcode_Import(Shortcodes);
 			} else {
 				// All users imported!
-				Swal.fire({
-					title   : 'All of the Data are Migrated successfully!',
+				Swal.fire('All of the Data are Migrated successfully!', '', 'success').then(() => {
+					window.location.reload();
 				});
 			}
 		}, function(error) {
@@ -102,6 +102,6 @@ jQuery(document).ready( function($) {
 		});
 	}
 
-
-	// End of scripts.
+	
+	 
 });
