@@ -167,7 +167,7 @@ if ( true === $old_mfw_pro_present ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via plugins page.</strong></p>
+						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via </strong> <a href="<?php echo admin_url( 'plugins.php' );?>">Plugins Page.</a> </p>
 					</div>
 				</div>
 			</td>

@@ -2729,7 +2729,6 @@ class Membership_For_Woocommerce_Admin {
 					'_mwb_membership_percentage',
 					'mwb_membership_plan_target_post_tags',
 					'mwb_membership_plan_price',
-					'plan_obj',
 					'_mwb_membership_percentage_',
 					'mwb_membership_plan_target_disc_ids',
 					'mwb_membership_plan_target_disc_categories',
