@@ -2782,9 +2782,23 @@ class Membership_For_Woocommerce_Admin {
 										$plan_obj_array2[ $new_key ] = $new_value;
 									}
 								}
-								update_option( 'plan_obj', 'migrated' );
+								
 								update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
 								continue;
+							} else {
+								$sql = "SELECT `meta_value`
+									FROM `wp_postmeta`
+									WHERE (`meta_key` = 'plan_obj' ) AND `post_id` LIKE '%".$product_id."%'";
+									global $wpdb;
+									$result = $wpdb->get_results( $sql, ARRAY_A ); 
+
+
+									if( ! empty($result ) && is_array($result )){
+									$plan_data = $result[0]['meta_value'];
+									$plan_data =  str_replace( 'mwb', 'wps', $plan_data );
+
+									update_post_meta( $product_id,'plan_obj', $plan_data);
+									}
 							}
 							
 						} else {
