@@ -733,6 +733,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
 					sleep(60);
 					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+					$general_settings_url = admin_url( 'plugins.php' );
+					header( 'Location: ' . $general_settings_url );
 				}
 			}
 		}
