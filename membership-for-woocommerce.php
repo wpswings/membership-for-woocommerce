@@ -442,7 +442,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 			if ( 'product' != $screen->id ) {
 				if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
-					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '1.0.0', false );
+					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '2.1.0', false );
 
 				}
 			}
