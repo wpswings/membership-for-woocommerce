@@ -259,8 +259,6 @@ class Membership_For_Woocommerce_Activator {
 			'mwb_membership_default_plans_page' => '',
 			'mwb_membership_default_product'  => '',
 			'makewebbetter_tracker_last_send'  => '',
-			'mwb_mfwp_license_key'  => '',
-			'mwb_mfwp_license_check'  => '',
 			'mwb_membership_email_subject'  => '',
 			'mwb_membership_email_content'  => '',
 			'mwb_mfw_onboarding_data_skipped'  => '',
