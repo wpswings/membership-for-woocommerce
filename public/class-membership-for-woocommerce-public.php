@@ -2970,7 +2970,9 @@ class Membership_For_Woocommerce_Public {
 					if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-
+						if( empty( $active_plan )  && ! is_array( $active_plan ) ) {
+							return;
+						}
 						$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
 						if ( ! empty( $club_membership ) ) {
 							$existing_plan_id = array_merge( $existing_plan_id, $club_membership );
@@ -2979,7 +2981,7 @@ class Membership_For_Woocommerce_Public {
 						if ( ! empty( $active_plan['ID'] ) ) {
 							array_push( $existing_plan_id, $active_plan['ID'] );
 						}
-
+					
 						$target_ids      = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
 						$target_cat_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
 						$target_tag_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
