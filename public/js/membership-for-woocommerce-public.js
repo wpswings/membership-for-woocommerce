@@ -156,7 +156,7 @@ jQuery(document).ready(function ($) {
 
 			success: function (response) {
 
-				window.location.replace(response);
+				window.location.replace('cart');
 			}
 		});
 	});
