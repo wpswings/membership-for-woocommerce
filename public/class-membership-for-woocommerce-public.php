@@ -375,6 +375,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( $wps_membership_default_product == $product->get_id() ) {
 				$is_purchasable = true;
+				return $is_purchasable;
 			}
 		}
 		$exclude = get_post_meta( $product->get_id(), '_wps_membership_exclude', true );
@@ -2946,6 +2947,7 @@ class Membership_For_Woocommerce_Public {
 			if ( $wps_membership_default_product == $product->get_id() ) {
 
 				$is_purchasable = true;
+				return $is_purchasable;
 			}
 		}
 
