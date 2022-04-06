@@ -289,8 +289,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
 		
 
-		$this->loader->add_action( 'manage_wps_cpt_membership_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_check_active_plans', 10, 2 );
-		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_membership_for_checking_active_plans');
+		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_membership_for_check_active_plans' );
+		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_membership_for_checking_active_plans',10 );
 
 
 	}

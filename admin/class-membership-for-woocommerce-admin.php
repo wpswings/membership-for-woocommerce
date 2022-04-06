@@ -2972,18 +2972,19 @@ class Membership_For_Woocommerce_Admin {
 	 * @param int $post_id is a post is.
 	 * @return void
 	 */
-	public function wps_membership_for_check_active_plans( $column, $post_id ) {
-		switch ( $column ) {
-
-			case 'membership_view':
-				$plans = !empty( get_option( 'wps_membership_active_plan_ids' ) ) ? get_option( 'wps_membership_active_plan_ids' ) : array();
-				
-				$plans[$post_id] = $post_id;
-				update_option( 'wps_membership_active_plan_ids', $plans );
-			
-				break;
-		}
+	public function wps_membership_for_check_active_plans() {
 		
+		$all_feeds = get_posts(
+			array(
+				'post_type'      => array( 'mwb_cpt_membership', 'wps_cpt_membership' ),
+				'post_status'    => array( 'publish', 'draft' ),
+				'fields'         => 'ids',
+				'posts_per_page' => -1,
+			)
+		);
+		
+
+		update_option( 'wps_membership_active_plan_ids',$all_feeds );
 
 
 	}
