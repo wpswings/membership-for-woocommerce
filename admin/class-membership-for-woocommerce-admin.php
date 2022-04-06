@@ -2964,4 +2964,56 @@ class Membership_For_Woocommerce_Admin {
 	}
 	
 
+
+	/**
+	 * Function to check active plans.
+	 *
+	 * @param array $column is array of column.
+	 * @param int $post_id is a post is.
+	 * @return void
+	 */
+	public function wps_membership_for_check_active_plans( $column, $post_id ) {
+		switch ( $column ) {
+
+			case 'membership_view':
+				$plans = !empty( get_option( 'wps_membership_active_plan_ids' ) ) ? get_option( 'wps_membership_active_plan_ids' ) : array();
+				
+				$plans[$post_id] = $post_id;
+				update_option( 'wps_membership_active_plan_ids', $plans );
+			
+				break;
+		}
+		
+
+
+	}
+
+
+	/**
+	 * Function to update user meta.
+	 *
+	 * @return void
+	 */
+	public function wps_membership_for_checking_active_plans () {
+		$update_user_meta = get_option( 'wps_is_user_meta_done', 'not done' );
+		if( 'not done' == $update_user_meta ) {
+
+			$plans = ! empty( get_option( 'wps_membership_active_plan_ids' ) ) ? get_option( 'wps_membership_active_plan_ids' ) : array();
+			$user_id               = get_current_user_id();
+			$current_memberships   = get_user_meta( $user_id, 'mfw_membership_id', true );
+			if( ! empty( $plans ) && is_array( $plans ) ) {
+				$length = count( $current_memberships );
+				for( $i=0;$i<$length; $i++ ) {
+					if( ! in_array( $current_memberships[$i], $plans ) ) {
+						unset( $current_memberships[$i] );
+					}
+				}
+				update_user_meta( $user_id, 'mfw_membership_id', $current_memberships );
+			}
+			update_option( 'wps_is_user_meta_done', 'done' );
+		}
+
+	}
+
+
 }
