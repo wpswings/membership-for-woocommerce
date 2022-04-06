@@ -2437,7 +2437,7 @@ class Membership_For_Woocommerce_Public {
 
 					$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 					if( empty( $active_plan  ) ) {
-						return;
+						continue;
 					}
 					$plan_existing = true;
 					$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
@@ -2976,7 +2976,7 @@ class Membership_For_Woocommerce_Public {
 
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
 						if( empty( $active_plan )  && ! is_array( $active_plan ) ) {
-							return;
+							continue;
 						}
 						$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
 						if ( ! empty( $club_membership ) ) {
