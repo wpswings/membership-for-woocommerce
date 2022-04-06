@@ -102,6 +102,17 @@ jQuery(document).ready( function($) {
 		});
 	}
 
+
 	
 	 
 });
+var wps_membership_migration_success = function() {
+	
+	if ( localised.pending_count != 0 && localised.shortcode_count != 0 ) {
+		jQuery( ".treat-button" ).click();
+		jQuery( ".treat-button" ).show();
+	}else{
+		jQuery( ".treat-button" ).hide();
+		
+	}
+}

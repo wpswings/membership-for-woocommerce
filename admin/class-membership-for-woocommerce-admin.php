@@ -325,6 +325,7 @@ class Membership_For_Woocommerce_Admin {
 		}
 		wp_enqueue_script( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-migrator-admin.js', array( 'jquery' ), $this->version, false );
 		wp_enqueue_script( $this->plugin_name . 'cdn', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-cdn-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name . 'swall', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-swall-admin.js', array( 'jquery' ), $this->version, false );
 		wp_localize_script(
 			$this->plugin_name . 'migrator',
 				'localised',
@@ -452,6 +453,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @param array $menus Marketplace menus.
 	 */
 	public function mfw_admin_submenu_page( $menus = array() ) {
+				
 		$menus[] = array(
 			'name'            => __( 'Membership For WooCommerce', 'membership-for-woocommerce' ),
 			'slug'            => 'membership_for_woocommerce_menu',
@@ -2953,13 +2955,14 @@ class Membership_For_Woocommerce_Admin {
 				wp_update_post( $my_post );
 
 
-					
+			
 				
 		
 			} catch ( \Throwable $th ) {
 				wp_die( esc_html( $th->getMessage() ) );
 			}
 		}
+		update_option('wps_membership_migrated_successfully', 'yes');
 		return compact( 'Shortcodes' );
 	}
 	
