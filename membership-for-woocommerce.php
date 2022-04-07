@@ -180,7 +180,7 @@ if ( true === $old_mfw_pro_present ) {
 
 				<?php
 
-	}//end mfw_upgrade_notice()
+	}
 	add_action( 'admin_notices', 'wps_mfw_check_and_inform_update' );
 
 	/**
@@ -200,8 +200,7 @@ if ( true === $old_mfw_pro_present ) {
 		}
 
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
-			// do_action( 'mwb_membership_for_woocommerce_pro_check_event' );
-			// $is_update_fetched = get_option( 'mwb_mfw_plugin_update', 'false' );
+			
 			$wps_mfw_pro = new Membership_For_Woocommerce_Pro_Update();
 			$wps_mfw_pro->mwb_check_update();
 			$plugin_transient  = get_site_transient( 'update_plugins' );
@@ -449,43 +448,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
-	// Upgrade notice.
-	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'mfw_upgrade_notice', 0, 3 );
 
-
-	/**
-	 * Displays notice to upgrade to membership.
-	 *
-	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-	 * @param array  $plugin_data An array of plugin data.
-	 * @param string $status Status filter currently applied to the plugin list.
-	 * @return void
-	 */
-	function mfw_upgrade_notice( $plugin_file, $plugin_data, $status ) {
-		?>
-
-<tr class="plugin-update-tr active notice-warning notice-alt">
-	<td colspan="4" class="plugin-update colspanchange">
-		<div class="notice notice-success inline update-message notice-alt">
-			<div class='wps-notice-title wps-notice-section'>
-				<p><strong>IMPORTANT NOTICE:</strong></p>
-			</div>
-			<div class='wps-notice-content wps-notice-section'>
-				<p>From this update <strong>Version 2.0.3</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-				Please connect with us for all setup, support, and update related queries without hesitation.</p>
-			</div>
-		</div>
-	</td>
-</tr>
-<style>
-	.wps-notice-section > p:before {
-		content: none;
-	}
-</style>
-
-		<?php
-
-	}//end mfw_upgrade_notice()
 
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
@@ -588,7 +551,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				/**
 				 * Generating default membership plans page at the time of plugin activation.
 				 */
-
+				
 				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
 				if ( ! empty( $mwb_membership_default_plans_page_id ) ) {
 					wp_delete_post( $mwb_membership_default_plans_page_id );

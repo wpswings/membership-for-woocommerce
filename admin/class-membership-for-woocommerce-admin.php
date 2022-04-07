@@ -2533,38 +2533,7 @@ class Membership_For_Woocommerce_Admin {
 		return $val;
 	}
 
-	/**
-	 * Displays notice to upgrade for membership plugin.
-	 *
-	 * @param [mixed] $plugin_file Path to the plugin file relative to the plugins directory.
-	 * @return void
-	 */
-	public function mfw_upgrade_notice( $plugin_file ) {
 
-		?>
-		
-	<tr class="plugin-update-tr active notice-warning notice-alt">
-	<td colspan="4" class="plugin-update colspanchange">
-		<div class="notice notice-success inline update-message notice-alt">
-			<div class='wps-notice-title wps-notice-section'>
-				<p><strong>IMPORTANT NOTICE:</strong></p>
-			</div>
-			<div class='wps-notice-content wps-notice-section'>
-				<p>From this update <strong>Version 2.0.3</strong> onwards, the plugin and its support will be handled by <strong>WP Swings</strong>.</p><p><strong>WP Swings</strong> is just our improvised and rebranded version with all quality solutions and help being the same, so no worries at your end.
-				Please connect with us for all setup, support, and update related queries without hesitation.</p>
-			</div>
-		</div>
-	</td>
-</tr>
-<style>
-	.wps-notice-section > p:before {
-		content: none;
-	}
-</style>
-	
-		<?php
-
-	}//end mfw_upgrade_notice()
 
 	/**
 	 * Displays notice to upgrade for membership plugin.
@@ -2599,7 +2568,7 @@ class Membership_For_Woocommerce_Admin {
 	
 		<?php
 
-	}//end mfw_upgrade_notice()
+	}
 
 
 	/**
