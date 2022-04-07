@@ -1,4 +1,3 @@
-
 <?php
 /**
  * Provide a admin area view for the plugin
@@ -11,15 +10,16 @@
  * @package    Rewardeem_woocommerce_Points_Rewards
  * @subpackage Rewardeem_woocommerce_Points_Rewards/admin/partials
  */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
 
 $wps_success_option = get_option( 'wps_membership_migrated_successfully', 'no' );
-	if ( $wps_success_option == 'no' ) {
+if ( 'no' == $wps_success_option ) {
 
-			$wps_par_global_custom_css = 'const triggerError = () => {
+		$wps_par_global_custom_css = 'const triggerError = () => {
 			swal({
 		
 				title: "Attention Required!",
@@ -32,7 +32,7 @@ $wps_success_option = get_option( 'wps_membership_migrated_successfully', 'no' )
 			});
 		}
 		triggerError();';
-		wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
-		wp_enqueue_script( 'wps_par_incompatible_css' );
-		wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+	wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
+	wp_enqueue_script( 'wps_par_incompatible_css' );
+	wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
 }

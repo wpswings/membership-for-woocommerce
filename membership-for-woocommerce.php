@@ -22,7 +22,7 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      5.9.2
+ * Tested up to:      5.9.3
  * WC requires at least: 4.0
  * WC tested up to:   6.3.1
  *
@@ -57,15 +57,15 @@ add_action( 'after_plugin_row_membership-for-woocommerce-pro/membership-for-wooc
 function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 		global $old_mfw_pro_exists;
-		if ( $old_mfw_pro_exists ) {
-			?>
+	if ( $old_mfw_pro_exists ) {
+		?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 			<td colspan="4" class="plugin-update colspanchange">
 				<div class="notice notice-error inline update-message notice-alt">
 					<p class='wps-notice-title wps-notice-section'>
 						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'membership-for-woocommerce' ); ?></strong><br>
-						<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'membership-for-woocommerce' ); ?><br>
-						<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'membership-for-woocommerce' ); ?>
+					<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'membership-for-woocommerce' ); ?><br>
+					<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'membership-for-woocommerce' ); ?>
 					</p>
 				</div>
 			</td>
@@ -76,8 +76,8 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 			}
 		</style>
 			<?php
-		}
 	}
+}
 
 
 	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
@@ -88,16 +88,16 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 		 * @param array  $plugin_data An array of plugin data.
 		 * @param string $status Status filter currently applied to the plugin list.
 		 */
-		function wps_mfw_org_migrate_notice( $plugin_file, $plugin_data, $status ) {
+function wps_mfw_org_migrate_notice( $plugin_file, $plugin_data, $status ) {
 
-			?>
+	?>
 			<tr class="plugin-update-tr active notice-warning notice-alt">
 				<td colspan="4" class="plugin-update colspanchange">
 					<div class="notice notice-error inline update-message notice-alt">
 						<p class='wps-notice-title wps-notice-section'>
-							<?php esc_html_e( 'Heads up. The latest update includes some substantial changes across different areas of the plugin. Please ', 'membership-for-woocommerce-pro' ); ?>
+					<?php esc_html_e( 'Heads up. The latest update includes some substantial changes across different areas of the plugin. Please ', 'membership-for-woocommerce-pro' ); ?>
 							<a href="<?php echo esc_url( admin_url( 'admin.php?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ) ); ?>"><?php esc_html_e( 'Click Here', 'membership-for-woocommerce' ); ?></a>
-							<?php esc_html_e( 'to goto migration panel.', 'membership-for-woocommerce-pro' ); ?>
+					<?php esc_html_e( 'to goto migration panel.', 'membership-for-woocommerce-pro' ); ?>
 						</p>
 					</div>
 				</td>
@@ -108,7 +108,7 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 				}
 			</style>
 			<?php
-		}
+}
 
 
 /**
@@ -145,18 +145,15 @@ if ( array_key_exists( 'membership-for-woocommerce-pro/membership-for-woocommerc
 
 if ( true === $old_mfw_pro_present ) {
 
-	add_action( 'wps_mfw_settings_saved_notice' , 'wps_mfw_lite_add_updatenow_notice' );
+	add_action( 'wps_mfw_settings_saved_notice', 'wps_mfw_lite_add_updatenow_notice' );
 
-	
+
 
 		/**
-	 * Displays notice to upgrade to membership.
-	 *
-	 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-	 * @param array  $plugin_data An array of plugin data.
-	 * @param string $status Status filter currently applied to the plugin list.
-	 * @return void
-	 */
+		 * Displays notice to upgrade to membership.
+		 *
+		 * @return void
+		 */
 	function wps_mfw_lite_add_updatenow_notice() {
 		?>
 
@@ -167,7 +164,7 @@ if ( true === $old_mfw_pro_present ) {
 						<p><strong>IMPORTANT NOTICE:</strong></p>
 					</div>
 					<div class='wps-notice-content wps-notice-section'>
-						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via </strong> <a href="<?php echo admin_url( 'plugins.php' );?>">Plugins Page.</a> </p>
+						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via </strong> <a href="<?php echo wp_kses_post( admin_url( 'plugins.php' ) ); ?>">Plugins Page.</a> </p>
 					</div>
 				</div>
 			</td>
@@ -200,7 +197,7 @@ if ( true === $old_mfw_pro_present ) {
 		}
 
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
-			
+
 			$wps_mfw_pro = new Membership_For_Woocommerce_Pro_Update();
 			$wps_mfw_pro->mwb_check_update();
 			$plugin_transient  = get_site_transient( 'update_plugins' );
@@ -213,7 +210,7 @@ if ( true === $old_mfw_pro_present ) {
 				</div>
 				<?php
 			endif;
-			
+
 		}
 	}
 }
@@ -525,7 +522,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		add_action( 'admin_init', 'wps_membership_code_migrate' );
 
 
-		
+
 
 		/**
 		 * Function for codebase migration.
@@ -551,7 +548,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				/**
 				 * Generating default membership plans page at the time of plugin activation.
 				 */
-				
+
 				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
 				if ( ! empty( $mwb_membership_default_plans_page_id ) ) {
 					wp_delete_post( $mwb_membership_default_plans_page_id );
@@ -651,10 +648,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				}
 
 				include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-				
+
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				
 
 				update_option( 'is_wps_migration_done', 'done', true );
 			}
@@ -673,7 +669,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			if ( function_exists( 'get_current_screen' ) ) {
 				$screen = get_current_screen();
 				if ( ! empty( $screen->id ) && 'plugins' === $screen->id ) {
-					if( isset( $mwf_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
+					if ( isset( $mwf_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
 
 						if ( $mwf_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2' ) {
 							?>
@@ -689,12 +685,18 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 		}
 		add_action( 'init', 'wps_mfw_deactivate_plugin' );
+
+		/**
+		 * Deactivating plugin.
+		 *
+		 * @return void
+		 */
 		function wps_mfw_deactivate_plugin() {
-			
+
 			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
-				$sfw_plugins= get_plugins();
-				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0') {
-					sleep(60);
+				$sfw_plugins = get_plugins();
+				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0' ) {
+					sleep( 60 );
 					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
 					$general_settings_url = admin_url( 'plugins.php' );
 					header( 'Location: ' . $general_settings_url );
