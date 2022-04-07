@@ -1647,6 +1647,13 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $data ) ) {
 				foreach ( $data as $plan ) {
+
+			
+
+			$plan_info = get_post_meta( $plan['ID'], 'wps_membership_plan_info', true );
+
+		
+
 					$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page', '' );
 
 					if ( ! empty( $wps_membership_default_plans_page_id ) && 'publish' == get_post_status( $wps_membership_default_plans_page_id ) ) {
@@ -1668,7 +1675,18 @@ class Membership_For_Woocommerce_Public {
 						$description .= '<div class="wps_all_plans_detail_wrapper">';
 						$description .= '<h2>' . $plan['post_title'] . '</h2>';
 						$description .= '<div class="wps_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
+						$plan_desc = get_post_field( 'post_content', $plan['ID'] );
+
+						if ( ! empty( $plan_desc ) ) {
+			
+							$description .= '<div class="wps_membership_plan_content_description">' . $plan_desc . '</div>';
+						}			
+						if ( ! empty( $plan_info ) ) {
+
+							$description .= '<div class="wps_membership_plan_info">' . $plan_info . '</div>';
+						}
 						$description .= $this->get_plan_details( $plan['ID'] );
+						
 						$description .= '</div>';
 
 						$description .= '<form method="post" class="wps_membership_buy_now_btn">
