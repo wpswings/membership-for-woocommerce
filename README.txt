@@ -6,7 +6,7 @@ Requires at least: 5.0
 Tested up to: 5.9.3
 WC requires at least: 4.0.0
 WC tested up to: 6.3.1
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -30,7 +30,7 @@ It gets on directly to give you a way out of the three most customary pain point
 
 >**IMPORTANT NOTICE:**
 
->_**From this update Version 2.1.0 onwards, the plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official).**_
+>_**From this update Version 2.1.1 onwards, the plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official).**_
 
 >_**WP Swings is just our improvised and rebranded version with all quality solutions and help to be the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-contactus&utm_medium=membership-org-page&utm_campaign=contact-us) for all setup, support, and update related queries without hesitation.**_
 ***
@@ -245,7 +245,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 
 == Changelog ==
-= 2.1.0 - RELEASED ON 8 April 2022 =
+= 2.1.1 - RELEASED ON 8 April 2022 =
 
 * New: Some substantial changes across different areas of the plugin.
 * New: Minor Bug Fixes
@@ -303,7 +303,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.1.0 - RELEASED ON 8 April 2022 =
+= 2.1.1 - RELEASED ON 8 April 2022 =
 
 * New: Some substantial changes across different areas of the plugin.
 * New: Minor Bug Fixes
