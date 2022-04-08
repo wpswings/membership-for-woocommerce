@@ -85,12 +85,12 @@ jQuery(document).ready( function($) {
 			
 			posts = JSON.parse( response );
 		}).then(
-		function( Shortcodes ) {
-			Shortcodes = JSON.parse( Shortcodes ).Shortcodes;
-			count = Object.keys(Shortcodes).length;
+		function( shortcodes ) {
+			shortcodes = JSON.parse( shortcodes ).shortcodes;
+			count = Object.keys(shortcodes).length;
 			jQuery('.order-progress-report').text( count + ' are left to import' );
-			if( ! jQuery.isEmptyObject(Shortcodes) ) {
-				start_shortcode_Import(Shortcodes);
+			if( ! jQuery.isEmptyObject(shortcodes) ) {
+				start_shortcode_Import(shortcodes);
 			} else {
 				// All users imported!
 				Swal.fire('All of the Data are Migrated successfully!', '', 'success').then(() => {

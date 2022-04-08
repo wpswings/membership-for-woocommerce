@@ -333,7 +333,7 @@ class Membership_For_Woocommerce_Admin {
 				'pending_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
 				'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
 				'shortcode_count'    => $this->wps_membership_get_count( 'shortcode', 'count' ),
-				'shortcode_products'   => $this->wps_membership_get_count( 'shortcode', 'Shortcodes' ),
+				'shortcode_products'   => $this->wps_membership_get_count( 'shortcode', 'shortcodes' ),
 
 			)
 		);
@@ -2869,10 +2869,10 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_mfw_import_shortcode( $product_data = array() ) {
 
-		$shortcodes = ! empty( $product_data['Shortcodes'] ) ? $product_data['Shortcodes'] : array();
+		$shortcodes = ! empty( $product_data['shortcodes'] ) ? $product_data['shortcodes'] : array();
 
 		if ( empty( $shortcodes ) ) {
-			return compact( 'Shortcodes' );
+			return compact( 'shortcodes' );
 		}
 
 		// Remove this product from request.
