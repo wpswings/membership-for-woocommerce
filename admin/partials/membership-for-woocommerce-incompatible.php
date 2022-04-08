@@ -15,24 +15,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
+if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-$wps_success_option = get_option( 'wps_membership_migrated_successfully', 'no' );
-if ( 'no' == $wps_success_option ) {
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.0');
+	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count'  );
+	$wps_count_users   = $wps_mfw_get_count->wps_membership_get_count( 'shortcode', 'count' ) ; 
 
-		$wps_par_global_custom_css = 'const triggerError = () => {
-			swal({
+	
+
+	if ( $wps_pending_par != '0' || $wps_count_users != '0' ) {
 		
-				title: "Attention Required!",
-				text: "Please Migrate Your Database Keys First By Clicking On Below Button , Then You can Have Access To Your Dashboard Button",
-				icon: "error",
-				button: "Click To Import",
-				closeOnClickOutside: false,
-			}).then(function() {
-				wps_membership_migration_success();
-			});
-		}
-		triggerError();';
-	wp_register_script( 'wps_par_incompatible_css', false, array(), '1.2.8', 'all' );
-	wp_enqueue_script( 'wps_par_incompatible_css' );
-	wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+
+				$wps_par_global_custom_css = 'const triggerError = () => {
+					swal({
+				
+						title: "Attention Required!",
+						text: "Please Migrate Your Database Keys First By Clicking On Below Button , Then You can Have Access To Your Dashboard Button",
+						icon: "error",
+						button: "Click To Import",
+						closeOnClickOutside: false,
+					}).then(function() {
+						wps_membership_migration_success();
+					});
+				}
+				triggerError();';
+			wp_register_script( 'wps_par_incompatible_css', false, array(), '2.1.0', 'all' );
+			wp_enqueue_script( 'wps_par_incompatible_css' );
+			wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
+		
+	}
 }
