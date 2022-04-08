@@ -23,7 +23,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
 	
 
-	if ( $wps_pending_par != '0' || $wps_count_users != '0' ) {
+	if ( $wps_pending_par != '0' && $wps_count_users != '0' ) {
 		
 
 				$wps_par_global_custom_css = 'const triggerError = () => {
