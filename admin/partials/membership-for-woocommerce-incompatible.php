@@ -39,7 +39,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 					});
 				}
 				triggerError();';
-			wp_register_script( 'wps_par_incompatible_css', false, array(), '2.1.0', 'all' );
+			wp_register_script( 'wps_par_incompatible_css', false, array(), '2.1.1', 'all' );
 			wp_enqueue_script( 'wps_par_incompatible_css' );
 			wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
 		
