@@ -78,9 +78,9 @@ jQuery(document).ready( function($) {
 		});
 	}
 
-	const start_shortcode_Import = ( Shortcodes ) => {
+	const start_shortcode_Import = ( shortcodes ) => {
 		var event   = 'wps_mfw_import_shortcode';
-		var request = { action, event, nonce, Shortcodes };
+		var request = { action, event, nonce, shortcodes };
 		jQuery.post( ajaxUrl , request ).done(function( response ){
 			
 			posts = JSON.parse( response );
