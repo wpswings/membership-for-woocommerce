@@ -187,14 +187,14 @@ if ( true === $old_mfw_pro_present ) {
 		$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'membership-for-woocommerce-pro/class-membership-for-woocommerce-pro-update.php';
 
 		// If present but not active.
-		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
+		
 			if ( file_exists( $update_file ) ) {
 				$wps_mfw_pro_license_key = get_option( 'mwb_mfwp_license_check', '' );
 				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_mfw_pro_license_key );
 				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
 			}
 			require_once $update_file;
-		}
+		
 
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
 
