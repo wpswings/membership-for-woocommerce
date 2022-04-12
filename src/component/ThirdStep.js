@@ -14,7 +14,7 @@ const ThirdStep = (props) => {
   
     return ( 
     <>
-    <h3 className="mwb-title">{__( 'Setting', 'membership-for-woocommerce' ) }</h3>
+    <h3 className="wps-title">{__( 'Setting', 'membership-for-woocommerce' ) }</h3>
     <FormGroup>
         <FormControlLabel
             control={

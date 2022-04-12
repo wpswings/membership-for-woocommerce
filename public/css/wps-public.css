@@ -28,7 +28,7 @@
 /* Sidebar CSS */
 /* About page css */
 /* Home Page CSS */
-.mwb_mfw_buy_button form {
+.wps_mfw_buy_button form {
   margin: 0;
 }
 
@@ -85,7 +85,7 @@
   width: 100px;
 }
 
-.mwb-mfwp__available--title {
+.wps-mfwp__available--title {
   color: #1a1a1a;
   font-weight: 600;
   margin-top: 10px;
@@ -93,7 +93,7 @@
   position: relative;
 }
 
-.mwb-mfwp__available--title:after {
+.wps-mfwp__available--title:after {
   background-color: #1a1a1a;
   border-radius: 50px;
   bottom: 0;
@@ -111,11 +111,11 @@
 }
 
 /*issue #70*/
-.mwb_membership_plan_content_price {
+.wps_membership_plan_content_price {
   padding-bottom: 0;
 }
 
-.mwb_membership_plan_content_desc img {
+.wps_membership_plan_content_desc img {
   -o-object-fit: cover;
      object-fit: cover;
   max-width: 100%;
@@ -123,11 +123,11 @@
   margin-bottom: 10px;
 }
 
-.mwb_membership_buy_now_btn .mwb_membership_buynow:hover, .mwb_membership_no_thanks.button.alt.thickbox:hover {
+.wps_membership_buy_now_btn .wps_membership_buynow:hover, .wps_membership_no_thanks.button.alt.thickbox:hover {
   border: 2px solid #f37e21 !important;
 }
 
-.mwb_membership_buy_now_btn .mwb_membership_buynow, .button.alt.mwb_membership_no_thanks {
+.wps_membership_buy_now_btn .wps_membership_buynow, .button.alt.wps_membership_no_thanks {
   border: 2px solid transparent !important;
   margin: 10px;
   padding: 0;
@@ -141,7 +141,7 @@
 .available_member .button.alt.mfw-membership {
   width: unset;
 }
-.mwb_membership_plan_content_description img {
+.wps_membership_plan_content_description img {
   margin: 20px auto;
   max-width: 200px;
   height: auto;

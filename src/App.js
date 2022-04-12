@@ -71,8 +71,8 @@ function App(props) {
         setLoading(true);
         const user = {
             ...state,
-            'action': 'mwb_membership_save_settings_filter',
-            nonce: frontend_ajax_object.mwb_standard_nonce,   // pass the nonce here
+            'action': 'wps_membership_save_settings_filter',
+            nonce: frontend_ajax_object.wps_standard_nonce,   // pass the nonce here
         };
         
         axios.post(frontend_ajax_object.ajaxurl, qs.stringify(user) )
@@ -110,18 +110,18 @@ function App(props) {
             formFields:state,
             changeHandler:  onFormFieldHandler, 
         }}>
-            <div className="mwbMsfWrapper">
+            <div className="wpsMsfWrapper">
                 <Stepper activeStep={activeStep} steps={steps}/>
-                <div className="mwbHeadingWrap">
+                <div className="wpsHeadingWrap">
                     <h2>{__( 'Welcome to WP Swings', 'membership-for-woocommerce' ) }</h2>
                     <p>{__('Complete The steps to get started','membership-for-woocommerce') }</p>
                 </div>
                 <Container maxWidth="sm">
-                    <form className="mwbMsf">
+                    <form className="wpsMsf">
                         <Typography className={classes.instructions}>
-                            {(loading) ? <CircularProgress className="mwbCircularProgress" /> :getStepContent(activeStep)}
+                            {(loading) ? <CircularProgress className="wpsCircularProgress" /> :getStepContent(activeStep)}
                         </Typography>
-                        <div className="mwbButtonWrap">
+                        <div className="wpsButtonWrap">
                             {activeStep !== steps.length && <Button
                                 disabled={activeStep === 0}
                                 onClick={handleBack}

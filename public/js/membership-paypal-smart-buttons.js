@@ -13,7 +13,7 @@ jQuery( document ).ready( function( $ ) {
     var country;
 
     // Getting billing form details here.
-    $('.mwb_mfw_btn-next-b').on('click', function(e){
+    $('.wps_mfw_btn-next-b').on('click', function(e){
         firstname = $( '#membership_billing_first_name' ).val();
         lastname  = $( '#membership_billing_last_name' ).val();
         ad_line_1 = $( '#membership_billing_address_1' ).val();
@@ -100,7 +100,7 @@ jQuery( document ).ready( function( $ ) {
                 type : 'POST',
                 url  : paypal_sb_obj.ajax_url,
                 data : {
-                    action : 'mwb_membership_save_transaction',
+                    action : 'wps_membership_save_transaction',
                     nonce : paypal_sb_obj.nonce,
                     details : tr_details,
                 },
@@ -116,7 +116,7 @@ jQuery( document ).ready( function( $ ) {
             jQuery( '#paypal-button-container' ).css( 'display', 'none' );
             jQuery( '#membership_proceed_payment' ).css( 'display', 'block' );
             jQuery( '#membership_proceed_payment' ).val( 'Proceed' );
-            jQuery( '#mwb_membership_buy_now_modal_form' ).append( '<div id="mwb_tnx_user"><input type="hidden" name="mwb_tnx_user_id" id="mwb_tnx_user_id" value="' + response.user_id + '"/></div>' );
+            jQuery( '#wps_membership_buy_now_modal_form' ).append( '<div id="wps_tnx_user"><input type="hidden" name="wps_tnx_user_id" id="wps_tnx_user_id" value="' + response.user_id + '"/></div>' );
             
         }
             

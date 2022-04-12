@@ -4,7 +4,7 @@ jQuery(document).ready(function() {
 
     jQuery('#mfw-datatable').DataTable({
         stateSave: true,
-        dom: '<"mwb-dt-buttons"fB>tr<"bottom"lip>',
+        dom: '<"wps-dt-buttons"fB>tr<"bottom"lip>',
         "ordering": true, // enable ordering
    
         

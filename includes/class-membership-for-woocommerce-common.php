@@ -13,27 +13,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists( 'mwb_membership_check_product_is_membership' ) ) {
+if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 	/**
 	 * This function is used to check susbcripton product.
 	 *
-	 * @name mwb_sfw_check_product_is_subscription
+	 * @name wps_sfw_check_product_is_subscription
 	 * @param Object $product product.
 	 * @since 1.0.0
 	 */
-	function mwb_membership_check_product_is_membership( $product ) {
+	function wps_membership_check_product_is_membership( $product ) {
 
-		$mwb_is_membership = false;
+		$wps_is_membership = false;
 		if ( is_object( $product ) ) {
 			$product_id = $product->get_id();
-			$mwb_membership_default_product = get_option( 'mwb_membership_default_product', '' );
+			$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 
-			if ( $mwb_membership_default_product == $product_id ) {
-				$mwb_is_membership = true;
+			if ( $wps_membership_default_product == $product_id ) {
+				$wps_is_membership = true;
 			}
 		}
 
-		return apply_filters( 'mwb_membership_check_membership_product_type', $mwb_is_membership, $product );
+		return apply_filters( 'wps_membership_check_membership_product_type', $wps_is_membership, $product );
 	}
 }
 
@@ -56,6 +56,27 @@ function get_member_id_from_order( $order ) {
 		}
 	}
 	return $member_id;
+}
+
+/**
+ * Function to check for plugin activation.
+ *
+ * @param string $plugin_slug is the slug of the plugin.
+ */
+function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
+	if ( empty( $plugin_slug ) ) {
+
+		return;
+	}
+
+	$active_plugins = (array) get_option( 'active_plugins', array() );
+
+	if ( is_multisite() ) {
+
+		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
+	}
+
+	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
 
 

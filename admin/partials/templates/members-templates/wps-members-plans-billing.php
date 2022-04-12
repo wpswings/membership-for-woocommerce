@@ -49,7 +49,7 @@ $payment_gateways = $wc_gateways->get_available_payment_gateways();
 
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
-$current_user_assigned = get_post_meta( $post->ID, 'mwb_member_user', true );
+$current_user_assigned = get_post_meta( $post->ID, 'wps_member_user', true );
 ?>
 
 <!-- Members billing metabox start -->
@@ -57,9 +57,9 @@ $current_user_assigned = get_post_meta( $post->ID, 'mwb_member_user', true );
 
 	<h1><?php echo sprintf( 'Member #%u details', esc_html( $post->ID ) ); ?></h1>
 
-	<span class="mwb_member_notice">
+	<span class="wps_member_notice">
 	<?php
-	if ( mwb_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+	if ( wps_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
 
 		esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
 	}
@@ -75,10 +75,10 @@ $current_user_assigned = get_post_meta( $post->ID, 'mwb_member_user', true );
 			<p class="form-field membership-customer">
 				<label for="member-user">
 					<?php esc_html_e( 'Customer:', 'membership-for-woocommerce' ); ?>
-					<a href="<?php echo esc_url( admin_url( 'edit.php?post_status=all&post_type=mwb_cpt_members&post_author=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'View other memberships', 'membership-for-woocommerce' ); ?></a>
+					<a href="<?php echo esc_url( admin_url( 'edit.php?post_status=all&post_type=wps_cpt_members&post_author=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'View other memberships', 'membership-for-woocommerce' ); ?></a>
 					<a href="<?php echo esc_url( admin_url( 'user-edit.php?user_id=' . $post->post_author ) ); ?>" target="_blank"><?php esc_html_e( 'Profile', 'membership-for-woocommerce' ); ?></a>
 				</label><br>
-				<select name="mwb_member_user" id="mwb_member_user">
+				<select name="wps_member_user" id="wps_member_user">
 					<?php
 
 

@@ -70,16 +70,16 @@ if ( empty( $current_url ) ) {
 
 								<?php elseif ( 'members-total' === $column_id ) : ?>
 									<?php
-									if ( ! empty( $membership_plan['mwb_membership_plan_price'] ) ) {
+									if ( ! empty( $membership_plan['wps_membership_plan_price'] ) ) {
 										/* translators: 1: formatted order total 2: total order items */
-										echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['mwb_membership_plan_price'] ) );
+										echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) );
 									}
 									?>
 
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'mwb-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
 
 									?>
 								<?php endif; ?>
@@ -112,17 +112,38 @@ if ( empty( $current_url ) ) {
 
 	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
 
+	if ( ! array_key_exists( 'payment_method', $membership_billing ) ) {
+		$membership_billing['payment_method'] = ! empty( get_post_meta( $membership_id, 'billing_details_payment', true ) ) ? get_post_meta( $membership_id, 'billing_details_payment', true ) : '';
+	}
+	$temp_array = array(
+		'wps_memebership_product_discount_price' => '',
+		'wps_membership_subscription' => '',
+		'wps_membership_subscription_expiry' => '',
+		'wps_membership_plan_target_tags' => '',
+		'wps_membership_plan_post_target_ids' => '',
+		'wps_membership_plan_target_post_categories' => '',
+		'wps_membership_plan_target_post_tags' => '',
+		'wps_membership_plan_page_target_ids' => '',
+		'wps_membership_plan_target_disc_ids' => '',
+		'wps_membership_plan_target_disc_categories' => '',
+		'wps_membership_plan_target_disc_tags' => '',
+
+	);
+	foreach ( $temp_array as $m_keys => $m_values ) {
+		if ( ! array_key_exists( $m_keys, $membership_plan ) ) {
+			$membership_plan[ $m_keys ] = $m_values;
+		}
+	}
 
 	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
 
-
 	if ( ! empty( $membership_plan ) ) {
 
-		$access_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_access_type', true );
+		$access_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_access_type', true );
 
 		if ( 'delay_type' == $access_type ) {
-			$time_duration      = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration', true );
-			$time_duration_type = get_post_meta( $membership_plan['ID'], 'mwb_membership_plan_time_duration_type', true );
+			$time_duration      = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
+			$time_duration_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
 
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
@@ -164,7 +185,7 @@ if ( empty( $current_url ) ) {
 					<td class="woocommerce-table__product-name product-name">
 						<a href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </a> <strong class="product-quantity">&times;&nbsp;<?php esc_html( 1 ); ?></strong>	</td>
 					<td class="woocommerce-table__product-total product-total">
-						<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['mwb_membership_plan_price'] ) ); ?></span></td>
+						<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
 				</tr>
 			</tbody>
 
@@ -176,7 +197,7 @@ if ( empty( $current_url ) ) {
 				</tr>
 				<tr>
 					<th scope="row"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
-					<td><span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['mwb_membership_plan_price'] ) ); ?></span></td>
+					<td><span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
 				</tr>
 			</tfoot>
 		</table>
@@ -206,11 +227,11 @@ if ( empty( $current_url ) ) {
 				<address>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
 					<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
-					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_plan_discount_price'] ), esc_html( $membership_plan['mwb_membership_plan_offer_price_type'] ) ); ?></br>
-					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_memebership_product_discount_price'] ), esc_html( $membership_plan['mwb_membership_product_offer_price_type'] ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html__( 'Subscription Membership: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_membership_subscription'] ) ); ?></br>
-					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Subscription Membership Duration: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['mwb_membership_subscription_expiry'] ), esc_html( $membership_plan['mwb_membership_subscription_expiry_type'] . 's' ) ); ?></br>
-					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['mwb_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
+					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_plan_discount_price'] ), esc_html( $membership_plan['wps_membership_plan_offer_price_type'] ) ); ?></br>
+					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_product_discount_price'] ), esc_html( $membership_plan['wps_membership_product_offer_price_type'] ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Subscription Membership: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription'] ) ); ?></br>
+					<?php echo sprintf( ' %s %u %s ', esc_html__( 'Subscription Membership Duration: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription_expiry'] ), esc_html( $membership_plan['wps_membership_subscription_expiry_type'] . 's' ) ); ?></br>
+					<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['wps_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
 					</address>
 	</div>
 					<table>
@@ -221,7 +242,7 @@ if ( empty( $current_url ) ) {
 					<td>
 						<?php
 
-						$club_membership = get_post_meta( $membership_plan['ID'], 'mwb_membership_club', true );
+						$club_membership = get_post_meta( $membership_plan['ID'], 'wps_membership_club', true );
 
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
@@ -238,7 +259,7 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-								$prod_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_ids'] );
+								$prod_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_ids'] );
 
 							if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 								foreach ( $prod_ids as $ids ) {
@@ -256,7 +277,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_categories'] );
+							$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_categories'] );
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
@@ -278,7 +299,7 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_tags'] );
+							$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_tags'] );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
@@ -298,7 +319,7 @@ if ( empty( $current_url ) ) {
 					
 						<td>
 							<?php
-							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_post_target_ids'] );
+							$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_post_target_ids'] );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -315,7 +336,7 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_categories'] );
+							$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_categories'] );
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 								foreach ( $cat_ids as $ids ) {
@@ -332,7 +353,7 @@ if ( empty( $current_url ) ) {
 						<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 						<td>
 							<?php
-							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_post_tags'] );
+							$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_tags'] );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {
@@ -352,7 +373,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_page_target_ids'] );
+							$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_page_target_ids'] );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -372,7 +393,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$post_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_ids'] );
+							$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_ids'] );
 
 							if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 								foreach ( $post_ids as $ids ) {
@@ -392,7 +413,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$cat_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_categories'] );
+							$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_categories'] );
 
 
 							if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
@@ -412,7 +433,7 @@ if ( empty( $current_url ) ) {
 						<td>
 							<?php
 
-							$tag_ids = maybe_unserialize( $membership_plan['mwb_membership_plan_target_disc_tags'] );
+							$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_tags'] );
 
 							if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 								foreach ( $tag_ids as $ids ) {

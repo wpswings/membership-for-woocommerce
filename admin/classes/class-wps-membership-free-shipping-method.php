@@ -19,7 +19,7 @@
  * @subpackage Membership_For_Woocommerce/includes
  * @author     WP Swings <plugins@wpswings.com>
  */
-class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
+class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 	/**
 	 * Requires option.
@@ -44,7 +44,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 */
 	public function __construct( $instance_id = 0 ) {
 
-		$this->id                 = 'mwb_membership_shipping'; // Id for your shipping method. Should be uunique.
+		$this->id                 = 'wps_membership_shipping'; // Id for your shipping method. Should be uunique.
 		$this->method_title       = __( 'Membership Shipping', 'membership-for-woocommerce' );  // Title shown in admin.
 		$this->method_description = __( 'Membership shipping allows free shipping to active members.', 'membership-for-woocommerce' ); // Description shown in admin.
 		$this->instance_id        = absint( $instance_id );
@@ -73,7 +73,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 		// Save settings in admin if you have any defined.
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
-		add_action( 'admin_footer', array( 'Mwb_Membership_Free_Shipping_Method', 'mwb_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
+		add_action( 'admin_footer', array( 'wps_Membership_Free_Shipping_Method', 'wps_enqueue_admin_js' ), 10 ); // Priority needs to be higher than wc_print_js (25).
 
 		// Define user set variables.
 		$this->enabled            = ! empty( $this->get_option( 'enabled' ) ) ? $this->get_option( 'enabled' ) : 'no';
@@ -132,9 +132,9 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 				foreach ( $plan_ids as $plan_id ) {
 
-					$product_ids       = get_post_meta( $plan_id, 'mwb_membership_plan_target_ids', true );
-					$cat_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_categories', true );
-					$tag_ids           = get_post_meta( $plan_id, 'mwb_membership_plan_target_tags', true );
+					$product_ids       = get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true );
+					$cat_ids           = get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true );
+					$tag_ids           = get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true );
 					$cart_items_ids    = $this->global_class->cart_item_ids();
 					$cart_item_cat_ids = $this->global_class->cart_item_cat_ids();
 					$cart_item_tag_ids = $this->global_class->cart_item_tag_ids();
@@ -191,7 +191,7 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				break;
 		}
 
-		return apply_filters( 'mwb_membership_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
+		return apply_filters( 'wps_membership_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
 	}
 
 	/**
@@ -219,13 +219,13 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 *
 	 * Static so that's enqueued only once.
 	 */
-	public static function mwb_enqueue_admin_js() {
+	public static function wps_enqueue_admin_js() {
 
 		wc_enqueue_js(
 			"jQuery( function( $ ) {
 				function wcFreeShippingShowHideAllowedMembershipField( el ) {
 					var form = $( el ).closest( 'form' );
-					var allowedmembershipfield = $( '#woocommerce_mwb_membership_shipping_allowed_membership', form ).closest( 'tr' );
+					var allowedmembershipfield = $( '#woocommerce_wps_membership_shipping_allowed_membership', form ).closest( 'tr' );
 					if ( '' === $( el ).val() ) {
 						allowedmembershipfield.hide();
 						
@@ -234,23 +234,23 @@ class Mwb_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 					}	
 				}
 
-				$( document.body ).on( 'change', '#woocommerce_mwb_membership_shipping_requires', function() {
+				$( document.body ).on( 'change', '#woocommerce_wps_membership_shipping_requires', function() {
 					wcFreeShippingShowHideAllowedMembershipField( this );
 				});
 
 				// Change while load.
-				$( '#woocommerce_mwb_membership_shipping_requires' ).change();
+				$( '#woocommerce_wps_membership_shipping_requires' ).change();
 				$( document.body ).on( 'wc_backbone_modal_loaded', function( evt, target ) {
 					
 					if ( 'wc-modal-shipping-method-settings' === target ) {
-						wcFreeShippingShowHideAllowedMembershipField( $( '#wc-backbone-modal-dialog #woocommerce_mwb_membership_shipping_requires', evt.currentTarget ) );
+						wcFreeShippingShowHideAllowedMembershipField( $( '#wc-backbone-modal-dialog #woocommerce_wps_membership_shipping_requires', evt.currentTarget ) );
 					}
 				});
 			});
 			
 			jQuery( function( $ ) {
 				jQuery( document.body ).on( 'click', '.wc-shipping-zone-method-settings', function () {
-					jQuery('.mwb-membership-shipping-method').select2();
+					jQuery('.wps-membership-shipping-method').select2();
 				});
 			});"
 		);

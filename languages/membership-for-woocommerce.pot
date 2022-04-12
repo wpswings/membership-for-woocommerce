@@ -1,7 +1,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Membership For WooCommerce 2.0.2\n"
+"Project-Id-Version: Membership For WooCommerce 2.0.3\n"
 "POT-Creation-Date: 2022-01-20 19:16+0530\n"
 "PO-Revision-Date: 2021-08-18 10:04+0530\n"
 "Last-Translator: \n"
@@ -183,7 +183,7 @@ msgid "members"
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:799
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:90
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:90
 #: public/class-membership-for-woocommerce-public.php:242
 #: public/class-membership-for-woocommerce-public.php:265
 #: public/class-membership-for-woocommerce-public.php:1324
@@ -192,7 +192,7 @@ msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:802
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:40
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:58
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:58
 msgid "Billing details"
 msgstr ""
 
@@ -323,28 +323,28 @@ msgid ""
 "shipping "
 msgstr ""
 
-#: admin/classes/class-mwb-membership-free-shipping-method.php:48
-#: admin/classes/class-mwb-membership-free-shipping-method.php:51
-#: admin/classes/class-mwb-membership-free-shipping-method.php:101
-#: public/classes/class-mwb-membership-free-shipping-method.php:48
-#: public/classes/class-mwb-membership-free-shipping-method.php:51
-#: public/classes/class-mwb-membership-free-shipping-method.php:101
+#: admin/classes/class-wps-membership-free-shipping-method.php:48
+#: admin/classes/class-wps-membership-free-shipping-method.php:51
+#: admin/classes/class-wps-membership-free-shipping-method.php:101
+#: public/classes/class-wps-membership-free-shipping-method.php:48
+#: public/classes/class-wps-membership-free-shipping-method.php:51
+#: public/classes/class-wps-membership-free-shipping-method.php:101
 msgid "Membership Shipping"
 msgstr ""
 
-#: admin/classes/class-mwb-membership-free-shipping-method.php:49
-#: public/classes/class-mwb-membership-free-shipping-method.php:49
+#: admin/classes/class-wps-membership-free-shipping-method.php:49
+#: public/classes/class-wps-membership-free-shipping-method.php:49
 msgid "Membership shipping allows free shipping to active members."
 msgstr ""
 
-#: admin/classes/class-mwb-membership-free-shipping-method.php:97
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:63
-#: public/classes/class-mwb-membership-free-shipping-method.php:97
+#: admin/classes/class-wps-membership-free-shipping-method.php:97
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:63
+#: public/classes/class-wps-membership-free-shipping-method.php:97
 msgid "Title"
 msgstr ""
 
-#: admin/classes/class-mwb-membership-free-shipping-method.php:99
-#: public/classes/class-mwb-membership-free-shipping-method.php:99
+#: admin/classes/class-wps-membership-free-shipping-method.php:99
+#: public/classes/class-wps-membership-free-shipping-method.php:99
 msgid "Title to be displayed on front-end."
 msgstr ""
 
@@ -421,32 +421,32 @@ msgid "Enable Tracking"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:49
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:127
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:127
 msgid "No billing details"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:52
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:133
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:133
 msgid "Email address :"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:54
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:138
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:138
 msgid "Phone :"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:56
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:141
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:141
 msgid "Payment Method"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:62
-#: public/partials/templates/mwb-membership-details-tab.php:205
+#: public/partials/templates/wps-membership-details-tab.php:205
 msgid "Plan details"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:75
-#: public/partials/templates/mwb-membership-details-tab.php:157
+#: public/partials/templates/wps-membership-details-tab.php:157
 msgid "Product"
 msgstr ""
 
@@ -454,8 +454,8 @@ msgstr ""
 #: includes/class-membership-for-woocommerce-global-functions.php:1023
 #: includes/class-membership-for-woocommerce-global-functions.php:1116
 #: includes/class-membership-for-woocommerce-global-functions.php:1218
-#: public/partials/templates/mwb-membership-details-tab.php:158
-#: public/partials/templates/mwb-membership-details-tab.php:178
+#: public/partials/templates/wps-membership-details-tab.php:158
+#: public/partials/templates/wps-membership-details-tab.php:178
 msgid "Total"
 msgstr ""
 
@@ -487,292 +487,292 @@ msgstr ""
 msgid "Plan Description"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:28
+#: admin/partials/templates/members-templates/wps-members-actions.php:28
 #: includes/class-membership-for-woocommerce-global-functions.php:1217
 msgid "Status"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:30
+#: admin/partials/templates/members-templates/wps-members-actions.php:30
 msgid "Pending"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:31
+#: admin/partials/templates/members-templates/wps-members-actions.php:31
 msgid "On-hold"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:32
+#: admin/partials/templates/members-templates/wps-members-actions.php:32
 msgid "Completed"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:33
+#: admin/partials/templates/members-templates/wps-members-actions.php:33
 msgid "Cancelled"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-actions.php:50
+#: admin/partials/templates/members-templates/wps-members-actions.php:50
 msgid "Update"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:64
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:64
 msgid ""
 "Only membership will be purchased subscription will not be activated if "
 "Membership plan assigned from here !!"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:73
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:73
 msgid "General"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:77
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:77
 msgid "Customer:"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:78
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:78
 msgid "View other memberships"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:79
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:79
 msgid "Profile"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:110
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:110
 msgid "Billing"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:116
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:116
 msgid "Address :"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:148
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:148
 msgid "First name"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:153
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:153
 msgid "Last name"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:158
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:158
 msgid "Company"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:163
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:163
 msgid "Address line 1"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:168
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:168
 msgid "Address line 2"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:173
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:173
 msgid "City"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:178
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:178
 msgid "Postcode/ZIP"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:183
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:183
 msgid "Country"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:194
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:194
 msgid "State/County"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:201
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:201
 msgid "Email address"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-billing.php:206
+#: admin/partials/templates/members-templates/wps-members-plans-billing.php:206
 msgid "Phone"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:70
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:70
 #: includes/class-membership-for-woocommerce-global-functions.php:1021
 #: includes/class-membership-for-woocommerce-global-functions.php:1114
 msgid "Price"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:77
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:77
 msgid "Description"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:84
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:84
 #: public/class-membership-for-woocommerce-public.php:1328
 msgid "Plan Type"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:98
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:98
 #: public/class-membership-for-woocommerce-public.php:1338
 msgid "Plan Duration"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:106
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:172
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:106
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:172
 #: public/class-membership-for-woocommerce-public.php:1346
 msgid "Duration"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:113
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:113
 #: public/class-membership-for-woocommerce-public.php:1353
 msgid "Plan duration not defined"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:119
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:207
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:119
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:207
 #: public/class-membership-for-woocommerce-public.php:1358
 msgid "Subscription Membership"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:126
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:126
 #: public/class-membership-for-woocommerce-public.php:1362
 msgid "Subscription Membership Duration"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:139
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:139
 #: public/class-membership-for-woocommerce-public.php:1366
 msgid "Plan access"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:149
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:141
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:149
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:141
 #: public/class-membership-for-woocommerce-public.php:1371
 msgid "Access Type"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:163
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:163
 #: public/class-membership-for-woocommerce-public.php:1381
 msgid "Delay Duration"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:170
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:170
 #: public/class-membership-for-woocommerce-public.php:1388
 msgid "Access type duration not defined"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:175
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:175
 #: public/class-membership-for-woocommerce-public.php:1392
 msgid "Discount on cart"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:182
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:182
 #: public/class-membership-for-woocommerce-public.php:1396
 msgid "Discount on Product"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:191
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:191
 #: public/class-membership-for-woocommerce-public.php:1401
-#: public/partials/templates/mwb-membership-details-tab.php:219
+#: public/partials/templates/wps-membership-details-tab.php:219
 msgid "Include Membership"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:205
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:205
 #: public/class-membership-for-woocommerce-public.php:1414
 msgid "Free Shipping"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:212
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:282
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:212
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:282
 #: public/class-membership-for-woocommerce-public.php:1418
 msgid "Offered Products"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:226
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:226
 #: public/class-membership-for-woocommerce-public.php:1432
 msgid "Offered Categories"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:235
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:369
-#: public/partials/templates/mwb-membership-details-tab.php:403
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:235
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:369
+#: public/partials/templates/wps-membership-details-tab.php:403
 msgid "No categories Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:247
-#: public/partials/templates/mwb-membership-details-tab.php:278
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:247
+#: public/partials/templates/wps-membership-details-tab.php:278
 msgid "Offered Product Tags: "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:259
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:391
-#: public/partials/templates/mwb-membership-details-tab.php:290
-#: public/partials/templates/mwb-membership-details-tab.php:424
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:259
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:391
+#: public/partials/templates/wps-membership-details-tab.php:290
+#: public/partials/templates/wps-membership-details-tab.php:424
 msgid "No Product Tags Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:266
-#: public/partials/templates/mwb-membership-details-tab.php:297
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:266
+#: public/partials/templates/wps-membership-details-tab.php:297
 msgid "Offered Posts: "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:278
-#: public/partials/templates/mwb-membership-details-tab.php:309
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:278
+#: public/partials/templates/wps-membership-details-tab.php:309
 msgid "No Posts Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:284
-#: public/partials/templates/mwb-membership-details-tab.php:315
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:284
+#: public/partials/templates/wps-membership-details-tab.php:315
 msgid "Offered Posts Categories: "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:294
-#: public/partials/templates/mwb-membership-details-tab.php:266
-#: public/partials/templates/mwb-membership-details-tab.php:325
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:294
+#: public/partials/templates/wps-membership-details-tab.php:266
+#: public/partials/templates/wps-membership-details-tab.php:325
 msgid "No Product Categories Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:300
-#: public/partials/templates/mwb-membership-details-tab.php:332
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:300
+#: public/partials/templates/wps-membership-details-tab.php:332
 msgid "Offered Post Tags: "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:312
-#: public/partials/templates/mwb-membership-details-tab.php:344
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:312
+#: public/partials/templates/wps-membership-details-tab.php:344
 msgid "No Post Tags Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:319
-#: public/partials/templates/mwb-membership-details-tab.php:351
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:319
+#: public/partials/templates/wps-membership-details-tab.php:351
 msgid "Offered Pages: "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:331
-#: public/partials/templates/mwb-membership-details-tab.php:363
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:331
+#: public/partials/templates/wps-membership-details-tab.php:363
 msgid "No Page Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:338
-#: public/partials/templates/mwb-membership-details-tab.php:371
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:338
+#: public/partials/templates/wps-membership-details-tab.php:371
 msgid "Offered Product (under Product discount): "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:350
-#: public/partials/templates/mwb-membership-details-tab.php:383
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:350
+#: public/partials/templates/wps-membership-details-tab.php:383
 msgid "No Product Offered in this Plan"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:358
-#: public/partials/templates/mwb-membership-details-tab.php:391
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:358
+#: public/partials/templates/wps-membership-details-tab.php:391
 msgid "Offered Product Categories (under Product discount): "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:376
-#: public/partials/templates/mwb-membership-details-tab.php:411
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:376
+#: public/partials/templates/wps-membership-details-tab.php:411
 msgid "Offered Product Tags (under Product discount): "
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:409
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:409
 msgid "No membership details found"
 msgstr ""
 
-#: admin/partials/templates/members-templates/mwb-members-plans-details.php:411
+#: admin/partials/templates/members-templates/wps-members-plans-details.php:411
 msgid "Select a plan"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:34
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:34
 msgid "What Is Membership For WooCommerce?"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:38
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:38
 msgid ""
 "Membership for WooCommerce allows you to create membership plans for a "
 "segment of customers, thereby\n"
@@ -782,85 +782,85 @@ msgid ""
 "updates."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:45
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:45
 msgid "With our Membership for WooCommerce plugin, as a store owner you get:"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:47
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:47
 msgid "Control content access"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:48
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:48
 msgid "See complete customer history"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:49
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:49
 msgid "Quick preview section for Membership plans on the plans listing page"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:50
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:50
 msgid ""
 "A different status selection like pending, on hold, or completed as per "
 "their payment and plan expiry"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:51
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:51
 msgid "Manual assignment of membership to a customer"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:61
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:61
 msgid "The Free And Pro Plugin Benefits"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:64
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:64
 msgid "The Free Plugin Benefits"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:75
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:75
 msgid "Complete Customer History"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:78
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:78
 msgid ""
 "Admin gets a quick preview section for Membership plans on the plans listing "
 "page. The users too can see their history in the ‘My Account’ section with "
 "entire details of their membership plans."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:93
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:93
 msgid ""
 "Admin can offer products/categories in a membership plan. Those products and "
 "categories can only be accessible to users if they have purchased the plan. "
 "Membership Details Tab on My Accounts Page has all the details of the plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:105
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:105
 msgid "Data Export"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:108
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:108
 msgid ""
 "Admin can effortlessly export all the membership plans along with the user "
 "data and settings. He can also import the details of all members as a CSV "
 "file."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:120
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:120
 msgid "Perfectly Neat Shortcodes For Customization"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:123
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:123
 msgid ""
 "The admin is provided with a neat collection of shortcodes that work not "
 "only on the purchase of the default membership plan but also on the custom "
 "page. These shortcodes let admin to design their plan page at ease."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:135
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:135
 msgid "User Cart Total Discount"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-overview.php:138
+#: admin/partials/templates/membership-templates/wps-membership-overview.php:138
 msgid ""
 "Admin can grant discounts to the customers on total cart value. Free "
 "shipping option is also available as per their membership plans. The "
@@ -868,374 +868,374 @@ msgid ""
 "choice."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:36
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:36
 msgid "Membership Plan Amount"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:38
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:38
 msgid ""
 "Provide the amount at which Membership Plan will be available for Users."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:52
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:52
 msgid "Include other Memberships"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:54
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:54
 msgid "Select the membership plans you want to include with this membership"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:60
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:60
 msgid "Search for a memberships&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:102
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:102
 msgid "Membership Info"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:104
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:104
 msgid "Provide the information related to membership"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:143
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:143
 msgid "Provide the Access Type of your Membership Plan"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:160
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:160
 msgid "Lifetime"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:162
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:162
 msgid "Limited"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:174
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:174
 msgid ""
 "Duration in terms of  'DAYS', 'WEEKS', 'MONTHS', 'YEARS' for which the plan "
 "will be active."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:189
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:249
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:846
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:189
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:249
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:846
 msgid "Days"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:190
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:250
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:847
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:190
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:250
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:847
 msgid "Weeks"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:191
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:251
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:191
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:251
 msgid "Months"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:192
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:252
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:192
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:252
 msgid "Years"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:209
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:209
 msgid "Enable it to make membership plan as subscription."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:232
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:232
 msgid "Subscription expiry"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:234
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:234
 msgid ""
 "Subscription Expiry in terms of  'DAYS', 'WEEKS', 'MONTHS', 'YEARS' for "
 "which the plan will be active."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:264
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:264
 msgid "Membership Plan Offers"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:274
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:274
 msgid "Offer Section"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:284
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:284
 msgid "Select the products you want to Offer in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:291
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:536
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:291
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:536
 msgid "Search for a product&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:331
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:331
 msgid "Offered Product Categories"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:333
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:333
 msgid "Select the categories you want to Offer in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:340
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:585
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:340
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:585
 msgid "Search for a category&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:379
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:379
 #: public/class-membership-for-woocommerce-public.php:1449
 msgid "Offered Product Tags"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:381
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:381
 msgid "Select the tags you want to Offer in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:388
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:628
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:388
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:628
 msgid "Search for a tag&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:425
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:425
 msgid "Discount on Products"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:427
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:427
 msgid "Specify discount % applied to products."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:449
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:891
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:449
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:891
 msgid "Discount %"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:451
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:893
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:451
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:893
 msgid "Fixed price"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:471
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:471
 msgid "Included Section"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:479
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:479
 msgid "Included pages"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:481
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:481
 msgid "Select the pages you want to include in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:488
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:488
 msgid "Search for a page&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:527
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:527
 msgid "Included Products"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:529
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:529
 msgid "Select the products you want to included in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:576
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:576
 msgid "Included Product Categories"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:578
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:578
 msgid "Select the categories you want to include in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:619
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:619
 msgid "Included Product Tags"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:621
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:621
 msgid "Select the tags you want to included in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:666
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:666
 msgid "Included Posts"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:668
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:668
 msgid "Select the posts you want to included in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:675
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:675
 msgid "Search for a post&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:714
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:714
 msgid "Included Post Categories"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:716
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:716
 msgid "Select the post categories you want to included in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:723
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:723
 msgid "Search for a post category&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:761
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:761
 msgid "Included Post Tags"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:763
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:763
 msgid "Select the post tags you want to included in Membership Plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:771
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:771
 msgid "Search for a post tag&hellip;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:809
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:809
 msgid "Accessibility Type"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:811
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:811
 msgid "Select the delay duration after which plan offers will be accessible."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:838
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:838
 msgid "Immediately"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:841
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:841
 msgid "Specify a time"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:864
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:864
 msgid "Membership Features Section"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:871
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:871
 msgid "Discount on Cart"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:873
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:873
 msgid "Specify discount % applied to orders with this plan."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:905
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:905
 msgid "Allow Free Shipping"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:907
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:907
 msgid "Allow Free Shipping to all the members of this membership plan"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:926
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:926
 msgid "Manage Free shipping"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:938
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:938
 msgid "Hide Products From non-Members"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:940
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:940
 msgid "Hide the member exclusive products from non members "
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:968
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:968
 msgid "Show Notice to Members"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-plans-creation.php:970
+#: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:970
 msgid "Show notice to the members"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:23
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:23
 msgid "Membership Shortcodes"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:35
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:35
 msgid "Membership Action Shortcodes"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:41
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:41
 msgid "Buy Now &rarr;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:42
-msgid "[mwb_membership_buy_now]"
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:42
+msgid "[wps_membership_buy_now]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:44
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:44
 msgid ""
 "This shortcode only returns the buy now button. Use it as "
-"[mwb_membership_buy_now plan_id=your plan ID]."
+"[wps_membership_buy_now plan_id=your plan ID]."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:54
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:54
 msgid "No Thanks &rarr;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:55
-msgid "[mwb_membership_no]"
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:55
+msgid "[wps_membership_no]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:57
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:57
 msgid ""
-"This shortcode only returns no thanks button. Use it as [mwb_membership_no]."
+"This shortcode only returns no thanks button. Use it as [wps_membership_no]."
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:71
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:71
 msgid "Membership Plan Shortcodes"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:77
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:77
 msgid "Membership Plan Title &rarr;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:78
-msgid "[mwb_membership_title_name]"
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:78
+msgid "[wps_membership_title_name]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:80
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:80
 msgid ""
 "This shortcode returns the title of Membership Plan. Use it as "
-"[mwb_membership_title_name plan_id=your plan ID]"
+"[wps_membership_title_name plan_id=your plan ID]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:88
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:88
 msgid "Membership Plan Price &rarr;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:89
-msgid "[mwb_membership_price]"
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:89
+msgid "[wps_membership_price]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:91
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:91
 msgid ""
 "This shortcode returns the price of Membership Plan. Use it as "
-"[mwb_membership_price plan_id=your plan ID]"
+"[wps_membership_price plan_id=your plan ID]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:99
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:99
 msgid "Membership Plan Desc &rarr;"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:100
-msgid "[mwb_membership_desc_data]"
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:100
+msgid "[wps_membership_desc_data]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-shortcodes.php:102
+#: admin/partials/templates/membership-templates/wps-membership-shortcodes.php:102
 msgid ""
 "This shortcode returns the description of Membership Plan. Use it as "
-"[mwb_membership_desc_data plan_id=your plan ID]"
+"[wps_membership_desc_data plan_id=your plan ID]"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php:24
+#: admin/partials/templates/membership-templates/wps-membership-supported-gateway.php:24
 msgid "Membership Supported Gateways"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php:30
+#: admin/partials/templates/membership-templates/wps-membership-supported-gateway.php:30
 msgid "Setup Membership Supported Gateways"
 msgstr ""
 
-#: admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php:63
-#: admin/partials/templates/membership-templates/mwb-membership-supported-gateway.php:74
+#: admin/partials/templates/membership-templates/wps-membership-supported-gateway.php:63
+#: admin/partials/templates/membership-templates/wps-membership-supported-gateway.php:74
 msgid "Manage"
 msgstr ""
 
@@ -1316,7 +1316,7 @@ msgid "Membership Invoice "
 msgstr ""
 
 #: includes/class-membership-for-woocommerce-global-functions.php:1069
-#: public/partials/templates/mwb-membership-details-tab.php:62
+#: public/partials/templates/wps-membership-details-tab.php:62
 msgid "#"
 msgstr ""
 
@@ -1349,7 +1349,7 @@ msgid "What is the best email address to contact you?"
 msgstr ""
 
 #: includes/class-membership-for-woocommerce-onboarding-steps.php:362
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:100
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:100
 msgid "Email"
 msgstr ""
 
@@ -1621,201 +1621,201 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:73
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:73
 msgid "First name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:73
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:79
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:92
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:98
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:110
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:121
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:127
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:140
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:148
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:73
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:79
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:92
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:98
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:110
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:121
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:127
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:140
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:148
 msgid "*"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:75
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:75
 msgid "First name&hellip;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:79
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:79
 msgid "Last name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:81
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:81
 msgid "Last name&hellip;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:86
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:86
 msgid "Company name&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:86
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:86
 msgid "(Optional)"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:88
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:88
 msgid "Company name"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:92
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:92
 msgid "Phone&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:94
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:94
 msgid "Phone no."
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:98
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:98
 msgid "E-mail&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:103
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:103
 msgid "Please enter a valid email."
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:110
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:110
 msgid "Street address&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:112
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:112
 msgid "House number and street name"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:117
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:117
 msgid "Apartment, suit, unit, etc. (Optional)"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:121
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:121
 msgid "Town/City&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:123
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:123
 msgid "Town/City"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:127
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:127
 msgid "Country/Region&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:130
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:130
 msgid "Select a Country"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:140
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:140
 msgid "State&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:143
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:143
 msgid "Select a state"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:148
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:148
 msgid "Pin code&nbsp;"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:150
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:150
 msgid "Pin code"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:161
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:162
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:161
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:162
 msgid "Previous Step"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:165
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:166
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:165
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:166
 msgid "Next Step"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:170
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:170
 msgid "Proceed for Payment"
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:176
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:176
 msgid "Your order is confirmed."
 msgstr ""
 
-#: public/partials/templates/membership-templates/mwb-membership-billing-modal.php:177
+#: public/partials/templates/membership-templates/wps-membership-billing-modal.php:177
 msgid "Shop more"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:98
+#: public/partials/templates/wps-membership-details-tab.php:98
 msgid "Browse products"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:99
+#: public/partials/templates/wps-membership-details-tab.php:99
 msgid "No Membership has been purchased yet."
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:137
-#: public/partials/templates/mwb-membership-details-tab.php:144
-#: public/partials/templates/mwb-membership-details-tab.php:149
+#: public/partials/templates/wps-membership-details-tab.php:137
+#: public/partials/templates/wps-membership-details-tab.php:144
+#: public/partials/templates/wps-membership-details-tab.php:149
 msgid " was placed on "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:137
-#: public/partials/templates/mwb-membership-details-tab.php:144
-#: public/partials/templates/mwb-membership-details-tab.php:149
+#: public/partials/templates/wps-membership-details-tab.php:137
+#: public/partials/templates/wps-membership-details-tab.php:144
+#: public/partials/templates/wps-membership-details-tab.php:149
 msgid " and is currently "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:149
+#: public/partials/templates/wps-membership-details-tab.php:149
 msgid " and will expire on "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:153
+#: public/partials/templates/wps-membership-details-tab.php:153
 msgid "Membership details"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:174
+#: public/partials/templates/wps-membership-details-tab.php:174
 msgid "Payment method"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:191
+#: public/partials/templates/wps-membership-details-tab.php:191
 msgid "Billing address"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:207
+#: public/partials/templates/wps-membership-details-tab.php:207
 msgid "Plan Name: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:208
+#: public/partials/templates/wps-membership-details-tab.php:208
 msgid "Status: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:209
+#: public/partials/templates/wps-membership-details-tab.php:209
 msgid "Discount on cart: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:210
+#: public/partials/templates/wps-membership-details-tab.php:210
 msgid "Discount on Product: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:211
+#: public/partials/templates/wps-membership-details-tab.php:211
 msgid "Subscription Membership: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:212
+#: public/partials/templates/wps-membership-details-tab.php:212
 msgid "Subscription Membership Duration: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:213
+#: public/partials/templates/wps-membership-details-tab.php:213
 msgid "Free Shipping: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:238
+#: public/partials/templates/wps-membership-details-tab.php:238
 msgid "Offered Products: "
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:248
+#: public/partials/templates/wps-membership-details-tab.php:248
 msgid "No Products Offered in this Plan"
 msgstr ""
 
-#: public/partials/templates/mwb-membership-details-tab.php:255
+#: public/partials/templates/wps-membership-details-tab.php:255
 msgid "Offered Products Categories: "
 msgstr ""
 

@@ -19,8 +19,15 @@
     "gulp"
   ],
   "devDependencies": {
+    "@date-io/date-fns": "v1",
+    "@fontsource/roboto": "^4.5.0",
+    "@material-ui/core": "^4.12.2",
+    "@material-ui/pickers": "latest",
+    "@material/textfield": "^11.0.0",
     "@popperjs/core": "^2.9.2",
+    "@wordpress/scripts": "^16.1.4",
     "autoprefixer": "^10.3.1",
+    "axios": "^0.21.1",
     "browser-sync": "^2.27.4",
     "child_process": "^1.0.2",
     "core-util-is": "^1.0.2",
@@ -29,6 +36,7 @@
     "datatables.net": "^1.10.25",
     "datatables.net-buttons": "^1.7.1",
     "datatables.net-responsive": "^2.2.9",
+    "date-fns": "latest",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.3.0",
@@ -42,14 +50,6 @@
     "gulp-terser": "^2.0.1",
     "gulp-uglify": "^3.0.2",
     "postcss": "^8.3.6",
-    "postcss-combine-media-query": "^1.0.1",
-    "@wordpress/scripts": "^16.1.4",
-    "@date-io/date-fns": "v1",
-    "@fontsource/roboto": "^4.5.0",
-    "@material-ui/core": "^4.12.2",
-    "@material-ui/pickers": "latest",
-    "@material/textfield": "^11.0.0",
-    "axios": "^0.21.1",
-    "date-fns": "latest"
+    "postcss-combine-media-query": "^1.0.1"
   }
 }

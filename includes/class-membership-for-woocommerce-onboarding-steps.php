@@ -40,7 +40,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string base url of API.
 	 */
-	private $mwb_mfw_base_url = 'https://api.hsforms.com/';
+	private $wps_mfw_base_url = 'https://api.hsforms.com/';
 
 	/**
 	 * Portal id of hubspot api for membership-for-woocommerce.
@@ -48,7 +48,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Portal id.
 	 */
-	private static $mwb_mfw_portal_id = '25444144';
+	private static $wps_mfw_portal_id = '25444144';
 
 	/**
 	 * Form id of hubspot api for membership-for-woocommerce.
@@ -56,7 +56,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mfw_onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
+	private static $wps_mfw_onboarding_form_id = '2a2fe23c-0024-43f5-9473-cbfefdb06fe2';
 
 	/**
 	 * Form id of hubspot api for membership-for-woocommerce.
@@ -64,39 +64,39 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since 1.0.0
 	 * @var string Form id.
 	 */
-	private static $mwb_mfw_deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
+	private static $wps_mfw_deactivation_form_id = '67feecaa-9a93-4fda-8f85-f73168da2672';
 
 	/**
 	 * Define some variables for membership-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_mfw_plugin_name plugin name.
+	 * @var string $wps_mfw_plugin_name plugin name.
 	 */
-	private static $mwb_mfw_plugin_name;
+	private static $wps_mfw_plugin_name;
 
 	/**
 	 * Define some variables for membership-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_mfw_plugin_name_label plugin name text.
+	 * @var string $wps_mfw_plugin_name_label plugin name text.
 	 */
-	private static $mwb_mfw_plugin_name_label;
+	private static $wps_mfw_plugin_name_label;
 
 	/**
 	 * Define some variables for membership-for-woocommerce.
 	 *
-	 * @var string $mwb_mfw_store_name store name.
+	 * @var string $wps_mfw_store_name store name.
 	 * @since 1.0.0
 	 */
-	private static $mwb_mfw_store_name;
+	private static $wps_mfw_store_name;
 
 	/**
 	 * Define some variables for membership-for-woocommerce.
 	 *
 	 * @since 1.0.0
-	 * @var string $mwb_mfw_store_url store url.
+	 * @var string $wps_mfw_store_url store url.
 	 */
-	private static $mwb_mfw_store_url;
+	private static $wps_mfw_store_url;
 
 	/**
 	 * Define the onboarding functionality of the plugin.
@@ -107,30 +107,30 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		self::$mwb_mfw_store_name = get_bloginfo( 'name' );
-		self::$mwb_mfw_store_url = home_url();
-		self::$mwb_mfw_plugin_name = 'Membership For WooCommerce';
-		self::$mwb_mfw_plugin_name_label = 'Membership For WooCommerce';
-		if ( ! mwb_mfw_standard_check_multistep() ) {
+		self::$wps_mfw_store_name = get_bloginfo( 'name' );
+		self::$wps_mfw_store_url = home_url();
+		self::$wps_mfw_plugin_name = 'Membership For WooCommerce';
+		self::$wps_mfw_plugin_name_label = 'Membership For WooCommerce';
+		if ( ! wps_mfw_standard_check_multistep() ) {
 			return;
 		}
 
-		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_styles' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'mwb_mfw_onboarding_enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_mfw_onboarding_enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'wps_mfw_onboarding_enqueue_scripts' ) );
 
-		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_onboarding_popup_screen' ) );
-		add_action( 'admin_footer', array( $this, 'mwb_mfw_add_deactivation_popup_screen' ) );
+		add_action( 'admin_footer', array( $this, 'wps_mfw_add_onboarding_popup_screen' ) );
+		add_action( 'admin_footer', array( $this, 'wps_mfw_add_deactivation_popup_screen' ) );
 
-		add_filter( 'mwb_mfw_on_boarding_form_fields', array( $this, 'mwb_mfw_add_on_boarding_form_fields' ) );
-		add_filter( 'mwb_mfw_deactivation_form_fields', array( $this, 'mwb_mfw_add_deactivation_form_fields' ) );
+		add_filter( 'wps_mfw_on_boarding_form_fields', array( $this, 'wps_mfw_add_on_boarding_form_fields' ) );
+		add_filter( 'wps_mfw_deactivation_form_fields', array( $this, 'wps_mfw_add_deactivation_form_fields' ) );
 
 		// Ajax to send data.
-		add_action( 'wp_ajax_mwb_mfw_send_onboarding_data', array( $this, 'mwb_mfw_send_onboarding_data' ) );
-		add_action( 'wp_ajax_nopriv_mwb_mfw_send_onboarding_data', array( $this, 'mwb_mfw_send_onboarding_data' ) );
+		add_action( 'wp_ajax_wps_mfw_send_onboarding_data', array( $this, 'wps_mfw_send_onboarding_data' ) );
+		add_action( 'wp_ajax_nopriv_wps_mfw_send_onboarding_data', array( $this, 'wps_mfw_send_onboarding_data' ) );
 
 		// Ajax to Skip popup.
-		add_action( 'wp_ajax_mfw_skip_onboarding_popup', array( $this, 'mwb_mfw_skip_onboarding_popup' ) );
-		add_action( 'wp_ajax_nopriv_mfw_skip_onboarding_popup', array( $this, 'mwb_mfw_skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_mfw_skip_onboarding_popup', array( $this, 'wps_mfw_skip_onboarding_popup' ) );
+		add_action( 'wp_ajax_nopriv_mfw_skip_onboarding_popup', array( $this, 'wps_mfw_skip_onboarding_popup' ) );
 
 	}
 
@@ -157,30 +157,30 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * This function is provided for demonstration purposes only.
 	 *
 	 * An instance of this class should be passed to the run() function
-	 * defined in Makewebbetter_Onboarding_Loader as all of the hooks are defined
+	 * defined in WPSwings_Onboarding_Loader as all of the hooks are defined
 	 * in that particular class.
 	 *
-	 * The Makewebbetter_Onboarding_Loader will then create the relationship
+	 * The WPSwings_Onboarding_Loader will then create the relationship
 	 * between the defined hooks and the functions defined in this
 	 * class.
 	 */
-	public function mwb_mfw_onboarding_enqueue_styles() {
+	public function wps_mfw_onboarding_enqueue_styles() {
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
 			$is_valid = true;
 		}
-		if ( $this->mwb_mfw_valid_page_screen_check() || $is_valid ) {
+		if ( $this->wps_mfw_valid_page_screen_check() || $is_valid ) {
 
 			// comment the line of code Only when your plugin doesn't uses the Select2.
-			wp_enqueue_style( 'mwb-mfw-onboarding-select2-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-onboarding-select2-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
 
-			wp_enqueue_style( 'mwb-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-mfw-meterial-css2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-mfw-meterial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'mwb-mfw-meterial-icons-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-css2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-icons-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
 
-			wp_enqueue_style( 'mwb-mfw-onboarding-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/membership-for-woocommerce-onboarding.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-onboarding-style', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/css/membership-for-woocommerce-onboarding.css', array(), time(), 'all' );
 
 		}
 	}
@@ -189,39 +189,39 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * This function is provided for demonstration purposes only.
 	 *
 	 * An instance of this class should be passed to the run() function
-	 * defined in Makewebbetter_Onboarding_Loader as all of the hooks are defined
+	 * defined in WPSwings_Onboarding_Loader as all of the hooks are defined
 	 * in that particular class.
 	 *
-	 * The Makewebbetter_Onboarding_Loader will then create the relationship
+	 * The WPSwings_Onboarding_Loader will then create the relationship
 	 * between the defined hooks and the functions defined in this
 	 * class.
 	 */
-	public function mwb_mfw_onboarding_enqueue_scripts() {
+	public function wps_mfw_onboarding_enqueue_scripts() {
 		global $pagenow;
 		$is_valid = false;
 		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
 			$is_valid = true;
 		}
-		if ( $this->mwb_mfw_valid_page_screen_check() || $is_valid ) {
-			wp_enqueue_script( 'mwb-mfw-onboarding-select2-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
+		if ( $this->wps_mfw_valid_page_screen_check() || $is_valid ) {
+			wp_enqueue_script( 'wps-mfw-onboarding-select2-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
 
-			wp_enqueue_script( 'mwb-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'mwb-mfw-metarial-js2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'mwb-mfw-metarial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-mfw-metarial-js2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
+			wp_enqueue_script( 'wps-mfw-metarial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
 
-			wp_enqueue_script( 'mwb-mfw-onboarding-scripts', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/js/membership-for-woocommerce-onboarding.js', array( 'jquery', 'mwb-mfw-onboarding-select2-js', 'mwb-mfw-metarial-js', 'mwb-mfw-metarial-js2', 'mwb-mfw-metarial-lite' ), time(), true );
+			wp_enqueue_script( 'wps-mfw-onboarding-scripts', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'onboarding/js/membership-for-woocommerce-onboarding.js', array( 'jquery', 'wps-mfw-onboarding-select2-js', 'wps-mfw-metarial-js', 'wps-mfw-metarial-js2', 'wps-mfw-metarial-lite' ), time(), true );
 
 			$mfw_current_slug = ! empty( explode( '/', plugin_basename( __FILE__ ) ) ) ? explode( '/', plugin_basename( __FILE__ ) )[0] : '';
 			wp_localize_script(
-				'mwb-mfw-onboarding-scripts',
-				'mwb_mfw_onboarding',
+				'wps-mfw-onboarding-scripts',
+				'wps_mfw_onboarding',
 				array(
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-					'mfw_auth_nonce'    => wp_create_nonce( 'mwb_mfw_onboarding_nonce' ),
+					'mfw_auth_nonce'    => wp_create_nonce( 'wps_mfw_onboarding_nonce' ),
 					'mfw_current_screen'    => $pagenow,
 					'mfw_current_supported_slug'    =>
 					// desc - filter for trial.
-					apply_filters( 'mwb_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
+					apply_filters( 'wps_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
 				)
 			);
 		}
@@ -232,8 +232,8 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_add_onboarding_popup_screen() {
-		if ( $this->mwb_mfw_valid_page_screen_check() && $this->mwb_mfw_show_onboarding_popup_check() ) {
+	public function wps_mfw_add_onboarding_popup_screen() {
+		if ( $this->wps_mfw_valid_page_screen_check() && $this->wps_mfw_show_onboarding_popup_check() ) {
 			require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'onboarding/templates/membership-for-woocommerce-onboarding-template.php';
 		}
 	}
@@ -243,7 +243,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_add_deactivation_popup_screen() {
+	public function wps_mfw_add_deactivation_popup_screen() {
 
 		global $pagenow;
 		if ( ! empty( $pagenow ) && 'plugins.php' == $pagenow ) {
@@ -256,9 +256,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_skip_onboarding_popup() {
+	public function wps_mfw_skip_onboarding_popup() {
 
-		$get_skipped_timstamp = update_option( 'mwb_mfw_onboarding_data_skipped', time() );
+		$get_skipped_timstamp = update_option( 'wps_mfw_onboarding_data_skipped', time() );
 		echo json_encode( 'true' );
 		wp_die();
 	}
@@ -269,7 +269,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_add_on_boarding_form_fields() {
+	public function wps_mfw_add_on_boarding_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -301,7 +301,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			 */
 
 			rand() => array(
-				'id' => 'mwb-mfw-monthly-revenue',
+				'id' => 'wps-mfw-monthly-revenue',
 				'title' => esc_html__( 'What is your monthly revenue?', 'membership-for-woocommerce' ),
 				'type' => 'radio',
 				'description' => '',
@@ -320,7 +320,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb_mfw_industry_type',
+				'id' => 'wps_mfw_industry_type',
 				'title' => esc_html__( 'What industry defines your business?', 'membership-for-woocommerce' ),
 				'type' => 'select',
 				'name' => 'industry_type_',
@@ -357,7 +357,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-onboard-email',
+				'id' => 'wps-mfw-onboard-email',
 				'title' => esc_html__( 'What is the best email address to contact you?', 'membership-for-woocommerce' ),
 				'type' => 'email',
 				'description' => '',
@@ -369,7 +369,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-onboard-number',
+				'id' => 'wps-mfw-onboard-number',
 				'title' => esc_html__( 'What is your contact number?', 'membership-for-woocommerce' ),
 				'type' => 'text',
 				'description' => '',
@@ -381,49 +381,49 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-store-name',
+				'id' => 'wps-mfw-store-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'company',
 				'placeholder' => '',
-				'value' => self::$mwb_mfw_store_name,
+				'value' => self::$wps_mfw_store_name,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-store-url',
+				'id' => 'wps-mfw-store-url',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_mfw_store_url,
+				'value' => self::$wps_mfw_store_url,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-show-counter',
+				'id' => 'wps-mfw-show-counter',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
-				'name' => 'mwb-mfw-show-counter',
-				'value' => get_option( 'mwb_mfw_onboarding_data_sent', 'not-sent' ),
+				'name' => 'wps-mfw-show-counter',
+				'value' => get_option( 'wps_mfw_onboarding_data_sent', 'not-sent' ),
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-plugin-name',
+				'id' => 'wps-mfw-plugin-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => self::$mwb_mfw_plugin_name,
+				'value' => self::$wps_mfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -438,7 +438,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_add_deactivation_form_fields() {
+	public function wps_mfw_add_deactivation_form_fields() {
 
 		$current_user = wp_get_current_user();
 		if ( ! empty( $current_user ) ) {
@@ -464,7 +464,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			 */
 
 			rand() => array(
-				'id' => 'mwb-mfw-deactivation-reason',
+				'id' => 'wps-mfw-deactivation-reason',
 				'title' => '',
 				'description' => '',
 				'type' => 'radio',
@@ -485,19 +485,19 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-deactivation-reason-text',
-				'title' => esc_html__( 'Let us know why you are deactivating ', 'membership-for-woocommerce' ) . self::$mwb_mfw_plugin_name_label . esc_html__( ' so we can improve the plugin', 'membership-for-woocommerce' ),
+				'id' => 'wps-mfw-deactivation-reason-text',
+				'title' => esc_html__( 'Let us know why you are deactivating ', 'membership-for-woocommerce' ) . self::$wps_mfw_plugin_name_label . esc_html__( ' so we can improve the plugin', 'membership-for-woocommerce' ),
 				'type' => 'textarea',
 				'description' => '',
 				'name' => 'deactivation_reason_text',
 				'placeholder' => esc_html__( 'Reason', 'membership-for-woocommerce' ),
 				'value' => '',
 				'required' => '',
-				'class' => 'mwb-keep-hidden',
+				'class' => 'wps-keep-hidden',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-admin-email',
+				'id' => 'wps-mfw-admin-email',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
@@ -509,37 +509,37 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-store-name',
+				'id' => 'wps-mfw-store-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'company',
-				'value' => self::$mwb_mfw_store_name,
+				'value' => self::$wps_mfw_store_name,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-store-url',
+				'id' => 'wps-mfw-store-url',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'name' => 'website',
 				'placeholder' => '',
-				'value' => self::$mwb_mfw_store_url,
+				'value' => self::$wps_mfw_store_url,
 				'required' => '',
 				'class' => '',
 			),
 
 			rand() => array(
-				'id' => 'mwb-mfw-plugin-name',
+				'id' => 'wps-mfw-plugin-name',
 				'title' => '',
 				'description' => '',
 				'type' => 'hidden',
 				'placeholder' => '',
 				'name' => 'org_plugin_name',
-				'value' => self::$mwb_mfw_plugin_name,
+				'value' => self::$wps_mfw_plugin_name,
 				'required' => '',
 				'class' => '',
 			),
@@ -553,9 +553,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_send_onboarding_data() {
+	public function wps_mfw_send_onboarding_data() {
 
-		check_ajax_referer( 'mwb_mfw_onboarding_nonce', 'nonce' );
+		check_ajax_referer( 'wps_mfw_onboarding_nonce', 'nonce' );
 
 		$form_data = ! empty( $_POST['form_data'] ) ? json_decode( sanitize_text_field( wp_unslash( $_POST['form_data'] ) ) ) : '';
 
@@ -565,7 +565,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 			foreach ( $form_data as $key => $input ) {
 
-				if ( 'mwb-mfw-show-counter' == $input->name ) {
+				if ( 'wps-mfw-show-counter' == $input->name ) {
 					continue;
 				}
 
@@ -616,9 +616,9 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 			if ( ! empty( $formatted_data ) && is_array( $formatted_data ) ) {
 
-				unset( $formatted_data['mwb-mfw-show-counter'] );
+				unset( $formatted_data['wps-mfw-show-counter'] );
 
-				$result = $this->mwb_mfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
+				$result = $this->wps_mfw_handle_form_submission_for_hubspot( $formatted_data, $action_type );
 			}
 		} catch ( Exception $e ) {
 
@@ -627,7 +627,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 		}
 
 		if ( ! empty( $action_type ) && 'onboarding' == $action_type ) {
-			 $get_skipped_timstamp = update_option( 'mwb_mfw_onboarding_data_sent', 'sent' );
+			 $get_skipped_timstamp = update_option( 'wps_mfw_onboarding_data_sent', 'sent' );
 		}
 
 		echo json_encode( $formatted_data );
@@ -642,7 +642,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @param      string $action_type      Type of action.
 	 * @since    1.0.0
 	 */
-	protected function mwb_mfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
+	protected function wps_mfw_handle_form_submission_for_hubspot( $submission = false, $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
 			array_push(
@@ -654,7 +654,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			);
 		}
 
-		$result = $this->mwb_mfw_hubwoo_submit_form( $submission, $action_type );
+		$result = $this->wps_mfw_hubwoo_submit_form( $submission, $action_type );
 
 		if ( true == $result['success'] ) {
 			return true;
@@ -671,15 +671,15 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @param      string $action_type    type of action.
 	 * @since       1.0.0
 	 */
-	protected function mwb_mfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
+	protected function wps_mfw_hubwoo_submit_form( $form_data = array(), $action_type = 'onboarding' ) {
 
 		if ( 'onboarding' == $action_type ) {
-			$form_id = self::$mwb_mfw_onboarding_form_id;
+			$form_id = self::$wps_mfw_onboarding_form_id;
 		} else {
-			$form_id = self::$mwb_mfw_deactivation_form_id;
+			$form_id = self::$wps_mfw_deactivation_form_id;
 		}
 
-		$url = 'submissions/v3/integration/submit/' . self::$mwb_mfw_portal_id . '/' . $form_id;
+		$url = 'submissions/v3/integration/submit/' . self::$wps_mfw_portal_id . '/' . $form_id;
 
 		$headers = 'Content-Type: application/json';
 
@@ -687,14 +687,14 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			array(
 				'fields' => $form_data,
 				'context'  => array(
-					'pageUri' => self::$mwb_mfw_store_url,
-					'pageName' => self::$mwb_mfw_store_name,
-					'ipAddress' => $this->mwb_mfw_get_client_ip(),
+					'pageUri' => self::$wps_mfw_store_url,
+					'pageName' => self::$wps_mfw_store_name,
+					'ipAddress' => $this->wps_mfw_get_client_ip(),
 				),
 			)
 		);
 
-		$response = $this->mwb_mfw_hic_post( $url, $form_data, $headers );
+		$response = $this->wps_mfw_hic_post( $url, $form_data, $headers );
 
 		if ( 200 == $response['status_code'] ) {
 			$result            = json_decode( sanitize_text_field( wp_unslash( $response['response'] ) ), true );
@@ -714,8 +714,8 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 * @param   array  $post_params    form data that need to be send.
 	 * @param   array  $headers    data that must be included in header for request.
 	 */
-	private function mwb_mfw_hic_post( $endpoint, $post_params, $headers ) {
-		$url      = $this->mwb_mfw_base_url . $endpoint;
+	private function wps_mfw_hic_post( $endpoint, $post_params, $headers ) {
+		$url      = $this->wps_mfw_base_url . $endpoint;
 		$request  = array(
 			'method'      => 'POST',
 			'timeout'     => 45,
@@ -749,7 +749,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_get_client_ip() {
+	public function wps_mfw_get_client_ip() {
 		$ipaddress = '';
 		if ( getenv( 'HTTP_CLIENT_IP' ) ) {
 			$ipaddress = getenv( 'HTTP_CLIENT_IP' );
@@ -774,14 +774,14 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_valid_page_screen_check() {
-		$mwb_mfw_screen  = get_current_screen();
-		$mwb_mfw_is_flag = false;
-		if ( isset( $mwb_mfw_screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' == $mwb_mfw_screen->id ) {
-			$mwb_mfw_is_flag = true;
+	public function wps_mfw_valid_page_screen_check() {
+		$wps_mfw_screen  = get_current_screen();
+		$wps_mfw_is_flag = false;
+		if ( isset( $wps_mfw_screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' == $wps_mfw_screen->id ) {
+			$wps_mfw_is_flag = true;
 		}
 
-		return $mwb_mfw_is_flag;
+		return $wps_mfw_is_flag;
 	}
 
 	/**
@@ -789,25 +789,25 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 *
 	 * @since    1.0.0
 	 */
-	public function mwb_mfw_show_onboarding_popup_check() {
+	public function wps_mfw_show_onboarding_popup_check() {
 
-		$mwb_mfw_is_already_sent = get_option( 'mwb_mfw_onboarding_data_sent', false );
+		$wps_mfw_is_already_sent = get_option( 'wps_mfw_onboarding_data_sent', false );
 
 		// Already submitted the data.
-		if ( ! empty( $mwb_mfw_is_already_sent ) && 'sent' == $mwb_mfw_is_already_sent ) {
+		if ( ! empty( $wps_mfw_is_already_sent ) && 'sent' == $wps_mfw_is_already_sent ) {
 			return false;
 		}
 
-		$mwb_mfw_get_skipped_timstamp = get_option( 'mwb_mfw_onboarding_data_skipped', false );
-		if ( ! empty( $mwb_mfw_get_skipped_timstamp ) ) {
+		$wps_mfw_get_skipped_timstamp = get_option( 'wps_mfw_onboarding_data_skipped', false );
+		if ( ! empty( $wps_mfw_get_skipped_timstamp ) ) {
 
-			$mwb_mfw_next_show = strtotime( '+2 days', $mwb_mfw_get_skipped_timstamp );
+			$wps_mfw_next_show = strtotime( '+2 days', $wps_mfw_get_skipped_timstamp );
 
-			$mwb_mfw_current_time = time();
+			$wps_mfw_current_time = time();
 
-			$mwb_mfw_time_diff = $mwb_mfw_next_show - $mwb_mfw_current_time;
+			$wps_mfw_time_diff = $wps_mfw_next_show - $wps_mfw_current_time;
 
-			if ( 0 < $mwb_mfw_time_diff ) {
+			if ( 0 < $wps_mfw_time_diff ) {
 				return false;
 			}
 		}

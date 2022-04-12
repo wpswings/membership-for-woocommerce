@@ -36,34 +36,34 @@ jQuery(document).ready(function($) {
     jQuery('#message').hide();
 
      // Remove image button.
-  $(document).on('change', '#mwb_membership_plan_duration_type', function(e) {
+  $(document).on('change', '#wps_membership_plan_duration_type', function(e) {
     e.preventDefault();
 
-    var duration_type = jQuery('#mwb_membership_plan_duration_type option:selected').val();
-    var duration_text = jQuery('#mwb_membership_plan_duration_type option:selected').text();
+    var duration_type = jQuery('#wps_membership_plan_duration_type option:selected').val();
+    var duration_text = jQuery('#wps_membership_plan_duration_type option:selected').text();
     duration_type =  duration_type.substring(0,duration_type.length - 1)
-    jQuery('#mwb_membership_subscription_expiry_type option:selected').val(duration_type);
-    jQuery('#mwb_membership_subscription_expiry_type option:selected').text(duration_text);
+    jQuery('#wps_membership_subscription_expiry_type option:selected').val(duration_type);
+    jQuery('#wps_membership_subscription_expiry_type option:selected').text(duration_text);
 
     });
-    $(document).on('blur', '#mwb_membership_subscription_expiry', function(e) {
+    $(document).on('blur', '#wps_membership_subscription_expiry', function(e) {
      e.preventDefault();
 
-     var duration = jQuery('#mwb_membership_plan_duration').val();
-     var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+     var duration = jQuery('#wps_membership_plan_duration').val();
+     var subscription = jQuery('#wps_membership_subscription_expiry').val();
      if ( parseInt(duration)  > parseInt(subscription) ) {
         alert('Please enter subscription expiry value greater or equal to duration ');
-        var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+        var subscription = jQuery('#wps_membership_subscription_expiry').val('');
      }
     });
 
-    $(document).on('blur', '#mwb_membership_plan_duration', function(e) {
+    $(document).on('blur', '#wps_membership_plan_duration', function(e) {
         e.preventDefault();
    
-        var duration = jQuery('#mwb_membership_plan_duration').val();
-        var subscription = jQuery('#mwb_membership_subscription_expiry').val();
+        var duration = jQuery('#wps_membership_plan_duration').val();
+        var subscription = jQuery('#wps_membership_subscription_expiry').val();
         if ( parseInt(duration)  > parseInt(subscription) ) {
-           var subscription = jQuery('#mwb_membership_subscription_expiry').val('');
+           var subscription = jQuery('#wps_membership_subscription_expiry').val('');
         }
     });
 
@@ -72,14 +72,14 @@ jQuery(document).ready(function($) {
       });
     
   // Avoid negative values for amount/discount and convert it to zero.
-  $('input[name="mwb_membership_plan_price"]').keyup(function() {
+  $('input[name="wps_membership_plan_price"]').keyup(function() {
 
       if ($(this).val() < 0) {
           $(this).val(0);
       }
   });
 
-  $('input[name="mwb_memebership_plan_discount_price"]').keyup(function() {
+  $('input[name="wps_memebership_plan_discount_price"]').keyup(function() {
 
       if ($(this).val() < 0) {
           $(this).val(0);
@@ -89,54 +89,54 @@ jQuery(document).ready(function($) {
   // Display already selected option field.
   function selected() {
 
-      var selection_access = $("#mwb_membership_plan_access_type  option:selected").val();
+      var selection_access = $("#wps_membership_plan_access_type  option:selected").val();
 
-      var selection_radio = $("input[name='mwb_membership_plan_access_type']:checked").val();
+      var selection_radio = $("input[name='wps_membership_plan_access_type']:checked").val();
 
-      var shipping_value = $("input[name='mwb_memebership_plan_free_shipping']:checked").val();
+      var shipping_value = $("input[name='wps_memebership_plan_free_shipping']:checked").val();
 
-      var show_notice = $("input[name='mwb_membership_show_notice']:checked").val();
+      var show_notice = $("input[name='wps_membership_show_notice']:checked").val();
 
-      var attch_inv = $( "input[name='mwb_membership_attach_invoice']:checked" ).val();
+      var attch_inv = $( "input[name='wps_membership_attach_invoice']:checked" ).val();
 
       switch (selection_access) {
         
           case 'limited':
-              $("#mwb_membership_duration").show('500');
-              $("#mwb_membership_subscription_tr").show('500');
-              $("#mwb_membership_subscription_expiry_tr").show('500');
+              $("#wps_membership_duration").show('500');
+              $("#wps_membership_subscription_tr").show('500');
+              $("#wps_membership_subscription_expiry_tr").show('500');
               
-              $("#mwb_membership_recurring_plan").show('500');
+              $("#wps_membership_recurring_plan").show('500');
               break;
 
           default:
-              $("#mwb_membership_duration").hide('500');
-              $("#mwb_membership_subscription_tr").hide('500');
-              $("#mwb_membership_recurring_plan").hide('500');
-              $("#mwb_membership_subscription_expiry_tr").hide('500');
+              $("#wps_membership_duration").hide('500');
+              $("#wps_membership_subscription_tr").hide('500');
+              $("#wps_membership_recurring_plan").hide('500');
+              $("#wps_membership_subscription_expiry_tr").hide('500');
 
       }
 
       switch (selection_radio) {
 
           case 'immediate_type':
-              $("#mwb_membership_plan_time_duratin_display").hide('500');
+              $("#wps_membership_plan_time_duratin_display").hide('500');
               break;
 
           case 'delay_type':
-              $("#mwb_membership_plan_time_duratin_display").show('500');
+              $("#wps_membership_plan_time_duratin_display").show('500');
       }
 
       if ('yes' == shipping_value) {
-          $(".mwb_membership_free_shipping_link").show('500');
+          $(".wps_membership_free_shipping_link").show('500');
       } else {
-          $(".mwb_membership_free_shipping_link").hide('500');
+          $(".wps_membership_free_shipping_link").hide('500');
       }
 
       if ('yes' == show_notice) {
-          $(".mwb_membership_notice_message").show('500');
+          $(".wps_membership_notice_message").show('500');
       } else {
-          $(".mwb_membership_notice_message").hide('500');
+          $(".wps_membership_notice_message").hide('500');
       }
 
       if ( 'yes' == attch_inv ) {
@@ -149,61 +149,61 @@ jQuery(document).ready(function($) {
   selected(); // calling the function when the page is ready.
 
   // Display access type form fields as per user seletcion.
-  $("#mwb_membership_plan_access_type").on('change', function() {
+  $("#wps_membership_plan_access_type").on('change', function() {
       var selection = $(this).val();
 
       switch (selection) {
 
           case 'limited':
-              $("#mwb_membership_duration").show('500');
-              $("#mwb_membership_subscription_tr").show('500');
-              $("#mwb_membership_subscription_expiry_tr").show('500');
+              $("#wps_membership_duration").show('500');
+              $("#wps_membership_subscription_tr").show('500');
+              $("#wps_membership_subscription_expiry_tr").show('500');
 
-              $("#mwb_membership_plan_duration_type").on("change", function() {
-                  var duration_type = $("#mwb_membership_plan_duration_type").val();
+              $("#wps_membership_plan_duration_type").on("change", function() {
+                  var duration_type = $("#wps_membership_plan_duration_type").val();
                   if ('days' == duration_type) {
-                      $("#mwb_membership_plan_duration_type").attr({ min: 1, max: 31 })
+                      $("#wps_membership_plan_duration_type").attr({ min: 1, max: 31 })
                   } else {
-                      $("#mwb_membership_plan_duration_type").removeAttr("min");
-                      $("#mwb_membership_plan_duration_type").removeAttr("max");
+                      $("#wps_membership_plan_duration_type").removeAttr("min");
+                      $("#wps_membership_plan_duration_type").removeAttr("max");
                   }
               });
 
-              $("#mwb_membership_recurring_plan").show('500');
+              $("#wps_membership_recurring_plan").show('500');
               break;
 
           default:
-              $("#mwb_membership_duration").hide('500');
-              $("#mwb_membership_subscription_tr").hide('500');
-              $("#mwb_membership_subscription_expiry_tr").hide('500');
-              $("#mwb_membership_plan_duration").val("");
-              $("#mwb_membership_plan_duration_type").prop("selectedIndex", 0);
-              $("#mwb_membership_recurring_plan").hide('500');
+              $("#wps_membership_duration").hide('500');
+              $("#wps_membership_subscription_tr").hide('500');
+              $("#wps_membership_subscription_expiry_tr").hide('500');
+              $("#wps_membership_plan_duration").val("");
+              $("#wps_membership_plan_duration_type").prop("selectedIndex", 0);
+              $("#wps_membership_recurring_plan").hide('500');
 
       }
   });
   
-  $("#mwb_membership_plan_immediate_type").on("click", function() {
-      $("#mwb_membership_plan_time_duratin_display").hide('500');
-      $("#mwb_membership_plan_time_duration").val("");
-      $("#mwb_membership_plan_time_duration_type").prop("selectedIndex", 0);
+  $("#wps_membership_plan_immediate_type").on("click", function() {
+      $("#wps_membership_plan_time_duratin_display").hide('500');
+      $("#wps_membership_plan_time_duration").val("");
+      $("#wps_membership_plan_time_duration_type").prop("selectedIndex", 0);
   }); 
-  $("#mwb_membership_plan_time_type").on("click", function() {
-      $("#mwb_membership_plan_time_duratin_display").show('500');
+  $("#wps_membership_plan_time_type").on("click", function() {
+      $("#wps_membership_plan_time_duratin_display").show('500');
 
   }); 
 
 
   // Display free shipping link as per user selection.
-  $("input[name='mwb_memebership_plan_free_shipping']").on("change", function() {
+  $("input[name='wps_memebership_plan_free_shipping']").on("change", function() {
 
       if ($(this).is(":checked")) {
 
-          $(".mwb_membership_free_shipping_link").show('500');
+          $(".wps_membership_free_shipping_link").show('500');
 
       } else {
 
-          $(".mwb_membership_free_shipping_link").hide('500');
+          $(".wps_membership_free_shipping_link").hide('500');
       }
   });
 
@@ -218,7 +218,7 @@ jQuery(document).ready(function($) {
       $("#upload_csv_file").on("click", function(e) {
           e.preventDefault();
 
-          var empty_check = $("#mwb_membership_csv_file_upload").val();
+          var empty_check = $("#wps_membership_csv_file_upload").val();
 
           // If no file selected close the dialog box and show 'failure' sweet alert.
           if (empty_check.length == 0) {
@@ -236,12 +236,12 @@ jQuery(document).ready(function($) {
           } else {
 
               var form = new FormData();
-              var file = $(document).find("#mwb_membership_csv_file_upload");
+              var file = $(document).find("#wps_membership_csv_file_upload");
 
               var single_file = file[0].files[0];
 
               form.append("file", single_file);
-              form.append("action", "mwb_membership_csv_file_upload");
+              form.append("action", "wps_membership_csv_file_upload");
               form.append("nonce", admin_ajax_obj.nonce)
 
               $.ajax({
@@ -289,7 +289,7 @@ jQuery(document).ready(function($) {
  
 
   // Applying script to admin part in all product list page
-  var mwb_status = $('.membership_status').each(function() {
+  var wps_status = $('.membership_status').each(function() {
 
       if ($(this).text() == 'Live') {
           $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' });
@@ -316,7 +316,7 @@ jQuery(document).ready(function($) {
 
           var attachment = media_modals.state().get('selection').first().toJSON();
           var img = attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.full;
-          $('#mwb_membership_invoice_logo').val(attachment.url);
+          $('#wps_membership_invoice_logo').val(attachment.url);
           $('#img_thumbnail').find('img').attr('src', img.url);
           $('#img_thumbnail').show(500);
           $('#upload_img').addClass('button_hide');
@@ -330,7 +330,7 @@ jQuery(document).ready(function($) {
   // Remove image button.
   $(document).on('click', '#remove_img', function(e) {
       e.preventDefault();
-      $('#mwb_membership_invoice_logo').val('');
+      $('#wps_membership_invoice_logo').val('');
       $('#img_thumbnail').hide(500);
       $('#img_thumbnail').find('img').attr('src', '');
       $('#upload_img').removeClass('button_hide');
@@ -407,23 +407,26 @@ $(document).ready(function() {
 
   
    
-    $(document).on('click','.mwb-password-hidden',function() {
-      if ($(".mwb-form__password").attr("type") == "text") {
-        $(".mwb-form__password").attr("type", "password");
+    $(document).on('click','.wps-password-hidden',function() {
+      if ($(".wps-form__password").attr("type") == "text") {
+        $(".wps-form__password").attr("type", "password");
       } else {
-        $(".mwb-form__password").attr("type", "text");
+        $(".wps-form__password").attr("type", "text");
       }
     });
   });
 
   $(window).load(function() {
     // add select2 for multiselect.
-    if ($(document).find(".mwb-defaut-multiselect").length > 0) {
+    if ($(document).find(".wps-defaut-multiselect").length > 0) {
       $(document)
-        .find(".mwb-defaut-multiselect")
+        .find(".wps-defaut-multiselect")
         .select2();
     }
+    
   });
+
+  
 })(jQuery);
 // License.
 

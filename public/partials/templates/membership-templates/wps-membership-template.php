@@ -12,18 +12,9 @@
  */
 
 /**
- * Template Name: MWB Membership For Woocommerce Template.
+ * Template Name: WPS Membership For Woocommerce Template.
  * This template will only display the content you entered in the page editor
  */
-
-if ( ! is_user_logged_in() ) {
-
-	wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
-
-} elseif ( ! isset( $_GET['plan_id'] ) && ! isset( $_GET['prod_id'] ) ) {
-
-	wp_safe_redirect( wc_get_page_permalink( 'shop' ) );
-}
 
 
 ?>
@@ -46,4 +37,5 @@ if ( ! is_user_logged_in() ) {
 		?>
 		<?php wp_footer(); ?>
 	</body>
+	
 </html>

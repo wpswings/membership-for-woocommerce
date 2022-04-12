@@ -10,7 +10,7 @@
     --mdc-theme-secondary: #2196f3;
 }
 
-.makewebbetter_page_membership_for_woocommerce_menu #sswpbody-content {
+.wpswings_page_membership_for_woocommerce_menu #sswpbody-content {
     font-family: "NunitoSans-Regular", sans-serif;
     margin: 0;
     
@@ -84,19 +84,19 @@ select {
     padding: 10px 30px 10px 15px;
 }
 
-.mwb-link:focus {
+.wps-link:focus {
     outline: none;
     border: none;
 }
 
-.mwb-info-img {
+.wps-info-img {
     display: inline-block;
     margin-right: 6px;
     margin-top: -3px;
     max-width: 15px;
 }
 
-.mwb-link {
+.wps-link {
     font-family: "NunitoSans-Bold";
     font-style: normal;
     font-weight: bold;
@@ -115,24 +115,24 @@ select {
     }
 }
 
-.mwb-bg-white {
+.wps-bg-white {
     background-color: $c-white;
     margin-right: 15px;
 }
 
-.mwb-r-8 {
+.wps-r-8 {
     border-radius: 8px;
 }
 
-.mwb-pl-4 {
+.wps-pl-4 {
     padding: 0 4px !important;
 }
 
-.mwb-section {
+.wps-section {
     padding: 28px 32px;
 }
 
-.mwb-header-container {
+.wps-header-container {
     padding: 28px 32px;
     display: flex;
     flex-wrap: wrap;
@@ -141,11 +141,11 @@ select {
     margin-top: 15px;
     margin-bottom: 8px;
     margin-right: 15px;
-    @include media (mwb-phone) {
+    @include media (wps-phone) {
         justify-content: flex-start;
     }
 
-    .mwb-header-title {
+    .wps-header-title {
         font-family: "NunitoSans-ExtraBold";
         font-style: normal;
         font-weight: 800;
@@ -155,35 +155,35 @@ select {
         color: $c-doger-blue;
         flex: 0 0 100%;
         max-width: calc(100% - 200px);
-        @include media (mwb-phone) {
+        @include media (wps-phone) {
             max-width: 100%;
         }
     }
 
-    .mwb-link {
-        @include media (mwb-phone) {
+    .wps-link {
+        @include media (wps-phone) {
             margin-top: 15px;
         }
     }
 
     span {
-        @include media (mwb-phone) {
+        @include media (wps-phone) {
             margin: 15px 5px 0;
         }
     }
 }
 
-.mwb-form-group {
+.wps-form-group {
     display: flex;
     flex-wrap: wrap;
     margin: 0 -15px 35px;
 
-    .mwb-form-group__label {
+    .wps-form-group__label {
         flex: 0 0 100%;
         max-width: 200px;
         padding: 0 15px;
 
-        .mwb-form-label {
+        .wps-form-label {
             font-family: "NunitoSans-SemiBold";
             font-size: $fs-xm-small;
             line-height: 24px;
@@ -191,12 +191,12 @@ select {
         }
     }
 
-    .mwb-form-group__control {
+    .wps-form-group__control {
         flex: 0 0 100%;
         max-width: calc(100% - 200px);
         padding: 0 15px;
 
-        .mwb-form-select {
+        .wps-form-select {
             &:hover {
                 select {
                     border-color: rgba(0, 0, 0, 0.87) !important;
@@ -222,7 +222,7 @@ select {
             height: 48px;
         }
     }
-    .mwb-password-hidden {
+    .wps-password-hidden {
         outline: none;
         opacity: 0.7;
         transition: opacity 0.2s linear;
@@ -249,11 +249,11 @@ select {
     padding: 16px;
 }
 
-.mwb-col-wrap {
+.wps-col-wrap {
     margin-bottom: 35px;
 }
 
-.mwb-options {
+.wps-options {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22) !important;
 }
 
@@ -272,7 +272,7 @@ select {
     color: $c-doger-blue !important;
 }
 
-#mwb-mfw-table-inner-container,
+#wps-mfw-table-inner-container,
 #public-hooks-listing,
 #admin-hooks-listing {
     width: 100%;

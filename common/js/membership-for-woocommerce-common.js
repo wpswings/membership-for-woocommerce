@@ -34,17 +34,17 @@
 
 
 jQuery(document).ready(function ($) {
-$(".mwb_membership_buynow").on("click", function (e) {
+$(".wps_membership_buynow").on("click", function (e) {
 	e.preventDefault();
-	let plan_price = $('#mwb_membership_plan_price').val();
-	let plan_id = $('#mwb_membership_plan_id').val();
-	let plan_title = $('#mwb_membership_title').val();
+	let plan_price = $('#wps_membership_plan_price').val();
+	let plan_id = $('#wps_membership_plan_id').val();
+	let plan_title = $('#wps_membership_title').val();
 
 	$.ajax({
 		url: mfw_common_param.ajaxurl,
 		type: "POST",
 		data: {
-			action: "mwb_membership_checkout",
+			action: "wps_membership_checkout",
 			plan_price: plan_price,
 			plan_id: plan_id,
 			plan_title: plan_title,

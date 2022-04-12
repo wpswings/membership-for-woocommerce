@@ -15,16 +15,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 // Template for showing information about system status.
-global $mfw_mwb_mfw_obj;
-$mfw_default_status = $mfw_mwb_mfw_obj->mwb_mfw_plug_system_status();
+global $mfw_wps_mfw_obj;
+$mfw_default_status = $mfw_wps_mfw_obj->wps_mfw_plug_system_status();
 $mfw_wordpress_details = is_array( $mfw_default_status['wp'] ) && ! empty( $mfw_default_status['wp'] ) ? $mfw_default_status['wp'] : array();
 $mfw_php_details = is_array( $mfw_default_status['php'] ) && ! empty( $mfw_default_status['php'] ) ? $mfw_default_status['php'] : array();
 ?>
-<div class="mwb-mfw-table-wrap">
-	<div class="mwb-col-wrap">
-		<div id="mwb-mfw-table-inner-container" class="table-responsive ">
+<div class="wps-mfw-table-wrap">
+	<div class="wps-col-wrap">
+		<div id="wps-mfw-table-inner-container" class="table-responsive ">
 			<div class="mdc-data-table__table-container">
-				<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-wp">
+				<table class="wps-mfw-table mdc-data-table__table wps-table" id="wps-mfw-wp">
 					<thead>
 						<tr>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'WP Variables', 'membership-for-woocommerce' ); ?></th>
@@ -47,10 +47,10 @@ $mfw_php_details = is_array( $mfw_default_status['php'] ) && ! empty( $mfw_defau
 			</div>
 		</div>
 	</div>
-	<div class="mwb-col-wrap">
-		<div id="mwb-mfw-table-inner-container" class="table-responsive ">
+	<div class="wps-col-wrap">
+		<div id="wps-mfw-table-inner-container" class="table-responsive ">
 			<div class="mdc-data-table__table-container">
-				<table class="mwb-mfw-table mdc-data-table__table mwb-table" id="mwb-mfw-sys">
+				<table class="wps-mfw-table mdc-data-table__table wps-table" id="wps-mfw-sys">
 					<thead>
 						<tr>
 							<th class="mdc-data-table__header-cell"><?php esc_html_e( 'System Variables', 'membership-for-woocommerce' ); ?></th>

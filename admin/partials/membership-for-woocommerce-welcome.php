@@ -14,25 +14,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit(); // Exit if accessed directly.
 }
-global $mfw_mwb_mfw_obj;
-$mfw_default_tabs = $mfw_mwb_mfw_obj->mwb_mfw_plug_default_tabs();
+global $mfw_wps_mfw_obj;
+$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
 $mfw_tab_key = '';
 ?>
 <header>
 	<?php
 	// desc - This hook is used for trial.
-	do_action( 'mwb_mfw_settings_saved_notice' );
+	do_action( 'wps_mfw_settings_saved_notice' );
 	?>
-	<div class="mwb-header-container mwb-bg-white mwb-r-8">
-		<h1 class="mwb-header-title"><?php echo esc_attr( __( 'WP Swings' ) ); ?></h1>
+	<div class="wps-header-container wps-bg-white wps-r-8">
+		<h1 class="wps-header-title"><?php echo esc_attr( __( 'WP Swings' ) ); ?></h1>
 	</div>
 </header>
-<main class="mwb-main mwb-bg-white mwb-r-8">
-	<section class="mwb-section">
+<main class="wps-main wps-bg-white wps-r-8">
+	<section class="wps-section">
 		<div>
 			<?php
 				// desc - This hook is used for trial.
-			do_action( 'mwb_mfw_before_common_settings_form' );
+			do_action( 'wps_mfw_before_common_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			$mfw_genaral_settings = apply_filters(
 				'mfw_home_settings_array',
@@ -57,17 +57,17 @@ $mfw_tab_key = '';
 				)
 			);
 			?>
-			<form action="" method="POST" class="mwb-mfw-gen-section-form">
+			<form action="" method="POST" class="wps-mfw-gen-section-form">
 				<div class="mfw-secion-wrap">
 					<?php
-					$mfw_general_html = $mfw_mwb_mfw_obj->mwb_mfw_plug_generate_html( $mfw_genaral_settings );
+					$mfw_general_html = $mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_genaral_settings );
 					echo esc_html( $mfw_general_html );
-					wp_nonce_field( 'admin_save_data', 'mwb_tabs_nonce' );
+					wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
 					?>
 				</div>
 			</form>
 			<?php
-			do_action( 'mwb_mfw_before_common_settings_form' );
+			do_action( 'wps_mfw_before_common_settings_form' );
 			$all_plugins = get_plugins();
 			?>
 		</div>
