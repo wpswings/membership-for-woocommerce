@@ -3165,26 +3165,7 @@ class Membership_For_Woocommerce_Public {
 		return $all_ids;
 	}
 
-	// /**
-	//  * Undocumented function
-	//  *
-	//  * @return void
-	//  */
-	// public function wps_membership_buy_now_add_to_cart() {
-
-	// 	if ( ! is_checkout() ) {
-	// 		if ( WC()->session->__isset( 'product_id' ) ) {
-
-	// 			$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
-	// 			// if cart empty, add it to cart.
-	// 			WC()->cart->empty_cart();
-
-	// 			WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
-	// 		}
-	// 		WC()->session->__unset( 'product_id' );
-
-	// 	}
-	// }
+ 
 
 	/**
 	 * Add to cart.
@@ -3210,6 +3191,13 @@ class Membership_For_Woocommerce_Public {
 					
 					add_action( 'woocommerce_before_cart', array( $this, 'add_cart_custom_notice' ) );
 					WC()->session->__unset( 'product_id' );
+				} else {
+					$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
+					WC()->cart->empty_cart();
+					// if no products in cart, add it.
+					WC()->cart->add_to_cart( $product_id );
+
+					wp_safe_redirect( wc_get_cart_url() );
 				}
 			} else {
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
@@ -3217,7 +3205,7 @@ class Membership_For_Woocommerce_Public {
 				// if no products in cart, add it.
 				WC()->cart->add_to_cart( $product_id );
 
-				wp_safe_redirect( wc_get_checkout_url() );
+				wp_safe_redirect( wc_get_cart_url() );
 
 			}
 			WC()->session->__unset( 'product_id' );
@@ -3233,7 +3221,7 @@ class Membership_For_Woocommerce_Public {
 		wc_print_notice(
 			sprintf(
 				'<span class="subscription-reminder">' .
-				__( 'Sorry we cannot recharge wallet with other products, either empty cart or recharge later when cart is empty', 'wallet-system-for-woocommerce' ) . '</span>',
+				__( 'Sorry we cannot add membership products with other products, either empty cart or add membership product later when cart is empty', 'membership-for-woocommerce' ) . '</span>',
 				__( 'empty', 'membership-for-woocommerce' )
 			),
 			'error'

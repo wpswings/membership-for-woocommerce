@@ -52,7 +52,7 @@ $(".wps_membership_buynow").on("click", function (e) {
 
 		success: function (response) {
 
-			window.location.replace('cart');
+			
 		}
 	});
 });
