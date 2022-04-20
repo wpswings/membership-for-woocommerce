@@ -2886,8 +2886,10 @@ class Membership_For_Woocommerce_Public {
 			}
 
 			if ( $product->get_id() == $cart_contents_value['product_id'] ) {
+				if( key_exists( 'plan_id', $cart_contents_value ) ) {
 
-				$wps_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
+					$wps_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
+				}
 
 				if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
 
@@ -3163,25 +3165,79 @@ class Membership_For_Woocommerce_Public {
 		return $all_ids;
 	}
 
+	// /**
+	//  * Undocumented function
+	//  *
+	//  * @return void
+	//  */
+	// public function wps_membership_buy_now_add_to_cart() {
+
+	// 	if ( ! is_checkout() ) {
+	// 		if ( WC()->session->__isset( 'product_id' ) ) {
+
+	// 			$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
+	// 			// if cart empty, add it to cart.
+	// 			WC()->cart->empty_cart();
+
+	// 			WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
+	// 		}
+	// 		WC()->session->__unset( 'product_id' );
+
+	// 	}
+	// }
+
 	/**
-	 * Undocumented function
+	 * Add to cart.
 	 *
 	 * @return void
 	 */
-	public function wps_membership_buy_now_add_to_cart() {
-
-		if ( ! is_checkout() ) {
-			if ( WC()->session->__isset( 'product_id' ) ) {
-
+	public function wps_membership_buy_now_add_to_cart() { 
+		if ( WC()->session->__isset( 'product_id' ) ) {
+			$product_id = WC()->session->get( 'product_id' );
+			
+			// check if product already in cart.
+			if ( count( WC()->cart->get_cart() ) > 0 ) {
+				
+				$found = false;
+				foreach ( WC()->cart->get_cart() as $cart_item ) {
+					$product_in_cart = $cart_item['product_id'];
+					if ( $product_in_cart == $product_id ) {
+						$found = true;
+					}
+				}
+				// if product not found, add it.
+				if ( ! $found ) {
+					
+					add_action( 'woocommerce_before_cart', array( $this, 'add_cart_custom_notice' ) );
+					WC()->session->__unset( 'product_id' );
+				}
+			} else {
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
-				// if cart empty, add it to cart.
 				WC()->cart->empty_cart();
+				// if no products in cart, add it.
+				WC()->cart->add_to_cart( $product_id );
 
-				WC()->cart->add_to_cart( WC()->session->get( 'product_id' ) );
+				wp_safe_redirect( wc_get_checkout_url() );
+
 			}
 			WC()->session->__unset( 'product_id' );
-
 		}
+	}
+
+	/**
+	 * Add notice on cart page if cart is already added with products
+	 *
+	 * @return void
+	 */
+	public function add_cart_custom_notice() {
+		wc_print_notice(
+			sprintf(
+				'<span class="subscription-reminder">' .
+				__( 'Sorry we cannot recharge wallet with other products, either empty cart or recharge later when cart is empty', 'wallet-system-for-woocommerce' ) . '</span>',
+				__( 'empty', 'membership-for-woocommerce' )
+			),
+			'error'
+		);
 	}
 
 	/**

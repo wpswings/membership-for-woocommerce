@@ -92,7 +92,7 @@ class Membership_For_Woocommerce_Common {
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 
 		global $wp_session;
-		WC()->cart->empty_cart();
+		
 		$wp_session['plan_price'] = $plan_price;
 		$wp_session['plan_title'] = $plan_title;
 		$wp_session['plan_id']    = $plan_id;
