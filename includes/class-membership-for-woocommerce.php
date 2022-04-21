@@ -418,6 +418,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'wps_membership_hide_quantity_fields_for_membership', 10, 2 );
 			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'wps_membership_validate_email', 10, 2 );
+
+			// Login at thank you page.
+			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
 		}
 	}
 

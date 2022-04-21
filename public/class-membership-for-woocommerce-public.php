@@ -542,7 +542,7 @@ class Membership_For_Woocommerce_Public {
 									$page_link
 								);
 
-								if ( is_user_logged_in() ) {
+								
 
 									// Show plans under review.
 
@@ -610,14 +610,7 @@ class Membership_For_Woocommerce_Public {
 	</div>';
 										}
 									}
-								} else {
-									echo '<div  class="plan_suggestion" >
-											<div>
-												<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" >' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
-											</div>
-										</div>';
-									break;
-								}
+								
 							}
 						}
 
@@ -651,7 +644,7 @@ class Membership_For_Woocommerce_Public {
 										$page_link
 									);
 
-									if ( is_user_logged_in() ) {
+									
 										$disable_required = false;
 										// Show plans under review.
 										if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
@@ -715,14 +708,7 @@ class Membership_For_Woocommerce_Public {
 		</div>';
 											}
 										}
-									} else {
-										echo '<div>
-												<div class="plan_suggestion" >
-													<a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" >' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
-												</div>
-											</div>';
-										break;
-									}
+									
 								}
 							}
 						}
@@ -3612,6 +3598,26 @@ class Membership_For_Woocommerce_Public {
 
 		if ( $is_not_membership_applicable ) {
 			   $errors->add( 'validation', 'Membership plan already exists Buy a new plan !!' );
+		}
+	}
+
+
+	public function wps_membership_login_thanku_page( $order_id ) {
+		$order = new WC_Order( $order_id );
+		$items = $order->get_items(); 
+		foreach ( $items as $item ) {
+			$product_id = $item['product_id'];
+			$product = wc_get_product( $product_id );
+			if( 'Membership Product' == $product->get_title() ) { 
+				if ( ! is_user_logged_in() ) {
+
+					$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Products!', 'membership-for-woocommerce' )  .
+					'</strong><br><span style="color:red;">' . esc_html__( ' To Access Membership Please Login/Signup First. ', 'membership-for-woocommerce' ) . '</span><a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
+					</div>';
+					echo $html;
+				 }
+				
+			}
 		}
 	}
 
