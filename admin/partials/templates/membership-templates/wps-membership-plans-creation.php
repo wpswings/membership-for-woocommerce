@@ -195,7 +195,7 @@ global $post;
 			<?php
 			if ( wps_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
 
-
+				
 				?>
 		</tr>
 		<!-- Plan Duration End. -->

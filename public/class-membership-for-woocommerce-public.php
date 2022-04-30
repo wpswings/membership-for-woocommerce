@@ -2225,6 +2225,13 @@ class Membership_For_Woocommerce_Public {
 						update_post_meta( $member_id, 'member_expiry', $expiry_date );
 					}
 				}
+				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
+				if ( 'Lifetime' == $expiry_date ) {
+					$expiry_date = 'Lifetime';
+				} else {
+					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
+	
+				}
 				$user_id = get_current_user_id();
 				$user = get_userdata( $user_id );
 				$user_name = $user->data->display_name;
