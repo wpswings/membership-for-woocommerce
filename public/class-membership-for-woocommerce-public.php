@@ -3617,11 +3617,16 @@ class Membership_For_Woocommerce_Public {
 			$product = wc_get_product( $product_id );
 			if( 'Membership Product' == $product->get_title() ) { 
 				if ( ! is_user_logged_in() ) {
+					$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
+
+					if ( 'on' !== $is_user_created ) {
 
 					$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Products!', 'membership-for-woocommerce' )  .
 					'</strong><br><span style="color:red;">' . esc_html__( ' To Access Membership Please Login/Signup First. ', 'membership-for-woocommerce' ) . '</span><a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 					</div>';
 					echo $html;
+					}
+
 				 }
 				
 			}
