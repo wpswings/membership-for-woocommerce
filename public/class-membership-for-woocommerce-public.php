@@ -3621,9 +3621,12 @@ class Membership_For_Woocommerce_Public {
 
 					if ( 'on' !== $is_user_created ) {
 
-					$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Products!', 'membership-for-woocommerce' )  .
+					$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Products! Check your mail for the login Credential', 'membership-for-woocommerce' )  .
 					'</strong><br><span style="color:red;">' . esc_html__( ' To Access Membership Please Login/Signup First. ', 'membership-for-woocommerce' ) . '</span><a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
 					</div>';
+					echo $html;
+					} else {
+						$html = '<div style="color:red;"><strong>' . esc_html__( ' Thank You For Purchasing Membership Products!', 'membership-for-woocommerce' )  . '<br><span style="color:blue;">' . esc_html__( 'You will get your Login Credential when Shop Owner will complete your Order and then after Login You can access your membership.', 'membership-for-woocommerce' )  .	'</span></div>';
 					echo $html;
 					}
 

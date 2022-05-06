@@ -102,7 +102,13 @@ jQuery(document).ready( function($) {
 		});
 	}
 
-
+	if ( localised.pending_count == 0 && localised.shortcode_count == 0 ) {
+		
+		jQuery( ".treat-button" ).hide();
+	}else{
+		jQuery( ".treat-button" ).show();
+		
+	}
 	
 	 
 });
