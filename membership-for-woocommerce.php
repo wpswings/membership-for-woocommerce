@@ -79,8 +79,17 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 	}
 }
 
+if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-	add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2');
+	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count'  );
+	$wps_count_users   = $wps_mfw_get_count->wps_membership_get_count( 'shortcode', 'count' ) ; 
+
+	if ( $wps_pending_par != '0' && $wps_count_users != '0' ) {
+
+		add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
+	}
+}
 		/**
 		 * Migration to new domain notice.
 		 *
