@@ -2595,6 +2595,11 @@ class Membership_For_Woocommerce_Admin {
 			case 'pending':
 				$post_meta_keys = array(
 					'mwb_membership_plan_price',
+					'_mwb_sfw_product',
+					'mwb_sfw_subscription_number',
+					'mwb_sfw_subscription_interval',
+					'mwb_sfw_subscription_expiry_number',
+					'mwb_sfw_subscription_expiry_interval',
 					'mwb_membership_plan_info',
 					'mwb_membership_plan_name_access_type',
 					'mwb_membership_plan_duration',
@@ -2729,6 +2734,11 @@ class Membership_For_Woocommerce_Admin {
 					$result = array_merge( $result, $temp2 );
 
 				}
+				if ( is_array( $result ) && is_array( $temp3 ) ) {
+
+					$result = array_merge( $result, $temp3 );
+
+				}
 				if ( is_array( $result ) && is_array( $temp4 ) ) {
 
 					$result = array_merge( $result, $temp4 );
@@ -2787,7 +2797,11 @@ class Membership_For_Woocommerce_Admin {
 
 				$post_meta_keys = array(
 					'mwb_membership_plan_price',
-					'plan_obj',
+					'_mwb_sfw_product',
+					'mwb_sfw_subscription_number',
+					'mwb_sfw_subscription_interval',
+					'mwb_sfw_subscription_expiry_number',
+					'mwb_sfw_subscription_expiry_interval',
 					'mwb_membership_plan_info',
 					'mwb_membership_plan_name_access_type',
 					'mwb_membership_plan_duration',
@@ -2830,6 +2844,7 @@ class Membership_For_Woocommerce_Admin {
 					'mwb_membership_plan_target_disc_categories',
 					'mwb_membership_plan_target_disc_tags',
 					'_mwb_membership_discount_',
+					'plan_obj',
 					'mwb_membership_exclude',
 					'mwb_membership_plan_info',
 					'mwb_memebership_product_discount_price',
@@ -2959,54 +2974,6 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 		return compact( 'products' );
-	}
-
-
-
-
-	/**
-	 * Import product callback.
-	 *
-	 * @param array $product_data The $_POST data.
-	 */
-	public function wps_mfw_import_shortcode( $product_data = array() ) {
-
-		$shortcodes = ! empty( $product_data['shortcodes'] ) ? $product_data['shortcodes'] : array();
-
-		if ( empty( $shortcodes ) ) {
-			return compact( 'shortcodes' );
-		}
-
-		// Remove this product from request.
-		foreach ( $shortcodes as $key => $product ) {
-			$product_id = ! empty( $product['ID'] ) ? $product['ID'] : false;
-			unset( $shortcodes[ $key ] );
-			break;
-		}
-
-		// Attempt for one product.
-		if ( ! empty( $product_id ) ) {
-
-			try {
-
-				$post = get_post( $product_id );
-				$content = $post->post_content;
-
-				$content = str_replace( 'MWB_', 'WPS_', $content );
-				$content = str_replace( 'mwb_', 'wps_', $content );
-				$my_post = array(
-					'ID'           => $product_id,
-					'post_content' => $content,
-				);
-
-				wp_update_post( $my_post );
-
-			} catch ( \Throwable $th ) {
-				wp_die( esc_html( $th->getMessage() ) );
-			}
-		}
-		update_option( 'wps_membership_migrated_successfully', 'yes' );
-		return compact( 'shortcodes' );
 	}
 
 
