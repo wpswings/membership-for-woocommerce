@@ -33,7 +33,7 @@
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
-} 
+}
 
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
