@@ -22,9 +22,9 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      5.9.3
+ * Tested up to:      6.0.0
  * WC requires at least: 4.0
- * WC tested up to:   6.3.1
+ * WC tested up to:   6.5.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -81,11 +81,10 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2');
-	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count'  );
-	$wps_count_users   = $wps_mfw_get_count->wps_membership_get_count( 'shortcode', 'count' ) ; 
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2' );
+	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
 
-	if ( $wps_pending_par != '0' && $wps_count_users != '0' ) {
+	if ( 0 != $wps_pending_par ) {
 
 		add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
 	}
@@ -196,14 +195,13 @@ if ( true === $old_mfw_pro_present ) {
 		$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'membership-for-woocommerce-pro/class-membership-for-woocommerce-pro-update.php';
 
 		// If present but not active.
-		
-			if ( file_exists( $update_file ) ) {
-				$wps_mfw_pro_license_key = get_option( 'mwb_mfwp_license_check', '' );
-				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_mfw_pro_license_key );
-				! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-			}
+
+		if ( file_exists( $update_file ) ) {
+			$wps_mfw_pro_license_key = get_option( 'mwb_mfwp_license_check', '' );
+			! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_mfw_pro_license_key );
+			! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
+		}
 			require_once $update_file;
-		
 
 		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
 
@@ -660,7 +658,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
 				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-
+				Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 				update_option( 'is_wps_migration_done', 'done', true );
 			}
 
@@ -709,9 +707,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
 				$sfw_plugins = get_plugins();
 				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0' ) {
-					
+
 					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-					
+
 				}
 			}
 		}
@@ -759,6 +757,5 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 }
-
 
 

@@ -564,21 +564,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		return $formatted_all_membership;
 	}
 
-	/**
-	 * Function to run query.
-	 *
-	 * @param string $query Is the query.
-	 * @return mixed
-	 *
-	 * @since 1.0.0
-	 */
-	public function run_query( $query = '' ) {
-
-		global $wpdb;
-		$result = ! empty( $wpdb->get_results( $query, ARRAY_A ) ) ? $wpdb->get_results( $query, ARRAY_A ) : false; // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared.
-
-		return $result;
-	}
 
 	/**
 	 * Maps the CSV data.

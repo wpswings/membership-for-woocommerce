@@ -5,8 +5,7 @@ jQuery(document).ready( function($) {
 	const action          = localised.callback;
 	const pending_count  = localised.pending_count;
 	const pending_products = localised.pending_products;
-	const shortcode_count  = localised.shortcode_count;
-	const shortcode_products = localised.shortcode_products;
+
 	
 	
 
@@ -16,7 +15,7 @@ jQuery(document).ready( function($) {
 		
 		Swal.fire({
 			icon: 'warning',
-			title: ' We Have got ' + pending_count + ' Products!<br/> And ' + shortcode_count + ' post to check shortcodes ! ',
+			title: ' We Have got ' + pending_count + ' Products! ',
 			text: 'Click to start import',
 			footer: 'Please do not reload/close this page until prompted',
 			showCloseButton: true,
@@ -63,35 +62,6 @@ jQuery(document).ready( function($) {
 			if( ! jQuery.isEmptyObject(products) ) {
 				startImport(products);
 			} else {
-				Swal.fire({
-					title   : 'shortcodes are being imported!',
-					html    : 'Do not reload/close this tab.',
-					footer  : '<span class="order-progress-report">' + shortcode_count + ' are left to import',
-					didOpen: () => {
-						Swal.showLoading()
-					}
-				});
-				start_shortcode_Import( shortcode_products );
-			}
-		}, function(error) {
-			console.error(error);
-		});
-	}
-
-	const start_shortcode_Import = ( shortcodes ) => {
-		var event   = 'wps_mfw_import_shortcode';
-		var request = { action, event, nonce, shortcodes };
-		jQuery.post( ajaxUrl , request ).done(function( response ){
-			
-			posts = JSON.parse( response );
-		}).then(
-		function( shortcodes ) {
-			shortcodes = JSON.parse( shortcodes ).shortcodes;
-			count = Object.keys(shortcodes).length;
-			jQuery('.order-progress-report').text( count + ' are left to import' );
-			if( ! jQuery.isEmptyObject(shortcodes) ) {
-				start_shortcode_Import(shortcodes);
-			} else {
 				// All users imported!
 				Swal.fire('All of the Data are Migrated successfully!', '', 'success').then(() => {
 					window.location.reload();
@@ -102,7 +72,9 @@ jQuery(document).ready( function($) {
 		});
 	}
 
-	if ( localised.pending_count == 0 && localised.shortcode_count == 0 ) {
+	
+
+	if ( localised.pending_count == 0 ) {
 		
 		jQuery( ".treat-button" ).hide();
 	}else{
@@ -110,12 +82,12 @@ jQuery(document).ready( function($) {
 		
 	}
 	
-	 
+	
 });
 var wps_membership_migration_success = function() {
 	
 	
-	if ( localised.pending_count != 0 || localised.shortcode_count != 0 ) {
+	if ( localised.pending_count != 0 ) {
 		jQuery( ".treat-button" ).click();
 		jQuery( ".treat-button" ).show();
 	}else{

@@ -17,14 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.0');
-	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count'  );
-	$wps_count_users   = $wps_mfw_get_count->wps_membership_get_count( 'shortcode', 'count' ) ; 
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.0' );
+	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
 
-	
 
-	if ( $wps_pending_par != '0' && $wps_count_users != '0' ) {
-		
+
+
+	if ( 0 != $wps_pending_par ) {
+
 
 				$wps_par_global_custom_css = 'const triggerError = () => {
 					swal({
@@ -42,6 +42,6 @@ if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 			wp_register_script( 'wps_par_incompatible_css', false, array(), '2.1.1', 'all' );
 			wp_enqueue_script( 'wps_par_incompatible_css' );
 			wp_add_inline_script( 'wps_par_incompatible_css', $wps_par_global_custom_css );
-		
+
 	}
 }
