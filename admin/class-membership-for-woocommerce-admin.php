@@ -581,7 +581,9 @@ class Membership_For_Woocommerce_Admin {
 		$instance = $this->global_class;
 
 		$wps_membership_global_settings = ! empty( get_option( 'wps_membership_global_options' ) ) ? get_option( 'wps_membership_global_options' ) : $instance->default_global_options();
-
+		if( ! empty( $wps_membership_global_settings ) ) {
+			$wps_membership_global_settings = array();
+		}
 		$wps_membership_global_settings['wps_membership_enable_plugin'] = ! empty( get_option( 'wps_membership_enable_plugin' ) ) ? get_option( 'wps_membership_enable_plugin' ) : '';
 		$wps_membership_global_settings['wps_membership_delete_data'] = ! empty( get_option( 'wps_membership_delete_data' ) ) ? get_option( 'wps_membership_delete_data' ) : '';
 		$wps_membership_global_settings['wps_membership_plan_user_history'] = get_option( 'wps_membership_plan_user_history' );
