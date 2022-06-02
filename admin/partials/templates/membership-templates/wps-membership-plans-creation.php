@@ -440,7 +440,7 @@ global $post;
 							$wps_membership_product_offer_price_type = $settings_fields['wps_membership_product_offer_price_type'];
 
 							$wps_membership_product_discount_price = $settings_fields['wps_memebership_product_discount_price'];
-							if( empty( $wps_membership_product_discount_price ) ) {
+							if ( empty( $wps_membership_product_discount_price ) ) {
 
 								$wps_membership_product_discount_price = 0;
 							}
@@ -887,7 +887,7 @@ global $post;
 						$wps_membership_plan_offer_price_type = $settings_fields['wps_membership_plan_offer_price_type'];
 
 						$wps_membership_plan_discount_price = $settings_fields['wps_memebership_plan_discount_price'];
-						if( empty( $wps_membership_plan_discount_price ) ) {
+						if ( empty( $wps_membership_plan_discount_price ) ) {
 
 							$wps_membership_plan_discount_price = 0;
 						}

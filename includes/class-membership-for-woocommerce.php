@@ -261,7 +261,7 @@ class Membership_For_Woocommerce {
 
 		// Save meta box fields.
 		$this->loader->add_action( 'save_post_wps_cpt_membership', $mfw_plugin_admin, 'wps_membership_for_woo_save_fields' );
-		
+
 		$this->loader->add_action( 'edit_post_wps_cpt_members', $mfw_plugin_admin, 'wps_membership_save_member_fields' );
 
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'wps_membership_woo_order_status_change_custom', 10, 3 );
@@ -282,14 +282,18 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'wps_membership_new_modify_user_table_value' );
 		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'wps_membership_new_column_value_assign', 10, 1 );
-		
-		$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_migrate_db_keys_notice', 10, 1 );
+		if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-		
+			$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2' );
+			$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
+
+			if ( 0 != $wps_pending_par ) {
+
+				$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_migrate_db_keys_notice', 10, 1 );
+			}
+		}
+
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
-		
-
-
 
 	}
 
@@ -418,6 +422,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'wps_membership_hide_quantity_fields_for_membership', 10, 2 );
 			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'wps_membership_validate_email', 10, 2 );
+
+			// Login at thank you page.
+			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
 		}
 	}
 

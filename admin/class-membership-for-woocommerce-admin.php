@@ -332,8 +332,6 @@ class Membership_For_Woocommerce_Admin {
 				'callback'         => 'wps_membership_ajax_callbacks',
 				'pending_count'    => $this->wps_membership_get_count( 'pending', 'count' ),
 				'pending_products'   => $this->wps_membership_get_count( 'pending', 'products' ),
-				'shortcode_count'    => $this->wps_membership_get_count( 'shortcode', 'count' ),
-				'shortcode_products'   => $this->wps_membership_get_count( 'shortcode', 'shortcodes' ),
 
 			)
 		);
@@ -583,7 +581,9 @@ class Membership_For_Woocommerce_Admin {
 		$instance = $this->global_class;
 
 		$wps_membership_global_settings = ! empty( get_option( 'wps_membership_global_options' ) ) ? get_option( 'wps_membership_global_options' ) : $instance->default_global_options();
-
+		if( ! empty( $wps_membership_global_settings ) ) {
+			$wps_membership_global_settings = array();
+		}
 		$wps_membership_global_settings['wps_membership_enable_plugin'] = ! empty( get_option( 'wps_membership_enable_plugin' ) ) ? get_option( 'wps_membership_enable_plugin' ) : '';
 		$wps_membership_global_settings['wps_membership_delete_data'] = ! empty( get_option( 'wps_membership_delete_data' ) ) ? get_option( 'wps_membership_delete_data' ) : '';
 		$wps_membership_global_settings['wps_membership_plan_user_history'] = get_option( 'wps_membership_plan_user_history' );
@@ -2595,68 +2595,13 @@ class Membership_For_Woocommerce_Admin {
 
 		switch ( $type ) {
 			case 'pending':
-				global $wpdb;
-				$table = $wpdb->prefix . 'postmeta';
-				$sql = "SELECT DISTINCT ( `post_id` )
-				FROM $table WHERE ( (`meta_key` LIKE '%mwb_member%') OR ( `meta_key` LIKE '%plan_obj%' AND `meta_value` LIKE '%mwb%') ) ";
-				break;
-
-			case 'shortcode':
-				global $wpdb;
-				$table = $wpdb->prefix . 'posts';
-				$sql = "SELECT DISTINCT (`ID`)
-				FROM $table
-				WHERE ( $table.post_type = 'page' OR $table.post_type = 'post' ) AND ( $table.post_content LIKE '%mwb%' OR $table.post_content LIKE '%MWB%' )";
-				break;
-
-			default:
-				$sql = false;
-				break;
-		}
-
-		if ( empty( $sql ) ) {
-			return 0;
-		}
-
-		global $wpdb;
-		$result = $wpdb->get_results( $sql, ARRAY_A ); // @codingStandardsIgnoreLine.
-
-		if ( 'count' === $action ) {
-			$result = ! empty( $result ) ? count( $result ) : 0;
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Import product callback.
-	 *
-	 * @param array $product_data The $_POST data.
-	 */
-	public function wps_mfw_import_single_product( $product_data = array() ) {
-
-		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
-
-		// return $products.
-		if ( empty( $products ) ) {
-			return compact( 'products' );
-		}
-
-		// Remove this product from request.
-		foreach ( $products as $key => $product ) {
-			$product_id = ! empty( $product['post_id'] ) ? $product['post_id'] : false;
-			unset( $products[ $key ] );
-			break;
-		}
-
-		// Attempt for one product.
-		if ( ! empty( $product_id ) ) {
-
-			try {
-
 				$post_meta_keys = array(
 					'mwb_membership_plan_price',
-					'plan_obj',
+					'_mwb_sfw_product',
+					'mwb_sfw_subscription_number',
+					'mwb_sfw_subscription_interval',
+					'mwb_sfw_subscription_expiry_number',
+					'mwb_sfw_subscription_expiry_interval',
 					'mwb_membership_plan_info',
 					'mwb_membership_plan_name_access_type',
 					'mwb_membership_plan_duration',
@@ -2714,6 +2659,209 @@ class Membership_For_Woocommerce_Admin {
 					'_mwb_membership_discount_product_price',
 				);
 
+				$result = get_posts(
+					array(
+						'post_type' => 'product',
+						'post_status'    => array( 'publish', 'draft', 'trash' ),
+						'numberposts'       => -1,
+						'meta_key' => $post_meta_keys,
+						'fields'         => 'ids',
+					)
+				);
+					$temp2 = get_posts(
+						array(
+							'post_type' => 'product_variation',
+							'post_status'    => array( 'publish', 'draft', 'trash' ),
+							'numberposts'       => -1,
+							'meta_key' => $post_meta_keys,
+							'fields'         => 'ids',
+						)
+					);
+					$temp3 = get_posts(
+						array(
+							'post_type' => 'mwb_cpt_members',
+							'post_status'    => array( 'publish', 'draft', 'trash' ),
+							'numberposts'       => -1,
+							'meta_key' => $post_meta_keys,
+							'fields'         => 'ids',
+						)
+					);
+					$temp4 = get_posts(
+						array(
+							'post_type' => 'mwb_cpt_membership',
+							'post_status'    => array( 'publish', 'draft', 'trash' ),
+							'numberposts'       => -1,
+							'meta_key' => $post_meta_keys,
+							'fields'         => 'ids',
+						)
+					);
+					$temp5 = get_posts(
+						array(
+							'post_type' => 'wps_cpt_membership',
+							'post_status'    => array( 'publish', 'draft', 'trash' ),
+							'numberposts'       => -1,
+							'meta_key' => $post_meta_keys,
+							'fields'         => 'ids',
+						)
+					);
+					$temp6 = get_posts(
+						array(
+							'post_type' => 'wps_cpt_members',
+							'post_status'    => array( 'publish', 'draft', 'trash' ),
+							'numberposts'       => -1,
+							'meta_key' => $post_meta_keys,
+							'fields'         => 'ids',
+						)
+					);
+				if ( empty( $result ) ) {
+					$result = array();
+				}
+				if ( empty( $temp2 ) ) {
+					$temp2 = array();
+				}
+				if ( empty( $temp3 ) ) {
+					$temp3 = array();
+				}
+				if ( empty( $temp4 ) ) {
+					$temp4 = array();
+				}
+				if ( empty( $temp5 ) ) {
+					$temp5 = array();
+				}
+				if ( empty( $temp6 ) ) {
+					$temp6 = array();
+				}
+				if ( is_array( $result ) && is_array( $temp2 ) ) {
+
+					$result = array_merge( $result, $temp2 );
+
+				}
+				if ( is_array( $result ) && is_array( $temp3 ) ) {
+
+					$result = array_merge( $result, $temp3 );
+
+				}
+				if ( is_array( $result ) && is_array( $temp4 ) ) {
+
+					$result = array_merge( $result, $temp4 );
+
+				}
+				if ( is_array( $result ) && is_array( $temp5 ) ) {
+
+					$result = array_merge( $result, $temp5 );
+
+				}
+				if ( is_array( $result ) && is_array( $temp6 ) ) {
+
+					$result = array_merge( $result, $temp6 );
+
+				}
+				$final_result = array();
+				foreach ( $result as $key => $value ) {
+					$final_result[]['post_id'] = $value;
+				}
+				break;
+
+		}
+
+		if ( 'count' === $action ) {
+			$final_result = ! empty( $final_result ) ? count( $final_result ) : 0;
+		}
+
+		return $final_result;
+	}
+
+	/**
+	 * Import product callback.
+	 *
+	 * @param array $product_data The $_POST data.
+	 */
+	public function wps_mfw_import_single_product( $product_data = array() ) {
+
+		$products = ! empty( $product_data['products'] ) ? $product_data['products'] : array();
+
+		// return $products.
+		if ( empty( $products ) ) {
+			return compact( 'products' );
+		}
+
+		// Remove this product from request.
+		foreach ( $products as $key => $product ) {
+			$product_id = ! empty( $product['post_id'] ) ? $product['post_id'] : false;
+			unset( $products[ $key ] );
+			break;
+		}
+
+		// Attempt for one product.
+		if ( ! empty( $product_id ) ) {
+
+			try {
+
+				$post_meta_keys = array(
+					'mwb_membership_plan_price',
+					'_mwb_sfw_product',
+					'mwb_sfw_subscription_number',
+					'mwb_sfw_subscription_interval',
+					'mwb_sfw_subscription_expiry_number',
+					'mwb_sfw_subscription_expiry_interval',
+					'mwb_membership_plan_info',
+					'mwb_membership_plan_name_access_type',
+					'mwb_membership_plan_duration',
+					'mwb_membership_plan_duration_type',
+					'mwb_membership_subscription',
+					'mwb_membership_subscription_expiry',
+					'mwb_membership_subscription_expiry_type',
+					'mwb_membership_plan_recurring',
+					'mwb_membership_plan_access_type',
+					'mwb_membership_plan_time_duration',
+					'mwb_membership_plan_time_duration_type',
+					'mwb_membership_plan_offer_price_type',
+					'mwb_memebership_plan_discount_price',
+					'mwb_memebership_plan_free_shipping',
+					'mwb_membership_show_notice',
+					'mwb_membership_notice_message',
+					'mwb_membership_plan_target_categories',
+					'mwb_membership_plan_target_ids',
+					'mwb_membership_plan_post_target_ids',
+					'mwb_membership_plan_target_tags',
+					'mwb_membership_plan_target_post_categories',
+					'mwb_membership_club',
+					'mwb_membership_plan_page_target_ids',
+					'mwb_membership_plan_target_disc_categories',
+					'mwb_membership_plan_target_disc_tags',
+					'mwb_membership_plan_target_disc_ids',
+					'mwb_membership_product_offer_price_type',
+					'mwb_memebership_product_discount_price',
+					'mwb_member_user',
+					'_mwb_membership_exclude',
+					'_mwb_membership_discount_product_',
+					'_mwb_membership_discount_product_price',
+					'mwb_membership_plan_target_ids_search',
+					'mwb_membership_plan_hide_products',
+					'_mwb_membership_percentage',
+					'mwb_membership_plan_target_post_tags',
+					'mwb_membership_plan_price',
+					'_mwb_membership_percentage_',
+					'mwb_membership_plan_target_disc_ids',
+					'mwb_membership_plan_target_disc_categories',
+					'mwb_membership_plan_target_disc_tags',
+					'_mwb_membership_discount_',
+					'plan_obj',
+					'mwb_membership_exclude',
+					'mwb_membership_plan_info',
+					'mwb_memebership_product_discount_price',
+					'mwb_membership_product_offer_price_type',
+					'mwb_membership_club',
+					'mwb_membership_plan_target_ids',
+					'mwb_membership_plan_target_categories',
+					'mwb_membership_plan_target_tags',
+					'mwb_membership_plan_hide_products',
+					'_mwb_membership_discount',
+					'mwb_membership_product_offer_price_type',
+					'_mwb_membership_discount_product_',
+					'_mwb_membership_discount_product_price',
+				);
+
 				foreach ( $post_meta_keys as $key => $meta_keys ) {
 					if ( ! empty( $product_id ) ) {
 
@@ -2744,19 +2892,6 @@ class Membership_For_Woocommerce_Admin {
 
 								update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
 								continue;
-							} else {
-								$sql = "SELECT `meta_value`
-									FROM `wp_postmeta`
-									WHERE (`meta_key` = 'plan_obj' ) AND `post_id` LIKE '%" . $product_id . "%'";
-									global $wpdb;
-									$result = $wpdb->get_results( $sql, ARRAY_A );
-
-								if ( ! empty( $result ) && is_array( $result ) ) {
-									$plan_data = $result[0]['meta_value'];
-									$plan_data = str_replace( 'mwb', 'wps', $plan_data );
-
-									update_post_meta( $product_id, 'plan_obj', $plan_data );
-								}
 							}
 						} else {
 
@@ -2810,22 +2945,6 @@ class Membership_For_Woocommerce_Admin {
 									}
 								}
 							}
-						} else if ( 'plan_obj' == $meta_keys ) {
-							$plan_obj_array = get_post_meta( $product_id, 'plan_obj', true );
-							$plan_obj_array2 = array();
-							if ( ! empty( $plan_obj_array ) ) {
-
-								foreach ( $plan_obj_array as $key => $values ) {
-									if ( ! is_array( $values ) && $key && $values ) {
-										$new_key = str_replace( 'mwb_', 'wps_', $key );
-										$new_value = str_replace( 'mwb_', 'wps_', $values );
-										$plan_obj_array2[ $new_key ] = $new_value;
-									}
-								}
-								update_option( 'plan_obj', 'migrated' );
-								update_post_meta( $product_id, 'plan_obj', $plan_obj_array2 );
-								continue;
-							}
 						} else {
 									$values  = get_post_meta( $product_id, $meta_keys, true );
 									$new_key = str_replace( 'mwb_', 'wps_', $meta_keys );
@@ -2857,54 +2976,6 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 		return compact( 'products' );
-	}
-
-
-
-
-	/**
-	 * Import product callback.
-	 *
-	 * @param array $product_data The $_POST data.
-	 */
-	public function wps_mfw_import_shortcode( $product_data = array() ) {
-
-		$shortcodes = ! empty( $product_data['shortcodes'] ) ? $product_data['shortcodes'] : array();
-
-		if ( empty( $shortcodes ) ) {
-			return compact( 'shortcodes' );
-		}
-
-		// Remove this product from request.
-		foreach ( $shortcodes as $key => $product ) {
-			$product_id = ! empty( $product['ID'] ) ? $product['ID'] : false;
-			unset( $shortcodes[ $key ] );
-			break;
-		}
-
-		// Attempt for one product.
-		if ( ! empty( $product_id ) ) {
-
-			try {
-
-				$post = get_post( $product_id );
-				$content = $post->post_content;
-
-				$content = str_replace( 'MWB_', 'WPS_', $content );
-				$content = str_replace( 'mwb_', 'wps_', $content );
-				$my_post = array(
-					'ID'           => $product_id,
-					'post_content' => $content,
-				);
-
-				wp_update_post( $my_post );
-
-			} catch ( \Throwable $th ) {
-				wp_die( esc_html( $th->getMessage() ) );
-			}
-		}
-		update_option( 'wps_membership_migrated_successfully', 'yes' );
-		return compact( 'shortcodes' );
 	}
 
 

@@ -138,11 +138,11 @@ class Membership_For_Woocommerce_Activator {
 
 						 }
 				}
-				
+
 				self::mfw_upgrade_wp_options();
 				self::mfw_migrate_membership_post_type();
-				
-				
+				self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+
 				restore_current_blog();
 			}
 
@@ -238,11 +238,11 @@ class Membership_For_Woocommerce_Activator {
 			}
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
-			
+
 			self::mfw_upgrade_wp_options();
 			self::mfw_migrate_membership_post_type();
-			
-			
+			self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
+
 		}
 	}
 
@@ -321,6 +321,52 @@ class Membership_For_Woocommerce_Activator {
 			}
 		}
 	}
-	
+
+	/**
+	 * Function for shortcode migration.
+	 *
+	 * @return void
+	 */
+	public static function wpg_mfw_replace_mwb_to_wps_in_shortcodes() {
+		$all_product_ids = get_posts(
+			array(
+				'post_type' => 'product',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_post_ids = get_posts(
+			array(
+				'post_type' => 'post',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_page_ids = get_posts(
+			array(
+				'post_type' => 'page',
+				'posts_per_page' => -1,
+				'post_status' => 'publish',
+				'fields' => 'ids',
+			)
+		);
+		$all_ids = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
+		foreach ( $all_ids as $id ) {
+			$post = get_post( $id );
+			$content = $post->post_content;
+
+			$content = str_replace( 'MWB_', 'WPS_', $content );
+			$content = str_replace( 'mwb_', 'wps_', $content );
+			$my_post = array(
+				'ID'           => $id,
+				'post_content' => $content,
+			);
+			wp_update_post( $my_post );
+
+		}
+	}
+
 
 }

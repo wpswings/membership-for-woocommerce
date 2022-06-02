@@ -1,12 +1,13 @@
-=== Membership For WooCommerce- Perfect MembersOnly Plugin for Offering Memberships Plan, Offers & Discounts ===
-Contributors: WP Swings
+Download
+=== Membership for WooCommerce - Add Simple Membership Plans, Recurring Revenue, User Registration & User Profiles ===
+Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: membership, memberships, member, user registration, woocommerce 
+Tags: membership, membership plan, members-only, subscription, User Registration, user profile
 Requires at least: 5.0
-Tested up to: 5.9.3
+Tested up to: 6.0.0
 WC requires at least: 4.0.0
-WC tested up to: 6.3.1
-Stable tag: 2.1.1
+WC tested up to: 6.5.1
+Stable tag: 2.1.2
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -15,29 +16,28 @@ Membership for WooCommerce plugin provides a restriction on access to any facili
 
 == Description ==
 
-***BUILD YOUR ECOMMERCE COMMUNITY THROUGH USER REGISTRATION WITH MEMBERSHIP FOR WOOCOMMERCE AND CHARM USER PROFILES WITH MEMBERS-ONLY OFFERS***
+**BUILD YOUR ECOMMERCE COMMUNITY THROUGH USER REGISTRATION WITH MEMBERSHIP FOR WOOCOMMERCE AND CHARM USER PROFILES WITH MEMBERS-ONLY OFFERS**
 
-Membership for WooCommerce Plugin is the missing piece of your eCommerce store that allows you to create membersonly space in your store. Get your memberships website going with the smartest option of the Membership for WooCommerce plugin. 
-
-The absolute WooCommerce Memberships plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using memberships plans. Additionally, offer membership plans as subscriptions to users for limited access to your eCommerce store
+Membership for WooCommerce Plugin is the missing piece of your eCommerce store that allows you to create members only space in your store. Get your memberships website going with the smartest option of the Membership for WooCommerce plugin. The absolute WooCommerce Memberships plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using memberships plans. Additionally, offer membership plans as subscriptions to users for limited access to your eCommerce store
 
 It gets on directly to give you a way out of the three most customary pain points related to the WooCommerce membership store:
 
  * Restriction on access for any facility
  * Adding recurring revenue based on memberships
  * Engaging customers using membership plans 
+
 ***
 
 >**IMPORTANT NOTICE:**
 
->_**From this update Version 2.1.1 onwards, the plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official).**_
+>_**From 2.0.2 Version update onwards, the Membership plugin and its support will be handled by [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official).**_
 
 >_**WP Swings is just our improvised and rebranded version with all quality solutions and help to be the same, so no worries at your end. Please [**Connect with us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-contactus&utm_medium=membership-org-page&utm_campaign=contact-us) for all setup, support, and update related queries without hesitation.**_
 ***
 
 [youtube https://youtu.be/FaSbkUi17WI&w=560&h=315&rel=0]
 
-== MEMBERSHIP FOR WOOCOMMERCE PLUGIN FREE VERSION FEATURES AT A GLANCE ==
+== WITH THE WOOCOMMERCE MEMBERSHIP PLUGIN YOU CAN: ==
 
 * Different sections for membership plans and members
 * Multiple language translations for WooCommerce memberships available
@@ -45,7 +45,7 @@ It gets on directly to give you a way out of the three most customary pain point
 * Create a user after membership payment is made
 * Offer free shipping and discount on WooCommerce member cart total
 * Display all membership plans together and options to buy them  
-* Offer membership subscriptions for limited acc5ess to membership plans.
+* Offer membership subscriptions for limited access to membership plans.
 * Export/ Import WooCommerce membership site and user details
 * Efficient Shortcodes
 * No chaos of billing form or setting up payment gateways integrations 
@@ -66,19 +66,17 @@ It gets on directly to give you a way out of the three most customary pain point
 [**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
 
 
-== FEATURES OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
+== WHAT’S INCLUDED IN OUR FREE MEMBERSHIP FOR WOOCOMMERCE PLUGIN ==
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
 
 **1) Complete User Membership History and WooCommerce Membership Details of Customers**
 Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users too can see their history in the ‘My Account’ section with entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
 
-
 **2) Membership User Data Export and Import**
 Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all WooCommerce membership users as a CSV file. 
 
 Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database.  
-
 
 **3) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization**
 We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
@@ -97,13 +95,13 @@ The membership plans page displays all membership plans created in your eCommerc
 
 **8) Membership Details and Plan Creation**
 Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
-**1-** Plan price
-**2-** Plan name
-**3-** Plan description
-**4-** Access Type (Lifetime or Limited accessibility) 
+* Plan price
+* Plan name
+* Plan description
+*  Access Type (Lifetime or Limited accessibility) 
 
 **9) Create User After Payment Done** 
-Using the free Membership for WooCommerce plugin, the admin can create a user after the complete payment. No default member will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.
+Using the free Membership for WooCommerce plugin, the admin can create a user after completing the payment. No default member will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.
 
 Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) and learn more about the features and working of the plugin. 
 
@@ -112,7 +110,9 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 == LIVE DEMO OF MEMBERSHIP FOR WOOCOMMERCE  PLUGIN ==
 
 * [**Membership plugin Frontend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=frontend-demo)
+
 * [**Membership plugin Backend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=backend-demo)
+
 
 == PLUGIN COMPATIBILITIES == 
 
@@ -125,7 +125,7 @@ Multisite is a type of WordPress installation that allows you to create and mana
 Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management.  
 
 
-== PREMIUM MEMBERSHIP FOR WOOCOMMERCE PLUGIN FEATURES == 
+== WHAT PREMIUM VERSION OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN OFFERS == 
 
 * Select Membership Products 
 * Include One Plan Benefits In Other Membership Plans
@@ -136,12 +136,13 @@ Membership for WooCommerce lets the admin add desired content and translate it i
 * Send Membership Plans Action Notifications via Email  
 * Sort Membership plans 
 * Attach an invoice to membership emails 
+* Login/signup button on thanku page for guest user
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF THE MEMBERSHIP PRO PLUGIN ==
 
 The admin has enough features in the  Membership for WooCommerce free plugin, but things will get even better in the premium version of  Membership for WooCommerce Pro. 
 
-> Note:  Get [**MEMBERSHIP FOR WOOCOMMERCE PRO**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
+> Note:  Get [**Membership for WooCommerce Pro**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
 
 == DOCUMENTATION OF PREMIUM VERSION ==
 
@@ -149,7 +150,7 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 
 == SUPPORT ==
 
-If you need support or have any questions then kindly use our online chat window   [here](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official) or  connect with us then [**Generate a Ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-submit-query&utm_medium=membership-org-page&utm_campaign=query)
+If you need support or have any questions then kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official) or  connect with us then [**Generate a Ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-submit-query&utm_medium=membership-org-page&utm_campaign=query)
 
 == Installation ==
 
@@ -177,27 +178,27 @@ The Membership for WooCommerce plugin lets the WooCommerce store owners create a
 
 = What are the features regarding the Membership Plans available using the WooCommerce Membership plugin? =
 The Admin panel will have the Memberships Menu. In this submenu, you can find the features regarding the membership Plans, which allow the following:
-**1-** Create new plans for your membership customers
-**2-**  Edit existing membership plans
-**3-**  Find all the plans that you have ever created.
+* Create new plans for your membership customers
+* Edit existing membership plans
+* Find all the plans that you have ever created.
 
  
 = Where can you find complete user details of all the Members who have purchased the Membership Plans? =
 The Admin panel will have the memberships Menu. In this submenu, you can find all members. This space is for the admin where he can find complete user details like:
-**1-**  Membership ID
-**2-**  Membership Status
-**3-**  User 
-**4-**  Expiry date
+* Membership ID
+* Membership Status
+* User 
+* Expiry date
 You can also Import and export members’ details & add new members.
 
 
 = Are there any shortcodes available in the WooCommerce  Membership extension? = 
-**Yes,** Membership for WooCommerce provides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
+Yes, Membership for WooCommerce provides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
 
 * Membership Action Shortcodes
 * Membership Plans Shortcodes
 
-For these shortcodes, you can check them in the Shortcodes tab of the Membership for WooCommerce plugin.
+You can check them in the Shortcodes tab of the Membership for WooCommerce plugin for these shortcodes.
 
 
 = From where can I enable the Membership for WooCommerce plans to show on the frontend? =
@@ -205,24 +206,24 @@ Admin can enable the Membership plans from the General settings of Membership fo
 Admin can enable/disable Membership for WooCommerce plugin functionality on the frontend. The users won't see it if you disable it.
 
 = Is there any option in the free Membership plugin to show/hide the Membership plans history to the users? =
-**Yes**, Admin can enable the visibility of the user history from the General Settings of the Membership for WooCommerce plugin. This way, the user can visit and see their plan history in the membership tab on ‘My Account Page’.
+Yes, Admin can enable the visibility of the user history from the General Settings of the Membership for WooCommerce plugin. This way, the user can visit and see their plan history in the membership tab on ‘My Account Page’.
 
 = Will this WooCommerce Membership plugin be compatible with my current theme? =
-**Yes**, The Membership for WooCommerce plugin is compatible with all popular themes that follow WooCommerce standards.
+Yes, The Membership for WooCommerce plugin is compatible with all popular themes that follow WooCommerce standards.
 
 
 = Does the Membership for WooCommerce plugin provide the Shortcode to display the membership plan/price? =
-**Yes**, The Membership for WooCommerce plugin has a shortcode section to display the Membership plan, price, and description.
+Yes, The Membership for WooCommerce plugin has a shortcode section to display the Membership plan, price, and description.
 
-*  Membership Plan Title : [[wps_membership_title_name]]
+* Membership Plan Title : [[wps_membership_title_name]]
 * Membership Plan Price : [wps_membership_price]
 * Membership Plan Desc : [wps_membership_desc_data]
 
 = Can I add as many levels of Membership as I want using the Membership for WooCommerce plugin? = 
-**Yes**, you can create as many levels as you want using the Membership for WooCommerce plugin.
+Yes, you can create as many levels as you want using the Membership for WooCommerce plugin.
 
 = Is there any option in a Membership for WooCommerce plugin to provide the user with lifetime membership or limited membership? =
-**Yes**, The admin can set the membership to lifetime or limited using the Membership for WooCommerce plugin. The admin can set either of the two.
+Yes,The admin can set the membership to lifetime or limited using the Membership for WooCommerce plugin. The admin can set either of the two.
 
 
 = My question is not listed =
@@ -245,26 +246,32 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 
 == Changelog ==
-= 2.1.1 - RELEASED ON 8 April 2022 =
 
+= 2.1.2 - Released on 2 June 2022 =
+* New: Minor Bug Fixes
+* New: Compatibility with latest WooCommerce and WordPress
+
+= 2.1.1 - Released on 8 April 2022 =
+* Fix: Migration issue.
+
+= 2.1.0 - Released on 8 April 2022 =
 * New: Some substantial changes across different areas of the plugin.
 * New: Minor Bug Fixes
 * New: Compatibility with WooCommerce  and WordPress 
 
-
-= 2.0.2 - RELEASED ON 3 February 2022 =
+= 2.0.2 - Released on 3 February 2022 =
 
 * New: Notice display of current version for [**WP Swings**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official)
 * New: Change author from MakeWebBetter to WP Swings
 * New: Compatible with the latest WP and WC
 * Fix: Minor Bug fixes
 
-= 2.0.1 - RELEASED ON 4 DECEMBER 2021 =
+= 2.0.1 - Released on 4 December 2021 =
 * New: Setting to Create membership after the payment done
 * New: Compatibility with WordPress 5.8.2
 * Fix: Minor bug fixes
 
-= 2.0.0 - RELEASED ON 11 NOVEMBER 2021 =
+= 2.0.0 - Released on 11 November 2021 =
 * New: Compatible with  [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/)
 * New: Compatible with [**Mautic WooCommerce Integration**]
 * New: Compatibility with WooCommerce 5.9 and WordPress 5.8.1
@@ -274,11 +281,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * New: Multi-Step Configuration of Membership for WooCommerce
 * New: Display All Membership Plans Together With Option to Buy Them 
 
-
-
-
-= 1.2.0 - RELEASED ON 1 OCTOBER 2021 =
-
+= 1.2.0 - Released on 1 October 2021 =
 * New: Compatible with **Multisite**
 * New: Compatible with **WPML Compatibility** 
 * New: Compatibility with WooCommerce 5.7.1 and WordPress 5.8.1
@@ -286,27 +289,19 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * New: The membership plan tab will reflect all plans
 * Fix: Minor bug fixes
 
-
-
-= 1.1.0 - RELEASED ON 23 AUGUST 2021 =
+= 1.1.0 - Released on 23 August 2021 =
 * New: Compatible with  [**Membership for WooCommerce Pro Version**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro)
 * New: Compatibility with WooCommerce 5.6  and WordPress 5.8
 * Fix: small bug fixes
 
-= 1.0.1 - RELEASED ON 13 APRIL 2021 =
-
+= 1.0.1 - Released on 13 April 2021 =
 * New: Compatibility with WooCommerce 5.1.0 and WordPress 5.7
 
-= 1.0.0 - RELEASED ON 12 MARCH 2021 =
-
+= 1.0.0 - Released on 12 March 2021 =
 * First version
 
 == Upgrade Notice ==
 
-= 2.1.1 - RELEASED ON 8 April 2022 =
-
-* New: Some substantial changes across different areas of the plugin.
+= 2.1.2 - Released on 2 June 2022 =
 * New: Minor Bug Fixes
-* New: Compatible with the latest WP and WC
-
-
+* New: Compatibility with latest WooCommerce and WordPress

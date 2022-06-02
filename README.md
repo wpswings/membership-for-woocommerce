@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.9.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.3.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-5.9-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.3.1-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce - Add Membership Plans, Recurring Revenue, User Registration & User Profiles
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
@@ -7,7 +7,7 @@
 *  License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 # Description
-**BUILD YOUR ECOMMERCE COMMUNITY THROUGH USER REGISTRATION WITH MEMBERSHIP FOR WOOCOMMERCE AND CHARM USER PROFILES WITH MEMBERS-ONLY OFFERS**
+BUILD YOUR ECOMMERCE COMMUNITY THROUGH USER REGISTRATION WITH MEMBERSHIP FOR WOOCOMMERCE AND CHARM USER PROFILES WITH MEMBERS-ONLY OFFERS
 
 [**Membership for WooCommerce Plugin**](https://wordpress.org/plugins/membership-for-woocommerce/)  is the missing piece of your eCommerce store that allows you to create members-only space in your store. Get your WooCommerce membership website going with the smartest option of the Membership for WooCommerce plugin. The absolute Membership for WooCommerce plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using membership plans. Additionally, offer membership plans as subscriptions to users for limited access to your eCommerce store
 
