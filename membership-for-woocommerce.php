@@ -758,3 +758,58 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 }
 
 
+
+// $results = get_posts(
+// 	array(
+// 		'post_type' => 'wps_cpt_membership',
+// 		'post_status' => 'publish',
+// 		'meta_key' => 'wps_membership_plan_target_ids',
+// 		'numberposts' => -1,
+// 		'fields'  => 'ids',
+		
+// 	),
+// );
+
+// $product_ids = array();
+// $category_ids = array();
+// $tag_ids = array();
+// foreach( $results as $key => $value ) {
+// 	$include_products = get_post_meta( $value, 'wps_membership_plan_target_ids', true );
+// 	if( ! is_array( $include_products ) && empty( $include_products ) ) {
+// 		$include_products = array();
+// 	}
+// 	$offered_products = get_post_meta( $value, 'wps_membership_plan_target_disc_ids', true );
+// 	if( ! is_array( $offered_products ) && empty( $offered_products ) ) {
+// 		$offered_products = array();
+// 	}
+// 	$product_ids = array_merge( $product_ids, $include_products, $offered_products );
+
+// 	$include_cats = get_post_meta( $value, 'wps_membership_plan_target_categories', true );
+// 	if( ! is_array( $include_cats ) && empty( $include_cats ) ) {
+// 		$include_cats = array();
+// 	}
+// 	$offered_cats = get_post_meta( $value, 'wps_membership_plan_target_disc_categories', true );
+// 	if( ! is_array( $offered_cats ) && empty( $offered_cats ) ) {
+// 		$offered_cats = array();
+// 	}
+// 	$category_ids = array_merge( $category_ids, $include_cats, $offered_cats );
+
+// 	$include_tags = get_post_meta( $value, 'wps_membership_plan_target_tags', true );
+// 	if( ! is_array( $include_tags ) && empty( $include_tags ) ) {
+// 		$include_tags = array();
+// 	}
+// 	$offered_tags = get_post_meta( $value, 'wps_membership_plan_target_disc_tags', true );
+// 	if( ! is_array( $offered_tags ) && empty( $offered_tags ) ) {
+// 		$offered_tags = array();
+// 	}
+// 	$tag_ids      = array_merge( $tag_ids, $include_tags, $offered_tags );
+// }
+// echo"<pre>";
+// print_r( $product_ids );
+// print_r( $category_ids );
+// print_r( $tag_ids );
+// global $post;
+
+// $terms_post = get_the_terms( $post->cat_ID , 'product_cat' );
+// print_r( $terms_post );
+// die;

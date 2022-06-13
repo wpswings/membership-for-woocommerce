@@ -58,9 +58,9 @@ if ( empty( $current_url ) ) {
 
 
 								<?php if ( 'members-id' === $column_id ) : ?>
-									<a href="javascript:void(0)">
+									<span >
 										<?php echo esc_html( _x( '#', 'hash before member id', 'membership-for-woocommerce' ) . $membership_id ); ?>
-									</a>
+								</span>
 
 								<?php elseif ( 'members-date' === $column_id ) : ?>
 									<time datetime="<?php echo esc_attr( get_the_date( 'j F Y', $membership_id ) ); ?>"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></time>
@@ -79,7 +79,11 @@ if ( empty( $current_url ) ) {
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									if( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'cancelled' != $membership_status ) {
+
+										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >Cancel Membership</button></div>';
+									}
 
 									?>
 								<?php endif; ?>
@@ -183,7 +187,7 @@ if ( empty( $current_url ) ) {
 			<tbody>
 				<tr class="woocommerce-table__line-item order_item">
 					<td class="woocommerce-table__product-name product-name">
-						<a href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </a> <strong class="product-quantity">&times;&nbsp;<?php esc_html( 1 ); ?></strong>	</td>
+						<span href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </span> <strong class="product-quantity">&nbsp;<?php esc_html( 1 ); ?></strong>	</td>
 					<td class="woocommerce-table__product-total product-total">
 						<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
 				</tr>

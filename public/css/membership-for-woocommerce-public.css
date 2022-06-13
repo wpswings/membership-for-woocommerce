@@ -267,7 +267,7 @@
     justify-content: center;
   }
   
-  .wps_membership_buy_now_btn .wps_membership_buynow:hover,
+  .wps_membership_buynow:hover,
   .wps_membership_no_thanks.button.alt.thickbox:hover {
     border: 2px solid #f37e21;
     background-color: #ffffff;
@@ -870,4 +870,9 @@ margin-top: 10px;
 
 .wps_all_plans_detail_wrapper .wps_membership_plan_content_price {
   padding-bottom: 15px;
+}
+
+
+.memberhip-cancel-button{
+  margin-top: 5px;
 }

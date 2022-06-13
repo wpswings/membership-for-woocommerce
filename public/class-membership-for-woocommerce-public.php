@@ -125,7 +125,8 @@ class Membership_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'mfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.1', false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.3', false );
+		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
 
 		wp_localize_script(
 			$this->plugin_name,
@@ -133,6 +134,7 @@ class Membership_For_Woocommerce_Public {
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
+				'buy_now_text' => $button_text,
 			)
 		);
 
@@ -1761,7 +1763,7 @@ class Membership_For_Woocommerce_Public {
 	public function buy_now_shortcode_yes( $atts, $content ) {
 
 		$buy_button = '';
-
+		return $buy_button;
 		/**
 		 * If shortcode attribute is set then get the plan_id from attribute else
 		 * if on default page get the plan_id from query.
@@ -3642,6 +3644,16 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
+	}
+
+
+	public function wps_mebership_buy_now_btn_txt( $text ) {
+	
+		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
+		if( ! empty( $button_text ) ) {
+			$text = esc_html( $button_text );
+		}
+		return $text;
 	}
 
 }

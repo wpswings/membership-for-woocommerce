@@ -336,6 +336,9 @@ class Membership_For_Woocommerce_Admin {
 			)
 		);
 
+		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), $this->version, false );
+		
+
 	}
 
 	/**
@@ -654,6 +657,33 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Allow your members to Cancel their membership accounts.', 'membership-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this Allow your members to Cancel their membership accounts.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_allow_cancel_membership',
+				'value' => get_option( 'wps_membership_allow_cancel_membership' ),
+				'class' => 'mfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			
+			array(
+				'title' => __( 'Change Buy Now button text.', 'membership-for-wotocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Change the text of Buy Now Button.', 'membership-for-woocommerce' ),
+				'placeholder' => __('Add Text', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_change_buy_now_text',
+				'value' => get_option( 'wps_membership_change_buy_now_text' ),
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+
+
 		);
 		$after_email = array();
 		$after_email = apply_filters( 'wps_membership_set_attach_invoice_data_after_email', $after_email );
@@ -2978,7 +3008,176 @@ class Membership_For_Woocommerce_Admin {
 		return compact( 'products' );
 	}
 
+	/**
+	 * Function to add new tab in product tab.
+	 *
+	 * @param array $product_data_tabs contains tabs.
+	 * @return array
+	 */
+	public function mfw_attach_plan_product_data_tab( $product_data_tabs ) {
+		$temp = true;
+		global $post;
+		$product_id = $post->ID;
+		$terms_post = get_the_terms( $post->cat_ID , 'product_cat' );
+		$product_cat_ids = array();
+		
+		if( ! empty( $terms_post ) ) {
 
+			foreach ($terms_post as $term_cat) { 
+				$product_cat_ids[] = $term_cat->term_id; 
+				
+			}
+		}
 
+		$product_tag_ids = array();
+		$terms = get_terms( 'product_tag' );
+		
+		if( ! empty( $terms ) ) {
+
+			foreach ($terms as $term_tag) { 
+				$product_tag_ids[] = $term_tag->term_id; 
+				
+			}
+		}
+		
+	
+		$results = get_posts(
+			array(
+				'post_type' => 'wps_cpt_membership',
+				'post_status' => 'publish',
+				'meta_key' => 'wps_membership_plan_target_ids',
+				'numberposts' => -1,
+				'fields'  => 'ids',
+				
+			),
+		);
+		
+		$product_ids = array();
+		$category_ids = array();
+		$tag_ids = array();
+		foreach( $results as $key => $value ) {
+			$include_products = get_post_meta( $value, 'wps_membership_plan_target_ids', true );
+			if( ! is_array( $include_products ) && empty( $include_products ) ) {
+				$include_products = array();
+			}
+			$offered_products = get_post_meta( $value, 'wps_membership_plan_target_disc_ids', true );
+			if( ! is_array( $offered_products ) && empty( $offered_products ) ) {
+				$offered_products = array();
+			}
+			$product_ids = array_merge( $product_ids, $include_products, $offered_products );
+		
+			$include_cats = get_post_meta( $value, 'wps_membership_plan_target_categories', true );
+			if( ! is_array( $include_cats ) && empty( $include_cats ) ) {
+				$include_cats = array();
+			}
+			$offered_cats = get_post_meta( $value, 'wps_membership_plan_target_disc_categories', true );
+			if( ! is_array( $offered_cats ) && empty( $offered_cats ) ) {
+				$offered_cats = array();
+			}
+			$category_ids = array_merge( $category_ids, $include_cats, $offered_cats );
+		
+			$include_tags = get_post_meta( $value, 'wps_membership_plan_target_tags', true );
+			if( ! is_array( $include_tags ) && empty( $include_tags ) ) {
+				$include_tags = array();
+			}
+			$offered_tags = get_post_meta( $value, 'wps_membership_plan_target_disc_tags', true );
+			if( ! is_array( $offered_tags ) && empty( $offered_tags ) ) {
+				$offered_tags = array();
+			}
+			$tag_ids      = array_merge( $tag_ids, $include_tags, $offered_tags );
+		}
+		
+		foreach( $product_cat_ids as $key => $id ) {
+			if( in_array( $id, $category_ids ) ) {
+				$temp = false;
+			}
+		}
+
+		foreach( $product_tag_ids as $key => $id ) {
+			if( in_array( $id, $tag_ids ) ) {
+				$temp = false;
+			}
+		} 
+
+		if( in_array( $product_id , $product_ids ) ) {
+			$temp = false;
+		}
+
+		if( true == $temp ) {
+
+			$product_data_tabs['attach-membership'] = array(
+				'label'  => __( 'Attach Membership', 'membership-for-woocommerce' ),
+				'target' => 'wps_attach_membership',
+			);
+		}
+
+		return $product_data_tabs;
+	}
+
+	/**
+	 * Function for adding data fields.
+	 *
+	 * @return void
+	 */
+	public function mfw_attach_plan_product_data_fields() {
+
+		$results = get_posts(
+			array(
+				'post_type' => 'wps_cpt_membership',
+				'post_status' => 'publish',
+				'meta_key' => 'wps_membership_plan_target_ids',
+				'numberposts' => -1,
+				
+			),
+		);
+		
+		$final_results = array(
+			''        => __( 'Select Membership plan', 'woocommerce' ),
+		);
+		foreach ( $results as $key => $value ) {
+			
+			$key_new = strtolower( str_replace( ' ', '_', $results[$key]->post_title ) );
+			$final_results[$results[$key]->ID] = $results[$key]->post_title;
+			
+		}
+		echo '<div class="wps_membership_dropdown hidden ">';
+		woocommerce_wp_select( 
+			array( 
+			'id'          => 'wps_attach_plans',
+			'label'       => __( 'Select Plan', 'membership-for-woocommerce' ),
+			'description' => __( 'Choose plan to attach with product.', 'membership-for-woocommerce' ),
+			'desc_tip'    => true,
+			'options'     => $final_results,
+		) );
+	
+		echo '</div>';
+	}
+
+	/**
+	 * Function to save data.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_save_product_data() {
+		global $post;
+		if ( isset( $post->ID ) ) {
+			if ( ! current_user_can( 'edit_post', $post->ID ) ) {
+				return;
+			}
+			$product_id = $post->ID;
+			$product = wc_get_product( $product_id );
+			if ( isset( $product ) && is_object( $product ) ) { 
+				$selected_plan = isset( $_POST['wps_attach_plans'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_attach_plans'] ) ) : '' ;
+				if( ! empty( $selected_plan ) ) {
+					update_post_meta( $product_id, 'wps_membership_plan_with_product', $selected_plan );
+				} else {
+					if( ! empty( get_post_meta( $product_id, 'wps_membership_plan_with_product', true  ) ) ) {
+
+						update_post_meta( $product_id, 'wps_membership_plan_with_product', '' );
+					}
+				}
+			 }
+		}
+	}
 
 }

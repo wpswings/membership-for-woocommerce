@@ -621,4 +621,16 @@ class Membership_For_Woocommerce_Common {
 		}
 	}
 
+
+	public function wps_membership_cancel_membership_count() {
+		$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
+		if( ! empty( $membership_id ) ) {
+			update_post_meta( $membership_id, 'member_status', 'cancelled' );
+			if( ! empty( get_post_meta( $membership_id-1, 'wps_subscription_status', true ) ) ) {
+
+				update_post_meta( $membership_id-1, 'wps_subscription_status', 'cancelled' );
+			}
+		}
+	}
+
 }

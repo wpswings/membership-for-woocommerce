@@ -294,6 +294,13 @@ class Membership_For_Woocommerce {
 		}
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
+		
+		// add custom menu in product edit page.
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', 99, 1 );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $mfw_plugin_admin, 'mfw_attach_plan_product_data_fields' );
+
+		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
+
 
 	}
 
@@ -328,7 +335,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'user_register', $mfw_plugin_common, 'wps_membership_sen_email_to_new_registered_user' );
-	}
+
+		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+
+	}	
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -425,6 +436,8 @@ class Membership_For_Woocommerce {
 
 			// Login at thank you page.
 			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
+
+			$this->loader->add_filter( 'wps_mebership_buy_now_btn_txt', $mfw_plugin_public, 'wps_mebership_buy_now_btn_txt', 10 ,1 );
 		}
 	}
 
