@@ -626,6 +626,8 @@ class Membership_For_Woocommerce_Common {
 		$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
 		if( ! empty( $membership_id ) ) {
 			update_post_meta( $membership_id, 'member_status', 'cancelled' );
+			$user = wp_get_current_user();
+			update_user_meta( $user->ID, 'is_member', '' );
 			if( ! empty( get_post_meta( $membership_id-1, 'wps_subscription_status', true ) ) ) {
 
 				update_post_meta( $membership_id-1, 'wps_subscription_status', 'cancelled' );

@@ -100,7 +100,6 @@ class Membership_For_Woocommerce_Admin {
 
 			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
-			wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
 
 		}
 		wp_enqueue_style( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), $this->version, 'all' );
@@ -3120,7 +3119,8 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mfw_attach_plan_product_data_fields() {
-
+		global $post;
+		$product_id = $post->ID;
 		$results = get_posts(
 			array(
 				'post_type' => 'wps_cpt_membership',
@@ -3136,7 +3136,6 @@ class Membership_For_Woocommerce_Admin {
 		);
 		foreach ( $results as $key => $value ) {
 			
-			$key_new = strtolower( str_replace( ' ', '_', $results[$key]->post_title ) );
 			$final_results[$results[$key]->ID] = $results[$key]->post_title;
 			
 		}
@@ -3145,9 +3144,11 @@ class Membership_For_Woocommerce_Admin {
 			array( 
 			'id'          => 'wps_attach_plans',
 			'label'       => __( 'Select Plan', 'membership-for-woocommerce' ),
+			'selected'   => true,
 			'description' => __( 'Choose plan to attach with product.', 'membership-for-woocommerce' ),
 			'desc_tip'    => true,
 			'options'     => $final_results,
+			'value'      => get_post_meta( $product_id, 'wps_membership_plan_with_product', true  ),
 		) );
 	
 		echo '</div>';

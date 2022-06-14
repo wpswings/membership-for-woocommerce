@@ -876,3 +876,53 @@ margin-top: 10px;
 .memberhip-cancel-button{
   margin-top: 5px;
 }
+
+
+.wps_membership_notice {
+  text-align: center;
+  background: #f37e21;
+  color: #fff;
+  padding: 5px 35px 5px 10px;
+  margin: 15px auto;
+  position: relative;
+  box-shadow: 0 5px 5px -5px rgb(0 0 0 / 30%);
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  max-width: 200px;
+}
+
+.single-product  .wps_membership_notice {
+  margin: 15px ;
+}
+
+
+
+.wps_membership_notice:after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  bottom: 0;
+  right: 0;
+  border-right: 20px solid #fff;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+}
+
+.wps_membership_notice:before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  border-right: 5px solid #f37e21;
+  border-top: 5px solid #f37e21;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid transparent;
+  box-shadow: 8px -4px 9px -7px rgba(0, 0, 0, 0.2);
+}
+
+
+.wps-info-membership-alert {
+  color:rgb(243, 42, 42);
+  font-weight: bold;
+ 
+}

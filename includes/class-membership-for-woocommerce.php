@@ -437,7 +437,8 @@ class Membership_For_Woocommerce {
 			// Login at thank you page.
 			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
 
-			$this->loader->add_filter( 'wps_mebership_buy_now_btn_txt', $mfw_plugin_public, 'wps_mebership_buy_now_btn_txt', 10 ,1 );
+			$this->loader->add_filter( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
+			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20  );
 		}
 	}
 
