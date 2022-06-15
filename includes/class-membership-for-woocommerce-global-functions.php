@@ -1339,7 +1339,7 @@ function wps_get_target_ids( $plan_id='' ) {
 
 	}
 
-	return $target_ids;
+	return array_unique( $target_ids );
 }
 
 
