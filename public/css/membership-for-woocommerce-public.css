@@ -270,9 +270,16 @@
   .wps_membership_buynow:hover,
   .wps_membership_no_thanks.button.alt.thickbox:hover {
     border: 2px solid #f37e21;
-    background-color: #ffffff;
+    background-color: #ffffff !important;
     box-shadow: none;
-    color: #f37e21;
+    color: #f37e21 !important;
+  }
+
+  .wps_membership_plan_content_desc .wps_membership_buynow:hover{
+    border: 2px solid #ffffff;
+    background-color: #f37e21 !important;
+    box-shadow: none;
+    color: #ffffff !important;
   }
   
   /*multi-step form for woo-commerce*/
