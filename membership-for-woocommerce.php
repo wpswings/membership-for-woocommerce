@@ -757,3 +757,19 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 }
 
+// $all_ids = get_posts(
+// 	array(
+// 		'post_type' => 'product',
+// 		'numberposts' => -1,
+// 		'post_status' => 'publish',
+// 		'fields' => 'ids',
+// 		'tax_query' => array(
+// 			array(
+// 				'taxonomy' => 'product_cat',
+// 				'field' => 'slug',
+// 				'terms' => 'music',
+// 				'operator' => 'IN',
+// 			),
+// 		),
+// 	)
+// );
