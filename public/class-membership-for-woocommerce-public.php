@@ -3688,26 +3688,16 @@ class Membership_For_Woocommerce_Public {
 		$price = '';
 		$is_plan_assigned = false;
 		$post_id    = get_the_ID();
-		$percentage = get_post_meta( $post_id, '_wps_membership_percentage', true );
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		$user_id = get_current_user_id();
-		$is_product_variable_member = false;
-		$active_plan_variable = array();
-		$_product = wc_get_product( $post_id ); // Get current product data.
-		$is_complete_member = false;
-		$existing_post_id_acc_member = array();
-		$data                = $this->custom_query_data;
 		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 		
 		$plan_id = get_post_meta( $post_id, 'wps_membership_plan_with_product', true  );
 		if( $plan_id ) {
 			$is_plan_assigned = false;
 		}
-
-		
-		
-		
+						
 		if ( is_user_logged_in() ) { 
 			if( in_array( 'member', (array) $is_member_meta ) ) {
 

@@ -109,6 +109,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			</tr>
 			<!-- Membership Plan Shortcodes End. -->
+			<?php do_action( 'wps_membership_column_wise_template_shortcode', $instance );?>
+			
 		</tbody>
 
 	</table>
