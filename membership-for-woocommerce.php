@@ -46,6 +46,7 @@ if ( isset( $plug['membership-for-woocommerce-pro/membership-for-woocommerce-pro
 	}
 }
 add_action( 'after_plugin_row_membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', 'wps_mfw_old_upgrade_notice', 0, 3 );
+
 /**
  * Migration to ofl pro plugin.
  *
