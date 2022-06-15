@@ -1763,7 +1763,7 @@ class Membership_For_Woocommerce_Public {
 	public function buy_now_shortcode_yes( $atts, $content ) {
 
 		$buy_button = '';
-		return $buy_button;
+		
 		/**
 		 * If shortcode attribute is set then get the plan_id from attribute else
 		 * if on default page get the plan_id from query.

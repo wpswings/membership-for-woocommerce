@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.1.2
+ * Version:           2.1.3
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
@@ -80,7 +80,7 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2' );
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.3' );
 	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
 
 	if ( 0 != $wps_pending_par ) {
