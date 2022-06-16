@@ -220,7 +220,10 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'mfw_auth_nonce'    => wp_create_nonce( 'wps_mfw_onboarding_nonce' ),
 					'mfw_current_screen'    => $pagenow,
 					'mfw_current_supported_slug'    =>
-					// desc - filter for trial.
+					/**
+					 * Desc filter for trial.
+					 * @since 1.0.0
+					 */
 					apply_filters( 'wps_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
 				)
 			);

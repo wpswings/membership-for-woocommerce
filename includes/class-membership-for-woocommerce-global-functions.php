@@ -14,7 +14,6 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     WP Swings <plugins@wpswings.com>
  */
 class Membership_For_Woocommerce_Global_Functions {
 
@@ -1216,6 +1215,10 @@ class Membership_For_Woocommerce_Global_Functions {
 			'members-actions' => esc_html__( 'Actions', 'membership-for-woocommerce' ),
 		);
 
+		/**
+		 * Filter for tab headers.
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'wps_memberhsip_tab_headers', $table_headers );
 	}
 

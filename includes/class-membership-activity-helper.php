@@ -14,7 +14,6 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     WP Swings <plugins@wpswings.com>
  */
 class Membership_Activity_Helper {
 

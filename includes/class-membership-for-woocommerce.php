@@ -542,6 +542,11 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-shortcodes',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
 			);
+
+			/**
+			 * Filter for admin tab setting.
+			 * @since 1.0.0
+			 */
 			$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
 			$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
 				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
@@ -555,7 +560,11 @@ class Membership_For_Woocommerce {
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
 			);
 			$mfw_default_tabs =
-			// desc - filter for trial.
+			
+			/**
+			 * Filter for admin setting tabs.
+			 * @since 1.0.0
+			 */
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
 
 			return $mfw_default_tabs;

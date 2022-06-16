@@ -16,7 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mfw_wps_mfw_obj;
 $mfw_genaral_settings =
-// desc - filter for trial.
+
+/**
+ * Filter for general setting.
+ * @since 1.0.0
+ */
 apply_filters( 'mfw_general_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
@@ -24,6 +28,11 @@ apply_filters( 'mfw_general_settings_array', array() );
 	<div class="mfw-secion-wrap">
 <?php
 	require_once plugin_dir_path( __FILE__ ) . '/membership-for-woocommerce-incompatible.php';
+
+	/**
+	 * Action for general setting before.
+	 * @since 1.0.0
+	 */
 	do_action( 'mfw_general_settings_before' );
 ?>
 
