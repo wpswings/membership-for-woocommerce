@@ -52,6 +52,7 @@
 				<?php	
 				/**
 				 * Hook for li to overview.
+				 *
 				 * @since 1.0.0
 				 */
 				do_action( 'wps_membership_li_to_overview' ); 
@@ -150,6 +151,7 @@
 			<?php	
 			/**
 			 * Action for add icons.
+			 *
 			 * @since 1.0.0
 			 */
 			do_action( 'wps_membership_add_icons_with_desc' ); 

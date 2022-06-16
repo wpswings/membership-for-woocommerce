@@ -545,6 +545,7 @@ class Membership_For_Woocommerce {
 
 			/**
 			 * Filter for admin tab setting.
+			 *
 			 * @since 1.0.0
 			 */
 			$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
@@ -563,6 +564,7 @@ class Membership_For_Woocommerce {
 			
 			/**
 			 * Filter for admin setting tabs.
+			 *
 			 * @since 1.0.0
 			 */
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );

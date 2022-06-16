@@ -80,7 +80,7 @@ if ( empty( $current_url ) ) {
 									<?php
 
 									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
-									if( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'cancelled' != $membership_status ) {
+									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'cancelled' != $membership_status ) {
 
 										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >Cancel Membership</button></div>';
 									}
@@ -99,7 +99,12 @@ if ( empty( $current_url ) ) {
 
 	<?php else : ?>
 		<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
-			<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
+			<a class="woocommerce-Button button" href="<?php
+			/**
+			 * Filter to shop redirect.
+			 * @since 1.0.0
+			 */
+			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
 			<?php esc_html_e( 'No Membership has been purchased yet.', 'membership-for-woocommerce' ); ?>
 		</div>
 		<?php

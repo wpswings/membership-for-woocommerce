@@ -23,6 +23,7 @@ $mfw_tab_key = '';
 	
 	/**
 	 * Action to save setting.
+	 *
 	 * @since 1.0.0
 	 */
 	do_action( 'wps_mfw_settings_saved_notice' );
@@ -38,10 +39,15 @@ $mfw_tab_key = '';
 			
 			/**
 			 * Action before common setting form.
+			 *
 			 * @since 1.0.0
 			 */
 			do_action( 'wps_mfw_before_common_settings_form' );
-				// if submenu is directly clicked on woocommerce.
+			
+			/**
+			 * Filter for setting.
+			 * @since 1.0.0
+			 */
 			$mfw_genaral_settings = apply_filters(
 				'mfw_home_settings_array',
 				array(
@@ -78,6 +84,7 @@ $mfw_tab_key = '';
 
 			/**
 			 * Action before common setting form.
+			 *
 			 * @since 1.0.0
 			 */
 			do_action( 'wps_mfw_before_common_settings_form' );

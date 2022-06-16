@@ -68,6 +68,7 @@ jQuery(document).ready(function ($) {
 				data: {
 					action: "wps_membership_cancel_membership_count",
 					membership_id : membership_id,
+					'security' : mfw_common_param.nonce,
 				},
 	
 				success: function (response) {

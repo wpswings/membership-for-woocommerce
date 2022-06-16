@@ -73,7 +73,7 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function mfw_common_enqueue_scripts() {
 		wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name . 'common', 'mfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
+		wp_localize_script( $this->plugin_name . 'common', 'mfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce( 'wps_common_ajax_nonce' ) ) );
 		wp_enqueue_script( $this->plugin_name . 'common' );
 	}
 
@@ -125,6 +125,11 @@ class Membership_For_Woocommerce_Common {
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 		}
+
+		/**
+		 * Filter for get cart items.
+		 * @since 1.0.0
+		 */
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 		return $cart_item_data;
@@ -273,9 +278,19 @@ class Membership_For_Woocommerce_Common {
 		require_once WC()->plugin_path() . '/includes/class-wc-tracker.php';
 
 		$last_send = get_option( 'wpswings_tracker_last_send' );
+
+		/**
+		 * Filter send tracker.
+		 * @since 1.0.0
+		 */
 		if ( ! apply_filters( 'wpswings_tracker_send_override', $override ) ) {
 			// Send a maximum of once per week by default.
 			$last_send = $this->wps_mfw_last_send_time();
+
+			/**
+			 * Filter to send last interval.
+			 * @since 1.0.0
+			 */
 			if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
 				return;
 			}
@@ -295,6 +310,11 @@ class Membership_For_Woocommerce_Common {
 			'membership_plans' => $this->wps_mfw_membership_plan_count(),
 			'members_data' => $this->wps_mfw_membership_get_all_members(),
 		);
+
+		/**
+		 * Filter tracker params.
+		 * @since 1.0.0
+		 */
 		$params = apply_filters( 'wpswings_tracker_params', $params );
 
 		$api_url = 'https://tracking.wpswings.com/wp-json/mfw-route/v1/mfw-testing-data/';
@@ -392,6 +412,11 @@ class Membership_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function wps_mfw_last_send_time() {
+
+		/**
+		 * Filter to send tracker.
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );
 	}
 
@@ -621,14 +646,19 @@ class Membership_For_Woocommerce_Common {
 		}
 	}
 
-
+	/**
+	 * Function to update status to cancel.
+	 *
+	 * @return void
+	 */
 	public function wps_membership_cancel_membership_count() {
+		check_ajax_referer( 'wps_common_ajax_nonce', 'security' );
 		$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
-		if( ! empty( $membership_id ) ) {
+		if ( ! empty( $membership_id ) ) {
 			update_post_meta( $membership_id, 'member_status', 'cancelled' );
 			$user = wp_get_current_user();
 			update_user_meta( $user->ID, 'is_member', '' );
-			if( ! empty( get_post_meta( $membership_id-1, 'wps_subscription_status', true ) ) ) {
+			if ( ! empty( get_post_meta( $membership_id-1, 'wps_subscription_status', true ) ) ) {
 
 				update_post_meta( $membership_id-1, 'wps_subscription_status', 'cancelled' );
 			}

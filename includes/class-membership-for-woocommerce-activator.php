@@ -150,6 +150,7 @@ class Membership_For_Woocommerce_Activator {
 
 			/**
 			 * Filter to track event recurrance.
+			 *
 			 * @since 1.0.0
 			 */
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
@@ -245,6 +246,7 @@ class Membership_For_Woocommerce_Activator {
 
 			/**
 			 * Filter for tracking recurrance.
+			 *
 			 * @since 1.0.0
 			 */
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );

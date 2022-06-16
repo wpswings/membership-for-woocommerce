@@ -35,6 +35,7 @@ if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 		
 		/**
 		 * Filter to check product type.
+		 *
 		 * @since 1.0.0
 		 */
 		return apply_filters( 'wps_membership_check_membership_product_type', $wps_is_membership, $product );

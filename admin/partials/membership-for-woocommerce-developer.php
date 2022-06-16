@@ -19,6 +19,7 @@ $mfw_developer_admin_hooks =
 
 /**
  * Filter for trial.
+ *
  * @since 1.0.0
  */
 apply_filters( 'mfw_developer_admin_hooks_array', array() );
@@ -27,6 +28,7 @@ $mfw_developer_public_hooks =
 
 /**
  * Filter for public hooks.
+ *
  * @since 1.0.0
  */
 apply_filters( 'mfw_developer_public_hooks_array', array() );

@@ -39,6 +39,7 @@ if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 
 /**
  * Action for before general setting.
+ *
  * @since 1.0.0
  */
 do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_default_tabs );
@@ -48,6 +49,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<?php
 		/**
 		 * Action for setting save.
+		 *
 		 * @since 1.0.0
 		 */
 		do_action( 'wps_mfw_settings_saved_notice' );
@@ -87,6 +89,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 				
 				/**
 				 * Action for before genral setting.
+				 *
 				 * @since 1.0.0
 				 */
 				do_action( 'wps_mfw_before_general_settings_form' );
@@ -102,6 +105,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 				
 				/**
 				 * Action for general setting form.
+				 *
 				 * @since 1.0.0
 				 */
 				do_action( 'wps_mfw_after_general_settings_form' );

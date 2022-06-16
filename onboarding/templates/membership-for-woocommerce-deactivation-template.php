@@ -20,6 +20,10 @@ $wps_plugin_deactivation_id     = $wps_plugin_name . '-no_thanks_deactive';
 $wps_plugin_onboarding_popup_id = $wps_plugin_name . '-onboarding_popup';
 $mfw_onboarding_form_deactivate =
 
+/**
+ * Filter for form field.
+ * @since 1.0.0
+ */
 apply_filters( 'wps_mfw_deactivation_form_fields', array() );
 
 ?>

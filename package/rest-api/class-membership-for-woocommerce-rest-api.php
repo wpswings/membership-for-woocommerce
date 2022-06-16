@@ -23,7 +23,7 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/package/rest-api/version1
- * @author     WP Swings <webmaster@wpswings.com>
+ * 
  */
 class Membership_For_Woocommerce_Rest_Api {
 
@@ -31,7 +31,6 @@ class Membership_For_Woocommerce_Rest_Api {
 	 * The unique identifier of this plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
 	 */
 	protected $plugin_name;
@@ -40,7 +39,6 @@ class Membership_For_Woocommerce_Rest_Api {
 	 * The current version of the plugin.
 	 *
 	 * @since    1.0.0
-	 * @access   protected
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
@@ -70,7 +68,7 @@ class Membership_For_Woocommerce_Rest_Api {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * @access   private
+	 * 
 	 */
 	public function wps_mfw_add_endpoint() {
 		register_rest_route(

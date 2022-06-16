@@ -19,6 +19,7 @@ $mfw_genaral_settings =
 
 /**
  * Filter for general setting.
+ *
  * @since 1.0.0
  */
 apply_filters( 'mfw_general_settings_array', array() );
@@ -31,6 +32,7 @@ apply_filters( 'mfw_general_settings_array', array() );
 
 	/**
 	 * Action for general setting before.
+	 *
 	 * @since 1.0.0
 	 */
 	do_action( 'mfw_general_settings_before' );

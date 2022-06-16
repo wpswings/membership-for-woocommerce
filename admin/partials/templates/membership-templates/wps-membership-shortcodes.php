@@ -117,6 +117,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php 
 	/**
 	 * Hook to fetch html from pro.
+	 *
 	 * @since 1.0.0
 	 */
 	do_action( 'wps_membership_column_wise_template_shortcode', $instance );

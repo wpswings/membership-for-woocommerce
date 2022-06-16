@@ -222,6 +222,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'mfw_current_supported_slug'    =>
 					/**
 					 * Desc filter for trial.
+					 *
 					 * @since 1.0.0
 					 */
 					apply_filters( 'wps_mfw_deactivation_supported_slug', array( $mfw_current_slug ) ),
