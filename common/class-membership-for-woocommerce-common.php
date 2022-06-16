@@ -128,6 +128,7 @@ class Membership_For_Woocommerce_Common {
 
 		/**
 		 * Filter for get cart items.
+		 *
 		 * @since 1.0.0
 		 */
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
@@ -281,6 +282,7 @@ class Membership_For_Woocommerce_Common {
 
 		/**
 		 * Filter send tracker.
+		 *
 		 * @since 1.0.0
 		 */
 		if ( ! apply_filters( 'wpswings_tracker_send_override', $override ) ) {
@@ -289,6 +291,7 @@ class Membership_For_Woocommerce_Common {
 
 			/**
 			 * Filter to send last interval.
+			 *
 			 * @since 1.0.0
 			 */
 			if ( $last_send && $last_send > apply_filters( 'wpswings_tracker_last_send_interval', strtotime( '-1 week' ) ) ) {
@@ -313,6 +316,7 @@ class Membership_For_Woocommerce_Common {
 
 		/**
 		 * Filter tracker params.
+		 *
 		 * @since 1.0.0
 		 */
 		$params = apply_filters( 'wpswings_tracker_params', $params );
@@ -415,6 +419,7 @@ class Membership_For_Woocommerce_Common {
 
 		/**
 		 * Filter to send tracker.
+		 *
 		 * @since 1.0.0
 		 */
 		return apply_filters( 'wpswings_tracker_last_send_time', get_option( 'wpswings_tracker_last_send', false ) );

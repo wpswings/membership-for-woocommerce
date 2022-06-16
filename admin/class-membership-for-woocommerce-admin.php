@@ -748,6 +748,7 @@ class Membership_For_Woocommerce_Admin {
 			
 			/**
 			 * Filter for general setting.
+			 *
 			 * @since 1.0.0
 			 */
 			apply_filters( 'mfw_general_settings_array', array() );
@@ -1228,6 +1229,7 @@ class Membership_For_Woocommerce_Admin {
 
 		/**
 		 * Filter to add shipping method.
+		 *
 		 * @since 1.0.0
 		 */
 		$methods = apply_filters( 'wps_membership_for_woo_add_shipping_method', $methods );

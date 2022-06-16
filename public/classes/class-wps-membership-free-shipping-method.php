@@ -192,6 +192,7 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 		
 		/**
 		 * Filter for shipping availability.
+		 *
 		 * @since 1.0.0
 		 */
 		return apply_filters( 'wps_membership_shipping_' . $this->id . '_is_available', $is_available, $package, $this );

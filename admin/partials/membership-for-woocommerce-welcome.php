@@ -46,6 +46,7 @@ $mfw_tab_key = '';
 			
 			/**
 			 * Filter for setting.
+			 *
 			 * @since 1.0.0
 			 */
 			$mfw_genaral_settings = apply_filters(

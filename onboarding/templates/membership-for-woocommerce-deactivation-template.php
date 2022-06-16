@@ -22,6 +22,7 @@ $mfw_onboarding_form_deactivate =
 
 /**
  * Filter for form field.
+ *
  * @since 1.0.0
  */
 apply_filters( 'wps_mfw_deactivation_form_fields', array() );

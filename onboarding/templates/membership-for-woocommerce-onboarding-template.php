@@ -16,6 +16,7 @@ $mfw_onboarding_form_fields =
 
 /**
  * Filter for form field.
+ *
  * @since 1.0.0
  */
 apply_filters( 'wps_mfw_on_boarding_form_fields', array() );

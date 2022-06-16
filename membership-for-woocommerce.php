@@ -294,6 +294,12 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			if ( ! empty( $wps_standard_check ) ) {
 				$bool = true;
 			}
+
+			/**
+			 * Filter for multistep done.
+			 *
+			 * @since 1.0.0
+			 */
 			$bool = apply_filters( 'wps_standard_multistep_done', $bool );
 			return $bool;
 		}
@@ -636,6 +642,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 				/**
 				 * Filter for reccurence.
+				 *
 				 * @since 1.0.0
 				 */
 				wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );

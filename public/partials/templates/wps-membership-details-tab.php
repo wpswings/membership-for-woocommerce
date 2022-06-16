@@ -99,12 +99,16 @@ if ( empty( $current_url ) ) {
 
 	<?php else : ?>
 		<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
-			<a class="woocommerce-Button button" href="<?php
+			<a class="woocommerce-Button button" href="
+			<?php
 			/**
 			 * Filter to shop redirect.
+			 *
 			 * @since 1.0.0
 			 */
-			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
+			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); 
+			?>
+			 "><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
 			<?php esc_html_e( 'No Membership has been purchased yet.', 'membership-for-woocommerce' ); ?>
 		</div>
 		<?php
