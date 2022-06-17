@@ -2299,7 +2299,7 @@ class Membership_For_Woocommerce_Public {
 					$status = get_post_meta( $membership_id, 'member_status', true );
 					
 					if ( ! empty( $active_plan['ID'] ) ) {
-						if ( $plan_id == $active_plan['ID'] && 'cancelled' == $status && ! empty( $status ) ) {
+						if ( $plan_id == $active_plan['ID'] && 'cancelled' != $status && ! empty( $status ) ) {
 							$is_plan_assigned = true;
 							break;
 							
