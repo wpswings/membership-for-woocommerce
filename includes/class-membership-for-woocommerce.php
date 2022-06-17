@@ -439,6 +439,7 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_filter( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20  );
+			
 		}
 	}
 
