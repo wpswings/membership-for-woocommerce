@@ -336,7 +336,6 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), $this->version, false );
-		
 
 	}
 
@@ -395,7 +394,7 @@ class Membership_For_Woocommerce_Admin {
 				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 			}
 			$mfw_menus =
-			
+
 			/**
 			 * Filter to add plugin menu.
 			 *
@@ -473,7 +472,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_plugins_listing_page() {
 		$active_marketplaces =
-		
+
 		/**
 		 * Filter to add menus.
 		 *
@@ -683,12 +682,12 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-			
+
 			array(
 				'title' => __( 'Change Buy Now button text.', 'membership-for-wotocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Change the text of Buy Now Button.', 'membership-for-woocommerce' ),
-				'placeholder' => __('Add Text', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'Add Text', 'membership-for-woocommerce' ),
 				'id'    => 'wps_membership_change_buy_now_text',
 				'value' => get_option( 'wps_membership_change_buy_now_text' ),
 				'options' => array(
@@ -696,7 +695,6 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-
 
 		);
 		$after_email = array();
@@ -745,7 +743,7 @@ class Membership_For_Woocommerce_Admin {
 
 			$wps_mfw_gen_flag     = false;
 			$mfw_genaral_settings =
-			
+
 			/**
 			 * Filter for general setting.
 			 *
@@ -1225,7 +1223,6 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_membership_for_woo_add_shipping_method( $methods ) {
 
 		$methods['wps_membership_shipping'] = 'WPS_Membership_Free_Shipping_Method';
-
 
 		/**
 		 * Filter to add shipping method.
@@ -3084,29 +3081,28 @@ class Membership_For_Woocommerce_Admin {
 		$temp = true;
 		global $post;
 		$product_id = $post->ID;
-		$terms_post = get_the_terms( $post->cat_ID , 'product_cat' );
+		$terms_post = get_the_terms( $post->cat_ID, 'product_cat' );
 		$product_cat_ids = array();
-		
+
 		if ( ! empty( $terms_post ) ) {
 
-			foreach ($terms_post as $term_cat) { 
-				$product_cat_ids[] = $term_cat->term_id; 
-				
+			foreach ( $terms_post as $term_cat ) {
+				$product_cat_ids[] = $term_cat->term_id;
+
 			}
 		}
 
 		$product_tag_ids = array();
 		$terms = get_terms( 'product_tag' );
-		
+
 		if ( ! empty( $terms ) ) {
 
-			foreach ($terms as $term_tag) { 
-				$product_tag_ids[] = $term_tag->term_id; 
-				
+			foreach ( $terms as $term_tag ) {
+				$product_tag_ids[] = $term_tag->term_id;
+
 			}
 		}
-		
-	
+
 		$results = get_posts(
 			array(
 				'post_type' => 'wps_cpt_membership',
@@ -3114,10 +3110,10 @@ class Membership_For_Woocommerce_Admin {
 				'meta_key' => 'wps_membership_plan_target_ids',
 				'numberposts' => -1,
 				'fields'  => 'ids',
-				
+
 			)
 		);
-		
+
 		$product_ids = array();
 		$category_ids = array();
 		$tag_ids = array();
@@ -3131,7 +3127,7 @@ class Membership_For_Woocommerce_Admin {
 				$offered_products = array();
 			}
 			$product_ids = array_merge( $product_ids, $include_products, $offered_products );
-		
+
 			$include_cats = get_post_meta( $value, 'wps_membership_plan_target_categories', true );
 			if ( ! is_array( $include_cats ) && empty( $include_cats ) ) {
 				$include_cats = array();
@@ -3141,7 +3137,7 @@ class Membership_For_Woocommerce_Admin {
 				$offered_cats = array();
 			}
 			$category_ids = array_merge( $category_ids, $include_cats, $offered_cats );
-		
+
 			$include_tags = get_post_meta( $value, 'wps_membership_plan_target_tags', true );
 			if ( ! is_array( $include_tags ) && empty( $include_tags ) ) {
 				$include_tags = array();
@@ -3152,7 +3148,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 			$tag_ids      = array_merge( $tag_ids, $include_tags, $offered_tags );
 		}
-		
+
 		foreach ( $product_cat_ids as $key => $id ) {
 			if ( in_array( $id, $category_ids ) ) {
 				$temp = false;
@@ -3163,9 +3159,9 @@ class Membership_For_Woocommerce_Admin {
 			if ( in_array( $id, $tag_ids ) ) {
 				$temp = false;
 			}
-		} 
+		}
 
-		if ( in_array( $product_id , $product_ids ) ) {
+		if ( in_array( $product_id, $product_ids ) ) {
 			$temp = false;
 		}
 
@@ -3176,7 +3172,7 @@ class Membership_For_Woocommerce_Admin {
 				'target' => 'wps_attach_membership',
 			);
 		} else {
-			if ( ! empty( get_post_meta( $product_id, 'wps_membership_plan_with_product', true  ) ) ) {
+			if ( ! empty( get_post_meta( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
 				update_post_meta( $product_id, 'wps_membership_plan_with_product', '' );
 			}
@@ -3199,30 +3195,31 @@ class Membership_For_Woocommerce_Admin {
 				'post_status' => 'publish',
 				'meta_key' => 'wps_membership_plan_target_ids',
 				'numberposts' => -1,
-				
+
 			)
 		);
-		
+
 		$final_results = array(
 			''        => __( 'Select Membership plan', 'woocommerce' ),
 		);
 		foreach ( $results as $key => $value ) {
-			
-			$final_results[$results[$key]->ID] = $results[$key]->post_title;
-			
+
+			$final_results[ $results[ $key ]->ID ] = $results[ $key ]->post_title;
+
 		}
 		echo '<div class="wps_membership_dropdown hidden ">';
-		woocommerce_wp_select( 
-			array( 
-			'id'          => 'wps_attach_plans',
-			'label'       => __( 'Select Plan', 'membership-for-woocommerce' ),
-			'selected'   => true,
-			'description' => __( 'Choose plan to attach with product.', 'membership-for-woocommerce' ),
-			'desc_tip'    => true,
-			'options'     => $final_results,
-			'value'      => get_post_meta( $product_id, 'wps_membership_plan_with_product', true  ),
-		) );
-	
+		woocommerce_wp_select(
+			array(
+				'id'          => 'wps_attach_plans',
+				'label'       => __( 'Select Plan', 'membership-for-woocommerce' ),
+				'selected'   => true,
+				'description' => __( 'Choose plan to attach with product.', 'membership-for-woocommerce' ),
+				'desc_tip'    => true,
+				'options'     => $final_results,
+				'value'      => get_post_meta( $product_id, 'wps_membership_plan_with_product', true ),
+			)
+		);
+
 		echo '</div>';
 		wp_nonce_field( 'wps_mfw_attach_membership_nonce', 'wps_mfw_attach_membership_nonce_field' );
 	}
@@ -3243,12 +3240,12 @@ class Membership_For_Woocommerce_Admin {
 			}
 			$product_id = $post->ID;
 			$product = wc_get_product( $product_id );
-			if ( isset( $product ) && is_object( $product ) ) { 
-				$selected_plan = isset( $_POST['wps_attach_plans'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_attach_plans'] ) ) : '' ;
+			if ( isset( $product ) && is_object( $product ) ) {
+				$selected_plan = isset( $_POST['wps_attach_plans'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_attach_plans'] ) ) : '';
 				if ( ! empty( $selected_plan ) ) {
 					update_post_meta( $product_id, 'wps_membership_plan_with_product', $selected_plan );
 				} else {
-					if ( ! empty( get_post_meta( $product_id, 'wps_membership_plan_with_product', true  ) ) ) {
+					if ( ! empty( get_post_meta( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
 						update_post_meta( $product_id, 'wps_membership_plan_with_product', '' );
 					}

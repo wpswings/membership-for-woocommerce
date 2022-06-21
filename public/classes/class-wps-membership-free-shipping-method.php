@@ -38,7 +38,7 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 * Constructor for your shipping class
 	 *
 	 * @param mixed $instance_id used to store instance.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function __construct( $instance_id = 0 ) {
@@ -189,7 +189,7 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				$is_available = true;
 				break;
 		}
-		
+
 		/**
 		 * Filter for shipping availability.
 		 *

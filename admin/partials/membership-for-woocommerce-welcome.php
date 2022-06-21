@@ -20,7 +20,7 @@ $mfw_tab_key = '';
 ?>
 <header>
 	<?php
-	
+
 	/**
 	 * Action to save setting.
 	 *
@@ -36,14 +36,14 @@ $mfw_tab_key = '';
 	<section class="wps-section">
 		<div>
 			<?php
-			
+
 			/**
 			 * Action before common setting form.
 			 *
 			 * @since 1.0.0
 			 */
 			do_action( 'wps_mfw_before_common_settings_form' );
-			
+
 			/**
 			 * Filter for setting.
 			 *

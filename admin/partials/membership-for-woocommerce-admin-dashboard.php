@@ -86,7 +86,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<section class="wps-section">
 		<div>
 			<?php
-				
+
 				/**
 				 * Action for before genral setting.
 				 *
@@ -102,7 +102,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 				$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
 				$mfw_tab_content_path = $mfw_default_tabs[ $mfw_active_tab ]['file_path'];
 				$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $mfw_tab_content_path );
-				
+
 				/**
 				 * Action for general setting form.
 				 *

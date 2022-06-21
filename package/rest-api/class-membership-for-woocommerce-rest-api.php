@@ -23,7 +23,6 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/package/rest-api/version1
- * 
  */
 class Membership_For_Woocommerce_Rest_Api {
 
@@ -68,7 +67,6 @@ class Membership_For_Woocommerce_Rest_Api {
 	 * with WordPress.
 	 *
 	 * @since    1.0.0
-	 * 
 	 */
 	public function wps_mfw_add_endpoint() {
 		register_rest_route(

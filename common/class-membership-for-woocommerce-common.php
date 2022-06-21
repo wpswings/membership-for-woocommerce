@@ -73,7 +73,14 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function mfw_common_enqueue_scripts() {
 		wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
-		wp_localize_script( $this->plugin_name . 'common', 'mfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'nonce' => wp_create_nonce( 'wps_common_ajax_nonce' ) ) );
+		wp_localize_script(
+			$this->plugin_name . 'common',
+			'mfw_common_param',
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'nonce' => wp_create_nonce( 'wps_common_ajax_nonce' ),
+			)
+		);
 		wp_enqueue_script( $this->plugin_name . 'common' );
 	}
 
@@ -560,6 +567,7 @@ class Membership_For_Woocommerce_Common {
 		update_option( 'Mem_Plan_Product', $mem_plan_product );
 
 		if ( ! empty( $mem_plan_title ) || ! empty( $mem_plan_amount ) ) {
+
 			$post_id = wp_insert_post(
 				array(
 					'post_type' => 'wps_cpt_membership',
@@ -577,6 +585,8 @@ class Membership_For_Woocommerce_Common {
 				$post_data = ! empty( $product_array ) ? array_map( 'sanitize_text_field', wp_unslash( $product_array ) ) : '';
 			}
 			update_post_meta( $post_id, 'wps_membership_plan_target_ids', $post_data );
+
+			update_post_meta( $post_id, 'wps_membership_plan_name_access_type', 'lifetime' );
 		}
 
 		update_option( 'mfw_mfw_plugin_standard_multistep_done', 'yes' );
@@ -663,9 +673,9 @@ class Membership_For_Woocommerce_Common {
 			update_post_meta( $membership_id, 'member_status', 'cancelled' );
 			$user = wp_get_current_user();
 			update_user_meta( $user->ID, 'is_member', '' );
-			if ( ! empty( get_post_meta( $membership_id-1, 'wps_subscription_status', true ) ) ) {
+			if ( ! empty( get_post_meta( $membership_id - 1, 'wps_subscription_status', true ) ) ) {
 
-				update_post_meta( $membership_id-1, 'wps_subscription_status', 'cancelled' );
+				update_post_meta( $membership_id - 1, 'wps_subscription_status', 'cancelled' );
 			}
 		}
 	}

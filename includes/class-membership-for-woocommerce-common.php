@@ -32,7 +32,7 @@ if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 				$wps_is_membership = true;
 			}
 		}
-		
+
 		/**
 		 * Filter to check product type.
 		 *

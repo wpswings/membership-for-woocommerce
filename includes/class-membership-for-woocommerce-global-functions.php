@@ -130,7 +130,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 * @since 1.0.0
 	 */
 	public function default_global_options() {
-		
+
 		$default_global_settings = array(
 
 			'wps_membership_enable_plugin'     => 'on',
@@ -1277,8 +1277,8 @@ class Membership_For_Woocommerce_Global_Functions {
 
 	}
 
-	
-	
+
+
 }
 
 /**
@@ -1302,16 +1302,14 @@ function wps_get_target_ids( $plan_id = '' ) {
 				'post_status' => 'publish',
 				'post_type' => 'product',
 				'fields' => 'ids',
-				'product_cat' => $cat_name ,
-				
+				'product_cat' => $cat_name,
+
 			);
 			$result = get_posts( $args );
 			if ( ! empty( $result ) ) {
 				$target_ids = array_merge( $target_ids, $result );
 			}
-
 		}
-
 	}
 	if ( ! empty( $target_tag_ids ) ) {
 		foreach ( $target_tag_ids as $key => $value ) {
@@ -1320,16 +1318,14 @@ function wps_get_target_ids( $plan_id = '' ) {
 				'post_status' => 'publish',
 				'post_type' => 'product',
 				'fields' => 'ids',
-				'product_cat' => $tag->name ,
-				
+				'product_cat' => $tag->name,
+
 			);
 			$result1 = get_posts( $args );
 			if ( ! empty( $result ) ) {
 				$target_ids = array_merge( $target_ids, $result1 );
 			}
-
 		}
-
 	}
 
 	return array_unique( $target_ids );

@@ -106,7 +106,7 @@ if ( empty( $current_url ) ) {
 			 *
 			 * @since 1.0.0
 			 */
-			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); 
+			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) );
 			?>
 			 "><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
 			<?php esc_html_e( 'No Membership has been purchased yet.', 'membership-for-woocommerce' ); ?>
@@ -140,6 +140,11 @@ if ( empty( $current_url ) ) {
 		'wps_membership_plan_target_disc_ids' => '',
 		'wps_membership_plan_target_disc_categories' => '',
 		'wps_membership_plan_target_disc_tags' => '',
+		'wps_memebership_plan_discount_price' => 0,
+		'wps_membership_plan_offer_price_type' => '',
+		'wps_membership_product_offer_price_type' => '',
+		'wps_membership_subscription_expiry_type' => '',
+		'wps_membership_plan_target_categories' => '',
 
 	);
 	foreach ( $temp_array as $m_keys => $m_values ) {
@@ -157,6 +162,7 @@ if ( empty( $current_url ) ) {
 		if ( 'delay_type' == $access_type ) {
 			$time_duration      = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
 			$time_duration_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
+			// $date = gmdate('Y-m-d');
 
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 

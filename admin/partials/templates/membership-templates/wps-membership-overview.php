@@ -49,13 +49,13 @@
 				<li><?php esc_html_e( 'Quick preview section for Membership plans on the plans listing page', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'A different status selection like pending, on hold, or completed as per their payment and plan expiry', 'membership-for-woocommerce' ); ?></li>
 				<li><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></li>
-				<?php	
+				<?php
 				/**
 				 * Hook for li to overview.
 				 *
 				 * @since 1.0.0
 				 */
-				do_action( 'wps_membership_li_to_overview' ); 
+				do_action( 'wps_membership_li_to_overview' );
 				?>
 			</ul>
 			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
@@ -148,13 +148,13 @@
 					</div>
 				</div>
 			</div>
-			<?php	
+			<?php
 			/**
 			 * Action for add icons.
 			 *
 			 * @since 1.0.0
 			 */
-			do_action( 'wps_membership_add_icons_with_desc' ); 
+			do_action( 'wps_membership_add_icons_with_desc' );
 			?>
 		</div>
 	</div>

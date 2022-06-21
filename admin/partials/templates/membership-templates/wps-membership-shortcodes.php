@@ -114,7 +114,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		
 	</table>
 	
-	<?php 
+	<?php
 	/**
 	 * Hook to fetch html from pro.
 	 *
