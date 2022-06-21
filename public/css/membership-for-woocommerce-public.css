@@ -90,6 +90,10 @@
     right: 0;
   }
   
+  .mfw-product-meta-membership-wrap {
+    display: flex;
+    align-items: center;
+}
   .product-inner .woo-entry-image + .mfw-product-meta-membership-wrap + .woo-entry-inner li.image-wrap {
     margin-bottom: 60px !important;
   }

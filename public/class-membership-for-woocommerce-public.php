@@ -2318,6 +2318,8 @@ class Membership_For_Woocommerce_Public {
 	 * @param object $order is object of order.
 	 * @param int    $plan_id is id of assigned plan.
 	 * @param int    $member_id is the id of the member.
+	 * @param array  $fields is a array of fields.
+	 * @param int    $order_id is the id of order.
 	 * @return void
 	 */
 	public function wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
@@ -3906,10 +3908,8 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Function to add label.
+	 * Function to add lebel.
 	 *
-	 * @param [type] $price
-	 * @param [type] $product
 	 * @return void
 	 */
 	public function mfw_membership_add_label() {

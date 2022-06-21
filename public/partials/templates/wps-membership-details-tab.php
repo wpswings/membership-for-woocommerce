@@ -162,7 +162,7 @@ if ( empty( $current_url ) ) {
 		if ( 'delay_type' == $access_type ) {
 			$time_duration      = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
 			$time_duration_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
-			// $date = gmdate('Y-m-d');
+			$current_date = gmdate( 'Y-m-d' );
 
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
