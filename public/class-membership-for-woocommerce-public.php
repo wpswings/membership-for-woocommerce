@@ -3608,8 +3608,8 @@ class Membership_For_Woocommerce_Public {
 
 							$page_link_found = false;
 							$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-							$target_cat_ids  = get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true );
-							$target_tag_ids  = get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true );
+							$target_cat_ids  = ! empty ( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+							$target_tag_ids  = ! empty ( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 							$product_terms = $this->get_product_terms( get_the_ID() );
 
