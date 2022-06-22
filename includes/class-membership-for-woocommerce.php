@@ -379,7 +379,12 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_get_price_html', $mfw_plugin_public, 'wps_membership_for_woo_hide_price_shop_page', 10, 2 );
 			// Display "Membership" tag for membership products on shop page.
 			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
-
+			$theme = wp_get_theme();
+			
+			if( 'Betheme'== $theme->name ) { 
+				
+				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
+			}
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $mfw_plugin_public, 'wps_membership_unset_shipping_if_membership_available', 10, 2 );
 
