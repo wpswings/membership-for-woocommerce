@@ -2343,19 +2343,21 @@ class Membership_For_Woocommerce_Admin {
 
 						if ( $_user ) {
 
-							$user_id   = $_user->ID;
+							$user_id   = $_user;
 							$user_ob   = get_user_by( 'id', $user_id );
 							$user_name = $user_ob->display_name;
 						}
 					}
 				}
 
+
+
 				if ( ! empty( $_user ) ) {
-					$wps_membership_posts = $_user->ID;
+					$wps_membership_posts = $_user;
 				} else {
 					$wps_membership_posts = get_post_field( 'post_author', $member_id );
 				}
-
+	
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
 				update_post_meta( $member_id, 'wps_member_user', $wps_membership_posts );
 				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
