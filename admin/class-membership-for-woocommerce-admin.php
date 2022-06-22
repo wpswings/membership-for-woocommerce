@@ -2360,14 +2360,6 @@ class Membership_For_Woocommerce_Admin {
 						$wps_membership_posts = get_post_field( 'post_author', $member_id );
 					}
 				}
-
-
-
-				if ( ! empty( $_user ) ) {
-					$wps_membership_posts = $_user;
-				} else {
-					$wps_membership_posts = get_post_field( 'post_author', $member_id );
-				}
 	
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
 				update_post_meta( $member_id, 'wps_member_user', $wps_membership_posts );
