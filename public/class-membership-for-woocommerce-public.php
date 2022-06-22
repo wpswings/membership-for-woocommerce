@@ -168,7 +168,7 @@ class Membership_For_Woocommerce_Public {
 			$plan_data['desc']  = $plan_desc;
 			$plan_data['price'] = $plan_price;
 
-			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . $client_id . '&currency=' . $currency . '&intent=' . $intent . '&components=' . $component . '&disable-funding=' . $disable_fund . '&vault=' . $vault . '&debug=' . $debug, array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . esc_html( $client_id ) . '&currency=' . esc_html( $currency ) . '&intent=' . esc_html( $intent ) . '&components=' . esc_html( $component ) . '&disable-funding=' . esc_html( $disable_fund ) . '&vault=' . esc_html( $vault ) . '&debug=' . esc_html( $debug ) , array( 'jquery' ), $this->version, false );
 
 			wp_localize_script(
 				'paypal-smart-buttons',
