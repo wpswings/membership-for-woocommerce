@@ -3913,7 +3913,6 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function mfw_membership_add_label() {
-
 		global $product;
 		$price = '';
 		$is_plan_assigned = false;
