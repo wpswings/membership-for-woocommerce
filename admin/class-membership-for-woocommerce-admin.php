@@ -2348,6 +2348,17 @@ class Membership_For_Woocommerce_Admin {
 							$user_name = $user_ob->display_name;
 						}
 					}
+					if ( ! empty( $_user ) ) {
+						$wps_membership_posts = $_user;
+					} else {
+						$wps_membership_posts = get_post_field( 'post_author', $member_id );
+					}
+				} else {
+					if ( ! empty( $_user ) ) {
+						$wps_membership_posts = $_user->ID;
+					} else {
+						$wps_membership_posts = get_post_field( 'post_author', $member_id );
+					}
 				}
 
 
