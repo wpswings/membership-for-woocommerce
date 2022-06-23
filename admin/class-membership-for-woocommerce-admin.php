@@ -684,7 +684,7 @@ class Membership_For_Woocommerce_Admin {
 			),
 
 			array(
-				'title' => __( 'Change Buy Now button text.', 'membership-for-wotocommerce' ),
+				'title' => __( 'Change Buy Now button text.', 'membership-for-woocommerce' ),
 				'type'  => 'text',
 				'description'  => __( 'Change the text of Buy Now Button.', 'membership-for-woocommerce' ),
 				'placeholder' => __( 'Add Text', 'membership-for-woocommerce' ),
