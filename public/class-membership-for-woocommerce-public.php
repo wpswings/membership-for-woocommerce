@@ -168,7 +168,7 @@ class Membership_For_Woocommerce_Public {
 			$plan_data['desc']  = $plan_desc;
 			$plan_data['price'] = $plan_price;
 
-			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . esc_html( $client_id ) . '&currency=' . esc_html( $currency ) . '&intent=' . esc_html( $intent ) . '&components=' . esc_html( $component ) . '&disable-funding=' . esc_html( $disable_fund ) . '&vault=' . esc_html( $vault ) . '&debug=' . esc_html( $debug ) , array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . esc_html( $client_id ) . '&currency=' . esc_html( $currency ) . '&intent=' . esc_html( $intent ) . '&components=' . esc_html( $component ) . '&disable-funding=' . esc_html( $disable_fund ) . '&vault=' . esc_html( $vault ) . '&debug=' . esc_html( $debug ), array( 'jquery' ), $this->version, false );
 
 			wp_localize_script(
 				'paypal-smart-buttons',
@@ -3608,8 +3608,8 @@ class Membership_For_Woocommerce_Public {
 
 							$page_link_found = false;
 							$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-							$target_cat_ids  = ! empty ( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-							$target_tag_ids  = ! empty ( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+							$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+							$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 							$product_terms = $this->get_product_terms( get_the_ID() );
 

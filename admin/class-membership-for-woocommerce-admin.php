@@ -2154,12 +2154,12 @@ class Membership_For_Woocommerce_Admin {
 				update_post_meta( $post_id, 'wps_membership_plan_target_ids_search', '' );
 			}
 			$discount_type  = isset( $_POST['wps_membership_product_offer_price_type'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_membership_product_offer_price_type'] ) ) : ''; // phpcs:ignore
-		
+
 			foreach ( $offered_product as $key => $product_id ) {
 
 				update_post_meta( $product_id, '_wps_membership_discount_' . $post_id, $product_discount );
 				if ( '%' == $discount_type ) {
-					
+
 					update_post_meta( $product_id, '_wps_membership_percentage', 'yes' );
 				} else {
 					update_post_meta( $product_id, '_wps_membership_percentage', 'no' );
@@ -2368,7 +2368,7 @@ class Membership_For_Woocommerce_Admin {
 						$wps_membership_posts = get_post_field( 'post_author', $member_id );
 					}
 				}
-	
+
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
 				update_post_meta( $member_id, 'wps_member_user', $wps_membership_posts );
 				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
