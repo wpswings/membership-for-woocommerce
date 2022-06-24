@@ -17,7 +17,7 @@ It gets on directly to give you a way out of the three most customary pain point
  * Adding recurring revenue based on memberships
  * Engaging customers using membership plans 
 
-[**Membership for WooCommerce Free Version Demo Video**](https://youtu.be/FaSbkUi17WI)
+[**Membership For WooCommerce: Part 2: Demo Video On Updated Layout and Features**](https://youtu.be/FaSbkUi17WI)
 
 ## WITH THE WOOCOMMERCE MEMBERSHIP PLUGIN YOU CAN: 
 
