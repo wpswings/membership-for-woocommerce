@@ -17,7 +17,6 @@
  * @since      1.0.0
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/includes
- * @author     WP Swings <plugins@wpswings.com>
  */
 class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
@@ -39,7 +38,6 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	 * Constructor for your shipping class
 	 *
 	 * @param mixed $instance_id used to store instance.
-	 * @access public
 	 * @return void
 	 */
 	public function __construct( $instance_id = 0 ) {
@@ -62,7 +60,6 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	/**
 	 * Init your settings
 	 *
-	 * @access public
 	 * @return void
 	 */
 	public function init() {
@@ -191,13 +188,17 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 				break;
 		}
 
+		/**
+		 * Filter for shipping.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'wps_membership_shipping_' . $this->id . '_is_available', $is_available, $package, $this );
 	}
 
 	/**
 	 * Calculate_shipping function.
 	 *
-	 * @access public
 	 * @param mixed $package used to store package.
 	 * @return void
 	 */

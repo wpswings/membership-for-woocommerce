@@ -20,7 +20,12 @@ $mfw_tab_key = '';
 ?>
 <header>
 	<?php
-	// desc - This hook is used for trial.
+
+	/**
+	 * Action to save setting.
+	 *
+	 * @since 1.0.0
+	 */
 	do_action( 'wps_mfw_settings_saved_notice' );
 	?>
 	<div class="wps-header-container wps-bg-white wps-r-8">
@@ -31,9 +36,19 @@ $mfw_tab_key = '';
 	<section class="wps-section">
 		<div>
 			<?php
-				// desc - This hook is used for trial.
+
+			/**
+			 * Action before common setting form.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'wps_mfw_before_common_settings_form' );
-				// if submenu is directly clicked on woocommerce.
+
+			/**
+			 * Filter for setting.
+			 *
+			 * @since 1.0.0
+			 */
 			$mfw_genaral_settings = apply_filters(
 				'mfw_home_settings_array',
 				array(
@@ -67,6 +82,12 @@ $mfw_tab_key = '';
 				</div>
 			</form>
 			<?php
+
+			/**
+			 * Action before common setting form.
+			 *
+			 * @since 1.0.0
+			 */
 			do_action( 'wps_mfw_before_common_settings_form' );
 			$all_plugins = get_plugins();
 			?>

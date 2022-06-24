@@ -14,7 +14,6 @@
  *
  * @package    Membership_For_Woocommerce
  * @subpackage Membership_For_Woocommerce/admin
- * @author     WP Swings <plugins@wpswings.com>
  */
 class Membership_For_Woocommerce_Global_Functions {
 
@@ -131,18 +130,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 * @since 1.0.0
 	 */
 	public function default_global_options() {
-		// $wps_membership_global_settings['wps_membership_enable_plugin'] = ! empty( get_option( 'wps_membership_enable_plugin' ) ) ? get_option( 'wps_membership_enable_plugin' ) : '';
-		// $wps_membership_global_settings['wps_membership_delete_data'] =  ! empty( get_option( 'wps_membership_delete_data' ) ) ? get_option( 'wps_membership_delete_data' ) : '';
-		// $wps_membership_global_settings['wps_membership_plan_user_history'] = get_option( 'wps_membership_plan_user_history' ); ! empty( get_option( 'wps_membership_delete_data' ) ) ? get_option( 'wps_membership_delete_data' ) : '';
-		// $wps_membership_global_settings['wps_membership_email_subject'] = ! empty( get_option( 'wps_membership_email_subject' ) ) ? get_option( 'wps_membership_email_subject' ) : '';
-		// $wps_membership_global_settings['wps_membership_email_content'] = ! empty( get_option( 'wps_membership_email_content' ) ) ? get_option( 'wps_membership_email_content' ) : '';
-		// $wps_membership_global_settings['wps_membership_for_woo_delete_data'] = ! empty( get_option( 'wps_membership_for_woo_delete_data' ) ) ? get_option( 'wps_membership_for_woo_delete_data' ) : '';
 
-		// $wps_membership_global_settings['wps_membership_attach_invoice'] = ! empty( get_option( 'wps_membership_attach_invoice' ) ) ? get_option( 'wps_membership_attach_invoice' ) : '';
-		// $wps_membership_global_settings['wps_membership_invoice_address'] =  ! empty( get_option( 'wps_membership_invoice_address' ) ) ? get_option( 'wps_membership_invoice_address' ) : '';
-		// $wps_membership_global_settings['wps_membership_invoice_phone'] = ! empty( get_option( 'wps_membership_invoice_phone' ) ) ? get_option( 'wps_membership_invoice_phone' ) : '';
-		// $wps_membership_global_settings['wps_membership_invoice_email'] = ! empty( get_option( 'wps_membership_invoice_email' ) ) ? get_option( 'wps_membership_invoice_email' ) : '';
-		// $wps_membership_global_settings['wps_membership_invoice_logo'] = ! empty( get_option( 'wps_membership_invoice_logo' ) ) ? get_option( 'wps_membership_invoice_logo' ) : '';
 		$default_global_settings = array(
 
 			'wps_membership_enable_plugin'     => 'on',
@@ -1216,6 +1204,11 @@ class Membership_For_Woocommerce_Global_Functions {
 			'members-actions' => esc_html__( 'Actions', 'membership-for-woocommerce' ),
 		);
 
+		/**
+		 * Filter for tab headers.
+		 *
+		 * @since 1.0.0
+		 */
 		return apply_filters( 'wps_memberhsip_tab_headers', $table_headers );
 	}
 
@@ -1283,4 +1276,59 @@ class Membership_For_Woocommerce_Global_Functions {
 		return $result;
 
 	}
+
+
+
 }
+
+/**
+ * Function for get all ids.
+ *
+ * @param string $plan_id is the id of plan.
+ * @return array.
+ */
+function wps_get_target_ids( $plan_id = '' ) {
+
+	$target_ids      = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true ) : array();
+	$target_cat_ids  = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true ) : array();
+	$target_tag_ids  = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true ) : array();
+	if ( empty( $target_ids ) ) {
+		$target_ids = array();
+	}
+	if ( ! empty( $target_cat_ids ) ) {
+		foreach ( $target_cat_ids as $key => $value ) {
+			$cat_name = get_the_category_by_ID( $value );
+			$args = array(
+				'post_status' => 'publish',
+				'post_type' => 'product',
+				'fields' => 'ids',
+				'product_cat' => $cat_name,
+
+			);
+			$result = get_posts( $args );
+			if ( ! empty( $result ) ) {
+				$target_ids = array_merge( $target_ids, $result );
+			}
+		}
+	}
+	if ( ! empty( $target_tag_ids ) ) {
+		foreach ( $target_tag_ids as $key => $value ) {
+			$tag = get_term( $value );
+			$args = array(
+				'post_status' => 'publish',
+				'post_type' => 'product',
+				'fields' => 'ids',
+				'product_cat' => $tag->name,
+
+			);
+			$result1 = get_posts( $args );
+			if ( ! empty( $result ) ) {
+				$target_ids = array_merge( $target_ids, $result1 );
+			}
+		}
+	}
+
+	return array_unique( $target_ids );
+}
+
+

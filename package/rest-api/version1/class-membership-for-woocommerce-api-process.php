@@ -22,7 +22,6 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 	 * @since      1.0.0
 	 * @package    Membership_For_Woocommerce
 	 * @subpackage Membership_For_Woocommerce/includes
-	 * @author     WP Swings <wpswings.com>
 	 */
 	class Membership_For_Woocommerce_Api_Process {
 

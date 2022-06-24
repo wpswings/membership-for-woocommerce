@@ -37,12 +37,21 @@ if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 	}
 }
 
+/**
+ * Action for before general setting.
+ *
+ * @since 1.0.0
+ */
 do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_default_tabs );
 
 ?>
 <header>
 	<?php
-		// desc - This hook is used for trial.
+		/**
+		 * Action for setting save.
+		 *
+		 * @since 1.0.0
+		 */
 		do_action( 'wps_mfw_settings_saved_notice' );
 	?>
 	<div class="wps-header-container wps-bg-white wps-r-8">
@@ -77,7 +86,12 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<section class="wps-section">
 		<div>
 			<?php
-				// desc - This hook is used for trial.
+
+				/**
+				 * Action for before genral setting.
+				 *
+				 * @since 1.0.0
+				 */
 				do_action( 'wps_mfw_before_general_settings_form' );
 				// if submenu is directly clicked on woocommerce.
 			if ( empty( $mfw_active_tab ) ) {
@@ -88,7 +102,12 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 				$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
 				$mfw_tab_content_path = $mfw_default_tabs[ $mfw_active_tab ]['file_path'];
 				$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $mfw_tab_content_path );
-				// desc - This hook is used for trial.
+
+				/**
+				 * Action for general setting form.
+				 *
+				 * @since 1.0.0
+				 */
 				do_action( 'wps_mfw_after_general_settings_form' );
 			?>
 		</div>

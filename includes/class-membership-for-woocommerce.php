@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.0.3';
+			$this->version = '2.1.3';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -142,11 +142,6 @@ class Membership_For_Woocommerce {
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'package/rest-api/class-membership-for-woocommerce-rest-api.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-common.php';
-
-		/**
-		 * The class responsible for defining all function for membership checkout validations.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-checkout-validation.php';
 
 		/**
 		 * The class responsible for defining all global functions for the plugin.
@@ -295,6 +290,12 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
 
+		// add custom menu in product edit page.
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', 99, 1 );
+		$this->loader->add_action( 'woocommerce_product_data_panels', $mfw_plugin_admin, 'mfw_attach_plan_product_data_fields' );
+
+		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
+
 	}
 
 	/**
@@ -328,6 +329,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'user_register', $mfw_plugin_common, 'wps_membership_sen_email_to_new_registered_user' );
+
+		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+
 	}
 
 	/**
@@ -374,7 +379,12 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_get_price_html', $mfw_plugin_public, 'wps_membership_for_woo_hide_price_shop_page', 10, 2 );
 			// Display "Membership" tag for membership products on shop page.
 			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
-
+			$theme = wp_get_theme();
+			
+			if( 'Betheme'== $theme->name ) { 
+				
+				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
+			}
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $mfw_plugin_public, 'wps_membership_unset_shipping_if_membership_available', 10, 2 );
 
@@ -425,6 +435,16 @@ class Membership_For_Woocommerce {
 
 			// Login at thank you page.
 			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
+
+			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
+			$theme = wp_get_theme();
+			
+			if( 'Betheme'== $theme->name ) { 
+				
+				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
+			}
+			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
+
 		}
 	}
 
@@ -528,6 +548,12 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-shortcodes',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
 			);
+
+			/**
+			 * Filter for admin tab setting.
+			 *
+			 * @since 1.0.0
+			 */
 			$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
 			$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
 				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
@@ -541,7 +567,12 @@ class Membership_For_Woocommerce {
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
 			);
 			$mfw_default_tabs =
-			// desc - filter for trial.
+
+			/**
+			 * Filter for admin setting tabs.
+			 *
+			 * @since 1.0.0
+			 */
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
 
 			return $mfw_default_tabs;

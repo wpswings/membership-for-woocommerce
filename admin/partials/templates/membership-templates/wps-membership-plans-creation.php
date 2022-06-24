@@ -975,7 +975,7 @@ global $post;
 					<th scope="row" class="titledesc">
 						<label for="wps_membership_show_notice"><?php esc_html_e( 'Show Notice to Members', 'membership-for-woocommerce' ); ?></label>
 						<?php
-						$description = esc_html__( 'Show notice to the members', 'membership-for-woocommerce' );
+						$description = esc_html__( 'This will Show notice to the members at front-end', 'membership-for-woocommerce' );
 						$instance->tool_tip( $description );
 						?>
 					</th>

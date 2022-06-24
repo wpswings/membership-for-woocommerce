@@ -58,9 +58,9 @@ if ( empty( $current_url ) ) {
 
 
 								<?php if ( 'members-id' === $column_id ) : ?>
-									<a href="javascript:void(0)">
+									<span >
 										<?php echo esc_html( _x( '#', 'hash before member id', 'membership-for-woocommerce' ) . $membership_id ); ?>
-									</a>
+								</span>
 
 								<?php elseif ( 'members-date' === $column_id ) : ?>
 									<time datetime="<?php echo esc_attr( get_the_date( 'j F Y', $membership_id ) ); ?>"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></time>
@@ -79,7 +79,11 @@ if ( empty( $current_url ) ) {
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'cancelled' != $membership_status ) {
+
+										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >Cancel Membership</button></div>';
+									}
 
 									?>
 								<?php endif; ?>
@@ -95,7 +99,16 @@ if ( empty( $current_url ) ) {
 
 	<?php else : ?>
 		<div class="woocommerce-message woocommerce-message--info woocommerce-Message woocommerce-Message--info woocommerce-info">
-			<a class="woocommerce-Button button" href="<?php echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) ); ?>"><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
+			<a class="woocommerce-Button button" href="
+			<?php
+			/**
+			 * Filter to shop redirect.
+			 *
+			 * @since 1.0.0
+			 */
+			 echo esc_url( apply_filters( 'membership_return_to_shop_redirect', wc_get_page_permalink( 'shop' ) ) );
+			?>
+			 "><?php esc_html_e( 'Browse products', 'membership-for-woocommerce' ); ?></a>
 			<?php esc_html_e( 'No Membership has been purchased yet.', 'membership-for-woocommerce' ); ?>
 		</div>
 		<?php
@@ -127,6 +140,11 @@ if ( empty( $current_url ) ) {
 		'wps_membership_plan_target_disc_ids' => '',
 		'wps_membership_plan_target_disc_categories' => '',
 		'wps_membership_plan_target_disc_tags' => '',
+		'wps_memebership_plan_discount_price' => 0,
+		'wps_membership_plan_offer_price_type' => '',
+		'wps_membership_product_offer_price_type' => '',
+		'wps_membership_subscription_expiry_type' => '',
+		'wps_membership_plan_target_categories' => '',
 
 	);
 	foreach ( $temp_array as $m_keys => $m_values ) {
@@ -144,6 +162,7 @@ if ( empty( $current_url ) ) {
 		if ( 'delay_type' == $access_type ) {
 			$time_duration      = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
 			$time_duration_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
+			$current_date = gmdate( 'Y-m-d' );
 
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 
@@ -183,7 +202,7 @@ if ( empty( $current_url ) ) {
 			<tbody>
 				<tr class="woocommerce-table__line-item order_item">
 					<td class="woocommerce-table__product-name product-name">
-						<a href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </a> <strong class="product-quantity">&times;&nbsp;<?php esc_html( 1 ); ?></strong>	</td>
+						<span href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </span> <strong class="product-quantity">&nbsp;<?php esc_html( 1 ); ?></strong>	</td>
 					<td class="woocommerce-table__product-total product-total">
 						<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
 				</tr>

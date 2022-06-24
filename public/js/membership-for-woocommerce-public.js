@@ -23,7 +23,11 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-
+	var button_text = membership_public_obj.buy_now_text;
+	if( '' != button_text ) {
+		$('.wps_membership_buynow').val( button_text );
+	}
+ 
 	// Payment modal definition.
 	$("#wps_membership_buy_now_modal_form").dialog({
 		modal: true,
@@ -160,6 +164,8 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	});
+
+	
 
  });
 

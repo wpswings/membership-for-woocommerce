@@ -16,11 +16,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 global $mfw_wps_mfw_obj;
 $mfw_developer_admin_hooks =
-// desc - filter for trial.
+
+/**
+ * Filter for trial.
+ *
+ * @since 1.0.0
+ */
 apply_filters( 'mfw_developer_admin_hooks_array', array() );
 $count_admin = filtered_array( $mfw_developer_admin_hooks );
 $mfw_developer_public_hooks =
-// desc - filter for trial.
+
+/**
+ * Filter for public hooks.
+ *
+ * @since 1.0.0
+ */
 apply_filters( 'mfw_developer_public_hooks_array', array() );
 $count_public = filtered_array( $mfw_developer_public_hooks );
 ?>

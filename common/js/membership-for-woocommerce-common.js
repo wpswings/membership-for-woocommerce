@@ -34,28 +34,50 @@
 
 
 jQuery(document).ready(function ($) {
-$(".wps_membership_buynow").on("click", function (e) {
-	e.preventDefault();
-	let plan_price = $('#wps_membership_plan_price').val();
-	let plan_id = $('#wps_membership_plan_id').val();
-	let plan_title = $('#wps_membership_title').val();
+	$(".wps_membership_buynow").on("click", function (e) {
+		e.preventDefault();
+		let plan_price = $('#wps_membership_plan_price').val();
+		let plan_id = $('#wps_membership_plan_id').val();
+		let plan_title = $('#wps_membership_title').val();
 
-	$.ajax({
-		url: mfw_common_param.ajaxurl,
-		type: "POST",
-		data: {
-			action: "wps_membership_checkout",
-			plan_price: plan_price,
-			plan_id: plan_id,
-			plan_title: plan_title,
-		},
+		$.ajax({
+			url: mfw_common_param.ajaxurl,
+			type: "POST",
+			data: {
+				action: "wps_membership_checkout",
+				plan_price: plan_price,
+				plan_id: plan_id,
+				plan_title: plan_title,
+			},
 
-		success: function (response) {
+			success: function (response) {
 
-			
-		}
+				
+			}
+		});
 	});
-});
+
+	// Cancel membership.
+	$(document).on( 'click', '.memberhip-cancel-button', function(){
+		var notice = "Are you sure to Cancel your membership account!";
+		var membership_id = $(this).data('membership_id');
+		if( confirm( notice ) == true ) {
+			$.ajax({
+				url: mfw_common_param.ajaxurl,
+				type: "POST",
+				data: {
+					action: "wps_membership_cancel_membership_count",
+					membership_id : membership_id,
+					'security' : mfw_common_param.nonce,
+				},
+	
+				success: function (response) {
+	
+					window.location.reload();
+				}
+			});
+		} 
+	} );
 
 });
 
