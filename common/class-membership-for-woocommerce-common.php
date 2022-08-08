@@ -328,7 +328,7 @@ class Membership_For_Woocommerce_Common {
 		 */
 		$params = apply_filters( 'wpswings_tracker_params', $params );
 
-		$api_url = 'https://tracking.wpswings.com/wp-json/mfw-route/v1/mfw-testing-data/';
+		$api_url = 'https://tracking.wpswings.com/wp-json/mps-route/v1/mps-testing-data/';
 
 		$sucess = wp_safe_remote_post(
 			$api_url,
