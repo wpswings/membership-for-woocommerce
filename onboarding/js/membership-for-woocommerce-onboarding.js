@@ -107,6 +107,7 @@ jQuery(document).ready(function($) {
                 form_data: form_data,
             },
             success: function(msg) {
+
                 if ('plugins.php' == wps_mfw_onboarding.mfw_current_screen) {
                     window.location.replace(deactivate_url);
                 }

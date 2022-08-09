@@ -125,7 +125,7 @@ class Membership_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'mfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.3', false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.4', false );
 		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
 
 		wp_localize_script(

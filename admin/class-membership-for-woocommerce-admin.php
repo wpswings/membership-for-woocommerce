@@ -1576,7 +1576,16 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( isset( $screen->id ) && ( 'edit-wps_cpt_members' === $screen->id ) ) {
 
-			?>
+			?>					
+				<select id="filter_member_status" >
+					<option value=""><?php esc_html_e( 'Filter By Status', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="complete"><?php esc_html_e( 'Complete', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="expired"><?php esc_html_e( 'Expired', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="pending"><?php esc_html_e( 'Pending', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="cancelled"><?php esc_html_e( 'Cancelled', 'wallet-system-for-woocommerce' ); ?></option>
+				</select>
+					
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
 			<?php
 		}
@@ -3268,3 +3277,4 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 }
+

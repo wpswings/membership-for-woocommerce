@@ -81,6 +81,23 @@ jQuery(document).ready(function($) {
         if ($('a').has('.disabled')) {
             $(this).closest('.wps_membership_plan_gateways tr').css('background','red');
         }
+
+
+        $(document).on('change', '#filter_member_status', function(e) {
+debugger;
+var filtered_status = jQuery('#filter_member_status').val();
+ var member_ststus_td = jQuery('.members_status');
+
+ for (let index = 0; index < member_ststus_td.length; index++) {
+     if (filtered_status == jQuery(jQuery('.members_status')[index]).html() || filtered_status == 'All' ) {
+        jQuery(jQuery('.members_status')[index]).parent().show();
+     } else {
+        jQuery(jQuery('.members_status')[index]).parent().hide();
+     }
+   // jQuery(jQuery('.members_status')[0]).parent().hide()
+ }
+
+        });
 });
 
 

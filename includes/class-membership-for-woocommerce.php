@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.1.3';
+			$this->version = '2.1.4';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -381,7 +381,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
 			$theme = wp_get_theme();
 			
-			if( 'Betheme'== $theme->name ) { 
+			if( 'Betheme'== $theme->name ) {
 				
 				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
 			}

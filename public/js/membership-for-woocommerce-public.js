@@ -170,7 +170,6 @@ jQuery(document).ready(function ($) {
  });
 
  jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {
-	debugger;
 	
 	var classes = jQuery(this.nextElementSibling).attr('class');
  var allclasses =classes.split(' ');

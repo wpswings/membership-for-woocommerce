@@ -6,7 +6,7 @@ Requires at least: 5.0
 Tested up to: 6.0.1
 WC requires at least: 4.0.0
 WC tested up to: 6.6.1
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -247,7 +247,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 2.1.3 - Released on 24 June 2022 =
+= 2.1.4 - Released on 24 June 2022 =
 * New: Change Buy Now button text
 * New: Allow customers to cancel membership
 * New: Attach membership plan with product
@@ -307,7 +307,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.1.3 - Released on 24 June 2022 =
+= 2.1.4 - Released on 24 June 2022 =
 * New: Change Buy Now button text
 * New: Allow customers to cancel membership
 * New: Attach membership plan with product
