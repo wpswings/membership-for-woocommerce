@@ -72,7 +72,7 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @var  array
 	 */
-	private $custom_query_data;
+	public $custom_query_data;
 
 
 	/**
@@ -577,7 +577,7 @@ class Membership_For_Woocommerce_Public {
 									array(
 										'plan_id' => $plan['ID'],
 										'prod_id' => $product->get_id(),
-									),
+									), 
 									$page_link
 								);
 

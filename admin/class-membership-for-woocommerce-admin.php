@@ -1267,12 +1267,13 @@ class Membership_For_Woocommerce_Admin {
 
 		// Adding new columns.
 		$columns = array(
-			'cb'                   => '<input type="checkbox" />',
-			'membership_id'        => esc_html__( 'Membership ID', 'membership-for-woocommerce' ),
-			'members_status'       => esc_html__( 'Membership Status', 'membership-for-woocommerce' ),
-			'membership_user'      => esc_html__( 'User', 'membership-for-woocommerce' ),
-			'membership_user_view' => '',
-			'expiration'           => esc_html__( 'Expiry Date', 'membership-for-woocommerce' ),
+			'cb'                         => '<input type="checkbox" />',
+			'membership_id'              => esc_html__( 'Membership ID', 'membership-for-woocommerce' ),
+			'members_status'             => esc_html__( 'Membership Status', 'membership-for-woocommerce' ),
+			'membership_user'            => esc_html__( 'User', 'membership-for-woocommerce' ),
+			'membership_plan_associated' => esc_html__( 'Plan Associated', 'membership-for-woocommerce' ),
+			'membership_user_view'       => esc_html__( 'Plan Preview', 'membership-for-woocommerce' ),
+			'expiration'                 => esc_html__( 'Expiry Date', 'membership-for-woocommerce' ),
 		);
 
 		/**
@@ -1395,12 +1396,34 @@ class Membership_For_Woocommerce_Admin {
 				$status = get_post_meta( $post_id, 'member_status', true );
 				echo esc_html( $status );
 				break;
-
+				
 			case 'membership_user':
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'wps_member_user', true ) );
 
 				echo esc_html( $author_name );
+				break;
+
+			case 'membership_plan_associated':
+				$plan     = get_post_meta( $post_id, 'plan_obj', true );
+				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'wps_member_user', true ) );
+				$plan_name = '';
+				if ( is_array( $plan ) && ! empty( $plan ) ) {
+					foreach ( $plan as $key => $value ) {
+						# code...
+					//	echo $key;
+						if ($key == 'post_title' ) {
+							$plan_name .= $value;
+							$plan_name .= ',';
+	
+						}
+					}
+				}
+				
+				$plan_name = $plan_name.trim('');
+				$plan_name = rtrim($plan_name , ',');
+				echo esc_html( ! empty( $plan_name ) ? $plan_name : __( 'No Plan Found', 'membership-for-woocommerce' ) );
+				//echo esc_html( $plan );
 				break;
 
 			case 'membership_user_view':
@@ -1573,17 +1596,33 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_membership_for_woo_export_members() {
 
 		$screen = get_current_screen();
-
 		if ( isset( $screen->id ) && ( 'edit-wps_cpt_members' === $screen->id ) ) {
-
+			$obj_public = new Membership_For_Woocommerce_Public('','');
+			$data = $obj_public->custom_query_data;
+			if ( ! empty( $data ) && is_array( $data ) ) {
+				$plan_name = '';
+				if ( is_array( $data ) && ! empty( $data ) ) {
+					foreach ( $data as $plan_membership ) {
+						if ( ! empty( $plan_membership['post_title'] ) ) {
+							$plan_name .= '<option value="' . $plan_membership['post_title'] . '">'. esc_html__( $plan_membership['post_title'] ) . '  </option>
+							';
+						}
+					}
+				}	
+			}
 			?>					
 				<select id="filter_member_status" >
-					<option value=""><?php esc_html_e( 'Filter By Status', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Filter By Status', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="complete"><?php esc_html_e( 'Complete', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="expired"><?php esc_html_e( 'Expired', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="pending"><?php esc_html_e( 'Pending', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="cancelled"><?php esc_html_e( 'Cancelled', 'wallet-system-for-woocommerce' ); ?></option>
+				</select>
+				<select id="filter_membership_name" >
+					<option value="All"><?php esc_html_e( 'Filter By Membership Plan', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
+					<?php echo ( $plan_name ); ?>
 				</select>
 					
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
