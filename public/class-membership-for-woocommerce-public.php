@@ -2715,13 +2715,12 @@ class Membership_For_Woocommerce_Public {
 			} else {
 				$discount = $applied_offer_price_fixed_on_cart;
 			}
-
+		
 			if ( ! empty( $discount_fixed ) ) {
 				if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 					$discount = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
 				}
 			}
-
 			$cart->add_fee( 'Membership Discount', -round( $discount ), false );
 		}
 

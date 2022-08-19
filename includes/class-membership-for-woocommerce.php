@@ -287,6 +287,7 @@ class Membership_For_Woocommerce {
 				$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_migrate_db_keys_notice', 10, 1 );
 			}
 		}
+		$this->loader->add_action( 'wp_ajax_wps_membership_save_member_status', $mfw_plugin_admin, 'wps_membership_save_member_status' );
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
 

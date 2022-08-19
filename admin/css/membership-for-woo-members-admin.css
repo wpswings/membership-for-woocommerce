@@ -463,3 +463,15 @@ span.wps_member_notice {
     display: block;
     line-height: 1.5px;
 }
+
+select#wps-wpg-gen-table_status .complete, .wps-member-status-complete {
+    color: #03dac5 !important;
+  }
+  
+  select#wps-wpg-gen-table_status .pending {
+       color: #fdb51a !important;
+  }
+  
+  select#wps-wpg-gen-table_status .cancelled, .wps-member-status-cancelled {
+       color: #f32121 !important;
+  }

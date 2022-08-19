@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     
+    
     $('#message').hide();
     // Display edit fields on edit click
     $(".members_data_column").on("click", ".edit_member_address", function(e) {
@@ -94,7 +95,6 @@ jQuery(document).ready(function($) {
                  } else {
                     jQuery(jQuery('.members_status')[index]).parent().hide();
                  }
-               // jQuery(jQuery('.members_status')[0]).parent().hide()
              }
             
         });
@@ -110,10 +110,50 @@ jQuery(document).ready(function($) {
                  } else {
                     jQuery(jQuery('.membership_plan_associated')[index]).parent().hide();
                  }
-               // jQuery(jQuery('.members_status')[0]).parent().hide()
              }
             
         });
+
+
+        	// update wallet and status on changing status of wallet request
+		$(document).on( 'change', 'select#wps-wpg-gen-table_status', function() {
+			var user_id = $('#wps-wpg-gen-table_status').attr('user_id');
+            var post_id = $('#wps-wpg-gen-table_status').attr('post_id_value');
+            var plan_id = $('#wps-wpg-gen-table_status').attr('plan_id');
+			var status = $(this).find(":selected").val();
+			var loader = $(this).siblings('#overlay');
+			loader.show();
+			$.ajax({
+				type: 'POST',
+				url: members_admin_obj.ajaxurl,
+				data: {
+					action: 'wps_membership_save_member_status',
+					nonce: members_admin_obj.nonce,
+					post_id: post_id,
+					user_id: user_id,
+					member_status: status,
+                    members_plan_assign:plan_id,
+					
+				},
+				datatType: 'JSON',
+				success: function( response ) {
+                    debugger;
+					$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-' + response.msgType + ' is-dismissible wps-errorr-8"><p>' + response.msg + '</p></div>');		
+					loader.hide();
+					setTimeout(function () {
+						location.reload();
+					}, 1000);
+					
+
+				},
+
+			})
+			.fail(function ( response ) {
+                debugger;
+				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + wsfw_admin_param.wsfw_ajax_error + '</p></div>');		
+				loader.hide();
+			});
+		});
 });
 
 
