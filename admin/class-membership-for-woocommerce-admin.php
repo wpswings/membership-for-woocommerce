@@ -87,6 +87,7 @@ class Membership_For_Woocommerce_Admin {
 				);
 				return;
 			}
+			wp_enqueue_style( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), $this->version, 'all' );
 
 			wp_enqueue_style( 'wps-mfw-select2-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
 
@@ -102,8 +103,7 @@ class Membership_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 
 		}
-		wp_enqueue_style( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), $this->version, 'all' );
-
+	
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
 			$pagescreen_id   = $screen->id;
