@@ -127,7 +127,12 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.4', false );
 		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
-
+		$wps_mfw_single_plan= '';
+		if( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
+			$wps_mfw_single_plan = 'yes';
+		} else {
+			$wps_mfw_single_plan= '';
+		}
 		wp_localize_script(
 			$this->plugin_name,
 			'membership_public_obj',
@@ -135,6 +140,7 @@ class Membership_For_Woocommerce_Public {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
 				'buy_now_text' => $button_text,
+				'single_plan' => $wps_mfw_single_plan,
 			)
 		);
 
@@ -633,14 +639,14 @@ class Membership_For_Woocommerce_Public {
 											}
 										}
 
-										echo '<div class="available_member" >
+										echo '<div class="available_member wps_mfw_plan_suggestion" >
 	<div>
 		<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 	</div>
 </div>';
 									} else {
 											// Show options to buy plans.
-											echo '<div class="plan_suggestion" >
+											echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
 		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 		</div>
@@ -729,14 +735,14 @@ class Membership_For_Woocommerce_Public {
 												}
 											}
 
-											echo '<div class="available_member">
+											echo '<div class="available_member wps_mfw_plan_suggestion">
 		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 		</div>
 	</div>';
 										} else {
 												// Show options to buy plans.
-												echo '<div class="plan_suggestion" >
+												echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
 			<div>
 				<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 			</div>
@@ -862,7 +868,7 @@ class Membership_For_Woocommerce_Public {
 
 										$page_link = $page_link . '?plan_id=' . $plan['ID'] . '&prod_id=' . $product->get_id();
 
-										echo '<div class="available_member" >
+										echo '<div class="available_member wps_mfw_plan_suggestion" >
 									<div>
 										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Memberships	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 									</div>
