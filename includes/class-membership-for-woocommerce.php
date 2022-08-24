@@ -381,9 +381,9 @@ class Membership_For_Woocommerce {
 			// Display "Membership" tag for membership products on shop page.
 			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
 			$theme = wp_get_theme();
-			
-			if( 'Betheme'== $theme->name ) {
-				
+
+			if ( 'Betheme' == $theme->name ) {
+
 				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
 			}
 			// Hide other shipping methods, if membership free shipping available.
@@ -439,9 +439,9 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			$theme = wp_get_theme();
-			
-			if( 'Betheme'== $theme->name ) { 
-				
+
+			if ( 'Betheme' == $theme->name ) {
+
 				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			}
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20 );

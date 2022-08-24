@@ -103,7 +103,7 @@ class Membership_For_Woocommerce_Admin {
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 
 		}
-	
+
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
 			$pagescreen_id   = $screen->id;
@@ -1394,24 +1394,25 @@ class Membership_For_Woocommerce_Admin {
 
 			case 'members_status':
 				$author_id    = get_post_field( 'post_author', $post_id );
-				$plan_id = get_post_meta( $post_id, 'plan_obj', true);
-				
+				$plan_id = get_post_meta( $post_id, 'plan_obj', true );
+
 				if ( is_array( $plan_id ) && ! empty( $plan_id ) ) {
 					$plan_id = $plan_id['ID'];
 				} else {
 					$plan_id = 0;
 				}
 				$withdrawal_status = get_post_meta( $post_id, 'member_status', true );
-				
-									if ( 'complete' === $withdrawal_status ) {
-										?>
+
+				if ( 'complete' === $withdrawal_status ) {
+					?>
 										<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
 										<?php
-									} elseif ( 'cancelled' === $withdrawal_status || 'Expired' === $withdrawal_status ) {
-										?>
+				} elseif ( 'cancelled' === $withdrawal_status || 'Expired' === $withdrawal_status ) {
+					?>
 										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
-									<?php } else {
-				?>
+									<?php
+				} else {
+					?>
 				<form action="" method="POST">
 				<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">
 					<option class="complete" value="complete" >&nbsp;&nbsp;<?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
@@ -1424,13 +1425,13 @@ class Membership_For_Woocommerce_Admin {
 					<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="64" height="64" /><br>Loading..
 				</div>
 			</form>
-				<?php
+					<?php
 
 				}
-				$status = get_post_meta( $post_id, 'member_status', true );
-				
+									$status = get_post_meta( $post_id, 'member_status', true );
+
 				break;
-				
+
 			case 'membership_user':
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', get_post_meta( $post_id, 'wps_member_user', true ) );
@@ -1444,17 +1445,17 @@ class Membership_For_Woocommerce_Admin {
 				$plan_name = '';
 				if ( is_array( $plan ) && ! empty( $plan ) ) {
 					foreach ( $plan as $key => $value ) {
-						if ($key == 'post_title' ) {
+						if ( 'post_title' == $key ) {
 							$plan_name .= $value;
 							$plan_name .= ',';
-	
+
 						}
 					}
 				}
-				$plan_name = $plan_name.trim('');
-				$plan_name = rtrim($plan_name , ',');
+				$plan_name = $plan_name . trim( '' );
+				$plan_name = rtrim( $plan_name, ',' );
 				echo esc_html( ! empty( $plan_name ) ? $plan_name : __( 'No Plan Found', 'membership-for-woocommerce' ) );
-				//echo esc_html( $plan );
+				
 				break;
 
 			case 'membership_user_view':
@@ -1628,20 +1629,21 @@ class Membership_For_Woocommerce_Admin {
 
 		$screen = get_current_screen();
 		if ( isset( $screen->id ) && ( 'edit-wps_cpt_members' === $screen->id ) ) {
-			$obj_public = new Membership_For_Woocommerce_Public('','');
+			$obj_public = new Membership_For_Woocommerce_Public( '', '' );
 			$data = $obj_public->custom_query_data;
 			if ( ! empty( $data ) && is_array( $data ) ) {
 				$plan_name = '';
 				if ( is_array( $data ) && ! empty( $data ) ) {
 					foreach ( $data as $plan_membership ) {
 						if ( ! empty( $plan_membership['post_title'] ) ) {
-							$plan_name .= '<option value="' . $plan_membership['post_title'] . '">'. esc_html__( $plan_membership['post_title'] ) . '  </option>
+							$plan_name .= '<option value="' . $plan_membership['post_title'] . '">' . esc_html( $plan_membership['post_title'] ) . '  </option>
 							';
 						}
 					}
-				}	
+				}
 			}
-			?>					
+			?>
+								
 				<select id="filter_member_status" >
 					<option value="All"><?php esc_html_e( 'Filter By Status', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
@@ -1653,7 +1655,7 @@ class Membership_For_Woocommerce_Admin {
 				<select id="filter_membership_name" >
 					<option value="All"><?php esc_html_e( 'Filter By Membership Plan', 'wallet-system-for-woocommerce' ); ?></option>
 					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
-					<?php echo ( $plan_name ); ?>
+					<?php echo esc_html( $plan_name ); ?>
 				</select>
 					
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
@@ -1710,7 +1712,7 @@ class Membership_For_Woocommerce_Admin {
 					fputcsv(
 						$file,
 						array(
-							get_the_ID(),
+							$post_datas->ID,
 							! empty( $post_datas->post_author ) ? get_the_author_meta( 'display_name', $post_datas->post_author ) : '',
 							get_the_author_meta( 'user_email' ),
 							$this->global_class->get_member_details( $post_datas, 'name' ),
@@ -1854,7 +1856,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_save_member_fields( $post_id ) {
-		
+
 		// Return if doing autosave.
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
@@ -3348,17 +3350,15 @@ class Membership_For_Woocommerce_Admin {
 
 
 
-		/**
+	/**
 	 * Members billing metabox save.
 	 *
-	 * @param int $post_id is the post ID.
-	 * @since 1.0.0
+	 * @return void
 	 */
-	public function wps_membership_save_member_status( ) {
-		
+	public function wps_membership_save_member_status() {
 
 		// Nonce verification.
-	//	check_admin_referer( 'wps_members_creation_nonce', 'wps_members_nonce_field' );
+		check_ajax_referer( 'members-nonce', 'nonce' );
 
 		// Saving member actions metabox fields.
 		$actions = array(
@@ -3366,7 +3366,7 @@ class Membership_For_Woocommerce_Admin {
 			'member_actions' => ! empty( $_POST['member_actions'] ) ? sanitize_text_field( wp_unslash( $_POST['member_actions'] ) ) : '',
 		);
 		$plan_id = '';
-		
+
 		$post_id = ! empty( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
 
 			// When plans are assigned manually.

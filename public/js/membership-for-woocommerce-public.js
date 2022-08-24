@@ -169,12 +169,13 @@ jQuery(document).ready(function ($) {
 
  });
 
-//  var single_page = membership_public_obj.single_plan;
-//  if('yes' == single_page ){
-// 	//  console.log( jQuery('.wps_members_plans .wps_table_wrapper') );
-// 	jQuery('.wps_members_plans .wps_table_wrapper').css('display', '');
-// 	jQuery('.wps_members_plans .wps_table_wrapper').addClass('show__membership_details');
-//  }
+ jQuery(document).ready(function($){
+
+	 var single_page = membership_public_obj.single_plan;
+	 if('yes' == single_page ){
+		jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
+	 }
+ });
 
 
  jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {

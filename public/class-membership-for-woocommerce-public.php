@@ -127,11 +127,11 @@ class Membership_For_Woocommerce_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.4', false );
 		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
-		$wps_mfw_single_plan= '';
-		if( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
+		$wps_mfw_single_plan = '';
+		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
 			$wps_mfw_single_plan = 'yes';
 		} else {
-			$wps_mfw_single_plan= '';
+			$wps_mfw_single_plan = '';
 		}
 		wp_localize_script(
 			$this->plugin_name,
@@ -583,7 +583,7 @@ class Membership_For_Woocommerce_Public {
 									array(
 										'plan_id' => $plan['ID'],
 										'prod_id' => $product->get_id(),
-									), 
+									),
 									$page_link
 								);
 
@@ -2721,7 +2721,7 @@ class Membership_For_Woocommerce_Public {
 			} else {
 				$discount = $applied_offer_price_fixed_on_cart;
 			}
-		
+
 			if ( ! empty( $discount_fixed ) ) {
 				if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 					$discount = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
