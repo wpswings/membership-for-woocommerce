@@ -31,6 +31,13 @@
 
 jQuery(document).ready(function($) {
 
+    console.log( jQuery('.wps-membership__plan--pro-disabled') );
+    jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
+        // alert();
+        // e.preventDefault();
+	    $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
+    });
+
     jQuery('#preview-action').hide();
     jQuery('#edit-slug-box').hide();
     jQuery('#message').hide();

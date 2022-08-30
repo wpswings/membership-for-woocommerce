@@ -3928,6 +3928,7 @@ class Membership_For_Woocommerce_Public {
 		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 		$plan_id = get_post_meta( $post_id, 'wps_membership_plan_with_product', true );
+		
 		if ( $plan_id ) {
 			$is_plan_assigned = false;
 		}
@@ -3951,14 +3952,8 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $is_plan_assigned ) {
 						if ( ! is_single() ) {
 
-							$result = get_posts(
-								array(
-									'post_type'      => 'wps_cpt_membership',
-									'post_status'    => 'publish',
-									'posts_per_page' => -1,
-									'post_id'       => $plan_id,
-								)
-							);
+							$result   = get_post( $plan_id );
+							
 							?>
 						<div class="mfw-product-meta-membership-wrap">
 								<div class="product-meta mfw-product-meta-membership">
@@ -3966,25 +3961,19 @@ class Membership_For_Woocommerce_Public {
 								</div>
 								<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 									<div class="wps_mfw_membership_tool_tip">
-										<?php echo esc_html( $result[0]->post_title ); ?>
+										<?php echo esc_html(  $result->post_title ); ?>
 									</div>
 								</i>
 							</div>
 							<?php
 						} else {
-							$result = get_posts(
-								array(
-									'post_type'      => 'wps_cpt_membership',
-									'post_status'    => 'publish',
-									'posts_per_page' => -1,
-									'post_id'       => $plan_id,
-								)
-							);
+							$result   = get_post( $plan_id );
+							
 							?>
 							<div class="wps-info-membership-alert">
 								<p >
 									<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-									<?php echo esc_html( $result[0]->post_title ); ?>
+									<?php echo esc_html( $result->post_title ); ?>
 									<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 	
 								</p>
@@ -3998,14 +3987,7 @@ class Membership_For_Woocommerce_Public {
 				if ( $plan_id ) {
 					if ( ! is_single() ) {
 
-						$result = get_posts(
-							array(
-								'post_type'      => 'wps_cpt_membership',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-								'post_id'       => $plan_id,
-							)
-						);
+						$result   = get_post( $plan_id );
 						?>
 					<div class="mfw-product-meta-membership-wrap">
 							<div class="product-meta mfw-product-meta-membership">
@@ -4013,25 +3995,18 @@ class Membership_For_Woocommerce_Public {
 							</div>
 							<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 								<div class="wps_mfw_membership_tool_tip">
-									<?php echo esc_html( $result[0]->post_title ); ?>
+									<?php echo esc_html( $result->post_title ); ?>
 								</div>
 							</i>
 						</div>
 						<?php
 					} else {
-						$result = get_posts(
-							array(
-								'post_type'      => 'wps_cpt_membership',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-								'post_id'       => $plan_id,
-							)
-						);
+						$result   = get_post( $plan_id );
 						?>
 						<div class="wps-info-membership-alert">
 							<p >
 								<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-								<?php echo esc_html( $result[0]->post_title ); ?>
+								<?php echo esc_html( $result->post_title ); ?>
 								<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 
 							</p>
@@ -4044,14 +4019,7 @@ class Membership_For_Woocommerce_Public {
 			if ( $plan_id ) {
 				if ( ! is_single() ) {
 
-					$result = get_posts(
-						array(
-							'post_type'      => 'wps_cpt_membership',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-							'post_id'       => $plan_id,
-						)
-					);
+					$result   = get_post( $plan_id );
 					?>
 				<div class="mfw-product-meta-membership-wrap">
 						<div class="product-meta mfw-product-meta-membership">
@@ -4059,25 +4027,18 @@ class Membership_For_Woocommerce_Public {
 						</div>
 						<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 							<div class="wps_mfw_membership_tool_tip">
-								<?php echo esc_html( $result[0]->post_title ); ?>
+								<?php echo esc_html( $result->post_title ); ?>
 							</div>
 						</i>
 					</div>
 					<?php
 				} else {
-					$result = get_posts(
-						array(
-							'post_type'      => 'wps_cpt_membership',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-							'post_id'       => $plan_id,
-						)
-					);
+					$result   = get_post( $plan_id );
 					?>
 					<div class="wps-info-membership-alert">
 						<p >
 							<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-							<?php echo esc_html( $result[0]->post_title ); ?>
+							<?php echo esc_html( $result->post_title ); ?>
 							<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 
 						</p>

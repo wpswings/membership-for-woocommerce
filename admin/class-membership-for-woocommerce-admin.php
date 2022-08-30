@@ -99,7 +99,7 @@ class Membership_For_Woocommerce_Admin {
 
 			wp_enqueue_style( $this->plugin_name . '-admin-global', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-global.css', array( 'wps-mfw-meterial-icons-css' ), time(), 'all' );
 
-			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.css', array(), $this->version, 'all' );
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
 
 		}
@@ -1068,8 +1068,8 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_for_woo_meta_box() {
-
-		add_meta_box( 'members_meta_box', esc_html__( 'Create Plan', 'membership-for-woocommerce' ), array( $this, 'wps_membership_meta_box_callback' ), 'wps_cpt_membership' );
+		
+		add_meta_box( 'members_meta_box', esc_html__( 'Create Plan     ', 'membership-for-woocommerce' ), array( $this, 'wps_membership_meta_box_callback' ), 'wps_cpt_membership' );
 	}
 
 
@@ -1387,8 +1387,9 @@ class Membership_For_Woocommerce_Admin {
 			case 'membership_id':
 				$author_id    = get_post_field( 'post_author', $post_id );
 				$display_name = get_the_author_meta( 'display_name', get_post_meta( $post_id, 'wps_member_user', true ) );
+				$withdrawal_status = get_post_meta( $post_id, 'member_status', true );
 				?>
-				<strong><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
+				<strong class="wps_hide_<?php echo $withdrawal_status; ?>"><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
 				<?php
 				break;
 
@@ -1631,31 +1632,31 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $screen->id ) && ( 'edit-wps_cpt_members' === $screen->id ) ) {
 			$obj_public = new Membership_For_Woocommerce_Public( '', '' );
 			$data = $obj_public->custom_query_data;
-			if ( ! empty( $data ) && is_array( $data ) ) {
-				$plan_name = '';
-				if ( is_array( $data ) && ! empty( $data ) ) {
-					foreach ( $data as $plan_membership ) {
-						if ( ! empty( $plan_membership['post_title'] ) ) {
-							$plan_name .= '<option value="' . $plan_membership['post_title'] . '">' . esc_html( $plan_membership['post_title'] ) . '  </option>
-							';
-						}
-					}
-				}
-			}
+			
 			?>
 								
 				<select id="filter_member_status" >
-					<option value="All"><?php esc_html_e( 'Filter By Status', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="complete"><?php esc_html_e( 'Complete', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="expired"><?php esc_html_e( 'Expired', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="pending"><?php esc_html_e( 'Pending', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="cancelled"><?php esc_html_e( 'Cancelled', 'wallet-system-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Filter By Status', 'membership-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Show All', 'membership-for-woocommerce' ); ?></option>
+					<option value="complete"><?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
+					<option value="expired"><?php esc_html_e( 'Expired', 'membership-for-woocommerce' ); ?></option>
+					<option value="pending"><?php esc_html_e( 'Pending', 'membership-for-woocommerce' ); ?></option>
+					<option value="cancelled"><?php esc_html_e( 'Cancelled', 'membership-for-woocommerce' ); ?></option>
 				</select>
 				<select id="filter_membership_name" >
-					<option value="All"><?php esc_html_e( 'Filter By Membership Plan', 'wallet-system-for-woocommerce' ); ?></option>
-					<option value="All"><?php esc_html_e( 'Show All', 'wallet-system-for-woocommerce' ); ?></option>
-					<?php echo esc_html( $plan_name ); ?>
+					<option value="All"><?php esc_html_e( 'Filter By Membership Plan', 'membership-for-woocommerce' ); ?></option>
+					<option value="All"><?php esc_html_e( 'Show All', 'membership-for-woocommerce' ); ?></option>
+					<?php if ( ! empty( $data ) && is_array( $data ) ) {
+							
+							if ( is_array( $data ) && ! empty( $data ) ) {
+								foreach ( $data as $plan_membership ) {
+									if ( ! empty( $plan_membership['post_title'] ) ) { ?>
+									<option value="<?php echo $plan_membership['post_title'];?>"><?php echo esc_html( $plan_membership['post_title'] ) ?></option>
+										
+									<?php }
+								}
+							}
+						} ?>
 				</select>
 					
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
@@ -3649,7 +3650,7 @@ class Membership_For_Woocommerce_Admin {
 
 		update_post_meta( $post_id, 'billing_details', $fields );
 
-			$wps_wsfw_error_text = esc_html__( 'Membership Status changed', 'wallet-system-for-woocommerce' );
+			$wps_wsfw_error_text = esc_html__( 'Membership Status changed', 'membership-for-woocommerce' );
 			$message             = array(
 				'msg'     => $wps_wsfw_error_text,
 				'msgType' => 'success',

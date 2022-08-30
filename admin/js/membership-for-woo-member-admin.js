@@ -85,22 +85,32 @@ jQuery(document).ready(function($) {
 
 
         $(document).on('change', '#filter_member_status', function(e) {
-            debugger;
             var filtered_status = jQuery('#filter_member_status').val();
              var member_ststus_td = jQuery('.members_status');
-            
-             for (let index = 0; index < member_ststus_td.length; index++) {
-                 if (filtered_status == jQuery(jQuery('.members_status')[index]).html() || filtered_status == 'All' ) {
-                    jQuery(jQuery('.members_status')[index]).parent().show();
-                 } else {
-                    jQuery(jQuery('.members_status')[index]).parent().hide();
-                 }
-             }
+             var wps_statuses = ['complete', 'expired', 'cancelled','pending', 'hold'];
+             var changed_value = $(this).val();
+            for( let i=0;i<wps_statuses.length;i++ ) {
+                if( changed_value == 'All' ){
+                     jQuery('.wps_hide_hold' ).parent().parent().show();
+                     jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().show();
+                   
+                } else if( changed_value == wps_statuses[i]  ){
+                    jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().show();
+                    
+                  
+                } else{
+                    jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().hide();
+                   
+                }
+                if( changed_value == 'pending' ) {
+
+                    jQuery('.wps_hide_hold' ).parent().parent().show();
+                }
+            }
             
         });
 
         $(document).on('change', '#filter_membership_name', function(e) {
-            debugger;
             var filtered_status = jQuery('#filter_membership_name').val();
              var member_ststus_td = jQuery('.membership_plan_associated');
             
@@ -137,7 +147,6 @@ jQuery(document).ready(function($) {
 				},
 				datatType: 'JSON',
 				success: function( response ) {
-                    debugger;
 					$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-' + response.msgType + ' is-dismissible wps-errorr-8"><p>' + response.msg + '</p></div>');		
 					loader.hide();
 					setTimeout(function () {
@@ -149,7 +158,6 @@ jQuery(document).ready(function($) {
 
 			})
 			.fail(function ( response ) {
-                debugger;
 				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + wsfw_admin_param.wsfw_ajax_error + '</p></div>');		
 				loader.hide();
 			});
