@@ -31,12 +31,29 @@
 
 jQuery(document).ready(function($) {
 
-    console.log( jQuery('.wps-membership__plan--pro-disabled') );
+   
     jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
-        // alert();
-        // e.preventDefault();
 	    $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
     });
+
+    $('.wps_ubo_lite_go_pro_popup_close').on( 'click', function (e) {
+
+        // Hide Go pro popup.
+        e.preventDefault();
+        $( '.wps_ubo_lite_go_pro_popup_wrap' ).removeClass('wps_ubo_lite_go_pro_popup_show' );
+        $( 'body' ).removeClass( 'wps_ubo_lite_go_pro_popup_body' );
+    });
+    $('body').click
+    (
+      function(e)
+      { 
+        if( e.target.className == 'wps_ubo_lite_go_pro_popup_wrap wps_ubo_lite_go_pro_popup_show' )
+        {   
+            $( '.wps_ubo_lite_go_pro_popup_wrap' ).removeClass( 'wps_ubo_lite_go_pro_popup_show' );
+            $( 'body' ).removeClass( 'wps_ubo_lite_go_pro_popup_body' );
+        }
+      }
+    );
 
     jQuery('#preview-action').hide();
     jQuery('#edit-slug-box').hide();
