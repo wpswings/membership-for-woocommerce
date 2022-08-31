@@ -1408,11 +1408,16 @@ class Membership_For_Woocommerce_Admin {
 					?>
 										<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
 										<?php
-				} elseif ( 'cancelled' === $withdrawal_status || 'Expired' === $withdrawal_status ) {
+				} elseif ( 'cancelled' === $withdrawal_status ) {
 					?>
 										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
 									<?php
-				} else {
+				} elseif ( 'expired' === $withdrawal_status ) {
+					?>
+										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'expired', 'membership-for-woocommerce' ); ?></span>
+									<?php
+				}
+				 else {
 					?>
 				<form action="" method="POST">
 				<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">

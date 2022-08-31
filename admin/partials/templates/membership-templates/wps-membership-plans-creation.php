@@ -50,9 +50,6 @@ function wps_mfw_upgrade_pro_popup(){
 			<!-- Notice. -->
 			<div class="wps_ubo_lite_go_pro_popup_content">
 				<p class="wps_ubo_lite_go_pro_popup_text">
-					<?php echo esc_html( $message ); ?>
-				</p>
-				<p class="wps_ubo_lite_go_pro_popup_text">
 					<?php esc_html_e( 'Go with our premium version and make unlimited numbers of order bumps. Get more smart features and make the most attractive offers with all of your products. Set Relevant offers for specific targets which will ensure customer satisfaction and higher conversion rates.', 'membership-for-woocommerce' ); ?>
 				</p>
 			</div>
@@ -165,18 +162,25 @@ function wps_mfw_upgrade_pro_popup(){
 					$check_licence = check_membership_pro_plugin_is_active();
 					if ( $check_licence ) {
 						$wps_membership_plan_info = $settings_fields['wps_membership_plan_info'];
+						$settings = array(
+							'media_buttons'    => false,
+							'drag_drop_upload' => true,
+							'dfw'              => true,
+							'teeny'            => true,
+							'editor_height'    => 200,
+							'editor_class'       => 'wps_etmfw_new_woo_ver_style_textarea',
+						);
+		
+						wp_editor( $wps_membership_plan_info, 'wps_membership_plan_info', $settings );
 					}
-				}
-				$settings = array(
-					'media_buttons'    => false,
-					'drag_drop_upload' => true,
-					'dfw'              => true,
-					'teeny'            => true,
-					'editor_height'    => 200,
-					'editor_class'       => 'wps_etmfw_new_woo_ver_style_textarea',
-				);
-
-				wp_editor( $wps_membership_plan_info, 'wps_membership_plan_info', $settings );
+				} else {?>
+					<select multiple="multiple">
+						<option></option>
+						<option></option>
+						<option></option>
+					</select>
+					
+			<?php	}
 
 				?>
 
