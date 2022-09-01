@@ -1389,7 +1389,7 @@ class Membership_For_Woocommerce_Admin {
 				$display_name = get_the_author_meta( 'display_name', get_post_meta( $post_id, 'wps_member_user', true ) );
 				$withdrawal_status = get_post_meta( $post_id, 'member_status', true );
 				?>
-				<strong class="wps_hide_<?php echo $withdrawal_status; ?>"><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
+				<strong class="wps_hide_<?php echo esc_attr( $withdrawal_status ); ?>"><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
 				<?php
 				break;
 
@@ -1656,7 +1656,7 @@ class Membership_For_Woocommerce_Admin {
 							if ( is_array( $data ) && ! empty( $data ) ) {
 								foreach ( $data as $plan_membership ) {
 									if ( ! empty( $plan_membership['post_title'] ) ) { ?>
-									<option value="<?php echo $plan_membership['post_title'];?>"><?php echo esc_html( $plan_membership['post_title'] ) ?></option>
+									<option value="<?php echo esc_attr( $plan_membership['post_title'] );?>"><?php echo esc_html( $plan_membership['post_title'] ) ?></option>
 										
 									<?php }
 								}

@@ -27,6 +27,12 @@ if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocom
 	wps_mfw_upgrade_pro_popup();
 }
 
+
+/**
+ * Function for popup.
+ *
+ * @return void
+ */
 function wps_mfw_upgrade_pro_popup(){
 	?>
 
