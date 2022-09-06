@@ -56,7 +56,7 @@ function wps_mfw_upgrade_pro_popup(){
 			<!-- Notice. -->
 			<div class="wps_ubo_lite_go_pro_popup_content">
 				<p class="wps_ubo_lite_go_pro_popup_text">
-					<?php esc_html_e( 'Go with our premium version and make unlimited numbers of order bumps. Get more smart features and make the most attractive offers with all of your products. Set Relevant offers for specific targets which will ensure customer satisfaction and higher conversion rates.', 'membership-for-woocommerce' ); ?>
+					<?php esc_html_e('A straightforward membership plugin that functions seamlessly on your eCommerce business will help you build your community of members with premium features which gives two Free Templates of Comparision and Simple, Create & sort plans, get revenue & detailed reports, give discounts, override access to posts, comments on your protected posts and many more.', 'membership-for-woocommerce' ); ?>
 				</p>
 			</div>
 
