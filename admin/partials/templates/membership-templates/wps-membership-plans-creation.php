@@ -1014,18 +1014,20 @@ function wps_mfw_upgrade_pro_popup(){
 
 						<?php
 						$wps_membership_plan_hide_products = '';
-
+						
+						$wps_mfw_disable = 'disabled';
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 							$check_licence = check_membership_pro_plugin_is_active();
 							if ( $check_licence ) {
 												$wps_membership_plan_hide_products = $settings_fields['wps_membership_plan_hide_products'];
+												$wps_mfw_disable = '';
 							}
 						}
 
 						?>
 
 
-						<input type="checkbox"  class="wps_membership_plan_hide_products" name="wps_membership_plan_hide_products" value="yes" <?php checked( 'yes', $wps_membership_plan_hide_products ); ?> >
+						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable );?> class="wps_membership_plan_hide_products" name="wps_membership_plan_hide_products" value="yes" <?php checked( 'yes', $wps_membership_plan_hide_products ); ?> >
 					</td>
 				</tr>
 				<!-- Hide products section end. -->
@@ -1054,7 +1056,7 @@ function wps_mfw_upgrade_pro_popup(){
 
 						?>
 
-						<input type="checkbox"  class="wps_membership_show_notice" name="wps_membership_show_notice" value="yes" <?php checked( 'yes', $wps_membership_show_notice ); ?> >
+						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable );?>  class="wps_membership_show_notice" name="wps_membership_show_notice" value="yes" <?php checked( 'yes', $wps_membership_show_notice ); ?> >
 
 						<?php
 						$wps_membership_notice_message = $settings_fields['wps_membership_notice_message'];
