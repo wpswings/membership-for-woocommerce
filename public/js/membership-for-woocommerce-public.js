@@ -169,8 +169,16 @@ jQuery(document).ready(function ($) {
 
  });
 
+ jQuery(document).ready(function($){
+
+	 var single_page = membership_public_obj.single_plan;
+	 if('yes' == single_page ){
+		jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
+	 }
+ });
+
+
  jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {
-	debugger;
 	
 	var classes = jQuery(this.nextElementSibling).attr('class');
  var allclasses =classes.split(' ');
@@ -185,3 +193,5 @@ if ( allclasses.length>1 ) {
 	}
 
  }); 
+
+ 

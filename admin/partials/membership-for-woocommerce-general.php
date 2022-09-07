@@ -23,6 +23,7 @@ $mfw_genaral_settings =
  * @since 1.0.0
  */
 apply_filters( 'mfw_general_settings_array', array() );
+
 ?>
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="wps-mfw-gen-section-form">

@@ -35,7 +35,7 @@ select#membership_billing_country:focus,
   border-radius: 40px;
   border: 2px solid #1a3365;
   color: #ffffff;
-  display: block;
+  display: inline-block;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
@@ -46,7 +46,9 @@ select#membership_billing_country:focus,
   text-align: center;
   text-transform: capitalize;
   transition: 0.3s all linear;
-  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  /* width: 100%; */
 }
 
 .products .button.alt.mfw-membership {

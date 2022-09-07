@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
     
+    
     $('#message').hide();
     // Display edit fields on edit click
     $(".members_data_column").on("click", ".edit_member_address", function(e) {
@@ -81,6 +82,86 @@ jQuery(document).ready(function($) {
         if ($('a').has('.disabled')) {
             $(this).closest('.wps_membership_plan_gateways tr').css('background','red');
         }
+
+
+        $(document).on('change', '#filter_member_status', function(e) {
+            var filtered_status = jQuery('#filter_member_status').val();
+             var member_ststus_td = jQuery('.members_status');
+             var wps_statuses = ['complete', 'expired', 'cancelled','pending', 'hold'];
+             var changed_value = $(this).val();
+            for( let i=0;i<wps_statuses.length;i++ ) {
+                if( changed_value == 'All' ){
+                     jQuery('.wps_hide_hold' ).parent().parent().show();
+                     jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().show();
+                   
+                } else if( changed_value == wps_statuses[i]  ){
+                    jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().show();
+                    
+                  
+                } else{
+                    jQuery('.wps_hide_' + wps_statuses[i] ).parent().parent().hide();
+                   
+                }
+                if( changed_value == 'pending' ) {
+
+                    jQuery('.wps_hide_hold' ).parent().parent().show();
+                }
+            }
+            
+        });
+
+        $(document).on('change', '#filter_membership_name', function(e) {
+            var filtered_status = jQuery('#filter_membership_name').val();
+             var member_ststus_td = jQuery('.membership_plan_associated');
+            
+             for (let index = 0; index < member_ststus_td.length; index++) {
+                 if (filtered_status == jQuery(jQuery('.membership_plan_associated')[index]).html() || filtered_status == 'All' ) {
+                    jQuery(jQuery('.membership_plan_associated')[index]).parent().show();
+                 } else {
+                    jQuery(jQuery('.membership_plan_associated')[index]).parent().hide();
+                 }
+             }
+            
+        });
+
+
+        	// update wallet and status on changing status of wallet request
+		$(document).on( 'change', 'select#wps-wpg-gen-table_status', function() {
+			var user_id = $('#wps-wpg-gen-table_status').attr('user_id');
+            var post_id = $('#wps-wpg-gen-table_status').attr('post_id_value');
+            var plan_id = $('#wps-wpg-gen-table_status').attr('plan_id');
+			var status = $(this).find(":selected").val();
+			var loader = $(this).siblings('#overlay');
+			loader.show();
+			$.ajax({
+				type: 'POST',
+				url: members_admin_obj.ajaxurl,
+				data: {
+					action: 'wps_membership_save_member_status',
+					nonce: members_admin_obj.nonce,
+					post_id: post_id,
+					user_id: user_id,
+					member_status: status,
+                    members_plan_assign:plan_id,
+					
+				},
+				datatType: 'JSON',
+				success: function( response ) {
+					$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-' + response.msgType + ' is-dismissible wps-errorr-8"><p>' + response.msg + '</p></div>');		
+					loader.hide();
+					setTimeout(function () {
+						location.reload();
+					}, 1000);
+					
+
+				},
+
+			})
+			.fail(function ( response ) {
+				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + wsfw_admin_param.wsfw_ajax_error + '</p></div>');		
+				loader.hide();
+			});
+		});
 });
 
 

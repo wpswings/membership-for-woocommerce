@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.1.3
+ * Version:           2.1.4
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.0.0
+ * Tested up to:      6.0.2
  * WC requires at least: 4.0
- * WC tested up to:   6.6.1
+ * WC tested up to:   6.8.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -81,7 +81,7 @@ function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
 
 if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
-	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.3' );
+	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.4' );
 	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
 
 	if ( 0 != $wps_pending_par ) {
@@ -251,7 +251,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.1.3' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.1.4' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -510,6 +510,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$links_array[] = '<a href="https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-pro-backend&utm_campaign=demo" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Demo.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="Demo image">' . __( 'Demo', 'membership-for-woocommerce' ) . '</a>';
 			$links_array[] = '<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Documentation.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="documentation image">' . __( 'Documentation', 'membership-for-woocommerce' ) . '</a>';
 			$links_array[] = '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank"><img src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/Support.svg" style="margin-right: 6px;margin-top: -3px;max-width: 15px;" alt="support image">' . __( 'Support', 'membership-for-woocommerce' ) . '</a>';
+			$links_array[] = '<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership-services&utm_medium=membership-org-backend&utm_campaign=woocommerce-services" target="_blank"><img style="height: 18px;width: 18px;" src="' . esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/mfw_Services.svg" class="wps-info-img" alt="support image">' . __( 'Services', 'membership-for-woocommerce' ) . '</a>';
+
 		}
 		return $links_array;
 	}
@@ -769,4 +771,3 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 }
-

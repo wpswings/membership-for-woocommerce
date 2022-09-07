@@ -72,7 +72,7 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 * @var  array
 	 */
-	private $custom_query_data;
+	public $custom_query_data;
 
 
 	/**
@@ -125,9 +125,14 @@ class Membership_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'mfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.3', false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.4', false );
 		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
-
+		$wps_mfw_single_plan = '';
+		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
+			$wps_mfw_single_plan = 'yes';
+		} else {
+			$wps_mfw_single_plan = '';
+		}
 		wp_localize_script(
 			$this->plugin_name,
 			'membership_public_obj',
@@ -135,6 +140,7 @@ class Membership_For_Woocommerce_Public {
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
 				'buy_now_text' => $button_text,
+				'single_plan' => $wps_mfw_single_plan,
 			)
 		);
 
@@ -633,14 +639,14 @@ class Membership_For_Woocommerce_Public {
 											}
 										}
 
-										echo '<div class="available_member" >
+										echo '<div class="available_member wps_mfw_plan_suggestion" >
 	<div>
 		<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 	</div>
 </div>';
 									} else {
 											// Show options to buy plans.
-											echo '<div class="plan_suggestion" >
+											echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
 		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 		</div>
@@ -729,14 +735,14 @@ class Membership_For_Woocommerce_Public {
 												}
 											}
 
-											echo '<div class="available_member">
+											echo '<div class="available_member wps_mfw_plan_suggestion">
 		<div>
 			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 		</div>
 	</div>';
 										} else {
 												// Show options to buy plans.
-												echo '<div class="plan_suggestion" >
+												echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
 			<div>
 				<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
 			</div>
@@ -862,7 +868,7 @@ class Membership_For_Woocommerce_Public {
 
 										$page_link = $page_link . '?plan_id=' . $plan['ID'] . '&prod_id=' . $product->get_id();
 
-										echo '<div class="available_member" >
+										echo '<div class="available_member wps_mfw_plan_suggestion" >
 									<div>
 										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Memberships	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
 									</div>
@@ -2721,7 +2727,6 @@ class Membership_For_Woocommerce_Public {
 					$discount = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
 				}
 			}
-
 			$cart->add_fee( 'Membership Discount', -round( $discount ), false );
 		}
 
@@ -3923,6 +3928,7 @@ class Membership_For_Woocommerce_Public {
 		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 		$plan_id = get_post_meta( $post_id, 'wps_membership_plan_with_product', true );
+		
 		if ( $plan_id ) {
 			$is_plan_assigned = false;
 		}
@@ -3946,14 +3952,8 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $is_plan_assigned ) {
 						if ( ! is_single() ) {
 
-							$result = get_posts(
-								array(
-									'post_type'      => 'wps_cpt_membership',
-									'post_status'    => 'publish',
-									'posts_per_page' => -1,
-									'post_id'       => $plan_id,
-								)
-							);
+							$result   = get_post( $plan_id );
+							
 							?>
 						<div class="mfw-product-meta-membership-wrap">
 								<div class="product-meta mfw-product-meta-membership">
@@ -3961,25 +3961,19 @@ class Membership_For_Woocommerce_Public {
 								</div>
 								<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 									<div class="wps_mfw_membership_tool_tip">
-										<?php echo esc_html( $result[0]->post_title ); ?>
+										<?php echo esc_html(  $result->post_title ); ?>
 									</div>
 								</i>
 							</div>
 							<?php
 						} else {
-							$result = get_posts(
-								array(
-									'post_type'      => 'wps_cpt_membership',
-									'post_status'    => 'publish',
-									'posts_per_page' => -1,
-									'post_id'       => $plan_id,
-								)
-							);
+							$result   = get_post( $plan_id );
+							
 							?>
 							<div class="wps-info-membership-alert">
 								<p >
 									<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-									<?php echo esc_html( $result[0]->post_title ); ?>
+									<?php echo esc_html( $result->post_title ); ?>
 									<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 	
 								</p>
@@ -3993,14 +3987,7 @@ class Membership_For_Woocommerce_Public {
 				if ( $plan_id ) {
 					if ( ! is_single() ) {
 
-						$result = get_posts(
-							array(
-								'post_type'      => 'wps_cpt_membership',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-								'post_id'       => $plan_id,
-							)
-						);
+						$result   = get_post( $plan_id );
 						?>
 					<div class="mfw-product-meta-membership-wrap">
 							<div class="product-meta mfw-product-meta-membership">
@@ -4008,25 +3995,18 @@ class Membership_For_Woocommerce_Public {
 							</div>
 							<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 								<div class="wps_mfw_membership_tool_tip">
-									<?php echo esc_html( $result[0]->post_title ); ?>
+									<?php echo esc_html( $result->post_title ); ?>
 								</div>
 							</i>
 						</div>
 						<?php
 					} else {
-						$result = get_posts(
-							array(
-								'post_type'      => 'wps_cpt_membership',
-								'post_status'    => 'publish',
-								'posts_per_page' => -1,
-								'post_id'       => $plan_id,
-							)
-						);
+						$result   = get_post( $plan_id );
 						?>
 						<div class="wps-info-membership-alert">
 							<p >
 								<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-								<?php echo esc_html( $result[0]->post_title ); ?>
+								<?php echo esc_html( $result->post_title ); ?>
 								<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 
 							</p>
@@ -4039,14 +4019,7 @@ class Membership_For_Woocommerce_Public {
 			if ( $plan_id ) {
 				if ( ! is_single() ) {
 
-					$result = get_posts(
-						array(
-							'post_type'      => 'wps_cpt_membership',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-							'post_id'       => $plan_id,
-						)
-					);
+					$result   = get_post( $plan_id );
 					?>
 				<div class="mfw-product-meta-membership-wrap">
 						<div class="product-meta mfw-product-meta-membership">
@@ -4054,25 +4027,18 @@ class Membership_For_Woocommerce_Public {
 						</div>
 						<i class="fa-question-circle wps_mfw_membership_tool_tip_wrapper">
 							<div class="wps_mfw_membership_tool_tip">
-								<?php echo esc_html( $result[0]->post_title ); ?>
+								<?php echo esc_html( $result->post_title ); ?>
 							</div>
 						</i>
 					</div>
 					<?php
 				} else {
-					$result = get_posts(
-						array(
-							'post_type'      => 'wps_cpt_membership',
-							'post_status'    => 'publish',
-							'posts_per_page' => -1,
-							'post_id'       => $plan_id,
-						)
-					);
+					$result   = get_post( $plan_id );
 					?>
 					<div class="wps-info-membership-alert">
 						<p >
 							<?php esc_html_e( 'Buy this product and become a member of ', 'membership-for-woocommerce' ); ?>
-							<?php echo esc_html( $result[0]->post_title ); ?>
+							<?php echo esc_html( $result->post_title ); ?>
 							<?php esc_html_e( ' membership plan. ', 'membership-for-woocommerce' ); ?>
 
 						</p>
