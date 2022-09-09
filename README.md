@@ -1,10 +1,11 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-100%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-200%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-6.8.2-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
 * Author URI: [WP Swings](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-github-page&utm_campaign=official)
 * Tags: membership, membership plan, members-only, subscription, user registration, user profile
 *  License URI: http://www.gnu.org/licenses/gpl-3.0.html
+
 
 # Description
 **MULTIPLE PLANS IN ONE MEMBERSHIP, SEND EMAILS FOR MEMBERSHIP PLAN ACTIONS, PRODUCT TAGS, CATEGORIES, AND SECTIONS ARE SELECTED ONLY FOR WOOCOMMERCE MEMBERS**
@@ -54,48 +55,56 @@ It gets on directly to give you a way out of the three most customary pain point
 ## WHAT’S INCLUDED IN OUR FREE MEMBERSHIP FOR WOOCOMMERCE PLUGIN
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
+**1) Filter Member According to Membership Plan and Column Added in Members Table**
+Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members and click on filter by membership plan and find the customer.
+**2) Filter Member According to Status**
+Membership for WooCommerce allow their members to filter members by status. You can filter the member by the status of their product. Go to all members and click on filter by status select the status and the list of that particular status will open in the table form from there you can the find the individual member.
+**3) Addition of Quick Status Update in Member Table**
+Admin can change the status directly from the member table if the status is pending. Else status is changed from individual product. Go to all members and click on pending statuses to change the status directly.
+**4) Allow Your Members to Cancel their Membership Accounts**
 
-**1) Allow Your Members to Cancel their Membership Accounts**
 Admin can allow their members to cancel their membership anytime. Membership for WooCommerce allows users to discontinue their plan whenever they want too. Enable the setting in general settings and your customers will get access to cancel your plan
 
-**2) Buy Now Button Text Can Be Changed To Dynamic Text**
+**5) Buy Now Button Text Can Be Changed To Dynamic Text**
+
 Store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
 
-**3) Individual Product Membership Plan**
+**6) Individual Product Membership Plan**
+
 Admin can provide the membership plans on individual products or categories. For example: Among the outfits, the store owner only provided the plan on the single product of clothing like a polo T-shirt.
 
-**4) Complete User Membership History and WooCommerce Membership Details of Customers**
+**7) Complete User Membership History and WooCommerce Membership Details of Customers**
 
 Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users too can see their history in the ‘My Account’ section with entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
 
 
-**5) Membership User Data Export and Import**
+**8) Membership User Data Export and Import**
 
 Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all WooCommerce membership users as a CSV file. 
 Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database. 
 
-**6) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization**
+**9) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization**
 
 We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
 
 
-**7) Discount On Membership User Cart Total**
+**10) Discount On Membership User Cart Total**
 
 Admin can apply discounts based on user roles. Give discounts only to the WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice. 
 
-**8) User Table for Admin**
+**11) User Table for Admin**
 
 Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
 
-**9) Multi-Step Configuration of Membership for WooCommerce**
+**12) Multi-Step Configuration of Membership for WooCommerce**
 
 With a multi-step configuration on installing the plugin, the admin gets assistance in creating his first membership plan. The home tab is also included according to the plugin configuration concept.
 
-**10) Display All Membership Plans Together With Option to Buy Them**
+**13) Display All Membership Plans Together With Option to Buy Them**
 The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here. 
 
 
-**11) Membership Details and Plan Creation**
+**14) Membership Details and Plan Creation**
 
 Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
 
@@ -104,7 +113,7 @@ Admin can display offered products and product categories in a membership plan. 
 * Plan description
 * Access Type (Lifetime or Limited accessibility) 
 
-**12) Create User After Payment Done**
+**15) Create User After Payment Done**
 
 Using the free Membership for WooCommerce plugin, the admin can create a user after completing payment. No default user will be created on your WooCommerce store immediately after membership purchase. This setting can be enabled or disabled anytime from the general setting.    
 
@@ -125,9 +134,6 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 ## PLUGIN COMPATIBILITIES  
 
 * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/) with our free subscriptions plugin, the admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
-
-* **Multisite**
-Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated in one place.
 
 * **WPML Compatibility** 
 Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management. 
@@ -174,6 +180,3 @@ Create and Revamp your eCommerce store with [**WooCommerce Services**](https://w
 * [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 * [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
 * [**SubscribeTo Our Youtube Channel**](https://www.youtube.com/c/wpswings)
-
-
-
