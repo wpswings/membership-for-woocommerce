@@ -2433,6 +2433,7 @@ class Membership_For_Woocommerce_Admin {
 						);
 
 						$_user = wp_insert_user( $userdata );
+						update_user_meta( $_user, 'user_created_by_membership', 'yes' );
 
 						update_option( 'user_name', $user_name );
 

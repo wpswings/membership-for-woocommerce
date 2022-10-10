@@ -633,32 +633,36 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_membership_sen_email_to_new_registered_user( $user_id ) {
+		$check = get_user_meta( $user_id, 'user_created_by_membership', true );
+		if( 'yes' == $check ) {
 
-		$user = get_userdata( $user_id );
-		$user_email = $user->user_email;
-		$user_login = $user->user_login;
-
-		// for simplicity, lets assume that user has typed their first and last name when they sign up.
-		$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
-		$user_password = get_option( 'user_password', true );
-		// Now we are ready to build our welcome email.
-		$to = $user_email;
-		$subject = 'Hi ' . $user_full_name . ', welcome to our site!';
-		$body = '
-				  <h1>Dear ' . $user_full_name . ',</h1></br>
-				  <p>Thank you for joining our site. Your account is now active.</p>
-				  <p>Please go ahead and navigate around your account.</p>
-				  <p>Here is your Credentials </p>
-				  <p> User ID - ' . $user_login . ' </p>
-				  <p> Password - ' . $user_password . ' </p>
-		';
-		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-		if ( wp_mail( $to, $subject, $body, $headers ) ) {
-			error_log( 'email has been successfully sent to user whose email is ' . $user_email );
-			$user_password = get_option( 'user_password', '' );
-		} else {
-			error_log( 'email failed to sent to user whose email is ' . $user_email );
+			$user = get_userdata( $user_id );
+			$user_email = $user->user_email;
+			$user_login = $user->user_login;
+	
+			// for simplicity, lets assume that user has typed their first and last name when they sign up.
+			$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
+			$user_password = get_option( 'user_password', true );
+			// Now we are ready to build our welcome email.
+			$to = $user_email;
+			$subject = 'Hi ' . $user_full_name . ', welcome to our site!';
+			$body = '
+					  <h1>Dear ' . $user_full_name . ',</h1></br>
+					  <p>Thank you for joining our site. Your account is now active.</p>
+					  <p>Please go ahead and navigate around your account.</p>
+					  <p>Here is your Credentials </p>
+					  <p> User ID - ' . $user_login . ' </p>
+					  <p> Password - ' . $user_password . ' </p>
+			';
+			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+			if ( wp_mail( $to, $subject, $body, $headers ) ) {
+				error_log( 'email has been successfully sent to user whose email is ' . $user_email );
+				$user_password = get_option( 'user_password', '' );
+			} else {
+				error_log( 'email failed to sent to user whose email is ' . $user_email );
+			}
 		}
+
 	}
 
 	/**
