@@ -3098,7 +3098,7 @@ class Membership_For_Woocommerce_Public {
 
 						$wps_membership_subscription_expiry = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry', true );
 						$wps_membership_subscription_expiry_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry_type', true );
-						// print_r( $wps_membership_default_product );die;
+						
 						update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
 
 						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
@@ -3122,10 +3122,10 @@ class Membership_For_Woocommerce_Public {
 				}
 			} else if ( $wps_attached_plan_id ) {
 				$wps_membership_default_product = $cart_contents_value['product_id'];
-				// if ( key_exists( 'plan_id', $cart_contents_value ) ) {	
+					
 					
 					$wps_sfw_product = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription', true );
-				// }
+				
 
 				if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
 
