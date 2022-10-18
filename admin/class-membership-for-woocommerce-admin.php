@@ -1987,7 +1987,7 @@ class Membership_For_Woocommerce_Admin {
 							if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
 								if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 									$current_time = current_time( 'timestamp' );
-									$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+									$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
 									update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
 								}
 							} else {
@@ -2120,7 +2120,7 @@ class Membership_For_Woocommerce_Admin {
 					if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
 						if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 							$current_time = current_time( 'timestamp' );
-							$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+							$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
 							update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
 						}
 					} else {
@@ -2433,6 +2433,7 @@ class Membership_For_Woocommerce_Admin {
 						);
 
 						$_user = wp_insert_user( $userdata );
+						update_user_meta( $_user, 'user_created_by_membership', 'yes' );
 
 						update_option( 'user_name', $user_name );
 
@@ -2475,7 +2476,7 @@ class Membership_For_Woocommerce_Admin {
 
 								}
 								$current_time = current_time( 'timestamp' );
-								$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+								$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
 								update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
 
 							}
@@ -3474,7 +3475,7 @@ class Membership_For_Woocommerce_Admin {
 							if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
 								if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 									$current_time = current_time( 'timestamp' );
-									$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+									$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
 									update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
 								}
 							} else {
@@ -3607,7 +3608,7 @@ class Membership_For_Woocommerce_Admin {
 					if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
 						if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 							$current_time = current_time( 'timestamp' );
-							$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time, '' );
+							$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
 							update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
 						}
 					} else {
