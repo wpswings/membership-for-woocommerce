@@ -2727,7 +2727,7 @@ class Membership_For_Woocommerce_Public {
 					$discount = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $discount );
 				}
 			}
-			$cart->add_fee( 'Membership Discount', $discount , false );
+			$cart->add_fee( 'Membership Discount', -$discount , false );
 		}
 
 	}
