@@ -1,17 +1,17 @@
-=== Membership for WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members with WooCommerce Membership ===
+=== Membership For WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members with WooCommerce Membership ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.0.2
+Tested up to: 6.1.1
 WC requires at least: 4.0.0
-WC tested up to: 7.0.0
-Stable tag: 2.1.5
+WC tested up to: 7.1.0
+Stable tag: 2.1.6
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Membership for WooCommerce plugin provides a restriction on access to any facility and adds recurring revenue by engaging customers.
+Membership For WooCommerce Plugin provides a restriction on access to any facility and adds recurring revenue by engaging customers.
 
 == Description ==
 
@@ -53,7 +53,7 @@ Membership Plugin directly give you a way out of the three most customary pain p
 * Bulk actions for the admin to edit plans and move them to the trash
 * Display all membership plans available in your store on the Membership Plans tab.
 
-== PLUGIN MEETS YOUR REQUIREMENT, SO ==
+== WOOCOMMERCE MEMBERSHIP PLUGIN MEETS YOUR REQUIREMENT, SO ==
 
 [**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
 
@@ -64,7 +64,6 @@ WooCommerce store owners already have so much to handle. And we want to simplify
 
 **1) Filter Member According to Membership Plan and Column Added in Members Table**
 Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members and click on filter by membership plan and find the customer.
-
 
 **2) Filter Member According to Status**
 Membership for WooCommerce allow their members to filter members by status. You can filter the member by the status of their product. Go to all members and click on filter by status select the status and the list of that particular status will open in the table form from there you can the find the individual member.
@@ -166,6 +165,8 @@ The admin has enough features in the  Membership for WooCommerce  plugin, but th
 
 If you need support or have any questions then kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-page&utm_campaign=official) or  connect with us then [**Generate a Ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-submit-query&utm_medium=membership-org-page&utm_campaign=query)
 
+>If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=membership-org-page&utm_campaign=forum)
+
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership-services&utm_medium=membership-org-page&utm_campaign=woocommerce-services)
 
 == Installation ==
@@ -238,7 +239,6 @@ Yes, you can create as many levels as you want using the Membership for WooComme
 = Is there any option in a Membership for WooCommerce plugin to provide the user with lifetime membership or limited membership? =
 Yes, The admin can set the membership to lifetime or limited using the Membership for WooCommerce plugin. The admin can set either of the two.
 
-
 = My question is not listed =
 Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=wpswings-membership-kb&utm_medium=membership-org-page&utm_campaign=membership-kb) and for more detailed visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc).
 
@@ -258,6 +258,11 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 12. Welcome Page
 
 == Changelog ==
+
+= 2.1.6 - Released on 29 November 2022 =
+* Fix: Minor Bug Fixes (Add to Cart Issue Fix)
+* Fix: Compatible with latest WooCommerce and WordPress
+
 
 = 2.1.5 - Released on 17 October 2022 =
 * New: Compatible with PHP8
@@ -332,7 +337,8 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * First version
 
 == Upgrade Notice ==
-= 2.1.5 - Released on 17 October 2022 =
-* New: Compatible with PHP8
-* Fix: Minor Bug Fixes( Compatibility issue with Subscription Plugin )
-* Fix: Compatible with  the latest WooCommerce and WordPress
+
+= 2.1.6 - Released on 29 November 2022 =
+* Fix: Minor Bug Fixes (Add to Cart Issue Fix)
+* Fix: Compatible with latest WooCommerce and WordPress
+
