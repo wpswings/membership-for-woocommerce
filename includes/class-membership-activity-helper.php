@@ -152,11 +152,13 @@ class Membership_Activity_Helper {
 			// Perform Upload.
 			$file_tmp  = ! empty( $file['tmp_name'] ) ? $file['tmp_name'] : false;
 			$file_type = ! empty( $file['type'] ) ? $file['type'] : false;
+			$file_name = isset( $file['name'] ) ? sanitize_text_field( wp_unslash( $file['name'] ) ) : '';
+			$file_security = pathinfo( $file_name, PATHINFO_EXTENSION );
 
 			// Getting file type here ( eg-: 'application/pdf' will return 'pdf' ).
 			$file_ext = substr( strrchr( $file_type, '/' ), 1 );
 
-			if ( ! empty( $file_type ) && ! in_array( $file_ext, $allowed_ext, true ) ) {
+			if (  empty( $file_security ) || 'csv' != $file_security ) {
 
 				return array(
 					'result'  => false,
@@ -165,7 +167,7 @@ class Membership_Activity_Helper {
 			}
 
 			// Move file to server.
-			$location = $this->active_folder . $file['name'];
+			$location = $this->active_folder . time() . '-' . $file['name'];
 			move_uploaded_file( $file_tmp, $location );
 
 			return array(

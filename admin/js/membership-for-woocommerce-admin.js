@@ -277,6 +277,7 @@ jQuery(document).ready(function($) {
                   processData: false,
 
                   success: function(response) {
+                    
 
                       // Close the import modal.
                       $(".import_csv_field_wrapper").dialog("close");
