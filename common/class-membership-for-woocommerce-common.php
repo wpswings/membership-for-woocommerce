@@ -149,6 +149,7 @@ class Membership_For_Woocommerce_Common {
 	 * Callback function for file Upload and import.
 	 */
 	public function wps_membership_csv_file_upload() {
+		check_ajax_referer( 'plan-import-nonce', 'nonce' );
 		if( is_admin( ) || ( is_multisite( ) && is_super_admin( ) ) ) {
 
 			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';

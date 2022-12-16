@@ -36,7 +36,8 @@ class Membership_Activity_Helper {
 	 *
 	 * @var string
 	 */
-	private $base_dir = WP_CONTENT_DIR . '/uploads/';
+
+	private $base_dir;
 
 	/**
 	 * Base url( Predefined Server properties ).
@@ -91,12 +92,30 @@ class Membership_Activity_Helper {
 	 */
 	public function __construct( $sub_folder = false, $activity = 'logger', $folder = 'mfw-activity-logger' ) {
 
+		$random_value = get_option('wps_base_url_for_csv_upload');
+		if( empty( $random_value ) ) {
+			$random_value = time();
+			$folder = $folder . $random_value;
+			update_option( 'wps_base_url_for_csv_upload', $folder );
+		} else {
+			$folder = $random_value;
+		}
+		$random_value_subfolder = get_option('wps_base_url_for_csv_upload_subfolder');
+		if( empty( $random_value_subfolder ) ) {
+			$random_value_subfolder = time();
+			$sub_folder = $sub_folder . $random_value_subfolder;
+			update_option( 'wps_base_url_for_csv_upload_subfolder', $sub_folder );
+		} else {
+			$sub_folder = $random_value_subfolder;
+		}
 		$this->activity   = $activity;
-		$this->folder     = $folder;
+		$this->folder     = $folder ;
 		$this->sub_folder = $sub_folder;
+		$uploads = wp_upload_dir();
 
+		$base_dir = $uploads['basedir'];
 		// Create Base Activity Directory.
-		$this->working_path = $this->base_dir . $this->folder;
+		$this->working_path = $base_dir .'/' . $this->folder;
 		$this->check_and_create_folder( $this->working_path );
 
 		// Create Activity Sub-Directory.
@@ -228,7 +247,11 @@ class Membership_Activity_Helper {
 
 			mkdir( $path, 0755, true );
 		}
+		$_temp = get_option( 'index_file_created', 'not done' );
+		if( 'not done' == $_temp ){
 
+			fopen($path . "/index.php","wb");
+		}
 		// Mark the current active file.
 		$this->active_folder = $path . '/';
 	}
@@ -266,8 +289,9 @@ class Membership_Activity_Helper {
 	 * @since 1.0.0
 	 */
 	public function get_file_url( $path = '' ) {
-
-		$base_url = content_url( 'uploads/mfw-activity-logger' );
+		$folder = get_option('wps_base_url_for_csv_upload');
+		$uploads = wp_upload_dir();
+		$base_url =  $uploads['baseurl'] . '/' . $folder;
 
 		return str_replace( $this->working_path, $base_url, $path );
 	}
