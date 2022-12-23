@@ -149,130 +149,143 @@ class Membership_For_Woocommerce_Common {
 	 * Callback function for file Upload and import.
 	 */
 	public function wps_membership_csv_file_upload() {
+		check_ajax_referer( 'plan-import-nonce', 'nonce' );
+		if( is_admin( ) || ( is_multisite( ) && is_super_admin( ) ) ) {
 
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
-
-		// Handling file upload using activity helper class..
-		$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
-		// phpcs:disable
-		$csv_file    = ! empty( $_FILES['file'] ) ? map_deep( wp_unslash( $_FILES['file'] ), 'sanitize_text_field' ) : ''; // phpcs:ignore
-
-		// phpcs:enable
-		$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
-
-		if ( ! current_user_can( 'edit_posts' ) ) {
-			exit;
-		}
-
-		if ( $upload_file && ( true === $upload_file['result'] ) ) {
-
-			$file_url = $upload_file['url'];
-			$csv      = array_map( 'str_getcsv', file( $file_url ) );
-
-			unset( $csv[0] ); // Removing first key after CSV data is converted to array.
-
-			// Getting a formatted CSV data.
-			$formatted_csv_data = $this->global_class->csv_data_map( $csv );
-
-			// Getting all Product titles from woocommerce store.
-			$all_prod_title = $this->global_class->all_prod_title();
-
-			// Getting all Category titles from woocommerce store.
-			$all_cat_title = $this->global_class->all_cat_title();
-
-			$prd_check = '';
-			$cat_check = '';
-
-			$csv_prod_title = $this->global_class->csv_prod_title( $csv ); // Getting all product titles from csv.
-			$csv_cate_title = $this->global_class->csv_cat_title( $csv ); // Getting all category titles from csv.
-
-			if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
-
-				foreach ( $csv_prod_title as $csv_prod_title_key => $csv_prod_title_value ) {
-
-					if ( in_array( $csv_prod_title_value, $all_prod_title, true ) ) {
-
-						$prd_check = true;
-					}
-				}
-
-				foreach ( $csv_cate_title as $csv_cate_title_key => $csv_cate_title_value ) {
-
-					if ( in_array( $csv_cate_title_value, $all_cat_title, true ) ) {
-
-						$cat_check = true;
-					}
-				}
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
+	
+			// Handling file upload using activity helper class..
+			$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
+			// phpcs:disable
+			$csv_file    = ! empty( $_FILES['file'] ) ? map_deep( wp_unslash( $_FILES['file'] ), 'sanitize_text_field' ) : ''; // phpcs:ignore
+			
+			// phpcs:enable
+			$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
+	
+			if ( ! current_user_can( 'edit_posts' ) ) {
+				exit;
 			}
-
-			$args = array(
-				'post_type'   => 'wps_cpt_membership',
-				'post_status' => array( 'publish' ),
-				'numberposts' => -1,
-			);
-
-			$check = '';
-			$all_plan_array = array();
-			$all_plans = get_posts( $args );
-			foreach ( $all_plans as $single_plan ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited */
-
-				array_push( $all_plan_array, $single_plan->post_title );
-			}
-
-			// If product ids and category ids from csv match from those of woocommerce, then only import the file.
-			if ( true === $prd_check || true === $cat_check ) {
-				foreach ( $formatted_csv_data as $formatted_csv_data_key => $formatted_csv_data_value ) {
-					if ( in_array( $formatted_csv_data_value['post_title'], (array) $all_plan_array ) ) {
-						$formatted_csv_data_value['post_title'] = $formatted_csv_data_value['post_title'] . '-copied';
+	
+			if ( $upload_file && ( true === $upload_file['result'] ) ) {
+	
+				$file_url = $upload_file['url'];
+				$csv      = array_map( 'str_getcsv', file( $file_url ) );
+	
+				unset( $csv[0] ); // Removing first key after CSV data is converted to array.
+	
+				// Getting a formatted CSV data.
+				$formatted_csv_data = $this->global_class->csv_data_map( $csv );
+	
+				// Getting all Product titles from woocommerce store.
+				$all_prod_title = $this->global_class->all_prod_title();
+	
+				// Getting all Category titles from woocommerce store.
+				$all_cat_title = $this->global_class->all_cat_title();
+	
+				$prd_check = '';
+				$cat_check = '';
+	
+				$csv_prod_title = $this->global_class->csv_prod_title( $csv ); // Getting all product titles from csv.
+				$csv_cate_title = $this->global_class->csv_cat_title( $csv ); // Getting all category titles from csv.
+	
+				if ( is_array( $csv_prod_title ) && is_array( $csv_cate_title ) ) {
+	
+					foreach ( $csv_prod_title as $csv_prod_title_key => $csv_prod_title_value ) {
+	
+						if ( in_array( $csv_prod_title_value, $all_prod_title, true ) ) {
+	
+							$prd_check = true;
+						}
 					}
-					if ( ! empty( $formatted_csv_data_value['post_title'] ) ) {
-						$plan_id = wp_insert_post(
-							array(
-								'post_type'    => 'wps_cpt_membership',
-								'post_title'   => $formatted_csv_data_value['post_title'],
-								'post_status'  => $formatted_csv_data_value['post_status'],
-								'post_content' => $formatted_csv_data_value['post_content'],
-							),
-							true
-						);
-
-						update_post_meta( $plan_id, 'wps_membership_plan_price', $value['wps_membership_plan_price'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_name_access_type', $value['wps_membership_plan_name_access_type'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_duration', $value['wps_membership_plan_duration'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_duration_type', $value['wps_membership_plan_duration_type'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_recurring', $value['wps_membership_plan_recurring'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_access_type', $value['wps_membership_plan_access_type'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_time_duration', $value['wps_membership_plan_time_duration'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_time_duration_type', $value['wps_membership_plan_time_duration_type'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_offer_price_type', $value['wps_membership_plan_offer_price_type'] );
-						update_post_meta( $plan_id, 'wps_memebership_plan_discount_price', $value['wps_memebership_plan_discount_price'] );
-						update_post_meta( $plan_id, 'wps_memebership_plan_free_shipping', $value['wps_memebership_plan_free_shipping'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_target_ids', $value['wps_membership_plan_target_ids'] );
-						update_post_meta( $plan_id, 'wps_membership_plan_target_categories', $value['wps_membership_plan_target_categories'] );
+	
+					foreach ( $csv_cate_title as $csv_cate_title_key => $csv_cate_title_value ) {
+	
+						if ( in_array( $csv_cate_title_value, $all_cat_title, true ) ) {
+	
+							$cat_check = true;
+						}
 					}
 				}
-
-				echo wp_json_encode(
-					array(
-						'status'   => 'success',
-						'message'  => 'File Imported Successfully',
-						'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
-					)
+	
+				$args = array(
+					'post_type'   => 'wps_cpt_membership',
+					'post_status' => array( 'publish' ),
+					'numberposts' => -1,
 				);
-
+	
+				$check = '';
+				$all_plan_array = array();
+				$all_plans = get_posts( $args );
+				foreach ( $all_plans as $single_plan ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited */
+	
+					array_push( $all_plan_array, $single_plan->post_title );
+				}
+	
+				// If product ids and category ids from csv match from those of woocommerce, then only import the file.
+				if ( true === $prd_check || true === $cat_check ) {
+					foreach ( $formatted_csv_data as $formatted_csv_data_key => $formatted_csv_data_value ) {
+						if ( in_array( $formatted_csv_data_value['post_title'], (array) $all_plan_array ) ) {
+							$formatted_csv_data_value['post_title'] = $formatted_csv_data_value['post_title'] . '-copied';
+						}
+						if ( ! empty( $formatted_csv_data_value['post_title'] ) ) {
+							$plan_id = wp_insert_post(
+								array(
+									'post_type'    => 'wps_cpt_membership',
+									'post_title'   => $formatted_csv_data_value['post_title'],
+									'post_status'  => $formatted_csv_data_value['post_status'],
+									'post_content' => $formatted_csv_data_value['post_content'],
+								),
+								true
+							);
+	
+							update_post_meta( $plan_id, 'wps_membership_plan_price', $value['wps_membership_plan_price'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_name_access_type', $value['wps_membership_plan_name_access_type'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_duration', $value['wps_membership_plan_duration'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_duration_type', $value['wps_membership_plan_duration_type'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_recurring', $value['wps_membership_plan_recurring'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_access_type', $value['wps_membership_plan_access_type'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_time_duration', $value['wps_membership_plan_time_duration'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_time_duration_type', $value['wps_membership_plan_time_duration_type'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_offer_price_type', $value['wps_membership_plan_offer_price_type'] );
+							update_post_meta( $plan_id, 'wps_memebership_plan_discount_price', $value['wps_memebership_plan_discount_price'] );
+							update_post_meta( $plan_id, 'wps_memebership_plan_free_shipping', $value['wps_memebership_plan_free_shipping'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_target_ids', $value['wps_membership_plan_target_ids'] );
+							update_post_meta( $plan_id, 'wps_membership_plan_target_categories', $value['wps_membership_plan_target_categories'] );
+						}
+					}
+	
+					echo wp_json_encode(
+						array(
+							'status'   => 'success',
+							'message'  => 'File Imported Successfully',
+							'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
+						)
+					);
+	
+				} else {
+	
+					echo wp_json_encode(
+						array(
+							'status'   => 'failed',
+							'message'  => 'Something Went Wrong. Either Products or Categories are not available!',
+							'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
+						)
+					);
+				}
 			} else {
-
+	
 				echo wp_json_encode(
 					array(
 						'status'   => 'failed',
-						'message'  => 'Something Went Wrong. Either Products or Categories are not available!',
+						'message'  => 'Invalid File type',
 						'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
 					)
 				);
 			}
+	
+			wp_die();
 		}
 
-		wp_die();
 	}
 
 	/**

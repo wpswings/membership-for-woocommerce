@@ -3076,101 +3076,105 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		foreach ( $cart->cart_contents as $cart_contents_key => $cart_contents_value ) {
-			$wps_attached_plan_id = get_post_meta( $cart_contents_value['product_id'], 'wps_membership_plan_with_product', true );
-			if ( isset( $cart_contents_value['plan_price'] ) && $cart_contents_value['plan_price'] && $product->get_id() == $cart_contents_value['product_id'] ) {
-				$cart_contents_value['data']->set_price( $cart_contents_value['plan_price'] );
-			}
-
-			if ( $product->get_id() == $cart_contents_value['product_id'] ) {
-				if ( key_exists( 'plan_id', $cart_contents_value ) ) {	
-					
-					$wps_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
-				}
-
-				if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
-
-					$wps_membership_plan_name_access_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_name_access_type', true );
-
-					if ( 'limited' == $wps_membership_plan_name_access_type ) {
-						$wps_membership_plan_duration = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration', true );
-						$wps_membership_plan_duration_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration_type', true );
-
-						$wps_membership_subscription_expiry = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry', true );
-						$wps_membership_subscription_expiry_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry_type', true );
+		if( ! empty( $product ) ) { 
+			
+					foreach ( $cart->cart_contents as $cart_contents_key => $cart_contents_value ) {
+						$wps_attached_plan_id = get_post_meta( $cart_contents_value['product_id'], 'wps_membership_plan_with_product', true );
+						if ( isset( $cart_contents_value['plan_price'] ) && $cart_contents_value['plan_price'] && $product->get_id() == $cart_contents_value['product_id'] ) {
+							$cart_contents_value['data']->set_price( $cart_contents_value['plan_price'] );
+						}
 						
-						update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
-
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
-
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
-
-						update_post_meta( $wps_membership_default_product, '_regular_price', $cart_contents_value['plan_price'] );
-
+						if ( $product->get_id() == $cart_contents_value['product_id'] ) {
+							if ( key_exists( 'plan_id', $cart_contents_value ) ) {	
+								
+								$wps_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
+							}
+			
+							if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
+			
+								$wps_membership_plan_name_access_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_name_access_type', true );
+			
+								if ( 'limited' == $wps_membership_plan_name_access_type ) {
+									$wps_membership_plan_duration = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration', true );
+									$wps_membership_plan_duration_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration_type', true );
+			
+									$wps_membership_subscription_expiry = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry', true );
+									$wps_membership_subscription_expiry_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry_type', true );
+									
+									update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
+			
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
+			
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
+			
+									update_post_meta( $wps_membership_default_product, '_regular_price', $cart_contents_value['plan_price'] );
+			
+								}
+							} else {
+								update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
+			
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
+			
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
+			
+							}
+						} else if ( $wps_attached_plan_id ) {
+							$wps_membership_default_product = $cart_contents_value['product_id'];
+								
+								
+								$wps_sfw_product = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription', true );
+							
+			
+							if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
+			
+								$wps_membership_plan_name_access_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_name_access_type', true );
+			
+								if ( 'limited' == $wps_membership_plan_name_access_type ) {
+									$wps_membership_plan_duration = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration', true );
+									$wps_membership_plan_duration_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration_type', true );
+			
+									$wps_membership_subscription_expiry = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry', true );
+									$wps_membership_subscription_expiry_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry_type', true );
+								
+									update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
+			
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
+			
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
+									update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
+			
+									
+			
+								}
+							} else {
+								update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
+			
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
+			
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
+								update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
+			
+							}
+						}
+			
+						if ( isset( $cart_contents_value['plan_title'] ) && $cart_contents_value['plan_title'] && $product->get_id() == $cart_contents_value['product_id'] ) {
+			
+							// Set the new name (WooCommerce versions 2.5.x to 3+).
+							if ( method_exists( $cart_contents_value['data'], 'set_name' ) ) {
+								$cart_contents_value['data']->set_name( $cart_contents_value['plan_title'] );
+			
+							} else {
+								$cart_contents_value['data']->post->post_title = $cart_contents_value['plan_title'];
+							}
+						}
 					}
-				} else {
-					update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
-
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
-
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
-
-				}
-			} else if ( $wps_attached_plan_id ) {
-				$wps_membership_default_product = $cart_contents_value['product_id'];
-					
-					
-					$wps_sfw_product = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription', true );
 				
-
-				if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
-
-					$wps_membership_plan_name_access_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_name_access_type', true );
-
-					if ( 'limited' == $wps_membership_plan_name_access_type ) {
-						$wps_membership_plan_duration = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration', true );
-						$wps_membership_plan_duration_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration_type', true );
-
-						$wps_membership_subscription_expiry = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry', true );
-						$wps_membership_subscription_expiry_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry_type', true );
-					
-						update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
-
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
-
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
-
-						
-
-					}
-				} else {
-					update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
-
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
-
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
-					update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
-
-				}
-			}
-
-			if ( isset( $cart_contents_value['plan_title'] ) && $cart_contents_value['plan_title'] && $product->get_id() == $cart_contents_value['product_id'] ) {
-
-				// Set the new name (WooCommerce versions 2.5.x to 3+).
-				if ( method_exists( $cart_contents_value['data'], 'set_name' ) ) {
-					$cart_contents_value['data']->set_name( $cart_contents_value['plan_title'] );
-
-				} else {
-					$cart_contents_value['data']->post->post_title = $cart_contents_value['plan_title'];
-				}
-			}
 		}
 	}
 
