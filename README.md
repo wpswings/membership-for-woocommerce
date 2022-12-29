@@ -1,5 +1,5 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-200%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.0.2-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-7.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
-# Membership for WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members with WooCommerce Membership
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-300%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.1.1-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-7.2.2-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+# Membership For WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members with WooCommerce Membership
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
 * Author URI: [WP Swings](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-github-page&utm_campaign=official)
@@ -16,8 +16,6 @@ Membership Plugin directly give you a way out of the three most customary pain p
  * Restriction on access for any facility
  * Adding recurring revenue based on memberships
  * Engaging customers using membership plans 
-
-***
 
 [**Membership for WooCommerce Free Version Demo Video**](https://youtu.be/FaSbkUi17WI)
 
@@ -50,11 +48,11 @@ Membership Plugin directly give you a way out of the three most customary pain p
 
   
 
-**PLUGIN MEETS YOUR REQUIREMENT, SO**
+**WOOCOMMERCE MEMBERSHIP PLUGIN MEETS YOUR REQUIREMENT, SO**
 
 [**Download Now**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
 
-## WHAT’S INCLUDED IN OUR FREE MEMBERSHIP FOR WOOCOMMERCE PLUGIN
+## WHAT’S INCLUDED IN OUR FREE WORDPRESS MEMBERSHIP PLUGIN FOR WOOCOMMERCE PLUGIN
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
 
@@ -86,7 +84,7 @@ Store owners can effortlessly export the WooCommerce membership plans along with
 Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database.  
 
 **9) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization**
-We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
+WordPress Membership Plugin provides the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
 
 **10) Discount On Membership User Cart Total**
 Admin can apply discounts based on user roles. Give discounts only to the WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice. 
@@ -101,7 +99,7 @@ With a multi-step configuration on installing the plugin, the admin gets assista
 The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here.       
 
 **14) Membership Details and Plan Creation**
-Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
+In WordPress Membership Plugin  admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plan like:
 * Plan price
 * Plan name
 * Plan description
@@ -165,6 +163,8 @@ The admin has enough features in the  Membership for WooCommerce free plugin, bu
 ## SUPPORT
 If you need support or have any questions then kindly use our online chat window [**here**](https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-github-page&utm_campaign=official) or  connect with us then [**Generate a Ticket**](https://wpswings.com/submit-query/?utm_source=wpswings-submit-query&utm_medium=membership-github-page&utm_campaign=query)
 
+>If our documentation doesn’t contain the solution to your problem, you can visit the [**WP Swings Forums Community**](https://forums.wpswings.com/?utm_source=wpswings-forums&utm_medium=membership-github-page&utm_campaign=forum)
+
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership-services&utm_medium=membership-github-page&utm_campaign=woocommerce-services) 
 
 ## **MORE ABOUT WP Swings**
@@ -173,7 +173,8 @@ If you need support or have any questions then kindly use our online chat window
 - [**Follow us on Facebook Page**](https://www.facebook.com/wpswings)
 - [**Tweet us on @WP Swings**](https://twitter.com/wpswings)
 - [**Visit our LinkedIn Account**](https://www.linkedin.com/company/77072505/)
-- [**SuscribeTo Our Youtube Channel**](https://www.youtube.com/c/wpswings)
+- [**SubscribeTo Our Youtube Channel**](https://www.youtube.com/c/wpswings)
+
 
 
 
