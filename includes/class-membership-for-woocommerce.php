@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.1.7';
+			$this->version = '2.1.8';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -544,6 +544,11 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-general',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-general.php',
 			);
+			$mfw_default_tabs['membership-for-woocommerce-membership-using-registration-form'] = array(
+				'title'       => esc_html__( 'Membership Using Registration Form', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-general',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-membership-using-registration-form.php',
+			);
 			$mfw_default_tabs['membership-for-woocommerce-shortcodes'] = array(
 				'title'       => esc_html__( 'Shortcodes', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-shortcodes',
@@ -577,6 +582,54 @@ class Membership_For_Woocommerce {
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
 
 			return $mfw_default_tabs;
+	}
+
+	/**
+	 * Predefined default wps_mfw_plug sub tabs.
+	 *
+	 * @return Array       An key=>value pair of Membership For WooCommerce sub tabs.
+	 */
+	public function wps_mfw_plug_config_sub_tabs(){
+		$mfw_default_sub_tabs = array();
+		$mfw_default_sub_tabs['membership-for-woocommerce-add-plans'] = array(
+			'title'       => esc_html__( 'Add Plan', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-add-plans',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-plans.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-membership-restriction'] = array(
+			'title'       => esc_html__( 'Membership Restriction', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-membership-restriction',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-membership-restriction.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-purchasing-discount-offer'] = array(
+			'title'       => esc_html__( 'Purchasing Discount Offer', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-purchasing-discount-offer',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-purchasing-discount-offer.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-content-restriction'] = array(
+			'title'       => esc_html__( 'Content Restriction', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-content-restriction',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-content-restriction.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-add-member'] = array(
+			'title'       => esc_html__( 'Add Member', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-add-member',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-import-members'] = array(
+			'title'       => esc_html__( 'Import Member', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-import-members',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-import-members.php',
+		);
+
+		/**
+		 * Filter for admin setting tabs.
+		 *
+		 * @since 1.0.0
+		 */
+		apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_sub_tabs', $mfw_default_sub_tabs );
+
+		return $mfw_default_sub_tabs;
 	}
 
 	/**
