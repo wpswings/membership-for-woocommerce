@@ -217,6 +217,20 @@ class Membership_For_Woocommerce_Admin {
 
 				)
 			);
+
+			
+			wp_register_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), time(), false );
+			wp_localize_script(
+				$this->plugin_name,
+				'admin_registration_ajax_obj',
+				array(
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'nonce'   => wp_create_nonce( 'membership-registration-nonce' ),
+	
+				)
+			);
+	
+			wp_enqueue_script(  'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), time(), false );
 		}
 
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
@@ -336,6 +350,9 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), $this->version, false );
+
+		
+
 
 	}
 
@@ -778,6 +795,48 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Setting for add plan sub tab.
+	 *
+	 * @param array $mfw_add_plans_settings_array contains array.
+	 * @return void
+	 */
+	public function wps_mfw_add_plans_settings_array( $mfw_add_plans_settings_array ){
+		$mfw_add_plans_settings_array = array(
+			array(
+				'title' => __( 'Enter Plan name', 'membership-for-woocommerce' ),
+				'type'  => 'text',
+				'description'  => __( 'Enter the name for the membership plans you are creating.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_mfw_reg_plan_name',
+				'placeholder' => 'Enter Plan Name',
+			),
+
+			array(
+				'title' => __( 'Enter plan price', 'membership-for-woocommerce' ),
+				'type'  => 'number',
+				'description'  => __( 'Enter the price for the membership plans you are creating.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_mfw_reg_plan_price',
+				'placeholder' => 'Enter Plan Price',
+			),
+			array(
+				'title' => __( 'Set Access Type( Expiry of plan )', 'membership-for-woocommerce' ),
+				'type'  => 'access_type',
+				'description'  => __( 'Set the expiry of the membership plan.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_mfw_access_type',
+				'placeholder' => 'Enter Plan Price',
+			),
+
+			array(
+				'type'  => 'button',
+				'id'    => 'wps_create_membership_plan_button',
+				'button_text' => __( 'Create plan', 'membership-for-woocommerce' ),
+				'class' => 'mfw-button-class',
+			),
+		);
+
+		return $mfw_add_plans_settings_array;
 	}
 
 	/**

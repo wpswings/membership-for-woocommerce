@@ -211,6 +211,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );
 		$this->loader->add_action( 'mfw_developer_public_hooks_array', $mfw_plugin_admin, 'wps_developer_public_hooks_listing' );
 
+
+		// Settings array for membership sub tabs.
+		$this->loader->add_action( 'mfw_add_plans_settings_array', $mfw_plugin_admin, 'wps_mfw_add_plans_settings_array' );
+
 		   // Remove title & editor field.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'membership_for_woo_remove_fields' );
 
@@ -904,7 +908,69 @@ class Membership_For_Woocommerce {
 						</div>
 							<?php
 							break;
-
+						case 'access_type':
+							
+							?>
+							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							
+							</div>
+							<div class="wps-form-group__control">
+								<label class="mdc-text-field mdc-text-field--outlined">
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
+									</span>
+									<select
+									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
+									 name="wps_mfw_reg_access_type" id="wps_mfw_reg_access_type" style="width:200px"
+									>
+									<option value="lifetime"><?php echo esc_html_e( 'Select Access Type', 'membership-for-woocommerce' );?></option>
+									<option value="lifetime"><?php echo esc_html_e( 'Lifetime', 'membership-for-woocommerce' );?></option>
+									<option value="limited"><?php echo esc_html_e( 'Limited', 'membership-for-woocommerce' );?></option>
+									</select>
+								</label>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="wps-form-group wps_mfw_plan_expiry_class hidden">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php esc_html_e( 'Set expiry', 'membership-for-woocommerce' ) // WPCS: XSS ok. ?></label>
+							
+							</div>
+							<div class="wps-form-group__control">
+								<!-- <label class="mdc-text-field mdc-text-field--outlined"> -->
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
+									</span>
+									<input
+									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
+									 type="number" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
+									>
+									<select id="wps_mfw_reg_expiry_time" name="wps_mfw_reg_expiry_time"  style="width:150px;height:55px">
+										<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' );  ?></option>
+										<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' );  ?></option>
+										<option value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' );  ?></option>
+										<option value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' );  ?></option>
+									</select>
+									
+								<!-- </label> -->
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php esc_html_e( 'Set the expiry time.', 'membership-for-woocommerce' ) ;?></div>
+								</div>
+							</div>
+						</div>
+						
+							<?php
+							break;
 						case 'select':
 						case 'multiselect':
 							?>

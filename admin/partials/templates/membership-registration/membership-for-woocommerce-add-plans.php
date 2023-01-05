@@ -26,11 +26,11 @@ $mfw_add_plans_settings =
 apply_filters( 'mfw_add_plans_settings_array', array() );
 ?>
 <!--  template file for admin settings. -->
-<form action="" method="POST" class="wps-mfw-gen-section-form">
+<!-- <form action="" method="POST" class="wps-mfw-gen-section-form"> -->
 	<div class="mfw-secion-wrap">
 		<?php
 		$mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_add_plans_settings );
-		wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
+		// wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
 		?>
 	</div>
-</form>
+<!-- </form> -->
