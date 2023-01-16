@@ -29,7 +29,9 @@ $results = get_posts(
 );
 
 ?>
-<select><?php 
+<select id="wps_membership_plan_for_restriction" name="wps_membership_plan_for_restriction">
+    <option value=""><?php esc_html_e( 'Select....', 'membership-for-woocommerce' ); ?></option>
+    <?php 
 
 foreach( $results as $key => $value  ){ ?>
 
