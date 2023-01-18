@@ -44,3 +44,25 @@ foreach( $results as $key => $value  ){ ?>
 ?>
 </select></div>
 <?php 
+foreach( $results as $key => $value  ){  
+
+    $pages = get_posts(
+        array(
+            'post_type' => 'page',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+    
+        )
+    );
+
+    foreach( $pages as $index => $values ){
+        if( 'Shop' != $values->post_title ){ ?>
+        <div>
+            <input type="checkbox" value="<?php echo esc_attr( $values->ID ); ?>">
+            <label><?php echo esc_html( $values->post_title ); ?> </label>
+        </div>
+        <?php }
+    }
+}
+?>
+<button class="button"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></button>

@@ -9,4 +9,7 @@ jQuery(document).ready(function($){
             $('.wps_mfw_plan_expiry_class').addClass('hidden');
         }
     });
+
+    //Form js
+    $("#wps_member_user_reg").select2();
 });
