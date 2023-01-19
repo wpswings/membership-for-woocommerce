@@ -82,4 +82,4 @@ foreach( $results as $key => $value  ){ ?>
 }
 
 ?>
-<button class="button"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></button>
+<button id="wps_membership_restriction_button"class="button"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></button>

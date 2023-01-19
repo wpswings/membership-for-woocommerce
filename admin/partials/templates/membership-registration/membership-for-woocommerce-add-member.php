@@ -80,4 +80,18 @@ foreach( $results as $key => $value  ){ ?>
 
 ?>
 </select></div>
+<div>
+
+	<label for="wps_add_member_name"><?php esc_html_e('Name', 'membeship-for-woocommerce'); ?></label>
+	<input type="text" id="wps_add_member_name" name="wps_add_member_name" placeholder="Enter Full Name">
+</div>
+<div>
+	<label for="wps_add_member_phone"><?php esc_html_e('Phone', 'membeship-for-woocommerce'); ?></label>
+	<input type="number" id="wps_add_member_phone" name="wps_add_member_phone" placeholder="Enter Full Name">
+</div>
+<div>
+	<label for="wps_add_member_address"><?php esc_html_e('Address', 'membeship-for-woocommerce'); ?></label>
+	<input type="text" id="wps_add_member_address" name="wps_add_member_address" placeholder="Enter Full Name">
+</div>
+<button id="wps_add_member_button" class="button"><?php esc_html_e( 'Add Member', 'membership-for-woocommerce' ); ?></button>
 <?php 
