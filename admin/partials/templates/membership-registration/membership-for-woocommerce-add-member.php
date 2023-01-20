@@ -16,8 +16,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-<div class="form-field membership-customer">
-<label for="wps_member_user_reg">
+<div class="wps-form-group">
+	<div class="wps-form-group__label">
+		<label for="wps_member_user_reg" class="wps-form-label">
 					<?php esc_html_e( 'Customer:', 'membership-for-woocommerce' ); ?>
 				</label>
 				<select name="wps_member_user_reg" id="wps_member_user_reg">

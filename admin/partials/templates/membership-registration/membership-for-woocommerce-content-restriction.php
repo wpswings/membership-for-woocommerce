@@ -17,8 +17,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 ?>
 
-<div>
-<label><?php esc_html_e('Select plan', 'membership-for-woocommerce');?> </label>
+<div class="wps-form-group">
+<div class="wps-form-group__label">
+    <label for="wps_membership_content_restriction" class="wps-form-label"><?php esc_html_e('Select plan', 'membership-for-woocommerce');?></label>
+</div>
 <?php
 $results = get_posts(
     array(
@@ -30,19 +32,24 @@ $results = get_posts(
 );
 
 ?>
-<select id="wps_membership_content_restriction" name="wps_membership_content_restriction">
-    <option value=""><?php esc_html_e( 'Select....', 'membership-for-woocommerce' ); ?></option>
-    <?php 
+<div class="wps-form-group__control">
+	<div class="wps-form-select">
+        <select id="wps_membership_content_restriction" name="wps_membership_content_restriction" class="mdl-textfield__input">
+            <option value=""><?php esc_html_e( 'Select....', 'membership-for-woocommerce' ); ?></option>
+            <?php 
 
-foreach( $results as $key => $value  ){ ?>
+        foreach( $results as $key => $value  ){ ?>
 
-    <option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
+            <option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
 
-<?php
-}
+        <?php
+        }
 
-?>
-</select></div>
+        ?>
+        </select>
+    </div>
+</div>
+</div>
 <?php 
 foreach( $results as $key => $value  ){  
 
@@ -57,12 +64,36 @@ foreach( $results as $key => $value  ){
 
     foreach( $pages as $index => $values ){
         if( 'Shop' != $values->post_title ){ ?>
-        <div>
-            <input type="checkbox" value="<?php echo esc_attr( $values->ID ); ?>">
-            <label><?php echo esc_html( $values->post_title ); ?> </label>
-        </div>
+      
+            <div class="wps-form-group">
+                <div class="wps-form-group__label">
+                    <label  class="wps-form-label"><?php echo esc_html( $values->post_title ); ?></label>
+                </div>
+                <div class="wps-form-group__control wps-pl-4">
+                    <div class="mdc-form-field">
+                        <div class="mdc-checkbox">
+                            <input 
+                            type="checkbox"
+                            class="mdc-checkbox__native-control" value="<?php echo esc_attr( $values->ID ); ?>"
+                            />
+                            <div class="mdc-checkbox__background">
+                                <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
+                                    <path class="mdc-checkbox__checkmark-path" fill="none" d="M1.73,12.91 8.1,19.28 22.79,4.59"/>
+                                </svg>
+                                <div class="mdc-checkbox__mixedmark"></div>
+                            </div>
+                            <div class="mdc-checkbox__ripple"></div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+            
         <?php }
     }
 }
 ?>
+
+                      
+
 <button class="button"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></button>
+
