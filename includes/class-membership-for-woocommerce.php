@@ -301,6 +301,7 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
 
+		$this->loader->add_action( 'wp_ajax_wps_membership_create_plan_reg', $mfw_plugin_admin, 'wps_membership_create_plan_reg_callback' );
 	}
 
 	/**

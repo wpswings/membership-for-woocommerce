@@ -3724,4 +3724,38 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
+	/**
+	 * Create plan ajax callback.
+	 *
+	 * @return void
+	 */
+	public function wps_membership_create_plan_reg_callback(){
+
+		$plan_price = isset(  $_POST['plan_price'] ) ? $_POST['plan_price'] : '';
+		$plan_access_type = isset(  $_POST['plan_access_type'] ) ? $_POST['plan_access_type'] : '';
+		$plan_title = isset(  $_POST['plan_title'] ) ? $_POST['plan_title'] : '';
+		$plan_duration_type = isset(  $_POST['plan_duration_type'] ) ? $_POST['plan_duration_type'] : '';
+		$plan_duration = isset(  $_POST['plan_duration_type'] ) ? $_POST['plan_duration_type'] : '';
+
+		if( ! empty( $plan_price )  && ! empty( $plan_access_type )  &&  ! empty( $plan_title ) ) {
+			$plan_id = wp_insert_post(
+				array(
+					'post_type'    => 'wps_cpt_membership',
+					'post_title'   => $plan_title,
+					'post_status'  => 'publish',
+					
+				),
+				true
+			);
+			update_post_meta( $plan_id, 'wps_membership_plan_price', $plan_price );
+			update_post_meta( $plan_id, 'wps_membership_plan_name_access_type', $plan_access_type );
+			if( $plan_access_type == 'limited' ){
+				update_post_meta( $plan_id, 'wps_membership_plan_duration', $plan_duration );
+				update_post_meta( $plan_id, 'wps_membership_plan_duration_type', $plan_duration_type );
+			}
+			
+			
+		}
+	}
+
 }
