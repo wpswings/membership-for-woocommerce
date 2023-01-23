@@ -745,6 +745,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @since 1.0.0
 	 */
 	public function mfw_admin_save_tab_settings() {
+		
 		global $mfw_wps_mfw_obj;
 		if ( isset( $_POST['mfw_button_demo'] )
 			&& ( ! empty( $_POST['wps_tabs_nonce'] )
@@ -3755,6 +3756,31 @@ class Membership_For_Woocommerce_Admin {
 			}
 			
 			
+		}
+	}
+
+
+	public function mfw_admin_save_tab_settings_reg_form(){
+		$results = get_posts(
+			array(
+				'post_type' => 'wps_cpt_membership',
+				'post_status' => 'publish',
+				'numberposts' => -1,
+		
+			)
+		);
+		if( isset( $_POST['wps_membership_restriction_button'] ) ){
+			// echo"<pre>";
+			// print_r( $_POST );die;
+			
+			
+			// wps_membership_accessibility_reg_100
+			// wps_membership_accessibility_input_100
+			// wps_membership_accessibility_time_span_100
+			// foreach( $results as $key => $value ) {
+			// 	$wps_membership_plan_target_ids = isset( $_POST['wps_membership_plan_target_ids_search_reg_100'] ) ? $_POST['wps_membership_plan_target_ids_search_reg_100'] : array();
+			// 	$wps_membership_plan_name_access_type = isset( $_POST['wps_membership_select_type_reg_100'] ) ? $_POST['wps_membership_select_type_reg_100'] : '';
+			// }
 		}
 	}
 

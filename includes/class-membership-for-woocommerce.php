@@ -206,6 +206,8 @@ class Membership_For_Woocommerce {
 
 		// Saving tab settings.
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings' );
+		// Saving tab settings for registration form.
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings_reg_form' );
 
 		// Developer's Hook Listing.
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );
@@ -817,7 +819,6 @@ class Membership_For_Woocommerce {
 						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
 							<div class="wps-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-							
 							</div>
 							<div class="wps-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined">

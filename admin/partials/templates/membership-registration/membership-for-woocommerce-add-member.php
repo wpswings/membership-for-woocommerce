@@ -91,17 +91,63 @@ $results = get_posts(
 		</div>
 	</div>
 </div>
-
-	<label for="wps_add_member_name"><?php esc_html_e('Name', 'membeship-for-woocommerce'); ?></label>
-	<input type="text" id="wps_add_member_name" name="wps_add_member_name" placeholder="Enter Full Name">
+<div class="wps-form-group wps-mfw-text">
+	<div class="wps-form-group__label">
+		<label for="wps_add_member_name" class="wps-form-label"><?php esc_html_e('Name', 'membership-for-woocommerce'); ?></label>
+	</div>
+	<div class="wps-form-group__control">
+		<label class="mdc-text-field mdc-text-field--outlined">
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+				<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Full Name', 'membership-for-woocommerce' ) ?></span>
+				<span class="mdc-notched-outline__trailing"></span>
+				</span>
+			</span>
+			<input type="text" id="wps_add_member_name" name="wps_add_member_name" class="mdc-text-field__input" placeholder="Enter Full Name" >
+		</label>
+	</div>
 </div>
-<div>
-	<label for="wps_add_member_phone"><?php esc_html_e('Phone', 'membeship-for-woocommerce'); ?></label>
-	<input type="number" id="wps_add_member_phone" name="wps_add_member_phone" placeholder="Enter Full Name">
+<div class="wps-form-group wps-mfw-number">
+	<div class="wps-form-group__label">
+		<label for="wps_add_member_phone" class="wps-form-label"><?php esc_html_e('Phone', 'membership-for-woocommerce'); ?></label>
+	</div>
+	<div class="wps-form-group__control">
+		<label class="mdc-text-field mdc-text-field--outlined">
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+				<span class="mdc-notched-outline__trailing"></span>
+				</span>
+			</span>
+			<input type="number" id="wps_add_member_phone" name="wps_add_member_phone" class="mdc-text-field__input" >
+		</label>
+	</div>
 </div>
-<div>
-	<label for="wps_add_member_address"><?php esc_html_e('Address', 'membeship-for-woocommerce'); ?></label>
-	<input type="text" id="wps_add_member_address" name="wps_add_member_address" placeholder="Enter Full Name">
+<div class="wps-form-group wps-mfw-text">
+	<div class="wps-form-group__label">
+		<label for="wps_add_member_address"  class="wps-form-label"><?php esc_html_e('Address', 'membeship-for-woocommerce'); ?></label>
+	</div>
+	<div class="wps-form-group__control">
+		<label class="mdc-text-field mdc-text-field--outlined">
+			<span class="mdc-notched-outline">
+				<span class="mdc-notched-outline__leading"></span>
+				<span class="mdc-notched-outline__notch">
+				<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Address', 'membership-for-woocommerce' ) ?></span>
+				<span class="mdc-notched-outline__trailing"></span>
+				</span>
+			</span>
+			<input type="text" id="wps_add_member_address" name="wps_add_member_address" class="mdc-text-field__input" placeholder="Enter Full Name">
+		</label>
+	</div>
 </div>
-<button id="wps_add_member_button" class="button"><?php esc_html_e( 'Add Member', 'membership-for-woocommerce' ); ?></button>
+<div class="wps-form-group">
+	<div class="wps-form-group__label"></div>
+	<div class="wps-form-group__control">
+		<button id="wps_add_member_button" class="mdc-button mdc-button--raised">
+			<span class="mdc-button__ripple"></span>
+			<span class="mdc-button__label"><?php esc_html_e( 'Add Member', 'membership-for-woocommerce' ); ?></span>	
+		</button>
+	</div>
+</div>
 <?php 
