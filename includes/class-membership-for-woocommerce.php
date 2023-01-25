@@ -208,6 +208,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings' );
 		// Saving tab settings for registration form.
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings_reg_form' );
+		// $this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership_registration', $mfw_plugin_admin, 'wps_membership_search_products_for_membership_registration' );
+		
 
 		// Developer's Hook Listing.
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );

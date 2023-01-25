@@ -60,48 +60,87 @@ $results = get_posts(
         foreach( $results as $key => $value  ){ 
             ?>
             <div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID );?>">
-                <div class="wps-form-group" >
-                    <div class="wps-form-group__label">
-                        <label class="wps-form-label"><?php $label = 'Select Type for ' . $value->post_title; echo esc_html( $label ); ?></label>
-                        
-                    </div>
-                    <div class="wps-form-group__control">
-                        <div class="wps-form-select">
-                            <select class="mdl-textfield__input" id="wps_membership_select_type_reg_<?php echo esc_attr( $value->ID );?>" name="wps_membership_select_type_reg_<?php echo esc_attr( $value->ID );?>">
-                                <option value="products"><?php esc_html_e( 'Products', 'membership-for-woocommerce' ) ?></option>
-                                <option value="product_cat"><?php esc_html_e( 'Product Categories', 'membership-for-woocommerce' ) ?></option>
-                                <option value="product_tag"><?php esc_html_e( 'Product Tags', 'membership-for-woocommerce' ) ?></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php $label = 'Select Title to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    <label class="wps-form-label"><?php $label = 'Select Products to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
-                            <select id="wps_membership_plan_target_ids_search_reg_<?php echo esc_attr( $value->ID );?>" name="wps_membership_plan_target_ids_search_reg_<?php echo esc_attr( $value->ID );?>[]" class="wc-membership-product-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
+                            <select id="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID );?>" name="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID );?>[]" class="wc-membership-product-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
+                                <?php
+                                
+                                $wps_membership_plan_target_product_ids = get_post_meta( $value->ID ,'wps_membership_plan_target_ids', true );
+                                if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
 
-                                <option></option>
+                                    foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+
+                                        $product_name = get_the_title( $wps_membership_plan_single_target_product_ids );
+                                        ?>
+
+                                <option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                        <label class="wps-form-label"><?php $label = 'Select Accessibility for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    <label class="wps-form-label"><?php $label = 'Select Product Categories to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
-                            <select id="wps_membership_accessibility_type_reg_<?php echo esc_attr( $value->ID );?>" class="mdl-textfield__input" name="wps_membership_accessibility_reg_<?php echo esc_attr( $value->ID );?>" >
-                                <option value="immediately"><?php esc_html_e( 'Immediatedly', 'membership-for-woocommerce' ) ?></option>
-                                <option value="specify_time"><?php esc_html_e( 'Specify Time', 'membership-for-woocommerce' ) ?></option>
+                            <select id="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID );?>" name="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID );?>[]" class="wc-membership-product-category-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a Categories&hellip;', 'membership-for-woocommerce' ); ?>">
+                            <?php
+                                
+                                $wps_membership_plan_target_product_ids = get_post_meta( $value->ID ,'wps_membership_plan_target_categories', true );
+                                if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
+
+                                    foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+
+                                        $product_name = get_the_category_by_ID( $wps_membership_plan_single_target_product_ids );
+                                        ?>
+
+                                <option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            
                             </select>
-                            <input type="number" id="wps_membership_accessibility_input_<?php echo esc_attr( $value->ID );?>" name="wps_membership_accessibility_input_<?php echo esc_attr( $value->ID );?>" class="mdl-textfield__input">
-                            <select id="wps_membership_accessibility_time_span_<?php echo esc_attr( $value->ID );?>" name="wps_membership_accessibility_time_span_<?php echo esc_attr( $value->ID );?>" class="mdl-textfield__input">
-                                <option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ) ?></option>
-                                <option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ) ?></option>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="wps-form-group">
+                    <div class="wps-form-group__label">
+                    <label class="wps-form-label"><?php $label = 'Select Product tags to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    </div>
+                    <div class="wps-form-group__control">
+                        <div class="wps-form-select">
+                            <select id="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID );?>" name="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID );?>[]" class="wc-membership-product-tag-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a tags&hellip;', 'membership-for-woocommerce' ); ?>">
+                            <?php
+                                
+                                $wps_membership_plan_target_product_ids = get_post_meta( $value->ID ,'wps_membership_plan_target_tags', true );
+                                if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
+
+                                    foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+                                        $tagn     = get_term_by( 'id', $wps_membership_plan_single_target_product_ids, 'product_tag' );
+                                        $product_name = $tagn->name;
+                                        ?>
+
+                                <option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            
                             </select>
                         </div>
                     </div>
@@ -116,6 +155,7 @@ $results = get_posts(
         }
 
         ?>
+            <input type="hidden" id="wps_reg_select_type" value="">
             <div class="wps-form-group">
                 <div class="wps-form-group__control">
                     <button id="wps_membership_restriction_button" name="wps_membership_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>

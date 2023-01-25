@@ -3759,6 +3759,78 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
+	public function wps_membership_search_products_for_membership_registration(){
+
+		$return         = array();
+		$search_results = new WP_Query(
+			array(
+				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+				'post_type'           => array( 'product', 'product_variation' ),
+				'post_status'         => array( 'publish' ),
+				'ignore_sticky_posts' => 1,
+				'posts_per_page'      => -1,
+			)
+		);
+
+		/**
+		 * Filter for search products.
+		 *
+		 * @since 1.0.0
+		 */
+		$search_results = apply_filters( 'wps_membership_search_products_for_membership', $search_results );
+
+		if ( $search_results->have_posts() ) {
+
+			while ( $search_results->have_posts() ) {
+
+				$search_results->the_post();
+
+				$title = ( mb_strlen( $search_results->post->post_title ) > 50 ) ? mb_substr( $search_results->post->post_title, 0, 49 ) . '...' : $search_results->post->post_title;
+
+				/**
+				 * Check for post type as query sometimes returns posts even after mentioning post_type.
+				 * As some plugins alter query which causes issues.
+				 */
+				$post_type = get_post_type( $search_results->post->ID );
+
+				if ( 'product' !== $post_type && 'product_variation' !== $post_type ) {
+
+					continue;
+				}
+
+				$exclude = get_post_meta( $search_results->post->ID, '_wps_membership_exclude', true );
+
+				if ( 'yes' === $exclude ) {
+					continue;
+				}
+
+				$product      = wc_get_product( $search_results->post->ID );
+				$downloadable = $product->is_downloadable();
+				$stock        = $product->get_stock_status();
+				$product_type = $product->get_type();
+
+				$unsupported_product_types = array(
+					'grouped',
+					'external',
+					'subscription',
+					'variable-subscription',
+					'subscription_variation',
+				);
+
+				if ( in_array( $product_type, $unsupported_product_types, true ) || 'outofstock' === $stock ) {
+
+					continue;
+				}
+
+				$return[] = array( $search_results->post->ID, $title );
+
+			}
+		}
+		echo wp_json_encode( $return );
+
+		wp_die();
+
+	}
 
 	public function mfw_admin_save_tab_settings_reg_form(){
 		$results = get_posts(
@@ -3766,21 +3838,34 @@ class Membership_For_Woocommerce_Admin {
 				'post_type' => 'wps_cpt_membership',
 				'post_status' => 'publish',
 				'numberposts' => -1,
+				'fields' => 'ids'
 		
 			)
 		);
+		// print_r( $results );die;
 		if( isset( $_POST['wps_membership_restriction_button'] ) ){
-			// echo"<pre>";
+			// echo "<pre>";
 			// print_r( $_POST );die;
 			
 			
-			// wps_membership_accessibility_reg_100
-			// wps_membership_accessibility_input_100
-			// wps_membership_accessibility_time_span_100
-			// foreach( $results as $key => $value ) {
-			// 	$wps_membership_plan_target_ids = isset( $_POST['wps_membership_plan_target_ids_search_reg_100'] ) ? $_POST['wps_membership_plan_target_ids_search_reg_100'] : array();
-			// 	$wps_membership_plan_name_access_type = isset( $_POST['wps_membership_select_type_reg_100'] ) ? $_POST['wps_membership_select_type_reg_100'] : '';
-			// }
+			foreach( $results as $key => $value ) {
+				$wps_membership_plan_target_ids = isset( $_POST['wps_membership_plan_target_ids_' . $value ] ) ? $_POST['wps_membership_plan_target_ids_' . $value] : array();
+				$wps_membership_plan_target_categories = isset( $_POST['wps_membership_plan_target_cats_' . $value ] ) ? $_POST['wps_membership_plan_target_cats_' . $value] : array();
+				$wps_membership_plan_target_tags = isset( $_POST['wps_membership_plan_target_tags_' . $value ] ) ? $_POST['wps_membership_plan_target_tags_' . $value] : array();
+				if( is_array( $wps_membership_plan_target_ids  ) && ! empty( $wps_membership_plan_target_ids ) ) {
+
+					update_post_meta( $value, 'wps_membership_plan_target_ids', $wps_membership_plan_target_ids );
+				}
+				if( is_array( $wps_membership_plan_target_categories  ) && ! empty( $wps_membership_plan_target_categories ) ) { 
+
+					update_post_meta( $value, 'wps_membership_plan_target_categories', $wps_membership_plan_target_categories );
+				}
+				if( is_array( $wps_membership_plan_target_tags  ) && ! empty( $wps_membership_plan_target_tags ) ) { 
+					
+					update_post_meta( $value, 'wps_membership_plan_target_tags', $wps_membership_plan_target_tags );
+				}
+				
+			}
 		}
 	}
 
