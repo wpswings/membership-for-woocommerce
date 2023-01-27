@@ -62,7 +62,7 @@ $results = get_posts(
             <div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID );?>">
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php $label = 'Select Products to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    <label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
@@ -90,7 +90,7 @@ $results = get_posts(
                 </div>
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php $label = 'Select Product Categories to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    <label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
@@ -119,7 +119,7 @@ $results = get_posts(
                 
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php $label = 'Select Product tags to restrict from non-members for ' . $value->post_title; echo esc_html( $label ); ?></label>
+                    <label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
@@ -155,7 +155,7 @@ $results = get_posts(
         }
 
         ?>
-            <input type="hidden" id="wps_reg_select_type" value="">
+            
             <div class="wps-form-group">
                 <div class="wps-form-group__control">
                     <button id="wps_membership_restriction_button" name="wps_membership_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>

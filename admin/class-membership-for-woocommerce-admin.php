@@ -3842,10 +3842,8 @@ class Membership_For_Woocommerce_Admin {
 		
 			)
 		);
-		// print_r( $results );die;
+	
 		if( isset( $_POST['wps_membership_restriction_button'] ) ){
-			// echo "<pre>";
-			// print_r( $_POST );die;
 			
 			
 			foreach( $results as $key => $value ) {
