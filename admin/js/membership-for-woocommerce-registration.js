@@ -66,11 +66,18 @@ jQuery(document).ready(function($){
 
 $('div .wps_membership_plan_fields').hide();
 
-$(document).on('change','#wps_membership_plan_for_restriction, #wps_membership_plan_for_discount_offer', function(){
+$(document).on('change','#wps_membership_plan_for_restriction, #wps_membership_plan_for_discount_offer, #wps_membership_content_restriction', function(){
+    
     $('div .wps_membership_plan_fields').hide();
     $('div .wps_reg_plan_' + $(this).val()).show();
 });
 
-
+$(document).on('click', '.wps_membership_checkbox', function(){
+    if( $(this).is(':checked') ){
+        $(this).val('on');
+    } else{
+        $(this).val('off');
+    }
+})
 
 });

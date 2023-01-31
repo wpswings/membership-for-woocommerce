@@ -62,7 +62,7 @@ $results = get_posts(
             <div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID );?>">
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
+                    <label class="wps-form-label"><?php esc_html_e( 'Select Product to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">
@@ -90,7 +90,7 @@ $results = get_posts(
                 </div>
                 <div class="wps-form-group">
                     <div class="wps-form-group__label">
-                    <label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
+                    <label class="wps-form-label"><?php esc_html_e( 'Select Product Categories to restrict from non-members for ', 'membership-for-woocommerce') ?><span style="color:red"><?php echo esc_html( $value->post_title );?></label>
                     </div>
                     <div class="wps-form-group__control">
                         <div class="wps-form-select">

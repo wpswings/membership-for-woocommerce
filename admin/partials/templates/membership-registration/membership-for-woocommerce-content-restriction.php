@@ -16,7 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 ?>
-
+<form action method="POST" class="wps-mfw-gen-section-form">
+    <div class="mfw-secion-wrap">
 <div class="wps-form-group">
 <div class="wps-form-group__label">
     <label for="wps_membership_content_restriction" class="wps-form-label"><?php esc_html_e('Select plan', 'membership-for-woocommerce');?></label>
@@ -61,20 +62,29 @@ foreach( $results as $key => $value  ){
     
         )
     );
-
+    $page_id_array = get_post_meta( $value->ID, 'wps_membership_plan_page_target_ids', true );
     foreach( $pages as $index => $values ){
         if( 'Shop' != $values->post_title ){ ?>
-      
+        <div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID );?>">
             <div class="wps-form-group">
                 <div class="wps-form-group__label">
-                    <label  class="wps-form-label"><?php echo esc_html( $values->post_title ); ?></label>
+                    <label  class="wps-form-label"><?php echo esc_html( $values->post_title );esc_html_e( ' for ', 'membership-for-woocommerce'); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
                 </div>
                 <div class="wps-form-group__control wps-pl-4">
                     <div class="mdc-form-field">
                         <div class="mdc-checkbox">
                             <input 
                             type="checkbox"
-                            class="mdc-checkbox__native-control" value="<?php echo esc_attr( $values->ID ); ?>"
+                            class="mdc-checkbox__native-control wps_membership_checkbox" name="wps_membership_pages_<?php echo esc_attr( $value->ID );?>_<?php echo esc_attr( $values->ID ); ?>"id="wps_membership_pages_<?php echo esc_attr( $value->ID );?>_<?php echo esc_attr( $values->ID ); ?>"
+                            <?php 
+                                if( ! empty($page_id_array) && is_array( $page_id_array ) ) {
+
+                                    if( in_array( $values->ID, $page_id_array ) ) {
+                                        echo esc_attr( 'checked' );
+                                        ?> value="<?php echo esc_attr( 'on' );?>"<?php
+                                    }
+                                }
+                            ?>
                             />
                             <div class="mdc-checkbox__background">
                                 <svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
@@ -87,6 +97,7 @@ foreach( $results as $key => $value  ){
                     </div>
                 </div>
 			</div>
+        </div>
             
         <?php }
     }
@@ -95,5 +106,13 @@ foreach( $results as $key => $value  ){
 
                       
 
-<button class="button"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></button>
+            <div class="wps-form-group">
+                <div class="wps-form-group__control">
+                    <button id="wps_membership_content_restriction_button" name="wps_membership_content_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
+                    <span class="mdc-button__label"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ) ?></span>
+                    </button>
+                </div>
+            </div>
 
+    </div>
+</form>
