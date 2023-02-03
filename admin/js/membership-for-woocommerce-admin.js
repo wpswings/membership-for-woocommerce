@@ -311,6 +311,8 @@ jQuery(document).ready(function($) {
       });
   });
 
+
+  
  
 
   // Applying script to admin part in all product list page

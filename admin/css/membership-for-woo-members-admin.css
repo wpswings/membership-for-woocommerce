@@ -52,7 +52,7 @@ span.dashicons.dashicons-no-alt:focus,
     display: flex;
 }
 
-input#export_all_members {
+input#export_all_members, input#import_members {
     order: 3;
     background-color: inherit;
     color: #0071a1;
@@ -62,7 +62,7 @@ input#export_all_members {
     transition: background-color 0.2s ease-in-out;
 }
 
-input#export_all_members:hover {
+input#export_all_members:hover, input#import_members:hover {
     background-color: #0071a1;
     color: #ffffff;
 }

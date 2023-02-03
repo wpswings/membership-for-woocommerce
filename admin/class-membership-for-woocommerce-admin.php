@@ -109,11 +109,12 @@ class Membership_For_Woocommerce_Admin {
 			$pagescreen_id   = $screen->id;
 			$pagescreen_post = $screen->post_type;
 
-			if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id ) {
+			
+			if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id || 'wps_cpt_members' == $pagescreen_post ) {
 
-				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), $this->version, 'all' );
+				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), time(), 'all' );
 
-				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), time(), 'all' );
 
 				wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
@@ -280,7 +281,7 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
 
-				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), time(), false );
 
 				wp_localize_script(
 					$this->plugin_name,
@@ -1725,7 +1726,9 @@ class Membership_For_Woocommerce_Admin {
 				</select>
 					
 			<input type="submit" name="export_all_members" id="export_all_members" class="button button-primary" value="<?php esc_html_e( 'Export Members', 'membership-for-woocommerce' ); ?>">
+			
 			<?php
+			
 		}
 	}
 

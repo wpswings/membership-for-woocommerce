@@ -41,6 +41,7 @@ select#wps_membership_plan_offer_price_type_id:focus,
 #poststuff .handlediv:focus,
 td.membership_view.column-membership_view a:focus,
 .import_csv_field_wrapper>input:focus,
+.import_member_csv_field_wrapper>input:focus,
 #wps_membership_manage_content:focus,
 ul.select2-selection__rendered:focus,
 button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:focus,
@@ -385,7 +386,7 @@ td.membership_view.column-membership_view,
     color: #0071a1;
 }
 
-#import_all_membership {
+#import_all_membership, #import_members {
     margin-left: 10px;
 }
 
@@ -433,6 +434,7 @@ div #TB_ajaxWindowTitle {
 
 input#export_all_membership,
 input#import_all_membership,
+input#import_members,
 .wps_membership_plans_creation_setting input[type="button"],
 .wps_membership_gateway_div .button,
 .wps_membership_gateway_div a {
@@ -446,6 +448,7 @@ input#import_all_membership,
 
 input#export_all_membership:hover,
 input#import_all_membership:hover,
+input#import_members:hover,
 .wps_membership_plans_creation_setting input[type="button"]:hover,
 .wps_membership_gateway_div .button:hover,
 .wps_membership_gateway_div a:hover {
@@ -467,11 +470,11 @@ input#import_all_membership:hover,
         flex-wrap: wrap;
     }
 
-    #import_all_membership {
+    #import_all_membership, #import_members {
         margin-left: 0px;
     }
 }
-input#import_all_membership {
+input#import_all_membership, #import_members {
     order: 4;
 }
 
@@ -506,7 +509,7 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
     color: #fff;
 }
 
-.import_csv_field_wrapper {
+.import_csv_field_wrapper, .import_csv_field_wrapper {
     align-items: center;
     display: flex;
     justify-content: space-evenly;
@@ -517,7 +520,7 @@ input#upload_csv_file:hover {
     color: #1a3365;
 }
 
-.import_csv_field_wrapper>input {
+.import_csv_field_wrapper>input, .import_csv_field_wrapper>input {
     background-color: inherit;
     border: 2px solid #fff;
     color: #ffffff;
@@ -525,7 +528,7 @@ input#upload_csv_file:hover {
     padding: 5px;
 }
 
-.import_csv_field_wrapper>input:first-child {
+.import_csv_field_wrapper>input:first-child, .import_csv_field_wrapper>input:first-child {
     background-color: inherit;
     border: none;
     color: #ffffff;
