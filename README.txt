@@ -6,7 +6,7 @@ Requires at least: 5.0
 Tested up to: 6.1.1
 WC requires at least: 4.0.0
 WC tested up to: 7.2.2
-Stable tag: 2.1.7
+Stable tag: 2.1.8
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -259,6 +259,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.1.8 - Released on 6 February 2023 =
+* New: Compatible with the latest WooCommerce & WordPress
+
+
 = 2.1.7 - Released on 23 December 2022 =
 * New: Compatible with the latest WooCommerce & WordPress
 * Fix: Minor Bug Fixes (Fixed Security Issues)
@@ -342,7 +346,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.1.7 - Released on 23 December 2022 =
+= 2.1.8 - Released on 6 February 2023 =
 * New: Compatible with the latest WooCommerce & WordPress
-* Fix: Minor Bug Fixes (Fixed Security Issues)
 
