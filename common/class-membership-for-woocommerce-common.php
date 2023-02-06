@@ -150,6 +150,9 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function wps_membership_csv_file_upload() {
 		check_ajax_referer( 'plan-import-nonce', 'nonce' );
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			exit;
+		}
 		if( is_admin( ) || ( is_multisite( ) && is_super_admin( ) ) ) {
 
 			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
@@ -162,9 +165,6 @@ class Membership_For_Woocommerce_Common {
 			// phpcs:enable
 			$upload_file = $activity_class->do_upload( $csv_file, array( 'csv' ) );
 	
-			if ( ! current_user_can( 'edit_posts' ) ) {
-				exit;
-			}
 	
 			if ( $upload_file && ( true === $upload_file['result'] ) ) {
 	
