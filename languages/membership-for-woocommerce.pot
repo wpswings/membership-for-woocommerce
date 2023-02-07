@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Membership For WooCommerce 2.1.6\n"
-"POT-Creation-Date: 2022-11-29 13:32+0530\n"
-"PO-Revision-Date: 2022-11-29 13:32+0530\n"
+"Project-Id-Version: Membership For WooCommerce 2.1.8\n"
+"POT-Creation-Date: 2023-02-03 12:40+0530\n"
+"PO-Revision-Date: 2023-02-03 12:40+0530\n"
 "Last-Translator: \n"
 "Language-Team: WP Swings\n"
 "Language: en_US\n"
@@ -1483,15 +1483,15 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
-#: includes/class-membership-activity-helper.php:147
+#: includes/class-membership-activity-helper.php:166
 msgid "File upload failed"
 msgstr ""
 
-#: includes/class-membership-activity-helper.php:163
+#: includes/class-membership-activity-helper.php:184
 msgid "Invalid File type"
 msgstr ""
 
-#: includes/class-membership-activity-helper.php:173
+#: includes/class-membership-activity-helper.php:194
 msgid "File upload successful"
 msgstr ""
 
@@ -1933,55 +1933,55 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3482
+#: public/class-membership-for-woocommerce-public.php:3485
 msgid ""
 "Sorry we cannot add membership products with other products, either empty "
 "cart or add membership product later when cart is empty"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3483
+#: public/class-membership-for-woocommerce-public.php:3486
 msgid "empty"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3938
+#: public/class-membership-for-woocommerce-public.php:3941
 msgid ""
 " Thank You For Purchasing Membership Plan! Check your mail for the login "
 "Credential"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3939
+#: public/class-membership-for-woocommerce-public.php:3942
 msgid " To Access Membership Please Login/Signup First. "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3939
+#: public/class-membership-for-woocommerce-public.php:3942
 msgid "Login/Sign-up first"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3943
+#: public/class-membership-for-woocommerce-public.php:3946
 msgid " Thank You For Purchasing Membership Plan!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3943
+#: public/class-membership-for-woocommerce-public.php:3946
 msgid ""
 "You will get your Login Credential when Shop Owner will complete your Order "
 "and then after You can Login and access your membership."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3996
-#: public/class-membership-for-woocommerce-public.php:4030
-#: public/class-membership-for-woocommerce-public.php:4062
+#: public/class-membership-for-woocommerce-public.php:3999
+#: public/class-membership-for-woocommerce-public.php:4033
+#: public/class-membership-for-woocommerce-public.php:4065
 msgid "Product with Membership Plan "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4011
-#: public/class-membership-for-woocommerce-public.php:4044
-#: public/class-membership-for-woocommerce-public.php:4076
+#: public/class-membership-for-woocommerce-public.php:4014
+#: public/class-membership-for-woocommerce-public.php:4047
+#: public/class-membership-for-woocommerce-public.php:4079
 msgid "Buy this product and become a member of "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4013
-#: public/class-membership-for-woocommerce-public.php:4046
-#: public/class-membership-for-woocommerce-public.php:4078
+#: public/class-membership-for-woocommerce-public.php:4016
+#: public/class-membership-for-woocommerce-public.php:4049
+#: public/class-membership-for-woocommerce-public.php:4081
 msgid " membership plan. "
 msgstr ""
 

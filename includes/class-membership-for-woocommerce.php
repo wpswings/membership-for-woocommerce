@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.1.7';
+			$this->version = '2.1.8';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -317,7 +317,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_checkout', $mfw_plugin_common, 'wps_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_checkout', $mfw_plugin_common, 'wps_membership_checkout' );
 		$this->loader->add_action( 'wp_ajax_wps_membership_csv_file_upload', $mfw_plugin_common, 'wps_membership_csv_file_upload' ); // Import CSV.
-		// $this->loader->add_action( 'wp_ajax_nopriv_wps_membership_csv_file_upload', $mfw_plugin_common, 'wps_membership_csv_file_upload' );
 		$this->loader->add_action( 'wps_sfw_other_payment_gateway_renewal', $mfw_plugin_common, 'wps_membership_subscription_renewal', 99, 3 );
 		$this->loader->add_action( 'wps_sfw_expire_subscription_scheduler', $mfw_plugin_common, 'wps_membership_subscription_expire', 99, 1 );
 		$this->loader->add_action( 'wps_sfw_subscription_active_renewal', $mfw_plugin_common, 'wps_membership_subscription_active_renewal', 99, 1 );
