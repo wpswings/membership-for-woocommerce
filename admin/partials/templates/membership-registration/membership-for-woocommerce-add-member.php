@@ -124,7 +124,7 @@ $results = get_posts(
 						<span class="mdc-notched-outline__trailing"></span>
 						</span>
 					</span>
-					<input type="email" id="wps_add_member_name" name="billing_email" class="mdc-text-field__input" placeholder="Enter Full Name" >
+					<input type="email" id="wps_add_member_name" name="billing_email" class="mdc-text-field__input" placeholder="Enter Email" >
 				</label>
 			</div>
 		</div>

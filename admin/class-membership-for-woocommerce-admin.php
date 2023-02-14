@@ -1740,6 +1740,7 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_membership_for_woo_export_csv_members() {
 
 		if ( isset( $_GET['export_all_members'] ) ) {
+			
 
 			global $post;
 
@@ -1749,6 +1750,7 @@ class Membership_For_Woocommerce_Admin {
 			);
 
 			$all_posts = get_posts( $args );
+			// print_r( print_r( $all_posts ) );die;
 
 			if ( ! empty( $all_posts ) ) {
 
@@ -1768,13 +1770,13 @@ class Membership_For_Woocommerce_Admin {
 						'Member Name',
 						'Member Email ',
 						'Member Phone No.',
-						'Payment Method',
 						'Plan ID',
 						'Plan Name',
 						'Membership Status',
 						'Expiry Date',
 					)
 				);
+				// die;
 				//phpcs:disable
 				foreach ( $all_posts as $post_datas ) {
 					setup_postdata( $post_datas );
@@ -1787,7 +1789,6 @@ class Membership_For_Woocommerce_Admin {
 							$this->global_class->get_member_details( $post_datas, 'name' ),
 							$this->global_class->get_member_details( $post_datas, 'email' ),
 							$this->global_class->get_member_details( $post_datas, 'phone' ),
-							$this->global_class->get_member_details( $post_datas, 'payment_method' ),
 							$this->global_class->get_member_details( $post_datas, 'plan_id' ),
 							$this->global_class->get_member_details( $post_datas, 'plan_name' ),
 							$this->global_class->get_member_details( $post_datas, 'plan_status' ),
@@ -3877,7 +3878,7 @@ class Membership_For_Woocommerce_Admin {
 			$post_id = wp_insert_post(
 				array(
 					'post_type'    => 'wps_cpt_members',
-					'post_status'  => 'draft',
+					'post_status'  => 'publish',
 					
 				),
 				true
