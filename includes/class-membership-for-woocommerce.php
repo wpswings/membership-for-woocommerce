@@ -625,11 +625,7 @@ class Membership_For_Woocommerce {
 			'name'        => 'membership-for-woocommerce-add-member',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php',
 		);
-		$mfw_default_sub_tabs['membership-for-woocommerce-import-members'] = array(
-			'title'       => esc_html__( 'Import Member', 'membership-for-woocommerce' ),
-			'name'        => 'membership-for-woocommerce-import-members',
-			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-import-members.php',
-		);
+		
 
 		/**
 		 * Filter for admin setting tabs.
