@@ -351,7 +351,15 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), $this->version, false );
-
+		wp_localize_script(
+			'membership-for-woocommerce-product-edit-admin',
+			'wps_product_edit_param',
+			array(
+				'ajaxurl'          => admin_url( 'admin-ajax.php' ),
+				'nonce'            => wp_create_nonce( 'wps_membership_nonce' ),
+				'prod_id'          => get_option( 'wps_membership_default_product' ),
+			)
+		);
 		
 
 
@@ -4069,5 +4077,7 @@ class Membership_For_Woocommerce_Admin {
 
 
 	}
+
+
 
 }

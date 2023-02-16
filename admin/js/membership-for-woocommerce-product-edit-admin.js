@@ -8,4 +8,14 @@ jQuery(document).ready(function($) {
             $('.wps_membership_dropdown').addClass('hidden');
         }
     } );
+
+    
+    jQuery(document).on( 'click', '#post-' + wps_product_edit_param.prod_id + ' td div.row-actions .trash', function(e){
+        if( confirm( 'Please do not delete this product , Membership functionality will not work!' ) ) {
+            
+        } else {
+            e.preventDefault();
+        }
+    } );
+
  } );
