@@ -76,6 +76,11 @@ $results = get_posts(
 );
 
 ?>
+
+<p>
+	<?php  esc_html_e( 'In this Section whatever the products, categories, tags you will choose, Members will get DISCOUNT on these products.', 'membership-for-woocommerce' ); ?>
+</p>
+
 <form action method="POST" class="wps-mfw-gen-section-form">
     <div class="mfw-secion-wrap">
         <div class="wps-form-group">

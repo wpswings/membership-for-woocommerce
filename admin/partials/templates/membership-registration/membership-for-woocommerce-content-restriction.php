@@ -68,6 +68,10 @@ function wps_mfw_upgrade_pro_popup(){
 
 
 ?>
+
+<p>
+	<?php  esc_html_e( 'In this Section whatever the pages you will select, ONLY MEMBERS can access the pages.', 'membership-for-woocommerce' ); ?>
+</p>
 <form action method="POST" class="wps-mfw-gen-section-form">
     <div class="mfw-secion-wrap">
 <div class="wps-form-group">

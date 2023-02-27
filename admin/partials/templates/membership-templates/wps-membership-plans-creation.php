@@ -333,7 +333,9 @@ function wps_mfw_upgrade_pro_popup(){
 		<h2 class="wps_membership_offer_title" >
 			<?php esc_html_e( 'Offer Section', 'membership-for-woocommerce' ); ?>
 		</h2>
-
+			<h3>
+				<?php  esc_html_e( 'In Offer Section whatever the products, categories, tags you will choose, Members will get DISCOUNT on these products.', 'membership-for-woocommerce' ); ?>
+			</h3>
 		<table>
 
 			<!-- Offer Product section start -->
@@ -534,7 +536,9 @@ function wps_mfw_upgrade_pro_popup(){
 		<h2 class="wps_membership_offer_title" >
 			<?php esc_html_e( 'Included Section', 'membership-for-woocommerce' ); ?>
 		</h2>
-
+		<h3>
+			<?php  esc_html_e( 'In Inlucde Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
+		</h3>
 		<table>
 
 			<!-- Offer Page section start -->
@@ -927,7 +931,9 @@ function wps_mfw_upgrade_pro_popup(){
 			<h2 class="wps_membership_offer_title" >
 				<?php esc_html_e( 'Membership Features Section', 'membership-for-woocommerce' ); ?>
 			</h2>
-
+			<h3>
+				<?php esc_html_e( 'According to this discount setting , Members will get discount on cart whatever the products they purchase no matter.', 'membership-for-woocommerce' )  ?>
+			</h3>
 			<table>
 				<!-- Discount section start -->
 				<tr>
@@ -938,6 +944,7 @@ function wps_mfw_upgrade_pro_popup(){
 
 					$instance->tool_tip( $description );
 					?>
+					
 					</th>
 
 					<td class="forminp forminp-text">
@@ -964,6 +971,7 @@ function wps_mfw_upgrade_pro_popup(){
 						<input type="number" min="0" step=".01" class="wps_membership plan_offer_input_type" id="wps_membership_plan_offer_price" name="wps_memebership_plan_discount_price" value="<?php echo esc_attr( $wps_membership_plan_discount_price ); ?>">
 
 					</td>
+					
 				</tr>
 				<!-- Discount section End. -->
 
