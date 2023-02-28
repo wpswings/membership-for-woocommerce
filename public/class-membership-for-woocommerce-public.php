@@ -359,6 +359,7 @@ class Membership_For_Woocommerce_Public {
 
 		// Default Gutenberg offer.
 		add_shortcode( 'wps_membership_default_page_identification', array( $this, 'default_offer_identification_shortcode' ) );
+		add_shortcode( 'wps_membership_registration_form', array( $this, 'wps_membership_registration_form_shortcode' ) );
 	}
 
 
@@ -3028,6 +3029,53 @@ class Membership_For_Woocommerce_Public {
 		wp_die();
 	}
 
+
+	public function wps_mfw_registration_form_submission_callback() {
+		if( isset( $_POST['wps_regiser_form_submit'] ) ) {
+			
+			$plan_id = isset( $_POST['wps_register_form_plan'] ) ? $_POST['wps_register_form_plan'] : '';
+			$plan_title = get_the_title( $plan_id );
+			$plan_price = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+			$wps_fname = isset( $_POST['wps_register_form_fname'] ) ? $_POST['wps_register_form_fname'] : '';
+			$wps_lname = isset( $_POST['wps_register_form_lname'] ) ? $_POST['wps_register_form_lname'] : '';
+			$wps_country = isset( $_POST['wps_register_form_country'] ) ? $_POST['wps_register_form_country'] : '';
+			$wps_address1 = isset( $_POST['wps_register_form_address1'] ) ? $_POST['wps_register_form_address1'] : '';
+			$wps_city = isset( $_POST['wps_register_form_city'] ) ? $_POST['wps_register_form_city'] : '';
+			$wps_pincode = isset( $_POST['wps_register_form_pincode'] ) ? $_POST['wps_register_form_pincode'] : '';
+			$wps_phone = isset( $_POST['wps_register_form_phone_no'] ) ? $_POST['wps_register_form_phone_no'] : '';
+			$wps_email = isset( $_POST['wps_register_form_email'] ) ? $_POST['wps_register_form_email'] : '';
+			$wps_state = isset( $_POST['wps_register_form_state'] ) ? $_POST['wps_register_form_state'] : '';
+
+			$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
+
+		global $wp_session;
+
+		$wp_session['plan_price'] = $plan_price;
+		$wp_session['plan_title'] = $plan_title;
+		$wp_session['plan_id']    = $plan_id;
+		// $wp_session['wps_fname'] = $wps_fname;
+		// $wp_session['wps_lname'] = $wps_lname;
+		// $wp_session['wps_country']    = $wps_country;
+		// $wp_session['wps_address1'] = $wps_address1;
+		// $wp_session['wps_city'] = $wps_city;
+		// $wp_session['wps_pincode']    = $wps_pincode;
+		// $wp_session['wps_phone'] = $wps_phone;
+		// $wp_session['wps_email'] = $wps_email;
+		// $wp_session['wps_state']    = $wps_state;
+		WC()->session->set( 'plan_id', $plan_id );
+		WC()->session->set( 'plan_title', $plan_title );
+		WC()->session->set( 'plan_price', $plan_price );
+		WC()->session->set( 'product_id', $wps_membership_default_product );
+		// WC()->session->set( 'form_submit', 'yes' );
+
+		// $cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
+
+		// wp_safe_redirect( wc_get_checkout_url() );
+		// exit();
+		}
+	}
+
+
 	/**
 	 * WooCommerce add cart item data.
 	 *
@@ -4095,6 +4143,49 @@ class Membership_For_Woocommerce_Public {
 
 	}
 
+
+
+
+	/**
+	 * Shortcode for form registration.
+	 * Returns : empty string.
+	 *
+	 * @since 1.0.0
+	 */
+	public function wps_membership_registration_form_shortcode() {
+		$wps_plan = get_posts(
+			array(
+				'post_type' => 'wps_cpt_membership',
+				'post_status' => 'publish',
+				'numberposts' => -1,
+		
+			)
+		);
+		$wps_membership_plans_page_id = get_option( 'wps_membership_default_plans_page', true );
+		$page_url = get_permalink( $wps_membership_plans_page_id );
+		
+		$output='';
+		$output .= '<form method="POST">';
+		$output .= '<div class="div_wrapper">';
+		$output .= '<div><label for="wps_register_form_plan"> ' . __( "Select Plan", "membership-for-woocommerce" ) . ' </lable><select required id="wps_register_form_plan" name="wps_register_form_plan"><option value="">' . __( "Choose Plan", "membership-for-woocommerce" ) . '</option>';
+		foreach( $wps_plan as $key => $value ) {
+
+			$output .= '<option value="'. $value->ID .'">' . $value->post_title . '</option>';
+		}
+		$output .= '</select><a style="margin-left:10px;" href="' . $page_url . '" target="_blank">' . __(" Click here for all plans details ", "membership-for-woocommerce") . '</a></div>';
+		$output .= '<div><label for="wps_register_form_fname">' . __( "First Name", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_fname" name="wps_register_form_fname" required placeholder="First Name"></div>';
+		$output .= '<div><label for="wps_register_form_lname">' . __( "Last Name", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_lname" name="wps_register_form_lname" required placeholder="Last Name"></div>';
+		$output .= '<div><label for="wps_register_form_country">' . __( "Country", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_country" name="wps_register_form_country" required placeholder="Country"></div>';
+		$output .= '<div><label for="wps_register_form_address1">' . __( "Street ", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_address1" name="wps_register_form_address1" required placeholder="Street Address"></div>';
+		$output .= '<div><label for="wps_register_form_city">' . __( "City ", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_city" name="wps_register_form_city" required placeholder="City"></div>';
+		$output .= '<div><label for="wps_register_form_state">' . __( "State ", "membership-for-woocommerce" ) . '</label><input type="text" id="wps_register_form_state" name="wps_register_form_state" required placeholder="State"></div>';
+		$output .= '<div><label for="wps_register_form_pincode">' . __( "Pin Code ", "membership-for-woocommerce" ) . '</label><input type="number" id="wps_register_form_pincode" name="wps_register_form_pincode" required placeholder="Pin Code"></div>';
+		$output .= '<div><label for="wps_register_form_phone_no">' . __( "Phone No ", "membership-for-woocommerce" ) . '</label><input type="number" id="wps_register_form_phone_no" name="wps_register_form_phone_no" required placeholder="Phone Number"></div>';
+		$output .= '<div><label for="wps_register_form_email">' . __( "Email Address ", "membership-for-woocommerce" ) . '</label><input type="email" id="wps_register_form_email" name="wps_register_form_email" required placeholder="Email Address"></div>';
+		$output .= '<div></form>';
+		$output .= '<div><input type="submit" id="wps_regiser_form_submit" class="button" name="wps_regiser_form_submit" value="Register">';
+		return $output;
+	}
 
 
 }
