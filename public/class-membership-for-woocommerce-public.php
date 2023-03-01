@@ -3112,15 +3112,15 @@ class Membership_For_Woocommerce_Public {
 
 		if ( WC()->session->__isset( 'form_submit' ) ) { 
 			$cart_item_data['form_submit'] = 'yes';
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_fname' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_lname' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_country' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_address1' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_city' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_pincode' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_phone' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_email' );
-			$cart_item_data['form_submit'] = WC()->session->get( 'wps_state' );
+			$cart_item_data['wps_fname'] = WC()->session->get( 'wps_fname' );
+			$cart_item_data['wps_lname'] = WC()->session->get( 'wps_lname' );
+			$cart_item_data['wps_country'] = WC()->session->get( 'wps_country' );
+			$cart_item_data['wps_address1'] = WC()->session->get( 'wps_address1' );
+			$cart_item_data['wps_city'] = WC()->session->get( 'wps_city' );
+			$cart_item_data['wps_pincode'] = WC()->session->get( 'wps_pincode' );
+			$cart_item_data['wps_phone'] = WC()->session->get( 'wps_phone' );
+			$cart_item_data['wps_email'] = WC()->session->get( 'wps_email' );
+			$cart_item_data['wps_state'] = WC()->session->get( 'wps_state' );
 			WC()->session->__unset( 'wps_fname', $wps_fname );
 			WC()->session->__unset( 'wps_lname', $wps_lname );
 			WC()->session->__unset( 'wps_country', $wps_country );
@@ -3580,6 +3580,90 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->__unset( 'wps_email', $wps_email );
 			WC()->session->__unset( 'wps_state', $wps_state );
 		}
+	}
+
+	/**
+	 * Function for remove billing fields.
+	 *
+	 * @param array $fields is array of fields.
+	 * @return array
+	 */
+	public function wps_mfw_remove_billing_from_checkout( $fields ) {
+
+		$default_product_id = get_option( 'wps_membership_default_product' );
+		$only_virtual      = false;
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			
+			$_product = $cart_item['data'];
+			if ( $_product->get_id() == $default_product_id ) {
+				if( array_key_exists( 'form_submit', $cart_item ) && 'yes' == $cart_item['form_submit'] ) {
+
+					$only_virtual = true;
+				}
+			}
+		}
+		
+		if ( $only_virtual ) {
+			if( array_key_exists( 'wps_fname', $cart_item ) ) {
+				
+				$fields['billing']['billing_first_name'] = $cart_item['wps_fname'] ;
+				
+			}
+			if( array_key_exists( 'wps_lname', $cart_item )  ) {
+				
+				$fields['billing']['billing_last_name'] = $cart_item['wps_lname'] ;
+				
+			}
+			if( array_key_exists( 'wps_address1', $cart_item ) ) {
+
+				$fields['billing']['billing_address_1'] = $cart_item['wps_address1'] ;
+			
+			}
+			if( array_key_exists( 'wps_city', $cart_item ) ) {
+				
+				$fields['billing']['billing_city'] = $cart_item['wps_city'] ;
+				
+			}
+			
+			if( array_key_exists( 'wps_pincode', $cart_item ) ) {
+
+				$fields['billing']['billing_postcode'] = $cart_item['wps_pincode'] ;
+				
+			}
+			if( array_key_exists( 'wps_country', $cart_item ) ) {
+
+				$fields['billing']['billing_country'] = $cart_item['wps_country'] ;
+				
+			}
+			if( array_key_exists( 'wps_state', $cart_item ) ) {
+
+				$fields['billing']['billing_state'] = $cart_item['wps_state'] ;
+				
+			}
+			
+			if( array_key_exists( 'wps_phone', $cart_item ) ) {
+
+				$fields['billing']['billing_phone'] = $cart_item['wps_phone'] ;
+				
+				
+			}
+			if( array_key_exists( 'wps_email', $cart_item ) ) {
+
+				$fields['billing']['billing_email'] = $cart_item['wps_email'] ;
+				
+				
+			}
+			
+			
+			add_filter( 'woocommerce_enable_order_notes_field', '__return_false' );
+			echo '<style type="text/css">
+			form.checkout .woocommerce-billing-fields {
+				display:none;
+			}
+			</style>';
+		}
+		return $fields;
+
 	}
 
 	/**
