@@ -3029,7 +3029,11 @@ class Membership_For_Woocommerce_Public {
 		wp_die();
 	}
 
-
+	/**
+	 * Function of callback on form submission.
+	 *
+	 * @return void
+	 */
 	public function wps_mfw_registration_form_submission_callback() {
 		if( isset( $_POST['wps_regiser_form_submit'] ) ) {
 			
@@ -3062,11 +3066,20 @@ class Membership_For_Woocommerce_Public {
 		// $wp_session['wps_phone'] = $wps_phone;
 		// $wp_session['wps_email'] = $wps_email;
 		// $wp_session['wps_state']    = $wps_state;
+		WC()->session->set( 'wps_fname', $wps_fname );
+		WC()->session->set( 'wps_lname', $wps_lname );
+		WC()->session->set( 'wps_country', $wps_country );
+		WC()->session->set( 'wps_address1', $wps_address1 );
+		WC()->session->set( 'wps_city', $wps_city );
+		WC()->session->set( 'wps_pincode', $wps_pincode );
+		WC()->session->set( 'wps_phone', $wps_phone );
+		WC()->session->set( 'wps_email', $wps_email );
+		WC()->session->set( 'wps_state', $wps_state );
 		WC()->session->set( 'plan_id', $plan_id );
 		WC()->session->set( 'plan_title', $plan_title );
 		WC()->session->set( 'plan_price', $plan_price );
 		WC()->session->set( 'product_id', $wps_membership_default_product );
-		// WC()->session->set( 'form_submit', 'yes' );
+		WC()->session->set( 'form_submit', 'yes' );
 
 		// $cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 
@@ -3096,6 +3109,29 @@ class Membership_For_Woocommerce_Public {
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 			$cart_item_data['plan_id'] = $wp_session['plan_id']; // In case of subscription.
 		}
+
+		if ( WC()->session->__isset( 'form_submit' ) ) { 
+			$cart_item_data['form_submit'] = 'yes';
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_fname' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_lname' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_country' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_address1' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_city' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_pincode' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_phone' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_email' );
+			$cart_item_data['form_submit'] = WC()->session->get( 'wps_state' );
+			WC()->session->__unset( 'wps_fname', $wps_fname );
+			WC()->session->__unset( 'wps_lname', $wps_lname );
+			WC()->session->__unset( 'wps_country', $wps_country );
+			WC()->session->__unset( 'wps_address1', $wps_address1 );
+			WC()->session->__unset( 'wps_city', $wps_city );
+			WC()->session->__unset( 'wps_pincode', $wps_pincode );
+			WC()->session->__unset( 'wps_phone', $wps_phone );
+			WC()->session->__unset( 'wps_email', $wps_email );
+			WC()->session->__unset( 'wps_state', $wps_state );
+			
+		} 
 
 		/**
 		 * Filter for cart item.
@@ -3511,19 +3547,38 @@ class Membership_For_Woocommerce_Public {
 					WC()->cart->empty_cart();
 					// if no products in cart, add it.
 					WC()->cart->add_to_cart( $product_id );
+					if ( WC()->session->__isset( 'form_submit' ) ) { 
 
-					wp_safe_redirect( wc_get_cart_url() );
+						wp_safe_redirect( wc_get_checkout_url() );
+					} else {
+						wp_safe_redirect( wc_get_cart_url() );
+					}
 				}
 			} else {
 				$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 				WC()->cart->empty_cart();
 				// if no products in cart, add it.
 				WC()->cart->add_to_cart( $product_id );
-
-				wp_safe_redirect( wc_get_cart_url() );
+				if ( WC()->session->__isset( 'form_submit' ) ) { 
+					
+					wp_safe_redirect( wc_get_checkout_url() );
+				} else {
+					wp_safe_redirect( wc_get_cart_url() );
+				}
+				
 
 			}
 			WC()->session->__unset( 'product_id' );
+			WC()->session->__unset( 'form_submit' );
+			WC()->session->__unset( 'wps_fname', $wps_fname );
+			WC()->session->__unset( 'wps_lname', $wps_lname );
+			WC()->session->__unset( 'wps_country', $wps_country );
+			WC()->session->__unset( 'wps_address1', $wps_address1 );
+			WC()->session->__unset( 'wps_city', $wps_city );
+			WC()->session->__unset( 'wps_pincode', $wps_pincode );
+			WC()->session->__unset( 'wps_phone', $wps_phone );
+			WC()->session->__unset( 'wps_email', $wps_email );
+			WC()->session->__unset( 'wps_state', $wps_state );
 		}
 	}
 

@@ -127,7 +127,7 @@ class Membership_For_Woocommerce_Common {
 		$product = wc_get_product( $product_id );
 
 		global $wp_session;
-
+		
 		if ( $product ) {
 			$cart_item_data['plan_price'] = $wp_session['plan_price'];
 			$cart_item_data['plan_title'] = $wp_session['plan_title'];
