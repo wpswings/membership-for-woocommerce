@@ -22,12 +22,12 @@ global $mfw_wps_mfw_obj;
 		if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) { 
             $wps_mfw_sub_tabs_array = $mfw_wps_mfw_obj->wps_mfw_plug_config_sub_tabs();
             
-
-            ?>
-			<?php
+			
 		
 			$active_sub_tab         = isset( $_GET['mfw_reg_sub_nav'] ) ? sanitize_key( $_GET['mfw_reg_sub_nav'] ) : '';// phpcs:ignore
-			
+			if ( ! isset( $_GET['mfw_reg_sub_nav'] ) ) {// phpcs:ignore
+				$active_sub_tab = 'membership-for-woocommerce-add-plans';
+			}
 			?>
 			<h3 class="nav-tab-wrapper">
 			<?php

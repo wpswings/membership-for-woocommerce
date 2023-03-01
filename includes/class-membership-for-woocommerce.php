@@ -556,7 +556,7 @@ class Membership_For_Woocommerce {
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-general.php',
 			);
 			$mfw_default_tabs['membership-for-woocommerce-membership-using-registration-form'] = array(
-				'title'       => esc_html__( 'Membership Using Registration Form', 'membership-for-woocommerce' ),
+				'title'       => esc_html__( 'Membership Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-general',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-membership-using-registration-form.php',
 			);
