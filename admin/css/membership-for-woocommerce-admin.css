@@ -926,15 +926,14 @@ img.wps_mfw_plugin_extra_custom_tab {
 
 .wps-membership__plan--pro-disabled::after {
     background: #772bff;
-    clip-path: polygon(50% 0, 100% 100%, 0 100%);
     content: "";
-    height: 30px;
-    left: -35px;
+    height: 70px;
+    left: -30px;
     padding: 2px 5px;
     position: absolute;
-    top: -4px;
-    transform: rotate( -40deg);
-    width: 80px;
+    top: -38px;
+    transform: rotate( 50deg);
+    width: 70px;
 }
 
 /*Additional CSS to improve Layout*/
@@ -1428,4 +1427,46 @@ div#wp-wps_membership_email_content-wrap {
     line-height: 1.7;
   }
   /* Go pro popup - End */
-  
+    /* 02-March-2023 */
+
+    .wps-form-group__control .mdc-text-field-helper-line {
+        padding: 0;
+        margin-top: 10px;
+    }
+    
+    .wps-form-group__control .mdc-text-field {
+        display: block;
+        max-width: 500px;
+        padding: 0px;
+    }
+    .wps-form-group__control select {
+        width: 100% !important;
+        max-width: 500px;
+    }
+    .wps-mfw-gen-section-form .wps-form-group__control .select2-container {
+        width: 100%;
+        display: block;
+    }
+
+
+    /* 02-March-2023 */
+
+    .wps-membership__plan--pro-disabled .wps-form-group__label {
+        padding: 25px 0px 25px 40px;
+        margin-bottom: 0;
+    }
+    
+    .wps-form-select {
+        max-width: 500px;
+    }
+    .wps-mfw-nav-tab {
+        padding: 10px 30px 10px 30px !important;
+        font-size: 18px !important;
+        font-weight: 400;
+        color: #000;
+        background-color: #fff;
+    }
+    .nav-tab-active.wps-mfw-nav-tab {
+        background-color: #21a3f6;
+        color: #fff;
+    }

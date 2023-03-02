@@ -91,7 +91,13 @@ $results = get_posts(
 ?>
 <div class="wps-form-group__control">
 	<div class="wps-form-select">
-        <select id="wps_membership_content_restriction" name="wps_membership_content_restriction" class="mdl-textfield__input">
+    <label class="mdc-text-field mdc-text-field--outlined">
+                    <span class="mdc-notched-outline mdc-notched-outline--no-label">
+							<span class="mdc-notched-outline__leading"></span>
+							<span class="mdc-notched-outline__notch"></span>
+							<span class="mdc-notched-outline__trailing"></span>
+						</span>
+        <select id="wps_membership_content_restriction" name="wps_membership_content_restriction" class="mdl-textfield__input mdc-text-field__input">
             <option value=""><?php esc_html_e( 'Select....', 'membership-for-woocommerce' ); ?></option>
             <?php 
 
@@ -104,6 +110,7 @@ $results = get_posts(
 
         ?>
         </select>
+    </label>
     </div>
 </div>
 </div>

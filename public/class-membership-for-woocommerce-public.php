@@ -4305,7 +4305,7 @@ class Membership_For_Woocommerce_Public {
 		
 		$output='';
 		$output .= '<form method="POST">';
-		$output .= '<div class="div_wrapper">';
+		$output .= '<div class="div_wrapper wps-register-form-wrapper">';
 		$output .= '<div><label for="wps_register_form_plan"> ' . __( "Select Plan", "membership-for-woocommerce" ) . ' </lable><select required id="wps_register_form_plan" name="wps_register_form_plan"><option value="">' . __( "Choose Plan", "membership-for-woocommerce" ) . '</option>';
 		foreach( $wps_plan as $key => $value ) {
 

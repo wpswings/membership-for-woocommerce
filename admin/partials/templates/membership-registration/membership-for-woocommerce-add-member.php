@@ -35,7 +35,8 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<div class="wps-form-select">
-					<select name="wps_member_user" id="wps_member_user_reg" class="mdl-textfield__input">
+					
+					<select name="wps_member_user" id="wps_member_user_reg" class="mdl-textfield__input mdc-text-field__input">
 						<option value=""><?php esc_html_e( 'Select User', 'membership-for-woocommerce' ) ?></option>
 						<?php
 						$all_users = get_users(
@@ -77,19 +78,25 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<div class="wps-form-select">
-					<select id="wps_membership_add_member" name="members_plan_assign" class="mdl-textfield__input">
+					<label class="mdc-text-field mdc-text-field--outlined">
+					<span class="mdc-notched-outline mdc-notched-outline--no-label">
+							<span class="mdc-notched-outline__leading"></span>
+							<span class="mdc-notched-outline__notch"></span>
+							<span class="mdc-notched-outline__trailing"></span>
+						</span>
+			
+					<select id="wps_membership_add_member" name="members_plan_assign" class="mdl-textfield__input mdc-text-field__input">
 						<option value=""><?php esc_html_e( 'Select', 'membership-for-woocommerce' ); ?></option>
 						<?php 
 
 					foreach( $results as $key => $value  ){ ?>
-
 						<option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
-
 					<?php
 					}
 
 					?>
 					</select>
+					</label>
 				</div>
 			</div>
 		</div>
@@ -99,12 +106,12 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<label class="mdc-text-field mdc-text-field--outlined">
-					<span class="mdc-notched-outline">
+					<span class="mdc-notched-outline mdc-notched-outline--upgraded">
 						<span class="mdc-notched-outline__leading"></span>
-						<span class="mdc-notched-outline__notch">
+						<span class="mdc-notched-outline__notch" style="">
 						<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Full Name', 'membership-for-woocommerce' ) ?></span>
-						<span class="mdc-notched-outline__trailing"></span>
 						</span>
+						<span class="mdc-notched-outline__trailing"></span>
 					</span>
 					<input type="text" id="wps_add_member_name" name="billing_first_name" class="mdc-text-field__input" placeholder="Enter Full Name" >
 				</label>
@@ -117,12 +124,12 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<label class="mdc-text-field mdc-text-field--outlined">
-					<span class="mdc-notched-outline">
+					<span class="mdc-notched-outline mdc-notched-outline--upgraded">
 						<span class="mdc-notched-outline__leading"></span>
-						<span class="mdc-notched-outline__notch">
-						<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Email', 'membership-for-woocommerce' ) ?></span>
-						<span class="mdc-notched-outline__trailing"></span>
+						<span class="mdc-notched-outline__notch" style="">
+							<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Email', 'membership-for-woocommerce' ) ?></span>
 						</span>
+						<span class="mdc-notched-outline__trailing"></span>
 					</span>
 					<input type="email" id="wps_add_member_name" name="billing_email" class="mdc-text-field__input" placeholder="Enter Email" >
 				</label>
@@ -134,12 +141,11 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<label class="mdc-text-field mdc-text-field--outlined">
-					<span class="mdc-notched-outline">
-						<span class="mdc-notched-outline__leading"></span>
-						<span class="mdc-notched-outline__notch">
-						<span class="mdc-notched-outline__trailing"></span>
-						</span>
-					</span>
+				<span class="mdc-notched-outline mdc-notched-outline--no-label">
+					<span class="mdc-notched-outline__leading"></span>
+					<span class="mdc-notched-outline__notch"></span>
+					<span class="mdc-notched-outline__trailing"></span>
+				</span>
 					<input type="number" id="wps_add_member_phone" name="billing_phone" class="mdc-text-field__input" >
 				</label>
 			</div>
@@ -150,12 +156,12 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<label class="mdc-text-field mdc-text-field--outlined">
-					<span class="mdc-notched-outline">
+					<span class="mdc-notched-outline mdc-notched-outline--upgraded">
 						<span class="mdc-notched-outline__leading"></span>
-						<span class="mdc-notched-outline__notch">
+						<span class="mdc-notched-outline__notch" style="">
 						<span class="mdc-floating-label" id="my-label-id" style=""><?php esc_html_e( 'Enter Address', 'membership-for-woocommerce' ) ?></span>
-						<span class="mdc-notched-outline__trailing"></span>
 						</span>
+						<span class="mdc-notched-outline__trailing"></span>
 					</span>
 					<input type="text" id="wps_add_member_address" name="billing_address_1" class="mdc-text-field__input" placeholder="Enter Full Name">
 				</label>

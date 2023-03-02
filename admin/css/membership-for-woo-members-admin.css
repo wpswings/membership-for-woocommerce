@@ -475,3 +475,5 @@ select#wps-wpg-gen-table_status .complete, .wps-member-status-complete {
   select#wps-wpg-gen-table_status .cancelled, .wps-member-status-cancelled {
        color: #f32121 !important;
   }
+
+
