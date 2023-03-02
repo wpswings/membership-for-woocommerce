@@ -3964,8 +3964,10 @@ class Membership_For_Woocommerce_Public {
 			if ( 'yes' == $plan['wps_membership_subscription'] ) {
 				update_post_meta( $subscription_i_d, 'wps_next_payment_date', $expiry_date );
 			}
+			return $expiry_date;
+		} else {
+			return $wps_next_payment_date;
 		}
-		return $expiry_date;
 	}
 
 	/**
@@ -4004,8 +4006,10 @@ class Membership_For_Woocommerce_Public {
 						update_post_meta( $subscription_i_d, 'wps_susbcription_end', '' );
 				}
 			}
+			return $expiry_date;
+		} else {
+			return $wps_susbcription_end;
 		}
-		return $expiry_date;
 	}
 
 	/**

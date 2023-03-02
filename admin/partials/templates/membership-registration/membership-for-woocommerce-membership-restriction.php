@@ -16,7 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $mfw_plugins = get_option('active_plugins');
-if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
+
+if ( ! in_array( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php',$mfw_plugins  ) ) {
 
 	wps_mfw_upgrade_pro_popup();
 }
