@@ -47,7 +47,8 @@ jQuery(document).ready(function($){
 				plan_access_type: plan_access_type,
 				plan_title: plan_title,
                 plan_duration : plan_duration,
-                plan_duration_type : plan_duration_type
+                plan_duration_type : plan_duration_type,
+                nonce : admin_registration_ajax_obj.nonce
 			},
 
 			success: function (response) {

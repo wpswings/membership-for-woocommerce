@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $mfw_wps_mfw_obj;
 
-$mfw_add_plans_settings = 
+$mfw_add_plans_settings =
 /**
  * Filter is for returning something.
  *
@@ -30,7 +30,7 @@ apply_filters( 'mfw_add_plans_settings_array', array() );
 	<div class="mfw-secion-wrap">
 		<?php
 		$mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_add_plans_settings );
-		// wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
+
 		?>
 	</div>
 <!-- </form> -->

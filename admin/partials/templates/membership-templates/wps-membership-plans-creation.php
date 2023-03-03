@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 global $post;
 
-$mfw_plugins = get_option('active_plugins');
+$mfw_plugins = get_option( 'active_plugins' );
 if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
 
 	wps_mfw_upgrade_pro_popup();
@@ -33,7 +33,7 @@ if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocom
  *
  * @return void
  */
-function wps_mfw_upgrade_pro_popup(){
+function wps_mfw_upgrade_pro_popup() {
 	?>
 
 		<!-- Go pro popup wrap start. -->
@@ -56,7 +56,7 @@ function wps_mfw_upgrade_pro_popup(){
 			<!-- Notice. -->
 			<div class="wps_ubo_lite_go_pro_popup_content">
 				<p class="wps_ubo_lite_go_pro_popup_text">
-					<?php esc_html_e('A straightforward membership plugin that functions seamlessly on your eCommerce business will help you build your community of members with premium features which gives two Free Templates of Comparision and Simple, Create & sort plans, get revenue & detailed reports, give discounts, override access to posts, comments on your protected posts and many more.', 'membership-for-woocommerce' ); ?>
+					<?php esc_html_e( 'A straightforward membership plugin that functions seamlessly on your eCommerce business will help you build your community of members with premium features which gives two Free Templates of Comparision and Simple, Create & sort plans, get revenue & detailed reports, give discounts, override access to posts, comments on your protected posts and many more.', 'membership-for-woocommerce' ); ?>
 				</p>
 			</div>
 
@@ -70,7 +70,7 @@ function wps_mfw_upgrade_pro_popup(){
 	<!-- Go pro popup wrap end. -->
 
 
-	<?php 
+	<?php
 }
 
 
@@ -176,17 +176,19 @@ function wps_mfw_upgrade_pro_popup(){
 							'editor_height'    => 200,
 							'editor_class'       => 'wps_etmfw_new_woo_ver_style_textarea',
 						);
-		
+
 						wp_editor( $wps_membership_plan_info, 'wps_membership_plan_info', $settings );
 					}
-				} else {?>
+				} else {
+					?>
 					<select multiple="multiple">
 						<option></option>
 						<option></option>
 						<option></option>
 					</select>
 					
-			<?php	}
+					<?php
+				}
 
 				?>
 
@@ -334,7 +336,7 @@ function wps_mfw_upgrade_pro_popup(){
 			<?php esc_html_e( 'Offer Section', 'membership-for-woocommerce' ); ?>
 		</h2>
 			<h3>
-				<?php  esc_html_e( 'In Offer Section whatever the products, categories, tags you will choose, Members will get DISCOUNT on these products.', 'membership-for-woocommerce' ); ?>
+				<?php esc_html_e( 'In Offer Section whatever the products, categories, tags you will choose, Members will get DISCOUNT on these products.', 'membership-for-woocommerce' ); ?>
 			</h3>
 		<table>
 
@@ -537,7 +539,7 @@ function wps_mfw_upgrade_pro_popup(){
 			<?php esc_html_e( 'Included Section', 'membership-for-woocommerce' ); ?>
 		</h2>
 		<h3>
-			<?php  esc_html_e( 'In Inlucde Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
+			<?php esc_html_e( 'In Inlucde Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
 		</h3>
 		<table>
 
@@ -932,7 +934,7 @@ function wps_mfw_upgrade_pro_popup(){
 				<?php esc_html_e( 'Membership Features Section', 'membership-for-woocommerce' ); ?>
 			</h2>
 			<h3>
-				<?php esc_html_e( 'According to this discount setting , Members will get discount on cart whatever the products they purchase no matter.', 'membership-for-woocommerce' )  ?>
+				<?php esc_html_e( 'According to this discount setting , Members will get discount on cart whatever the products they purchase no matter.', 'membership-for-woocommerce' ); ?>
 			</h3>
 			<table>
 				<!-- Discount section start -->
@@ -1022,7 +1024,7 @@ function wps_mfw_upgrade_pro_popup(){
 
 						<?php
 						$wps_membership_plan_hide_products = '';
-						
+
 						$wps_mfw_disable = 'disabled';
 						if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
 							$check_licence = check_membership_pro_plugin_is_active();
@@ -1035,7 +1037,7 @@ function wps_mfw_upgrade_pro_popup(){
 						?>
 
 
-						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable );?> class="wps_membership_plan_hide_products" name="wps_membership_plan_hide_products" value="yes" <?php checked( 'yes', $wps_membership_plan_hide_products ); ?> >
+						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable ); ?> class="wps_membership_plan_hide_products" name="wps_membership_plan_hide_products" value="yes" <?php checked( 'yes', $wps_membership_plan_hide_products ); ?> >
 					</td>
 				</tr>
 				<!-- Hide products section end. -->
@@ -1064,7 +1066,7 @@ function wps_mfw_upgrade_pro_popup(){
 
 						?>
 
-						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable );?>  class="wps_membership_show_notice" name="wps_membership_show_notice" value="yes" <?php checked( 'yes', $wps_membership_show_notice ); ?> >
+						<input type="checkbox" <?php echo esc_attr( $wps_mfw_disable ); ?>  class="wps_membership_show_notice" name="wps_membership_show_notice" value="yes" <?php checked( 'yes', $wps_membership_show_notice ); ?> >
 
 						<?php
 						$wps_membership_notice_message = $settings_fields['wps_membership_notice_message'];

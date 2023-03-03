@@ -491,7 +491,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 	}
 
-	
+
 
 	/**
 	 * Check if any plan exist or not.
@@ -1280,7 +1280,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	}
 
 
-	
+
 
 
 
