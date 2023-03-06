@@ -1756,7 +1756,6 @@ class Membership_For_Woocommerce_Admin {
 			);
 
 			$all_posts = get_posts( $args );
-			
 
 			if ( ! empty( $all_posts ) ) {
 
@@ -1782,7 +1781,7 @@ class Membership_For_Woocommerce_Admin {
 						'Expiry Date',
 					)
 				);
-				
+
 				//phpcs:disable
 				foreach ( $all_posts as $post_datas ) {
 					setup_postdata( $post_datas );
@@ -3773,7 +3772,7 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Function for registration.
 	 *
-	 * @return array
+	 * @return void
 	 */
 	public function wps_membership_search_products_for_membership_registration() {
 
@@ -3866,11 +3865,12 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		if ( isset( $_POST['wps_membership_restriction_button'] ) ) {
-
+			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
+			wp_verify_nonce( $value_check, 'wps-form-nonce' );
 			foreach ( $results as $key => $value ) {
-				$wps_membership_plan_target_ids = isset( $_POST[ 'wps_membership_plan_target_ids_' . $value ] ) ? $_POST[ 'wps_membership_plan_target_ids_' . $value ] : array();
-				$wps_membership_plan_target_categories = isset( $_POST[ 'wps_membership_plan_target_cats_' . $value ] ) ? $_POST[ 'wps_membership_plan_target_cats_' . $value ] : array();
-				$wps_membership_plan_target_tags = isset( $_POST[ 'wps_membership_plan_target_tags_' . $value ] ) ? $_POST[ 'wps_membership_plan_target_tags_' . $value ] : array();
+				$wps_membership_plan_target_ids = isset( $_POST[ 'wps_membership_plan_target_ids_' . $value ] ) ? map_deep( wp_unslash( $_POST[ 'wps_membership_plan_target_ids_' . $value ] ), 'sanitize_text_field' ) : array();
+				$wps_membership_plan_target_categories = isset( $_POST[ 'wps_membership_plan_target_cats_' . $value ] ) ? map_deep( wp_unslash( $_POST[ 'wps_membership_plan_target_cats_' . $value ] ), 'sanitize_text_field' ) : array();
+				$wps_membership_plan_target_tags = isset( $_POST[ 'wps_membership_plan_target_tags_' . $value ] ) ? map_deep( wp_unslash( $_POST[ 'wps_membership_plan_target_tags_' . $value ] ), 'sanitize_text_field' ) : array();
 				if ( is_array( $wps_membership_plan_target_ids ) && ! empty( $wps_membership_plan_target_ids ) ) {
 
 					update_post_meta( $value, 'wps_membership_plan_target_ids', $wps_membership_plan_target_ids );
@@ -3887,7 +3887,8 @@ class Membership_For_Woocommerce_Admin {
 		}
 
 		if ( isset( $_POST['wps_add_member_button'] ) ) {
-
+			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
+			wp_verify_nonce( $value_check, 'wps-form-nonce' );
 			$post_id = wp_insert_post(
 				array(
 					'post_type'    => 'wps_cpt_members',
@@ -3959,7 +3960,6 @@ class Membership_For_Woocommerce_Admin {
 			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
 
 			// If manually completing membership then set its expiry date.
-			
 
 				// Getting current activation date.
 				$current_date = gmdate( 'Y-m-d' );

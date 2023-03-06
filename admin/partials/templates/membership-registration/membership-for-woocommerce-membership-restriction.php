@@ -220,7 +220,8 @@ $results = get_posts(
 			}
 
 			?>
-			
+			<?php $nonce = wp_create_nonce( 'wps-form-nonce' ); ?>
+			<input type="hidden" name="wps_nonce_name" value="<?php echo esc_attr( $nonce ); ?>" /> 
 			<div class="wps-form-group">
 				<div class="wps-form-group__control">
 					<button id="wps_membership_restriction_button" name="wps_membership_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
