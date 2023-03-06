@@ -386,7 +386,7 @@ td.membership_view.column-membership_view,
     color: #0071a1;
 }
 
-#import_all_membership, #import_members {
+#import_all_membership, #import_members, #download_sample_csv_to_import {
     margin-left: 10px;
 }
 
@@ -449,6 +449,7 @@ input#import_members,
 input#export_all_membership:hover,
 input#import_all_membership:hover,
 input#import_members:hover,
+input#download_sample_csv_to_import:hover,
 .wps_membership_plans_creation_setting input[type="button"]:hover,
 .wps_membership_gateway_div .button:hover,
 .wps_membership_gateway_div a:hover {
@@ -470,11 +471,12 @@ input#import_members:hover,
         flex-wrap: wrap;
     }
 
-    #import_all_membership, #import_members {
+    #import_all_membership, #import_members, #download_sample_csv_to_import {
         margin-left: 0px;
     }
+    
 }
-input#import_all_membership, #import_members {
+input#import_all_membership, #import_members, #download_sample_csv_to_import {
     order: 4;
 }
 
