@@ -2433,10 +2433,12 @@ class Membership_For_Woocommerce_Public {
 			$user = get_userdata( $user_id );
 			$user_name = $user->data->display_name;
 			$order_id = get_post_meta( $member_id, 'member_order_id', true );
+			if( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {}
 			$customer_email = WC()->mailer()->emails['membership_creation_email'];
 			if ( ! empty( $customer_email ) ) {
 				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
+			
 		}
 	}
 
