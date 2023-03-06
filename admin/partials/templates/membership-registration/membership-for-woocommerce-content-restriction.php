@@ -177,7 +177,8 @@ foreach ( $results as $key => $value ) {
 }
 ?>
 
-					  
+<?php $nonce = wp_create_nonce( 'wps-form-nonce' ); ?>
+		<input type="hidden" name="wps_nonce_name" value="<?php echo esc_attr( $nonce ); ?>" />
 
 			<div class="wps-form-group">
 				<div class="wps-form-group__control">
