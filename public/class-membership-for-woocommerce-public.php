@@ -2064,9 +2064,11 @@ class Membership_For_Woocommerce_Public {
 					$membership_status = get_post_meta( $membership_id, 'member_status', true );
 					if ( ! empty( $membership_status ) && 'complete' == $membership_status ) {
 						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						if( key_exists( 'wps_memebership_plan_free_shipping', $active_plan ) ) {
 
-						if ( 'yes' == $active_plan['wps_memebership_plan_free_shipping'] ) {
-							$is_allowed_membership_shipping = true;
+							if ( 'yes' == $active_plan['wps_memebership_plan_free_shipping'] ) {
+								$is_allowed_membership_shipping = true;
+							}
 						}
 					}
 				}
@@ -2433,10 +2435,12 @@ class Membership_For_Woocommerce_Public {
 			$user = get_userdata( $user_id );
 			$user_name = $user->data->display_name;
 			$order_id = get_post_meta( $member_id, 'member_order_id', true );
-			if( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {}
-			$customer_email = WC()->mailer()->emails['membership_creation_email'];
-			if ( ! empty( $customer_email ) ) {
-				$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
+			if( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+
+				$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				if ( ! empty( $customer_email ) ) {
+					$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
+				}
 			}
 			
 		}
@@ -3112,15 +3116,15 @@ class Membership_For_Woocommerce_Public {
 			$cart_item_data['wps_phone'] = WC()->session->get( 'wps_phone' );
 			$cart_item_data['wps_email'] = WC()->session->get( 'wps_email' );
 			$cart_item_data['wps_state'] = WC()->session->get( 'wps_state' );
-			WC()->session->__unset( 'wps_fname', $wps_fname );
-			WC()->session->__unset( 'wps_lname', $wps_lname );
-			WC()->session->__unset( 'wps_country', $wps_country );
-			WC()->session->__unset( 'wps_address1', $wps_address1 );
-			WC()->session->__unset( 'wps_city', $wps_city );
-			WC()->session->__unset( 'wps_pincode', $wps_pincode );
-			WC()->session->__unset( 'wps_phone', $wps_phone );
-			WC()->session->__unset( 'wps_email', $wps_email );
-			WC()->session->__unset( 'wps_state', $wps_state );
+			WC()->session->__unset( 'wps_fname' );
+			WC()->session->__unset( 'wps_lname' );
+			WC()->session->__unset( 'wps_country' );
+			WC()->session->__unset( 'wps_address1' );
+			WC()->session->__unset( 'wps_city' );
+			WC()->session->__unset( 'wps_pincode' );
+			WC()->session->__unset( 'wps_phone' );
+			WC()->session->__unset( 'wps_email' );
+			WC()->session->__unset( 'wps_state' );
 
 		}
 
@@ -3553,15 +3557,15 @@ class Membership_For_Woocommerce_Public {
 			}
 			WC()->session->__unset( 'product_id' );
 			WC()->session->__unset( 'form_submit' );
-			WC()->session->__unset( 'wps_fname', $wps_fname );
-			WC()->session->__unset( 'wps_lname', $wps_lname );
-			WC()->session->__unset( 'wps_country', $wps_country );
-			WC()->session->__unset( 'wps_address1', $wps_address1 );
-			WC()->session->__unset( 'wps_city', $wps_city );
-			WC()->session->__unset( 'wps_pincode', $wps_pincode );
-			WC()->session->__unset( 'wps_phone', $wps_phone );
-			WC()->session->__unset( 'wps_email', $wps_email );
-			WC()->session->__unset( 'wps_state', $wps_state );
+			WC()->session->__unset( 'wps_fname' );
+			WC()->session->__unset( 'wps_lname' );
+			WC()->session->__unset( 'wps_country' );
+			WC()->session->__unset( 'wps_address1' );
+			WC()->session->__unset( 'wps_city' );
+			WC()->session->__unset( 'wps_pincode' );
+			WC()->session->__unset( 'wps_phone' );
+			WC()->session->__unset( 'wps_email' );
+			WC()->session->__unset( 'wps_state' );
 		}
 	}
 

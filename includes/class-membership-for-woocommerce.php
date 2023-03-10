@@ -925,7 +925,7 @@ class Membership_For_Woocommerce {
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
 									 name="wps_mfw_reg_access_type" id="wps_mfw_reg_access_type" style="width:200px"
 									>
-									<option value="lifetime"><?php echo esc_html_e( 'Select Access Type', 'membership-for-woocommerce' ); ?></option>
+			
 									<option value="lifetime"><?php echo esc_html_e( 'Lifetime', 'membership-for-woocommerce' ); ?></option>
 									<option value="limited"><?php echo esc_html_e( 'Limited', 'membership-for-woocommerce' ); ?></option>
 									</select>
