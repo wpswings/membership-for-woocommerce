@@ -3748,7 +3748,7 @@ class Membership_For_Woocommerce_Admin {
 		$plan_access_type = isset( $_POST['plan_access_type'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_access_type'] ) ) : '';
 		$plan_title = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
 		$plan_duration_type = isset( $_POST['plan_duration_type'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_duration_type'] ) ) : '';
-		$plan_duration = isset( $_POST['plan_duration_type'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_duration_type'] ) ) : '';
+		$plan_duration = isset( $_POST['plan_duration'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_duration'] ) ) : '';
 
 		if ( ! empty( $plan_price ) && ! empty( $plan_access_type ) && ! empty( $plan_title ) ) {
 			$plan_id = wp_insert_post(

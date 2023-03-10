@@ -15,50 +15,57 @@ jQuery(document).ready(function($){
 
 
     jQuery(document).on('click', '#wps_create_membership_plan_button', function(){
-        // alert();
+        var wps_plan_check = true;
         var plan_title = $('#wps_mfw_reg_plan_name').val();
         var plan_price = $('#wps_mfw_reg_plan_price').val();
         var plan_access_type = $('#wps_mfw_reg_access_type').val();
         var plan_duration = $('#wps_mfw_reg_expiry_num').val();
         var plan_duration_type = $('#wps_mfw_reg_expiry_time').val();
+
         if( plan_title == '' ){
+            wps_plan_check = false;
             alert('Please Enter plan name !');
         }
         if( plan_price <= 0 ){
+            wps_plan_check = false;
             alert('Please Enter valid price !');
         }
         if( plan_access_type == '' ){
+            wps_plan_check = false;
             alert('Please choose access type !');
         }
         if( plan_access_type == 'limited' ){
             if( plan_duration <= 0 ) {
+                wps_plan_check = false;
                 alert('Please Enter valid duration !')
             }
            
         }
 
+        if( wps_plan_check ) {
 
-        $.ajax({
-			url: ajaxurl,
-			type: "POST",
-			data: {
-				action: "wps_membership_create_plan_reg",
-				plan_price: plan_price,
-				plan_access_type: plan_access_type,
-				plan_title: plan_title,
-                plan_duration : plan_duration,
-                plan_duration_type : plan_duration_type,
-                nonce : admin_registration_ajax_obj.nonce
-			},
-
-			success: function (response) {
-                // jQuery('#wps-form-wps_create_membership_plan_button').parent().append('<h3 style="color:red">Plan is Created Successfully !<h3>');
-                setTimeout(function(){
-                    window.location.reload(1);
-                 }, 5000);
-				
-			}
-        });
+            $.ajax({
+                url: ajaxurl,
+                type: "POST",
+                data: {
+                    action: "wps_membership_create_plan_reg",
+                    plan_price: plan_price,
+                    plan_access_type: plan_access_type,
+                    plan_title: plan_title,
+                    plan_duration : plan_duration,
+                    plan_duration_type : plan_duration_type,
+                    nonce : admin_registration_ajax_obj.nonce
+                },
+    
+                success: function (response) {
+                    
+                    setTimeout(function(){
+                        window.location.reload(1);
+                     }, 5000);
+                    
+                }
+            });
+        }
         
 
     });
