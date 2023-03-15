@@ -153,7 +153,7 @@ $results = get_posts(
 		</div>
 		<div class="wps-form-group wps-mfw-text">
 			<div class="wps-form-group__label">
-				<label for="wps_add_member_address"  class="wps-form-label"><?php esc_html_e( 'Address', 'membeship-for-woocommerce' ); ?></label>
+				<label for="wps_add_member_address"  class="wps-form-label"><?php esc_html_e( 'Address', 'membership-for-woocommerce' ); ?></label>
 			</div>
 			<div class="wps-form-group__control">
 				<label class="mdc-text-field mdc-text-field--outlined">

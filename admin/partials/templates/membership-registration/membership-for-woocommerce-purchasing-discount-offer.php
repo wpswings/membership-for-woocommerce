@@ -121,7 +121,7 @@ $results = get_posts(
 			<div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID ); ?>">
 				<div class="wps-form-group wps-membership__plan--pro-disabled">
 					<div class="wps-form-group__label">
-						<label class="wps-form-label"><?php esc_html_e( 'Select Products to offer a discount for ' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
+						<label class="wps-form-label"><?php esc_html_e( 'Select Products to offer a discount for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
 					<div class="wps-form-group__control">
 						<div class="wps-form-select">
@@ -148,7 +148,7 @@ $results = get_posts(
 				</div>
 				<div class="wps-form-group wps-membership__plan--pro-disabled">
 					<div class="wps-form-group__label">
-						<label class="wps-form-label"><?php esc_html_e( 'Select Product Categories to offer a discount for  ' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
+						<label class="wps-form-label"><?php esc_html_e( 'Select Product Categories to offer a discount for  ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
 					<div class="wps-form-group__control">
 						<div class="wps-form-select">
@@ -175,7 +175,7 @@ $results = get_posts(
 				</div>
 				<div class="wps-form-group wps-membership__plan--pro-disabled">
 					<div class="wps-form-group__label">
-						<label class="wps-form-label"><?php esc_html_e( 'Select Prodcucts tags to offer a discount for ' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
+						<label class="wps-form-label"><?php esc_html_e( 'Select Prodcucts tags to offer a discount for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
 					<div class="wps-form-group__control">
 						<div class="wps-form-select">
@@ -203,7 +203,7 @@ $results = get_posts(
 
 				<div class="wps-form-group wps-membership__plan--pro-disabled">
 					<div class="wps-form-group__label">
-					<label  class="wps-form-label"><?php esc_html_e( 'Discount type ' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
+					<label  class="wps-form-label"><?php esc_html_e( 'Discount type ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
 					<div class="wps-form-group__control">
 						<div class="wps-form-select">
@@ -233,7 +233,7 @@ $results = get_posts(
 				</div>
 				<div class="wps-form-group wps-membership__plan--pro-disabled ">
 					<div class="wps-form-group__label">
-						<label  class="wps-form-label"><?php esc_html_e( 'Enter Discount ' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
+						<label  class="wps-form-label"><?php esc_html_e( 'Enter Discount ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
 					<input type="number" id="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" class="mdl-textfield__input" name="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" min="0" placeholder="Enter discount" value="<?php echo esc_attr( get_post_meta( $value->ID, 'wps_memebership_product_discount_price', true ) ); ?>">
 				</div>

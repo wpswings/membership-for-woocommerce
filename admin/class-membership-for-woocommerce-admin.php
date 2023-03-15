@@ -4027,8 +4027,11 @@ class Membership_For_Woocommerce_Admin {
 				}
 
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
+				$user_name = '';
+				if( isset( $user->data->display_name  ) ) {
 
-				$user_name = $user->data->display_name;
+					$user_name = $user->data->display_name;
+				}
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				if ( ! empty( $customer_email ) ) {
 					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
