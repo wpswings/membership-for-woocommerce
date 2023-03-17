@@ -4032,7 +4032,11 @@ class Membership_For_Woocommerce_Admin {
 
 					$user_name = $user->data->display_name;
 				}
-				$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				$customer_email = '';
+				if( key_exists( 'membership_creation_email', WC()->mailer()->emails  ) ) {
+
+					$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				}
 				if ( ! empty( $customer_email ) ) {
 					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 				}
