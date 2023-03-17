@@ -773,3 +773,4 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 }
 
 
+

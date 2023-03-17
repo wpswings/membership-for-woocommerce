@@ -363,3 +363,4 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * New:  Compatible with the latest WooCommerce (7.5.0) & WordPress (6.1.1)
 
 
+
