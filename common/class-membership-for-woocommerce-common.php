@@ -698,3 +698,4 @@ class Membership_For_Woocommerce_Common {
 	}
 
 }
+
