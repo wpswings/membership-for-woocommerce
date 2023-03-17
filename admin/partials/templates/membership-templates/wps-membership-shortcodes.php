@@ -105,13 +105,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 					</div>
 
+
 				</td>
 
 			</tr>
+			
 			<!-- Membership Plan Shortcodes End. -->
 			
 		</tbody>
 		
+	</table>
+	<table class="form-table wps_membership_plan_shortcodes">
+		<tbody>
+		<tr valign="top">
+				<th scope="row" class="titledesc">
+					<label><?php esc_html_e( 'Membership Registration Shortcodes', 'membership-for-woocommerce' ); ?></label>
+				</th>
+
+				<td class="forminp forminp-text">
+					<div class="wps_membership_shortcode_div">
+						<div class="wps_membership_shortcode">
+							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Membership Registration Form &rarr;', 'membership-for-woocommerce' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_registration_form]  ' ); ?></span>
+							<?php
+							$shortcode_desc = esc_html__( 'This shortcode returns the Membership Registration Form. Use it as [wps_membership_registration_form]', 'membership-for-woocommerce' );
+								$instance->tool_tip( $shortcode_desc );
+							?>
+						</div>
+					</div>
+				<td>
+			</tr>
+		</tbody>
 	</table>
 	
 	<?php

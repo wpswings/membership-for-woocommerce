@@ -41,6 +41,7 @@ select#wps_membership_plan_offer_price_type_id:focus,
 #poststuff .handlediv:focus,
 td.membership_view.column-membership_view a:focus,
 .import_csv_field_wrapper>input:focus,
+.import_member_csv_field_wrapper>input:focus,
 #wps_membership_manage_content:focus,
 ul.select2-selection__rendered:focus,
 button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-close:focus,
@@ -385,7 +386,7 @@ td.membership_view.column-membership_view,
     color: #0071a1;
 }
 
-#import_all_membership {
+#import_all_membership, #import_members, #download_sample_csv_to_import {
     margin-left: 10px;
 }
 
@@ -433,6 +434,7 @@ div #TB_ajaxWindowTitle {
 
 input#export_all_membership,
 input#import_all_membership,
+input#import_members,
 .wps_membership_plans_creation_setting input[type="button"],
 .wps_membership_gateway_div .button,
 .wps_membership_gateway_div a {
@@ -446,6 +448,8 @@ input#import_all_membership,
 
 input#export_all_membership:hover,
 input#import_all_membership:hover,
+input#import_members:hover,
+input#download_sample_csv_to_import:hover,
 .wps_membership_plans_creation_setting input[type="button"]:hover,
 .wps_membership_gateway_div .button:hover,
 .wps_membership_gateway_div a:hover {
@@ -467,11 +471,12 @@ input#import_all_membership:hover,
         flex-wrap: wrap;
     }
 
-    #import_all_membership {
+    #import_all_membership, #import_members, #download_sample_csv_to_import {
         margin-left: 0px;
     }
+    
 }
-input#import_all_membership {
+input#import_all_membership, #import_members, #download_sample_csv_to_import {
     order: 4;
 }
 
@@ -506,7 +511,7 @@ button.ui-button.ui-corner-all.ui-widget.ui-button-icon-only.ui-dialog-titlebar-
     color: #fff;
 }
 
-.import_csv_field_wrapper {
+.import_csv_field_wrapper, .import_csv_field_wrapper {
     align-items: center;
     display: flex;
     justify-content: space-evenly;
@@ -517,7 +522,7 @@ input#upload_csv_file:hover {
     color: #1a3365;
 }
 
-.import_csv_field_wrapper>input {
+.import_csv_field_wrapper>input, .import_csv_field_wrapper>input {
     background-color: inherit;
     border: 2px solid #fff;
     color: #ffffff;
@@ -525,7 +530,7 @@ input#upload_csv_file:hover {
     padding: 5px;
 }
 
-.import_csv_field_wrapper>input:first-child {
+.import_csv_field_wrapper>input:first-child, .import_csv_field_wrapper>input:first-child {
     background-color: inherit;
     border: none;
     color: #ffffff;
@@ -923,15 +928,14 @@ img.wps_mfw_plugin_extra_custom_tab {
 
 .wps-membership__plan--pro-disabled::after {
     background: #772bff;
-    clip-path: polygon(50% 0, 100% 100%, 0 100%);
     content: "";
-    height: 30px;
-    left: -35px;
+    height: 70px;
+    left: -30px;
     padding: 2px 5px;
     position: absolute;
-    top: -4px;
-    transform: rotate( -40deg);
-    width: 80px;
+    top: -38px;
+    transform: rotate( 50deg);
+    width: 70px;
 }
 
 /*Additional CSS to improve Layout*/
@@ -1425,4 +1429,46 @@ div#wp-wps_membership_email_content-wrap {
     line-height: 1.7;
   }
   /* Go pro popup - End */
-  
+    /* 02-March-2023 */
+
+    .wps-form-group__control .mdc-text-field-helper-line {
+        padding: 0;
+        margin-top: 10px;
+    }
+    
+    .wps-form-group__control .mdc-text-field {
+        display: block;
+        max-width: 500px;
+        padding: 0px;
+    }
+    .wps-form-group__control select {
+        width: 100% !important;
+        max-width: 500px;
+    }
+    .wps-mfw-gen-section-form .wps-form-group__control .select2-container {
+        width: 100%;
+        display: block;
+    }
+
+
+    /* 02-March-2023 */
+
+    .wps-membership__plan--pro-disabled .wps-form-group__label {
+        padding: 25px 0px 25px 40px;
+        margin-bottom: 0;
+    }
+    
+    .wps-form-select {
+        max-width: 500px;
+    }
+    .wps-mfw-nav-tab {
+        padding: 10px 30px 10px 30px !important;
+        font-size: 18px !important;
+        font-weight: 400;
+        color: #000;
+        background-color: #fff;
+    }
+    .nav-tab-active.wps-mfw-nav-tab {
+        background-color: #21a3f6;
+        color: #fff;
+    }

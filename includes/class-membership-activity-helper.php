@@ -92,16 +92,16 @@ class Membership_Activity_Helper {
 	 */
 	public function __construct( $sub_folder = false, $activity = 'logger', $folder = 'mfw-activity-logger' ) {
 
-		$random_value = get_option('wps_base_url_for_csv_upload');
-		if( empty( $random_value ) ) {
+		$random_value = get_option( 'wps_base_url_for_csv_upload' );
+		if ( empty( $random_value ) ) {
 			$random_value = time();
 			$folder = $folder . $random_value;
 			update_option( 'wps_base_url_for_csv_upload', $folder );
 		} else {
 			$folder = $random_value;
 		}
-		$random_value_subfolder = get_option('wps_base_url_for_csv_upload_subfolder');
-		if( empty( $random_value_subfolder ) ) {
+		$random_value_subfolder = get_option( 'wps_base_url_for_csv_upload_subfolder' );
+		if ( empty( $random_value_subfolder ) ) {
 			$random_value_subfolder = time();
 			$sub_folder = $sub_folder . $random_value_subfolder;
 			update_option( 'wps_base_url_for_csv_upload_subfolder', $sub_folder );
@@ -109,13 +109,13 @@ class Membership_Activity_Helper {
 			$sub_folder = $random_value_subfolder;
 		}
 		$this->activity   = $activity;
-		$this->folder     = $folder ;
+		$this->folder     = $folder;
 		$this->sub_folder = $sub_folder;
 		$uploads = wp_upload_dir();
 
 		$base_dir = $uploads['basedir'];
 		// Create Base Activity Directory.
-		$this->working_path = $base_dir .'/' . $this->folder;
+		$this->working_path = $base_dir . '/' . $this->folder;
 		$this->check_and_create_folder( $this->working_path );
 
 		// Create Activity Sub-Directory.
@@ -177,7 +177,7 @@ class Membership_Activity_Helper {
 			// Getting file type here ( eg-: 'application/pdf' will return 'pdf' ).
 			$file_ext = substr( strrchr( $file_type, '/' ), 1 );
 
-			if (  empty( $file_security ) || 'csv' != $file_security ) {
+			if ( empty( $file_security ) || 'csv' != $file_security ) {
 
 				return array(
 					'result'  => false,
@@ -248,9 +248,9 @@ class Membership_Activity_Helper {
 			mkdir( $path, 0755, true );
 		}
 		$_temp = get_option( 'index_file_created', 'not done' );
-		if( 'not done' == $_temp ){
+		if ( 'not done' == $_temp ) {
 
-			fopen($path . "/index.php","wb");
+			fopen( $path . '/index.php', 'wb' );
 		}
 		// Mark the current active file.
 		$this->active_folder = $path . '/';
@@ -289,9 +289,9 @@ class Membership_Activity_Helper {
 	 * @since 1.0.0
 	 */
 	public function get_file_url( $path = '' ) {
-		$folder = get_option('wps_base_url_for_csv_upload');
+		$folder = get_option( 'wps_base_url_for_csv_upload' );
 		$uploads = wp_upload_dir();
-		$base_url =  $uploads['baseurl'] . '/' . $folder;
+		$base_url = $uploads['baseurl'] . '/' . $folder;
 
 		return str_replace( $this->working_path, $base_url, $path );
 	}

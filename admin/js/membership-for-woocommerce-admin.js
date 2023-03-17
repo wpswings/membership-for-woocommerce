@@ -311,6 +311,8 @@ jQuery(document).ready(function($) {
       });
   });
 
+
+  
  
 
   // Applying script to admin part in all product list page
@@ -449,9 +451,12 @@ $(document).ready(function() {
         .select2();
     }
     
+
+    
   });
 
   
+
 })(jQuery);
 // License.
 

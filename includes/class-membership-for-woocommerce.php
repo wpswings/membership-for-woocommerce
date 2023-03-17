@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.1.8';
+			$this->version = '2.2.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -206,10 +206,16 @@ class Membership_For_Woocommerce {
 
 		// Saving tab settings.
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings' );
+		// Saving tab settings for registration form.
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings_reg_form' );
+		// $this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership_registration', $mfw_plugin_admin, 'wps_membership_search_products_for_membership_registration' );
 
 		// Developer's Hook Listing.
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );
 		$this->loader->add_action( 'mfw_developer_public_hooks_array', $mfw_plugin_admin, 'wps_developer_public_hooks_listing' );
+
+		// Settings array for membership sub tabs.
+		$this->loader->add_action( 'mfw_add_plans_settings_array', $mfw_plugin_admin, 'wps_mfw_add_plans_settings_array' );
 
 		   // Remove title & editor field.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'membership_for_woo_remove_fields' );
@@ -296,6 +302,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_product_data_panels', $mfw_plugin_admin, 'mfw_attach_plan_product_data_fields' );
 
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
+
+		$this->loader->add_action( 'wp_ajax_wps_membership_create_plan_reg', $mfw_plugin_admin, 'wps_membership_create_plan_reg_callback' );
 
 	}
 
@@ -444,7 +452,8 @@ class Membership_For_Woocommerce {
 				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			}
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
-
+			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_registration_form_submission_callback' );
+			$this->loader->add_filter( 'woocommerce_checkout_fields', $mfw_plugin_public, 'wps_mfw_remove_billing_from_checkout', 10, 1 );
 		}
 	}
 
@@ -543,6 +552,11 @@ class Membership_For_Woocommerce {
 				'name'        => 'membership-for-woocommerce-general',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-general.php',
 			);
+			$mfw_default_tabs['membership-for-woocommerce-membership-using-registration-form'] = array(
+				'title'       => esc_html__( 'Membership Settings', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-general',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-membership-using-registration-form.php',
+			);
 			$mfw_default_tabs['membership-for-woocommerce-shortcodes'] = array(
 				'title'       => esc_html__( 'Shortcodes', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-shortcodes',
@@ -576,6 +590,49 @@ class Membership_For_Woocommerce {
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
 
 			return $mfw_default_tabs;
+	}
+
+	/**
+	 * Predefined default wps_mfw_plug sub tabs.
+	 *
+	 * @return Array       An key=>value pair of Membership For WooCommerce sub tabs.
+	 */
+	public function wps_mfw_plug_config_sub_tabs() {
+		$mfw_default_sub_tabs = array();
+		$mfw_default_sub_tabs['membership-for-woocommerce-add-plans'] = array(
+			'title'       => esc_html__( 'Add Plan', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-add-plans',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-plans.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-membership-restriction'] = array(
+			'title'       => esc_html__( 'Membership Restriction', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-membership-restriction',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-membership-restriction.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-purchasing-discount-offer'] = array(
+			'title'       => esc_html__( 'Purchasing Discount Offer', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-purchasing-discount-offer',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-purchasing-discount-offer.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-content-restriction'] = array(
+			'title'       => esc_html__( 'Content Restriction', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-content-restriction',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-content-restriction.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-add-member'] = array(
+			'title'       => esc_html__( 'Add Member', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-add-member',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php',
+		);
+
+		/**
+		 * Filter for admin setting tabs.
+		 *
+		 * @since 1.0.0
+		 */
+		apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_sub_tabs', $mfw_default_sub_tabs );
+
+		return $mfw_default_sub_tabs;
 	}
 
 	/**
@@ -758,7 +815,6 @@ class Membership_For_Woocommerce {
 						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
 							<div class="wps-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
-							
 							</div>
 							<div class="wps-form-group__control">
 								<label class="mdc-text-field mdc-text-field--outlined">
@@ -850,7 +906,68 @@ class Membership_For_Woocommerce {
 						</div>
 							<?php
 							break;
-
+						case 'access_type':
+							?>
+							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+							
+							</div>
+							<div class="wps-form-group__control">
+								<label class="mdc-text-field mdc-text-field--outlined">
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
+									</span>
+									<select
+									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
+									 name="wps_mfw_reg_access_type" id="wps_mfw_reg_access_type" style="width:200px"
+									>
+			
+									<option value="lifetime"><?php echo esc_html_e( 'Lifetime', 'membership-for-woocommerce' ); ?></option>
+									<option value="limited"><?php echo esc_html_e( 'Limited', 'membership-for-woocommerce' ); ?></option>
+									</select>
+								</label>
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="wps-form-group wps_mfw_plan_expiry_class hidden">
+							<div class="wps-form-group__label">
+								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php esc_html_e( 'Set expiry', 'membership-for-woocommerce' ); // WPCS: XSS ok. ?></label>
+							
+							</div>
+							<div class="wps-form-group__control">
+								<!-- <label class="mdc-text-field mdc-text-field--outlined"> -->
+									<span class="mdc-notched-outline">
+										<span class="mdc-notched-outline__leading"></span>
+										<span class="mdc-notched-outline__notch">
+										</span>
+										<span class="mdc-notched-outline__trailing"></span>
+									</span>
+									<input
+									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
+									 type="number" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
+									>
+									<select id="wps_mfw_reg_expiry_time" name="wps_mfw_reg_expiry_time"  style="width:150px;height:55px">
+										<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+										<option value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+										<option value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+										<option value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+									</select>
+									
+								<!-- </label> -->
+								<div class="mdc-text-field-helper-line">
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php esc_html_e( 'Set the expiry time.', 'membership-for-woocommerce' ); ?></div>
+								</div>
+							</div>
+						</div>
+						
+							<?php
+							break;
 						case 'select':
 						case 'multiselect':
 							?>
