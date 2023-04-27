@@ -211,7 +211,7 @@ $results = get_posts(
 								<?php
 								$product_discount_type = get_post_meta( $value->ID, 'wps_membership_product_offer_price_type', true );
 								?>
-								<option value=""><?php esc_html_e( 'Select....', 'membership-for-woocommerce' ); ?></option>
+								
 								<option value="fixed" 
 								<?php
 								if ( 'fixed' == $product_discount_type ) {

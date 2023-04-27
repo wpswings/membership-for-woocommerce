@@ -34,6 +34,12 @@ class Membership_For_Woocommerce_Deactivator {
 		$current_post = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
 		$current_post['post_status'] = 'draft';
 		wp_update_post( $current_post );
+		$pro_id = get_option( 'wps_membership_default_product' );
+		if( $pro_id ) {
+			wp_delete_post( $pro_id);
+		}
+
+		
 	}
 
 }

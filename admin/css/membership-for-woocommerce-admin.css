@@ -931,7 +931,7 @@ img.wps_mfw_plugin_extra_custom_tab {
     content: "";
     height: 70px;
     left: -30px;
-    padding: 2px 5px;
+    /* padding: 2px 5px; */
     position: absolute;
     top: -38px;
     transform: rotate( 50deg);
