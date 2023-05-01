@@ -2264,15 +2264,28 @@ class Membership_For_Woocommerce_Public {
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 		if ( $product_id == $wps_membership_default_product ) {
 			if ( $plan_id ) {
+				$is_processing = get_option( 'wps_membership_create_member_on_processing' );
+				if( 'on' === $is_processing ) {
 
-				if ( 'completed' == $order->get_status() ) {
-					$order_st = 'complete';
-				} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
-					$order_st = 'hold';
-				} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() || 'failed' == $order->get_status() ) {
-					$order_st = 'pending';
-				} elseif ( 'cancelled' == $order->get_status() ) {
-					$order_st = 'cancelled';
+					if ( 'processing' == $order->get_status() ) {
+						$order_st = 'complete';
+					} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
+						$order_st = 'hold';
+					} elseif ( 'pending' == $order->get_status() || 'completed' == $order->get_status() || 'failed' == $order->get_status() ) {
+						$order_st = 'pending';
+					} elseif ( 'cancelled' == $order->get_status() ) {
+						$order_st = 'cancelled';
+					}
+				} else {
+					if ( 'completed' == $order->get_status() ) {
+						$order_st = 'complete';
+					} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() ) {
+						$order_st = 'hold';
+					} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() || 'failed' == $order->get_status() ) {
+						$order_st = 'pending';
+					} elseif ( 'cancelled' == $order->get_status() ) {
+						$order_st = 'cancelled';
+					}
 				}
 				update_post_meta( $member_id, 'member_status', $order_st );
 

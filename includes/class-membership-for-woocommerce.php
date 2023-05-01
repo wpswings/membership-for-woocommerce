@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.2.1';
+			$this->version = '2.2.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -265,7 +265,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'edit_post_wps_cpt_members', $mfw_plugin_admin, 'wps_membership_save_member_fields' );
 
-		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'wps_membership_woo_order_status_change_custom', 10, 3 );
 
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'wps_membership_for_woo_create_shipping_method' );
@@ -340,6 +339,7 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
 
 	}
 

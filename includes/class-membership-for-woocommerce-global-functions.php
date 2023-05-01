@@ -866,15 +866,28 @@ class Membership_For_Woocommerce_Global_Functions {
 					}
 				}
 			}
+			$is_processing = get_option( 'wps_membership_create_member_on_processing' );
+			if( 'on' === $is_processing ) {
 
-			if ( 'completed' == $order_status ) {
-				$order_st = 'complete';
-			} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
-				$order_st = 'hold';
-			} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'processing' == $order_status ) {
-				$order_st = 'pending';
-			} elseif ( 'cancelled' == $order_status ) {
-				$order_st = 'cancelled';
+				if ( 'processing' == $order_status ) {
+					$order_st = 'complete';
+				} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
+					$order_st = 'hold';
+				} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'completed' == $order_status ) {
+					$order_st = 'pending';
+				} elseif ( 'cancelled' == $order_status ) {
+					$order_st = 'cancelled';
+				}
+			} else {
+				if ( 'completed' == $order_status ) {
+					$order_st = 'complete';
+				} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
+					$order_st = 'hold';
+				} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'processing' == $order_status ) {
+					$order_st = 'pending';
+				} elseif ( 'cancelled' == $order_status ) {
+					$order_st = 'cancelled';
+				}
 			}
 
 			// Creating post for members, keeping its status to pending.
