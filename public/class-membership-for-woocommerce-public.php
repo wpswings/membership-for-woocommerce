@@ -403,7 +403,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
-
+		
 		$membership_product = wc_get_product( $wps_membership_default_product );
 
 		if ( $membership_product ) {
@@ -3425,17 +3425,15 @@ class Membership_For_Woocommerce_Public {
 							}
 
 							if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) ) {
-								if( ! empty( $existing_plan_product ) && is_array( $existing_plan_product ) ) {
 
-									if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
-										$is_purchasable = false;
-	
-										if ( $product->is_type( 'variable' ) ) {
-											$product = wc_get_product( $product->get_id() );
-											$current_products = $product->get_children();
-											foreach ( $current_products as $key => $current_products_value ) {
-												array_push( $this->exclude_other_plan_products, $current_products_value );
-											}
+								if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
+									$is_purchasable = false;
+
+									if ( $product->is_type( 'variable' ) ) {
+										$product = wc_get_product( $product->get_id() );
+										$current_products = $product->get_children();
+										foreach ( $current_products as $key => $current_products_value ) {
+											array_push( $this->exclude_other_plan_products, $current_products_value );
 										}
 									}
 								}
