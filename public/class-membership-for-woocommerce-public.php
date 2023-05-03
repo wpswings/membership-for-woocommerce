@@ -403,7 +403,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
-
+		
 		$membership_product = wc_get_product( $wps_membership_default_product );
 
 		if ( $membership_product ) {
