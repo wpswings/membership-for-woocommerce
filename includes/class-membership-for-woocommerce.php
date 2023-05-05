@@ -303,6 +303,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_create_plan_reg', $mfw_plugin_admin, 'wps_membership_create_plan_reg_callback' );
+		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_mfwp_send_msg_to_all_members' );
 
 	}
 
@@ -624,7 +625,12 @@ class Membership_For_Woocommerce {
 			'name'        => 'membership-for-woocommerce-add-member',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php',
 		);
-
+		$mfw_default_sub_tabs['membership-for-woocommerce-send-msg-to-member'] = array(
+			'title'       => esc_html__( 'Send Message to Members', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-send-msg-to-member',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-send-message-to-members.php',
+		);
+		
 		/**
 		 * Filter for admin setting tabs.
 		 *

@@ -3911,6 +3911,20 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
+	public function wps_mfwp_send_msg_to_all_members(){
+		if( isset( $_POST['wps-mfwp-send-to-all-members'] ) ){
+			$members =  get_posts(
+				array(
+					'post_type' => 'wps_cpt_members',
+					'numberposts' => -1,
+			
+				)
+			);
+
+			
+		}
+	}
+
 
 
 }
