@@ -488,7 +488,7 @@ function wps_mfw_upgrade_pro_popup() {
 				<th scope="row" class="titledesc">
 					<label for="wps_membership_product_price_type_id"><?php esc_html_e( 'Discount on Products', 'membership-for-woocommerce' ); ?></label>
 				<?php
-				$description = esc_html__( 'Specify discount % applied to products.', 'membership-for-woocommerce' );
+				$description = esc_html__( 'Specify discount applied to products.', 'membership-for-woocommerce' );
 				$instance->tool_tip( $description );
 				?>
 				</th>

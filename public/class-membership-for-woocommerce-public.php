@@ -3310,11 +3310,16 @@ class Membership_For_Woocommerce_Public {
 		 */
 		$is_purchasable = apply_filters( 'add_membership_product_price_to_is_purchasable', $is_purchasable );
 		$is_product_exclude = false;
-		$user = wp_get_current_user();
-		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
-		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
-			$data                  = $this->custom_query_data;
+		$user_id = 0;
+		// $user = wp_get_current_user();
+		$is_member_meta = array();
+		if( is_user_logged_in() ) {
 			$user_id               = get_current_user_id();
+			$is_member_meta = get_user_meta( $user_id, 'is_member', true );
+		}
+		// if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
+			$data                  = $this->custom_query_data;
+			// $user_id               = get_current_user_id();
 			$existing_plan_id      = array();
 			$existing_plan_product = array();
 			$plan_existing         = false;
@@ -3442,7 +3447,7 @@ class Membership_For_Woocommerce_Public {
 					}
 				}
 			}
-		}
+		// }
 		if ( in_array( $product->get_id(), $this->exclude_other_plan_products ) ) {
 			$is_purchasable = false;
 		}

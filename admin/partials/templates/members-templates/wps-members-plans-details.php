@@ -81,7 +81,7 @@ $existing_plans = get_posts( $args );
 				</tr>
 
 				<tr>
-					<th><label><?php esc_html_e( 'Plan Type', 'membership-for-woocommerce' ); ?></label></th>
+					<th><label><?php esc_html_e( 'Access Type', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php echo esc_html( $plan_type ); ?>
 					</td>
@@ -146,7 +146,7 @@ $existing_plans = get_posts( $args );
 				}
 				?>
 				<tr>
-					<th><label><?php esc_html_e( 'Access Type', 'membership-for-woocommerce' ); ?></label></th>
+					<th><label><?php esc_html_e( 'Accessibility Type', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php echo esc_html( $access_type ); ?>
 					</td>
