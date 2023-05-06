@@ -3911,6 +3911,11 @@ class Membership_For_Woocommerce_Admin {
 
 	}
 
+	/**
+	 * Function to send msg to all members.
+	 *
+	 * @return void
+	 */
 	public function wps_mfwp_send_msg_to_all_members(){
 		if( isset( $_POST['wps-mfwp-send-to-all-members'] ) ){
 			$members =  get_posts(
@@ -3940,10 +3945,10 @@ class Membership_For_Woocommerce_Admin {
 						$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
 						$to = $user_email;
 						$subject = 'Important message for you!';
-						$body = '<p>Hello, ' . $user_full_name . '!</p><br>
-								<p>' . $_POST['wps-mfwp-msg-body'] . '</p>';
+						$body =  $_POST['wps-mfwp-msg-body'];
 					
 						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+						$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
 					
 						if ( wp_mail( $to, $subject, $body, $headers ) ) {
 							error_log( 'email has been successfully sent to user whose email is ' . $user_email );
