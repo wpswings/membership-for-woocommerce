@@ -867,7 +867,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 			$is_processing = get_option( 'wps_membership_create_member_on_processing' );
-			if( 'on' === $is_processing ) {
+			if ( 'on' === $is_processing ) {
 
 				if ( 'processing' == $order_status ) {
 					$order_st = 'complete';

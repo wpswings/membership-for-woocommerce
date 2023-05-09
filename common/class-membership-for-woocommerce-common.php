@@ -569,10 +569,10 @@ class Membership_For_Woocommerce_Common {
 		}
 
 		$is_processing = get_option( 'wps_membership_create_member_on_processing' );
-		if( 'on' === $is_processing ){
+		if ( 'on' === $is_processing ) {
 			$tmp_order_st = 'processing';
-			if (  'processing' == $order->get_status() ) {
-	
+			if ( 'processing' == $order->get_status() ) {
+
 				$order_st = 'complete';
 			} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() || 'failed' == $order->get_status() ) {
 				$order_st = 'hold';
@@ -584,7 +584,7 @@ class Membership_For_Woocommerce_Common {
 		} else {
 			$tmp_order_st = 'completed';
 			if ( 'completed' == $order->get_status() ) {
-	
+
 				$order_st = 'complete';
 			} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() || 'failed' == $order->get_status() ) {
 				$order_st = 'hold';
@@ -594,7 +594,6 @@ class Membership_For_Woocommerce_Common {
 				$order_st = 'cancelled';
 			}
 		}
-
 
 		if ( 'delay_type' == $access_type ) {
 			if ( $current_date >= $today_date && $tmp_order_st == $order->get_status() ) {
@@ -902,7 +901,6 @@ class Membership_For_Woocommerce_Common {
 
 				update_post_meta( $membership_id - 1, 'wps_subscription_status', 'cancelled' );
 			}
-			
 		}
 	}
 

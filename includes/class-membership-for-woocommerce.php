@@ -265,7 +265,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'edit_post_wps_cpt_members', $mfw_plugin_admin, 'wps_membership_save_member_fields' );
 
-
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'wps_membership_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'wps_membership_for_woo_add_shipping_method' );
@@ -630,7 +629,7 @@ class Membership_For_Woocommerce {
 			'name'        => 'membership-for-woocommerce-send-msg-to-member',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-send-message-to-members.php',
 		);
-		
+
 		/**
 		 * Filter for admin setting tabs.
 		 *

@@ -3851,12 +3851,12 @@ class Membership_For_Woocommerce_Admin {
 
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 				$user_name = '';
-				if( isset( $user->data->display_name  ) ) {
+				if ( isset( $user->data->display_name ) ) {
 
 					$user_name = $user->data->display_name;
 				}
 				$customer_email = '';
-				if( key_exists( 'membership_creation_email', WC()->mailer()->emails  ) ) {
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
 
 					$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				}
@@ -3916,53 +3916,49 @@ class Membership_For_Woocommerce_Admin {
 	 *
 	 * @return void
 	 */
-	public function wps_mfwp_send_msg_to_all_members(){
-		if( isset( $_POST['wps-mfwp-send-to-all-members'] ) ){
-			$members =  get_posts(
+	public function wps_mfwp_send_msg_to_all_members() {
+		if ( isset( $_POST['wps-mfwp-send-to-all-members'] ) ) {
+			$value_check = isset( $_POST['wps_send_msg_hidden'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_send_msg_hidden'] ) ) : '';
+			wp_verify_nonce( $value_check, 'wps_mfw_send_msg_nonce' );
+			$members = get_posts(
 				array(
 					'post_type' => 'wps_cpt_members',
-					'post_status' => array('publish', 'draft' ),
+					'post_status' => array( 'publish', 'draft' ),
 					'numberposts' => -1,
-			
+
 				)
 			);
-		
-			if( ! empty( $members ) ) {
-				foreach( $members as $index => $values ) {
-					
+
+			if ( ! empty( $members ) ) {
+				foreach ( $members as $index => $values ) {
+
 					$status  = get_post_meta( $values->ID, 'member_status', true );
-					
-					if( 'complete' === $status ) {
-					
+
+					if ( 'complete' === $status ) {
+
 						$user_id = get_post_meta( $values->ID, 'wps_member_user', true );
 						$user = get_userdata( $user_id );
-					
+
 						$user_email = $user->user_email;
-						
-						
-			
-						// for simplicity, lets assume that user has typed their first and last name when they sign up.
+
+						// For simplicity, lets assume that user has typed their first and last name when they sign up.
 						$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
 						$to = $user_email;
 						$subject = 'Important message for you!';
-						$body =  $_POST['wps-mfwp-msg-body'];
-					
+						 $body = isset( $_POST['wps-mfwp-msg-body'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-mfwp-msg-body'] ) ) : '';
+
 						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 						$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
-					
+
 						if ( wp_mail( $to, $subject, $body, $headers ) ) {
 							error_log( 'email has been successfully sent to user whose email is ' . $user_email );
-							
+
 						} else {
 							error_log( 'email failed to sent to user whose email is ' . $user_email );
 						}
 					}
-
 				}
-			
 			}
-
-			
 		}
 	}
 

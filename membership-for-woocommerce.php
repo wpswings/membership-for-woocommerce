@@ -22,7 +22,7 @@
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.1.1
+ * Tested up to:      6.2
  * WC requires at least: 4.0
  * WC tested up to:   7.6.1
  *
