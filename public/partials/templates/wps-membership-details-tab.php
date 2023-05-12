@@ -80,7 +80,7 @@ if ( empty( $current_url ) ) {
 									<?php
 
 									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
-									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'cancelled' != $membership_status ) {
+									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'complete' == $membership_status ) {
 
 										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >Cancel Membership</button></div>';
 									}

@@ -274,19 +274,19 @@ select#membership_billing_country:focus,
   justify-content: center;
 }
 
-.wps_membership_buynow:hover,
+
 .wps_membership_no_thanks.button.alt.thickbox:hover {
   border: 2px solid #f37e21;
-  background-color: #ffffff !important;
+  background-color: #ffffff ;
   box-shadow: none;
-  color: #f37e21 !important;
+  color: #f37e21 ;
 }
 
 .wps_membership_plan_content_desc .wps_membership_buynow:hover{
   border: 2px solid #ffffff;
-  background-color: #f37e21 !important;
+  background-color: #f37e21 ;
   box-shadow: none;
-  color: #ffffff !important;
+  color: #ffffff;
 }
 
 /*multi-step form for woo-commerce*/
@@ -766,9 +766,7 @@ padding-bottom: 0;
   margin-bottom: 10px;
 }
 
-.wps_membership_buy_now_btn .wps_membership_buynow:hover, .wps_membership_no_thanks.button.alt.thickbox:hover {
-  border: 2px solid #f37e21!important;
-}
+
 
 .wps_membership_buy_now_btn .wps_membership_buynow, .button.alt.wps_membership_no_thanks {
   border: 2px solid transparent!important;

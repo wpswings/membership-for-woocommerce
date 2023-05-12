@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.2.1';
+			$this->version = '2.2.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -265,8 +265,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'edit_post_wps_cpt_members', $mfw_plugin_admin, 'wps_membership_save_member_fields' );
 
-		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_admin, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-
 		// Creating membership method.
 		$this->loader->add_action( 'woocommerce_shipping_init', $mfw_plugin_admin, 'wps_membership_for_woo_create_shipping_method' );
 		$this->loader->add_filter( 'woocommerce_shipping_methods', $mfw_plugin_admin, 'wps_membership_for_woo_add_shipping_method' );
@@ -304,6 +302,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_create_plan_reg', $mfw_plugin_admin, 'wps_membership_create_plan_reg_callback' );
+		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_mfwp_send_msg_to_all_members' );
 
 	}
 
@@ -340,6 +339,7 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
+		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
 
 	}
 
@@ -623,6 +623,11 @@ class Membership_For_Woocommerce {
 			'title'       => esc_html__( 'Add Member', 'membership-for-woocommerce' ),
 			'name'        => 'membership-for-woocommerce-add-member',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php',
+		);
+		$mfw_default_sub_tabs['membership-for-woocommerce-send-msg-to-member'] = array(
+			'title'       => esc_html__( 'Send Message to Members', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-send-msg-to-member',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-send-message-to-members.php',
 		);
 
 		/**

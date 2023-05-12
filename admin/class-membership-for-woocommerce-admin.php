@@ -704,6 +704,18 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Create member on Processing order status.', 'membership-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable this Create member on processing order status.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_create_member_on_processing',
+				'value' => get_option( 'wps_membership_create_member_on_processing' ),
+				'class' => 'mfw-radio-switch-class',
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 
 			array(
 				'title' => __( 'Change Buy Now button text.', 'membership-for-woocommerce' ),
@@ -2376,195 +2388,6 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-	/**
-	 * Remove add-on payment gateways from checkout page.
-	 *
-	 * @param mixed $order_id order id.
-	 * @param mixed $old_status order old status.
-	 * @param mixed $new_status order new status.
-	 *
-	 * @throws  Exception Error.
-	 *
-	 * @since 1.0.0
-	 */
-	public function wps_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
-
-		$order = new WC_Order( $order_id );
-		$order_data = $order->get_data(); // The Order data.
-		$billing_email = $order_data['billing']['email'];
-		$billing_first_name = $order_data['billing']['first_name'];
-		$billing_last_name = $order_data['billing']['last_name'];
-
-		$billing_phone = $order_data['billing']['phone'];
-
-		$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
-
-		$_user = get_user_by( 'email', $billing_email );
-
-		// If user exist, get the required details.
-
-		$items = $order->get_items();
-
-		$member_id = '';
-
-		$items = $order->get_items();
-
-		foreach ( $items as $item ) {
-			$get_data = $item->get_formatted_meta_data();
-			$item_meta_data = $item->get_formatted_meta_data( '', true );
-			foreach ( $item_meta_data as $mfw_key => $mfw_value ) {
-				if ( '_member_id' == $mfw_value->display_key ) {
-					$member_id = $mfw_value->value;
-				}
-			}
-		}
-
-		$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-		$today_date = gmdate( 'Y-m-d' );
-		// Save expiry date in post.
-		if ( ! empty( $plan_obj ) ) {
-
-			$access_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
-
-			if ( 'delay_type' == $access_type ) {
-				$time_duration      = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
-				$time_duration_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
-
-				$current_date = gmdate( 'Y-m-d', strtotime( $today_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-				update_post_meta( $member_id, 'membership_delay_date', $current_date );
-			}
-
-			if ( 'lifetime' == $plan_obj['wps_membership_plan_name_access_type'] ) {
-
-				update_post_meta( $member_id, 'member_expiry', 'Lifetime' );
-
-			} elseif ( 'limited' == $plan_obj['wps_membership_plan_name_access_type'] ) {
-
-				$duration = $plan_obj['wps_membership_plan_duration'] . ' ' . $plan_obj['wps_membership_plan_duration_type'];
-
-				$expiry_date = gmdate( strtotime( $current_date . $duration ) );
-
-				if ( 'delay_type' == $access_type ) {
-					$delay_duration = $time_duration . ' ' . $time_duration_type;
-
-					$expiry_date = gmdate( strtotime( $today_date . $duration ) );
-					$date_exipary = gmdate( 'Y-m-d', $expiry_date );
-					$expiry_date = strtotime( $date_exipary . $delay_duration );
-				}
-				update_post_meta( $member_id, 'member_expiry', $expiry_date );
-			}
-		}
-
-		if ( 'completed' == $order->get_status() ) {
-
-			$order_st = 'complete';
-		} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() || 'failed' == $order->get_status() ) {
-			$order_st = 'hold';
-		} elseif ( 'pending' == $order->get_status() || 'processing' == $order->get_status() ) {
-			$order_st = 'pending';
-		} elseif ( 'cancelled' == $order->get_status() ) {
-			$order_st = 'cancelled';
-		}
-
-		if ( 'delay_type' == $access_type ) {
-			if ( $current_date >= $today_date && 'completed' == $order->get_status() ) {
-
-				update_post_meta( $member_id, 'member_status', 'pending' );
-
-				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
-					$subscription_id = get_post_meta( $order_id, 'wps_subscription_id', true );
-					if ( ! empty( $subscription_id ) ) {
-						update_post_meta( $subscription_id, 'wps_subscription_status', 'pending' );
-					}
-				}
-			}
-		} else {
-
-			update_post_meta( $member_id, 'member_status', $order_st );
-			$subscription_id = get_post_meta( $order_id, 'wps_subscription_id', true );
-			if ( 'complete' == $order_st ) {
-
-				if ( ! $_user ) {
-
-					if ( 'on' == $is_user_created ) {
-
-						$website = get_site_url();
-
-						$user_name = $billing_first_name . '-' . rand();
-						$password = $billing_first_name . substr( $billing_phone, -4, 4 );
-						update_option( 'user_password', $password );
-						$userdata = array(
-							'user_login' => $user_name,
-							'user_url'   => $website,
-							'user_pass'  => $password, // When creating an user, `user_pass` is expected.
-							'user_email' => $billing_email,
-							'first_name' => $billing_first_name,
-							'last_name' => $billing_last_name,
-							'display_name' => $billing_first_name,
-							'nickname' => $billing_first_name,
-						);
-
-						$_user = wp_insert_user( $userdata );
-						update_user_meta( $_user, 'user_created_by_membership', 'yes' );
-
-						update_option( 'user_name', $user_name );
-
-						if ( $_user ) {
-
-							$user_id   = $_user;
-							$user_ob   = get_user_by( 'id', $user_id );
-							$user_name = $user_ob->display_name;
-						}
-					}
-					if ( ! empty( $_user ) ) {
-						$wps_membership_posts = $_user;
-					} else {
-						$wps_membership_posts = get_post_field( 'post_author', $member_id );
-					}
-				} else {
-					if ( ! empty( $_user ) ) {
-						$wps_membership_posts = $_user->ID;
-					} else {
-						$wps_membership_posts = get_post_field( 'post_author', $member_id );
-					}
-				}
-
-				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
-				update_post_meta( $member_id, 'wps_member_user', $wps_membership_posts );
-				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
-					if ( ! empty( $subscription_id ) ) {
-						update_post_meta( $subscription_id, 'wps_subscription_status', 'active' );
-						update_post_meta( $subscription_id, 'wps_next_payment_date', $expiry_date );
-
-						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
-							if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
-								$access_type = get_post_meta( $plan_obj['plan_id'], 'wps_membership_plan_access_type', true );
-								$current_date = gmdate( 'Y-m-d' );
-								if ( 'delay_type' == $access_type ) {
-									$time_duration      = get_post_meta( $plan_obj['plan_id'], 'wps_membership_plan_time_duration', true );
-									$time_duration_type = get_post_meta( $plan_obj['plan_id'], 'wps_membership_plan_time_duration_type', true );
-
-									$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-
-								}
-								$current_time = current_time( 'timestamp' );
-								$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
-								update_post_meta( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
-
-							}
-						} else {
-							update_post_meta( $subscription_id, 'wps_susbcription_end', '' );
-						}
-					}
-				}
-			} else {
-				if ( ! empty( $subscription_id ) ) {
-					update_post_meta( $subscription_id, 'wps_subscription_status', $order_st );
-				}
-			}
-		}
-		update_post_meta( $member_id, 'billing_details_payment', get_post_meta( $order_id, '_payment_method', true ) );
-	}
 
 	/**
 	 * Creating shipping method for membership.
@@ -4028,12 +3851,12 @@ class Membership_For_Woocommerce_Admin {
 
 				$order_id = get_post_meta( $post_id, 'member_order_id', true );
 				$user_name = '';
-				if( isset( $user->data->display_name  ) ) {
+				if ( isset( $user->data->display_name ) ) {
 
 					$user_name = $user->data->display_name;
 				}
 				$customer_email = '';
-				if( key_exists( 'membership_creation_email', WC()->mailer()->emails  ) ) {
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
 
 					$customer_email = WC()->mailer()->emails['membership_creation_email'];
 				}
@@ -4086,6 +3909,57 @@ class Membership_For_Woocommerce_Admin {
 
 		}
 
+	}
+
+	/**
+	 * Function to send msg to all members.
+	 *
+	 * @return void
+	 */
+	public function wps_mfwp_send_msg_to_all_members() {
+		if ( isset( $_POST['wps-mfwp-send-to-all-members'] ) ) {
+			$value_check = isset( $_POST['wps_send_msg_hidden'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_send_msg_hidden'] ) ) : '';
+			wp_verify_nonce( $value_check, 'wps_mfw_send_msg_nonce' );
+			$members = get_posts(
+				array(
+					'post_type' => 'wps_cpt_members',
+					'post_status' => array( 'publish', 'draft' ),
+					'numberposts' => -1,
+
+				)
+			);
+
+			if ( ! empty( $members ) ) {
+				foreach ( $members as $index => $values ) {
+
+					$status  = get_post_meta( $values->ID, 'member_status', true );
+
+					if ( 'complete' === $status ) {
+
+						$user_id = get_post_meta( $values->ID, 'wps_member_user', true );
+						$user = get_userdata( $user_id );
+
+						$user_email = $user->user_email;
+
+						// For simplicity, lets assume that user has typed their first and last name when they sign up.
+						$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
+						$to = $user_email;
+						$subject = 'Important message for you!';
+						 $body = isset( $_POST['wps-mfwp-msg-body'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-mfwp-msg-body'] ) ) : '';
+
+						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+						$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
+
+						if ( wp_mail( $to, $subject, $body, $headers ) ) {
+							error_log( 'email has been successfully sent to user whose email is ' . $user_email );
+
+						} else {
+							error_log( 'email failed to sent to user whose email is ' . $user_email );
+						}
+					}
+				}
+			}
+		}
 	}
 
 
