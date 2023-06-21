@@ -55,10 +55,8 @@ class Membership_For_Woocommerce_Rest_Api {
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
-		$this->version = $version;
-
+		$this->version     = $version;
 	}
-
 
 	/**
 	 * Define endpoints for the plugin.
@@ -69,50 +67,131 @@ class Membership_For_Woocommerce_Rest_Api {
 	 * @since    1.0.0
 	 */
 	public function wps_mfw_add_endpoint() {
-		register_rest_route(
-			'mfw-route/v1',
-			'/mfw-dummy-data/',
-			array(
-				'methods'  => WP_REST_Server::CREATABLE,
-				'callback' => array( $this, 'wps_mfw_default_callback' ),
-				'permission_callback' => array( $this, 'wps_mfw_default_permission_check' ),
-			)
-		);
+		// check API setting enable.
+		if ( 'on' === get_option( 'wps_membership_enable_api_settings', true ) ) {
+
+			// default endpoints to check API.
+			register_rest_route(
+				'wps-mfw',
+				'/mfw-dummy-data/',
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'wps_mfw_default_callback' ),
+					'permission_callback' => array( $this, 'wps_mfw_default_permission_check' ),
+				)
+			);
+
+			// endpoints to show membership offers.
+			register_rest_route(
+				'wps-mfw',
+				'/get-membership-offers/',
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'wps_mfw_get_membership_offers' ),
+					'permission_callback' => array( $this, 'wps_mfw_default_permission_check' ),
+				),
+			);
+
+			// endpoints to get individual membership of users.
+			register_rest_route(
+				'wps-mfw',
+				'/get-user-membership',
+				array(
+					'methods'             => WP_REST_Server::CREATABLE,
+					'callback'            => array( $this, 'wps_mfw_get_user_membership' ),
+					'permission_callback' => array( $this, 'wps_mfw_default_permission_check' ),
+				),
+			);
+		}
 	}
 
+	/**
+	 * This function is used to create process class boject.
+	 *
+	 * @return object
+	 */
+	public function wps_mfw_creating_api_process_class_obj() {
+
+		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'package/rest-api/version1/class-membership-for-woocommerce-api-process.php';
+		$wps_mfw_api_obj = new Membership_For_Woocommerce_Api_Process();
+		return $wps_mfw_api_obj;
+	}
 
 	/**
 	 * Begins validation process of api endpoint.
 	 *
-	 * @param   Array $request    All information related with the api request containing in this array.
-	 * @return  Array   $result   return rest response to server from where the endpoint hits.
+	 * @param   object $request    All information related with the api request containing in this array.
+	 * @return  bool   $result   return rest response to server from where the endpoint hits.
 	 * @since    1.0.0
 	 */
 	public function wps_mfw_default_permission_check( $request ) {
 
-		// Add rest api validation for each request.
-		$result = true;
+		$result                                  = false;
+		$request_response                        = $request->get_params();
+		$consumer_secret                         = ! empty( $request_response['consumer_secret'] ) ? trim( $request_response['consumer_secret'] ) : '';
+		$wps_membership_api_consumer_secret_keys = ! empty( get_option( 'wps_membership_api_consumer_secret_keys' ) ) ? trim( get_option( 'wps_membership_api_consumer_secret_keys' ) ) : '';
+		
+		if ( $consumer_secret === $wps_membership_api_consumer_secret_keys ) {
+
+			$result = true;
+		}
 		return $result;
 	}
-
 
 	/**
 	 * Begins execution of api endpoint.
 	 *
-	 * @param   Array $request    All information related with the api request containing in this array.
-	 * @return  Array   $wps_mfw_response   return rest response to server from where the endpoint hits.
+	 * @param   object $request          All information related with the api request containing in this array.
+	 * @return  object $wps_mfw_response return rest response to server from where the endpoint hits.
 	 * @since    1.0.0
 	 */
 	public function wps_mfw_default_callback( $request ) {
 
-		require_once MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'package/rest-api/version1/class-membership-for-woocommerce-api-process.php';
-		$wps_mfw_api_obj = new Membership_For_Woocommerce_Api_Process();
-		$wps_mfw_resultsdata = $wps_mfw_api_obj->wps_mfw_default_process( $request );
-		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 200 == $wps_mfw_resultsdata['status'] ) {
-			unset( $wps_mfw_resultsdata['status'] );
+		$wps_mfw_resultsdata = $this->wps_mfw_creating_api_process_class_obj()->wps_mfw_default_process( $request );
+		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 'success' == $wps_mfw_resultsdata['status'] ) {
+
 			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata, 200 );
 		} else {
+
 			$wps_mfw_response = new WP_Error( $wps_mfw_resultsdata );
+		}
+		return $wps_mfw_response;
+	}
+
+	/**
+	 * This function is used to get all membership details.
+	 *
+	 * @param object $request request.
+	 * @return object
+	 */
+	public function wps_mfw_get_membership_offers( $request ) {
+
+		$wps_mfw_resultsdata = $this->wps_mfw_creating_api_process_class_obj()->wps_list_membership_details( $request );
+		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 'success' == $wps_mfw_resultsdata['status'] ) {
+
+			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata, 200 );
+		} else {
+
+			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata );
+		}
+		return $wps_mfw_response;
+	}
+
+	/**
+	 * This function is used to get individual user membership.
+	 *
+	 * @param [type] $request
+	 * @return void
+	 */
+	public function wps_mfw_get_user_membership( $request ) {
+
+		$wps_mfw_resultsdata = $this->wps_mfw_creating_api_process_class_obj()->wps_mfw_get_individual_user_membership_details( $request );
+		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 'success' == $wps_mfw_resultsdata['status'] ) {
+
+			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata, 200 );
+		} else {
+
+			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata );
 		}
 		return $wps_mfw_response;
 	}

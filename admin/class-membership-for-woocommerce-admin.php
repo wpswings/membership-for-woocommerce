@@ -210,11 +210,10 @@ class Membership_For_Woocommerce_Admin {
 				$this->plugin_name,
 				'admin_ajax_obj',
 				array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'nonce'   => wp_create_nonce( 'plan-import-nonce' ),
-					'Plan'  => __( 'Plan ', 'membership-for-woocommerce' ),
+					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+					'nonce'         => wp_create_nonce( 'plan-import-nonce' ),
+					'Plan'          => __( 'Plan ', 'membership-for-woocommerce' ),
 					'Plan_warning'  => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
-
 				)
 			);
 
@@ -223,9 +222,10 @@ class Membership_For_Woocommerce_Admin {
 				$this->plugin_name,
 				'admin_registration_ajax_obj',
 				array(
-					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'nonce'   => wp_create_nonce( 'membership-registration-nonce' ),
-
+					'ajaxurl'                => admin_url( 'admin-ajax.php' ),
+					'nonce'                  => wp_create_nonce( 'membership-registration-nonce' ),
+					'is_api_enable'          => get_option( 'wps_membership_enable_api_settings', true ),
+					'is_consumer_secret_set' => get_option( 'wps_membership_api_consumer_secret_keys', true ),
 				)
 			);
 
@@ -3962,6 +3962,133 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
+	/**
+	 * Creating API settings.
+	 *
+	 * @param array $mfw_settings_api mfw_settings_api.
+	 * @return array
+	 */
+	public function wps_membership_api_html_settings( $mfw_settings_api ) {
 
+		$wps_api_settings = array(
+			array(
+				'title'       => __( 'Enable API Settigs', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable plugin to start the functionality.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_enable_api_settings',
+				'value'       => get_option( 'wps_membership_enable_api_settings' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Consumer Secret', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'Use this keys to fetch plugin API', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'Secret Key', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_api_consumer_secret_keys',
+				'value'       => get_option( 'wps_membership_api_consumer_secret_keys' ),
+			),
+			array(
+				'type'        => 'multi-button',
+				'id'          => 'mfw_button_api_settings',
+				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+			array(
+				'type'        => 'multi-button',
+				'id'          => 'mfw_button_generate_keys_settings',
+				'button_text' => __( 'Generate Keys', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+		);
+		$mfw_settings_api = array_merge( $mfw_settings_api, $wps_api_settings );
+		return $mfw_settings_api;
+	}
+
+	/**
+	 * Save API settings here.
+	 *
+	 * @return void
+	 */
+	public function mfw_admin_save_api_settings() {
+
+		global $mfw_wps_mfw_obj;
+		if ( isset( $_POST['mfw_button_api_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag     = false;
+			$mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
+			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
+			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
+			}
+
+			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+				unset( $mfw_genaral_settings[ $mfw_button_index ] );
+				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
+
+					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
+						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+							} else {
+
+								update_option( $mfw_genaral_setting['id'], '' );
+							}
+						} else {
+
+							$wps_mfw_gen_flag = true;
+						}
+					}
+				}
+
+				if ( $wps_mfw_gen_flag ) {
+
+					$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+				} else {
+
+					$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to generate consumer secret.
+	 *
+	 * @return void
+	 */
+	public function mfw_generate_api_keys_settings() {
+		global $mfw_wps_mfw_obj;
+		if ( isset( $_POST['mfw_button_generate_keys_settings'] ) ) {
+			$wps_mfw_gen_flag                   = true;
+			$wps_membership_enable_api_settings = ! empty( $_POST['wps_membership_enable_api_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_membership_enable_api_settings'] ) ) : '';
+
+			if ( 'on' === $wps_membership_enable_api_settings ) {
+
+				$wps_membership_api_consumer_secret_keys = 'wps_mfw_' . wc_rand_hash();
+				update_option( 'wps_membership_enable_api_settings', $wps_membership_enable_api_settings );
+				update_option( 'wps_membership_api_consumer_secret_keys', $wps_membership_api_consumer_secret_keys );
+				$wps_mfw_gen_flag = false;
+			}
+
+			if ( $wps_mfw_gen_flag ) {
+
+				$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+			} else {
+
+				$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+			}
+		}
+	}
 
 }

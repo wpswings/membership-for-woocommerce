@@ -88,4 +88,55 @@ $(document).on('click', '.wps_membership_checkbox', function(){
     }
 })
 
+    // ======= API feature start here =======
+
+    // Hide ans show generate button, when consumer key is generated.
+    var is_api_setting_enable = jQuery(document).find('#wps_membership_enable_api_settings').prop('checked');
+    var api_consumer_secret   = jQuery(document).find('#wps_membership_api_consumer_secret_keys').val().trim();
+
+    if ( true == is_api_setting_enable && api_consumer_secret ) {
+
+        jQuery('button#mfw_button_generate_keys_settings').hide();
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').parents('.wps-form-group').show();
+    } else if ( true == is_api_setting_enable && ! api_consumer_secret ) {
+
+        jQuery('button#mfw_button_generate_keys_settings').show();
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').parents('.wps-form-group').hide();
+    } else if ( false == is_api_setting_enable && api_consumer_secret ) {
+
+        jQuery('button#mfw_button_generate_keys_settings').hide();
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').parents('.wps-form-group').show();
+    } else {
+
+        jQuery('button#mfw_button_generate_keys_settings').hide();
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').parents('.wps-form-group').hide();
+    }
+
+    // Hide and show button when enable/disabled api settings.
+    jQuery(document).on('change', '#wps_membership_enable_api_settings', function(){
+
+        var is_api_setting_enable = jQuery(document).find('#wps_membership_enable_api_settings').prop('checked');
+        var api_consumer_secret   = jQuery(document).find('#wps_membership_api_consumer_secret_keys').val().trim();
+
+        
+        if ( true == is_api_setting_enable && ! api_consumer_secret ) {
+            
+            jQuery('button#mfw_button_generate_keys_settings').show();
+        } else {
+
+            jQuery('button#mfw_button_generate_keys_settings').hide();
+        }
+    });
+
+    // Make consumer keys field disabled false when click on submit button.
+    jQuery(document).on('click', 'button#mfw_button_api_settings', function(){
+
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').attr('disabled', false);
+    });
+
+    // Make consumer keys field disabled true when key is set.
+    if ( admin_registration_ajax_obj.is_consumer_secret_set ) {
+
+        jQuery(document).find('#wps_membership_api_consumer_secret_keys').attr('disabled', true);
+    }
 });
