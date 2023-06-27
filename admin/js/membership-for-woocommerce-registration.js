@@ -13,8 +13,9 @@ jQuery(document).ready(function($){
     //Form js
     $("#wps_member_user_reg").select2();
 
-
-    jQuery(document).on('click', '#wps_create_membership_plan_button', function(){
+  
+    jQuery(document).on('click', '#wps_create_membership_plan_button', function () {
+        
         var wps_plan_check = true;
         var plan_title = $('#wps_mfw_reg_plan_name').val();
         var plan_price = $('#wps_mfw_reg_plan_price').val();
@@ -24,20 +25,17 @@ jQuery(document).ready(function($){
 
         if( plan_title == '' ){
             wps_plan_check = false;
-            alert('Please Enter plan name !');
+            alert(admin_registration_ajax_obj.plan_name_error);
         }
         if( plan_price <= 0 ){
             wps_plan_check = false;
-            alert('Please Enter valid price !');
+            alert(admin_registration_ajax_obj.plan_price_error);
         }
-        if( plan_access_type == '' ){
-            wps_plan_check = false;
-            alert('Please choose access type !');
-        }
+        
         if( plan_access_type == 'limited' ){
             if( plan_duration <= 0 ) {
                 wps_plan_check = false;
-                alert('Please Enter valid duration !')
+                alert(admin_registration_ajax_obj.valid_access_msg)
             }
            
         }
@@ -59,9 +57,11 @@ jQuery(document).ready(function($){
     
                 success: function (response) {
                     
-                    setTimeout(function(){
+                   
+                    jQuery('<h4 style="color:red;">'+ admin_registration_ajax_obj.plan_created_msg +'</h4>').insertBefore(jQuery('#wps_create_membership_plan_button'));
+                    setTimeout(function () {
                         window.location.reload(1);
-                     }, 5000);
+                     }, 3000);
                     
                 }
             });

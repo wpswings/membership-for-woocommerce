@@ -226,6 +226,10 @@ class Membership_For_Woocommerce_Admin {
 					'nonce'                  => wp_create_nonce( 'membership-registration-nonce' ),
 					'is_api_enable'          => get_option( 'wps_membership_enable_api_settings', true ),
 					'is_consumer_secret_set' => get_option( 'wps_membership_api_consumer_secret_keys', true ),
+					'plan_name_error'        => __( 'Please Enter plan name !', 'membership-for-woocommerce' ),
+					'plan_price_error'		 => __( 'Please Enter plan Price !', 'membership-for-woocommerce' ),
+					'plan_created_msg'		 => __( 'Plan is created Successfully !', 'membership-for-woocommerce' ),
+					'valid_access_msg'       => __( 'Please Enter valid duration !', 'membership-for-woocommerce' ),
 				)
 			);
 
@@ -3588,6 +3592,18 @@ class Membership_For_Woocommerce_Admin {
 			if ( 'limited' == $plan_access_type ) {
 				update_post_meta( $plan_id, 'wps_membership_plan_duration', $plan_duration );
 				update_post_meta( $plan_id, 'wps_membership_plan_duration_type', $plan_duration_type );
+			}
+			$temp_array = ['wps_membership_plan_price','wps_membership_plan_name_access_type', 'wps_membership_plan_duration', 'wps_membership_plan_duration_type' ];
+			if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
+
+				foreach ( $this->get_plans_default_value() as $field => $value ) {
+	
+					$default = ! empty( $value['default'] ) ? $value['default'] : '';
+	
+					if( ! in_array( $field, $temp_array ) ) {
+						update_post_meta( $plan_id, $field, $default  );
+					}
+				}
 			}
 		}
 	}
