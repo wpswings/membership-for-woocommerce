@@ -3527,6 +3527,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_buy_now_add_to_cart() {
+		
 		if ( WC()->session->__isset( 'product_id' ) ) {
 			$product_id = WC()->session->get( 'product_id' );
 
@@ -3580,6 +3581,19 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->__unset( 'wps_phone' );
 			WC()->session->__unset( 'wps_email' );
 			WC()->session->__unset( 'wps_state' );
+		}
+
+		if( is_cart() ) {
+			if(  1 < WC()->cart->get_cart_contents_count( )) {
+				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) { 
+					$_product = $cart_item['data'];
+					$wps_membership_default_product = get_option( 'wps_membership_default_product' );
+					if( $wps_membership_default_product != $_product->get_id() ){
+						WC()->cart->remove_cart_item($cart_item_key);
+					}
+				}
+				add_action( 'woocommerce_before_cart', array( $this, 'add_cart_custom_notice_2' ) );
+			}
 		}
 	}
 
@@ -3674,6 +3688,22 @@ class Membership_For_Woocommerce_Public {
 			sprintf(
 				'<span class="subscription-reminder">' .
 				__( 'Sorry we cannot add membership products with other products, either empty cart or add membership product later when cart is empty', 'membership-for-woocommerce' ) . '</span>',
+				__( 'empty', 'membership-for-woocommerce' )
+			),
+			'error'
+		);
+	}
+
+	/**
+	 * Add notice on cart page if cart is already added with products
+	 *
+	 * @return void
+	 */
+	public function add_cart_custom_notice_2() {
+		wc_print_notice(
+			sprintf(
+				'<span class="subscription-reminder">' .
+				__( 'Sorry we cannot add  other products with membership products , either empty cart or add  product later when cart is empty', 'membership-for-woocommerce' ) . '</span>',
 				__( 'empty', 'membership-for-woocommerce' )
 			),
 			'error'
