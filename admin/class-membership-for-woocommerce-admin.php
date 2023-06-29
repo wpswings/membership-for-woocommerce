@@ -4083,7 +4083,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_generate_api_keys_settings() {
 		global $mfw_wps_mfw_obj;
-		if ( isset( $_POST['mfw_button_generate_keys_settings'] ) ) {
+		if ( isset( $_POST['mfw_button_generate_keys_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
 			$wps_mfw_gen_flag                   = true;
 			$wps_membership_enable_api_settings = ! empty( $_POST['wps_membership_enable_api_settings'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_membership_enable_api_settings'] ) ) : '';
 

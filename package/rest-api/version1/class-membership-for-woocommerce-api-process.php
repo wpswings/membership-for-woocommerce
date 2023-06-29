@@ -56,7 +56,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 		 * This function is used to get all membership details.
 		 *
 		 * @param object $mfw_request mfw_request.
-		 * @return void
+		 * @return object
 		 */
 		public function wps_list_membership_details( $mfw_request ) {
 
@@ -72,7 +72,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 			if ( ! empty( $wps_membership_posts ) && is_array( $wps_membership_posts ) ) {
 				foreach ( array_reverse( $wps_membership_posts ) as $value ) {
 
-					$wps_offer_arr['offer_' . $count] = array(
+					$wps_offer_arr[] = array(
 						'membership_id'   => $value->ID,
 						'membership_name' => $value->post_title,
 						'plan_type'       => ! empty( get_post_meta( $value->ID, 'wps_membership_plan_name_access_type', true ) ) ? get_post_meta( $value->ID, 'wps_membership_plan_name_access_type', true ) : '',
@@ -98,7 +98,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 		 * This function is used to fetch individual user membership details.
 		 *
 		 * @param object $mfw_request mfw_request.
-		 * @return void
+		 * @return object
 		 */
 		public function wps_mfw_get_individual_user_membership_details( $mfw_request ) {
 
@@ -135,7 +135,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 							$plan_duration = '---';
 						}
 
-						$membership_send_arr['membership_' . $count] = array(
+						$membership_send_arr[] = array(
 							'membership_id'     => $membership_id,
 							'membership_name'   => $membership_plan['post_title'],
 							'plan_price'        => $membership_plan['wps_membership_plan_price'],
@@ -165,8 +165,8 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 		/**
 		 * This function is used to check whether user is exist or not.
 		 *
-		 * @param [type] $user_id
-		 * @return void
+		 * @param string $user_id user_id.
+		 * @return array
 		 */
 		public function wps_mfw_validate_user_id( $user_id ) {
 			$data = array();

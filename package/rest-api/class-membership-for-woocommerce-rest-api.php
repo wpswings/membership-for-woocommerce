@@ -180,8 +180,8 @@ class Membership_For_Woocommerce_Rest_Api {
 	/**
 	 * This function is used to get individual user membership.
 	 *
-	 * @param [type] $request
-	 * @return void
+	 * @param object $request request.
+	 * @return object
 	 */
 	public function wps_mfw_get_user_membership( $request ) {
 
