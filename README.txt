@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.2.0
-WC requires at least: 4.0.0
-WC tested up to: 7.6.1
-Stable tag: 2.2.2
+Tested up to: 6.2.2
+WC requires at least: 5.0.0
+WC tested up to: 7.8.1
+Stable tag: 2.3.0
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -31,6 +31,7 @@ Membership Plugin directly give you a way out of the three most customary pain p
 * Send email notifications to all members at once 
 * You can create memberships on processing order status 
 * Allow your Members to Cancel their Membership Accounts
+* Use APIs to render data regarding membership offers and plans opted by users
 * You can allow your members to change Buy Now Button(make it dynamic) text
 * Membership plan on the individual products.
 * Different sections for membership plans and members
@@ -112,20 +113,23 @@ Admin can apply discounts based on user roles. Give discounts only to WooCommerc
 **14) User Table for Admin**
 Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
 
-**15) Multi-Step Configuration of Membership for WooCommerce**
+**15) APIs for Membership Offer Details and Purchased Membership Plans**
+The WooCommerce membership plugin offers APIs to fetch details about active membership plans (membership id, name, type, price, & duration) and purchased memberships by any user (membership ID, name, price, valadity, duration, & status). Apply the required parameters along with API secret key and show these details in any web application, desktop application, mobile application, scripting language, or API documentation.
+
+**16) Multi-Step Configuration of Membership for WooCommerce**
 With a multi-step configuration on installing the plugin, the admin gets assistance in creating his first membership plan. The home tab is also included according to the plugin configuration concept.
 
-**16)  Display All Membership Plans Together With the Option to Buy Them**
+**17)  Display All Membership Plans Together With the Option to Buy Them**
 The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here.       
 
-**17) Membership Details and Plan Creation**
+**18) Membership Details and Plan Creation**
 In the WordPress Membership Plugin admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plans like:
 * Plan price
 * Plan name
 * Plan Description
 * Access Type (Lifetime or Limited accessibility) 
 
-**18) Create User After Payment Done** 
+**19) Create User After Payment Done** 
 Using the free Membership for WooCommerce plugin, the admin can create a user after completing the payment. No default member will be created on your WooCommerce store immediately after the membership purchase. This setting can be enabled or disabled anytime from the general setting.
 
 Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) and learn more about the features and working of the plugin. 
@@ -274,14 +278,26 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 12. Welcome Page
 13. Add Membership Plan
 14. Membership Restriction 
-15. Purchasing Discount Offer 
-16. Content Restriction 
-17. Add Members
-18. Send Quick Notifications
+15. API Setting Tab
+16. Purchasing Discount Offer 
+17. Content Restriction 
+18. Add Members
+19. Send Quick Notifications
 
 == Changelog ==
 
-= 2.2.2 - Released on 11 May 2023 = 
+= 2.3.0 - Released on 30 June 2023 = 
+* New: API Feature
+* New: Endpoints to show membership offer
+* New: Endpoints to show individuals assigned members
+* New: Compatible with latest WP( 6.2.2 ) & WC( 7.8.1 ) 
+* Fix: Plugin listing page CSS issues
+* Enhance: Acknowledge message for admin while creating membership
+* Fix: Membership plan creation issues
+* Fix: String localization issues
+* Fix: Add to cart issues
+
+= 2.2.2 - Released on  2023 = 
 * New: Send Quick Notification Email to Your Members.
 * New: Create Membership on Processing Order Status
 * New: Compatibility with WC(7.6.1) and WP(6.2.0).
@@ -377,7 +393,13 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.2.2 - Released on 11 May 2023 = 
-* New: Send Quick Notification Email to Your Members.
-* New: Create Membership on Processing Order Status
-* New: Compatibility with WC(7.6.1) and WP(6.2.0).
+= 2.3.0 - Released on 30 June 2023 = 
+* New: API Feature
+* New: Endpoints to show membership offer
+* New: Endpoints to show individuals assigned members
+* New: Compatible with latest WP( 6.2.2 ) & WC( 7.8.1 ) 
+* Fix: Plugin listing page CSS issues
+* Enhance: Acknowledge message for admin while creating membership
+* Fix: Membership plan creation issues
+* Fix: String localization issues
+* Fix: Add to cart issues
