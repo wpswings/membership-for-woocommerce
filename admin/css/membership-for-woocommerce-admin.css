@@ -10,7 +10,10 @@
     box-sizing: border-box;
 }
 
-a:hover ,a:focus{
+#deactivate-membership-for-woocommerce:hover ,#deactivate-membership-for-woocommerce:focus{
+    color:inherit !important;
+}
+#deactivate-membership-for-woocommerce-pro:hover ,#deactivate-membership-for-woocommerce-pro:focus{
     color:inherit !important;
 }
 
@@ -1472,3 +1475,13 @@ div#wp-wps_membership_email_content-wrap {
         background-color: #21a3f6;
         color: #fff;
     }
+
+#mfw_button_api_settings {
+    margin-right: 10px;
+}
+
+@media screen and ( max-width : 420px ) {
+    #mfw_button_api_settings {
+        margin-bottom: 10px;
+    }  
+}

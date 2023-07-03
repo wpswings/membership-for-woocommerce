@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.2.2';
+			$this->version = '2.3.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -304,6 +304,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_create_plan_reg', $mfw_plugin_admin, 'wps_membership_create_plan_reg_callback' );
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_mfwp_send_msg_to_all_members' );
 
+		// API settings creations.
+		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
 	}
 
 	/**
@@ -465,9 +469,15 @@ class Membership_For_Woocommerce {
 	 */
 	private function membership_for_woocommerce_api_hooks() {
 
-		$mfw_plugin_api = new Membership_For_Woocommerce_Rest_Api( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
+		$global_class                   = Membership_For_Woocommerce_Global_Functions::get();
+		$wps_membership_global_settings = get_option( 'wps_membership_global_options', $global_class->default_global_options() );
+		$wps_membership_enable_plugin   = ! empty( $wps_membership_global_settings['wps_membership_enable_plugin'] ) ? $wps_membership_global_settings['wps_membership_enable_plugin'] : 'off';
 
-		$this->loader->add_action( 'rest_api_init', $mfw_plugin_api, 'wps_mfw_add_endpoint' );
+		if ( 'on' === $wps_membership_enable_plugin ) {
+
+			$mfw_plugin_api = new Membership_For_Woocommerce_Rest_Api( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
+			$this->loader->add_action( 'rest_api_init', $mfw_plugin_api, 'wps_mfw_add_endpoint' );
+		}
 
 	}
 
@@ -561,6 +571,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Shortcodes', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-shortcodes',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-api-settings'] = array(
+				'title'       => esc_html__( 'API Settings', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-api-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
 			);
 
 			/**
@@ -1127,18 +1142,25 @@ class Membership_For_Woocommerce {
 
 						case 'button':
 							?>
-						<div class="wps-form-group">
-							<div class="wps-form-group__label"></div>
-							<div class="wps-form-group__control">
-								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
-									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
-									<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
-								</button>
+							<div class="wps-form-group">
+								<div class="wps-form-group__label"></div>
+								<div class="wps-form-group__control">
+									<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+										id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+										<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
+									</button>
+								</div>
 							</div>
-						</div>
-
 							<?php
-							break;
+						break;
+						case 'multi-button':
+							?>
+							<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+								id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+								<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
+							</button>
+							<?php
+						break;
 
 						case 'multi':
 							?>
