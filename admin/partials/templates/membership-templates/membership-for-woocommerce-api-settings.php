@@ -34,3 +34,136 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 		?>
 	</div>
 </form>
+
+<!-- ======== List all API details for admin ========== -->
+<div class="wps_msfw_parent_api_details_wrapper">
+	<h3><?php esc_html_e( 'Plugin API Details', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
+
+	<!-- Show Authentication -->
+	<h4><?php esc_html_e( 'Authentication', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<div class="wps_msfw_rest_api_response">
+		<p>
+			<?php
+			esc_html_e( 'For authentication you need ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( ' Consumer Secret ', 'ultimate-woocommerce-points-and-rewards' );
+			echo '<strong>{consumer_secret}</strong>';
+			esc_html_e( ' keys. Response on wrong api details:', 'ultimate-woocommerce-points-and-rewards' );
+			?>
+		</p>
+		<?php
+		echo '<pre>
+		{
+		"code": "rest_forbidden",
+		"message": "Sorry, you are not allowed to do that.",
+		"data": {
+			"status": 401
+		}
+		}
+		</pre>';
+		?>
+	</div>
+
+	<!-- To get user points -->
+	<h4><?php esc_html_e( 'To Retrive Membership Offers', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<div class="wps_msfw_rest_api_response">
+		<p>
+			<?php
+			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'ultimate-woocommerce-points-and-rewards' ) . '</strong>';
+			echo '{site_url}/wp-json/wps-mfw/get-membership-offers';
+			?>
+		</p>
+		<p>
+			<strong>
+			<?php
+			esc_html_e( 'Example : ', 'ultimate-woocommerce-points-and-rewards' );
+			echo esc_html( site_url() );
+			esc_html_e( '/wp-json/wps-mfw/get-membership-offers', 'ultimate-woocommerce-points-and-rewards' );
+			?>
+			</strong>
+		</p>
+		<p>
+			<?php
+			esc_html_e( 'Parameters Required : ', 'ultimate-woocommerce-points-and-rewards' );
+			echo '<strong> {consumer_secret}</strong>';
+			?>
+		</p>
+		<p><?php esc_html_e( 'JSON response example:', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+		<?php
+		echo '<pre>
+		{
+			"status": "success",
+			"code": 200,
+			"data": [
+				{
+					"membership_id": 71,
+					"membership_name": "Silver",
+					"plan_type": "lifetime",
+					"plan_price": "15",
+				},
+				{
+					"membership_id": 72,
+					"membership_name": "Gold",
+					"plan_type": "limited",
+					"plan_price": "20",
+					"plan_duration": "2 years"
+				},
+			]
+		}
+		</pre>';
+		?>
+	</div>
+
+	<h4><?php esc_html_e( 'To Retrive Particular User Membership', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<div class="wps_msfw_rest_api_response">
+		<p>
+			<?php
+			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'ultimate-woocommerce-points-and-rewards' ) . '</strong>';
+			echo '{site_url}/wp-json/wps-mfw/get-user-membership';
+			?>
+		</p>
+		<p>
+			<strong>
+			<?php
+			esc_html_e( 'Example : ', 'ultimate-woocommerce-points-and-rewards' );
+			echo esc_html( site_url() );
+			esc_html_e( '/wp-json/wps-mfw/get-user-membership', 'ultimate-woocommerce-points-and-rewards' );
+			?>
+			</strong>
+		</p>
+		<p>
+			<?php
+			esc_html_e( 'Parameters Required : ', 'ultimate-woocommerce-points-and-rewards' );
+			echo '<strong> {user_id}</strong>';
+			echo '<strong> {consumer_secret}</strong>';
+			?>
+		</p>
+		<p><?php esc_html_e( 'JSON response example:', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+		<?php
+		echo '<pre>
+		{
+			"status": "success",
+			"code": "200",
+			"data": [
+				{
+					"membership_id": 72,
+					"membership_name": "Gold",
+					"plan_price": "20",
+					"plan_validity": "limited",
+					"plan_duration": "2 years",
+					"membership_status": "complete"
+				},
+				{
+					"membership_id": 80,
+					"membership_name": "Diamond",
+					"plan_price": "30",
+					"plan_validity": "lifetime",
+					"plan_duration": "---",
+					"membership_status": "complete"
+				}
+			]
+		}
+		</pre>';
+		?>
+	</div>
+</div>
+

@@ -150,3 +150,43 @@ table {
 #wps-mfw__item-table tbody .td_1 {
     border-top: 1px solid #222;
 }
+
+/* API Setting section start */
+
+.wps_msfw_parent_api_details_wrapper h3 {
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.wps_msfw_parent_api_details_wrapper h4 {
+    font-size: 18px;
+    padding: 5px 20px 5px 15px;
+    border-left: 5px solid #2196f3;
+    position: relative;
+    cursor: pointer;
+    background-color: #2196f311;
+}
+
+.wps_msfw_parent_api_details_wrapper p {
+    font-size: 16px;
+    color: #000;
+}
+
+.wps_msfw_parent_api_details_wrapper strong {
+    color: #2196f3;
+}
+
+.wps_msfw_parent_api_details_wrapper pre {
+    background: #efefef;
+    border-radius: 5px;
+    margin-bottom: 28px;
+    overflow: auto;
+}
+
+.wps_msfw_parent_api_details_wrapper {
+    padding: 25px 0 0;
+}
+
+/* API Setting section end */

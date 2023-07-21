@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.0';
+			$this->version = '2.3.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -281,16 +281,6 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_filter( 'manage_users_columns', $mfw_plugin_admin, 'wps_membership_new_modify_user_table_value' );
 		$this->loader->add_filter( 'user_contactmethods', $mfw_plugin_admin, 'wps_membership_new_column_value_assign', 10, 1 );
-		if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
-
-			$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.2' );
-			$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
-
-			if ( 0 != $wps_pending_par ) {
-
-				$this->loader->add_filter( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_migrate_db_keys_notice', 10, 1 );
-			}
-		}
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_member_status', $mfw_plugin_admin, 'wps_membership_save_member_status' );
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );

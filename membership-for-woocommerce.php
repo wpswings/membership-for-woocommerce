@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.3.0
+ * Version:           2.3.1
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
@@ -24,7 +24,7 @@
  * Requires at least: 5.0
  * Tested up to:      6.2.2
  * WC requires at least: 5.0
- * WC tested up to:   7.8.1
+ * WC tested up to:   7.9.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -37,86 +37,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-$old_mfw_pro_exists = false;
-$plug           = get_plugins();
-if ( isset( $plug['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
-	if ( version_compare( $plug['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'], '2.1.0', '<' ) ) {
-		$old_mfw_pro_exists = true;
-	}
-}
-add_action( 'after_plugin_row_membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', 'wps_mfw_old_upgrade_notice', 0, 3 );
-
-/**
- * Migration to ofl pro plugin.
- *
- * @param string $plugin_file Path to the plugin file relative to the plugins directory.
- * @param array  $plugin_data An array of plugin data.
- * @param string $status Status filter currently applied to the plugin list.
- */
-function wps_mfw_old_upgrade_notice( $plugin_file, $plugin_data, $status ) {
-
-		global $old_mfw_pro_exists;
-	if ( $old_mfw_pro_exists ) {
-		?>
-			<tr class="plugin-update-tr active notice-warning notice-alt">
-			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-error inline update-message notice-alt">
-					<p class='wps-notice-title wps-notice-section'>
-						<strong><?php esc_html_e( 'This plugin will not work anymore correctly.', 'membership-for-woocommerce' ); ?></strong><br>
-					<?php esc_html_e( 'We highly recommend to update to latest pro version and once installed please migrate the existing settings.', 'membership-for-woocommerce' ); ?><br>
-					<?php esc_html_e( 'If you are not getting automatic update now button here, then don\'t worry you will get in within 24 hours. If you still not get it please visit to your account dashboard and install it manually or connect to our support.', 'membership-for-woocommerce' ); ?>
-					</p>
-				</div>
-			</td>
-		</tr>
-		<style>
-			.wps-notice-section > p:before {
-				content: none;
-			}
-		</style>
-			<?php
-	}
-}
-
-if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
-
-	$wps_mfw_get_count = new Membership_For_Woocommerce_Admin( 'membership-for-woocommerce', '2.1.4' );
-	$wps_pending_par   = $wps_mfw_get_count->wps_membership_get_count( 'pending', 'count' );
-
-	if ( 0 != $wps_pending_par ) {
-
-		add_action( 'after_plugin_row_' . plugin_basename( __FILE__ ), 'wps_mfw_org_migrate_notice', 0, 3 );
-	}
-}
-		/**
-		 * Migration to new domain notice.
-		 *
-		 * @param string $plugin_file Path to the plugin file relative to the plugins directory.
-		 * @param array  $plugin_data An array of plugin data.
-		 * @param string $status Status filter currently applied to the plugin list.
-		 */
-function wps_mfw_org_migrate_notice( $plugin_file, $plugin_data, $status ) {
-
-	?>
-			<tr class="plugin-update-tr active notice-warning notice-alt">
-				<td colspan="4" class="plugin-update colspanchange">
-					<div class="notice notice-error inline update-message notice-alt">
-						<p class='wps-notice-title wps-notice-section'>
-					<?php esc_html_e( 'Heads up. The latest update includes some substantial changes across different areas of the plugin. Please ', 'membership-for-woocommerce-pro' ); ?>
-							<a href="<?php echo esc_url( admin_url( 'admin.php?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ) ); ?>"><?php esc_html_e( 'Click Here', 'membership-for-woocommerce' ); ?></a>
-					<?php esc_html_e( 'to goto migration panel.', 'membership-for-woocommerce-pro' ); ?>
-						</p>
-					</div>
-				</td>
-			</tr>
-			<style>
-				.wps-notice-section > p:before {
-					content: none;
-				}
-			</style>
-			<?php
-}
 
 
 /**
@@ -140,88 +60,6 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
 
-
-$old_mfw_pro_present   = false;
-$installed_plugins = get_plugins();
-
-if ( array_key_exists( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $installed_plugins ) ) {
-	$pro_plugin = $installed_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'];
-	if ( version_compare( $pro_plugin['Version'], '2.1.0', '<' ) ) {
-		$old_mfw_pro_present = true;
-	}
-}
-
-if ( true === $old_mfw_pro_present ) {
-
-	add_action( 'wps_mfw_settings_saved_notice', 'wps_mfw_lite_add_updatenow_notice' );
-
-
-
-		/**
-		 * Displays notice to upgrade to membership.
-		 *
-		 * @return void
-		 */
-	function wps_mfw_lite_add_updatenow_notice() {
-		?>
-
-		<tr class="plugin-update-tr active notice-warning notice-alt">
-			<td colspan="4" class="plugin-update colspanchange">
-				<div class="notice notice-error inline update-message notice-alt">
-					<div class='wps-notice-title wps-notice-section'>
-						<p><strong>IMPORTANT NOTICE:</strong></p>
-					</div>
-					<div class='wps-notice-content wps-notice-section'>
-						<p><strong>Your Memebership for Woocommerce Pro plugin update is here! Please Update it now via </strong> <a href="<?php echo wp_kses_post( admin_url( 'plugins.php' ) ); ?>">Plugins Page.</a> </p>
-					</div>
-				</div>
-			</td>
-		</tr>
-		<style>
-			.wps-notice-section > p:before {
-				content: none;
-			}
-		</style>
-
-				<?php
-
-	}
-	add_action( 'admin_notices', 'wps_mfw_check_and_inform_update' );
-
-	/**
-	 * Check update if pro is old.
-	 */
-	function wps_mfw_check_and_inform_update() {
-		$update_file = plugin_dir_path( dirname( __FILE__ ) ) . 'membership-for-woocommerce-pro/class-membership-for-woocommerce-pro-update.php';
-
-		// If present but not active.
-
-		if ( file_exists( $update_file ) ) {
-			$wps_mfw_pro_license_key = get_option( 'mwb_mfwp_license_check', '' );
-			! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_LICENSE_KEY', $wps_mfw_pro_license_key );
-			! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) && define( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE', 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-		}
-			require_once $update_file;
-
-		if ( defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE' ) ) {
-
-			$wps_mfw_pro = new Membership_For_Woocommerce_Pro_Update();
-			$wps_mfw_pro->mwb_check_update();
-			$plugin_transient  = get_site_transient( 'update_plugins' );
-			$update_obj        = ! empty( $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] ) ? $plugin_transient->response[ MEMBERSHIP_FOR_WOOCOMMERCE_PRO_BASE_FILE ] : false;
-
-			if ( ! empty( $update_obj ) ) :
-				?>
-				<div class="notice notice-error is-dismissible">
-					<p><?php esc_html_e( 'Your Memebership For Woocommerce Pro plugin update is here! Please Update it now.', 'membership-for-woocommerce' ); ?></p>
-				</div>
-				<?php
-			endif;
-
-		}
-	}
-}
-
 /**
  * Checking whether the dependent plugin is active or not.
  */
@@ -237,7 +75,6 @@ function wps_membership_plugin_activation() {
 	}
 
 	return $activation;
-
 }
 
 // The following code runs during the activation of the plugin.
@@ -251,7 +88,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.0' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.1' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -422,11 +259,11 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	add_action( 'wps_membership_expiry_check_action', 'wps_membership_schedule_action_expiry_check' );
 
-		/**
-		 * Schedule hook for member expiry.
-		 *
-		 * @return void
-		 */
+	/**
+	 * Schedule hook for member expiry.
+	 *
+	 * @return void
+	 */
 	function wps_membership_schedule_hook() {
 		// Schedule cron for checking of membership expiration on daily basis.
 		if ( ! wp_next_scheduled( 'wps_membership_expiry_check' ) ) {
@@ -451,14 +288,12 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 			if ( 'product' != $screen->id ) {
 				if ( isset( $screen->id ) && 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id || 'plugins' == $screen->id ) {
-					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '2.1.0', false );
 
+					wp_enqueue_style( 'admin-css', plugin_dir_url( __FILE__ ) . '/admin/css/membership-for-woocommerce-admin.css', array(), '2.1.0', false );
 				}
 			}
 		}
 	}
-
-
 
 	// Add settings link on plugin page.
 	add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'membership_for_woocommerce_settings_link' );
@@ -480,6 +315,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		return array_merge( $my_link, $links );
 	}
+
 	if ( ! function_exists( 'wps_membership_check_plugin_enable' ) ) {
 		/**
 		 * This function is used to check plugin is enable.
@@ -533,201 +369,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				exit();
 			}
 		}
-
-
-		add_action( 'admin_init', 'wps_membership_code_migrate' );
-
-
-
-
-		/**
-		 * Function for codebase migration.
-		 *
-		 * @return void
-		 */
-		function wps_membership_code_migrate() {
-			$is_migration_done = get_option( 'is_wps_migration_done', 'not_done' );
-			if ( 'done' != $is_migration_done ) {
-				global $wpdb;
-
-				// Creating Instance of the global functions class.
-				$global_class = Membership_For_Woocommerce_Global_Functions::get();
-
-				add_role(
-					'member',
-					__( 'Member', 'membership-for-woocommerce' ),
-					array(
-						'read' => true,
-					)
-				);
-
-				/**
-				 * Generating default membership plans page at the time of plugin activation.
-				 */
-
-				$mwb_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
-				if ( ! empty( $mwb_membership_default_plans_page_id ) ) {
-					wp_delete_post( $mwb_membership_default_plans_page_id );
-					delete_option( 'mwb_membership_default_plans_page' );
-				}
-
-				$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page' );
-
-				if ( empty( $wps_membership_default_plans_page_id ) ) {
-
-					$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[wps_membership_default_plans_page]';
-
-					if ( empty( $wps_membership_default_plans_page_id ) || 'publish' !== get_post_status( $wps_membership_default_plans_page_id ) ) {
-
-						$wps_membership_plans_page = array(
-							'comment_status' => 'closed',
-							'ping_status'    => 'closed',
-							'post_content'   => $page_content,
-							'post_name'      => 'membership-plans',
-							'post_status'    => 'publish',
-							'post_title'     => 'Membership Plans',
-							'post_type'      => 'page',
-						);
-
-						$wps_membership_plans_post = wp_insert_post( $wps_membership_plans_page );
-
-						update_option( 'wps_membership_default_plans_page', $wps_membership_plans_post );
-					}
-				} else {
-					$current_post                = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
-					$current_post['post_status'] = 'publish';
-					wp_update_post( $current_post );
-				}
-
-				/**
-				 * Generating default membership plans page at the time of plugin activation.
-				 */
-				$wps_membership_default_plans_product_id = get_option( 'mwb_membership_default_product' );
-				if ( ! empty( $wps_membership_default_plans_product_id ) ) {
-					wp_delete_post( $wps_membership_default_plans_product_id );
-					delete_option( 'mwb_membership_default_product' );
-				}
-				$wps_membership_default_product = get_option( 'wps_membership_default_product' );
-
-				if ( empty( $wps_membership_default_product ) || 'private' !== get_post_status( $wps_membership_default_product ) ) {
-
-					 $wps_membership_product = array(
-						 'post_name'    => 'membership-product',
-						 'post_status'  => 'publish',
-						 'post_title'   => 'Membership Product',
-						 'post_type'    => 'product',
-						 'post_author'  => 1,
-						 'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
-					 );
-
-					 $wps_membership_product_id = wp_insert_post( $wps_membership_product );
-
-					 if ( ! is_wp_error( $wps_membership_product_id ) ) {
-
-						 $product = wc_get_product( $wps_membership_product_id );
-						 wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
-						 update_post_meta( $wps_membership_product_id, '_regular_price', 0 );
-						 update_post_meta( $wps_membership_product_id, '_price', 0 );
-						 update_post_meta( $wps_membership_product_id, '_visibility', 'public' );
-						 update_post_meta( $wps_membership_product_id, '_virtual', 'yes' );
-
-						 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
-
-							 $product->set_reviews_allowed( false );
-							 $product->set_catalog_visibility( 'hidden' );
-							 $product->save();
-						 }
-
-						 update_option( 'wps_membership_default_product', $wps_membership_product_id );
-					 }
-				}
-				wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
-
-				/**
-				 * Filter for reccurence.
-				 *
-				 * @since 1.0.0
-				 */
-				wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
-
-				$all_feeds = get_posts(
-					array(
-						'post_type'      => 'mwb_cpt_members',
-						'post_status'    => array( 'publish', 'draft' ),
-						'fields'         => 'ids',
-						'posts_per_page' => -1,
-					)
-				);
-
-				if ( ! empty( $all_feeds ) && is_array( $all_feeds ) ) {
-					foreach ( $all_feeds as $key => $feed_id ) {
-						$args = array(
-							'ID'        => $feed_id,
-							'post_type' => 'wps_cpt_members',
-						);
-						wp_update_post( $args );
-					}
-				}
-
-				include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
-
-				Membership_For_Woocommerce_Activator::mfw_migrate_membership_post_type();
-				Membership_For_Woocommerce_Activator::mfw_upgrade_wp_options();
-				Membership_For_Woocommerce_Activator::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
-				update_option( 'is_wps_migration_done', 'done', true );
-			}
-
-		}
-
-		add_action( 'admin_notices', 'wps_membership_plugin_updation_notice' );
-
-
-
-
-
-		/**
-		 * Function for admin notice of update.
-		 *
-		 * @return void
-		 */
-		function wps_membership_plugin_updation_notice() {
-			$mwf_plugins = get_plugins();
-			if ( function_exists( 'get_current_screen' ) ) {
-				$screen = get_current_screen();
-				if ( ! empty( $screen->id ) && 'plugins' === $screen->id ) {
-					if ( isset( $mwf_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
-
-						if ( $mwf_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.0.2' ) {
-							?>
-							
-							<div class="notice notice-error is-dismissible">
-								<p><strong><?php esc_html_e( 'Version 2.1.0 of Membership for Woocommerce Pro ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not available on your system! Please Update ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
-							</div>
-							<?php
-						}
-					}
-				}
-			}
-
-		}
-		add_action( 'init', 'wps_mfw_deactivate_plugin' );
-
-		/**
-		 * Deactivating plugin.
-		 *
-		 * @return void
-		 */
-		function wps_mfw_deactivate_plugin() {
-
-			if ( is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) ) {
-				$sfw_plugins = get_plugins();
-				if ( $sfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php']['Version'] < '2.1.0' ) {
-
-					deactivate_plugins( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' );
-
-				}
-			}
-		}
 	}
 } else {
 
@@ -772,5 +413,3 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 }
-
-
