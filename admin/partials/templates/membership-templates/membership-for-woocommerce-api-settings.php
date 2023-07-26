@@ -37,17 +37,17 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 
 <!-- ======== List all API details for admin ========== -->
 <div class="wps_msfw_parent_api_details_wrapper">
-	<h3><?php esc_html_e( 'Plugin API Details', 'ultimate-woocommerce-points-and-rewards' ); ?></h3>
+	<h3><?php esc_html_e( 'Plugin API Details', 'membership-for-woocommerce' ); ?></h3>
 
 	<!-- Show Authentication -->
-	<h4><?php esc_html_e( 'Authentication', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<h4><?php esc_html_e( 'Authentication', 'membership-for-woocommerce' ); ?></h4>
 	<div class="wps_msfw_rest_api_response">
 		<p>
 			<?php
-			esc_html_e( 'For authentication you need ', 'ultimate-woocommerce-points-and-rewards' );
-			esc_html_e( ' Consumer Secret ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( 'For authentication you need ', 'membership-for-woocommerce' );
+			esc_html_e( ' Consumer Secret ', 'membership-for-woocommerce' );
 			echo '<strong>{consumer_secret}</strong>';
-			esc_html_e( ' keys. Response on wrong api details:', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( ' keys. Response on wrong api details:', 'membership-for-woocommerce' );
 			?>
 		</p>
 		<?php
@@ -64,30 +64,30 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 	</div>
 
 	<!-- To get user points -->
-	<h4><?php esc_html_e( 'To Retrive Membership Offers', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<h4><?php esc_html_e( 'To Retrive Membership Offers', 'membership-for-woocommerce' ); ?></h4>
 	<div class="wps_msfw_rest_api_response">
 		<p>
 			<?php
-			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'ultimate-woocommerce-points-and-rewards' ) . '</strong>';
+			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'membership-for-woocommerce' ) . '</strong>';
 			echo '{site_url}/wp-json/wps-mfw/get-membership-offers';
 			?>
 		</p>
 		<p>
 			<strong>
 			<?php
-			esc_html_e( 'Example : ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( 'Example : ', 'membership-for-woocommerce' );
 			echo esc_html( site_url() );
-			esc_html_e( '/wp-json/wps-mfw/get-membership-offers', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( '/wp-json/wps-mfw/get-membership-offers', 'membership-for-woocommerce' );
 			?>
 			</strong>
 		</p>
 		<p>
 			<?php
-			esc_html_e( 'Parameters Required : ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( 'Parameters Required : ', 'membership-for-woocommerce' );
 			echo '<strong> {consumer_secret}</strong>';
 			?>
 		</p>
-		<p><?php esc_html_e( 'JSON response example:', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+		<p><?php esc_html_e( 'JSON response example:', 'membership-for-woocommerce' ); ?></p>
 		<?php
 		echo '<pre>
 		{
@@ -113,31 +113,31 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 		?>
 	</div>
 
-	<h4><?php esc_html_e( 'To Retrive Particular User Membership', 'ultimate-woocommerce-points-and-rewards' ); ?></h4>
+	<h4><?php esc_html_e( 'To Retrive Particular User Membership', 'membership-for-woocommerce' ); ?></h4>
 	<div class="wps_msfw_rest_api_response">
 		<p>
 			<?php
-			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'ultimate-woocommerce-points-and-rewards' ) . '</strong>';
+			echo '<strong>' . esc_html__( 'Base Url to get membership offers : ', 'membership-for-woocommerce' ) . '</strong>';
 			echo '{site_url}/wp-json/wps-mfw/get-user-membership';
 			?>
 		</p>
 		<p>
 			<strong>
 			<?php
-			esc_html_e( 'Example : ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( 'Example : ', 'membership-for-woocommerce' );
 			echo esc_html( site_url() );
-			esc_html_e( '/wp-json/wps-mfw/get-user-membership', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( '/wp-json/wps-mfw/get-user-membership', 'membership-for-woocommerce' );
 			?>
 			</strong>
 		</p>
 		<p>
 			<?php
-			esc_html_e( 'Parameters Required : ', 'ultimate-woocommerce-points-and-rewards' );
+			esc_html_e( 'Parameters Required : ', 'membership-for-woocommerce' );
 			echo '<strong> {user_id}</strong>';
 			echo '<strong> {consumer_secret}</strong>';
 			?>
 		</p>
-		<p><?php esc_html_e( 'JSON response example:', 'ultimate-woocommerce-points-and-rewards' ); ?></p>
+		<p><?php esc_html_e( 'JSON response example:', 'membership-for-woocommerce' ); ?></p>
 		<?php
 		echo '<pre>
 		{
