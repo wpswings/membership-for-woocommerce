@@ -64,7 +64,7 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 	</div>
 
 	<!-- To get user points -->
-	<h4><?php esc_html_e( 'To Retrive Membership Offers', 'membership-for-woocommerce' ); ?></h4>
+	<h4><?php esc_html_e( 'To Retrieve Membership Offers', 'membership-for-woocommerce' ); ?></h4>
 	<div class="wps_msfw_rest_api_response">
 		<p>
 			<?php
@@ -113,7 +113,7 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 		?>
 	</div>
 
-	<h4><?php esc_html_e( 'To Retrive Particular User Membership', 'membership-for-woocommerce' ); ?></h4>
+	<h4><?php esc_html_e( 'To Retrieve Particular User Membership', 'membership-for-woocommerce' ); ?></h4>
 	<div class="wps_msfw_rest_api_response">
 		<p>
 			<?php
