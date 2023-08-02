@@ -36,9 +36,9 @@ class Membership_For_Woocommerce_Deactivator {
 		wp_update_post( $current_post );
 		$pro_id = get_option( 'wps_membership_default_product' );
 		if ( $pro_id ) {
+
 			wp_delete_post( $pro_id );
 		}
-
 	}
 
 }

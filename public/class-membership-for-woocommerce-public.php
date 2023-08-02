@@ -3584,15 +3584,24 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		if( is_cart() ) {
-			if(  1 < WC()->cart->get_cart_contents_count( )) {
-				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) { 
-					$_product = $cart_item['data'];
-					$wps_membership_default_product = get_option( 'wps_membership_default_product' );
-					if( $wps_membership_default_product != $_product->get_id() ){
-						WC()->cart->remove_cart_item($cart_item_key);
-					}
+			if(  1 < WC()->cart->get_cart_contents_count()) {
+				$wps_store_cart_prouduct_id = array();
+				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+					array_push( $wps_store_cart_prouduct_id, $cart_item['product_id'] );
 				}
-				add_action( 'woocommerce_before_cart', array( $this, 'add_cart_custom_notice_2' ) );
+
+				$wps_membership_default_product = get_option( 'wps_membership_default_product' );
+				if ( in_array( $wps_membership_default_product, $wps_store_cart_prouduct_id  ) ) {
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+
+						if ( $wps_membership_default_product != $cart_item['product_id'] ) {
+
+							WC()->cart->remove_cart_item( $cart_item_key );
+						}
+					}
+					add_action( 'woocommerce_before_cart', array( $this, 'add_cart_custom_notice_2' ) );
+				}
 			}
 		}
 	}

@@ -5,8 +5,8 @@ Tags: membership, membership plan, subscription, woocommerce, members-only, wooc
 Requires at least: 5.0
 Tested up to: 6.2.2
 WC requires at least: 5.0.0
-WC tested up to: 7.8.1
-Stable tag: 2.3.0
+WC tested up to: 7.9.0
+Stable tag: 2.3.1
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -279,12 +279,20 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 13. Add Membership Plan
 14. Membership Restriction 
 15. API Setting Tab
-16. Purchasing Discount Offer 
-17. Content Restriction 
-18. Add Members
-19. Send Quick Notifications
+16. Retrieve Membership Offers API 
+17. To Retrieve Particular User Membership API 
+18. Purchasing Discount Offer 
+19. Content Restriction 
+20. Add Members
+21. Send Quick Notifications
 
 == Changelog ==
+
+= 2.3.1 - Released on 31 July 2023 = 
+* New: List API details on Admin Panel
+* New: Compatible with latest WP(6.2.2) & WC(7.9.0)
+* Fix: Cart empty issues fixed
+
 
 = 2.3.0 - Released on 30 June 2023 = 
 * New: API Feature
@@ -393,13 +401,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.3.0 - Released on 30 June 2023 = 
-* New: API Feature
-* New: Endpoints to show membership offer
-* New: Endpoints to show individuals assigned members
-* New: Compatible with latest WP( 6.2.2 ) & WC( 7.8.1 ) 
-* Fix: Plugin listing page CSS issues
-* Enhance: Acknowledge message for admin while creating membership
-* Fix: Membership plan creation issues
-* Fix: String localization issues
-* Fix: Add to cart issues
+= 2.3.1 - Released on 31 July 2023 = 
+* New: List API details on Admin Panel
+* New: Compatible with latest WP(6.2.2) & WC(7.9.0)
+* Fix: Cart empty issues fixed

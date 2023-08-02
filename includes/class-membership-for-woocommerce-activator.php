@@ -93,9 +93,9 @@ class Membership_For_Woocommerce_Activator {
 						update_option( 'wps_membership_default_plans_page', $wps_membership_plans_post );
 					}
 				} else {
-						  $current_post = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
-						  $current_post['post_status'] = 'publish';
-						  wp_update_post( $current_post );
+					$current_post = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
+					$current_post['post_status'] = 'publish';
+					wp_update_post( $current_post );
 				}
 
 				/**
@@ -138,10 +138,6 @@ class Membership_For_Woocommerce_Activator {
 
 						 }
 				}
-
-				self::mfw_upgrade_wp_options();
-				self::mfw_migrate_membership_post_type();
-				self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
 
 				restore_current_blog();
 			}
@@ -250,135 +246,6 @@ class Membership_For_Woocommerce_Activator {
 			 * @since 1.0.0
 			 */
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
-
-			self::mfw_upgrade_wp_options();
-			self::mfw_migrate_membership_post_type();
-			self::wpg_mfw_replace_mwb_to_wps_in_shortcodes();
-
 		}
 	}
-
-
-		/**
-		 * Upgrade_wp_options. (use period)
-		 *
-		 * Upgrade_wp_options.
-		 *
-		 * @since    1.0.0
-		 */
-	public static function mfw_upgrade_wp_options() {
-		$wp_options = array(
-			'mwb_membership_default_plans_page' => '',
-			'mwb_membership_default_product'  => '',
-			'makewebbetter_tracker_last_send'  => '',
-			'mwb_membership_email_subject'  => '',
-			'mwb_membership_email_content'  => '',
-			'mwb_mfw_onboarding_data_skipped'  => '',
-			'mwb_mfw_onboarding_data_sent'  => '',
-
-			'mwb_membership_number_of_expiry_days' => '',
-
-			'mwb_membership_global_options' => '',
-			'mwb_membership_enable_plugin' => '',
-			'mwb_membership_plan_user_history' => '',
-			'mwb_membership_create_user_after_payment' => '',
-			'mwb_membership_for_woo_delete_data' => '',
-			'mwb_membership_attach_invoice' => '',
-		);
-
-		foreach ( $wp_options as $key => $value ) {
-
-			$new_key = str_replace( 'mwb_', 'wps_', $key );
-			if ( ! empty( get_option( $new_key ) ) ) {
-				continue;
-			}
-			$new_value = get_option( $key, $value );
-
-			$arr_val = array();
-			if ( is_array( $new_value ) ) {
-				foreach ( $new_value as $key => $value ) {
-					$new_key1 = str_replace( 'mwb_', 'wps_', $key );
-					$arr_val[ $new_key1 ] = $value;
-				}
-				update_option( $new_key, $arr_val );
-			} else {
-				update_option( $new_key, $new_value );
-			}
-		}
-	}
-
-
-	/**
-	 * Replacement for mwb_membership post type to WPS.
-	 *
-	 * @return void
-	 */
-	public static function mfw_migrate_membership_post_type() {
-		$all_feeds = get_posts(
-			array(
-				'post_type'      => 'mwb_cpt_membership',
-				'post_status'    => array( 'publish', 'draft' ),
-				'fields'         => 'ids',
-				'posts_per_page' => -1,
-			)
-		);
-
-		if ( ! empty( $all_feeds ) && is_array( $all_feeds ) ) {
-			foreach ( $all_feeds as $key => $feed_id ) {
-				$args = array(
-					'ID'        => $feed_id,
-					'post_type' => 'wps_cpt_membership',
-				);
-				wp_update_post( $args );
-			}
-		}
-	}
-
-	/**
-	 * Function for shortcode migration.
-	 *
-	 * @return void
-	 */
-	public static function wpg_mfw_replace_mwb_to_wps_in_shortcodes() {
-		$all_product_ids = get_posts(
-			array(
-				'post_type' => 'product',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$all_post_ids = get_posts(
-			array(
-				'post_type' => 'post',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$all_page_ids = get_posts(
-			array(
-				'post_type' => 'page',
-				'posts_per_page' => -1,
-				'post_status' => 'publish',
-				'fields' => 'ids',
-			)
-		);
-		$all_ids = array_merge( $all_product_ids, $all_post_ids, $all_page_ids );
-		foreach ( $all_ids as $id ) {
-			$post = get_post( $id );
-			$content = $post->post_content;
-
-			$content = str_replace( 'MWB_', 'WPS_', $content );
-			$content = str_replace( 'mwb_', 'wps_', $content );
-			$my_post = array(
-				'ID'           => $id,
-				'post_content' => $content,
-			);
-			wp_update_post( $my_post );
-
-		}
-	}
-
-
 }

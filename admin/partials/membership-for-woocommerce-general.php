@@ -29,7 +29,6 @@ apply_filters( 'mfw_general_settings_array', array() );
 <form action="" method="POST" class="wps-mfw-gen-section-form">
 	<div class="mfw-secion-wrap">
 <?php
-	require_once plugin_dir_path( __FILE__ ) . '/membership-for-woocommerce-incompatible.php';
 
 	/**
 	 * Action for general setting before.
