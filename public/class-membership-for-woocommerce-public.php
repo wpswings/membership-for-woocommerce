@@ -168,7 +168,7 @@ class Membership_For_Woocommerce_Public {
 
 			$plan_name  = ! empty( get_the_title( $plan_id ) ) ? get_the_title( $plan_id ) : '';
 			$plan_desc  = ! empty( get_post_field( 'post_content', $plan_id ) ) ? get_post_field( 'post_content', $plan_id ) : '';
-			$plan_price = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_price', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_price', true ) : '';
+			$plan_price = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true ) : '';
 
 			$plan_data['name']  = $plan_name;
 			$plan_data['desc']  = $plan_desc;
@@ -413,7 +413,7 @@ class Membership_For_Woocommerce_Public {
 				return $is_purchasable;
 			}
 		}
-		$exclude = get_post_meta( $product->get_id(), '_wps_membership_exclude', true );
+		$exclude = wps_membership_get_meta_data( $product->get_id(), '_wps_membership_exclude', true );
 
 		if ( 'yes' === $exclude ) {
 			$is_purchasable = false;
@@ -542,9 +542,9 @@ class Membership_For_Woocommerce_Public {
 					foreach ( $data as $plan ) {
 
 						$page_link_found = false;
-						$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-						$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-						$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+						$target_ids      = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+						$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+						$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 						if ( $target_cat_ids ) {
 
@@ -571,7 +571,7 @@ class Membership_For_Woocommerce_Public {
 							if ( in_array( $product->get_id(), $target_ids ) ) {
 
 								foreach ( $target_ids as $ids ) {
-									$exclude = get_post_meta( $ids, '_wps_membership_exclude', true );
+									$exclude = wps_membership_get_meta_data( $ids, '_wps_membership_exclude', true );
 
 									if ( 'yes' === $exclude ) {
 										return;
@@ -600,11 +600,11 @@ class Membership_For_Woocommerce_Public {
 
 										foreach ( $current_memberships as $key => $membership_id ) {
 
-											$member_status = get_post_meta( $membership_id, 'member_status', true );
+											$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 											if ( ! empty( $member_status ) && 'complete' != $member_status && 'expired' != $member_status ) {
 
-												$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+												$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 
 												if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 													$is_pending = 'pending';
@@ -699,11 +699,11 @@ class Membership_For_Woocommerce_Public {
 
 											foreach ( $current_memberships as $key => $membership_id ) {
 
-												$member_status = get_post_meta( $membership_id, 'member_status', true );
+												$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 												if ( ! empty( $member_status ) && 'complete' != $member_status ) {
 
-													$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+													$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 
 													if ( ! empty( $active_plan['ID'] ) && $active_plan['ID'] == $plan['ID'] ) {
 														$is_pending = 'pending';
@@ -772,10 +772,10 @@ class Membership_For_Woocommerce_Public {
 
 					foreach ( $current_memberships as $key => $membership_id ) {
 
-						$member_status = get_post_meta( $membership_id, 'member_status', true );
+						$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 						if ( 'pending' == $member_status || 'on-hold' == $member_status ) {
 
-									$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+									$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 							$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
 							if ( ! empty( $club_membership ) ) {
 								$existing_plan_id = array_merge( $existing_plan_id, $club_membership );
@@ -788,7 +788,7 @@ class Membership_For_Woocommerce_Public {
 						}
 						if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
-							$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+							$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 							if ( empty( $active_plan ) ) {
 								continue;
 							}
@@ -814,9 +814,9 @@ class Membership_For_Woocommerce_Public {
 
 								if ( ! in_array( $plan['ID'], $already_included_plan ) ) {
 									$page_link_found = false;
-									$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-									$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-									$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+									$target_ids      = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+									$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+									$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 									if ( $target_cat_ids ) {
 										$target_ids = array_merge( $target_ids, $target_cat_ids );
@@ -839,7 +839,7 @@ class Membership_For_Woocommerce_Public {
 										if ( in_array( $product->get_id(), $target_ids ) ) {
 
 											foreach ( $target_ids as $ids ) {
-												$exclude = get_post_meta( $ids, '_wps_membership_exclude', true );
+												$exclude = wps_membership_get_meta_data( $ids, '_wps_membership_exclude', true );
 
 												if ( 'yes' === $exclude ) {
 													return;
@@ -967,9 +967,9 @@ class Membership_For_Woocommerce_Public {
 						break;
 					}
 
-					$target_ids     = get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true );
-					$target_cat_ids = get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true );
-					$target_tag_ids  = get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true );
+					$target_ids     = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true );
+					$target_cat_ids = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true );
+					$target_tag_ids  = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true );
 
 					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
@@ -1074,7 +1074,7 @@ class Membership_For_Woocommerce_Public {
 
 			// Get plan details.
 			$plan_title    = get_the_title( $plan_id );
-			$plan_price    = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+			$plan_price    = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 
 			if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 				$plan_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $plan_price );
@@ -1085,7 +1085,7 @@ class Membership_For_Woocommerce_Public {
 				$plan_currency = wps_mmcsfw_get_custom_currency_symbol( '' );
 			}
 			$plan_desc     = get_post_field( 'post_content', $plan_id );
-			$plan_info     = get_post_meta( $plan_id, 'wps_membership_plan_info', true );
+			$plan_info     = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
 
 			/**
 			 * Filter for membership plan.
@@ -1208,7 +1208,7 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $plan_id ) ) {
 
-			$plan_price = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+			$plan_price = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 			if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 				$plan_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $plan_price );
 			}
@@ -1716,7 +1716,7 @@ class Membership_For_Woocommerce_Public {
 				$description .= $this->get_plan_details( $plan_id );
 			}
 
-			$plan_info = get_post_meta( $plan_id, 'wps_membership_plan_info', true );
+			$plan_info = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
 
 			if ( ! empty( $plan_info ) ) {
 
@@ -1734,14 +1734,14 @@ class Membership_For_Woocommerce_Public {
 			if ( ! empty( $data ) ) {
 				foreach ( $data as $plan ) {
 
-					$plan_info = get_post_meta( $plan['ID'], 'wps_membership_plan_info', true );
+					$plan_info = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_info', true );
 
 					$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page', '' );
 
 					if ( ! empty( $wps_membership_default_plans_page_id ) && 'publish' == get_post_status( $wps_membership_default_plans_page_id ) ) {
 						$page_link = get_page_link( $wps_membership_default_plans_page_id );
 					}
-					$plan_price    = floatval( get_post_meta( $plan['ID'], 'wps_membership_plan_price', true ) );
+					$plan_price    = floatval( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_price', true ) );
 
 					if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 						$plan_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $plan_price );
@@ -1832,7 +1832,7 @@ class Membership_For_Woocommerce_Public {
 				$description .= '<div class="wps_membership_plan_content_desc">' . $content . '</div>';
 			}
 
-			$plan_info = get_post_meta( $plan_id, 'wps_membership_plan_info', true );
+			$plan_info = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
 
 			if ( ! empty( $plan_info ) ) {
 
@@ -1881,7 +1881,7 @@ class Membership_For_Woocommerce_Public {
 		}
 		if ( ! empty( $plan_id ) ) {
 
-			$plan_price = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+			$plan_price = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 			$plan_title = get_the_title( $plan_id );
 
 			if ( empty( $content ) ) {
@@ -1940,7 +1940,7 @@ class Membership_For_Woocommerce_Public {
 
 		}
 
-		$plan_price = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+		$plan_price = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 		$plan_title = get_the_title( $plan_id );
 
 		if ( empty( $content ) ) {
@@ -2061,9 +2061,9 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					$membership_status = get_post_meta( $membership_id, 'member_status', true );
+					$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 					if ( ! empty( $membership_status ) && 'complete' == $membership_status ) {
-						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 						if ( key_exists( 'wps_memebership_plan_free_shipping', $active_plan ) ) {
 
 							if ( 'yes' == $active_plan['wps_memebership_plan_free_shipping'] ) {
@@ -2164,70 +2164,70 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function assign_club_membership_to_member( $plan_id, $plan_obj, $member_id ) {
-		$club_membership = get_post_meta( $plan_id, 'wps_membership_club', true );
+		$club_membership = wps_membership_get_meta_data( $plan_id, 'wps_membership_club', true );
 
 		if ( ! empty( $club_membership ) ) {
 
 			foreach ( $club_membership as $mem_ids ) {
 
-				$product_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_ids', true );
+				$product_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_ids', true );
 				if ( ! empty( $product_ids ) ) {
 					$plan_obj['wps_membership_plan_target_ids'] = ! empty( $plan_obj['wps_membership_plan_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_target_ids'] = array_merge( $plan_obj['wps_membership_plan_target_ids'], $product_ids );
 					$plan_obj['wps_membership_plan_target_ids'] = serialize( $plan_obj['wps_membership_plan_target_ids'] );
 				}
-				$product_disc_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_disc_ids', true );
+				$product_disc_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_ids', true );
 				if ( ! empty( $product_disc_ids ) ) {
 					$plan_obj['wps_membership_plan_target_disc_ids'] = ! empty( $plan_obj['wps_membership_plan_target_disc_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_ids'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_ids'] = array_merge( $plan_obj['wps_membership_plan_target_disc_ids'], $product_disc_ids );
 					$plan_obj['wps_membership_plan_target_disc_ids'] = serialize( $plan_obj['wps_membership_plan_target_disc_ids'] );
 				}
 
-				$post_ids = get_post_meta( $mem_ids, 'wps_membership_plan_post_target_ids', true );
+				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_post_target_ids', true );
 				if ( ! empty( $post_ids ) ) {
 					$plan_obj['wps_membership_plan_post_target_ids'] = ! empty( $plan_obj['wps_membership_plan_post_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_post_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_post_target_ids'] = array_merge( $plan_obj['wps_membership_plan_post_target_ids'], $post_ids );
 					$plan_obj['wps_membership_plan_post_target_ids'] = serialize( $plan_obj['wps_membership_plan_post_target_ids'] );
 				}
 
-				$post_ids = get_post_meta( $mem_ids, 'wps_membership_plan_page_target_ids', true );
+				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_page_target_ids', true );
 				if ( ! empty( $post_ids ) ) {
 					$plan_obj['wps_membership_plan_page_target_ids'] = ! empty( $plan_obj['wps_membership_plan_page_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_page_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_page_target_ids'] = array_merge( $plan_obj['wps_membership_plan_page_target_ids'], $post_ids );
 					$plan_obj['wps_membership_plan_page_target_ids'] = serialize( $plan_obj['wps_membership_plan_page_target_ids'] );
 				}
 
-				$cat_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_categories', true );
+				$cat_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_categories', true );
 				if ( ! empty( $cat_ids ) ) {
 					$plan_obj['wps_membership_plan_target_categories'] = ! empty( $plan_obj['wps_membership_plan_target_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_categories'] = array_merge( $plan_obj['wps_membership_plan_target_categories'], $cat_ids );
 					$plan_obj['wps_membership_plan_target_categories'] = serialize( $plan_obj['wps_membership_plan_target_categories'] );
 				}
-				$cat_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_disc_categories', true );
+				$cat_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_categories', true );
 				if ( ! empty( $cat_ids ) ) {
 					$plan_obj['wps_membership_plan_target_disc_categories'] = ! empty( $plan_obj['wps_membership_plan_target_disc_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_categories'] = array_merge( $plan_obj['wps_membership_plan_target_disc_categories'], $cat_ids );
 					$plan_obj['wps_membership_plan_target_disc_categories'] = serialize( $plan_obj['wps_membership_plan_target_disc_categories'] );
 				}
-				$tag_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_tags', true );
+				$tag_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_tags', true );
 				if ( ! empty( $tag_ids ) ) {
 					$plan_obj['wps_membership_plan_target_tags'] = ! empty( $plan_obj['wps_membership_plan_target_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_tags'] = array_merge( $plan_obj['wps_membership_plan_target_tags'], $tag_ids );
 					$plan_obj['wps_membership_plan_target_tags'] = serialize( $plan_obj['wps_membership_plan_target_tags'] );
 				}
-				$post_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_disc_tags', true );
+				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_tags', true );
 				if ( ! empty( $post_ids ) ) {
 					$plan_obj['wps_membership_plan_target_disc_tags'] = ! empty( $plan_obj['wps_membership_plan_target_disc_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_tags'] = array_merge( $plan_obj['wps_membership_plan_target_disc_tags'], $post_ids );
 					$plan_obj['wps_membership_plan_target_disc_tags'] = serialize( $plan_obj['wps_membership_plan_target_disc_tags'] );
 				}
-				$ptags = get_post_meta( $mem_ids, 'wps_membership_plan_target_post_tags', true );
+				$ptags = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_post_tags', true );
 				if ( ! empty( $ptags ) ) {
 					$plan_obj['wps_membership_plan_target_post_tags'] = ! empty( $plan_obj['wps_membership_plan_target_post_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_post_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_post_tags'] = array_merge( $plan_obj['wps_membership_plan_target_post_tags'], $ptags );
 					$plan_obj['wps_membership_plan_target_post_tags'] = serialize( $plan_obj['wps_membership_plan_target_post_tags'] );
 				}
-				$pcats = get_post_meta( $mem_ids, 'wps_membership_plan_target_post_categories', true );
+				$pcats = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_post_categories', true );
 				if ( ! empty( $pcats ) ) {
 					$plan_obj['wps_membership_plan_target_post_categories'] = ! empty( $plan_obj['wps_membership_plan_target_post_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_post_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_post_categories'] = array_merge( $plan_obj['wps_membership_plan_target_post_categories'], $pcats );
@@ -2235,12 +2235,12 @@ class Membership_For_Woocommerce_Public {
 				}
 				// $product_disc_ids
 
-				$product_disc_ids = get_post_meta( $mem_ids, 'wps_membership_plan_target_disc_ids', true );
+				$product_disc_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_ids', true );
 				foreach ( $product_disc_ids as $product_id ) {
-					$prouct_discount = get_post_meta( $product_id, '_wps_membership_discount_' . $mem_ids, true );
-					update_post_meta( $product_id, '_wps_membership_discount_' . $plan_id, $prouct_discount );
+					$prouct_discount = wps_membership_get_meta_data( $product_id, '_wps_membership_discount_' . $mem_ids, true );
+					wps_membership_update_meta_data( $product_id, '_wps_membership_discount_' . $plan_id, $prouct_discount );
 				}
-				update_post_meta( $member_id, 'plan_obj', $plan_obj );
+				wps_membership_update_meta_data( $member_id, 'plan_obj', $plan_obj );
 			}
 		}
 	}
@@ -2287,7 +2287,7 @@ class Membership_For_Woocommerce_Public {
 						$order_st = 'cancelled';
 					}
 				}
-				update_post_meta( $member_id, 'member_status', $order_st );
+				wps_membership_update_meta_data( $member_id, 'member_status', $order_st );
 
 			} else {
 
@@ -2301,7 +2301,7 @@ class Membership_For_Woocommerce_Public {
 			$this->wps_process_payment_callback( $member_id );
 
 		} else {
-			$plan_id = get_post_meta( $product_id, 'wps_membership_plan_with_product', true );
+			$plan_id = wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true );
 			$is_plan_assigned = false;
 			$user = get_user_by( 'email', $order->get_billing_email() );
 			$is_member_meta = get_user_meta( $user->ID, 'is_member' );
@@ -2314,8 +2314,8 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $current_memberships ) && is_array( $current_memberships ) && $plan_id ) {
 				foreach ( $current_memberships as $key => $membership_id ) {
-					$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-					$status = get_post_meta( $membership_id, 'member_status', true );
+					$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+					$status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 					if ( ! empty( $active_plan['ID'] ) ) {
 						if ( $plan_id == $active_plan['ID'] && 'cancelled' != $status && ! empty( $status ) ) {
@@ -2386,8 +2386,8 @@ class Membership_For_Woocommerce_Public {
 				$member_id = $member_data['member_id'];
 			}
 
-			update_post_meta( $member_id, 'member_order_id', $order_id );
-			$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+			wps_membership_update_meta_data( $member_id, 'member_order_id', $order_id );
+			$plan_obj = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 			if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
 				$available_plan = get_option( 'all_subscription_plan' );
 				$available_plan = $available_plan . '-' . $member_id;
@@ -2404,7 +2404,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_process_payment_callback( $member_id ) {
-		$member_status = get_post_meta( $member_id, 'member_status' );
+		$member_status = wps_membership_get_meta_data( $member_id, 'member_status' );
 
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $member_status[0] ) {
@@ -2413,31 +2413,31 @@ class Membership_For_Woocommerce_Public {
 			$current_date = gmdate( 'Y-m-d' );
 			$today_date = gmdate( 'Y-m-d' );
 
-			$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+			$plan_obj = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 
 			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) ) {
 
-				$access_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
+				$access_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
 
 				if ( 'delay_type' == $access_type ) {
-					$time_duration      = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
-					$time_duration_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
+					$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
+					$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
 					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				}
 
 				if ( 'lifetime' == $plan_obj['wps_membership_plan_name_access_type'] ) {
 
-					update_post_meta( $member_id, 'member_expiry', 'Lifetime' );
+					wps_membership_update_meta_data( $member_id, 'member_expiry', 'Lifetime' );
 
 				} elseif ( 'limited' == $plan_obj['wps_membership_plan_name_access_type'] ) {
 
 					$duration = $plan_obj['wps_membership_plan_duration'] . ' ' . $plan_obj['wps_membership_plan_duration_type'];
 					$expiry_date = strtotime( $today_date . $duration );
-					update_post_meta( $member_id, 'member_expiry', $expiry_date );
+					wps_membership_update_meta_data( $member_id, 'member_expiry', $expiry_date );
 				}
 			}
-			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
+			$expiry_date = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
 			if ( 'Lifetime' == $expiry_date ) {
 				$expiry_date = 'Lifetime';
 			} else {
@@ -2447,7 +2447,7 @@ class Membership_For_Woocommerce_Public {
 			$user_id = get_current_user_id();
 			$user = get_userdata( $user_id );
 			$user_name = $user->data->display_name;
-			$order_id = get_post_meta( $member_id, 'member_order_id', true );
+			$order_id = wps_membership_get_meta_data( $member_id, 'member_order_id', true );
 			if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
 
 				$customer_email = WC()->mailer()->emails['membership_creation_email'];
@@ -2512,7 +2512,7 @@ class Membership_For_Woocommerce_Public {
 
 		if ( ! empty( $product ) ) {
 
-			$exclude = get_post_meta( $product->get_id(), '_wps_membership_exclude', true );
+			$exclude = wps_membership_get_meta_data( $product->get_id(), '_wps_membership_exclude', true );
 
 			if ( 'yes' === $exclude ) {
 				$access = true;
@@ -2527,14 +2527,14 @@ class Membership_For_Woocommerce_Public {
 				foreach ( $current_memberships as $key => $membership_id ) {
 
 					if ( 'publish' == get_post_status( $membership_id ) || 'draft' == get_post_status( $membership_id ) ) {
-						$membership_status = get_post_meta( $membership_id, 'member_status', true );
+						$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 						// Get Saved Plan Details.
-						$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						$membership_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 						if ( ! empty( $membership_plan->ID ) ) {
 							array_push( $all_member_plans, $membership_plan->ID );
 						}
-						$membership_status = get_post_meta( $membership_id, 'member_status', true );
+						$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 						$accessible_prod = ! empty( $membership_plan['wps_membership_plan_target_ids'] ) ? maybe_unserialize( $membership_plan['wps_membership_plan_target_ids'] ) : array();
 						$accessible_cat  = ! empty( $membership_plan['wps_membership_plan_target_categories'] ) ? maybe_unserialize( $membership_plan['wps_membership_plan_target_categories'] ) : array();
@@ -2544,7 +2544,7 @@ class Membership_For_Woocommerce_Public {
 
 							$access = true;
 
-							$membership_status = get_post_meta( $membership_id, 'member_status', true );
+							$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 							if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'complete' ) ) ) {
 								$access = true;
@@ -2611,7 +2611,7 @@ class Membership_For_Woocommerce_Public {
 
 							$access = true;
 
-							$membership_status = get_post_meta( $membership_id, 'member_status', true );
+							$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 							$this->another_plan_products = $this->another_plan_products ? $this->another_plan_products : array();
 							array_push( $this->another_plan_products, $product->get_id() );
@@ -2664,11 +2664,11 @@ class Membership_For_Woocommerce_Public {
 
 			foreach ( $current_memberships as $key => $membership_id ) {
 
-				$member_status = get_post_meta( $membership_id, 'member_status', true );
+				$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 				if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
-					$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+					$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 					if ( empty( $active_plan ) ) {
 						continue;
 					}
@@ -2692,8 +2692,8 @@ class Membership_For_Woocommerce_Public {
 
 					if ( in_array( $plan['ID'], $existing_plan_id ) ) {
 
-						$offer_type = get_post_meta( $plan['ID'], 'wps_membership_plan_offer_price_type', true );
-						$offer_price = get_post_meta( $plan['ID'], 'wps_memebership_plan_discount_price', true );
+						$offer_type = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_offer_price_type', true );
+						$offer_price = wps_membership_get_meta_data( $plan['ID'], 'wps_memebership_plan_discount_price', true );
 
 						if ( '%' == $offer_type ) {
 							array_push( $applied_offer_price_percentage, floatval( $offer_price ) );
@@ -2781,9 +2781,9 @@ class Membership_For_Woocommerce_Public {
 
 			foreach ( $delay_members as $member_id ) {
 
-				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
-				$member_status = get_post_meta( $member_id, 'member_status', true );
-				$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
+				$plan_obj = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
+				$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
+				$order = new WC_Order( wps_membership_get_meta_data( $member_id, 'member_order_id', true ) );
 				$order_status = $order->status;
 
 				if ( 'pending' == $member_status ) {
@@ -2792,35 +2792,35 @@ class Membership_For_Woocommerce_Public {
 					if ( ! empty( $plan_obj ) ) {
 						// Getting current activation date.
 
-						$access_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
+						$access_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
 						if ( 'delay_type' == $access_type ) {
-								$time_duration      = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
-								$time_duration_type = get_post_meta( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
+								$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
+								$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
 
-								$delay_date = get_post_meta( $member_id, 'membership_delay_date', true );
-								$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
+								$delay_date = wps_membership_get_meta_data( $member_id, 'membership_delay_date', true );
+								$expiry_date = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
 							// Getting current activation date.
 							$current_date = gmdate( 'Y-m-d' );
 							if ( $current_date >= $delay_date ) {
 
 								if ( 'completed' == $order_status ) {
-									update_post_meta( $member_id, 'member_status', 'complete' );
-									$order_id = get_post_meta( $member_id, 'member_order_id', true );
-									$plan = get_post_meta( $member_id, 'plan_obj', true );
+									wps_membership_update_meta_data( $member_id, 'member_status', 'complete' );
+									$order_id = wps_membership_get_meta_data( $member_id, 'member_order_id', true );
+									$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 									if ( 'yes' == $plan['wps_membership_subscription'] ) {
-										$subscription_i_d = get_post_meta( $order_id, 'wps_subscription_id', true );
+										$subscription_i_d = wps_membership_get_meta_data( $order_id, 'wps_subscription_id', true );
 										if ( ! empty( $subscription_i_d ) ) {
-											update_post_meta( $subscription_i_d, 'wps_subscription_status', 'active' );
-											update_post_meta( $subscription_i_d, 'wps_next_payment_date', $expiry_date );
+											wps_membership_update_meta_data( $subscription_i_d, 'wps_subscription_status', 'active' );
+											wps_membership_update_meta_data( $subscription_i_d, 'wps_next_payment_date', $expiry_date );
 											if ( ! empty( $plan['wps_membership_subscription_expiry'] ) ) {
 												if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 													$current_time = current_time( 'timestamp' );
 													$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_i_d, $current_time );
-													update_post_meta( $subscription_i_d, 'wps_susbcription_end', $wps_susbcription_end );
+													wps_membership_update_meta_data( $subscription_i_d, 'wps_susbcription_end', $wps_susbcription_end );
 
 												}
 											} else {
-													update_post_meta( $subscription_i_d, 'wps_susbcription_end', '' );
+													wps_membership_update_meta_data( $subscription_i_d, 'wps_susbcription_end', '' );
 											}
 										}
 									}
@@ -2861,18 +2861,18 @@ class Membership_For_Woocommerce_Public {
 			$user_name = '';
 
 			foreach ( $limited_members as $member_id ) {
-				$member_status = get_post_meta( $member_id, 'member_status', true );
+				$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
 				$post   = get_post( $member_id );
 				$user = get_userdata( $post->post_author );
-				$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
-				$plan_obj = get_post_meta( $member_id, 'plan_obj', true );
+				$expiry_date = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
+				$plan_obj = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 				$today_date = gmdate( 'Y-m-d' );
 				$current_date = time();
-				$order = new WC_Order( get_post_meta( $member_id, 'member_order_id', true ) );
+				$order = new WC_Order( wps_membership_get_meta_data( $member_id, 'member_order_id', true ) );
 				$order_status = $order->status;
-				$order_id = get_post_meta( $member_id, 'member_order_id', true );
+				$order_id = wps_membership_get_meta_data( $member_id, 'member_order_id', true );
 				$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
-				$expiry = get_post_meta( $member_id, 'member_expiry', true );
+				$expiry = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
 
 				if ( 'Lifetime' == $expiry ) {
 					$expiry_mail = 'Lifetime';
@@ -2903,15 +2903,15 @@ class Membership_For_Woocommerce_Public {
 
 					if ( 'complete' == $member_status ) {
 
-						$plan = get_post_meta( $member_id, 'plan_obj', true );
+						$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 
-						$plan = get_post_meta( $member_id, 'plan_obj', true );
+						$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 						$is_subscription = $plan['wps_membership_subscription'];
 
 						update_option( 'xfgxfg' . $member_id, $is_subscription . '--' );
 
 						if ( 'yes' != $is_subscription ) {
-							update_post_meta( $member_id, 'member_status', 'expired' );
+							wps_membership_update_meta_data( $member_id, 'member_status', 'expired' );
 						}
 						$customer_email = '';
 						if ( ! empty( WC()->mailer()->emails['membership_expired_email'] ) ) {
@@ -2920,7 +2920,7 @@ class Membership_For_Woocommerce_Public {
 
 						$expiry_mail = gmdate( 'Y-m-d', strtotime( $expiry_date ) );
 
-						$expiry = get_post_meta( $member_id, 'member_expiry', true );
+						$expiry = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
 
 						if ( 'Lifetime' == $expiry ) {
 							$expiry_mail = 'Lifetime';
@@ -2981,7 +2981,7 @@ class Membership_For_Woocommerce_Public {
 
 					foreach ( $memberships as $key => $m_id ) {
 
-						$status = get_post_meta( $m_id, 'member_status', true );
+						$status = wps_membership_get_meta_data( $m_id, 'member_status', true );
 
 						if ( 'complete' == $status ) {
 
@@ -2999,7 +2999,7 @@ class Membership_For_Woocommerce_Public {
 
 						foreach ( $memberships as $key => $m_id ) {
 
-							$status = get_post_meta( $m_id, 'member_status', true );
+							$status = wps_membership_get_meta_data( $m_id, 'member_status', true );
 
 							if ( 'expired' != $status ) {
 
@@ -3059,7 +3059,7 @@ class Membership_For_Woocommerce_Public {
 
 			$plan_id = isset( $_POST['wps_register_form_plan'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_register_form_plan'] ) ) : '';
 			$plan_title = get_the_title( $plan_id );
-			$plan_price = get_post_meta( $plan_id, 'wps_membership_plan_price', true );
+			$plan_price = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 			$wps_fname = isset( $_POST['wps_register_form_fname'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_register_form_fname'] ) ) : '';
 			$wps_lname = isset( $_POST['wps_register_form_lname'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_register_form_lname'] ) ) : '';
 			$wps_country = isset( $_POST['wps_register_form_country'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_register_form_country'] ) ) : '';
@@ -3169,7 +3169,7 @@ class Membership_For_Woocommerce_Public {
 		if ( ! empty( $product ) ) {
 
 			foreach ( $cart->cart_contents as $cart_contents_key => $cart_contents_value ) {
-				$wps_attached_plan_id = get_post_meta( $cart_contents_value['product_id'], 'wps_membership_plan_with_product', true );
+				$wps_attached_plan_id = wps_membership_get_meta_data( $cart_contents_value['product_id'], 'wps_membership_plan_with_product', true );
 				if ( isset( $cart_contents_value['plan_price'] ) && $cart_contents_value['plan_price'] && $product->get_id() == $cart_contents_value['product_id'] ) {
 					$cart_contents_value['data']->set_price( $cart_contents_value['plan_price'] );
 				}
@@ -3177,74 +3177,74 @@ class Membership_For_Woocommerce_Public {
 				if ( $product->get_id() == $cart_contents_value['product_id'] ) {
 					if ( key_exists( 'plan_id', $cart_contents_value ) ) {
 
-						$wps_sfw_product = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
+						$wps_sfw_product = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_subscription', true );
 					}
 
 					if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
 
-						$wps_membership_plan_name_access_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_name_access_type', true );
+						$wps_membership_plan_name_access_type = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_plan_name_access_type', true );
 
 						if ( 'limited' == $wps_membership_plan_name_access_type ) {
-							$wps_membership_plan_duration = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration', true );
-							$wps_membership_plan_duration_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_plan_duration_type', true );
+							$wps_membership_plan_duration = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_plan_duration', true );
+							$wps_membership_plan_duration_type = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_plan_duration_type', true );
 
-							$wps_membership_subscription_expiry = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry', true );
-							$wps_membership_subscription_expiry_type = get_post_meta( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry_type', true );
+							$wps_membership_subscription_expiry = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry', true );
+							$wps_membership_subscription_expiry_type = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_membership_subscription_expiry_type', true );
 
-							update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
+							wps_membership_update_meta_data( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
 
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
 
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
 
-							update_post_meta( $wps_membership_default_product, '_regular_price', $cart_contents_value['plan_price'] );
+							wps_membership_update_meta_data( $wps_membership_default_product, '_regular_price', $cart_contents_value['plan_price'] );
 
 						}
 					} else {
-						update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
+						wps_membership_update_meta_data( $wps_membership_default_product, '_wps_sfw_product', 'no' );
 
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
 
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
 
 					}
 				} else if ( $wps_attached_plan_id ) {
 					$wps_membership_default_product = $cart_contents_value['product_id'];
 
-						$wps_sfw_product = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription', true );
+						$wps_sfw_product = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_subscription', true );
 
 					if ( ! empty( $wps_sfw_product ) && 'yes' == $wps_sfw_product ) {
 
-						$wps_membership_plan_name_access_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_name_access_type', true );
+						$wps_membership_plan_name_access_type = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_plan_name_access_type', true );
 
 						if ( 'limited' == $wps_membership_plan_name_access_type ) {
-							$wps_membership_plan_duration = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration', true );
-							$wps_membership_plan_duration_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_plan_duration_type', true );
+							$wps_membership_plan_duration = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_plan_duration', true );
+							$wps_membership_plan_duration_type = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_plan_duration_type', true );
 
-							$wps_membership_subscription_expiry = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry', true );
-							$wps_membership_subscription_expiry_type = get_post_meta( $wps_attached_plan_id, 'wps_membership_subscription_expiry_type', true );
+							$wps_membership_subscription_expiry = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_subscription_expiry', true );
+							$wps_membership_subscription_expiry_type = wps_membership_get_meta_data( $wps_attached_plan_id, 'wps_membership_subscription_expiry_type', true );
 
-							update_post_meta( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
+							wps_membership_update_meta_data( $wps_membership_default_product, '_wps_sfw_product', $wps_sfw_product );
 
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_number', intval( $wps_membership_plan_duration ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_interval', substr( $wps_membership_plan_duration_type, 0, -1 ) );
 
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
-							update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
+							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
 
 						}
 					} else {
-						update_post_meta( $wps_membership_default_product, '_wps_sfw_product', 'no' );
+						wps_membership_update_meta_data( $wps_membership_default_product, '_wps_sfw_product', 'no' );
 
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_number', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_interval', '' );
 
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
-						update_post_meta( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', '' );
+						wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', '' );
 
 					}
 				}
@@ -3273,7 +3273,7 @@ class Membership_For_Woocommerce_Public {
 	public function get_all_included_membership( $active_plan_id ) {
 
 		$included_membership = array();
-		$club_membership = get_post_meta( $active_plan_id, 'wps_membership_club', true );
+		$club_membership = wps_membership_get_meta_data( $active_plan_id, 'wps_membership_club', true );
 		if ( ! empty( $club_membership ) ) {
 			foreach ( $club_membership as $club_membership_key => $club_membership_value ) {
 				array_push( $included_membership, $club_membership_value );
@@ -3325,11 +3325,11 @@ class Membership_For_Woocommerce_Public {
 
 			foreach ( $current_memberships as $key => $membership_id ) {
 
-				$member_status = get_post_meta( $membership_id, 'member_status', true );
+				$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 				if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
-					$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+					$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 					if ( empty( $active_plan ) && ! is_array( $active_plan ) ) {
 						continue;
 					}
@@ -3342,9 +3342,9 @@ class Membership_For_Woocommerce_Public {
 						array_push( $existing_plan_id, $active_plan['ID'] );
 					}
 
-					$target_ids      = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-					$target_cat_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-					$target_tag_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+					$target_ids      = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+					$target_cat_ids  = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+					$target_tag_ids  = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 					$product_terms = $this->get_product_terms( $product->get_id() );
 
@@ -3403,9 +3403,9 @@ class Membership_For_Woocommerce_Public {
 					if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
 						$page_link_found = false;
-						$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-						$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-						$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+						$target_ids      = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+						$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+						$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 						if ( $target_cat_ids ) {
 							foreach ( $target_cat_ids as $cat_id ) {
@@ -3836,11 +3836,11 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					$member_status = get_post_meta( $membership_id, 'member_status', true );
+					$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 					if ( ! empty( $member_status ) && 'complete' == $member_status ) {
 
-						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 
 						$club_membership = $this->get_all_included_membership( $active_plan['ID'] );
 						if ( ! empty( $club_membership ) ) {
@@ -3850,9 +3850,9 @@ class Membership_For_Woocommerce_Public {
 							array_push( $existing_plan_id, $active_plan['ID'] );
 						}
 
-						$target_ids      = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-						$target_cat_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-						$target_tag_ids  = ! empty( get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+						$target_ids      = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+						$target_cat_ids  = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+						$target_tag_ids  = ! empty( wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $active_plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 						$product_terms = $this->get_product_terms( get_the_ID() );
 
@@ -3880,9 +3880,9 @@ class Membership_For_Woocommerce_Public {
 				if ( ! in_array( $plan['ID'], $existing_plan_id ) ) {
 
 							$page_link_found = false;
-							$target_ids      = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
-							$target_cat_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
-							$target_tag_ids  = ! empty( get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
+							$target_ids      = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) : array();
+							$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true ) : array();
+							$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true ) : array();
 
 							$product_terms = $this->get_product_terms( get_the_ID() );
 
@@ -3935,10 +3935,10 @@ class Membership_For_Woocommerce_Public {
 		if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
 			if ( ! is_cart() ) {
 
-				$discount = get_post_meta( $product_id, '_wps_membership_discount_product_', true );
+				$discount = wps_membership_get_meta_data( $product_id, '_wps_membership_discount_product_', true );
 
 				if ( 'true' == $discount ) {
-					$member_product = get_post_meta( $product_id, '_wps_membership_discount_product_price', true );
+					$member_product = wps_membership_get_meta_data( $product_id, '_wps_membership_discount_product_price', true );
 				}
 
 				if ( empty( $member_product ) ) {
@@ -3974,7 +3974,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		if ( ! empty( $member_id ) ) {
-			$plan = get_post_meta( $member_id, 'plan_obj', true );
+			$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 			if ( 'yes' == $plan['wps_membership_subscription'] ) {
 				$subscription_status = $order->get_status();
 			}
@@ -3991,15 +3991,15 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_subscription_next_payment_date( $wps_next_payment_date, $subscription_i_d ) {
-		$order_id = get_post_meta( $subscription_i_d, 'wps_parent_order', true );
+		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
 
 		if ( ! empty( $member_id ) ) {
-			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
-			$plan = get_post_meta( $member_id, 'plan_obj', true );
+			$expiry_date = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
+			$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 			if ( 'yes' == $plan['wps_membership_subscription'] ) {
-				update_post_meta( $subscription_i_d, 'wps_next_payment_date', $expiry_date );
+				wps_membership_update_meta_data( $subscription_i_d, 'wps_next_payment_date', $expiry_date );
 			}
 			return $expiry_date;
 		} else {
@@ -4016,31 +4016,31 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_susbcription_end_date( $wps_susbcription_end, $subscription_i_d ) {
-		$order_id = get_post_meta( $subscription_i_d, 'wps_parent_order', true );
+		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
 
 		if ( ! empty( $member_id ) ) {
-			$expiry_date = get_post_meta( $member_id, 'member_expiry', true );
-			$plan = get_post_meta( $member_id, 'plan_obj', true );
+			$expiry_date = wps_membership_get_meta_data( $member_id, 'member_expiry', true );
+			$plan = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
 			if ( 'yes' == $plan['wps_membership_subscription'] ) {
 				if ( ! empty( $plan['wps_membership_subscription_expiry'] ) ) {
 					if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
-						$access_type = get_post_meta( $plan['plan_id'], 'wps_membership_plan_access_type', true );
+						$access_type = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_access_type', true );
 						// $current_date = gmdate( 'Y-m-d' );
 						$current_time = current_time( 'timestamp' );
 						if ( 'delay_type' == $access_type ) {
-							$time_duration      = get_post_meta( $plan['plan_id'], 'wps_membership_plan_time_duration', true );
-							$time_duration_type = get_post_meta( $plan['plan_id'], 'wps_membership_plan_time_duration_type', true );
+							$time_duration      = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_time_duration', true );
+							$time_duration_type = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_time_duration_type', true );
 
 							$current_time = strtotime( gmdate( 'Y-m-d', strtotime( $current_time . ' + ' . $time_duration . ' ' . $time_duration_type ) ) );
 						}
 						$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_i_d, $current_time );
-						update_post_meta( $subscription_i_d, 'wps_susbcription_end', $wps_susbcription_end );
+						wps_membership_update_meta_data( $subscription_i_d, 'wps_susbcription_end', $wps_susbcription_end );
 
 					}
 				} else {
-						update_post_meta( $subscription_i_d, 'wps_susbcription_end', '' );
+						wps_membership_update_meta_data( $subscription_i_d, 'wps_susbcription_end', '' );
 				}
 			}
 			return $expiry_date;
@@ -4110,10 +4110,10 @@ class Membership_For_Woocommerce_Public {
 
 				foreach ( $current_memberships as $key => $membership_id ) {
 
-					$member_status = get_post_meta( $membership_id, 'member_status', true );
+					$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status || 'hold' == $member_status ) {
-						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
+						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 						if ( $active_plan['post_title'] == $membership_name ) {
 							$is_not_membership_applicable = true;
 						}
@@ -4139,7 +4139,7 @@ class Membership_For_Woocommerce_Public {
 		foreach ( $items as $item ) {
 			$product_id = $item['product_id'];
 			$product = wc_get_product( $product_id );
-			$plan_id = get_post_meta( $product_id, 'wps_membership_plan_with_product', true );
+			$plan_id = wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true );
 			$is_plan_assigned = false;
 			$user = get_user_by( 'email', $order->get_billing_email() );
 			if ( $plan_id ) {
@@ -4151,8 +4151,8 @@ class Membership_For_Woocommerce_Public {
 				$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 				if ( ! empty( $current_memberships ) && is_array( $current_memberships ) && $plan_id ) {
 					foreach ( $current_memberships as $key => $membership_id ) {
-						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-						$status = get_post_meta( $membership_id, 'member_status', true );
+						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+						$status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 						if ( ! empty( $active_plan['ID'] ) ) {
 
@@ -4200,7 +4200,7 @@ class Membership_For_Woocommerce_Public {
 		$user_id = get_current_user_id();
 		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
-		$plan_id = get_post_meta( $post_id, 'wps_membership_plan_with_product', true );
+		$plan_id = wps_membership_get_meta_data( $post_id, 'wps_membership_plan_with_product', true );
 
 		if ( $plan_id ) {
 			$is_plan_assigned = false;
@@ -4211,8 +4211,8 @@ class Membership_For_Woocommerce_Public {
 
 				if ( ! empty( $current_memberships ) && is_array( $current_memberships ) && $plan_id ) {
 					foreach ( $current_memberships as $key => $membership_id ) {
-						$active_plan = get_post_meta( $membership_id, 'plan_obj', true );
-						$status = get_post_meta( $membership_id, 'member_status', true );
+						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+						$status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 						if ( ! empty( $active_plan['ID'] ) ) {
 							if ( $plan_id == $active_plan['ID'] && 'complete' == $status ) {

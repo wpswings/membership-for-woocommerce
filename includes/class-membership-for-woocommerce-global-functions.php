@@ -356,7 +356,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $all_posts as $post ) {
 
-				$products = get_post_meta( $post->ID, 'wps_membership_plan_target_ids', true );
+				$products = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_ids', true );
 
 				if ( is_array( $products ) ) {
 
@@ -393,7 +393,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $all_posts as $post ) {
 
-				$categories = get_post_meta( $post->ID, 'wps_membership_plan_target_categories', true );
+				$categories = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_categories', true );
 
 				if ( is_array( $categories ) ) {
 
@@ -432,7 +432,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $all_posts as $post ) {
 
-				$tag = get_post_meta( $post->ID, 'wps_membership_plan_target_tags', true );
+				$tag = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_tags', true );
 
 				if ( is_array( $tag ) ) {
 
@@ -799,7 +799,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			// Getting plan data.
 			$plan_obj = get_post( $plan_id, ARRAY_A );
 
-			$post_meta = get_post_meta( $plan_id );
+			$post_meta = wps_membership_get_meta_data( $plan_id );
 
 			// Formatting array.
 			foreach ( $post_meta as $key => $value ) {
@@ -958,9 +958,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		if ( ! empty( $member_id ) ) {
 
-			$plan_info = get_post_meta( $member_id, 'plan_obj', true );
-			$billing   = get_post_meta( $member_id, 'billing_details', true );
-			$status    = get_post_meta( $member_id, 'member_status', true );
+			$plan_info = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
+			$billing   = wps_membership_get_meta_data( $member_id, 'billing_details', true );
+			$status    = wps_membership_get_meta_data( $member_id, 'member_status', true );
 
 			$first_name = ! empty( $billing['membership_billing_first_name'] ) ? $billing['membership_billing_first_name'] : '';
 			$last_name  = ! empty( $billing['membership_billing_last_name'] ) ? $billing['membership_billing_last_name'] : '';
@@ -1244,9 +1244,9 @@ class Membership_For_Woocommerce_Global_Functions {
 			$post_id = $post->ID;
 		}
 
-		$billing_info = get_post_meta( $post_id, 'billing_details', true );
-		$plan_info    = get_post_meta( $post_id, 'plan_obj', true );
-		$plan_status  = get_post_meta( $post_id, 'member_status', true );
+		$billing_info = wps_membership_get_meta_data( $post_id, 'billing_details', true );
+		$plan_info    = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
+		$plan_status  = wps_membership_get_meta_data( $post_id, 'member_status', true );
 
 		if ( ! empty( $fields ) && ! empty( $billing_info ) ) {
 
@@ -1307,9 +1307,9 @@ class Membership_For_Woocommerce_Global_Functions {
  */
 function wps_get_target_ids( $plan_id = '' ) {
 
-	$target_ids      = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true ) : array();
-	$target_cat_ids  = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true ) : array();
-	$target_tag_ids  = ! empty( get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true ) ) ? get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true ) : array();
+	$target_ids      = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) : array();
+	$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) : array();
+	$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) : array();
 	if ( empty( $target_ids ) ) {
 		$target_ids = array();
 	}

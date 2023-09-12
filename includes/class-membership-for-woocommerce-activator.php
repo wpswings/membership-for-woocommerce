@@ -122,10 +122,10 @@ class Membership_For_Woocommerce_Activator {
 							 $product = wc_get_product( $wps_membership_product_id );
 
 							 wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
-							 update_post_meta( $wps_membership_product_id, '_regular_price', 0 );
-							 update_post_meta( $wps_membership_product_id, '_price', 0 );
-							 update_post_meta( $wps_membership_product_id, '_visibility', 'public' );
-							 update_post_meta( $wps_membership_product_id, '_virtual', 'yes' );
+							 wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
+							 wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
+							 wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
+							 wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
 
 							 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
 
@@ -223,10 +223,10 @@ class Membership_For_Woocommerce_Activator {
 
 					 $product = wc_get_product( $wps_membership_product_id );
 					 wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
-					 update_post_meta( $wps_membership_product_id, '_regular_price', 0 );
-					 update_post_meta( $wps_membership_product_id, '_price', 0 );
-					 update_post_meta( $wps_membership_product_id, '_visibility', 'public' );
-					 update_post_meta( $wps_membership_product_id, '_virtual', 'yes' );
+					 wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
+					 wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
+					 wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
+					 wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
 
 					 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
 

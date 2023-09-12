@@ -41,9 +41,9 @@ if ( empty( $current_url ) ) {
 				foreach ( $memberships as $key => $membership_id ) {
 
 					// Get Saved Plan Details.
-					$membership_data   = get_post_meta( $membership_id );
-					$membership_plan   = get_post_meta( $membership_id, 'plan_obj', true );
-					$membership_status = get_post_meta( $membership_id, 'member_status', true );
+					$membership_data   = wps_membership_get_meta_data( $membership_id );
+					$membership_plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+					$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 					$button_disable   = ( in_array( $membership_status, array( 'pending', 'hold' ) ) ) ? 'disabled' : '';
 
 					if ( empty( $membership_plan ) ) {
@@ -118,15 +118,15 @@ if ( empty( $current_url ) ) {
 
 	$membership_id = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
-	$membership_data = get_post_meta( $membership_id );
-	$membership_plan = get_post_meta( $membership_id, 'plan_obj', true );
+	$membership_data = wps_membership_get_meta_data( $membership_id );
+	$membership_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 
-	$membership_status  = get_post_meta( $membership_id, 'member_status', true );
+	$membership_status  = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
-	$membership_billing = get_post_meta( $membership_id, 'billing_details', true );
+	$membership_billing = wps_membership_get_meta_data( $membership_id, 'billing_details', true );
 
 	if ( ! array_key_exists( 'payment_method', $membership_billing ) ) {
-		$membership_billing['payment_method'] = ! empty( get_post_meta( $membership_id, 'billing_details_payment', true ) ) ? get_post_meta( $membership_id, 'billing_details_payment', true ) : '';
+		$membership_billing['payment_method'] = ! empty( wps_membership_get_meta_data( $membership_id, 'billing_details_payment', true ) ) ? wps_membership_get_meta_data( $membership_id, 'billing_details_payment', true ) : '';
 	}
 	$temp_array = array(
 		'wps_memebership_product_discount_price' => '',
@@ -153,15 +153,15 @@ if ( empty( $current_url ) ) {
 		}
 	}
 
-	$expiry = get_post_meta( $membership_id, 'member_expiry', true );
+	$expiry = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
 
 	if ( ! empty( $membership_plan ) ) {
 
-		$access_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_access_type', true );
+		$access_type = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_access_type', true );
 
 		if ( 'delay_type' == $access_type ) {
-			$time_duration      = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
-			$time_duration_type = get_post_meta( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
+			$time_duration      = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
+			$time_duration_type = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
 			$current_date = gmdate( 'Y-m-d' );
 
 			$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
@@ -170,7 +170,7 @@ if ( empty( $current_url ) ) {
 	}
 
 
-		$membership_expiry  = get_post_meta( $membership_id, 'member_expiry', true );
+		$membership_expiry  = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
 
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
@@ -261,7 +261,7 @@ if ( empty( $current_url ) ) {
 					<td>
 						<?php
 
-						$club_membership = get_post_meta( $membership_plan['ID'], 'wps_membership_club', true );
+						$club_membership = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_club', true );
 
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {

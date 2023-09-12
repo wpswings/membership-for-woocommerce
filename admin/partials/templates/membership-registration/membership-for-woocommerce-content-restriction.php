@@ -126,7 +126,7 @@ foreach ( $results as $key => $value ) {
 
 		)
 	);
-	$page_id_array = get_post_meta( $value->ID, 'wps_membership_plan_page_target_ids', true );
+	$page_id_array = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_page_target_ids', true );
 	foreach ( $_pages as $index => $values ) {
 		if ( 'Shop' != $values->post_title ) {
 			?>

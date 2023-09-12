@@ -21,12 +21,12 @@ $output = '';
 if ( ! empty( $post_id ) ) {
 
 	$plan_title       = get_the_title( $post_id );
-	$plan_price       = get_post_meta( $post_id, 'wps_membership_plan_price', true );
-	$plan_products    = $instance->csv_get_prod_title( get_post_meta( $post_id, 'wps_membership_plan_target_ids', true ) );
-	$plan_categories  = $instance->csv_get_cat_title( get_post_meta( $post_id, 'wps_membership_plan_target_categories', true ) );
+	$plan_price       = wps_membership_get_meta_data( $post_id, 'wps_membership_plan_price', true );
+	$plan_products    = $instance->csv_get_prod_title( wps_membership_get_meta_data( $post_id, 'wps_membership_plan_target_ids', true ) );
+	$plan_categories  = $instance->csv_get_cat_title( wps_membership_get_meta_data( $post_id, 'wps_membership_plan_target_categories', true ) );
 	$plan_description = get_post_field( 'post_content', $post_id );
-	$plan_access_type = get_post_meta( $post_id, 'wps_membership_plan_name_access_type', true );
-	$plan_user_access = get_post_meta( $post_id, 'wps_membership_plan_access_type', true );
+	$plan_access_type = wps_membership_get_meta_data( $post_id, 'wps_membership_plan_name_access_type', true );
+	$plan_user_access = wps_membership_get_meta_data( $post_id, 'wps_membership_plan_access_type', true );
 	$currency         = get_woocommerce_currency_symbol();
 
 	// Html for preview mode.

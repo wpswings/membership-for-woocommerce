@@ -129,9 +129,9 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 
 				foreach ( $plan_ids as $plan_id ) {
 
-					$product_ids       = get_post_meta( $plan_id, 'wps_membership_plan_target_ids', true );
-					$cat_ids           = get_post_meta( $plan_id, 'wps_membership_plan_target_categories', true );
-					$tag_ids           = get_post_meta( $plan_id, 'wps_membership_plan_target_tags', true );
+					$product_ids       = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true );
+					$cat_ids           = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true );
+					$tag_ids           = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true );
 					$cart_items_ids    = $this->global_class->cart_item_ids();
 					$cart_item_cat_ids = $this->global_class->cart_item_cat_ids();
 					$cart_item_tag_ids = $this->global_class->cart_item_tag_ids();

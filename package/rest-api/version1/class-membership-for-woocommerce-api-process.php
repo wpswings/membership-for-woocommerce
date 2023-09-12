@@ -75,9 +75,9 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 					$wps_offer_arr[] = array(
 						'membership_id'   => $value->ID,
 						'membership_name' => $value->post_title,
-						'plan_type'       => ! empty( get_post_meta( $value->ID, 'wps_membership_plan_name_access_type', true ) ) ? get_post_meta( $value->ID, 'wps_membership_plan_name_access_type', true ) : '',
-						'plan_price'      => ! empty( get_post_meta( $value->ID, 'wps_membership_plan_price', true ) ) ? get_post_meta( $value->ID, 'wps_membership_plan_price', true ) : '0',
-						'plan_duration'   => ! empty( get_post_meta( $value->ID, 'wps_membership_plan_duration', true ) . ' ' . get_post_meta( $value->ID, 'wps_membership_plan_duration_type', true ) ) ? get_post_meta( $value->ID, 'wps_membership_plan_duration', true ) . ' ' . get_post_meta( $value->ID, 'wps_membership_plan_duration_type', true ) : '---',
+						'plan_type'       => ! empty( wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_name_access_type', true ) ) ? wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_name_access_type', true ) : '',
+						'plan_price'      => ! empty( wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_price', true ) ) ? wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_price', true ) : '0',
+						'plan_duration'   => ! empty( wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_duration', true ) . ' ' . wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_duration_type', true ) ) ? wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_duration', true ) . ' ' . wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_duration_type', true ) : '---',
 					);
 					++$count;
 				}
@@ -114,8 +114,8 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 				if ( ! empty( $membership_id_arr ) && is_array( $membership_id_arr ) ) {
 					foreach( $membership_id_arr as $membership_id ) {
 
-						$membership_plan   = get_post_meta( $membership_id, 'plan_obj', true );
-						$membership_status = get_post_meta( $membership_id, 'member_status', true );
+						$membership_plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+						$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 						if ( empty( $membership_plan ) ) {
 
 							continue;

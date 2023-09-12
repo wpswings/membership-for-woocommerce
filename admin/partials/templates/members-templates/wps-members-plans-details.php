@@ -41,7 +41,7 @@ $plan_subscription = ! empty( $plan['wps_membership_subscription'] ) ? $plan['wp
 $plan_subscription_duration = ! empty( $plan['wps_membership_subscription_expiry'] ) ? $plan['wps_membership_subscription_expiry'] : '';
 $plan_subscription_duration_type = ! empty( $plan['wps_membership_subscription_expiry_type'] ) ? $plan['wps_membership_subscription_expiry_type'] : '';
 
-$club_membership = get_post_meta( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'wps_membership_club', true );
+$club_membership = wps_membership_get_meta_data( ! empty( $plan['ID'] ) ? $plan['ID'] : '', 'wps_membership_club', true );
 $args = array(
 	'post_type'   => 'wps_cpt_membership',
 	'post_status' => array( 'publish' ),
