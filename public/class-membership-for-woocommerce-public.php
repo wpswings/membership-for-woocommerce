@@ -2404,7 +2404,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_process_payment_callback( $member_id ) {
-		$member_status = wps_membership_get_meta_data( $member_id, 'member_status' );
+		$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
 
 		// If manually completing membership then set its expiry date.
 		if ( 'complete' == $member_status[0] ) {

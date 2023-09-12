@@ -799,7 +799,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			// Getting plan data.
 			$plan_obj = get_post( $plan_id, ARRAY_A );
 
-			$post_meta = wps_membership_get_meta_data( $plan_id );
+			$post_meta = get_post_meta( $plan_id );
 
 			// Formatting array.
 			foreach ( $post_meta as $key => $value ) {
