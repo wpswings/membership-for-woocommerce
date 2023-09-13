@@ -1967,7 +1967,7 @@ class Membership_For_Woocommerce_Admin {
 
 				$plan_obj = get_post( $plan_id, ARRAY_A );
 
-				$post_meta = wps_membership_get_meta_data( $plan_id );
+				$post_meta = get_post_meta( $plan_id );
 
 				// Formatting array.
 				foreach ( $post_meta as $post_meta_key => $post_meta_value ) {
@@ -3283,7 +3283,7 @@ class Membership_For_Woocommerce_Admin {
 
 					$plan_obj = get_post( $plan_id, ARRAY_A );
 
-					$post_meta = wps_membership_get_meta_data( $plan_id );
+					$post_meta = get_post_meta( $plan_id );
 
 					// Formatting array.
 					foreach ( $post_meta as $post_meta_key => $post_meta_value ) {

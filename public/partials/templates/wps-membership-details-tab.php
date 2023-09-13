@@ -41,7 +41,7 @@ if ( empty( $current_url ) ) {
 				foreach ( $memberships as $key => $membership_id ) {
 
 					// Get Saved Plan Details.
-					$membership_data   = wps_membership_get_meta_data( $membership_id );
+					$membership_data   = get_post_meta( $membership_id );
 					$membership_plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 					$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 					$button_disable   = ( in_array( $membership_status, array( 'pending', 'hold' ) ) ) ? 'disabled' : '';
