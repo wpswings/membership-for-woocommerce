@@ -118,7 +118,7 @@ if ( empty( $current_url ) ) {
 
 	$membership_id = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
-	$membership_data = wps_membership_get_meta_data( $membership_id );
+	$membership_data = get_post_meta( $membership_id );
 	$membership_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 
 	$membership_status  = wps_membership_get_meta_data( $membership_id, 'member_status', true );
