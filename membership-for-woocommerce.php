@@ -35,9 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 use Automattic\WooCommerce\Utilities\OrderUtil;
-
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
 
 /**
  * Function to check for plugin activation.
@@ -51,12 +49,10 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 	}
 
 	$active_plugins = (array) get_option( 'active_plugins', array() );
-
 	if ( is_multisite() ) {
 
 		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 	}
-
 	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
 
@@ -73,7 +69,6 @@ function wps_membership_plugin_activation() {
 		$activation['status']  = false;
 		$activation['message'] = 'woo_inactive';
 	}
-
 	return $activation;
 }
 
@@ -115,7 +110,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $wps_mfw_license_key );
-
 	}
 
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
@@ -229,7 +223,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 	run_membership_for_woocommerce();
-
 	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
 
 	/**
@@ -256,7 +249,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	add_action( 'init', 'wps_membership_schedule_expiry' );
-
 	add_action( 'wps_membership_expiry_check_action', 'wps_membership_schedule_action_expiry_check' );
 
 	/**
@@ -365,7 +357,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
-
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *
@@ -445,7 +436,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 }
-
 
 add_action( 'before_woocommerce_init', function() {
 	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {

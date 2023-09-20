@@ -1480,6 +1480,10 @@ div#wp-wps_membership_email_content-wrap {
     margin-right: 10px;
 }
 
+label.mdc-text-field.mdc-text-field--outlined.wps_admin_membership_price_wrapper.mdc-text-field--invalid span {
+    border-color: var(--mdc-theme-text-disabled-on-background);
+}
+
 @media screen and ( max-width : 420px ) {
     #mfw_button_api_settings {
         margin-bottom: 10px;

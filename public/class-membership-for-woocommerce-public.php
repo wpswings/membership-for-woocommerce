@@ -37,8 +37,6 @@ class Membership_For_Woocommerce_Public {
 	 */
 	private $version;
 
-
-
 	/**
 	 * Under review membership products.
 	 *
@@ -47,7 +45,6 @@ class Membership_For_Woocommerce_Public {
 	 */
 	protected $under_review_products;
 
-
 	/**
 	 * Another plan membership products.
 	 *
@@ -55,8 +52,6 @@ class Membership_For_Woocommerce_Public {
 	 * @var array
 	 */
 	protected $another_plan_products;
-
-
 
 	/**
 	 * Exclude other plan membership products.
@@ -93,7 +88,6 @@ class Membership_For_Woocommerce_Public {
 		$this->global_class = Membership_For_Woocommerce_Global_Functions::get();
 
 		$this->custom_query_handler();
-
 	}
 
 	/**
@@ -145,7 +139,6 @@ class Membership_For_Woocommerce_Public {
 		);
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
-
 		wp_enqueue_script( 'sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
 
 		if ( is_page( 'membership-plans' ) ) {
@@ -163,8 +156,7 @@ class Membership_For_Woocommerce_Public {
 			$debug        = ! empty( $settings['debug'] ) ? 'true' : 'false';
 
 			$plan_data = array();
-
-			$plan_id = ! empty( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
+			$plan_id   = ! empty( $_GET['plan_id'] ) ? sanitize_text_field( wp_unslash( $_GET['plan_id'] ) ) : '';
 
 			$plan_name  = ! empty( get_the_title( $plan_id ) ) ? get_the_title( $plan_id ) : '';
 			$plan_desc  = ! empty( get_post_field( 'post_content', $plan_id ) ) ? get_post_field( 'post_content', $plan_id ) : '';
@@ -211,7 +203,6 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 		$this->custom_query_data = $final_results;
-
 	}
 
 	/**
@@ -238,7 +229,6 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$vars = apply_filters( 'wps_membership_endpoint_query_var', $vars );
-
 		return $vars;
 	}
 
@@ -272,7 +262,6 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$items = apply_filters( 'wps_membership_add_membership_tab', $items );
-
 		return $items;
 	}
 
@@ -290,7 +279,6 @@ class Membership_For_Woocommerce_Public {
 		if ( $endpoint && ! is_admin() && in_the_loop() && is_account_page() ) {
 
 			$title = __( 'Membership Details', 'membership-for-woocommerce' );
-
 		}
 
 		/**
@@ -299,7 +287,6 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$title = apply_filters( 'wps_membership_tab_title', $title );
-
 		return $title;
 	}
 
@@ -362,7 +349,6 @@ class Membership_For_Woocommerce_Public {
 		add_shortcode( 'wps_membership_registration_form', array( $this, 'wps_membership_registration_form_shortcode' ) );
 	}
 
-
 	/**
 	 * Membership default global options.
 	 *
@@ -386,7 +372,6 @@ class Membership_For_Woocommerce_Public {
 		);
 		return $default_global_settings;
 	}
-
 
 	/**
 	 * Restrict purchase of product to non-members.
@@ -468,10 +453,8 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$is_purchasable = apply_filters( 'wps_membership_tab_is_purchasable', $is_purchasable );
-
 		return $is_purchasable;
 	}
-
 
 	/**
 	 * Hide price of selected product on shop page.
@@ -502,7 +485,6 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$price_html = apply_filters( 'wps_membership_tab_price_html', $price_html );
-
 		return $price_html;
 	}
 
@@ -549,7 +531,6 @@ class Membership_For_Woocommerce_Public {
 						if ( $target_cat_ids ) {
 
 							$target_ids = array_merge( $target_ids, $target_cat_ids );
-
 						}
 
 						$product_terms = $this->get_product_terms( $product->get_id() );
@@ -587,8 +568,7 @@ class Membership_For_Woocommerce_Public {
 									),
 									$page_link
 								);
-
-									// Show plans under review.
+								// Show plans under review.
 
 								if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
 									$is_pending = 'not pending';
@@ -641,17 +621,17 @@ class Membership_For_Woocommerce_Public {
 										}
 
 										echo '<div class="available_member wps_mfw_plan_suggestion" >
-	<div>
-		<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
-	</div>
-</div>';
+												<div>
+													<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
+												</div>
+											</div>';
 									} else {
-											// Show options to buy plans.
-											echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
-		<div>
-			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
-		</div>
-	</div>';
+										// Show options to buy plans.
+										echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
+											<div>
+												<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+											</div>
+										</div>';
 									}
 								}
 							}
@@ -709,18 +689,18 @@ class Membership_For_Woocommerce_Public {
 														$is_pending = 'pending';
 														$disable_required = 'disable_required';
 														?>
-															<div class="product-meta product-meta-review">
-																<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
-															</div>
-															<?php
+														<div class="product-meta product-meta-review">
+															<span><b><?php esc_html_e( 'Membership Under Review', 'membership-for-woocommerce' ); ?></b></span>
+														</div>
+														<?php
 													}
 												}
 											}
 										}
 									}
 
-										array_push( $already_included_plan, $plan['ID'] );
-										// Show options to buy plans.
+									array_push( $already_included_plan, $plan['ID'] );
+									// Show options to buy plans.
 									if ( 'not pending' === $is_pending ) {
 
 										if ( true === $suggested_membership ) {
@@ -737,17 +717,17 @@ class Membership_For_Woocommerce_Public {
 											}
 
 											echo '<div class="available_member wps_mfw_plan_suggestion">
-		<div>
-			<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
-		</div>
-	</div>';
+													<div>
+														<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Membership :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
+													</div>
+												</div>';
 										} else {
-												// Show options to buy plans.
-												echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
-			<div>
-				<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
-			</div>
-		</div>';
+											// Show options to buy plans.
+											echo '<div class="plan_suggestion wps_mfw_plan_suggestion" >
+												<div>
+													<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Become a  ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . esc_html__( '  member and buy this product', 'membership-for-woocommerce' ) . '</a>
+												</div>
+											</div>';
 										}
 									}
 								}
@@ -868,12 +848,11 @@ class Membership_For_Woocommerce_Public {
 										++$count;
 
 										$page_link = $page_link . '?plan_id=' . $plan['ID'] . '&prod_id=' . $product->get_id();
-
 										echo '<div class="available_member wps_mfw_plan_suggestion" >
-									<div>
-										<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Memberships	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
-									</div>
-								</div>';
+												<div>
+													<a class="button alt ' . esc_html( $disable_required ) . ' mfw-membership" href="' . esc_url( $page_link ) . '" target="_blank" >' . esc_html__( 'Memberships	 :- ', 'membership-for-woocommerce' ) . esc_html( get_the_title( $plan['ID'] ) ) . '</a>
+												</div>
+											</div>';
 									}
 								}
 							}
@@ -884,8 +863,6 @@ class Membership_For_Woocommerce_Public {
 		}
 
 	}
-
-
 
 	/**
 	 * Common function to get terms realted to product.
@@ -902,7 +879,7 @@ class Membership_For_Woocommerce_Public {
 				$term_id = $term->term_id; // Product tag Id.
 				array_push( $term_related_to_product, $term_id );
 			}
-				// Set the product tag names in an array.
+			// Set the product tag names in an array.
 		}
 
 		$term_related_to_product = ! empty( $term_related_to_product ) ? $term_related_to_product : array();
@@ -930,7 +907,7 @@ class Membership_For_Woocommerce_Public {
 		} else {
 			$product_id = get_the_ID();
 		}
-		$product_id = $product_id;
+		$product_id         = $product_id;
 		$is_product_exclude = false;
 
 		if ( $this->global_class->plans_exist_check() == true ) {
@@ -1053,7 +1030,6 @@ class Membership_For_Woocommerce_Public {
 		return false;
 	}
 
-
 	/**
 	 * Default plan page shortcode.
 	 * Returns : html :
@@ -1063,8 +1039,7 @@ class Membership_For_Woocommerce_Public {
 	public function membership_offers_default_shortcode() {
 
 		$output = '';
-
-		$mode = $this->wps_membership_validate_mode();
+		$mode   = $this->wps_membership_validate_mode();
 
 		// If on default page, plan_id and prod_id are set.
 		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
@@ -1073,8 +1048,8 @@ class Membership_For_Woocommerce_Public {
 			$prod_id = sanitize_text_field( wp_unslash( $_GET['prod_id'] ) );
 
 			// Get plan details.
-			$plan_title    = get_the_title( $plan_id );
-			$plan_price    = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
+			$plan_title = get_the_title( $plan_id );
+			$plan_price = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
 
 			if ( function_exists( 'wps_mmcsfw_admin_fetch_currency_rates_from_base_currency' ) ) {
 				$plan_price = wps_mmcsfw_admin_fetch_currency_rates_from_base_currency( '', $plan_price );
@@ -1163,7 +1138,6 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$output = apply_filters( 'wps_membership_tab_output', $output );
-
 		return $output;
 	}
 
@@ -1176,7 +1150,6 @@ class Membership_For_Woocommerce_Public {
 	public function default_offer_identification_shortcode() {
 
 		return '';
-
 	}
 
 	/**
@@ -1235,10 +1208,7 @@ class Membership_For_Woocommerce_Public {
 		$price = apply_filters( 'membership_plan_price_shortcode', $price );
 
 		return $price;
-
 	}
-
-
 
 	/**
 	 * Shortcode for plan - title.
@@ -1285,10 +1255,8 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$title = apply_filters( 'membership_plan_title_all_plan', $title );
-
 		return $title;
 	}
-
 
 	/**
 	 * Shortcode for plan - title.
@@ -1338,7 +1306,6 @@ class Membership_For_Woocommerce_Public {
 
 		return $title;
 	}
-
 
 	/**
 	 * Shortcode for plan - details.
@@ -1428,18 +1395,18 @@ class Membership_For_Woocommerce_Public {
 
 						case 'limited':
 							$description .= '<li>
-					<label>' . esc_html__( 'Plan Duration', 'membership-for-woocommerce' ) . '</label>
+								<label>' . esc_html__( 'Plan Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<span>' . sprintf( ' %u %s ', esc_html( $plan_dura ), esc_html( $dura_type ) ) . '</span>
-				</li>';
+								<span>' . sprintf( ' %u %s ', esc_html( $plan_dura ), esc_html( $dura_type ) ) . '</span>
+							</li>';
 							break;
 
 						case 'date_ranged':
 							$description .= '<li>
-					<label>' . esc_html__( 'Duration', 'membership-for-woocommerce' ) . '</label>
+								<label>' . esc_html__( 'Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<span>' . sprintf( ' %s to %s ', esc_html( $plan_start ), esc_html( $plan_end ) ) . '</span>
-				</li>';
+								<span>' . sprintf( ' %s to %s ', esc_html( $plan_start ), esc_html( $plan_end ) ) . '</span>
+							</li>';
 							break;
 
 						default:
@@ -1471,10 +1438,10 @@ class Membership_For_Woocommerce_Public {
 
 						case 'delay_type':
 							$description .= '<li>
-					<label>' . esc_html__( 'Delay Duration', 'membership-for-woocommerce' ) . '</label>
+								<label>' . esc_html__( 'Delay Duration', 'membership-for-woocommerce' ) . '</label>
 
-					<span>' . sprintf( ' %u %s ', esc_html( $delay_dura ), esc_html( $delay_type ) ) . '</span>
-				</li>';
+								<span>' . sprintf( ' %u %s ', esc_html( $delay_dura ), esc_html( $delay_type ) ) . '</span>
+							</li>';
 							break;
 
 						default:
@@ -1550,7 +1517,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-							$description .= '</span></li>';
+						$description .= '</span></li>';
 					}
 
 					$post_ids = maybe_unserialize( $plan['wps_membership_plan_post_target_ids'] );
@@ -1672,9 +1639,7 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
-
 		return $description;
-
 	}
 
 	/**
@@ -1795,8 +1760,6 @@ class Membership_For_Woocommerce_Public {
 		return $description;
 	}
 
-
-
 	/**
 	 * Shortcode for plan - description
 	 * Return : string :
@@ -1849,8 +1812,6 @@ class Membership_For_Woocommerce_Public {
 
 		return $description;
 	}
-
-
 
 	/**
 	 * Shortcode for plan - Buy now button.
@@ -1967,9 +1928,7 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$buy_button  = apply_filters( 'membership_plan_buy_button_shortcode', $buy_button );
-
 		return $buy_button;
-
 	}
 
 	/**
@@ -2089,7 +2048,6 @@ class Membership_For_Woocommerce_Public {
 
 	}
 
-
 	/**
 	 * Register the AJAX Callback for file removal.
 	 *
@@ -2123,7 +2081,6 @@ class Membership_For_Woocommerce_Public {
 					)
 				);
 			}
-
 			wp_die();
 		}
 	}
@@ -2149,11 +2106,8 @@ class Membership_For_Woocommerce_Public {
 				<?php
 			}
 		}
-
 		wp_die();
 	}
-
-
 
 	/**
 	 * Assign Club membership.
@@ -2634,7 +2588,6 @@ class Membership_For_Woocommerce_Public {
 		 */
 		$access = apply_filters( 'is_accessible_to_member', $access );
 		return $access;
-
 	}
 
 	/**
@@ -2719,10 +2672,9 @@ class Membership_For_Woocommerce_Public {
 			$applied_offer_price_percentage_on_cart = ( 0 > $applied_offer_price_percentage_on_cart ) ? 0 : $applied_offer_price_percentage_on_cart;
 
 			$discount_percentage = floatval( $cart_total * ( $applied_offer_price_percentage_on_cart / 100 ) );
-
 		}
 
-			// If fixed discount is given.
+		// If fixed discount is given.
 		if ( ! empty( $applied_offer_price_fixed ) ) {
 			// When fixed price is given.
 			$applied_offer_price_fixed_on_cart = max( $applied_offer_price_fixed );
@@ -2748,7 +2700,6 @@ class Membership_For_Woocommerce_Public {
 			}
 			$cart->add_fee( 'Membership Discount', -$discount, false );
 		}
-
 	}
 
 	/**
@@ -2960,7 +2911,6 @@ class Membership_For_Woocommerce_Public {
 		);
 
 		$already_processed_users = array();
-
 		if ( ! empty( $expired_members ) && is_array( $expired_members ) && count( $expired_members ) ) {
 
 			foreach ( $expired_members as $key => $id ) {
@@ -3043,7 +2993,6 @@ class Membership_For_Woocommerce_Public {
 
 		$redirect_url = ( $cart_item_data ) ? wc_get_checkout_url() : wc_get_cart_url();
 		echo wp_json_encode( $redirect_url );
-
 		wp_die();
 	}
 
@@ -3091,10 +3040,8 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->set( 'plan_price', $plan_price );
 			WC()->session->set( 'product_id', $wps_membership_default_product );
 			WC()->session->set( 'form_submit', 'yes' );
-
 		}
 	}
-
 
 	/**
 	 * WooCommerce add cart item data.
@@ -3137,7 +3084,6 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->__unset( 'wps_phone' );
 			WC()->session->__unset( 'wps_email' );
 			WC()->session->__unset( 'wps_state' );
-
 		}
 
 		/**
@@ -3146,9 +3092,7 @@ class Membership_For_Woocommerce_Public {
 		 * @since 1.0.0
 		 */
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
-
 		return $cart_item_data;
-
 	}
 
 	/**
@@ -3262,7 +3206,6 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 	}
-
 
 	/**
 	 * Function to get all included membership.
@@ -3451,8 +3394,6 @@ class Membership_For_Woocommerce_Public {
 		return $is_purchasable;
 	}
 
-
-
 	/**
 	 * Get product data through query.
 	 *
@@ -3518,8 +3459,6 @@ class Membership_For_Woocommerce_Public {
 
 		return $all_ids;
 	}
-
-
 
 	/**
 	 * Add to cart.
@@ -3770,7 +3709,6 @@ class Membership_For_Woocommerce_Public {
 		return $page_template;
 	}
 
-
 	/**
 	 * Creating shipping method for membership.
 	 *
@@ -3811,13 +3749,13 @@ class Membership_For_Woocommerce_Public {
 		return $methods;
 	}
 
-		/**
-		 * Adding membership shipping method.
-		 *
-		 * @param array $methods an array of shipping methods.
-		 *
-		 * @since 1.0.0
-		 */
+	/**
+	 * Adding membership shipping method.
+	 *
+	 * @param array $methods an array of shipping methods.
+	 *
+	 * @since 1.0.0
+	 */
 	public function wps_membership_add_to_cart_url( $methods ) {
 
 		global $product;
@@ -3919,8 +3857,6 @@ class Membership_For_Woocommerce_Public {
 		}
 	}
 
-
-
 	/**
 	 * Set session for membership purchase.
 	 *
@@ -3946,11 +3882,8 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 		}
-
 		return $member_product;
 	}
-
-
 
 	/**
 	 * Updating subscription status according membership status.
@@ -4062,7 +3995,6 @@ class Membership_For_Woocommerce_Public {
 		if ( wps_membership_check_plugin_enable() && wps_membership_check_product_is_membership( $product ) ) {
 
 			$return = true;
-
 		}
 
 		/**
@@ -4323,9 +4255,6 @@ class Membership_For_Woocommerce_Public {
 
 	}
 
-
-
-
 	/**
 	 * Shortcode for form registration.
 	 * Returns : empty string.
@@ -4368,6 +4297,4 @@ class Membership_For_Woocommerce_Public {
 		$output .= '<div><input type="submit" id="wps_regiser_form_submit" class="button" name="wps_regiser_form_submit" value="Register">';
 		return $output;
 	}
-
-
 }

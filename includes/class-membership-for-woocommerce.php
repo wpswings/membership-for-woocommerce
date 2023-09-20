@@ -827,7 +827,7 @@ class Membership_For_Woocommerce {
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
 							<div class="wps-form-group__control">
-								<label class="mdc-text-field mdc-text-field--outlined">
+								<label class="mdc-text-field mdc-text-field--outlined wps_admin_membership_price_wrapper">
 									<span class="mdc-notched-outline">
 										<span class="mdc-notched-outline__leading"></span>
 										<span class="mdc-notched-outline__notch">
@@ -960,7 +960,7 @@ class Membership_For_Woocommerce {
 									</span>
 									<input
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
-									 type="number" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
+									 type="number" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
 									>
 									<select id="wps_mfw_reg_expiry_time" name="wps_mfw_reg_expiry_time"  style="width:150px;height:55px">
 										<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
@@ -1269,17 +1269,16 @@ class Membership_For_Woocommerce {
 							$file_upload_id = ! empty( $mfw_component['id'] ) ? $mfw_component['id'] : '';
 
 							?>
-
-<input type="hidden" id="wps_membership_invoice_logo" name="wps_membership_invoice_logo" value="<?php echo esc_html( $wps_membership_invoice_logo ); ?>">
-	<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload Logo', 'membership-for-woocommerce' ); ?>">
-	<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Logo', 'membership-for-woocommerce' ); ?>">
-	<div id="img_thumbnail">
-							
-									<img src="<?php echo esc_html( ! empty( $wps_membership_invoice_logo ) ? $wps_membership_invoice_logo : ' ' ); ?>" alt='Logo Image' onerror=this.src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/placeholder.png' ); ?>" width="60px" height="60px"/>
-								   
-	</div>
-</div>
-</div>
+							<input type="hidden" id="wps_membership_invoice_logo" name="wps_membership_invoice_logo" value="<?php echo esc_html( $wps_membership_invoice_logo ); ?>">
+								<input type="button" id="upload_img" class="button <?php echo esc_html( $upload_btn_cls ); ?>" value="<?php esc_html_e( 'Upload Logo', 'membership-for-woocommerce' ); ?>">
+								<input type="button" id="remove_img" class="button <?php echo esc_html( $remove_btn_cls ); ?>" value="<?php esc_html_e( 'Remove Logo', 'membership-for-woocommerce' ); ?>">
+								<div id="img_thumbnail">
+														
+								<img src="<?php echo esc_html( ! empty( $wps_membership_invoice_logo ) ? $wps_membership_invoice_logo : ' ' ); ?>" alt='Logo Image' onerror=this.src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/placeholder.png' ); ?>" width="60px" height="60px"/>
+															
+								</div>
+							</div>
+							</div>
 							<?php
 							break;
 						case 'submit':

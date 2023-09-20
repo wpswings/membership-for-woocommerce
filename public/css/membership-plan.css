@@ -1,3 +1,7 @@
 #header, #footer {
     display: none;
-    } 
+}
+.wps_membership_no_thanks.button.alt.thickbox, .wps_membership_plan_content_desc .wps_membership_buynow:hover {
+    color: white !important;
+    background-color: #f37e21 !important;
+}
