@@ -512,14 +512,14 @@ function wps_mfw_upgrade_pro_popup() {
 					}
 
 					?>
-					<select name="wps_membership_product_offer_price_type" id = 'wps_membership_product_offer_price_type_id' >
+					<select name="wps_membership_product_offer_price_type" id='wps_membership_product_offer_price_type_id' >
 
 						<option <?php echo esc_html( '%' === $wps_membership_product_offer_price_type ? 'selected' : '' ); ?> value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
 
 						<option <?php echo esc_html( 'fixed' === $wps_membership_product_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 					</select>
-					<input type="number" min="0" max="100" class="wps_membership product_offer_input_type" id="wps_membership_product_offer_price" name="wps_memebership_product_discount_price" value="<?php echo esc_attr( $wps_membership_product_discount_price ); ?>">
+					<input type="number" min="0" class="wps_membership product_offer_input_type" id="wps_membership_product_offer_price" name="wps_memebership_product_discount_price" value="<?php echo esc_attr( $wps_membership_product_discount_price ); ?>">
 
 				</td>
 			</tr>
@@ -963,14 +963,14 @@ function wps_mfw_upgrade_pro_popup() {
 
 
 						?>
-						<select name="wps_membership_plan_offer_price_type" id = 'wps_membership_plan_offer_price_type_id' >
+						<select name="wps_membership_plan_offer_price_type" id='wps_membership_plan_offer_price_type_id' >
 
 							<option <?php echo esc_html( '%' === $wps_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="%"><?php esc_html_e( 'Discount %', 'membership-for-woocommerce' ); ?></option>
 
 							<option <?php echo esc_html( 'fixed' === $wps_membership_plan_offer_price_type ? 'selected' : '' ); ?> value="fixed"><?php esc_html_e( 'Fixed price', 'membership-for-woocommerce' ); ?></option>
 
 						</select>
-						<input type="number" min="0" max="100" class="wps_membership plan_offer_input_type" id="wps_membership_plan_offer_price" name="wps_memebership_plan_discount_price" value="<?php echo esc_attr( $wps_membership_plan_discount_price ); ?>">
+						<input type="number" min="0" class="wps_membership plan_offer_input_type" id="wps_membership_plan_offer_price" name="wps_memebership_plan_discount_price" value="<?php echo esc_attr( $wps_membership_plan_discount_price ); ?>">
 
 					</td>
 					

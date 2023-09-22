@@ -18,4 +18,30 @@ jQuery(document).ready(function($) {
         }
     } );
 
+    jQuery('#wps_membership_plan_offer_price').prop( 'max', '100' );
+    jQuery(document).on('change', '#wps_membership_plan_offer_price_type_id', function(){
+        
+        var wps_discount_type = jQuery(this).val();
+        if ( 'fixed' == wps_discount_type ) {
+            
+            jQuery('#wps_membership_plan_offer_price').removeAttr( 'max' );
+        } else {
+
+            jQuery('#wps_membership_plan_offer_price').attr( 'max', '100' );
+        }
+    });
+
+    jQuery('#wps_membership_product_offer_price').prop( 'max', '100' );
+    jQuery(document).on('change', '#wps_membership_product_offer_price_type_id', function(){
+        
+        var wps_discount_type = jQuery(this).val();
+        if ( 'fixed' == wps_discount_type ) {
+            
+            jQuery('#wps_membership_product_offer_price').removeAttr( 'max' );
+        } else {
+
+            jQuery('#wps_membership_product_offer_price').attr( 'max', '100' );
+        }
+    });
+
  } );

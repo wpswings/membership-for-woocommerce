@@ -5,3 +5,12 @@
     color: white !important;
     background-color: #f37e21 !important;
 }
+
+.wps_membership_buy_now_btn input[type=button].wps_membership_buynow {
+    border-color: #f37e21 !important;
+}
+
+.wps_membership_buy_now_btn input[type=button].wps_membership_buynow:hover {
+    background-color: #f37e21 !important;
+    color: #fff !important;
+}

@@ -65,7 +65,7 @@ select#membership_billing_country:focus,
 }
 
 .product-meta.product-meta-review {
-  border-top: 2px solid;
+  border: 2px solid;
   border-radius: 35px;
   color: #f37e21;
   max-width: 200px;
