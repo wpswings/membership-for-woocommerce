@@ -14,3 +14,7 @@
     background-color: #f37e21 !important;
     color: #fff !important;
 }
+.wps_membership_no_thanks.button.alt.thickbox:hover {
+    color: f37e21 !important;
+    background-color: #fff !important;
+}
