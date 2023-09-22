@@ -261,8 +261,8 @@ select#membership_billing_country:focus,
 .button.alt.wps_membership_no_thanks {
   border: 2px solid transparent;
   border-radius: 5px;
-  background-color: #f37e21;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #f37e21;
   transition: linear 0.3s;
   font-size: 16px;
   padding: 5px;
