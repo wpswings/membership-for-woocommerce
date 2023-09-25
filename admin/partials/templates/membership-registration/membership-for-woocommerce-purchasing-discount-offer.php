@@ -235,7 +235,16 @@ $results = get_posts(
 					<div class="wps-form-group__label">
 						<label  class="wps-form-label"><?php esc_html_e( 'Enter Discount ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></span></label>
 					</div>
-					<input required type="number" id="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" class="mdl-textfield__input" name="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" min="0" placeholder="Enter discount" value="<?php echo esc_attr( ! empty( wps_membership_get_meta_data( $value->ID, 'wps_memebership_product_discount_price', true ) ) ? wps_membership_get_meta_data( $value->ID, 'wps_memebership_product_discount_price', true ) : 0 ); ?>">
+					<div class="wps-form-group__control">
+						<label class="mdc-text-field mdc-text-field--outlined wps_admin_membership_price_wrapper">
+							<span class="mdc-notched-outline mdc-notched-outline--no-label">
+								<span class="mdc-notched-outline__leading"></span>
+								<span class="mdc-notched-outline__notch"></span>
+								<span class="mdc-notched-outline__trailing"></span>
+							</span>
+							<input required type="number" id="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" class="mdc-text-field__input wps_membership_discount__amount" name="wps_membership_discount_amount_<?php echo esc_html( $value->ID ); ?>" min="0" placeholder="Enter discount" value="<?php echo esc_attr( ! empty( wps_membership_get_meta_data( $value->ID, 'wps_memebership_product_discount_price', true ) ) ? wps_membership_get_meta_data( $value->ID, 'wps_memebership_product_discount_price', true ) : 0 ); ?>">
+						</label>
+					</div>
 				</div>
 			</div>
 				<?php
