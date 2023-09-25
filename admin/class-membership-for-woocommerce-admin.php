@@ -1223,7 +1223,6 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_target_disc_categories' => array( 'default' => array() ),
 			'wps_membership_plan_target_disc_tags'       => array( 'default' => array() ),
 			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
-			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
 			'wps_membership_product_offer_price_type'    => array( 'default' => '%' ),
 			'wps_memebership_product_discount_price'     => array( 'default' => '0' ),
 		);

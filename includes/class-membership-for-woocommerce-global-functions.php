@@ -1289,14 +1289,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		return $result;
-
 	}
-
-
-
-
-
-
 }
 
 /**
