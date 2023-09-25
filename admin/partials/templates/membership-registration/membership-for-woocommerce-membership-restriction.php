@@ -134,7 +134,7 @@ $results = get_posts(
 							<select id="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
 								<?php
 
-								$wps_membership_plan_target_product_ids = get_post_meta( $value->ID, 'wps_membership_plan_target_ids', true );
+								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_ids', true );
 								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
 
 									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
@@ -162,7 +162,7 @@ $results = get_posts(
 							<select id="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-category-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a Categories&hellip;', 'membership-for-woocommerce' ); ?>">
 								<?php
 
-								$wps_membership_plan_target_product_ids = get_post_meta( $value->ID, 'wps_membership_plan_target_categories', true );
+								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_categories', true );
 								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
 
 									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
@@ -191,7 +191,7 @@ $results = get_posts(
 							<select id="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-tag-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a tags&hellip;', 'membership-for-woocommerce' ); ?>">
 								<?php
 
-								$wps_membership_plan_target_product_ids = get_post_meta( $value->ID, 'wps_membership_plan_target_tags', true );
+								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_tags', true );
 								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
 
 									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {

@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.2.2
+Tested up to: 6.3.1
 WC requires at least: 5.0.0
-WC tested up to: 7.9.0
-Stable tag: 2.3.1
+WC tested up to: 8.1.1
+Stable tag: 2.3.2
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -24,9 +24,13 @@ Membership Plugin directly give you a way out of the three most customary pain p
  * Adding recurring revenue based on memberships.
  * Engaging customers using membership plans. 
 
+Note: Our Membership for WooCommerce Plugin is Compatible with WooCommerce High Order Performance Storage (HPOS) to ensure the smooth workflow of your WooCommerce store.
+
+[**Membership For WooCommerce Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=demo) | [**Membership WooCommerce Documentatio**](https://docs.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=documentation) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=contact-us)
+
 [youtube https://youtu.be/FaSbkUi17WI&w=560&h=315&rel=0]
 
-== WITH THE WOOCOMMERCE MEMBERSHIPS PLUGIN YOU CAN: ==
+== Drive Engagement, Foster Loyalty, and Increase Cash Flow with WooCommerce Membership Curated Features: ==
 
 * Send email notifications to all members at once 
 * You can create memberships on processing order status 
@@ -147,7 +151,10 @@ Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/m
 The admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
 
 * **WPML Compatibility** 
-Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management.  
+Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management.
+
+* **WooCommerce HPOS Compatibility**
+Our WooCommerce Membership Plugin is Compatible with High-Performance Order Storage (HPOS). HPOS Compatibility allows you to use an alternate storage mechanism for your orders to increase your WooCommerce store’s performance.
 
 
 == WHAT PREMIUM VERSION OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN OFFERS == 
@@ -169,6 +176,13 @@ Membership for WooCommerce lets the admin add desired content and translate it i
 * Membership plans on individual products.
 * Dynamic CSS to become a member button. 
 * Import Members all together.
+
+== See what is Mayank Bothra saying about Membership for WooCommerce ==
+
+Mayank Bothra reported an increase in the number of signups up to 5 in the span of just 2 months. He also mentioned that the result he was expecting from the membership plugin was up to par—gaining more members to his website. 
+
+“I am fully satisfied with the features and results I’m observing from the Membership for WooCommerce Pro plugin. I will rate 4 out of 5 for this plugin. - **"Mayank Bothra”**
+[**Checkout the full case study**](https://wpswings.com/case-studies/mayankbothra/?utm_source=wpswings-membership-case-study&utm_medium=membership-org-page&utm_campaign=case-study)
 
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF THE MEMBERSHIP FOR WOOCOMMERCE PRO PLUGIN ==
@@ -288,9 +302,17 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 2.3.1 - Released on 31 July 2023 = 
+= 2.3.2 - Released on 25 September 2023 =
+* New: Compatible with HPOS
+* New: Compatible with latest WC( 8.1.1 ) & WP( 6.3.1 )
+* Fix: Fixes related to settings
+* Fix: Cart Discount Issues
+* Fix: Product Discount Issues
+* Fix: Designing Issues
+
+= 2.3.1 - Released on 1 August 2023 = 
 * New: List API details on Admin Panel
-* New: Compatible with latest WP(6.2.2) & WC(7.9.0)
+* New: Compatible with latest WP(6.2.3) & WC(8.0.0)
 * Fix: Cart empty issues fixed
 
 
@@ -401,7 +423,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.3.1 - Released on 31 July 2023 = 
-* New: List API details on Admin Panel
-* New: Compatible with latest WP(6.2.2) & WC(7.9.0)
-* Fix: Cart empty issues fixed
+= 2.3.2 - Released on 25 September 2023 =
+* New: Compatible with HPOS
+* New: Compatible with latest WC( 8.1.1 ) & WP( 6.3.1 )
+* Fix: Fixes related to settings
+* Fix: Cart Discount Issues
+* Fix: Product Discount Issues
+* Fix: Designing Issues

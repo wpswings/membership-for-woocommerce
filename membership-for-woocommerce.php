@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.3.1
+ * Version:           2.3.2
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.2.2
+ * Tested up to:      6.3.1
  * WC requires at least: 5.0
- * WC tested up to:   7.9.0
+ * WC tested up to:   8.1.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -34,10 +34,8 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
-
-
+use Automattic\WooCommerce\Utilities\OrderUtil;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
-
 
 /**
  * Function to check for plugin activation.
@@ -51,12 +49,10 @@ function wps_membership_is_plugin_active( $plugin_slug = '' ) {
 	}
 
 	$active_plugins = (array) get_option( 'active_plugins', array() );
-
 	if ( is_multisite() ) {
 
 		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 	}
-
 	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
 
@@ -73,7 +69,6 @@ function wps_membership_plugin_activation() {
 		$activation['status']  = false;
 		$activation['message'] = 'woo_inactive';
 	}
-
 	return $activation;
 }
 
@@ -88,7 +83,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.1' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.2' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -115,7 +110,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $wps_mfw_license_key );
-
 	}
 
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
@@ -229,7 +223,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 	run_membership_for_woocommerce();
-
 	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
 
 	/**
@@ -256,7 +249,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	add_action( 'init', 'wps_membership_schedule_expiry' );
-
 	add_action( 'wps_membership_expiry_check_action', 'wps_membership_schedule_action_expiry_check' );
 
 	/**
@@ -331,6 +323,37 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			}
 
 			return $is_enable;
+		}
+	}
+
+	// replace get_post_meta with wps_membership_get_meta_data
+	function wps_membership_get_meta_data( $id, $key, $v ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order    = wc_get_order( $id );
+			if ( '_customer_user' == $key ) {
+				$meta_val = $order->get_customer_id();
+				return $meta_val;
+			}
+			$meta_val = $order->get_meta( $key );
+			return $meta_val;
+		} else {
+			// Traditional CPT-based orders are in use.
+			$meta_val = get_post_meta( $id, $key, $v );
+			return $meta_val; 
+		}
+	}
+
+	// replace update_post_meta with wps_membership_update_meta_data
+	function wps_membership_update_meta_data( $id, $key, $value ) {
+		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order = wc_get_order( $id );
+			$order->update_meta_data( $key, $value );
+			$order->save();
+		} else {
+			// Traditional CPT-based orders are in use.
+			update_post_meta( $id, $key, $value );
 		}
 	}
 
@@ -413,3 +436,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	}
 }
+
+add_action( 'before_woocommerce_init', function() {
+	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+	}
+} );

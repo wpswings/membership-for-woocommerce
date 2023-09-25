@@ -69,5 +69,23 @@ jQuery( document ).ready( function( $ ){
     });
 
 
+    // set limit when fixed and discount type is selected in new plan price.
+    jQuery(document).on('change', '#wps_membership_plan_for_discount_offer', function(){
+        
+        var plan_id = jQuery(this).val();
+        
+        jQuery('#wps_membership_discount_amount_'+plan_id).attr( 'max', '100' );
+        jQuery(document).on('change', '#wps_membership_discount_type_'+plan_id, function(){
 
+            var discount_type = jQuery(this).val();
+            
+            if ( 'fixed' == discount_type ) {
+            
+                jQuery('#wps_membership_discount_amount_'+plan_id).removeAttr( 'max' );
+            } else {
+    
+                jQuery('#wps_membership_discount_amount_'+plan_id).attr( 'max', '100' );
+            }
+        });
+    });
 });
