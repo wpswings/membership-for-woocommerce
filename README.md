@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-500%2B-brightgreen) ![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.2.3-brightgreen) ![WC tested](https://img.shields.io/badge/WC%20tested-8.0.0-brightgreen) ![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-500%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.3.1-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.1.1-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce - Add Membership Plans, Recurring Revenue, User Registration & User Profiles
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
@@ -10,13 +10,55 @@
 **MULTIPLE PLANS IN ONE MEMBERSHIP, SEND EMAILS FOR MEMBERSHIP PLAN ACTIONS, PRODUCT TAGS, CATEGORIES, AND SECTIONS ARE SELECTED ONLY FOR WOOCOMMERCE MEMBERS**
 
 Membership for WooCommerce plugin is the missing piece of your eCommerce store that allows you to create members-only space in your store. Get your membership website going with the smartest option of the Membership for WooCommerce plugin. The absolute [**WooCommerce Memberships**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro) plugin provides a restriction on access for any facility that adds recurring revenue based on membership and helps engage customers using memberships plans. Additionally, offer membership plans as subscriptions to users for limited access to your eCommerce store.
-Membership Plugin directly give you a way out of the three most customary pain points related to the WooCommerce membership store:
+Membership Plugin directly gives you a way out of the three most customary pain points related to the WooCommerce membership store:
 
  * Restriction on access for any facility.
  * Adding recurring revenue based on memberships.
  * Engaging customers using membership plans. 
 
+Note: Our Membership for WooCommerce Plugin is Compatible with WooCommerce High Order Performance Storage (HPOS) to ensure the smooth workflow of your WooCommerce store.
+
+[**Membership For WooCommerce Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-github-page&utm_campaign=demo) | [**Membership WooCommerce Documentatio**](https://docs.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-github-page&utm_campaign=documentation) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-pro&utm_medium=membership-github-page&utm_campaign=contact-us)
+
+
 [**Membership for WooCommerce Free Version Demo Video**](https://youtu.be/FaSbkUi17WI)
+
+## Drive Engagement, Foster Loyalty, and Increase Cash Flow with WooCommerce Membership Curated Features: 
+* Send email notifications to all members at once 
+* You can create memberships on processing order status 
+* Allow your Members to Cancel their Membership Accounts
+* Use APIs to render data regarding membership offers and plans opted by users
+* You can allow your members to change the Buy Now Button(make it dynamic) text
+* Membership plan on the individual products.
+* Different sections for membership plans and members
+* Multiple language translations for WooCommerce memberships are available
+* Assign membership to users manually 
+* Create a user after Woo membership payment is made
+* Offer free shipping and discount on WooCommerce member cart total
+* Display all membership plans together and options to buy them  
+* Offer membership subscriptions for limited access to membership plans
+* Export/ Import WooCommerce membership site and user details
+* Efficient Shortcodes
+* No chaos with billing forms or setting up payment gateway integrations 
+* Customize the plan page using shortcodes
+* Complete WooCommerce members and plans details 
+* Assign or sell membership plans, restrict access facility to WooCommerce members only
+* Error Logging for handling WooCommerce membership errors
+* Delete Membership for WooCommerce free plugin data on uninstall
+* Show Woo membership history to WooCommerce store owner users as well
+* Offer membership categories to users 
+* Select limited or lifetime accessibility to WooCommerce members
+* Set different statuses for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
+* Bulk actions for the admin to edit plans and move them to the trash
+* Display all membership plans available in your store on the Membership Plans tab.
+* Filter Member According to Membership Plan and Column Added in Members Table
+* Filter Member According to Status
+* Addition of Quick Status Update in Member Table
+* Membership Registration Shortcodes for Membership Purchase
+  
+**PLUGIN MEETS YOUR REQUIREMENT, SO**
+
+[**Download Now**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
 
 ## WHAT’S INCLUDED IN OUR FREE MEMBERSHIP FOR WOOCOMMERCE PLUGIN
 
@@ -77,51 +119,17 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 
 * [**Membership plugin Backend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-github-page&utm_campaign=backend-demo)
 
-## WITH THE WOOCOMMERCE MEMBERSHIP PLUGIN YOU CAN: 
-* Send email notifications to all members at once 
-* You can create memberships on processing order status 
-* Allow your Members to Cancel their Membership Accounts
-* Use APIs to render data regarding membership offers and plans opted by users
-* You can allow your members to change Buy Now Button(make it dynamic) text
-* Membership plan on the individual products.
-* Different sections for membership plans and members
-* Multiple language translations for WooCommerce memberships are available
-* Assign membership to users manually 
-* Create a user after Woo membership payment is made
-* Offer free shipping and discount on WooCommerce member cart total
-* Display all membership plans together and options to buy them  
-* Offer membership subscriptions for limited access to membership plans
-* Export/ Import WooCommerce membership site and user details
-* Efficient Shortcodes
-* No chaos with billing forms or setting up payment gateway integrations 
-* Customize the plan page using shortcodes
-* Complete WooCommerce members and plans details 
-* Assign or sell membership plans, restrict access facility to WooCommerce members only
-* Error Logging for handling WooCommerce membership errors
-* Delete Membership for WooCommerce free plugin data on uninstall
-* Show Woo membership history to WooCommerce store owner users as well
-* Offer membership categories to users 
-* Select limited or lifetime accessibility to WooCommerce members
-* Set different statuses for WooCommerce members as per their payments and plan expiry i.e. pending, on hold, and completed
-* Bulk actions for the admin to edit plans and move them to the trash
-* Display all membership plans available in your store on the Membership Plans tab.
-* Filter Member According to Membership Plan and Column Added in Members Table
-* Filter Member According to Status
-* Addition of Quick Status Update in Member Table
-* Membership Registration Shortcodes for Membership Purchase
-  
-### WORDPRESS MEMBERSHIP PLUGIN MEETS YOUR REQUIREMENTS, SO
 
-[**Download Now**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
-
-
-## MEMBERSHIP PLUGIN COMPATIBILITIES  
+## PLUGIN COMPATIBILITIES  
 
 * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/): With our free subscriptions plugin, the admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
 
 * **Multisite:** Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated in one place.
 
 * **WPML Compatibility:** Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management. 
+
+* **WooCommerce HPOS Compatibility**
+Our WooCommerce Membership Plugin is Compatible with High-Performance Order Storage (HPOS). HPOS Compatibility allows you to use an alternate storage mechanism for your orders to increase your WooCommerce store’s performance.
 
 
 ## WHAT PREMIUM VERSION OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN OFFERS
@@ -143,6 +151,14 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 * Membership plans on individual products.
 * Dynamic CSS to become a member button. 
 * Import Members all together.
+
+##See what is Mayank Bothra saying about Membership for WooCommerce 
+
+Mayank Bothra reported an increase in the number of signups up to 5 in the span of just 2 months. He also mentioned that the result he was expecting from the membership plugin was up to par—gaining more members to his website. 
+
+“I am fully satisfied with the features and results I’m observing from the Membership for WooCommerce Pro plugin. I will rate 4 out of 5 for this plugin. - **"Mayank Bothra”**
+[**Checkout the full case study**](https://wpswings.com/case-studies/mayankbothra/?utm_source=wpswings-membership-case-study&utm_medium=membership-github-page&utm_campaign=case-study)
+
 
 ### TAKE ADVANTAGE OF THE EXCLUSIVE FEATURES OF THE MEMBERSHIP PRO PLUGIN
 
