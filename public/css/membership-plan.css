@@ -1,20 +1,7 @@
 #header, #footer {
     display: none;
 }
-.wps_membership_no_thanks.button.alt.thickbox, .wps_membership_plan_content_desc .wps_membership_buynow:hover {
+.wps_membership_plan_content_desc .wps_membership_buynow:hover {
     color: white !important;
     background-color: #f37e21 !important;
-}
-
-.wps_membership_buy_now_btn input[type=button].wps_membership_buynow {
-    border-color: #f37e21 !important;
-}
-
-.wps_membership_buy_now_btn input[type=button].wps_membership_buynow:hover {
-    background-color: #f37e21 !important;
-    color: #fff !important;
-}
-.wps_membership_no_thanks.button.alt.thickbox:hover {
-    color: #f37e21 !important;
-    background-color: #fff !important;
 }

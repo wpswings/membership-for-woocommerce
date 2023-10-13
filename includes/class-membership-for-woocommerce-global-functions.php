@@ -455,23 +455,26 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function gutenberg_content() {
 
-		$page_content = '<!-- wp:cover {"minHeight":722,"minHeightUnit":"px","customGradient":"linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%)","align":"wide"} -->
-						<div class="wp-block-cover alignwide has-background-dim has-background-gradient" style="background:linear-gradient(153deg,rgb(6,89,229) 35%,rgb(155,81,224) 80%);min-height:722px"><div class="wp-block-cover__inner-container"><!-- wp:heading {"textAlign":"center","textColor":"white"} -->
-						<h2 class="has-text-align-center has-white-color has-text-color"><strong><em>One Membership, Many Benefits</em></strong></h2>
-						<!-- /wp:heading -->
+		$page_content = '
+						<div class="wp-block-cover wps-dark-mode">
+						<div class="wp-block-cover__inner-container">
+							<div class="wp-block-heading">
+								<h2>Membership Plans [Bronze, Silver, Gold] <span>Live Demo</span></h2>
+								<h5>ONE MEMBERSHIP, MANY BENEFITS</h5>
+							</div>
 						
-						<!-- wp:group -->
-						<div class="wp-block-group"><div class="wp-block-group__inner-container"><!-- wp:html -->
+						<div class="wp-block-group">
+						<div class="wp-block-group__inner-container">
 						<div class="wps_mfw_membership_front_page">
-						<span class="dashicons dashicons-awards wps_mfw_membership_icon"></span>
-						<div class="wps_membership_plan_content_title">[wps_membership_title]</div>
-						<div class="wps_membership_plan_content_price">[wps_membership_price]</div>
-						<div class="wps_membership_plan_content_desc">[wps_membership_desc]</div>
-						<div class="wps_mfw_buy_button">[wps_membership_buy_now] [wps_membership_no]</div>
+							<div class="wps_membership_heading">
+								<div class="wps_membership_plan_content_title">[wps_membership_title]</div>
+								<div class="wps_membership_plan_content_price">[wps_membership_price]</div>
+							</div>
+							<div class="wps_membership_plan_content_desc">[wps_membership_desc]</div>
+							<div class="wps_mfw_buy_button">[wps_membership_buy_now] [wps_membership_no]</div>
 						</div>
-						<!-- /wp:html --></div></div>
-						<!-- /wp:group --></div></div>
-						<!-- /wp:cover -->';
+						</div></div>
+						</div></div>';
 
 		return $page_content;
 	}

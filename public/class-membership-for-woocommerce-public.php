@@ -1716,18 +1716,24 @@ class Membership_For_Woocommerce_Public {
 					if ( function_exists( 'wps_mmcsfw_get_custom_currency_symbol' ) ) {
 						$plan_currency = wps_mmcsfw_get_custom_currency_symbol( '' );
 					}
-
+				
 					$mode = $this->wps_membership_validate_mode();
 					$content = 'Buy Now';
-						$description .= '<div class="wps_all_plans_detail_wrapper">';
-						$description .= '<h2>' . $plan['post_title'] . '</h2>';
-						$description .= '<div class="wps_membership_plan_content_price">' . sprintf( ' %s %s ', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
-						$plan_desc = get_post_field( 'post_content', $plan['ID'] );
+					$description .= '<div class="wps_all_plans_detail_wrapper"><div class="wps_membership_heading">';
+					$description .= '<div class="wps_membership_title"><h2>' . $plan['post_title'] . '</h2>';
+
+					$plan_desc = get_post_field( 'post_content', $plan['ID'] );
 
 					if ( ! empty( $plan_desc ) ) {
 
 						$description .= '<div class="wps_membership_plan_content_description">' . $plan_desc . '</div>';
+
 					}
+
+					$description .= '</div>';
+
+					$description .= '<div class="wps_membership_plan_content_price"> <div><sup>'. sprintf( ' %s %s ', '', esc_html( $plan_currency )) .'</sup> ' . sprintf( ' %s %s ', '',esc_html( $plan_price ) ) . '</div></div></div>';
+						
 					if ( ! empty( $plan_info ) ) {
 
 						$description .= '<div class="wps_membership_plan_info">' . $plan_info . '</div>';
@@ -1736,12 +1742,37 @@ class Membership_For_Woocommerce_Public {
 
 						$description .= '</div>';
 
-						$description .= '<form method="post" class="wps_membership_buy_now_btn">
+						$description .= '<div class="wps-table-wrapper">
+						<h4>Membership Details</h4>
+						<div class="wps-table-list">
+							<ul>
+								<li><label>Plan type</label><span>Lifetime</span></li>
+								<li><label>Subscription Membership Duration</label><span>0 Days</span></li>
+								<li><label>Delay Duration</label><span>1 Day</span></li>
+								<li><label>Discount On Product</label><span>10%</span></li>
+								<li><label>Offered Products</label><span>Sunglasses</span></li>
+								<li><label>Offered Categories</label><span>Dress</span></li>
+								<li><label>Subscription Membership</label><span>No</span></li>
+								<li><label>Access Type</label><span>Delay_type</span></li>
+								<li><label>Discount On Cart</label><span>5%</span></li>
+								<li><label>Include Membership</label><span>Silver</span></li>
+								<li><label>Offered Product (Under Product Discount)</label><span>Bennies</span></li>
+								<li><label>Offered Product Categories (Under Product Discount)</label><span>Clothings</span></li>
+							</ul>
+						</div>
+						</div>
+						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, iusto, modi. Incidunt, distinctio repellendus 
+						consequuntur, unde nostrum exercitationem libero et. Magni, nostrum! Veritatis ea perferendis asperiores modi 
+						et suscipit dicta?</P>
+						
+						';
+
+						$description .= '<div class="wps-membership-footer-btn"><form method="post" class="wps_membership_buy_now_btn">
 						<input type="hidden" id="wps_membership_plan_id" name="plan_id" value="' . $plan['ID'] . '">
 						<input type="hidden" id="wps_membership_plan_price" value="' . esc_html( $plan_price ) . '">
 						<input type="hidden" name="membership_title" id="wps_membership_title" value="' . $plan['post_title'] . '">
 						<input type="button" data-mode="' . $mode . '" class="wps_membership_buynow" name="wps_membership_buynow" value="' . $content . '">
-						</form>';
+						</form><a class="wps_membership_no_thanks" href="#">No Thanks!</a></div>';
 				}
 			} else {
 				$description .= esc_html__( 'Plans Not Available', 'membership-for-woocommerce' );
@@ -1790,9 +1821,9 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! empty( $plan_desc ) ) {
 
-				$description .= '<div class="wps_membership_plan_content_desc">' . $plan_desc . '</div>';
+				$description .= '' . $plan_desc . '';
 			} else {
-				$description .= '<div class="wps_membership_plan_content_desc">' . $content . '</div>';
+				$description .= '' . $content . '';
 			}
 
 			$plan_info = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
@@ -4296,5 +4327,12 @@ class Membership_For_Woocommerce_Public {
 		$output .= '<input type="hidden" name="wps_nonce_name" value="' . esc_attr( $nonce ) . '" />';
 		$output .= '<div><input type="submit" id="wps_regiser_form_submit" class="button" name="wps_regiser_form_submit" value="Register">';
 		return $output;
+	}
+
+			
+	public function my_function($content){
+		$global_class = Membership_For_Woocommerce_Global_Functions::get();
+		$content = $global_class->gutenberg_content();
+		return $content;
 	}
 }
