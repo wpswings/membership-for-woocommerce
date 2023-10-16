@@ -1,6 +1,8 @@
 jQuery(document).ready(function ($) {
-
-
+	
+	if ('temp2' == membership_public_obj.plan_page_template) {
+		jQuery('.wp-block-cover__inner-container').addClass('wps-mfw-temp2');
+	}
 	jQuery(jQuery('.not_accessible').parent().find('.add_to_cart_button')).hide();
 
 

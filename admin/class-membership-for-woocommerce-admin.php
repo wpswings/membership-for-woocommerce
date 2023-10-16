@@ -717,6 +717,17 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Membership Plan Page Template', 'membership-for-woocommerce' ),
+				'type'  => 'select',
+				'description'  => __( 'Select Template for Plan Page', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_plan_page_temp',
+				'value' => get_option( 'wps_membership_plan_page_temp' ),
+				'options' => array(
+					'temp1' => __( 'Template 1', 'membership-for-woocommerce' ),
+					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
+				),
+			),
 
 		);
 		$after_email = array();
