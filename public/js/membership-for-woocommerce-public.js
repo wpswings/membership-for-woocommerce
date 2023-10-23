@@ -2,8 +2,14 @@ jQuery(document).ready(function ($) {
 	
 	if ('temp2' == membership_public_obj.plan_page_template) {
 		jQuery('.wp-block-cover').addClass('wps-mfw-temp2');
+	} else {
+		jQuery('.wp-block-cover').removeClass('wps-mfw-temp2');
 	}
-	jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
+	if ('on' == membership_public_obj.dark_mode) {
+		jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
+	} else {
+		jQuery('.wp-block-cover').removeClass('wps-mfw-dark-mode');
+	}
 	
 	jQuery(jQuery('.not_accessible').parent().find('.add_to_cart_button')).hide();
 

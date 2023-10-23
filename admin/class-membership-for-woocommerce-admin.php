@@ -728,6 +728,17 @@ class Membership_For_Woocommerce_Admin {
 					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Enable Dark Mode', 'membership-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable to display plan page in dark mode.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_plan_page_dark_mode',
+				'value' => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 
 		);
 		$after_email = array();

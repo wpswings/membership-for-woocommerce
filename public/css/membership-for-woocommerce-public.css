@@ -1211,40 +1211,6 @@ a {
     }
 }
 
-/* Dark mode of template 2 */
-
-/*.wp-block-cover.wps-mfw-temp2.wps-mfw-dark-mode {
-    background: #262626 !important;
-}
-
-.wp-block-cover.wps-mfw-temp2.wps-mfw-dark-mode .wp-block-heading {
-    color: #fff !important;
-}
-
-.wp-block-cover.wps-mfw-dark-mode.wps-mfw-temp2 .wps_mfw_membership_front_page {
-    background: #8b8b8b;
-}
-
-.wp-block-cover.wps-mfw-dark-mode.wps-mfw-temp2 .wps_mfw_membership_front_page * {
-    background: transparent !important;
-}
-
-.wp-block-cover.wps-mfw-dark-mode.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
-    background: linear-gradient(220deg, #FC9918 3.37%, #FFC524 106.47%) !important;
-}
-
-.wp-block-cover.wps-mfw-dark-mode.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_info {
-    background: #eee !important;
-}
-
-@media screen and (max-width: 620px) {
-    .wp-block-cover.wps-mfw-dark-mode.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_table_wrapper li:nth-of-type(even) {
-        background: #979797 !important;
-    }
-}*/
-
-/* Template 2 end */
-
 /* Dark mode Starts */
 
 .wp-block-cover.wps-mfw-dark-mode {
