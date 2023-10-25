@@ -2,9 +2,20 @@ jQuery(document).ready(function ($) {
 	
 	if ('temp2' == membership_public_obj.plan_page_template) {
 		jQuery('.wp-block-cover').addClass('wps-mfw-temp2');
+		// jQuery()
 	} else {
 		jQuery('.wp-block-cover').removeClass('wps-mfw-temp2');
 	}
+	if ('yes' == membership_public_obj.single_plan) {
+		jQuery('.wps_mfw_membership_front_page').addClass('wps_mfw_membership_single_plan');
+		jQuery('.wps_membership_plan_content_price').parent().removeClass('wps_membership_plan_content_price');
+		jQuery('.wp-block-cover.wps-mfw-temp2').css('min-height','100vh');
+		
+	} else {
+		jQuery('.wps_mfw_membership_front_page').addClass('wps_mfw_membership_multiple_plan');
+	}
+	
+	
 	if ('on' == membership_public_obj.dark_mode) {
 		jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
 	} else {

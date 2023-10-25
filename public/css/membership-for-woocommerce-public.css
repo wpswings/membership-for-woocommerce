@@ -242,7 +242,6 @@ select#membership_billing_country:focus,
 
 .wps_membership_plan_content_desc {
     font-size: 18px;
-    min-height: 100px;
     font-weight: 400;
 }
 
@@ -846,10 +845,11 @@ a {
 /* All plan Page fixes*/
 
 .wps_all_plans_detail_wrapper {
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); */
     border-radius: 10px;
     margin-bottom: 10px;
     background-color: white;
+    width: 100%;
 }
 
 .show__membership_details {
@@ -978,6 +978,16 @@ a {
 
 /* Template 2 start */
 
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_single_plan .wps_membership_plan_content_price {
+    top: 15px;
+    right: 15px;
+    padding: 0;
+}
+
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_single_plan .wps_mfw_buy_button {
+    align-items: center;
+}
+
 .wp-block-cover.wps-mfw-temp2 {
     background: #fff !important;
     padding: 0;
@@ -1003,6 +1013,7 @@ a {
     box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.10);
     max-width: 1140px;
     padding: 20px;
+    position: relative;
 }
 
 .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_icon {
@@ -1020,9 +1031,9 @@ a {
     background: transparent;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_membership_plan_content_title,
-.wp-block-cover.wps-mfw-temp2 .wps_membership_plan_content_price {
-    padding: 0;
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_multiple_plan>.wps_membership_plan_content_title,
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_multiple_plan>.wps_membership_plan_content_price {
+    display: none;
 }
 
 .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper {
@@ -1032,7 +1043,7 @@ a {
     padding: 0 130px 0 0;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_content_price {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
     width: 120px;
     height: 120px;
     background: linear-gradient(220deg, #FC9918 3.37%, #FFC524 106.47%);
@@ -1047,7 +1058,7 @@ a {
     top: 0;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper h2 {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page h2 {
     padding: 0;
     margin: 0 0 15px;
     text-align: left;
@@ -1055,12 +1066,12 @@ a {
     line-height: 1.25;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans {
     padding: 0;
     text-align: left;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans>label {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans>label {
     padding: 0;
     font-size: 18px;
     font-weight: 600;
@@ -1071,26 +1082,26 @@ a {
     position: relative;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans>label span {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans>label span {
     font-size: 14px;
     vertical-align: text-bottom;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper li {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper li {
     max-width: 600px;
     margin: 0 0 5px;
     gap: 10px;
     width: 100%;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper .form-table {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper .form-table {
     display: grid;
     grid-template-columns: 1fr 1fr;
     column-gap: 10px;
     margin: 0 0 15px;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper .form-table label {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper .form-table label {
     font-size: 14px;
     flex: 1;
     margin: 0;
@@ -1124,14 +1135,14 @@ a {
     border-color: #FC9918 !important;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_content_description {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_content_description {
     font-size: 14px;
     line-height: 1.5;
     text-align: left;
     margin: 0 0 15px;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_info {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_info {
     font-size: 14px;
     margin: 0 0 15px;
     text-align: left;
@@ -1143,7 +1154,7 @@ a {
     position: relative;
 }
 
-.wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_info:before {
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_info:before {
     content: "\f14c";
     font-family: 'dashicons';
     vertical-align: top;
@@ -1154,29 +1165,41 @@ a {
     top: 5px;
 }
 
+.wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_single_plan .wps_membership_plan_content_title {
+    padding: 0 0 20px;
+}
+
 @media screen and (max-width: 620px) {
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page {
         padding: 0;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_content_price {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_single_plan{
+        padding: 10px;
+    }
+
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page.wps_mfw_membership_single_plan .wps_membership_plan_content_title_for_page {
+        text-align: center;
+    }
+
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
         position: unset;
         margin: 0 auto 15px;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper .form-table {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper .form-table {
         display: block;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper li {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper li {
         margin: 0 0 10px;
         gap: 5px;
         display: grid;
         grid-template-columns: 150px 1fr;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper .form-table label+span {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper .form-table label+span {
         word-break: break-all;
     }
 
@@ -1184,16 +1207,16 @@ a {
         font-size: 28px;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper h2 {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page h2 {
         font-size: 24px;
         text-align: center;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_membership_plan_content_description {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_membership_plan_content_description {
         text-align: center;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans {
         text-align: center;
     }
 
@@ -1201,12 +1224,12 @@ a {
         margin: 0 auto;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper li * {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper li * {
         background: transparent !important;
         padding: 5px;
     }
 
-    .wp-block-cover.wps-mfw-temp2 .wps_all_plans_detail_wrapper .wps_members_plans .wps_table_wrapper li:nth-of-type(even) {
+    .wp-block-cover.wps-mfw-temp2 .wps_mfw_membership_front_page .wps_members_plans .wps_table_wrapper li:nth-of-type(even) {
         background: #eee;
     }
 }
@@ -1222,7 +1245,7 @@ a {
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page {
-    background: #8b8b8b;
+    background: #2b2b2b;
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page * {
@@ -1234,7 +1257,11 @@ a {
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page .wps_membership_plan_info {
-    background: #979797 !important;
+    background: #2b2b2b !important;
+}
+
+.wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page * {
+    color: #fff !important;
 }
 
 @media screen and (max-width: 620px) {
