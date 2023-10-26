@@ -952,12 +952,7 @@ class Membership_For_Woocommerce {
 							</div>
 							<div class="wps-form-group__control">
 								<!-- <label class="mdc-text-field mdc-text-field--outlined"> -->
-									<span class="mdc-notched-outline">
-										<span class="mdc-notched-outline__leading"></span>
-										<span class="mdc-notched-outline__notch">
-										</span>
-										<span class="mdc-notched-outline__trailing"></span>
-									</span>
+									
 									<input
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
 									 type="number" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
