@@ -3138,6 +3138,7 @@ class Membership_For_Woocommerce_Admin {
 				),
 				true
 			);
+			
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_price', $plan_price );
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_name_access_type', $plan_access_type );
 			if ( 'limited' == $plan_access_type ) {
