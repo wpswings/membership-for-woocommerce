@@ -298,6 +298,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
+
+
 	}
 
 	/**
@@ -334,7 +336,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-
+		
 	}
 
 	/**
