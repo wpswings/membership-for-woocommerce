@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.3.2
+ * Version:           2.3.3
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.3.1
+ * Tested up to:      6.3.2
  * WC requires at least: 5.0
- * WC tested up to:   8.1.1
+ * WC tested up to:   8.2.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -83,7 +83,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.2' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.3' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -356,6 +356,148 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			update_post_meta( $id, $key, $value );
 		}
 	}
+
+	add_action( 'admin_init', 'wps_mfw_set_cron_for_plugin_notification' );
+	add_action( 'wps_wgm_check_for_notification_update', 'wps_mfw_save_notice_message' );
+	add_action( 'wp_ajax_wps_mfw_dismiss_notice_banner', 'wps_mfw_dismiss_notice_banner_callback' );
+	/**
+	 * Function to set cron.
+	 *
+	 * @return void
+	 */
+	function wps_mfw_set_cron_for_plugin_notification() {   
+		$wps_sfw_offset = get_option( 'gmt_offset' );
+		$wps_sfw_time   = time() + $wps_sfw_offset * 60 * 60;
+		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
+			wp_schedule_event( $wps_sfw_time, 'daily', 'wps_wgm_check_for_notification_update' );
+		}
+	}
+
+	/**
+	 * Function to save msg.
+	 *
+	 * @return void
+	 */
+	function wps_mfw_save_notice_message() {
+		$wps_notification_data = wps_mfw_get_update_notification_data();
+	
+		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
+			$banner_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
+			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
+			$banner_url = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_url'] : '';
+			$banner_type = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_type'] : '';
+			update_option( 'wps_wgm_notify_new_banner_id', $banner_id );
+			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
+			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
+			if ( 'regular' == $banner_type ) {
+				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+			}
+		}
+	}
+
+	/**
+	 * Function to update notice.
+	 *
+	 * @return array
+	 */
+	function wps_mfw_get_update_notification_data() {
+		$wps_notification_data = array();
+		$url                   = 'https://demo.wpswings.com/client-notification/woo-gift-cards-lite/wps-client-notify.php';
+		$attr                  = array(
+			'action'         => 'wps_notification_fetch',
+			'plugin_version' => MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+		);
+		$query                 = esc_url_raw( add_query_arg( $attr, $url ) );
+		$response              = wp_remote_get(
+			$query,
+			array(
+				'timeout'   => 20,
+				'sslverify' => false,
+			)
+		);
+ 
+ 
+		if ( is_wp_error( $response ) ) {
+			$error_message = $response->get_error_message();
+			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
+		} else {
+			$wps_notification_data = json_decode( wp_remote_retrieve_body( $response ), true );
+		}
+		return $wps_notification_data;
+	}
+ 
+	/**
+	 * Function to dissmiss notice.
+	 *
+	 * @return array
+	 */
+	function wps_mfw_dismiss_notice_banner_callback() {
+		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'plan-import-nonce' ) ) {
+ 
+ 
+			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+ 
+ 
+			if ( isset( $banner_id ) && '' != $banner_id ) {
+				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
+			}
+ 
+ 
+			wp_send_json_success();
+		}
+	}
+
+
+	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
+	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
+	/**
+	* Common Function To show banner image.
+	*
+	* @return void
+	*/
+		function wps_banner_notification_plugin_html() {
+
+
+			$screen = get_current_screen();
+			if ( isset( $screen->id ) ) {
+				$pagescreen = $screen->id;
+			}
+			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) || ( 'wp-swings_page_membership_for_woocommerce_menu' == $pagescreen )  ) {
+				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+				if ( isset( $banner_id ) && '' !== $banner_id ) {
+					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
+					$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
+					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+
+
+						if ( '' !== $banner_image && '' !== $banner_url ) {
+
+
+							?>
+								<div class="wps-offer-notice notice notice-warning is-dismissible">
+									<div class="notice-container">
+										<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+									</div>
+									<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+								</div>
+								
+							<?php
+						}
+					}
+				}
+			}
+		}
+	}
+
+	
+	register_deactivation_hook( __FILE__, 'wps_mfw_remove_cron_for_notification_update' );
+
+
+	function wps_mfw_remove_cron_for_notification_update() {
+		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
+	}
+
 
 	/**
 	 * Adding custom setting links at the plugin activation list.

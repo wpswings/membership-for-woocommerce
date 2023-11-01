@@ -1489,3 +1489,29 @@ label.mdc-text-field.mdc-text-field--outlined.wps_admin_membership_price_wrapper
         margin-bottom: 10px;
     }  
 }
+
+h4.wps-plan-msg {
+    position: absolute;
+    top: 100%;
+    font-size: 16px;
+    color: #14ae14;
+}
+
+.wps-form-group {
+    position: relative;
+}
+
+
+
+.wps-offer-notice.notice.notice-warning {
+    padding: 0;
+    border: none;
+    margin-left: 2px;
+    margin-right: 20px;
+  }
+  .wps-offer-notice.notice.notice-warning a img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+ 

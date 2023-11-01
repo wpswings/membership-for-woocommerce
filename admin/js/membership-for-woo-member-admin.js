@@ -161,7 +161,9 @@ jQuery(document).ready(function($) {
 				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + wsfw_admin_param.wsfw_ajax_error + '</p></div>');		
 				loader.hide();
 			});
-		});
+        });
+    
+   
 });
 
 

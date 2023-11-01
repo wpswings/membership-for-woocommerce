@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.2';
+			$this->version = '2.3.3';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -298,6 +298,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
+
+
 	}
 
 	/**
@@ -334,7 +336,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-
+		
 	}
 
 	/**
@@ -952,12 +954,7 @@ class Membership_For_Woocommerce {
 							</div>
 							<div class="wps-form-group__control">
 								<!-- <label class="mdc-text-field mdc-text-field--outlined"> -->
-									<span class="mdc-notched-outline">
-										<span class="mdc-notched-outline__leading"></span>
-										<span class="mdc-notched-outline__notch">
-										</span>
-										<span class="mdc-notched-outline__trailing"></span>
-									</span>
+									
 									<input
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
 									 type="number" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"

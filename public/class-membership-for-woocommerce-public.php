@@ -135,6 +135,8 @@ class Membership_For_Woocommerce_Public {
 				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
 				'buy_now_text' => $button_text,
 				'single_plan' => $wps_mfw_single_plan,
+				'plan_page_template' => get_option( 'wps_membership_plan_page_temp' ),
+				'dark_mode'     => get_option( 'wps_membership_plan_page_dark_mode' ),
 			)
 		);
 
