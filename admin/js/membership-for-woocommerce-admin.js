@@ -460,3 +460,30 @@ $(document).ready(function() {
 })(jQuery);
 // License.
 
+jQuery( document ).ready(
+    function($){
+        $( document ).on(
+            'click',
+            '#dismiss-banner',
+            function(e){
+                e.preventDefault();
+                var data = {
+                    action:'wps_mfw_dismiss_notice_banner',
+                    wps_nonce:admin_ajax_obj.nonce
+                };
+                $.ajax(
+                    {
+                        url: admin_ajax_obj.ajaxurl,
+                        type: "POST",
+                        data: data,
+                        success: function(response)
+                        {
+                            window.location.reload();
+                        }
+                    }
+                );
+            }
+        );
+    }
+ );
+ 

@@ -717,6 +717,28 @@ class Membership_For_Woocommerce_Admin {
 					'no' => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title' => __( 'Membership Plan Page Template', 'membership-for-woocommerce' ),
+				'type'  => 'select',
+				'description'  => __( 'Select Template for Plan Page', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_plan_page_temp',
+				'value' => get_option( 'wps_membership_plan_page_temp' ),
+				'options' => array(
+					'temp1' => __( 'Template 1', 'membership-for-woocommerce' ),
+					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title' => __( 'Enable Dark Mode', 'membership-for-woocommerce' ),
+				'type'  => 'radio-switch',
+				'description'  => __( 'Enable to display plan page in dark mode.', 'membership-for-woocommerce' ),
+				'id'    => 'wps_membership_plan_page_dark_mode',
+				'value' => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'options' => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no' => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 
 		);
 		$after_email = array();
@@ -3116,6 +3138,7 @@ class Membership_For_Woocommerce_Admin {
 				),
 				true
 			);
+			
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_price', $plan_price );
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_name_access_type', $plan_access_type );
 			if ( 'limited' == $plan_access_type ) {
@@ -3635,5 +3658,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 	}
+
+	 
 
 }

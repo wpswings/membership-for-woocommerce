@@ -122,6 +122,18 @@
   height: auto;
   margin-bottom: 10px;
 }
+
+.wps_membership_buy_now_btn .wps_membership_buynow:hover, .wps_membership_no_thanks.button.alt.thickbox:hover {
+  border: 2px solid #f37e21 !important;
+}
+
+.wps_membership_buy_now_btn .wps_membership_buynow, .button.alt.wps_membership_no_thanks {
+  border: 2px solid transparent !important;
+  margin: 10px;
+  padding: 0;
+  height: 55px;
+}
+
 .available_member {
   margin: 10px 10px -20px 0 !important;
 }

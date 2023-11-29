@@ -58,7 +58,7 @@ jQuery(document).ready(function($){
                 success: function (response) {
                     
                    
-                    jQuery('<h4 style="color:red;">'+ admin_registration_ajax_obj.plan_created_msg +'</h4>').insertBefore(jQuery('#wps_create_membership_plan_button'));
+                    jQuery('<h4 class="wps-plan-msg" >'+ admin_registration_ajax_obj.plan_created_msg +'</h4>').insertBefore(jQuery('#wps_create_membership_plan_button'));
                     setTimeout(function () {
                         window.location.reload(1);
                      }, 3000);
@@ -69,7 +69,6 @@ jQuery(document).ready(function($){
         
 
     });
-
 
 
 $('div .wps_membership_plan_fields').hide();
