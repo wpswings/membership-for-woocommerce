@@ -91,7 +91,7 @@ $(document).on('click', '.wps_membership_checkbox', function(){
 
     // Hide ans show generate button, when consumer key is generated.
     var is_api_setting_enable = jQuery(document).find('#wps_membership_enable_api_settings').prop('checked');
-    var api_consumer_secret   = jQuery(document).find('#wps_membership_api_consumer_secret_keys').val().trim();
+    var api_consumer_secret   = jQuery(document).find('#wps_membership_api_consumer_secret_keys').val();
 
     if ( true == is_api_setting_enable && api_consumer_secret ) {
 
@@ -138,4 +138,9 @@ $(document).on('click', '.wps_membership_checkbox', function(){
 
         jQuery(document).find('#wps_membership_api_consumer_secret_keys').attr('disabled', true);
     }
+
+    jQuery(document).on('keyup', '#memPlanAmount', function(){
+
+        this.value = this.value.replace(/[^0-9]/g, '');
+    });
 });

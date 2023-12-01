@@ -1058,6 +1058,7 @@ class Membership_For_Woocommerce_Admin {
 		$member  = $post;
 		$actions = wps_membership_get_meta_data( $post->ID, 'member_actions', true );
 		$status  = wps_membership_get_meta_data( $post->ID, 'member_status', true );
+		$plan_obj = wps_membership_get_meta_data( $post->ID, 'plan_obj', true );
 
 		wc_get_template(
 			'admin/partials/templates/members-templates/wps-members-actions.php',
@@ -1065,6 +1066,7 @@ class Membership_For_Woocommerce_Admin {
 				'post'    => $member,
 				'actions' => $actions,
 				'status'  => $status,
+				'plan_id' => ! empty( $plan_obj['ID'] ) ? $plan_obj['ID'] : 0,
 			),
 			'',
 			MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH
@@ -3067,6 +3069,9 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 		}
+
+		// PAR compatible.
+		do_action( 'wps_wpr_assign_points_to_user', $_POST );
 
 		foreach ( $actions as $action => $value ) {
 

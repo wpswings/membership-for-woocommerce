@@ -2251,7 +2251,7 @@ class Membership_For_Woocommerce_Public {
 					$plan_id   = WC()->session->get( 'plan_id' );
 				}
 
-				$this->wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
+				$this->wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
 			}
 
 			$this->wps_process_payment_callback( $member_id );
@@ -2284,7 +2284,7 @@ class Membership_For_Woocommerce_Public {
 			}
 
 			if ( ! $is_plan_assigned ) {
-				$this->wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
+				$this->wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
 				$this->wps_process_payment_callback( $member_id );
 			}
 		}
@@ -2300,7 +2300,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param int    $order_id is the id of order.
 	 * @return void
 	 */
-	public function wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
+	public function wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
 		$items    = $order->get_data()['line_items'];
 		$keys     = array_keys( $items );
 

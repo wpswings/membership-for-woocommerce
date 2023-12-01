@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $mem_status = ! empty( $status ) ? sanitize_text_field( wp_unslash( $status ) ) : '';
 $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) ) : '';
+$plan_id    = ! empty( $plan_id ) ? sanitize_text_field( wp_unslash( $plan_id ) ) : '';
 
 ?>
 <ul class="member_status submitbox">
@@ -32,6 +33,7 @@ $mem_action = ! empty( $actions ) ? sanitize_text_field( wp_unslash( $actions ) 
 			<option <?php echo esc_html( 'complete' === $mem_status ? 'selected' : '' ); ?> value="complete"><?php esc_html_e( 'Completed', 'membership-for-woocommerce' ); ?></option>
 			<option <?php echo esc_html( 'cancelled' === $mem_status ? 'selected' : '' ); ?> value="cancelled"><?php esc_html_e( 'Cancelled', 'membership-for-woocommerce' ); ?></option>
 		</select>
+		<input type="hidden" name="members_plan_assign" value="<?php echo esc_html( $plan_id ); ?>">
 	</li>
 
 

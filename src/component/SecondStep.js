@@ -32,7 +32,6 @@ const SecondStep = (props) => {
                  label="Membership Plan Name"  variant="outlined" className={classes.margin}/>
 
                 <TextField 
-                  value={ctx.formFields['memPlanAmount']}
                   onChange={ctx.changeHandler} 
                   id="memPlanAmount" 
                   name="memPlanAmount" 
