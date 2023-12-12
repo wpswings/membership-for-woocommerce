@@ -2601,19 +2601,19 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_add_cart_discount( $cart ) {
 
+		// get cart total and minus cart total.
 		$cart_total = $cart->subtotal;
+		$cart_tax   = ! empty( $cart->tax_total ) ? $cart->tax_total : 0;
+		$cart_total = (int) $cart_total - $cart_tax;
 
-		$user_id = get_current_user_id();
-		$discount_fixed = '';
-		$applied_offer_type_percentage = '';
+		$user_id                        = get_current_user_id();
+		$discount_fixed                 = '';
 		$applied_offer_price_percentage = array();
-		$applied_offer_type_fixed = '';
-		$applied_offer_price_fixed = array();
-		$plan_existing = false;
-		$data                = $this->custom_query_data;
-		$existing_plan_id    = array();
-
-		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+		$applied_offer_price_fixed      = array();
+		$plan_existing                  = false;
+		$data                           = $this->custom_query_data;
+		$existing_plan_id               = array();
+		$current_memberships            = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 		if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
 
@@ -2660,10 +2660,10 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 
-		$discount_percentage = 0;
-		$discount_fixed = 0;
+		$discount_percentage                    = 0;
+		$discount_fixed                         = 0;
 		$applied_offer_price_percentage_on_cart = 0;
-		$applied_offer_price_fixed_on_cart = 0;
+		$applied_offer_price_fixed_on_cart      = 0;
 		if ( ! empty( $applied_offer_price_percentage ) ) {
 
 			// Discount % is given( no negatives, not more than 100, if 100% then price zero ).
