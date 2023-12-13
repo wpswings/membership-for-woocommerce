@@ -100,7 +100,7 @@ class Membership_For_Woocommerce_Admin {
 			wp_enqueue_style( $this->plugin_name . '-admin-global', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-global.css', array( 'wps-mfw-meterial-icons-css' ), time(), 'all' );
 
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), $this->version, 'all' );
 
 		}
 
