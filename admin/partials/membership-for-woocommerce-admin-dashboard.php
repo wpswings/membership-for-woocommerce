@@ -61,9 +61,9 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 		<span>|</span>
 		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
-		<a href="https://join.skype.com/invite/xCmwbfxx8MCX" target="_blank" class="wps-link"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/skype_logo.png' ); ?>" height="20" width="20"><?php esc_html_e( 'Connect with us', 'membership-for-woocommerce' ); ?></a>
-		
-		
+		<a href="https://wa.me/message/JSDF7KNKMUSKA1" target="_blank" class="wps-link"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/whatsapp.png' ); ?>" height="26" width="26"></a>
+		<span>|</span>
+		<div><b><?php echo esc_html( 'v' . MEMBERSHIP_FOR_WOOCOMMERCE_VERSION ); ?></b></div>
 	</div>
 </header>
 <main class="wps-main wps-bg-white wps-r-8">

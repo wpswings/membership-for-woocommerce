@@ -63,7 +63,7 @@ class Membership_For_Woocommerce_Common {
 	 * @since    1.0.0
 	 */
 	public function mfw_common_enqueue_styles() {
-		wp_enqueue_style( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/css/membership-for-woocommerce-common.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/css/membership-for-woocommerce-common.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 	}
 
 	/**
@@ -72,7 +72,7 @@ class Membership_For_Woocommerce_Common {
 	 * @since    1.0.0
 	 */
 	public function mfw_common_enqueue_scripts() {
-		wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		wp_localize_script(
 			$this->plugin_name . 'common',
 			'mfw_common_param',

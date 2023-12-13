@@ -97,14 +97,14 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mfw_public_enqueue_styles() {
 
-		wp_enqueue_style( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/membership-for-woocommerce-public.css', array(), $this->version, 'all' );
-		wp_enqueue_style( 'public-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/wps-public.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/membership-for-woocommerce-public.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+		wp_enqueue_style( 'public-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/wps-public.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
 		if ( is_page( 'membership-plans' ) ) {
 
-			wp_enqueue_style( 'membership-plan', plugin_dir_url( __FILE__ ) . 'css/membership-plan.css', array(), $this->version, false );
+			wp_enqueue_style( 'membership-plan', plugin_dir_url( __FILE__ ) . 'css/membership-plan.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		}
 	}
 
@@ -115,11 +115,11 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mfw_public_enqueue_scripts() {
 
-		wp_register_script( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/js/membership-for-woocommerce-public.js', array( 'jquery' ), $this->version, false );
+		wp_register_script( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/js/membership-for-woocommerce-public.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		wp_localize_script( $this->plugin_name, 'mfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), '2.1.4', false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		$button_text = get_option( 'wps_membership_change_buy_now_text', '' );
 		$wps_mfw_single_plan = '';
 		if ( isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ) {
@@ -141,11 +141,11 @@ class Membership_For_Woocommerce_Public {
 		);
 
 		wp_enqueue_script( 'jquery-ui-dialog' );
-		wp_enqueue_script( 'sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 		if ( is_page( 'membership-plans' ) ) {
 
-			wp_enqueue_script( 'paypal-smart-buttons', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-smart-buttons.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'paypal-smart-buttons', plugin_dir_url( __FILE__ ) . 'js/membership-paypal-smart-buttons.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 			$settings = '';
 
@@ -168,7 +168,7 @@ class Membership_For_Woocommerce_Public {
 			$plan_data['desc']  = $plan_desc;
 			$plan_data['price'] = $plan_price;
 
-			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . esc_html( $client_id ) . '&currency=' . esc_html( $currency ) . '&intent=' . esc_html( $intent ) . '&components=' . esc_html( $component ) . '&disable-funding=' . esc_html( $disable_fund ) . '&vault=' . esc_html( $vault ) . '&debug=' . esc_html( $debug ), array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'paypal-sdk', 'https://www.paypal.com/sdk/js?client-id=' . esc_html( $client_id ) . '&currency=' . esc_html( $currency ) . '&intent=' . esc_html( $intent ) . '&components=' . esc_html( $component ) . '&disable-funding=' . esc_html( $disable_fund ) . '&vault=' . esc_html( $vault ) . '&debug=' . esc_html( $debug ), array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 			wp_localize_script(
 				'paypal-smart-buttons',
@@ -2251,7 +2251,7 @@ class Membership_For_Woocommerce_Public {
 					$plan_id   = WC()->session->get( 'plan_id' );
 				}
 
-				$this->wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
+				$this->wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
 			}
 
 			$this->wps_process_payment_callback( $member_id );
@@ -2284,7 +2284,7 @@ class Membership_For_Woocommerce_Public {
 			}
 
 			if ( ! $is_plan_assigned ) {
-				$this->wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
+				$this->wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id );
 				$this->wps_process_payment_callback( $member_id );
 			}
 		}
@@ -2300,7 +2300,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param int    $order_id is the id of order.
 	 * @return void
 	 */
-	public function wps_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
+	public function wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
 		$items    = $order->get_data()['line_items'];
 		$keys     = array_keys( $items );
 
@@ -2601,19 +2601,19 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_add_cart_discount( $cart ) {
 
+		// get cart total and minus cart total.
 		$cart_total = $cart->subtotal;
+		$cart_tax   = ! empty( $cart->tax_total ) ? $cart->tax_total : 0;
+		$cart_total = (int) $cart_total - $cart_tax;
 
-		$user_id = get_current_user_id();
-		$discount_fixed = '';
-		$applied_offer_type_percentage = '';
+		$user_id                        = get_current_user_id();
+		$discount_fixed                 = '';
 		$applied_offer_price_percentage = array();
-		$applied_offer_type_fixed = '';
-		$applied_offer_price_fixed = array();
-		$plan_existing = false;
-		$data                = $this->custom_query_data;
-		$existing_plan_id    = array();
-
-		$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+		$applied_offer_price_fixed      = array();
+		$plan_existing                  = false;
+		$data                           = $this->custom_query_data;
+		$existing_plan_id               = array();
+		$current_memberships            = get_user_meta( $user_id, 'mfw_membership_id', true );
 
 		if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
 
@@ -2660,10 +2660,10 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 
-		$discount_percentage = 0;
-		$discount_fixed = 0;
+		$discount_percentage                    = 0;
+		$discount_fixed                         = 0;
 		$applied_offer_price_percentage_on_cart = 0;
-		$applied_offer_price_fixed_on_cart = 0;
+		$applied_offer_price_fixed_on_cart      = 0;
 		if ( ! empty( $applied_offer_price_percentage ) ) {
 
 			// Discount % is given( no negatives, not more than 100, if 100% then price zero ).

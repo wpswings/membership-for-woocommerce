@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.3';
+			$this->version = '2.3.4';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';

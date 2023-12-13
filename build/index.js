@@ -55888,7 +55888,6 @@ const SecondStep = props => {
     variant: "outlined",
     className: classes.margin
   }), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["TextField"], {
-    value: ctx.formFields['memPlanAmount'],
     onChange: ctx.changeHandler,
     id: "memPlanAmount",
     name: "memPlanAmount",

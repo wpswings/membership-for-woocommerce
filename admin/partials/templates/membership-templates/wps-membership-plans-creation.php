@@ -1085,6 +1085,8 @@ function wps_mfw_upgrade_pro_popup() {
 
 			</table>
 		</div>
+		<!-- PAR Compatible -->
+		<?php do_action( 'wps_wpr_extend_membership_metabox_field', $settings_fields, $instance, $post ); ?>
 	</div>
 </div>
 <!-- Plans creation end. -->
