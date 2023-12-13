@@ -82,25 +82,25 @@ class Membership_For_Woocommerce_Admin {
 					'wps-admin-react-styles',
 					$style_url,
 					array(),
-					time(),
+					MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
 					false
 				);
 				return;
 			}
-			wp_enqueue_style( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), $this->version, 'all' );
+			wp_enqueue_style( $this->plugin_name . 'migrator', plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-migrator-admin.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-			wp_enqueue_style( 'wps-mfw-select2-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-select2-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-			wp_enqueue_style( 'wps-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'wps-mfw-meterial-css2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), time(), 'all' );
-			wp_enqueue_style( 'wps-mfw-meterial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-css2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-			wp_enqueue_style( 'wps-mfw-meterial-icons-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), time(), 'all' );
+			wp_enqueue_style( 'wps-mfw-meterial-icons-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/icon.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-			wp_enqueue_style( $this->plugin_name . '-admin-global', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-global.css', array( 'wps-mfw-meterial-icons-css' ), time(), 'all' );
+			wp_enqueue_style( $this->plugin_name . '-admin-global', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-global.css', array( 'wps-mfw-meterial-icons-css' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), $this->version, 'all' );
-			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), $this->version, 'all' );
+			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
 		}
 
@@ -111,9 +111,9 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id || 'wps_cpt_members' == $pagescreen_post ) {
 
-				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), time(), 'all' );
+				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), time(), 'all' );
+				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
 				wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
@@ -121,14 +121,14 @@ class Membership_For_Woocommerce_Admin {
 
 			if ( isset( $_GET['tab'] ) && 'shipping' === $_GET['tab'] ) {
 
-				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 			}
 
 			if ( 'wps_cpt_members' === $pagescreen_post || 'wps_cpt_members' === $pagescreen_id ) {
 
-				wp_enqueue_style( 'members-admin-css', plugin_dir_url( __FILE__ ) . 'css/membership-for-woo-members-admin.css', array(), $this->version, 'all' );
+				wp_enqueue_style( 'members-admin-css', plugin_dir_url( __FILE__ ) . 'css/membership-for-woo-members-admin.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
-				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), $this->version, 'all' );
+				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 
 			}
 		}
@@ -183,15 +183,15 @@ class Membership_For_Woocommerce_Admin {
 				);
 			}
 
-			wp_enqueue_script( 'wps-mfw-select2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( 'wps-mfw-select2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
-			wp_enqueue_script( 'wps-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'wps-mfw-metarial-js2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), time(), false );
-			wp_enqueue_script( 'wps-mfw-metarial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), time(), false );
-			wp_enqueue_script( 'wps-mfw-datatable', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/js/jquery.dataTables.min.js', array(), time(), false );
-			wp_enqueue_script( 'wps-mfw-datatable-btn', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/dataTables.buttons.min.js', array(), time(), false );
-			wp_enqueue_script( 'wps-mfw-datatable-btn-2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/buttons.html5.min.js', array(), time(), false );
-			wp_register_script( $this->plugin_name . 'admin-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/membership-for-woocommerce-admin.js', array( 'jquery', 'wps-mfw-select2', 'wps-mfw-metarial-js', 'wps-mfw-metarial-js2', 'wps-mfw-metarial-lite' ), time(), false );
+			wp_enqueue_script( 'wps-mfw-metarial-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-web.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( 'wps-mfw-metarial-js2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-components-v5.0-web.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( 'wps-mfw-metarial-lite', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/material-design/material-lite.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( 'wps-mfw-datatable', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/js/jquery.dataTables.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( 'wps-mfw-datatable-btn', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/dataTables.buttons.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( 'wps-mfw-datatable-btn-2', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables.net/buttons/buttons.html5.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_register_script( $this->plugin_name . 'admin-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/membership-for-woocommerce-admin.js', array( 'jquery', 'wps-mfw-select2', 'wps-mfw-metarial-js', 'wps-mfw-metarial-js2', 'wps-mfw-metarial-lite' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 			wp_localize_script(
 				$this->plugin_name . 'admin-js',
 				'mfw_admin_param',
@@ -203,8 +203,8 @@ class Membership_For_Woocommerce_Admin {
 				)
 			);
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
-			wp_enqueue_script( 'wps-admin-min-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin.min.js', array(), time(), false );
-			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), $this->version, false );
+			wp_enqueue_script( 'wps-admin-min-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 			wp_localize_script(
 				$this->plugin_name,
@@ -217,7 +217,7 @@ class Membership_For_Woocommerce_Admin {
 				)
 			);
 
-			wp_register_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), time(), false );
+			wp_register_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 			wp_localize_script(
 				$this->plugin_name,
 				'admin_registration_ajax_obj',
@@ -233,7 +233,7 @@ class Membership_For_Woocommerce_Admin {
 				)
 			);
 
-			wp_enqueue_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), time(), false );
+			wp_enqueue_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		}
 
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
@@ -244,7 +244,7 @@ class Membership_For_Woocommerce_Admin {
 			if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
 
 				wp_register_script( 'woocommerce_admin', WC()->plugin_url() . '/assets/js/admin/woocommerce_admin.js', array( 'jquery', 'jquery-blockui', 'jquery-ui-sortable', 'jquery-ui-widget', 'jquery-ui-core', 'jquery-tiptip', 'wc-enhanced-select' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
-				wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), $this->version, false );
+				wp_register_script( $this->plugin_name . 'common', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'common/js/membership-for-woocommerce-common.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 				wp_localize_script( $this->plugin_name . 'common', 'mfw_common_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 
 				wp_enqueue_script( $this->plugin_name . 'common' );
@@ -281,9 +281,9 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'woocommerce_admin' );
 
-				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
-				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), time(), false );
+				wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 				wp_localize_script(
 					$this->plugin_name,
@@ -297,7 +297,7 @@ class Membership_For_Woocommerce_Admin {
 					)
 				);
 
-				wp_enqueue_script( 'wps_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/wps_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), $this->version, false );
+				wp_enqueue_script( 'wps_membership_for_woo_add_new_plan_script', plugin_dir_url( __FILE__ ) . 'js/wps_membership_for_woo_add_new_plan_script.js', array( 'woocommerce_admin', 'wc-enhanced-select' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 				wp_localize_script(
 					'wps_membership_for_woo_add_new_plan_script',
@@ -315,15 +315,15 @@ class Membership_For_Woocommerce_Admin {
 
 				wp_enqueue_script( 'jquery-ui-dialog' );
 
-				wp_enqueue_script( 'wps_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'wps_mmebership_sweet_alert', plugin_dir_url( __FILE__ ) . 'js/sweet-alert2.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 			}
 
 			if ( 'wps_cpt_members' === $pagescreen_post || 'wps_cpt_members' === $pagescreen_id ) {
 
-				wp_enqueue_script( 'members-admin-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woo-member-admin.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'members-admin-script', plugin_dir_url( __FILE__ ) . 'js/membership-for-woo-member-admin.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
-				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), $this->version, false );
+				wp_enqueue_script( 'membership-for-woocommerce-select2', plugin_dir_url( __FILE__ ) . 'js/select2.min.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 
 				wp_localize_script(
 					'members-admin-script',
@@ -337,7 +337,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'membership-for-woocommerce-product-edit-admin', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-product-edit-admin.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 		wp_localize_script(
 			'membership-for-woocommerce-product-edit-admin',
 			'wps_product_edit_param',
