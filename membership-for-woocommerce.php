@@ -24,7 +24,7 @@
  * Requires at least: 5.0
  * Tested up to:      6.4.2
  * WC requires at least: 5.0
- * WC tested up to:   8.3.1
+ * WC tested up to:   8.4.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -326,7 +326,14 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
-	// replace get_post_meta with wps_membership_get_meta_data
+	/**
+	 * Replace get_post_meta with wps_membership_get_meta_data.
+	 *
+	 * @param  string $id  id.
+	 * @param  string $key key.
+	 * @param  string $v   v.
+	 * @return string
+	 */
 	function wps_membership_get_meta_data( $id, $key, $v ) {
 		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
@@ -340,11 +347,18 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		} else {
 			// Traditional CPT-based orders are in use.
 			$meta_val = get_post_meta( $id, $key, $v );
-			return $meta_val; 
+			return $meta_val;
 		}
 	}
 
-	// replace update_post_meta with wps_membership_update_meta_data
+	/**
+	 * Replace update_post_meta with wps_membership_update_meta_data.
+	 *
+	 * @param  string $id    id.
+	 * @param  string $key   key.
+	 * @param  string $value value.
+	 * @return void
+	 */
 	function wps_membership_update_meta_data( $id, $key, $value ) {
 		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
@@ -360,12 +374,13 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	add_action( 'admin_init', 'wps_mfw_set_cron_for_plugin_notification' );
 	add_action( 'wps_wgm_check_for_notification_update', 'wps_mfw_save_notice_message' );
 	add_action( 'wp_ajax_wps_mfw_dismiss_notice_banner', 'wps_mfw_dismiss_notice_banner_callback' );
+
 	/**
 	 * Function to set cron.
 	 *
 	 * @return void
 	 */
-	function wps_mfw_set_cron_for_plugin_notification() {   
+	function wps_mfw_set_cron_for_plugin_notification() {
 		$wps_sfw_offset = get_option( 'gmt_offset' );
 		$wps_sfw_time   = time() + $wps_sfw_offset * 60 * 60;
 		if ( ! wp_next_scheduled( 'wps_wgm_check_for_notification_update' ) ) {
@@ -380,7 +395,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 */
 	function wps_mfw_save_notice_message() {
 		$wps_notification_data = wps_mfw_get_update_notification_data();
-	
+
 		if ( is_array( $wps_notification_data ) && ! empty( $wps_notification_data ) ) {
 			$banner_id      = array_key_exists( 'notification_id', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_id'] : '';
 			$banner_image = array_key_exists( 'notification_message', $wps_notification_data[0] ) ? $wps_notification_data[0]['wps_banner_image'] : '';
@@ -415,8 +430,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				'sslverify' => false,
 			)
 		);
- 
- 
+
 		if ( is_wp_error( $response ) ) {
 			$error_message = $response->get_error_message();
 			echo '<p><strong>Something went wrong: ' . esc_html( stripslashes( $error_message ) ) . '</strong></p>';
@@ -425,24 +439,21 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		return $wps_notification_data;
 	}
- 
+
 	/**
 	 * Function to dissmiss notice.
 	 *
-	 * @return array
+	 * @return void
 	 */
 	function wps_mfw_dismiss_notice_banner_callback() {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'plan-import-nonce' ) ) {
- 
- 
+
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
- 
- 
+
 			if ( isset( $banner_id ) && '' != $banner_id ) {
 				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
 			}
- 
- 
+
 			wp_send_json_success();
 		}
 	}
@@ -450,19 +461,18 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
 	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
-	/**
-	* Common Function To show banner image.
-	*
-	* @return void
-	*/
+		/**
+		 * Common Function To show banner image.
+		 *
+		 * @return void
+		 */
 		function wps_banner_notification_plugin_html() {
-
 
 			$screen = get_current_screen();
 			if ( isset( $screen->id ) ) {
 				$pagescreen = $screen->id;
 			}
-			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) || ( 'wp-swings_page_membership_for_woocommerce_menu' == $pagescreen )  ) {
+			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) || ( 'wp-swings_page_membership_for_woocommerce_menu' == $pagescreen ) ) {
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
 				if ( isset( $banner_id ) && '' !== $banner_id ) {
 					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
@@ -470,9 +480,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 					$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
 					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
 
-
 						if ( '' !== $banner_image && '' !== $banner_url ) {
-
 
 							?>
 								<div class="wps-offer-notice notice notice-warning is-dismissible">
@@ -490,10 +498,13 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
-	
 	register_deactivation_hook( __FILE__, 'wps_mfw_remove_cron_for_notification_update' );
 
-
+	/**
+	 * This function is used to clear scheduled events
+	 *
+	 * @return void
+	 */
 	function wps_mfw_remove_cron_for_notification_update() {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
@@ -579,8 +590,11 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 }
 
-add_action( 'before_woocommerce_init', function() {
-	if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
 	}
-} );
+);
