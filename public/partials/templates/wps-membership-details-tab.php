@@ -170,8 +170,7 @@ if ( empty( $current_url ) ) {
 	}
 
 
-		$membership_expiry  = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
-
+	$membership_expiry  = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
 	if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
 		?>
 		<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( $membership_status ); ?></mark>.</p>

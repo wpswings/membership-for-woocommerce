@@ -1055,9 +1055,9 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function member_actions_callback( $post ) {
 
-		$member  = $post;
-		$actions = wps_membership_get_meta_data( $post->ID, 'member_actions', true );
-		$status  = wps_membership_get_meta_data( $post->ID, 'member_status', true );
+		$member   = $post;
+		$actions  = wps_membership_get_meta_data( $post->ID, 'member_actions', true );
+		$status   = wps_membership_get_meta_data( $post->ID, 'member_status', true );
 		$plan_obj = wps_membership_get_meta_data( $post->ID, 'plan_obj', true );
 
 		wc_get_template(
@@ -1494,37 +1494,35 @@ class Membership_For_Woocommerce_Admin {
 
 				if ( 'complete' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
-										<?php
+					<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} elseif ( 'cancelled' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
-									<?php
+					<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} elseif ( 'expired' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'expired', 'membership-for-woocommerce' ); ?></span>
-									<?php
+					<span class="wps-member-status-cancelled" ><?php esc_html_e( 'expired', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} else {
 					?>
-				<form action="" method="POST">
-				<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">
-					<option class="complete" value="complete" >&nbsp;&nbsp;<?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
-					<option class="pending" value="pending" selected="selected">&nbsp;&nbsp;<?php esc_html_e( 'Pending', 'membership-for-woocommerce' ); ?></option>
-					<option class="cancelled" value="cancelled" >&nbsp;&nbsp;<?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></option>
-				</select>
-				<input type="hidden" name="withdrawal_id" value="<?php echo esc_attr( $post_id ); ?>" />
-				<input type="hidden" name="user_id" value="<?php echo esc_attr( $author_id ); ?>" />
-				<div id="overlay" style="display:none">
-					<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="64" height="64" /><br>Loading..
-				</div>
-			</form>
+					<form action="" method="POST">
+						<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">
+							<option class="complete" value="complete" >&nbsp;&nbsp;<?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
+							<option class="pending" value="pending" selected="selected">&nbsp;&nbsp;<?php esc_html_e( 'Pending', 'membership-for-woocommerce' ); ?></option>
+							<option class="cancelled" value="cancelled" >&nbsp;&nbsp;<?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></option>
+						</select>
+						<input type="hidden" name="withdrawal_id" value="<?php echo esc_attr( $post_id ); ?>" />
+						<input type="hidden" name="user_id" value="<?php echo esc_attr( $author_id ); ?>" />
+						<div id="overlay" style="display:none">
+							<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="64" height="64" /><br>Loading..
+						</div>
+					</form>
 					<?php
 
 				}
-									$status = wps_membership_get_meta_data( $post_id, 'member_status', true );
-
+				$status = wps_membership_get_meta_data( $post_id, 'member_status', true );
 				break;
-
 			case 'membership_user':
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', wps_membership_get_meta_data( $post_id, 'wps_member_user', true ) );
@@ -3256,7 +3254,6 @@ class Membership_For_Woocommerce_Admin {
 				'post_status' => 'publish',
 				'numberposts' => -1,
 				'fields' => 'ids',
-
 			)
 		);
 
@@ -3363,7 +3360,7 @@ class Membership_For_Woocommerce_Admin {
 				$plan_obj = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
 
 				// Save expiry date in post.
-			if ( ! empty( $plan_obj ) ) {
+			if ( ! empty( $plan_obj ) && is_array( $plan_obj ) ) {
 
 				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
 				$membership_plubic->assign_club_membership_to_member( $plan_obj['ID'], $plan_obj, $post_id );

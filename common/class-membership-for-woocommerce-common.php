@@ -456,7 +456,7 @@ class Membership_For_Woocommerce_Common {
 	public function wps_membership_subscription_renewal( $wps_new_order, $subscription_id, $payment_method ) {
 		$expiry_date = '';
 		$next_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_next_payment_date', true );
-		$end_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_susbcription_end' );
+		$end_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_susbcription_end', true );
 		if ( ! empty( $next_payment_date ) ) {
 			$expiry_date = $next_payment_date;
 		} elseif ( ! empty( $end_payment_date ) ) {
