@@ -3218,9 +3218,10 @@ class Membership_For_Woocommerce_Public {
 	public function get_all_included_membership( $active_plan_id ) {
 
 		$included_membership = array();
-		$club_membership = wps_membership_get_meta_data( $active_plan_id, 'wps_membership_club', true );
-		if ( ! empty( $club_membership ) ) {
+		$club_membership     = wps_membership_get_meta_data( $active_plan_id, 'wps_membership_club', true );
+		if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 			foreach ( $club_membership as $club_membership_key => $club_membership_value ) {
+
 				array_push( $included_membership, $club_membership_value );
 			}
 		}
@@ -3468,7 +3469,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_buy_now_add_to_cart() {
-		
+
 		if ( WC()->session->__isset( 'product_id' ) ) {
 			$product_id = WC()->session->get( 'product_id' );
 
@@ -3524,8 +3525,8 @@ class Membership_For_Woocommerce_Public {
 			WC()->session->__unset( 'wps_state' );
 		}
 
-		if( is_cart() ) {
-			if(  1 < WC()->cart->get_cart_contents_count()) {
+		if ( is_cart() ) {
+			if ( 1 < WC()->cart->get_cart_contents_count() ) {
 				$wps_store_cart_prouduct_id = array();
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
@@ -3533,7 +3534,7 @@ class Membership_For_Woocommerce_Public {
 				}
 
 				$wps_membership_default_product = get_option( 'wps_membership_default_product' );
-				if ( in_array( $wps_membership_default_product, $wps_store_cart_prouduct_id  ) ) {
+				if ( in_array( $wps_membership_default_product, $wps_store_cart_prouduct_id ) ) {
 					foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
 
 						if ( $wps_membership_default_product != $cart_item['product_id'] ) {

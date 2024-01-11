@@ -778,7 +778,7 @@ class Membership_For_Woocommerce_Common {
 		}
 
 		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
-		if( 0 > $mem_plan_amount ) {
+		if ( 0 > $mem_plan_amount ) {
 			$mem_plan_amount = 0;
 		}
 		update_option( 'Mem_Plan_Amount', $mem_plan_amount );

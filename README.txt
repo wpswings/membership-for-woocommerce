@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.3.2
+Tested up to: 6.4.2
 WC requires at least: 5.0.0
-WC tested up to: 8.2.1
-Stable tag: 2.3.3
+WC tested up to: 8.4.0
+Stable tag: 2.3.4
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -158,7 +158,7 @@ If you need support or have any questions then kindly use our online chat window
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership-services&utm_medium=membership-org-page&utm_campaign=woocommerce-services)
 
-> Get Huge Discounts on PDF Generator plugin during BFCM Sales 2023 - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-member-offers&utm_medium=member-org-page&utm_campaign=offers)
+> Get Huge Discounts on PDF Generator plugin during Christmas Sales 2023 - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-member-offers&utm_medium=member-org-page&utm_campaign=offers)
 
 == Installation ==
 
@@ -256,6 +256,11 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 21. Send Quick Notifications
 
 == Changelog ==
+
+= 2.3.4 -released on 13 December 2023 = 
+* New: Compatible with latest WC(8.4.0) & WP(6.4.2)
+* Fix: Membership discount issues fixed
+* Fix: Validation issues Fixed
 
 = 2.3.3 - Released on 31 October 2023 =
 * New: Compatible with latest WC(8.2.1) & WP(6.3.2)
@@ -379,7 +384,8 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.3.3 - Released on 31 October 2023 =
-* New: Compatible with latest WC(8.2.1) & WP(6.3.2)
-* New: Added new template
-* New: Added a dark mode option
+= 2.3.4 -released on 13 December 2023 = 
+* New: Compatible with latest WC(8.4.0) & WP(6.4.2)
+* Fix: Membership discount issues fixed
+* Fix: Validation issues Fixed
+

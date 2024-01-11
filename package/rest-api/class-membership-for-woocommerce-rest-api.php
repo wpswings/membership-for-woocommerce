@@ -130,7 +130,7 @@ class Membership_For_Woocommerce_Rest_Api {
 		$request_response                        = $request->get_params();
 		$consumer_secret                         = ! empty( $request_response['consumer_secret'] ) ? trim( $request_response['consumer_secret'] ) : '';
 		$wps_membership_api_consumer_secret_keys = ! empty( get_option( 'wps_membership_api_consumer_secret_keys' ) ) ? trim( get_option( 'wps_membership_api_consumer_secret_keys' ) ) : '';
-		
+
 		if ( $consumer_secret === $wps_membership_api_consumer_secret_keys ) {
 
 			$result = true;
