@@ -32,7 +32,7 @@
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	die;
+	exit;
 }
 use Automattic\WooCommerce\Utilities\OrderUtil;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
@@ -215,7 +215,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function run_membership_for_woocommerce() {
-		 define_membership_for_woocommerce_constants();
+		define_membership_for_woocommerce_constants();
 		auto_update_membership_for_woocommerce();
 		$mfw_mfw_plugin_standard = new Membership_For_Woocommerce();
 		$mfw_mfw_plugin_standard->mfw_run();

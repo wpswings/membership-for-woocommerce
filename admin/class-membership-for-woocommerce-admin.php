@@ -3757,7 +3757,7 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * This function is used to list all WpordPress pages.
 	 *
-	 * @return void
+	 * @return array
 	 */
 	public function wps_msfw_list_all_wprdpress_pages() {
     
