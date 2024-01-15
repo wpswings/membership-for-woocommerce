@@ -3542,7 +3542,7 @@ class Membership_For_Woocommerce_Admin {
 
 		$wps_api_settings = array(
 			array(
-				'title'       => __( 'Enable API Settigs', 'membership-for-woocommerce' ),
+				'title'       => __( 'Enable API Settings', 'membership-for-woocommerce' ),
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable plugin to start the functionality.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_membership_enable_api_settings',
@@ -3636,6 +3636,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mfw_generate_api_keys_settings() {
+
 		global $mfw_wps_mfw_obj;
 		if ( isset( $_POST['mfw_button_generate_keys_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
 			$wps_mfw_gen_flag                   = true;
@@ -3661,6 +3662,115 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
+	/**
+	 * This function is used to create other settings html.
+	 *
+	 * @param  array $mfw_settings_other mfw_settings_other.
+	 * @return array
+	 */
+	public function wps_mfw_other_html_settings( $mfw_settings_other ) {
 
+		$wps_other_settings = array(
+			array(
+				'title'       => __( 'Enable Settings', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to redirect users when they register on your site.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_enable_other_settings',
+				'value'       => get_option( 'wps_membership_enable_other_settings' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Choose the page for redirection.', 'membership-for-woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Select the page where you want to redirect users when they register on the site.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_page_for_redirection_user',
+				'value'       => get_option( 'wps_msfw_page_for_redirection_user' ),
+				'options'     => $this->wps_msfw_list_all_wprdpress_pages(),
+			),
+			array(
+				'type'        => 'multi-button',
+				'id'          => 'mfw_button_other_settings',
+				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+		);
+		$mfw_settings_other = array_merge( $mfw_settings_other, $wps_other_settings );
+		return $mfw_settings_other;
+	}
+
+	/**
+	 * Save API settings here.
+	 *
+	 * @return void
+	 */
+	public function mfw_admin_save_other_settings() {
+
+		global $mfw_wps_mfw_obj;
+		if ( isset( $_POST['mfw_button_other_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag     = false;
+			$mfw_genaral_settings = apply_filters( 'mfw_other_settings_array', array() );
+			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
+			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
+			}
+
+			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+				unset( $mfw_genaral_settings[ $mfw_button_index ] );
+				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
+
+					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
+						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+							} else {
+
+								update_option( $mfw_genaral_setting['id'], '' );
+							}
+						} else {
+
+							$wps_mfw_gen_flag = true;
+						}
+					}
+				}
+
+				if ( $wps_mfw_gen_flag ) {
+
+					$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+				} else {
+
+					$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to list all WpordPress pages.
+	 *
+	 * @return void
+	 */
+	public function wps_msfw_list_all_wprdpress_pages() {
+    
+		$wps_msfw_all_pages = array();
+		if ( ! empty( get_pages() ) && is_array( get_pages() ) ) {
+			foreach ( get_pages() as $page) {
+				if ( 'Checkout' !== $page->post_title ) {
+
+					$wps_msfw_all_pages[$page->ID] = $page->post_title;
+				}
+			}
+		}
+		return $wps_msfw_all_pages;
+	}
 
 }

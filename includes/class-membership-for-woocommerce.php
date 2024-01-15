@@ -295,10 +295,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_mfwp_send_msg_to_all_members' );
 
 		// API settings creations.
-		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10 );
+		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
-
+		// Other settings.
+		$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_mfw_other_html_settings', 10, 1 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_other_settings' );
 	}
 
 	/**
@@ -450,6 +452,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_registration_form_submission_callback' );
 			$this->loader->add_filter( 'woocommerce_checkout_fields', $mfw_plugin_public, 'wps_mfw_remove_billing_from_checkout', 10, 1 );
 		}
+		// redirect user when register on site,
+		$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
 	}
 
 	/**
@@ -567,6 +571,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'API Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-api-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
+				'title'       => esc_html__( 'Other Settings', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-other-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
 			);
 
 			/**

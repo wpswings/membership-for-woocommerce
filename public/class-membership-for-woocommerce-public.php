@@ -4303,4 +4303,23 @@ class Membership_For_Woocommerce_Public {
 		$output .= '<div><input type="submit" id="wps_regiser_form_submit" class="button" name="wps_regiser_form_submit" value="Register">';
 		return $output;
 	}
+
+	/**
+	 * This function is used to redirect user on selected page by admin.
+	 *
+	 * @param  string $redirection_url redirection_url.
+	 * @return string
+	 */
+	public function wps_msfw_user_redirection( $redirection_url ) {
+
+		$wps_membership_enable_other_settings = get_option( 'wps_membership_enable_other_settings', 'off' );
+		$wps_msfw_page_for_redirection_user   = ! empty( get_option( 'wps_msfw_page_for_redirection_user' ) ) ? get_option( 'wps_msfw_page_for_redirection_user' ) : 0;
+		if ( 'on' === $wps_membership_enable_other_settings ) {
+			if ( $wps_msfw_page_for_redirection_user > 0 ) {
+
+				$redirection_url = get_permalink( $wps_msfw_page_for_redirection_user );
+			}
+		}
+		return $redirection_url;
+	}
 }
