@@ -3248,6 +3248,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mfw_admin_save_tab_settings_reg_form() {
+		global $mfw_wps_mfw_obj;
 		$results = get_posts(
 			array(
 				'post_type' => 'wps_cpt_membership',
@@ -3279,6 +3280,8 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
+		// flag variable to show success msg for members creation.
+		$wps_success_msg = false;
 		if ( isset( $_POST['wps_add_member_button'] ) ) {
 			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
 			wp_verify_nonce( $value_check, 'wps-form-nonce' );
@@ -3297,7 +3300,8 @@ class Membership_For_Woocommerce_Admin {
 			);
 			$plan_id = '';
 
-				// When plans are assigned manually.
+			// When plans are assigned manually.
+			$wps_success_msg = true;
 			if ( isset( $_POST['members_plan_assign'] ) ) {
 
 				$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
@@ -3352,14 +3356,10 @@ class Membership_For_Woocommerce_Admin {
 			// Assign membership plan to user and assign 'member' role to it.
 			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
 
-			// If manually completing membership then set its expiry date.
-
-				// Getting current activation date.
-				$current_date = gmdate( 'Y-m-d' );
-
-				$plan_obj = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
-
-				// Save expiry date in post.
+			// Getting current activation date.
+			$current_date = gmdate( 'Y-m-d' );
+			$plan_obj     = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
+			// Save expiry date in post.
 			if ( ! empty( $plan_obj ) && is_array( $plan_obj ) ) {
 
 				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
@@ -3476,9 +3476,14 @@ class Membership_For_Woocommerce_Admin {
 			);          // phpcs:enable
 
 			wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
-
 		}
 
+		// show success msg for members creation from admin end.
+		if ( $wps_success_msg ) {
+
+			$wps_mfw_error_text = esc_html__( 'Member added successfully !', 'membership-for-woocommerce' );
+			$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+		}
 	}
 
 	/**
