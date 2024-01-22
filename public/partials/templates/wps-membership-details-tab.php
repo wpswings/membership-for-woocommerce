@@ -46,11 +46,6 @@ if ( empty( $current_url ) ) {
 					$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 					$button_disable   = ( in_array( $membership_status, array( 'pending', 'hold' ) ) ) ? 'disabled' : '';
 
-					if ( empty( $membership_plan ) ) {
-						continue;
-					}
-
-
 					?>
 					<tr class="woocommerce-orders-table__row woocommerce-orders-table__row--status-<?php echo esc_attr( $membership_status ); ?> order">
 						<?php foreach ( $instance->membership_tab_headers() as $column_id => $column_name ) : ?>

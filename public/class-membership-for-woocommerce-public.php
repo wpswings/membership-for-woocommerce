@@ -4051,8 +4051,9 @@ class Membership_For_Woocommerce_Public {
 					$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
 					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status || 'hold' == $member_status ) {
-						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
-						if ( $active_plan['post_title'] == $membership_name ) {
+						$active_plan       = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+						$active_plan_title = ! empty( $active_plan['post_title'] ) ? $active_plan['post_title'] : '';
+						if ( $active_plan_title == $membership_name ) {
 							$is_not_membership_applicable = true;
 						}
 					}
@@ -4061,7 +4062,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		if ( $is_not_membership_applicable ) {
-			   $errors->add( 'validation', 'Membership plan already exists Buy a new plan !!' );
+			$errors->add( 'validation', 'Membership plan already exists Buy a new plan !!' );
 		}
 	}
 
