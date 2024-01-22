@@ -2178,7 +2178,6 @@ class Membership_For_Woocommerce_Admin {
 
 				$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
-			wps_membership_update_meta_data( $post_id, 'member_expiry', '' );
 
 			$other_member_exists = false;
 			$wps_membership_posts = get_post_field( 'post_author', $post_id );
@@ -3022,7 +3021,6 @@ class Membership_For_Woocommerce_Admin {
 
 				$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
-			wps_membership_update_meta_data( $post_id, 'member_expiry', '' );
 
 			$other_member_exists = false;
 			$wps_membership_posts = get_post_field( 'post_author', $post_id );
