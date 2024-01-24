@@ -22,10 +22,10 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="wps-mfw-gen-section-form">
-    <div class="mfw-secion-wrap">
-    <?php
-	    do_action( 'mfw_api_settings_before' );
-    ?>
+	<div class="mfw-secion-wrap">
+	<?php
+		do_action( 'mfw_api_settings_before' );
+	?>
 	<div class="wps-sm__modal"></div>
 		<?php
 		$mfw_general_html = $mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_genaral_settings );

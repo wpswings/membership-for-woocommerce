@@ -136,19 +136,15 @@ $results = get_posts(
 
 								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_ids', true );
 								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-
 									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
 
 										$product_name = get_the_title( $wps_membership_plan_single_target_product_ids );
 										?>
-
-								<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-
+										<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
 										<?php
 									}
 								}
 								?>
-								
 							</select>
 						</div>
 					</div>
@@ -164,14 +160,11 @@ $results = get_posts(
 
 								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_categories', true );
 								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-
 									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
 
 										$product_name = get_the_category_by_ID( $wps_membership_plan_single_target_product_ids );
 										?>
-
-								<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-
+										<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
 										<?php
 									}
 								}

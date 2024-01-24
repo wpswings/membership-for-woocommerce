@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.4';
+			$this->version = '2.3.5';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -295,11 +295,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_mfwp_send_msg_to_all_members' );
 
 		// API settings creations.
-		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10 );
+		$this->loader->add_filter( 'mfw_api_settings_array', $mfw_plugin_admin, 'wps_membership_api_html_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
-
-
+		// Other settings.
+		$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_mfw_other_html_settings', 10, 1 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_other_settings' );
 	}
 
 	/**
@@ -336,7 +337,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-		
+
 	}
 
 	/**
@@ -451,6 +452,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_registration_form_submission_callback' );
 			$this->loader->add_filter( 'woocommerce_checkout_fields', $mfw_plugin_public, 'wps_mfw_remove_billing_from_checkout', 10, 1 );
 		}
+		// redirect user when register on site.
+		$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
 	}
 
 	/**
@@ -568,6 +571,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'API Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-api-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
+				'title'       => esc_html__( 'Other Settings', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-other-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
 			);
 
 			/**
@@ -1139,7 +1147,7 @@ class Membership_For_Woocommerce {
 								</div>
 							</div>
 							<?php
-						break;
+							break;
 						case 'multi-button':
 							?>
 							<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
@@ -1147,7 +1155,7 @@ class Membership_For_Woocommerce {
 								<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
 							</button>
 							<?php
-						break;
+							break;
 
 						case 'multi':
 							?>

@@ -1264,6 +1264,22 @@ a {
     color: #fff !important;
 }
 
+img.wps_mfw_no_plan_found_img {
+    max-width: 66px;
+    margin: 0 auto 10px;
+}
+
+.wps_mfw_no_plan_found_main_wrapper {
+    text-align: center;
+}
+
+span.wps_mfw_no_plan_found_msg {
+    font-size: 44px;
+    font-weight: 700;
+    opacity: 0.2;
+    color: #000;
+}
+
 @media screen and (max-width: 620px) {
     .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page .wps_table_wrapper li:nth-of-type(even) {
         background: #979797 !important;

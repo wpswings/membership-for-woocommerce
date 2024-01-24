@@ -614,7 +614,7 @@ function wps_mfw_upgrade_pro_popup() {
 							$demo_plan_array = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_ids_search', true );
 
 							if ( ! empty( $demo_plan_array ) ) {
-								$demo_plan_array = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_ids_search' );
+								$demo_plan_array = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_ids_search', true );
 								$wps_membership_plan_target_product_ids = array_merge( $wps_membership_plan_target_product_ids, $demo_plan_array );
 							}
 							if ( $wps_membership_plan_target_product_ids ) {

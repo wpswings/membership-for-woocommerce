@@ -456,7 +456,7 @@ class Membership_For_Woocommerce_Common {
 	public function wps_membership_subscription_renewal( $wps_new_order, $subscription_id, $payment_method ) {
 		$expiry_date = '';
 		$next_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_next_payment_date', true );
-		$end_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_susbcription_end' );
+		$end_payment_date = wps_membership_get_meta_data( $subscription_id, 'wps_susbcription_end', true );
 		if ( ! empty( $next_payment_date ) ) {
 			$expiry_date = $next_payment_date;
 		} elseif ( ! empty( $end_payment_date ) ) {
@@ -778,7 +778,7 @@ class Membership_For_Woocommerce_Common {
 		}
 
 		$mem_plan_amount = ! empty( $_POST['memPlanAmount'] ) ? sanitize_text_field( wp_unslash( $_POST['memPlanAmount'] ) ) : '';
-		if( 0 > $mem_plan_amount ) {
+		if ( 0 > $mem_plan_amount ) {
 			$mem_plan_amount = 0;
 		}
 		update_option( 'Mem_Plan_Amount', $mem_plan_amount );

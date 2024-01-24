@@ -227,8 +227,8 @@ class Membership_For_Woocommerce_Admin {
 					'is_api_enable'          => get_option( 'wps_membership_enable_api_settings', true ),
 					'is_consumer_secret_set' => get_option( 'wps_membership_api_consumer_secret_keys', true ),
 					'plan_name_error'        => __( 'Please Enter plan name !', 'membership-for-woocommerce' ),
-					'plan_price_error'		 => __( 'Please Enter plan Price !', 'membership-for-woocommerce' ),
-					'plan_created_msg'		 => __( 'Plan is created Successfully !', 'membership-for-woocommerce' ),
+					'plan_price_error'       => __( 'Please Enter plan Price !', 'membership-for-woocommerce' ),
+					'plan_created_msg'       => __( 'Plan is created Successfully !', 'membership-for-woocommerce' ),
 					'valid_access_msg'       => __( 'Please Enter valid duration !', 'membership-for-woocommerce' ),
 				)
 			);
@@ -1055,9 +1055,9 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function member_actions_callback( $post ) {
 
-		$member  = $post;
-		$actions = wps_membership_get_meta_data( $post->ID, 'member_actions', true );
-		$status  = wps_membership_get_meta_data( $post->ID, 'member_status', true );
+		$member   = $post;
+		$actions  = wps_membership_get_meta_data( $post->ID, 'member_actions', true );
+		$status   = wps_membership_get_meta_data( $post->ID, 'member_status', true );
 		$plan_obj = wps_membership_get_meta_data( $post->ID, 'plan_obj', true );
 
 		wc_get_template(
@@ -1494,37 +1494,35 @@ class Membership_For_Woocommerce_Admin {
 
 				if ( 'complete' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
-										<?php
+					<span class="wps-member-status-complete" ><?php esc_html_e( 'complete', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} elseif ( 'cancelled' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
-									<?php
+					<span class="wps-member-status-cancelled" ><?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} elseif ( 'expired' === $withdrawal_status ) {
 					?>
-										<span class="wps-member-status-cancelled" ><?php esc_html_e( 'expired', 'membership-for-woocommerce' ); ?></span>
-									<?php
+					<span class="wps-member-status-cancelled" ><?php esc_html_e( 'expired', 'membership-for-woocommerce' ); ?></span>
+					<?php
 				} else {
 					?>
-				<form action="" method="POST">
-				<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">
-					<option class="complete" value="complete" >&nbsp;&nbsp;<?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
-					<option class="pending" value="pending" selected="selected">&nbsp;&nbsp;<?php esc_html_e( 'Pending', 'membership-for-woocommerce' ); ?></option>
-					<option class="cancelled" value="cancelled" >&nbsp;&nbsp;<?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></option>
-				</select>
-				<input type="hidden" name="withdrawal_id" value="<?php echo esc_attr( $post_id ); ?>" />
-				<input type="hidden" name="user_id" value="<?php echo esc_attr( $author_id ); ?>" />
-				<div id="overlay" style="display:none">
-					<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="64" height="64" /><br>Loading..
-				</div>
-			</form>
+					<form action="" method="POST">
+						<select onchange="this.className=this.options[this.selectedIndex].className" plan_id="<?php echo esc_attr( $plan_id ); ?>" user_id="<?php echo esc_attr( $author_id ); ?>" post_id_value="<?php echo esc_attr( $post_id ); ?>" name="wps-wpg-gen-table_status" id="wps-wpg-gen-table_status" aria-controls="wps-wpg-gen-section-table" class="<?php echo esc_attr( get_post_status( $post_id ) ); ?>">
+							<option class="complete" value="complete" >&nbsp;&nbsp;<?php esc_html_e( 'Complete', 'membership-for-woocommerce' ); ?></option>
+							<option class="pending" value="pending" selected="selected">&nbsp;&nbsp;<?php esc_html_e( 'Pending', 'membership-for-woocommerce' ); ?></option>
+							<option class="cancelled" value="cancelled" >&nbsp;&nbsp;<?php esc_html_e( 'cancelled', 'membership-for-woocommerce' ); ?></option>
+						</select>
+						<input type="hidden" name="withdrawal_id" value="<?php echo esc_attr( $post_id ); ?>" />
+						<input type="hidden" name="user_id" value="<?php echo esc_attr( $author_id ); ?>" />
+						<div id="overlay" style="display:none">
+							<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="64" height="64" /><br>Loading..
+						</div>
+					</form>
 					<?php
 
 				}
-									$status = wps_membership_get_meta_data( $post_id, 'member_status', true );
-
+				$status = wps_membership_get_meta_data( $post_id, 'member_status', true );
 				break;
-
 			case 'membership_user':
 				$author_id   = get_post_field( 'post_author', $post_id );
 				$author_name = get_the_author_meta( 'user_nicename', wps_membership_get_meta_data( $post_id, 'wps_member_user', true ) );
@@ -2180,8 +2178,6 @@ class Membership_For_Woocommerce_Admin {
 
 				$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
-			wps_membership_update_meta_data( $post_id, 'member_expiry', '' );
-			wps_membership_update_meta_data( $post_id, 'plan_obj', '' );
 
 			$other_member_exists = false;
 			$wps_membership_posts = get_post_field( 'post_author', $post_id );
@@ -3025,8 +3021,6 @@ class Membership_For_Woocommerce_Admin {
 
 				$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
 			}
-			wps_membership_update_meta_data( $post_id, 'member_expiry', '' );
-			wps_membership_update_meta_data( $post_id, 'plan_obj', '' );
 
 			$other_member_exists = false;
 			$wps_membership_posts = get_post_field( 'post_author', $post_id );
@@ -3143,22 +3137,22 @@ class Membership_For_Woocommerce_Admin {
 				),
 				true
 			);
-			
+
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_price', $plan_price );
 			wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_name_access_type', $plan_access_type );
 			if ( 'limited' == $plan_access_type ) {
 				wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_duration', $plan_duration );
 				wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_duration_type', $plan_duration_type );
 			}
-			$temp_array = ['wps_membership_plan_price','wps_membership_plan_name_access_type', 'wps_membership_plan_duration', 'wps_membership_plan_duration_type' ];
+			$temp_array = array( 'wps_membership_plan_price', 'wps_membership_plan_name_access_type', 'wps_membership_plan_duration', 'wps_membership_plan_duration_type' );
 			if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 
 				foreach ( $this->get_plans_default_value() as $field => $value ) {
-	
+
 					$default = ! empty( $value['default'] ) ? $value['default'] : '';
-	
-					if( ! in_array( $field, $temp_array ) ) {
-						wps_membership_update_meta_data( $plan_id, $field, $default  );
+
+					if ( ! in_array( $field, $temp_array ) ) {
+						wps_membership_update_meta_data( $plan_id, $field, $default );
 					}
 				}
 			}
@@ -3250,13 +3244,13 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mfw_admin_save_tab_settings_reg_form() {
+		global $mfw_wps_mfw_obj;
 		$results = get_posts(
 			array(
 				'post_type' => 'wps_cpt_membership',
 				'post_status' => 'publish',
 				'numberposts' => -1,
 				'fields' => 'ids',
-
 			)
 		);
 
@@ -3282,6 +3276,8 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
+		// flag variable to show success msg for members creation.
+		$wps_success_msg = false;
 		if ( isset( $_POST['wps_add_member_button'] ) ) {
 			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
 			wp_verify_nonce( $value_check, 'wps-form-nonce' );
@@ -3300,7 +3296,8 @@ class Membership_For_Woocommerce_Admin {
 			);
 			$plan_id = '';
 
-				// When plans are assigned manually.
+			// When plans are assigned manually.
+			$wps_success_msg = true;
 			if ( isset( $_POST['members_plan_assign'] ) ) {
 
 				$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';
@@ -3355,15 +3352,11 @@ class Membership_For_Woocommerce_Admin {
 			// Assign membership plan to user and assign 'member' role to it.
 			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
 
-			// If manually completing membership then set its expiry date.
-
-				// Getting current activation date.
-				$current_date = gmdate( 'Y-m-d' );
-
-				$plan_obj = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
-
-				// Save expiry date in post.
-			if ( ! empty( $plan_obj ) ) {
+			// Getting current activation date.
+			$current_date = gmdate( 'Y-m-d' );
+			$plan_obj     = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
+			// Save expiry date in post.
+			if ( ! empty( $plan_obj ) && is_array( $plan_obj ) ) {
 
 				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
 				$membership_plubic->assign_club_membership_to_member( $plan_obj['ID'], $plan_obj, $post_id );
@@ -3479,9 +3472,14 @@ class Membership_For_Woocommerce_Admin {
 			);          // phpcs:enable
 
 			wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
-
 		}
 
+		// show success msg for members creation from admin end.
+		if ( $wps_success_msg ) {
+
+			$wps_mfw_error_text = esc_html__( 'Member added successfully !', 'membership-for-woocommerce' );
+			$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+		}
 	}
 
 	/**
@@ -3545,7 +3543,7 @@ class Membership_For_Woocommerce_Admin {
 
 		$wps_api_settings = array(
 			array(
-				'title'       => __( 'Enable API Settigs', 'membership-for-woocommerce' ),
+				'title'       => __( 'Enable API Settings', 'membership-for-woocommerce' ),
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable plugin to start the functionality.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_membership_enable_api_settings',
@@ -3639,6 +3637,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function mfw_generate_api_keys_settings() {
+
 		global $mfw_wps_mfw_obj;
 		if ( isset( $_POST['mfw_button_generate_keys_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
 			$wps_mfw_gen_flag                   = true;
@@ -3664,6 +3663,115 @@ class Membership_For_Woocommerce_Admin {
 		}
 	}
 
-	 
+	/**
+	 * This function is used to create other settings html.
+	 *
+	 * @param  array $mfw_settings_other mfw_settings_other.
+	 * @return array
+	 */
+	public function wps_mfw_other_html_settings( $mfw_settings_other ) {
+
+		$wps_other_settings = array(
+			array(
+				'title'       => __( 'Enable Settings', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to redirect users when they register on your site.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_enable_other_settings',
+				'value'       => get_option( 'wps_membership_enable_other_settings' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Choose the page for redirection.', 'membership-for-woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Select the page where you want to redirect users when they register on the site.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_page_for_redirection_user',
+				'value'       => get_option( 'wps_msfw_page_for_redirection_user' ),
+				'options'     => $this->wps_msfw_list_all_wprdpress_pages(),
+			),
+			array(
+				'type'        => 'multi-button',
+				'id'          => 'mfw_button_other_settings',
+				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+		);
+		$mfw_settings_other = array_merge( $mfw_settings_other, $wps_other_settings );
+		return $mfw_settings_other;
+	}
+
+	/**
+	 * Save API settings here.
+	 *
+	 * @return void
+	 */
+	public function mfw_admin_save_other_settings() {
+
+		global $mfw_wps_mfw_obj;
+		if ( isset( $_POST['mfw_button_other_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag     = false;
+			$mfw_genaral_settings = apply_filters( 'mfw_other_settings_array', array() );
+			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
+			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
+			}
+
+			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+				unset( $mfw_genaral_settings[ $mfw_button_index ] );
+				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
+
+					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
+						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+							} else {
+
+								update_option( $mfw_genaral_setting['id'], '' );
+							}
+						} else {
+
+							$wps_mfw_gen_flag = true;
+						}
+					}
+				}
+
+				if ( $wps_mfw_gen_flag ) {
+
+					$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+				} else {
+
+					$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to list all WpordPress pages.
+	 *
+	 * @return array
+	 */
+	public function wps_msfw_list_all_wprdpress_pages() {
+    
+		$wps_msfw_all_pages = array();
+		if ( ! empty( get_pages() ) && is_array( get_pages() ) ) {
+			foreach ( get_pages() as $page) {
+				if ( 'Checkout' !== $page->post_title ) {
+
+					$wps_msfw_all_pages[$page->ID] = $page->post_title;
+				}
+			}
+		}
+		return $wps_msfw_all_pages;
+	}
 
 }

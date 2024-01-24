@@ -5,8 +5,8 @@ Tags: membership, membership plan, subscription, woocommerce, members-only, wooc
 Requires at least: 5.0
 Tested up to: 6.4.2
 WC requires at least: 5.0.0
-WC tested up to: 8.4.0
-Stable tag: 2.3.4
+WC tested up to: 8.5.1
+Stable tag: 2.3.5
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,51 +36,53 @@ Membership Plugin directly give you a way out of the three most customary pain p
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
 
-**1) New Template for Membership Plan Page:** Membership for WooCommerce has a new template to show on individual membership plans and membership plan pages allowing you to engage and add more customers to your membership program, thus leading to higher customer satisfaction rates and increased loyalty.
+**1) Redirect Users Upon Registration:** Improve user experience by smoothly redirecting users to your chosen page when they sign up. Activate the option, pick your desired page—whether it's the Cart, Membership Plan, My Account, or any other page—and create a more personalized onboarding journey.
 
-**2) Create Membership in the Order Processing Stage:** You can enroll users into your membership plans even when their membership order is in the processing stage. It allows you to quickly create new members for your site’s programs.
+**2) New Template for Membership Plan Page:** Membership for WooCommerce has a new template to show on individual membership plans and membership plan pages allowing you to engage and add more customers to your membership program, thus leading to higher customer satisfaction rates and increased loyalty.
 
-**3) Send Quick Notifications to All Users:** The WooCommerce Membership plugin allows you to send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
+**3) Create Membership in the Order Processing Stage:** You can enroll users into your membership plans even when their membership order is in the processing stage. It allows you to quickly create new members for your site’s programs.
 
-**4) Membership Registration Shortcodes:** Admin can place a form for users to redirect them to the payment checkout page for direct purchases. This will help users with a hassle-free purchase.
+**4) Send Quick Notifications to All Users:** The WooCommerce Membership plugin allows you to send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
 
-**5) Filter Member According to Membership Plan and Column Added in Members Table:** Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members, click on the filter by membership plan, and find the customer.
+**5) Membership Registration Shortcodes:** Admin can place a form for users to redirect them to the payment checkout page for direct purchases. This will help users with a hassle-free purchase.
 
-**6) Filter Member According to Status:** Membership for WooCommerce allows their members to filter members by status. You can filter the member by the status of their product. Go to all members and click on the filter by status select the status and the list of that particular status will open in the table form from there you can find the individual member.
+**6) Filter Member According to Membership Plan and Column Added in Members Table:** Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members, click on the filter by membership plan, and find the customer.
 
-**7) Addition of Quick Status Update in Member Table:** Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly.
+**7) Filter Member According to Status:** Membership for WooCommerce allows their members to filter members by status. You can filter the member by the status of their product. Go to all members and click on the filter by status select the status and the list of that particular status will open in the table form from there you can find the individual member.
 
-**8) Allow Your Members to Cancel their Membership Accounts:** Admin can allow their members to cancel their membership anytime. Simple WooCommerce Membership allows users to discontinue their plan whenever they want. Enable the setting in general settings and your customers will get access to cancel your plan
+**8) Addition of Quick Status Update in Member Table:** Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly.
 
-**9) The Buy Now Button Text Can Be Changed To Dynamic Text:** Store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
+**9) Allow Your Members to Cancel their Membership Accounts:** Admin can allow their members to cancel their membership anytime. Simple WooCommerce Membership allows users to discontinue their plan whenever they want. Enable the setting in general settings and your customers will get access to cancel your plan
 
-**10) Individual Product Membership Plan:** Admin can provide the membership plans on individual products or categories. For example: Among the outfits, the store owners only provided the plan for a single product of clothing like a polo T-shirt.
+**10) The Buy Now Button Text Can Be Changed To Dynamic Text:** Store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
 
-**11) Complete User Membership History and WooCommerce Membership Details of Customers:** Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users can see their history in the ‘My Account’ section with the entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
+**11) Individual Product Membership Plan:** Admin can provide the membership plans on individual products or categories. For example: Among the outfits, the store owners only provided the plan for a single product of clothing like a polo T-shirt.
 
-**12) Membership User Data Export and Import:** Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all WooCommerce membership users as a CSV file. 
+**12) Complete User Membership History and WooCommerce Membership Details of Customers:** Admin gets a quick preview section for WooCommerce Membership plans on the plans listing page. The Woo membership users can see their history in the ‘My Account’ section with the entire details of their membership plans. This will also show their WooCommerce membership details like the due date of their membership plan, their payment status, etc.
+
+**13) Membership User Data Export and Import:** Store owners can effortlessly export the WooCommerce membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all WooCommerce membership users as a CSV file. 
 Admin can also import the WooCommerce membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database.  
 
-**13) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization:** WordPress Membership Plugin provides the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
+**14) Perfectly Neat Shortcodes For Your WooCommerce Membership Plan Page Customization:** WordPress Membership Plugin provides the admin with a remarkable collection of shortcodes that work not only on purchasing the default WooCommerce membership plan but also on the WooCommerce memberships custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
 
-**14) Discount On Membership User Cart Total:** Admin can apply discounts based on user roles. Give discounts only to WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice. 
+**15) Discount On Membership User Cart Total:** Admin can apply discounts based on user roles. Give discounts only to WooCommerce membership users. Admin can grant discounts to his WooCommerce membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice. 
 
-**15) User Table for Admin:** Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
+**16) User Table for Admin:** Now members will not be assigned roles. Instead, metadata will be saved and displayed in the user table as member type.
 
-**16) APIs for Membership Offer Details and Purchased Membership Plans:** The WooCommerce membership plugin offers APIs to fetch details about active membership plans (membership ID, name, type, price, & duration) and purchased memberships by any user (membership ID, name, price, validity, duration, & status). Apply the required parameters along with the API secret key and show these details in any web application, desktop application, mobile application, scripting language, or API documentation.
+**17) APIs for Membership Offer Details and Purchased Membership Plans:** The WooCommerce membership plugin offers APIs to fetch details about active membership plans (membership ID, name, type, price, & duration) and purchased memberships by any user (membership ID, name, price, validity, duration, & status). Apply the required parameters along with the API secret key and show these details in any web application, desktop application, mobile application, scripting language, or API documentation.
 
-**17) Multi-Step Configuration of Membership for WooCommerce:** With a multi-step configuration on installing the plugin, the admin gets assistance in creating his first membership plan. The home tab is also included according to the plugin configuration concept.
+**18) Multi-Step Configuration of Membership for WooCommerce:** With a multi-step configuration on installing the plugin, the admin gets assistance in creating his first membership plan. The home tab is also included according to the plugin configuration concept.
 
-**18)  Display All Membership Plans Together With the Option to Buy Them:** The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here.       
+**19)  Display All Membership Plans Together With the Option to Buy Them:** The membership plans page displays all membership plans created in your eCommerce store with their respective prices. The users can directly buy membership plans from here.       
 
-**19) Membership Details and Plan Creation:** In the WordPress Membership Plugin admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plans like:
+**20) Membership Details and Plan Creation:** In the WordPress Membership Plugin admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WooCommerce membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plans like:
 
 * Plan price
 * Plan name
 * Plan Description
 * Access Type (Lifetime or Limited accessibility) 
 
-**20) Create User After Payment Done:** Using the free Membership for WooCommerce plugin, the admin can create a user after completing the payment. No default member will be created on your WooCommerce store immediately after the membership purchase. This setting can be enabled or disabled anytime from the general setting. Offer members-only individual product discounts and increase customer loyalty and engagement rate.
+**21) Create User After Payment Done:** Using the free Membership for WooCommerce plugin, the admin can create a user after completing the payment. No default member will be created on your WooCommerce store immediately after the membership purchase. This setting can be enabled or disabled anytime from the general setting. Offer members-only individual product discounts and increase customer loyalty and engagement rate.
 
 Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) and learn more about the features and working of the plugin. 
 
@@ -257,7 +259,12 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 2.3.4 -released on 13 December 2023 = 
+= 2.3.5 - Released on 22 January 2024 =
+* New: Option to re-direct user when register
+* New: Compatible with latest WP( 6.4.2 ) & WC( 8.5.1 )
+* Fix: Product edit page uploading image issues
+
+= 2.3.4 - Released on 13 December 2023 = 
 * New: Compatible with latest WC(8.4.0) & WP(6.4.2)
 * Fix: Membership discount issues fixed
 * Fix: Validation issues Fixed
@@ -384,8 +391,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.3.4 -released on 13 December 2023 = 
-* New: Compatible with latest WC(8.4.0) & WP(6.4.2)
-* Fix: Membership discount issues fixed
-* Fix: Validation issues Fixed
-
+= 2.3.5 - Released on 22 January 2024 =
+* New: Option to re-direct user when register
+* New: Compatible with latest WP( 6.4.2 ) & WC( 8.5.1 )
+* Fix: Product edit page uploading image issues

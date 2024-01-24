@@ -112,7 +112,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 				$membership_send_arr = array();
 				$count               = 1;
 				if ( ! empty( $membership_id_arr ) && is_array( $membership_id_arr ) ) {
-					foreach( $membership_id_arr as $membership_id ) {
+					foreach ( $membership_id_arr as $membership_id ) {
 
 						$membership_plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 						$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
@@ -120,12 +120,12 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 
 							continue;
 						}
-					
+
 						if ( 'complete' !== $membership_status ) {
-					
+
 							continue;
 						}
-						
+
 						$plan_duration = '';
 						if ( 'limited' === $membership_plan['wps_membership_plan_name_access_type'] ) {
 
