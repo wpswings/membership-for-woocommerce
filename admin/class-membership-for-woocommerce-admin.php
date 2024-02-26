@@ -3693,6 +3693,22 @@ class Membership_For_Woocommerce_Admin {
 				'options'     => $this->wps_msfw_list_all_wprdpress_pages(),
 			),
 			array(
+				'title'       => __( 'Display the header on the Membership page.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to display the header on the membership page.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_show_header_on_membership_page',
+				'value'       => get_option( 'wps_show_header_on_membership_page' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title'       => __( 'Display the footer on the Membership page.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to display the footer on the membership page.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_show_footer_on_membership_page',
+				'value'       => get_option( 'wps_show_footer_on_membership_page' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
 				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
