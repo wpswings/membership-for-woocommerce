@@ -23,6 +23,7 @@
 	<head>
 		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<?php wp_head(); ?>
 	</head>
 	<?php
 	// show header on membership page.
@@ -37,6 +38,7 @@
 			the_content();
 			endwhile;
 		?>
+		<?php wp_footer(); ?>
 	</body>
 	<?php
 	// show footer on membership page.
