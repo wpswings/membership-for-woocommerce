@@ -3508,24 +3508,28 @@ class Membership_For_Woocommerce_Admin {
 					if ( 'complete' === $status ) {
 
 						$user_id = wps_membership_get_meta_data( $values->ID, 'wps_member_user', true );
-						$user = get_userdata( $user_id );
+						if ( ! empty( $user_id ) ) {
 
-						$user_email = $user->user_email;
+							$user = get_userdata( $user_id );
+							if ( ! empty( $user ) && is_object( $user ) ) {
 
-						// For simplicity, lets assume that user has typed their first and last name when they sign up.
-						$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
-						$to = $user_email;
-						$subject = 'Important message for you!';
-						 $body = isset( $_POST['wps-mfwp-msg-body'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-mfwp-msg-body'] ) ) : '';
+								$user_email = $user->user_email;
+								// For simplicity, lets assume that user has typed their first and last name when they sign up.
+								$user_full_name = $user->user_firstname . ' ' . $user->user_lastname;
+								$to = $user_email;
+								$subject = 'Important message for you!';
+								$body = isset( $_POST['wps-mfwp-msg-body'] ) ? sanitize_text_field( wp_unslash( $_POST['wps-mfwp-msg-body'] ) ) : '';
 
-						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-						$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
+								$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+								$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
 
-						if ( wp_mail( $to, $subject, $body, $headers ) ) {
-							error_log( 'email has been successfully sent to user whose email is ' . $user_email );
+								if ( wp_mail( $to, $subject, $body, $headers ) ) {
+									error_log( 'email has been successfully sent to user whose email is ' . $user_email );
 
-						} else {
-							error_log( 'email failed to sent to user whose email is ' . $user_email );
+								} else {
+									error_log( 'email failed to sent to user whose email is ' . $user_email );
+								}
+							}
 						}
 					}
 				}
