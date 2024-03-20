@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.6';
+			$this->version = '2.4.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -576,6 +576,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Other Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-other-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-reports-settings'] = array(
+				'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-reports-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
 			);
 
 			/**
