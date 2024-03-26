@@ -112,6 +112,23 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $wps_mfw_license_key );
 	}
 
+	// check wallet plugin active or not.
+	/**
+	 * This function is used to check whether wallet plugin is active or not.
+	 *
+	 * @return bool
+	 */
+	function wps_msfw_is_wallet_plugin_active() {
+		$is_active = false;
+		if ( is_plugin_active( 'wallet-system-for-woocommerce/wallet-system-for-woocommerce.php' ) ) {
+			if ( 'on' === get_option( 'wps_wsfw_enable', '' ) ) {
+
+				$is_active = true;
+			}
+		}
+		return $is_active;
+	}
+
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
 		/**
 		 * Function to check multistep function.

@@ -4323,4 +4323,43 @@ class Membership_For_Woocommerce_Public {
 		}
 		return $redirection_url;
 	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  array $gateways gateways.wps_wcb_wallet_payment_gateway
+	 * @return array
+	 */
+	public function wps_msfw_restrict_wallet_payments( $gateways ) {
+
+		$wps_msfw_restrict_payment_via_wallet = get_option( 'wps_msfw_restrict_payment_via_wallet', '' );
+		$count                                = 0;
+		if ( 'on' === $wps_msfw_restrict_payment_via_wallet ) {
+			if ( isset( WC()->cart ) && null !== WC()->cart ) {
+				if ( ! empty( WC()->cart->get_cart() ) && is_array( WC()->cart->get_cart() ) ) {
+					
+					foreach ( WC()->cart->get_cart() as $item_key => $item_values ) {
+						if ( ! empty( $item_values['product_id'] ) ) {
+
+							$product = wc_get_product( $item_values['product_id'] );
+							if ( ! empty( $product ) && is_object( $product ) ) {
+								if ( 'Membership Product' === $product->get_title() ) {
+
+									++$count;
+									break;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// check if counter is greater than zero, than reset wallet payment.
+			if ( $count > 0 ) {
+
+				unset( $gateways['wps_wcb_wallet_payment_gateway'] );
+			}
+		}
+		return $gateways;
+	}
 }

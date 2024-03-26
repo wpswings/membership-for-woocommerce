@@ -301,6 +301,11 @@ class Membership_For_Woocommerce {
 		// Other settings.
 		$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_mfw_other_html_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_other_settings' );
+		// wallet plugin compatible.
+		if ( wps_msfw_is_wallet_plugin_active() ) {
+
+			$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
+		}
 	}
 
 	/**
@@ -454,6 +459,11 @@ class Membership_For_Woocommerce {
 		}
 		// redirect user when register on site.
 		$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
+		// wallet plugin compatible.
+		if ( wps_msfw_is_wallet_plugin_active() ) {
+
+			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
+		}
 	}
 
 	/**
