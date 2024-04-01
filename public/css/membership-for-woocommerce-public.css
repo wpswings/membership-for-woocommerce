@@ -1245,7 +1245,7 @@ a {
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page {
-    background: #2b2b2b;
+    background: #2b2b2b !important;
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page * {
