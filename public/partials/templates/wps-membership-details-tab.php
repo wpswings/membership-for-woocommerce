@@ -74,10 +74,10 @@ if ( empty( $current_url ) ) {
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership= ' . $membership_id ) . '" style="background-color:blue;color:white;"class="woocommerce-button button ' . esc_attr( $button_disable ) . ' ">' . esc_html__( 'View' ) . '</a>';
 									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'complete' == $membership_status ) {
 
-										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >Cancel Membership</button></div>';
+										echo '<div><button class="button memberhip-cancel-button" style="background-color:#b30d0d;color:white;" data-membership_id="' . esc_html( $membership_id ) . '" >' . esc_html__( 'Cancel Membership', 'membership-for-woocommerce' ) . '</button></div>';
 									}
 
 									?>
