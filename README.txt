@@ -4,9 +4,9 @@ Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
 Requires at least: 5.0
 Tested up to: 6.4.3
-WC requires at least: 5.0.0
-WC tested up to: 8.6.1
-Stable tag: 2.3.6
+WC requires at least: 6.5.0
+WC tested up to: 8.7.0
+Stable tag: 2.4.0
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -110,6 +110,8 @@ Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/m
 == WOOCOMMERCE MEMBERSHIP PLUGIN COMPATIBILITIES == 
 
 * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/): The admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
+
+* [**Wallet System for WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/): With our wallet system plugin the admin can set up a digital wallet system on their WooCommerce store and its compatibility with the membership plugin allows the admin to accept membership payment via wallet. Users can easily add money to their wallets and use it to buy memberships hassle-free.
 
 * **WPML Compatibility:** Membership for WooCommerce lets the admin add desired content and translate it into multiple languages. WPML compatibility gives you easy access to professional translation management.
 
@@ -261,6 +263,11 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.4.0 - Released on 02 April 2024 = 
+* New : Compatible with Wallet Plugin
+* New : Compatible with latest WP(6.4.3) & WC(8.7.0)
+* Enhance : Report Section in Org plugin
+
 = 2.3.6 - Released on 6 March 2023 = 
 * New : Option to Header & Footer on Membership Page
 * New : Compatibility with latest WP( 6.4.3 ) & WC( 8.6.1 )
@@ -397,6 +404,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.3.6 - Released on 6 March 2023 = 
-* New : Option to Header & Footer on Membership Page
-* New : Compatibility with latest WP( 6.4.3 ) & WC( 8.6.1 )
+= 2.4.0 - Released on 02 April 2024 = 
+* New : Compatible with Wallet Plugin
+* New : Compatible with latest WP(6.4.3) & WC(8.7.0)
+* Enhance : Report Section in Org plugin

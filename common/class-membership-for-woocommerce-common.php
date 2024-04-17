@@ -643,6 +643,9 @@ class Membership_For_Woocommerce_Common {
 							$user_id   = $_user;
 							$user_ob   = get_user_by( 'id', $user_id );
 							$user_name = $user_ob->display_name;
+
+							// assign one time discount coupon.
+							$this->global_class->wps_msfw_assign_one_time_discount_coupon( $user_ob );
 						}
 					}
 					if ( ! empty( $_user ) ) {
