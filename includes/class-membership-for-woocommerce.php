@@ -862,7 +862,7 @@ class Membership_For_Woocommerce {
 										</span>
 										<span class="mdc-notched-outline__trailing"></span>
 									</span>
-									<input
+									<input min="0"
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
 									name="<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
 									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"

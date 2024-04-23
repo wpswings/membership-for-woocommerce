@@ -513,7 +513,15 @@ class Membership_For_Woocommerce_Common {
 		$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
 
 		$_user = get_user_by( 'email', $billing_email );
+		if ( ( $_user ) && ( 'processing' === $new_status || 'completed' === $new_status ) ) {
 
+			$wps_wpr_one_time_coupon_assignment = get_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', true );
+			if ( empty( $wps_wpr_one_time_coupon_assignment ) ) {
+				// assign one time discount coupon.
+				$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
+				update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
+			}
+		}
 		// If user exist, get the required details.
 
 		$items = $order->get_items();
@@ -645,7 +653,12 @@ class Membership_For_Woocommerce_Common {
 							$user_name = $user_ob->display_name;
 
 							// assign one time discount coupon.
-							$this->global_class->wps_msfw_assign_one_time_discount_coupon( $user_ob );
+							$wps_wpr_one_time_coupon_assignment = get_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', true );
+							if ( empty( $wps_wpr_one_time_coupon_assignment ) ) {
+								// assign one time discount coupon.
+								$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
+								update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
+							}
 						}
 					}
 					if ( ! empty( $_user ) ) {

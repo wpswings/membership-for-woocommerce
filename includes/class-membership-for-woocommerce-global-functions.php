@@ -817,7 +817,6 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				$user_name = $_user->display_name;
 				$user_id   = $_user->ID;
-
 			} else {
 
 				$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
@@ -863,9 +862,6 @@ class Membership_For_Woocommerce_Global_Functions {
 						$user_id   = $_user;
 						$user_ob   = get_user_by( 'id', $user_id );
 						$user_name = $user_ob->display_name;
-
-						// assign one time discount coupon.
-						$this->wps_msfw_assign_one_time_discount_coupon( $user_ob );
 					}
 				}
 			}
@@ -1302,58 +1298,61 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function wps_msfw_assign_one_time_discount_coupon( $user ) {
 
-		$wps_msfw_enable_to_rewards_one_time_coupon = get_option( 'wps_msfw_enable_to_rewards_one_time_coupon' );
-		if ( 'on' === $wps_msfw_enable_to_rewards_one_time_coupon ) {
+		if ( ! empty( $user ) && is_object( $user ) ) {
 
-			$wps_msfw_one_time_coupon_amount = get_option( 'wps_msfw_one_time_coupon_amount' );
-			$wps_msfw_one_time_coupon_amount = ! empty( $wps_msfw_one_time_coupon_amount ) && $wps_msfw_one_time_coupon_amount > 0 ? $wps_msfw_one_time_coupon_amount : 5;
-			if ( ! empty( $user->user_email ) ) {
+			$wps_msfw_enable_to_rewards_one_time_coupon = get_option( 'wps_msfw_enable_to_rewards_one_time_coupon' );
+			if ( 'on' === $wps_msfw_enable_to_rewards_one_time_coupon ) {
 
-				// check if not assign.
-				if ( empty( get_user_meta( $user->get_id(), 'wps_msfw_one_time_coupon_assign_done', true ) ) ) {
+				$wps_msfw_one_time_coupon_amount = get_option( 'wps_msfw_one_time_coupon_amount' );
+				$wps_msfw_one_time_coupon_amount = ! empty( $wps_msfw_one_time_coupon_amount ) && $wps_msfw_one_time_coupon_amount > 0 ? $wps_msfw_one_time_coupon_amount : 5;
+				if ( ! empty( $user->user_email ) && $user->ID ) {
 
-					// generate coupon code.
-					$coupon_code = wp_generate_password( 8, false );
-					// check coupon code exists.
-					if ( $this->wps_msfw_coupon_code_exists( $coupon_code ) ) {
+					// check if not assign.
+					if ( empty( get_user_meta( $user->ID, 'wps_msfw_one_time_coupon_assign_done', true ) ) ) {
 
+						// generate coupon code.
 						$coupon_code = wp_generate_password( 8, false );
-					}
+						// check coupon code exists.
+						if ( $this->wps_msfw_coupon_code_exists( $coupon_code ) ) {
 
-					// insert coupon.
-					$coupon = array(
-						'post_title'   => $coupon_code,
-						'post_content' => '',
-						'post_status'  => 'publish',
-						'post_author'  => 1,
-						'post_type'    => 'shop_coupon'
-					);
+							$coupon_code = wp_generate_password( 8, false );
+						}
 
-					$new_coupon_id = wp_insert_post( $coupon );
-					// update coupon values.
-					if ( ! empty( $new_coupon_id ) ) {
+						// insert coupon.
+						$coupon = array(
+							'post_title'   => $coupon_code,
+							'post_content' => '',
+							'post_status'  => 'publish',
+							'post_author'  => 1,
+							'post_type'    => 'shop_coupon'
+						);
 
-						$wps_msfw_set_coupon_max_usage = apply_filters( 'wps_msfw_set_coupon_usage_limit', 1 );
-						update_post_meta( $new_coupon_id, 'discount_type', 'fixed_cart' );
-						update_post_meta( $new_coupon_id, 'coupon_amount', $wps_msfw_one_time_coupon_amount );
-						update_post_meta( $new_coupon_id, 'individual_use', 'no' );
-						update_post_meta( $new_coupon_id, 'product_ids', '' );
-						update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
-						update_post_meta( $new_coupon_id, 'usage_limit', '1' );
-						update_post_meta( $new_coupon_id, 'usage_limit_per_user', $wps_msfw_set_coupon_max_usage );
-						update_post_meta( $new_coupon_id, 'expiry_date', strtotime( '+1 month' ) );
-						update_user_meta( $user->get_id(), 'wps_msfw_one_time_coupon_assign_done', 'done' );
+						$new_coupon_id = wp_insert_post( $coupon );
+						// update coupon values.
+						if ( ! empty( $new_coupon_id ) ) {
 
-						$subject = 'Important message for you!';
-						$body    = $coupon_code . ' ' . esc_html__( 'use this Coupon Code to get discount on Cart.', 'membership-for-woocommerce' );
-						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-						$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
-						if ( wp_mail( $user->user_email, $subject, $body, $headers ) ) {
+							$wps_msfw_set_coupon_max_usage = apply_filters( 'wps_msfw_set_coupon_usage_limit', 1 );
+							update_post_meta( $new_coupon_id, 'discount_type', 'fixed_cart' );
+							update_post_meta( $new_coupon_id, 'coupon_amount', $wps_msfw_one_time_coupon_amount );
+							update_post_meta( $new_coupon_id, 'individual_use', 'yes' );
+							update_post_meta( $new_coupon_id, 'product_ids', '' );
+							update_post_meta( $new_coupon_id, 'exclude_product_ids', '' );
+							update_post_meta( $new_coupon_id, 'usage_limit', $wps_msfw_set_coupon_max_usage );
+							update_post_meta( $new_coupon_id, 'usage_limit_per_user', $wps_msfw_set_coupon_max_usage );
+							update_post_meta( $new_coupon_id, 'expiry_date', strtotime( '+1 month' ) );
+							update_user_meta( $user->ID, 'wps_msfw_one_time_coupon_assign_done', 'done' );
 
-							error_log( "The coupon has been sent to the user's email." );
-						} else {
+							$subject = 'Important message for you!';
+							$body    = $coupon_code . ' ' . esc_html__( 'use this Coupon Code to get discount on Cart.', 'membership-for-woocommerce' );
+							$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+							$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
+							if ( wp_mail( $user->user_email, $subject, $body, $headers ) ) {
 
-							error_log( 'There is some issues while sending the coupon.' );
+								error_log( "The coupon has been sent to the user's email." );
+							} else {
+
+								error_log( 'There is some issues while sending the coupon.' );
+							}
 						}
 					}
 				}

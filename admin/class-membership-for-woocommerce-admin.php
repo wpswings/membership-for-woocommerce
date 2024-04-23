@@ -3715,7 +3715,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Create a one-time discount coupon for new members.', 'membership-for-woocommerce' ),
 				'type'        => 'radio-switch',
-				'description' => __( 'Enable this setting to reward new members with a coupon.', 'membership-for-woocommerce' ),
+				'description' => __( 'Enable this setting to reward new members with a coupon. Ensure that the membership order status is set to either processing or completed.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_enable_to_rewards_one_time_coupon',
 				'value'       => get_option( 'wps_msfw_enable_to_rewards_one_time_coupon' ),
 				'class'       => 'mfw-radio-switch-class',
