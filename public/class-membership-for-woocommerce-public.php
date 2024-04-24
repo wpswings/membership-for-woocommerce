@@ -4327,7 +4327,7 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Undocumented function.
 	 *
-	 * @param  array $gateways gateways.wps_wcb_wallet_payment_gateway
+	 * @param  array $gateways gateways.
 	 * @return array
 	 */
 	public function wps_msfw_restrict_wallet_payments( $gateways ) {
