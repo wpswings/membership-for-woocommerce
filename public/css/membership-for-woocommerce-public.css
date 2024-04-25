@@ -1116,7 +1116,7 @@ a {
 .wp-block-cover.wps-mfw-temp2 .wps_membership_buy_now_btn .wps_membership_buynow {
     margin: 0;
     border-color: #FC9918 !important;
-    color: #FC9918 !important;
+    color: #FC9918;
 }
 
 .wp-block-cover.wps-mfw-temp2 .wps_membership_buy_now_btn .wps_membership_buynow:hover {
@@ -1245,7 +1245,7 @@ a {
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page {
-    background: #2b2b2b;
+    background: #2b2b2b !important;
 }
 
 .wp-block-cover.wps-mfw-dark-mode .wps_mfw_membership_front_page * {

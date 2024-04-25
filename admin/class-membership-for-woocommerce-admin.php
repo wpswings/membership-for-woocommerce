@@ -3713,6 +3713,22 @@ class Membership_For_Woocommerce_Admin {
 				'class'       => 'mfw-radio-switch-class',
 			),
 			array(
+				'title'       => __( 'Create a one-time discount coupon for new members.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to reward new members with a coupon. Ensure that the membership order status is set to either processing or completed.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_to_rewards_one_time_coupon',
+				'value'       => get_option( 'wps_msfw_enable_to_rewards_one_time_coupon' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title'       => __( 'Enter Coupon Amount', 'membership-for-woocommerce' ),
+				'type'        => 'number',
+				'description' => __( 'Please enter the coupon amount to assign to new members.', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'Coupon Amount', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_one_time_coupon_amount',
+				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
+			),
+			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
 				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
@@ -3792,6 +3808,49 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 		return $wps_msfw_all_pages;
+	}
+
+	/** ******* Wallet plugin compatible ********** */
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  array $mfw_settings_other mfw_settings_other.
+	 * @return array
+	 */
+	public function wps_msfw_restrict_wallet_payment( $mfw_settings_other ) {
+
+		$other_settings     = array(
+			array(
+				'title'       => __( 'Enable this setting to restrict payment via Wallet.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to restrict wallet payments on the cart and checkout pages.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_restrict_payment_via_wallet',
+				'value'       => get_option( 'wps_msfw_restrict_payment_via_wallet' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+		);
+		$mfw_settings_other = $this->wps_msfw_insert_org_key_value_pair( $mfw_settings_other, $other_settings, 4 );
+		return $mfw_settings_other;
+	}
+
+	/**
+	 * This function is used to set array index.
+	 *
+	 * @param  array  $arr            arr.
+	 * @param  array  $inserted_array inserted_array.
+	 * @param  string $index          index.
+	 * @return array
+	 */
+	public function wps_msfw_insert_org_key_value_pair( $arr, $inserted_array, $index ) {
+
+		$arrayend   = array_splice( $arr, $index );
+		$arraystart = array_splice( $arr, 0, $index );
+		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
 	}
 
 }

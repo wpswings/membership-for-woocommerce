@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.3.6';
+			$this->version = '2.4.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -301,6 +301,11 @@ class Membership_For_Woocommerce {
 		// Other settings.
 		$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_mfw_other_html_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_other_settings' );
+		// wallet plugin compatible.
+		if ( wps_msfw_is_wallet_plugin_active() ) {
+
+			$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
+		}
 	}
 
 	/**
@@ -454,6 +459,11 @@ class Membership_For_Woocommerce {
 		}
 		// redirect user when register on site.
 		$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
+		// wallet plugin compatible.
+		if ( wps_msfw_is_wallet_plugin_active() ) {
+
+			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
+		}
 	}
 
 	/**
@@ -576,6 +586,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Other Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-other-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-reports-settings'] = array(
+				'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-reports-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
 			);
 
 			/**
@@ -847,7 +862,7 @@ class Membership_For_Woocommerce {
 										</span>
 										<span class="mdc-notched-outline__trailing"></span>
 									</span>
-									<input
+									<input min="0"
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
 									name="<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
 									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"

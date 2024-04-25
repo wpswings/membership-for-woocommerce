@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.3.6
+ * Version:           2.4.1
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.4.3
+ * Tested up to:      6.5.2
  * WC requires at least: 5.0
- * WC tested up to:   8.6.1
+ * WC tested up to:   8.8.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -83,7 +83,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.3.6' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.4.1' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -110,6 +110,23 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_BASE_FILE', __FILE__ );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_LICENSE_KEY', $wps_mfw_license_key );
+	}
+
+	// check wallet plugin active or not.
+	/**
+	 * This function is used to check whether wallet plugin is active or not.
+	 *
+	 * @return bool
+	 */
+	function wps_msfw_is_wallet_plugin_active() {
+		$is_active = false;
+		if ( is_plugin_active( 'wallet-system-for-woocommerce/wallet-system-for-woocommerce.php' ) ) {
+			if ( 'on' === get_option( 'wps_wsfw_enable', '' ) ) {
+
+				$is_active = true;
+			}
+		}
+		return $is_active;
 	}
 
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
