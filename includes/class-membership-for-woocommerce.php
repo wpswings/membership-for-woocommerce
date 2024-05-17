@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.4.1';
+			$this->version = '2.4.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -153,6 +153,13 @@ class Membership_For_Woocommerce {
 		 * of the plugin.
 		 */
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-membership-for-woocommerce-common.php';
+
+		// Elementor Compatibility.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcode-widget/class-membership-for-woocommerce-elementor-shortcode.php';
+		if ( class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
+
+			WPS_Membership_Shortcode_Widget_Loader::get_instance();
+		}
 
 		$this->loader = new Membership_For_Woocommerce_Loader();
 
