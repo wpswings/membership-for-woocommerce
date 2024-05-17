@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-700%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.4.3-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.6.1-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-800%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.5.2-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.8.2-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce - Add Membership Plans, Recurring Revenue, User Registration & User Profiles
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
@@ -25,24 +25,26 @@ Membership Plugin directly gives you a way out of the three most customary pain 
 
 ## WHAT’S INCLUDED IN OUR FREE MEMBERSHIP FOR WOOCOMMERCE PLUGIN
 
-WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This free Membership plugin brings you:
+WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website. This WooCommerce Membership free plugin brings you:
+
+**1) One-time Discount Coupon For New Members:** Using Membership with WooCommerce plugin, you can create discount coupons exclusively for new members. After new users sign up on your website and buy a membership, they'll receive an email with their unique coupon, granting them discounts on their membership plan.
 
 ** 1) Show Header and Footer on Membership Plan Page:** Membership for WooCommerce plugin has the option to show the header and footer on the membership plans page. Showing header and footer on the membership plan page can provide consistent branding and navigation for users, making it easier for them to understand and navigate the website.
 
-**2) Redirect Users Upon Registration:** Improve user experience by smoothly redirecting users to your chosen page when they sign up. Activate the option, pick your desired page—whether it's the Cart, Membership Plan, My Account, or any other page—and create a more personalized onboarding journey.
+**2) Redirect Users Upon Registration:** Using Membership with WooCommerce plugin, improve user experience by smoothly redirecting users to your chosen page when they sign up. Activate the option, pick your desired page—whether it's the Cart, Membership Plan, My Account, or any other page—and create a more personalized onboarding journey.
 
 
 **3) New Template for Membership Plan Page:** Membership for WooCommerce has a new template to show on individual membership plans and membership plan pages allowing you to engage and add more customers to your membership program, thus leading to higher customer satisfaction rates and increased loyalty.
 
 **4) Create Membership in the Order Processing Stage:** You can enroll users into your membership plans even when their membership order is in the processing stage. It allows you to quickly create new members for your site’s programs.
 
-**5) Send Quick Notifications to All Users:**  The WooCommerce Membership plugin allows you to send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
+**5) Send Quick Notifications to All Users:**  Using the Membership with WooCommerce plugin you can send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc. 
 
 **6) Membership Registration Shortcodes:** Admin can place a form for users to redirect them to the payment checkout page for direct purchases. This will help users with a hassle-free purchase.
 
 **7) Filter Member According to Membership Plan and Column Added in Members Table:** Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members, click on the filter by membership plan and find the customer.
 
-**8) Filter Member According to Status:** Membership for WooCommerce allows their members to filter members by status. You can filter the member by the status of their product. Go to all members and click on the filter by status select the status and the list of that particular status will open in the table form from there you can find the individual member.
+**8) Filter Member According to Status:** Using the Membership With WooCommerce plugin you can filter members by status. You can filter the member by the status of their product. Go to all members and click on the filter by status select the status and the list of that particular status will open in the table form from there you can find the individual member.
 
 **9) Addition of Quick Status Update in Member Table**
 Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly.
@@ -104,6 +106,7 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 ## WOOCOMMERCE MEMBERSHIP PLUGIN COMPATIBILITIES
 
   * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/): With our free subscriptions plugin, the admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
+* [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/): With our wallet system plugin the admin can set up a digital wallet system on their WooCommerce store and its compatibility with the membership plugin allows the admin to accept membership payment via wallet. Users can easily add money to their wallets and use it to buy memberships hassle-free.
 
 * **Multisite:** Multisite is a type of WordPress installation that allows you to create and manage a network of multiple websites from a single WordPress dashboard. This lets you easily make changes and keep all of your websites updated in one place.
 
