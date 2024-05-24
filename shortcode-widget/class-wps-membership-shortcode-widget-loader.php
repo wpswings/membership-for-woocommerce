@@ -26,7 +26,7 @@ if ( ! class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
 	 */
 	class WPS_Membership_Shortcode_Widget_Loader {
 
-		const Membership_buy_now_button = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH;
+		const MEMBERSHIP_BUY_NOW_BUTTON = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH;
 
 		/**
 		 * The instance.
@@ -109,7 +109,7 @@ if ( ! class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
 			if ( ! empty( $this->active_builders ) && is_array( $this->active_builders ) ) {
 				foreach ( $this->active_builders as $b_slug => $b_name ) {
 					$widget_file = $this->retrieve_loader_file( $b_slug, $b_slug );
-					$widget_path = self::Membership_buy_now_button . $widget_file;
+					$widget_path = self::MEMBERSHIP_BUY_NOW_BUTTON . $widget_file;
 
 					if ( file_exists( $widget_path ) ) {
 						require_once $widget_path;

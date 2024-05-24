@@ -1363,7 +1363,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	/**
 	 * Check coupon exists.
 	 *
-	 * @param  string $coupon_code coupon_code
+	 * @param  string $coupon_code coupon_code.
 	 * @return bool
 	 */
 	public function wps_msfw_coupon_code_exists( $coupon_code ) {
@@ -1371,6 +1371,22 @@ class Membership_For_Woocommerce_Global_Functions {
 		$sql   = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_title = %s AND post_type = 'shop_coupon'", $coupon_code );
 		$count = $wpdb->get_var($sql);
 		return $count;
+	}
+
+	/**
+	 * This function is used to block user.
+	 *
+	 * @return bool
+	 */
+	public function wps_mfw_is_user_block() {
+
+		$flag              = true;
+		$wps_is_user_block = get_user_meta( get_current_user_id(), 'wps_is_user_block', true );
+		if ( 'yes' === $wps_is_user_block ) {
+
+			$flag = false;
+		}
+		return $flag;
 	}
 }
 

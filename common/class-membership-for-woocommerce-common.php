@@ -90,7 +90,10 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_membership_checkout() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 		$plan_id    = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
 		$plan_price = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
@@ -124,6 +127,10 @@ class Membership_For_Woocommerce_Common {
 	 * @return array
 	 */
 	public function add_membership_product_price_to_cart_item_data( $cart_item_data, $product_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $cart_item_data;
+		}
 		$product = wc_get_product( $product_id );
 
 		global $wp_session;
@@ -501,7 +508,10 @@ class Membership_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_woo_order_status_change_custom( $order_id, $old_status, $new_status ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$order = new WC_Order( $order_id );
 		$order_data = $order->get_data(); // The Order data.
 		$billing_email = $order_data['billing']['email'];

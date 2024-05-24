@@ -187,6 +187,10 @@ class Membership_For_Woocommerce_Public {
 	 * Custom query handler.
 	 */
 	protected function custom_query_handler() {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$results = get_posts(
 			array(
 				'post_type' => 'wps_cpt_membership',
@@ -212,6 +216,10 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_register_endpoint() {
 
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		add_rewrite_endpoint( 'wps-membership-tab', EP_PERMALINK | EP_PAGES );
 		flush_rewrite_rules();
 	}
@@ -222,6 +230,11 @@ class Membership_For_Woocommerce_Public {
 	 * @param array $vars An array of query variables.
 	 */
 	public function wps_membership_endpoint_query_var( $vars ) {
+
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $vars;
+		}
 
 		$vars[] = 'wps-membership-tab';
 
@@ -241,6 +254,10 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_add_membership_tab( $items ) {
 
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $items;
+		}
 		// Getting global options.
 		$wps_membership_global_settings = get_option( 'wps_membership_global_options', $this->global_class->default_global_options() );
 
@@ -275,7 +292,10 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_membership_tab_title( $title ) {
 		global $wp_query;
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $title;
+		}
 		$endpoint = isset( $wp_query->query_vars['wps-membership-tab'] );
 
 		if ( $endpoint && ! is_admin() && in_the_loop() && is_account_page() ) {
@@ -296,7 +316,10 @@ class Membership_For_Woocommerce_Public {
 	 * Add content to Membership details tab.
 	 */
 	public function wps_membership_populate_tab() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$user       = get_current_user_id();
 		$memerships = get_user_meta( $user, 'mfw_membership_id', true );
 		$instance   = $this->global_class;
@@ -317,7 +340,10 @@ class Membership_For_Woocommerce_Public {
 	 * Membership Shortcodes for plan Action and plan Attributes.
 	 */
 	public function wps_membership_shortcodes() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// Buy now button shortcode.
 		add_shortcode( 'wps_membership_buy_now', array( $this, 'buy_now_shortcode_yes' ) );
 		add_shortcode( 'wps_membership_buy', array( $this, 'buy_now_shortcode_content' ) );
@@ -357,7 +383,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function default_global_options() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$default_global_settings = array(
 
 			'wps_membership_enable_plugin'     => 'on',
@@ -383,7 +412,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function wps_membership_for_woo_membership_purchasable( $is_purchasable, $product ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $is_purchasable;
+		}
 		if ( is_admin() ) {
 
 			return $is_purchasable;
@@ -465,7 +497,10 @@ class Membership_For_Woocommerce_Public {
 	 * @param object $product Product object.
 	 */
 	public function wps_membership_for_woo_hide_price_shop_page( $price_html, $product ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $price_html;
+		}
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( $this->global_class->plans_exist_check() == true ) {
@@ -498,6 +533,10 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_product_membership_purchase_html() {
 
 		global $product;
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		$already_included_plan = array();
@@ -873,6 +912,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function get_product_terms( $product_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$term_related_to_product = array();
 		$terms = wp_get_post_terms( $product_id, 'product_tag' );
 
@@ -899,7 +942,10 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_products_on_shop_page( $return_status = false, $_product = false ) {
 
 		global $product;
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		if ( empty( $product ) ) {
 
 			$product = $_product;
@@ -1018,7 +1064,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since    3.0.0
 	 */
 	public function wps_membership_validate_mode() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// If user is customer.
 		if ( ! current_user_can( 'manage_options' ) ) {
 
@@ -2006,7 +2055,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return string
 	 */
 	public function wps_membership_unset_shipping_if_membership_available( $rates, $package ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $rates;
+		}
 		$all_methods = array();
 		$user = wp_get_current_user();
 		$is_allowed_membership_shipping = false;
@@ -2058,7 +2110,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_remove_current_receipt() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// Verify nonce.
 		check_ajax_referer( 'auth_adv_nonce', 'auth_nonce' );
 
@@ -2093,7 +2148,10 @@ class Membership_For_Woocommerce_Public {
 	 * Ajax callback for getting states.
 	 */
 	public function wps_membership_get_states_public() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// Nonce verify.
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 
@@ -2122,6 +2180,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function assign_club_membership_to_member( $plan_id, $plan_obj, $member_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$club_membership = wps_membership_get_meta_data( $plan_id, 'wps_membership_club', true );
 
 		if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
@@ -2212,7 +2274,10 @@ class Membership_For_Woocommerce_Public {
 	 * @param mixed $order_id  id of order.
 	 */
 	public function wps_membership_process_payment( $order_id ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$fields = array();
 		$order = wc_get_order( $order_id );
 		$plan_id = '';
@@ -2306,6 +2371,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_msfw_membership_update_meta_data( $order, $plan_id, $member_id, $fields, $order_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$items    = $order->get_data()['line_items'];
 		$keys     = array_keys( $items );
 
@@ -2365,6 +2434,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_process_payment_callback( $member_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
 
 		// If manually completing membership then set its expiry date.
@@ -2423,7 +2496,10 @@ class Membership_For_Woocommerce_Public {
 	 * Handle paypal transaction data.
 	 */
 	public function wps_membership_save_transaction() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// Nonce verification.
 		check_ajax_referer( 'paypal-nonce', 'nonce' );
 
@@ -2465,7 +2541,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function is_accessible_to_member( $product ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$access = false;
 		$all_member_plans = array();
 		$all_member_category = array();
@@ -2605,7 +2684,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_add_cart_discount( $cart ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// get cart total and minus cart total.
 		$cart_total = $cart->subtotal;
 		$cart_tax   = ! empty( $cart->tax_total ) ? $cart->tax_total : 0;
@@ -2713,7 +2795,10 @@ class Membership_For_Woocommerce_Public {
 	 * Check membership expiration on daily basis.
 	 */
 	public function wps_membership_cron_expiry_check() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		// Get all limited memberships.
 		$delay_members = get_posts(
 			array(
@@ -2979,7 +3064,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_checkout() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 		$plan_id    = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
 		$plan_price = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
@@ -3007,6 +3095,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_mfw_registration_form_submission_callback() {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		if ( isset( $_POST['wps_regiser_form_submit'] ) ) {
 			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
 			wp_verify_nonce( $value_check, 'wps-form-nonce' );
@@ -3056,7 +3148,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function add_membership_product_price_to_cart_item_data( $cart_item_data, $product_id ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $cart_item_data;
+		}
 		global $wp_session;
 
 		if ( empty( $wp_session ) ) {
@@ -3106,7 +3201,10 @@ class Membership_For_Woocommerce_Public {
 	 * @param OBJECT $cart cart.
 	 */
 	public function wps_membership_set_membership_product_price( $cart ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 
 		$product = wc_get_product( $wps_membership_default_product );
@@ -3219,7 +3317,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function get_all_included_membership( $active_plan_id ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$included_membership = array();
 		$club_membership     = wps_membership_get_meta_data( $active_plan_id, 'wps_membership_club', true );
 		if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
@@ -3239,7 +3340,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return boolean
 	 */
 	public function wps_membership_make_membership_product_purchasable( $is_purchasable, $product ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $is_purchasable;
+		}
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 		$page_link = '';
 		$membership_product = wc_get_product( $wps_membership_default_product );
@@ -3408,6 +3512,10 @@ class Membership_For_Woocommerce_Public {
 	 * @param mixed $term terms.
 	 */
 	public function get_product_query( $post_type, $taxonomy, $term ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$products = new WP_Query(
 			array(
 				'post_type'   => $post_type,
@@ -3441,6 +3549,10 @@ class Membership_For_Woocommerce_Public {
 	 * @param mixed $taxonomy taxonomy.
 	 */
 	public function get_category_query( $cat_id, $taxonomy ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$all_ids = get_posts(
 			array(
 				'post_type' => 'product',
@@ -3472,7 +3584,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_buy_now_add_to_cart() {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		if ( WC()->session->__isset( 'product_id' ) ) {
 			$product_id = WC()->session->get( 'product_id' );
 
@@ -3558,7 +3673,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function wps_mfw_remove_billing_from_checkout( $fields ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$default_product_id = get_option( 'wps_membership_default_product' );
 		$only_virtual      = false;
 		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
@@ -3638,6 +3756,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function add_cart_custom_notice() {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		wc_print_notice(
 			sprintf(
 				'<span class="subscription-reminder">' .
@@ -3654,6 +3776,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function add_cart_custom_notice_2() {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		wc_print_notice(
 			sprintf(
 				'<span class="subscription-reminder">' .
@@ -3672,7 +3798,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_plan_page_template( $page_template ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$pages_available = get_posts(
 			array(
 				'post_type'      => 'any',
@@ -3723,7 +3852,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_for_woo_create_shipping_method( $methods ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		if ( ! class_exists( 'WPS_Membership_Free_Shipping_Method' ) ) {
 			/**
 			 * Custom shipping class for membership.
@@ -3733,16 +3865,19 @@ class Membership_For_Woocommerce_Public {
 		}
 	}
 
-		/**
-		 * Adding membership shipping method.
-		 *
-		 * @param array $methods an array of shipping methods.
-		 * @return array
-		 *
-		 * @since 1.0.0
-		 */
+	/**
+	 * Adding membership shipping method.
+	 *
+	 * @param array $methods an array of shipping methods.
+	 * @return array
+	 *
+	 * @since 1.0.0
+	 */
 	public function wps_membership_for_woo_add_shipping_method( $methods ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $methods;
+		}
 		$methods['wps_membership_shipping'] = 'wps_Membership_Free_Shipping_Method';
 
 		/**
@@ -3765,7 +3900,10 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_add_to_cart_url( $methods ) {
 
 		global $product;
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
@@ -3871,7 +4009,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return mixed
 	 */
 	public function wps_membership_get_product_price_of_member( $member_product, $product_id ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$user = wp_get_current_user();
 		$is_member_meta = get_user_meta( $user->ID, 'is_member' );
 		if ( is_user_logged_in() && in_array( 'member', (array) $is_member_meta ) ) {
@@ -3900,7 +4041,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_subscription_get_status( $subscription_status, $subscription_i_d ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$member_id = '';
 		$subscription = get_post( $subscription_i_d );
 		$parent_order_id  = $subscription->wps_parent_order;
@@ -3930,6 +4074,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_subscription_next_payment_date( $wps_next_payment_date, $subscription_i_d ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
@@ -3955,6 +4103,10 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_susbcription_end_date( $wps_susbcription_end, $subscription_i_d ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );
 		$member_id = get_member_id_from_order( $order );
@@ -4019,6 +4171,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_validate_email( $fields, $errors ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		global $woocommerce;
 		$membership_name = '';
 		$the_user = get_user_by( 'email', $fields['billing_email'] );
@@ -4073,6 +4229,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return void
 	 */
 	public function wps_membership_login_thanku_page( $order_id ) {
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$order = new WC_Order( $order_id );
 		$items = $order->get_items();
 		foreach ( $items as $item ) {
@@ -4131,6 +4291,10 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function mfw_membership_add_label() {
 		global $product;
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$price = '';
 		$is_plan_assigned = false;
 		$post_id    = get_the_ID();
@@ -4312,7 +4476,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return string
 	 */
 	public function wps_msfw_user_redirection( $redirection_url ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
 		$wps_membership_enable_other_settings = get_option( 'wps_membership_enable_other_settings', 'off' );
 		$wps_msfw_page_for_redirection_user   = ! empty( get_option( 'wps_msfw_page_for_redirection_user' ) ) ? get_option( 'wps_msfw_page_for_redirection_user' ) : 0;
 		if ( 'on' === $wps_membership_enable_other_settings ) {
@@ -4331,7 +4498,10 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	public function wps_msfw_restrict_wallet_payments( $gateways ) {
-
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return $gateways;
+		}
 		$wps_msfw_restrict_payment_via_wallet = get_option( 'wps_msfw_restrict_payment_via_wallet', '' );
 		$count                                = 0;
 		if ( 'on' === $wps_msfw_restrict_payment_via_wallet ) {
@@ -4362,4 +4532,5 @@ class Membership_For_Woocommerce_Public {
 		}
 		return $gateways;
 	}
+
 }

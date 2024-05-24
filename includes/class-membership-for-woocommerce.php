@@ -155,7 +155,7 @@ class Membership_For_Woocommerce {
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-membership-for-woocommerce-common.php';
 
 		// Elementor Compatibility.
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcode-widget/class-membership-for-woocommerce-elementor-shortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcode-widget/class-wps-membership-shortcode-widget-loader.php';
 		if ( class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
 
 			WPS_Membership_Shortcode_Widget_Loader::get_instance();
