@@ -69,6 +69,13 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public $custom_query_data;
 
+	/**
+	 * Undocumented variable.
+	 *
+	 * @var object
+	 */
+	protected $global_class;
+
 
 	/**
 	 * Initialize the class and set its properties.
@@ -4531,6 +4538,89 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 		return $gateways;
+	}
+
+	/**
+	 * This function is used to restrict blocked user to not purchase include section product.
+	 *
+	 * @param  bool   $is_purchasable is_purchasable.
+	 * @param  object $product        product.
+	 * @return bool
+	 */
+	public function wps_mfw_block_user_unable_to_pruchase_include_product( $is_purchasable, $product ) {
+
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+		
+
+			if ( object == gettype( $product ) ) {
+				$product_id = $product->get_id();
+			} else {
+				$product_id = get_the_ID();
+			}
+
+			$product_id         = $product_id;
+			$is_product_exclude = false;
+
+			if ( $this->global_class->plans_exist_check() == true ) {
+
+				$data = $this->custom_query_data;
+				if ( ! empty( $data ) && is_array( $data ) ) {
+					foreach ( $data as $plan ) {
+
+						$exclude_product = array();
+
+						/**
+						 * Filter for exclude product.
+						 *
+						 * @since 1.0.0
+						 */
+						$exclude_product = apply_filters( 'wps_membership_exclude_product', $exclude_product, $product_id );
+
+						/**
+						 * Filter for exclude products.
+						 *
+						 * @since 1.0.0
+						 */
+						$is_product_exclude = apply_filters( 'wps_membership_is_exclude_product', $exclude_product, $data, $is_product_exclude );
+
+						if ( $is_product_exclude ) {
+							break;
+						}
+
+						if ( in_array( $plan['ID'], $exclude_product ) && ! empty( $exclude_product ) ) {
+							break;
+						}
+
+						$target_ids     = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true );
+						$target_cat_ids = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_categories', true );
+						$target_tag_ids  = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true );
+						if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
+
+							if ( in_array( get_the_ID(), $target_ids ) ) {
+
+								$is_purchasable = false;
+							}
+						}
+
+						if ( ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) {
+							if ( has_term( $target_cat_ids, 'product_cat', get_post( $product_id ) ) || has_term( $target_tag_ids, 'product_tag', get_post( $product_id ) ) ) {
+
+								if ( empty( $target_ids ) ) { // If target id is empty string make it an array.
+
+									$target_ids = array();
+								}
+								if ( ! in_array( $product_id, $target_ids ) ) { // checking if the product does not exist in target id of a plan.
+
+									$is_purchasable = false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return $is_purchasable;
 	}
 
 }

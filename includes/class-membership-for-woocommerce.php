@@ -471,6 +471,9 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
 		}
+
+		// block user unable to purchase include product.
+		$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
 	}
 
 	/**
