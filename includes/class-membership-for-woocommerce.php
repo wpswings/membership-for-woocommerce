@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.4.1';
+			$this->version = '2.5.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -153,6 +153,13 @@ class Membership_For_Woocommerce {
 		 * of the plugin.
 		 */
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-membership-for-woocommerce-common.php';
+
+		// Elementor Compatibility.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcode-widget/class-wps-membership-shortcode-widget-loader.php';
+		if ( class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
+
+			WPS_Membership_Shortcode_Widget_Loader::get_instance();
+		}
 
 		$this->loader = new Membership_For_Woocommerce_Loader();
 
@@ -464,6 +471,9 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
 		}
+
+		// block user unable to purchase include product.
+		$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
 	}
 
 	/**

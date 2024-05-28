@@ -1,4 +1,4 @@
-[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-800%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.5.2-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.8.2-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
+[![Build Status](https://img.shields.io/travis/twbs/bootstrap/v4-dev.svg)](https://travis-ci.org/twbs/bootstrap) ![Active installs](https://img.shields.io/badge/Active-800%2B-brightgreen)![License](https://img.shields.io/badge/License-GPLv3%20or%20later-yellowgreen) ![WP tested](https://img.shields.io/badge/WP%20tested-6.5.3-brightgreen)![WC tested](https://img.shields.io/badge/WC%20tested-8.9.1-brightgreen)![Requires PHP](https://img.shields.io/badge/Requires%20PHP-7.3.5-blue)
 # Membership for WooCommerce - Add Membership Plans, Recurring Revenue, User Registration & User Profiles
 ![Membership for WooCommerce](https://ps.w.org/membership-for-woocommerce/assets/banner-772x250.png?rev=2672060)
 * Contributors: WP Swings
@@ -104,6 +104,7 @@ Checkout [**WooCommerce Membership Knowledgebase**](https://support.wpswings.com
 * Filter Member According to Membership Plan and Column Added in Members Table
 
 ## WOOCOMMERCE MEMBERSHIP PLUGIN COMPATIBILITIES
+* **Elementor Builder Compatibility:** Membership for WooCommerce is fully compatible with Elementor Builder, allowing you to directly use all the shortcodes from the membership plugin within Elementor. This makes customizing and managing your membership site simpler and more efficient.
 
   * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/): With our free subscriptions plugin, the admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
 * [**Wallet System For WooCommerce**](https://wordpress.org/plugins/wallet-system-for-woocommerce/): With our wallet system plugin the admin can set up a digital wallet system on their WooCommerce store and its compatibility with the membership plugin allows the admin to accept membership payment via wallet. Users can easily add money to their wallets and use it to buy memberships hassle-free.

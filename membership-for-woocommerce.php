@@ -15,16 +15,16 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.4.1
+ * Version:           2.5.0
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
  *
  * Requires at least: 5.0
- * Tested up to:      6.5.2
+ * Tested up to:      6.5.3
  * WC requires at least: 5.0
- * WC tested up to:   8.8.2
+ * WC tested up to:   8.9.1
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -83,7 +83,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.4.1' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.5.0' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -353,13 +353,17 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 */
 	function wps_membership_get_meta_data( $id, $key, $v ) {
 		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
-			// HPOS usage is enabled.
 			$order    = wc_get_order( $id );
 			if ( '_customer_user' == $key ) {
 				$meta_val = $order->get_customer_id();
 				return $meta_val;
 			}
 			$meta_val = $order->get_meta( $key );
+			return $meta_val;
+		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			$order    = new WPS_Subscription( $id );
+			$meta_val = $order->get_meta( $key );
+
 			return $meta_val;
 		} else {
 			// Traditional CPT-based orders are in use.
@@ -380,6 +384,12 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		if ( 'shop_order' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
 			$order = wc_get_order( $id );
+			$order->update_meta_data( $key, $value );
+			$order->save();
+		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+			// HPOS usage is enabled.
+			$order = new WPS_Subscription( $id );
+
 			$order->update_meta_data( $key, $value );
 			$order->save();
 		} else {
