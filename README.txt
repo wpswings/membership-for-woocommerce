@@ -1,12 +1,12 @@
 === Membership For WooCommerce - Add Simple Membership Plans, Recurring Revenue, Product Tags & Send Emails To Members with WooCommerce Membership ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: membership, membership plan, subscription, woocommerce, members-only, woocommerce-memberships
+Tags: membership, membership plan, subscription, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.5.2
+Tested up to: 6.5.3
 WC requires at least: 6.5.0
-WC tested up to: 8.8.2
-Stable tag: 2.4.1
+WC tested up to: 8.9.1
+Stable tag: 2.5.0
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -48,7 +48,7 @@ WooCommerce store owners already have so much to handle. And we want to simplify
 
 **6) Send Quick Notifications to All Users:** The WooCommerce Membership plugin allows you to send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
 
-**7) Membership Registration Shortcodes:** Admin can place a form for users to redirect them to the payment checkout page for direct purchases. This will help users with a hassle-free purchase.
+**7) Membership Registration Shortcodes:** WooCommerce Membership free plugin admin can place a form for users to redirect them to the payment checkout page for direct purchases. This will help users with a hassle-free purchase.
 
 **8) Filter Member According to Membership Plan and Column Added in Members Table:** Admin can allow their members to filter members by membership plans. This will help you to find the details of members according to the plans. Go to all members, click on the filter by membership plan, and find the customer.
 
@@ -56,7 +56,7 @@ WooCommerce store owners already have so much to handle. And we want to simplify
 
 **10) Addition of Quick Status Update in Member Table:** Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly.
 
-**11) Allow Your Members to Cancel their Membership Accounts:** Admin can allow their members to cancel their membership anytime. Simple WooCommerce Membership allows users to discontinue their plan whenever they want. Enable the setting in general settings and your customers will get access to cancel your plan
+**11) Allow Your Members to Cancel their Membership Accounts:** Using WooCommerce Membership free plugin admin can allow their members to cancel their membership anytime. Simple WooCommerce Membership allows users to discontinue their plan whenever they want. Enable the setting in general settings and your customers will get access to cancel your plan
 
 **12) The Buy Now Button Text Can Be Changed To Dynamic Text:** With Membership plugin store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
 
@@ -110,6 +110,9 @@ Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/m
 * Filter Member According to Membership Plan and Column Added in Members Table
 
 == WOOCOMMERCE MEMBERSHIP PLUGIN COMPATIBILITIES == 
+
+
+* **Elementor Builder Compatibility:** Membership for WooCommerce is fully compatible with Elementor Builder, allowing you to directly use all the shortcodes from the membership plugin within Elementor. This makes customizing and managing your membership site simpler and more efficient.
 
 * [**Subscriptions for WooCommerce** ](https://wordpress.org/plugins/subscriptions-for-woocommerce/): The admin can offer membership subscriptions to users for limited access. For limited access, the admin can decide the subscription duration of the membership plan.
 
@@ -266,6 +269,11 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.5.0 - Released on 28 May 2024 = 
+* New : Compatible with Elementor Plugin (Shortcode Widget Creation)
+* New : Compatible with latest WP(6.5.3) & WC(8.9.1)
+* Fixes : Fixed Subscription plugin compatibility issues
+
 = 2.4.1 - Released on 24 April 2024 = 
 * New : Compatible with latest WP(6.5.2) & WC(8.8.2)
 * New : Create one time discount coupon setting for the new members
@@ -411,6 +419,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.4.1 - Released on 24 April 2024 = 
-* New : Compatible with latest WP(6.5.2) & WC(8.8.2)
-* New : Create one time discount coupon setting for the new members
+= 2.5.0 - Released on 28 May 2024 = 
+* New : Compatible with Elementor Plugin (Shortcode Widget Creation)
+* New : Compatible with latest WP(6.5.3) & WC(8.9.1)
+* Fixes : Fixed Subscription plugin compatibility issues
