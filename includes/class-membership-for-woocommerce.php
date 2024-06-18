@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.5.0';
+			$this->version = '2.5.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -337,10 +337,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_sfw_expire_subscription_scheduler', $mfw_plugin_common, 'wps_membership_subscription_expire', 99, 1 );
 		$this->loader->add_action( 'wps_sfw_subscription_active_renewal', $mfw_plugin_common, 'wps_membership_subscription_active_renewal', 99, 1 );
 		$this->loader->add_action( 'wps_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'wps_membership_subscription_on_hold_renewal', 99, 1 );
-
-		if ( self::is_enbale_usage_tracking() ) {
-			$this->loader->add_action( 'wpswings_tracker_send_event', $mfw_plugin_common, 'wps_membership_mfw_makewebbetter_tracker_send_event' );
-		}
 		// Save ajax request for the plugin's multistep.
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
@@ -474,6 +470,8 @@ class Membership_For_Woocommerce {
 
 		// block user unable to purchase include product.
 		$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
+		// send welcome mail to user.
+		$this->loader->add_action( 'wp_loaded', $mfw_plugin_public, 'wps_mfw_send_welcome_mail' );
 	}
 
 	/**

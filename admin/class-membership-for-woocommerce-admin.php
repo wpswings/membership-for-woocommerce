@@ -3729,6 +3729,14 @@ class Membership_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
 			),
 			array(
+				'title'       => __( 'Send Welcome Mail', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Please enable this setting to send a welcome email to new members.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_send_welcome_mail',
+				'value'       => get_option( 'wps_mfw_send_welcome_mail' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
 				'button_text' => __( 'Save', 'membership-for-woocommerce' ),

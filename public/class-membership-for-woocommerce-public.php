@@ -4623,4 +4623,80 @@ class Membership_For_Woocommerce_Public {
 		return $is_purchasable;
 	}
 
+	/**
+	 * This function is used to send a welcome email when a membership
+	 * is purchased for the first time.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_send_welcome_mail() {
+
+		$wps_mfw_send_welcome_mail = get_option( 'wps_mfw_send_welcome_mail', true );
+		if ( 'on' === $wps_mfw_send_welcome_mail ) {
+			if ( is_user_logged_in() ) {
+
+				$user_id                     = get_current_user_id();
+				$user                        = get_user_by( 'ID', $user_id );
+				$wps_mfw_welcome_mail_sended = get_user_meta( $user_id, 'wps_mfw_welcome_mail_sended', true );
+				if ( empty( $wps_mfw_welcome_mail_sended ) ) {
+
+					$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+					$current_memberships = ! empty( $current_memberships ) && is_array( $current_memberships ) ? $current_memberships : array();
+					if ( ! empty( $current_memberships[0] ) && is_array( $current_memberships ) ) {
+
+						$memberships_plan_obj = wps_membership_get_meta_data( $current_memberships[0], 'plan_obj', true );
+						if ( ! empty( $memberships_plan_obj ) && is_array( $memberships_plan_obj ) ) {
+
+							$wps_mfw_welcome_email_temp = '
+								<body style="margin: 0; padding: 0;">
+									<center>
+										<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse !important;">
+											<tr>
+												<td>
+													<table role="presentation" cellspacing="0" cellpadding="0" border="0" class="email-container" style="width: 100%;max-width:600px;margin:0 auto;">
+														<!-- Header -->
+														<tr>
+															<td class="email-header" style="padding:40px 20px;text-align: center;">
+																<h1 style="font-family:sans-serif;font-size:18px;font-weight:700;color:#3A9EFD;line-height:1.25;margin: 0 0 5px;">Hello! [Admin]</h1>
+																<h2 style="font-family:sans-serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.25;margin: 0 0 15px;">Welcome to <strong>[Silver] Membership!</strong></h2>
+															</td>
+														</tr>
+														<!-- Body -->
+														<tr>
+															<td class="email-body" style="text-align: center;">
+																<img src="https://demo.wpswings.com/membership-for-woocommerce-pro/wp-content/uploads/2024/06/welcome.png" alt="welcome-image" style="width: 100%;height: auto;"/>
+																<p style="font-family:sans-serif;font-size:14px;font-weight:400;color:#333333;line-height:1.5;padding:40px 20px 0;margin: 0 auto 15px;max-width:450px;">Welcome to the <strong>[Silver] Membership!</strong> We are thrilled to have you as a part of our community. As a [Silver] member, you now enjoy immediate access to a wide range of exclusive features and premium benefits designed just for you.</p>
+																<p style="margin: 0 0 40px;text-align:center;"><a href="#" style="display:inline-block;background:#3a9efd;border-radius: 100px;font-family:sans-serif;font-size:14px;font-weight:400;color:#ffffff;line-height:1.25;padding:10px 15px;text-decoration : none;">Visit Shop Page</a></p>
+															</td>
+														</tr>
+														<!-- Footer -->
+														<tr>
+															<td class="email-footer" style="background: #F2F6F9;padding:40px 20px;text-align: center;">
+																<h3 style="font-family:sans-serif;font-size:18px;font-weight:600;color:#1a1a1a;line-height:1.25;margin: 0 auto 15px;max-width:300px;">Thanks for becoming member</h3>
+																<p style="font-family:sans-serif;font-size:14px;font-weight:400;color:#333333;line-height:1.5;margin: 0 auto;max-width:400px;"><a href="site" style="text-decoration : none;">[SITE_NAME]</a></p>
+															</td>
+														</tr>
+													</table>    
+												</td>
+											</tr>
+										</table>
+									</center>
+								</body>';
+
+							$wps_mfw_welcome_email_temp = str_replace( '[Admin]', $user->display_name, $wps_mfw_welcome_email_temp );
+							$wps_mfw_welcome_email_temp = str_replace( '[Silver]', ucfirst( $memberships_plan_obj['post_name'] ), $wps_mfw_welcome_email_temp );
+							$wps_mfw_welcome_email_temp = str_replace( 'href="#"', 'href="' . get_permalink( wc_get_page_id( 'shop' ) ) . '"', $wps_mfw_welcome_email_temp );
+							$wps_mfw_welcome_email_temp = str_replace( '[SITE_NAME]', get_bloginfo( 'name' ), $wps_mfw_welcome_email_temp );
+							$wps_mfw_welcome_email_temp = str_replace( 'href="site"', 'href="' . site_url() . '"', $wps_mfw_welcome_email_temp );
+							$subject                    = esc_html__( 'Congratulations! You are Officially a Member', 'membership-for-woocommerce' );
+							$headers                    = array( 'Content-Type: text/html; charset=UTF-8' );
+							wp_mail( $user->user_email, $subject, $wps_mfw_welcome_email_temp, $headers );
+							update_user_meta( $user_id, 'wps_mfw_welcome_mail_sended', 'done' );
+						}
+					}
+				}
+			}
+		}
+	}
+
 }
