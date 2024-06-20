@@ -470,8 +470,6 @@ class Membership_For_Woocommerce {
 
 		// block user unable to purchase include product.
 		$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
-		// send welcome mail to user.
-		$this->loader->add_action( 'wp_loaded', $mfw_plugin_public, 'wps_mfw_send_welcome_mail' );
 	}
 
 	/**
