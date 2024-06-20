@@ -533,6 +533,17 @@ class Membership_For_Woocommerce_Common {
 				update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
 			}
 		}
+
+		// send welcome mail.
+		if ( $_user && 'completed' === $new_status ) {
+
+			$wps_mfw_send_welcome_mail_once_check = get_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', true );
+			if ( empty( $wps_mfw_send_welcome_mail_once_check ) ) {
+
+				$this->global_class->wps_mfw_membership_welcome_mail( $_user->ID );
+				update_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', 'done' );
+			}
+		}
 		// If user exist, get the required details.
 
 		$items = $order->get_items();
