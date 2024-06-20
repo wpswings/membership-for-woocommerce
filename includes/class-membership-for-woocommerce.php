@@ -988,7 +988,7 @@ class Membership_For_Woocommerce {
 									
 									<input
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
-									 type="number" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
+									 type="number" min="0" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
 									>
 									<select id="wps_mfw_reg_expiry_time" name="wps_mfw_reg_expiry_time"  style="width:150px;height:55px">
 										<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>

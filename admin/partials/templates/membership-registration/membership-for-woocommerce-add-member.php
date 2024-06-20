@@ -147,7 +147,7 @@ $results = get_posts(
 					<span class="mdc-notched-outline__notch"></span>
 					<span class="mdc-notched-outline__trailing"></span>
 				</span>
-					<input type="number" required id="wps_add_member_phone" name="billing_phone" class="mdc-text-field__input" min="0" >
+					<input type="number" pattern="[0-9]" required id="wps_add_member_phone" name="billing_phone" class="mdc-text-field__input" min="0" >
 				</label>
 			</div>
 		</div>

@@ -3281,11 +3281,13 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $_POST['wps_add_member_button'] ) ) {
 			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
 			wp_verify_nonce( $value_check, 'wps-form-nonce' );
+
+			$wps_mfw_user_id = ! empty( $_POST['wps_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_member_user'] ) ) : '';
 			$post_id = wp_insert_post(
 				array(
 					'post_type'    => 'wps_cpt_members',
 					'post_status'  => 'publish',
-
+					'post_author'  => $wps_mfw_user_id
 				),
 				true
 			);
