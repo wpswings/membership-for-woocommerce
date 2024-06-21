@@ -525,11 +525,23 @@ class Membership_For_Woocommerce_Common {
 		$_user = get_user_by( 'email', $billing_email );
 		if ( ( $_user ) && ( 'processing' === $new_status || 'completed' === $new_status ) ) {
 
+			// assign one time discount coupon.
 			$wps_wpr_one_time_coupon_assignment = get_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', true );
 			if ( empty( $wps_wpr_one_time_coupon_assignment ) ) {
-				// assign one time discount coupon.
+
 				$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
 				update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
+			}
+		}
+
+		// send welcome mail.
+		if ( $_user && 'completed' === $new_status ) {
+
+			$wps_mfw_send_welcome_mail_once_check = get_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', true );
+			if ( empty( $wps_mfw_send_welcome_mail_once_check ) ) {
+
+				$this->global_class->wps_mfw_membership_welcome_mail( $_user->ID );
+				update_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', 'done' );
 			}
 		}
 		// If user exist, get the required details.
@@ -556,7 +568,7 @@ class Membership_For_Woocommerce_Common {
 		if ( ! empty( $plan_obj ) ) {
 
 			$access_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
-
+			$current_date = 0;
 			if ( 'delay_type' == $access_type ) {
 				$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
 				$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
@@ -589,7 +601,7 @@ class Membership_For_Woocommerce_Common {
 		$is_processing = get_option( 'wps_membership_create_member_on_processing' );
 		if ( 'on' === $is_processing ) {
 			$tmp_order_st = 'processing';
-			if ( 'processing' == $order->get_status() ) {
+			if ( 'processing' == $order->get_status() || 'completed' == $order->get_status() ) {
 
 				$order_st = 'complete';
 			} elseif ( 'on-hold' == $order->get_status() || 'refunded' == $order->get_status() || 'failed' == $order->get_status() ) {
@@ -665,9 +677,17 @@ class Membership_For_Woocommerce_Common {
 							// assign one time discount coupon.
 							$wps_wpr_one_time_coupon_assignment = get_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', true );
 							if ( empty( $wps_wpr_one_time_coupon_assignment ) ) {
-								// assign one time discount coupon.
+
 								$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
 								update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
+							}
+
+							// send welcome mail.
+							$wps_mfw_send_welcome_mail_once_check = get_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', true );
+							if ( empty( $wps_mfw_send_welcome_mail_once_check ) ) {
+
+								$this->global_class->wps_mfw_membership_welcome_mail( $_user );
+								update_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', 'done' );
 							}
 						}
 					}

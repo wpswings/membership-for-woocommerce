@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.5.3
+Tested up to: 6.5.4
 WC requires at least: 6.5.0
-WC tested up to: 8.9.1
-Stable tag: 2.5.0
+WC tested up to: 9.0.1
+Stable tag: 2.5.1
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -98,7 +98,8 @@ Visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/m
 
 == Drive Engagement, Foster Loyalty, and Increase Cash Flow with These Curated Features ==
 
-* Stimulate your user’s experience with Dark Mode on Membership Plan Pages (New)
+* Dynamically send a welcome email to new members when they join a membership program.
+* Stimulate your user’s experience with Dark Mode on Membership Plan Pages
 * Send email notifications to all members at once 
 * Allow your Members to Cancel their Membership Accounts
 * Use APIs to render data regarding membership offers and plans opted by users. 
@@ -169,7 +170,7 @@ If you need support or have any questions then kindly use our online chat window
 
 > Create and Revamp your eCommerce store with [**WooCommerce Services**](https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership-services&utm_medium=membership-org-page&utm_campaign=woocommerce-services)
 
-> Get Huge Discounts on PDF Generator plugin - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-member-offers&utm_medium=member-org-page&utm_campaign=offers)
+> Get Huge Discounts on Membership for WooCommerce plugin - [**Get More Offers**](https://wpswings.com/offers/?utm_source=wpswings-member-offers&utm_medium=member-org-page&utm_campaign=offers)
 
 == Installation ==
 
@@ -268,6 +269,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 22. Send Quick Notifications
 
 == Changelog ==
+
+= 2.5.1 - Released on 21 June 2024 = 
+* New : Compatible with latest WP(6.5.4) & WC(9.0.1)
+* New : Welcome Email template for new members
 
 = 2.5.0 - Released on 28 May 2024 = 
 * New : Compatible with Elementor Plugin (Shortcode Widget Creation)
@@ -419,7 +424,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.5.0 - Released on 28 May 2024 = 
-* New : Compatible with Elementor Plugin (Shortcode Widget Creation)
-* New : Compatible with latest WP(6.5.3) & WC(8.9.1)
-* Fixes : Fixed Subscription plugin compatibility issues
+= 2.5.1 - Released on 21 June 2024 = 
+* New : Compatible with latest WP(6.5.4) & WC(9.0.1)
+* New : Welcome Email template for new members

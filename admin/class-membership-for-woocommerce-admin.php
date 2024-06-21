@@ -3281,11 +3281,13 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $_POST['wps_add_member_button'] ) ) {
 			$value_check = isset( $_POST['wps_nonce_name'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_nonce_name'] ) ) : '';
 			wp_verify_nonce( $value_check, 'wps-form-nonce' );
+
+			$wps_mfw_user_id = ! empty( $_POST['wps_member_user'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_member_user'] ) ) : '';
 			$post_id = wp_insert_post(
 				array(
 					'post_type'    => 'wps_cpt_members',
 					'post_status'  => 'publish',
-
+					'post_author'  => $wps_mfw_user_id
 				),
 				true
 			);
@@ -3351,6 +3353,7 @@ class Membership_For_Woocommerce_Admin {
 
 			// Assign membership plan to user and assign 'member' role to it.
 			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
+			$this->global_class->wps_mfw_membership_welcome_mail( $wps_mfw_user_id );
 
 			// Getting current activation date.
 			$current_date = gmdate( 'Y-m-d' );
@@ -3727,6 +3730,14 @@ class Membership_For_Woocommerce_Admin {
 				'placeholder' => __( 'Coupon Amount', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_one_time_coupon_amount',
 				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
+			),
+			array(
+				'title'       => __( 'Send Welcome Mail', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Please enable this setting to send a welcome email to new members.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_send_welcome_mail',
+				'value'       => get_option( 'wps_mfw_send_welcome_mail' ),
+				'class'       => 'mfw-radio-switch-class',
 			),
 			array(
 				'type'        => 'multi-button',

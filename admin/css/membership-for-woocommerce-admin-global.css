@@ -252,6 +252,17 @@ table {
     border-collapse: collapse;
 }
 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
 @media (max-width: 768px){
     .membership_report .wps-member__plan--card {
         margin: 0 15px 10px 0;

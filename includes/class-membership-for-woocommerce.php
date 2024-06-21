@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.5.0';
+			$this->version = '2.5.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -215,7 +215,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings' );
 		// Saving tab settings for registration form.
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings_reg_form' );
-		// $this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership_registration', $mfw_plugin_admin, 'wps_membership_search_products_for_membership_registration' );
+		$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership_registration', $mfw_plugin_admin, 'wps_membership_search_products_for_membership_registration' );
 
 		// Developer's Hook Listing.
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );
@@ -337,10 +337,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_sfw_expire_subscription_scheduler', $mfw_plugin_common, 'wps_membership_subscription_expire', 99, 1 );
 		$this->loader->add_action( 'wps_sfw_subscription_active_renewal', $mfw_plugin_common, 'wps_membership_subscription_active_renewal', 99, 1 );
 		$this->loader->add_action( 'wps_sfw_subscription_on_hold_renewal', $mfw_plugin_common, 'wps_membership_subscription_on_hold_renewal', 99, 1 );
-
-		if ( self::is_enbale_usage_tracking() ) {
-			$this->loader->add_action( 'wpswings_tracker_send_event', $mfw_plugin_common, 'wps_membership_mfw_makewebbetter_tracker_send_event' );
-		}
 		// Save ajax request for the plugin's multistep.
 		$this->loader->add_action( 'wp_ajax_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_save_settings_filter', $mfw_plugin_common, 'wps_membership_save_settings_filter' );
@@ -349,7 +345,6 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-
 	}
 
 	/**
@@ -990,7 +985,7 @@ class Membership_For_Woocommerce {
 									
 									<input
 									class="mdc-text-field__input <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>" 
-									 type="number" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
+									 type="number" min="0" pattern="[0-9]" oninput="this.value=(parseInt(this.value)||0)" name="wps_mfw_reg_expiry_num" id="wps_mfw_reg_expiry_num" style="width:100px;height:55px"
 									>
 									<select id="wps_mfw_reg_expiry_time" name="wps_mfw_reg_expiry_time"  style="width:150px;height:55px">
 										<option value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
