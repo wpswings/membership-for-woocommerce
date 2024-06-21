@@ -3353,6 +3353,7 @@ class Membership_For_Woocommerce_Admin {
 
 			// Assign membership plan to user and assign 'member' role to it.
 			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
+			$this->global_class->wps_mfw_membership_welcome_mail( $wps_mfw_user_id );
 
 			// Getting current activation date.
 			$current_date = gmdate( 'Y-m-d' );
