@@ -20,6 +20,7 @@
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
  * Domain Path:       /languages
+ * Requires Plugins: woocommerce
  *
  * Requires at least: 5.0
  * Tested up to:      6.5.4
