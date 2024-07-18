@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.5.1';
+			$this->version = '2.5.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -1174,6 +1174,22 @@ class Membership_For_Woocommerce {
 								id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
 								<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
 							</button>
+							<?php
+							break;
+
+						case 'button_two':
+							?>
+							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+								<div class="wps-form-group__label">
+									<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
+								</div>
+								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
+								</button>
+								<input type="hidden" name="attachment_id" class="wp_attachment_id" value="" />
+								<img src="<?php echo esc_url( get_option( 'wps_mfw_image_text_url' ) ); ?>" class="wps_mfw_show_welcome_image" width="200" height="130">
+							</div>
 							<?php
 							break;
 
