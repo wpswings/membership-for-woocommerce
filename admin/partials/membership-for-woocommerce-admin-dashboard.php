@@ -13,11 +13,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) {
 
-	exit(); // Exit if accessed directly.
+	exit();
 }
 
 global $mfw_wps_mfw_obj;
-
 
 if ( ! wps_mfw_standard_check_multistep() ) {
 	?>
@@ -47,12 +46,13 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 ?>
 <header>
 	<?php
-		/**
-		 * Action for setting save.
-		 *
-		 * @since 1.0.0
-		 */
-		do_action( 'wps_mfw_settings_saved_notice' );
+
+	/**
+	 * Action for setting save.
+	 *
+	 * @since 1.0.0
+	 */
+	do_action( 'wps_mfw_settings_saved_notice' );
 	?>
 	<div class="wps-header-container wps-bg-white wps-r-8">
 		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
@@ -66,6 +66,7 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 		<div><b><?php echo esc_html( 'v' . MEMBERSHIP_FOR_WOOCOMMERCE_VERSION ); ?></b></div>
 	</div>
 </header>
+
 <main class="wps-main wps-bg-white wps-r-8">
 	<nav class="wps-navbar">
 		<ul class="wps-navbar__items">
@@ -91,28 +92,31 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 		<div>
 			<?php
 
-				/**
-				 * Action for before genral setting.
-				 *
-				 * @since 1.0.0
-				 */
-				do_action( 'wps_mfw_before_general_settings_form' );
-				// if submenu is directly clicked on woocommerce.
+			/**
+			 * Action for before genral setting.
+			 *
+			 * @since 1.0.0
+			 */
+			do_action( 'wps_mfw_before_general_settings_form' );
+
+			// if submenu is directly clicked on woocommerce.
 			if ( empty( $mfw_active_tab ) ) {
+
 				$mfw_active_tab = 'wps_mfw_plug_general';
 			}
 
-				// look for the path based on the tab id in the admin templates.
-				$mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
-				$mfw_tab_content_path = $mfw_default_tabs[ $mfw_active_tab ]['file_path'];
-				$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $mfw_tab_content_path );
+			// look for the path based on the tab id in the admin templates.
+			$mfw_default_tabs     = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
+			$mfw_tab_content_path = isset( $mfw_default_tabs[ $mfw_active_tab ] ) ? $mfw_default_tabs[ $mfw_active_tab ]['file_path'] : $mfw_default_tabs[ 'membership-for-woocommerce-general' ]['file_path'];
+			$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $mfw_tab_content_path );
 
-				/**
-				 * Action for general setting form.
-				 *
-				 * @since 1.0.0
-				 */
-				do_action( 'wps_mfw_after_general_settings_form' );
+			/**
+			 * Action for general setting form.
+			 *
+			 * @since 1.0.0
+			 */
+			do_action( 'wps_mfw_after_general_settings_form' );
 			?>
 		</div>
 	</section>
+</main>

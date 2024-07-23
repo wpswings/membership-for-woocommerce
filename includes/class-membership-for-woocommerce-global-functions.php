@@ -1427,7 +1427,7 @@ class Membership_For_Woocommerce_Global_Functions {
 														<tr>
 															<td class="email-header" style="padding:40px 20px;text-align: center;">
 																<h1 style="font-family:sans-serif;font-size:18px;font-weight:700;color:#3A9EFD;line-height:1.25;margin: 0 0 5px;">Hello! [Admin]</h1>
-																<h2 style="font-family:sans-serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.25;margin: 0 0 15px;">Welcome to <strong>[Silver] Membership!</strong></h2>
+																<h2 style="font-family:sans-serif;font-size:20px;font-weight:600;color:#1a1a1a;line-height:1.25;margin: 0 0 15px;">Welcome to <strong>[Name] Membership!</strong></h2>
 															</td>
 														</tr>
 														<!-- Body -->
@@ -1456,6 +1456,7 @@ class Membership_For_Woocommerce_Global_Functions {
 							$wps_mfw_welcome_email_temp = str_replace( 'href="#"', 'href="' . get_permalink( wc_get_page_id( 'shop' ) ) . '"', $wps_mfw_welcome_email_temp );
 							$wps_mfw_welcome_email_temp = str_replace( '[SITE_NAME]', get_bloginfo( 'name' ), $wps_mfw_welcome_email_temp );
 							$wps_mfw_welcome_email_temp = str_replace( 'href="site"', 'href="' . site_url() . '"', $wps_mfw_welcome_email_temp );
+							$wps_mfw_welcome_email_temp = str_replace( '[Name]', ucfirst( $memberships_plan_obj['post_name'] ), $wps_mfw_welcome_email_temp );
 							$subject                    = ! empty( get_option( 'wps_mfw_mail_welcome_subject' ) ) ? get_option( 'wps_mfw_mail_welcome_subject' ) : esc_html__( 'Congratulations! You are Officially a Member', 'membership-for-woocommerce' );
 							$headers                    = array( 'Content-Type: text/html; charset=UTF-8' );
 							wp_mail( $user->user_email, $subject, $wps_mfw_welcome_email_temp, $headers );
