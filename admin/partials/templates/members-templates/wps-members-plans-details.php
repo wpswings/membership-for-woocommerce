@@ -125,7 +125,7 @@ $existing_plans = get_posts( $args );
 				<tr>
 					<th><label><?php esc_html_e( 'Subscription Membership Duration', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
-						<?php echo sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type . 's' ) ); ?>
+						<?php echo sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type ) ); ?>
 					</td>
 				</tr>
 

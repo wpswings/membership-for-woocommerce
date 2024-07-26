@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.5.4
+Tested up to: 6.6
 WC requires at least: 6.5.0
-WC tested up to: 9.0.1
-Stable tag: 2.5.1
+WC tested up to: 9.1.2
+Stable tag: 2.5.2
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -270,6 +270,9 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.5.2 - Released on 26 July 2024 = 
+* New : Compatible with latest WP(6.6) & WC(9.1.2)
+
 = 2.5.1 - Released on 21 June 2024 = 
 * New : Compatible with latest WP(6.5.4) & WC(9.0.1)
 * New : Welcome Email template for new members
@@ -424,6 +427,5 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.5.1 - Released on 21 June 2024 = 
-* New : Compatible with latest WP(6.5.4) & WC(9.0.1)
-* New : Welcome Email template for new members
+= 2.5.2 - Released on 26 July 2024 = 
+* New : Compatible with latest WP(6.6) & WC(9.1.2)

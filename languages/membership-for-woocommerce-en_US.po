@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2024-06-21 12:33+0530\n"
-"PO-Revision-Date: 2024-06-21 12:34+0530\n"
+"POT-Creation-Date: 2024-07-25 19:37+0530\n"
+"PO-Revision-Date: 2024-07-25 19:37+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -79,8 +79,8 @@ msgid "Export"
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:470
-#: membership-for-woocommerce.php:185 membership-for-woocommerce.php:191
-#: membership-for-woocommerce.php:611
+#: membership-for-woocommerce.php:186 membership-for-woocommerce.php:192
+#: membership-for-woocommerce.php:612
 msgid "Membership For WooCommerce"
 msgstr ""
 
@@ -647,12 +647,12 @@ msgid "Title to be displayed on front-end."
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:60
-#: membership-for-woocommerce.php:551
+#: membership-for-woocommerce.php:552
 msgid "Documentation"
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:62
-#: membership-for-woocommerce.php:552
+#: membership-for-woocommerce.php:553
 msgid "Support"
 msgstr ""
 
@@ -2034,7 +2034,7 @@ msgstr ""
 #: includes/class-membership-for-woocommerce-global-functions.php:1122
 #: includes/class-membership-for-woocommerce-global-functions.php:1124
 #: includes/class-membership-for-woocommerce-global-functions.php:1129
-#: includes/class-membership-for-woocommerce.php:1302
+#: includes/class-membership-for-woocommerce.php:1318
 msgid " "
 msgstr ""
 
@@ -2082,7 +2082,14 @@ msgstr ""
 msgid "use this Coupon Code to get discount on Cart."
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1457
+#: includes/class-membership-for-woocommerce-global-functions.php:1416
+msgid ""
+"Welcome to the [Name] Membership! We are thrilled to have you as a part of "
+"our community. As a [Name] member, you now enjoy immediate access to a wide "
+"range of exclusive features and premium benefits designed just for you."
+msgstr ""
+
+#: includes/class-membership-for-woocommerce-global-functions.php:1460
 msgid "Congratulations! You are Officially a Member"
 msgstr ""
 
@@ -2263,19 +2270,19 @@ msgstr ""
 msgid "Set the expiry time."
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1233
+#: includes/class-membership-for-woocommerce.php:1249
 msgid "max="
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1298
+#: includes/class-membership-for-woocommerce.php:1314
 msgid "Upload Logo"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1299
+#: includes/class-membership-for-woocommerce.php:1315
 msgid "Remove Logo"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce.php:1302
+#: includes/class-membership-for-woocommerce.php:1318
 msgid "admin/image/placeholder.png"
 msgstr ""
 
@@ -2283,35 +2290,35 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: membership-for-woocommerce.php:318
+#: membership-for-woocommerce.php:319
 msgid "Settings"
 msgstr ""
 
-#: membership-for-woocommerce.php:323
+#: membership-for-woocommerce.php:324
 msgid "GO PRO"
 msgstr ""
 
-#: membership-for-woocommerce.php:549
+#: membership-for-woocommerce.php:550
 msgid "Demo"
 msgstr ""
 
-#: membership-for-woocommerce.php:550
+#: membership-for-woocommerce.php:551
 msgid "Video"
 msgstr ""
 
-#: membership-for-woocommerce.php:553
+#: membership-for-woocommerce.php:554
 msgid "Services"
 msgstr ""
 
-#: membership-for-woocommerce.php:611
+#: membership-for-woocommerce.php:612
 msgid "WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:611
+#: membership-for-woocommerce.php:612
 msgid " is not activated, Please activate WooCommerce first to activate "
 msgstr ""
 
-#: membership-for-woocommerce.php:611
+#: membership-for-woocommerce.php:612
 msgid "."
 msgstr ""
 
