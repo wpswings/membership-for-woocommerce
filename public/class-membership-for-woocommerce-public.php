@@ -1478,7 +1478,7 @@ class Membership_For_Woocommerce_Public {
 
 					$description .= '<li><label>';
 					$description .= __( 'Subscription Membership Duration', 'membership-for-woocommerce' );
-					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type . 's' ) ) . '</span></li>';
+					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type ) ) . '</span></li>';
 					if ( ! empty( $plan_access ) ) {
 						$description .= '<li><label>';
 						$description .= __( 'Plan access', 'membership-for-woocommerce' );
