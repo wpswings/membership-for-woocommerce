@@ -1939,7 +1939,6 @@ class Membership_For_Woocommerce_Admin {
 
 			<input type="submit" name="export_all_membership" id="export_all_membership" class="button button-primary" value="<?php esc_html_e( 'Export Plans', 'membership-for-woocommerce' ); ?>">
 			<input type="submit" name="import_all_membership" id="import_all_membership" class="button button-primary" value="<?php esc_html_e( 'Import Plans', 'membership-for-woocommerce' ); ?>">
-
 			<?php
 		}
 	}
@@ -2824,7 +2823,7 @@ class Membership_For_Woocommerce_Admin {
 
 		$post_id = ! empty( $_POST['post_id'] ) ? sanitize_text_field( wp_unslash( $_POST['post_id'] ) ) : '';
 
-			// When plans are assigned manually.
+		// When plans are assigned manually.
 		if ( isset( $_POST['members_plan_assign'] ) ) {
 
 			$plan_id = ! empty( $_POST['members_plan_assign'] ) ? sanitize_text_field( wp_unslash( $_POST['members_plan_assign'] ) ) : '';

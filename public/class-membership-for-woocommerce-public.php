@@ -2698,7 +2698,7 @@ class Membership_For_Woocommerce_Public {
 		// get cart total and minus cart total.
 		$cart_total = $cart->subtotal;
 		$cart_tax   = ! empty( $cart->tax_total ) ? $cart->tax_total : 0;
-		$cart_total = (int) $cart_total - $cart_tax;
+		$cart_total = (float) $cart_total - $cart_tax;
 
 		$user_id                        = get_current_user_id();
 		$discount_fixed                 = '';

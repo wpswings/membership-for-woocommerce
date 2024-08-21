@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.5.2
+ * Version:           2.5.3
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
@@ -25,7 +25,7 @@
  * Requires at least: 5.0
  * Tested up to:      6.6.1
  * WC requires at least: 5.0
- * WC tested up to:   9.1.2
+ * WC tested up to:   9.1.4
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -84,7 +84,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.5.2' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.5.3' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
