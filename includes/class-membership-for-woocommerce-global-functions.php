@@ -1369,7 +1369,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function wps_msfw_coupon_code_exists( $coupon_code ) {
 		global $wpdb;
 		$sql   = $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_title = %s AND post_type = 'shop_coupon'", $coupon_code );
-		$count = $wpdb->get_var($sql);
+		$count = $wpdb->get_var( $sql );
 		return $count;
 	}
 
