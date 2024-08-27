@@ -3,10 +3,10 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, membership plan, subscription, members-only, woocommerce-memberships
 Requires at least: 5.0
-Tested up to: 6.6
+Tested up to: 6.6.1
 WC requires at least: 6.5.0
-WC tested up to: 9.1.2
-Stable tag: 2.5.2
+WC tested up to: 9.2.3
+Stable tag: 2.5.3
 Requires PHP: 7.3.5 or higher
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -270,6 +270,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.5.3 - Released on 27 August 2024 = 
+* New : Compatible with latest WP(6.6.1) & WC(9.2.3)
+* Fix : Issue fix for round discount
+
 = 2.5.2 - Released on 26 July 2024 = 
 * New : Compatible with latest WP(6.6) & WC(9.1.2)
 
@@ -427,5 +431,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.5.2 - Released on 26 July 2024 = 
-* New : Compatible with latest WP(6.6) & WC(9.1.2)
+= 2.5.3 - Released on 27 August 2024 = 
+* New : Compatible with latest WP(6.6.1) & WC(9.2.3)
+* Fix : Issue fix for round discount
