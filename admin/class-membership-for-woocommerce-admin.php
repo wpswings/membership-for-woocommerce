@@ -3086,30 +3086,12 @@ class Membership_For_Woocommerce_Admin {
 			$payment = ! empty( wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) ) ? wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) : '';
 		}
 
-			// phpcs:disable
-		$fields = array(
-			'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
-			'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
-			'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
-			'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
-			'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
-			'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
-			'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
-			'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
-			'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
-			'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
-			'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
-			'payment_method'                => $payment,
-		);          // phpcs:enable
-
-		wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
-
-			$wps_wsfw_error_text = esc_html__( 'Membership Status changed', 'membership-for-woocommerce' );
-			$message             = array(
-				'msg'     => $wps_wsfw_error_text,
-				'msgType' => 'success',
-			);
-			wp_send_json( $message );
+		$wps_wsfw_error_text = esc_html__( 'Membership Status changed', 'membership-for-woocommerce' );
+		$message             = array(
+			'msg'     => $wps_wsfw_error_text,
+			'msgType' => 'success',
+		);
+		wp_send_json( $message );
 
 	}
 
@@ -3737,6 +3719,22 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_mfw_send_welcome_mail',
 				'value'       => get_option( 'wps_mfw_send_welcome_mail' ),
 				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title'       => __( 'Membership Tab Layout Settings', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to apply the new layout to membership tab areas for an improved user experience.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_new_layout_settings',
+				'value'       => get_option( 'wps_msfw_enable_new_layout_settings' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title' => __( 'Choose the color scheme for the Membership tab layout', 'membership-for-woocommerce' ),
+				'type'  => 'color',
+				'id'    => 'wps_msfw_new_layout_color',
+				'value' => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? 'ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'class' => 'mfw-text-class',
+				'placeholder' => __( 'Background Color', 'membership-for-woocommerce' ),
 			),
 			array(
 				'type'        => 'multi-button',

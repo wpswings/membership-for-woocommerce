@@ -1287,3 +1287,118 @@ span.wps_mfw_no_plan_found_msg {
 }
 
 /* Dark mode ends */
+
+/* Layout 2 start */
+
+:root{
+    --wps-msfw-primary-color : #f7f7f7;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one th {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    color: #000;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one th,.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td {
+    padding: 12px;
+    background: transparent;
+    line-height: 1.25;
+    vertical-align: middle;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one th:last-of-type {
+    text-align: center;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td:last-of-type {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td:last-of-type a,.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td:last-of-type button {
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 12px;
+    line-height: 1.25;
+    border-radius: 3px;
+    flex: 1;
+    text-align: center;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td:last-of-type::after {
+    display: none;
+}
+
+.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one td:last-of-type,.wps_msfw__new_layout.wps_msf_new_layout_dynamic_one th:last-of-type {
+    border-right: none;
+}
+
+/* On view */
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one>p {
+    background: var(--wps-msfw-primary-color);
+    padding: 10px;
+    border-radius: 3px;
+    margin: 0 0 15px;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 400;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one article.woocommerce-columns {
+    float: unset;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one section {
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 0 0 15px;
+    border-radius: 5px;
+    background: var(--wps-msfw-primary-color);
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table {
+    margin: 0;
+    background: transparent;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one h2 {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: 0.4px;
+    padding: 0 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table th,.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table td {
+    padding: 10px;
+    background: transparent;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table th,.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table th label {
+    color: #000;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table thead th {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table th label, .wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one table td {
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: 0.4px;
+}
+
+.wps_msfw__new_layout_billing.wps_msf_new_layout_dynamic_one address {
+    margin: 0;
+    padding: 0 10px;
+}
+
+/* Layout 2 End */

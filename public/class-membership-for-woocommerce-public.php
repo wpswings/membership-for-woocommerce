@@ -138,12 +138,14 @@ class Membership_For_Woocommerce_Public {
 			$this->plugin_name,
 			'membership_public_obj',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
-				'buy_now_text' => $button_text,
-				'single_plan' => $wps_mfw_single_plan,
+				'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+				'nonce'              => wp_create_nonce( 'auth_adv_nonce' ),
+				'buy_now_text'       => $button_text,
+				'single_plan'        => $wps_mfw_single_plan,
 				'plan_page_template' => get_option( 'wps_membership_plan_page_temp' ),
-				'dark_mode'     => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'dark_mode'          => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'enable_new_layout'  => get_option( 'wps_msfw_enable_new_layout_settings' ),
+				'new_layout_color'   => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? 'ff7700' : get_option( 'wps_msfw_new_layout_color' ),
 			)
 		);
 
