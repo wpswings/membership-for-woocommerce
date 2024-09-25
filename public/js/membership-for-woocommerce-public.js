@@ -186,8 +186,16 @@ jQuery(document).ready(function ($) {
 		});
 	});
 
-	
+	// Membership Tab New layout js.
+	if ( 'on' == membership_public_obj.enable_new_layout ) {
 
+		// change points tab layout color.
+        var root = $(':root');
+        root.css('--wps-msfw-primary-color', membership_public_obj.new_layout_color );
+
+		jQuery(document).find('.wps_msfw__new_layout').addClass('wps_msf_new_layout_dynamic_one');
+		jQuery(document).find('.wps_msfw__new_layout_billing').addClass('wps_msf_new_layout_dynamic_one');
+	}
  });
 
  jQuery(document).ready(function($){

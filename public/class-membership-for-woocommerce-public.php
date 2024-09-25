@@ -138,12 +138,14 @@ class Membership_For_Woocommerce_Public {
 			$this->plugin_name,
 			'membership_public_obj',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'auth_adv_nonce' ),
-				'buy_now_text' => $button_text,
-				'single_plan' => $wps_mfw_single_plan,
+				'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+				'nonce'              => wp_create_nonce( 'auth_adv_nonce' ),
+				'buy_now_text'       => $button_text,
+				'single_plan'        => $wps_mfw_single_plan,
 				'plan_page_template' => get_option( 'wps_membership_plan_page_temp' ),
-				'dark_mode'     => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'dark_mode'          => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'enable_new_layout'  => get_option( 'wps_msfw_enable_new_layout_settings' ),
+				'new_layout_color'   => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? 'ff7700' : get_option( 'wps_msfw_new_layout_color' ),
 			)
 		);
 
@@ -4514,7 +4516,7 @@ class Membership_For_Woocommerce_Public {
 		if ( 'on' === $wps_msfw_restrict_payment_via_wallet ) {
 			if ( isset( WC()->cart ) && null !== WC()->cart ) {
 				if ( ! empty( WC()->cart->get_cart() ) && is_array( WC()->cart->get_cart() ) ) {
-					
+
 					foreach ( WC()->cart->get_cart() as $item_key => $item_values ) {
 						if ( ! empty( $item_values['product_id'] ) ) {
 
@@ -4551,7 +4553,6 @@ class Membership_For_Woocommerce_Public {
 
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-		
 
 			if ( object == gettype( $product ) ) {
 				$product_id = $product->get_id();

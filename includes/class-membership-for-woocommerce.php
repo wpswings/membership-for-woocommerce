@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.5.3';
+			$this->version = '2.6.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -458,17 +458,18 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_registration_form_submission_callback' );
 			$this->loader->add_filter( 'woocommerce_checkout_fields', $mfw_plugin_public, 'wps_mfw_remove_billing_from_checkout', 10, 1 );
-		}
-		// redirect user when register on site.
-		$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
-		// wallet plugin compatible.
-		if ( wps_msfw_is_wallet_plugin_active() ) {
 
-			$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
-		}
+			// redirect user when register on site.
+			$this->loader->add_filter( 'woocommerce_registration_redirect', $mfw_plugin_public, 'wps_msfw_user_redirection', 10, 1 );
+			// wallet plugin compatible.
+			if ( wps_msfw_is_wallet_plugin_active() ) {
 
-		// block user unable to purchase include product.
-		$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
+				$this->loader->add_filter( 'woocommerce_available_payment_gateways', $mfw_plugin_public, 'wps_msfw_restrict_wallet_payments', 10, 1 );
+			}
+
+			// block user unable to purchase include product.
+			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
+		}
 	}
 
 	/**
