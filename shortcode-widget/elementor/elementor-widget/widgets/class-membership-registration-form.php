@@ -120,7 +120,7 @@ class MEMBERSHIP_REGISTRATION_FORM extends Widget_Base {
 		$this->start_controls_section(
 			'section_shortcode',
 			array(
-				'label' => esc_html__( 'Shortcode', '' ),
+				'label' => esc_html__( 'Shortcode', 'membership-for-woocommerce' ),
 			)
 		);
 

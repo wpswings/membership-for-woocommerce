@@ -4516,7 +4516,7 @@ class Membership_For_Woocommerce_Public {
 		if ( 'on' === $wps_msfw_restrict_payment_via_wallet ) {
 			if ( isset( WC()->cart ) && null !== WC()->cart ) {
 				if ( ! empty( WC()->cart->get_cart() ) && is_array( WC()->cart->get_cart() ) ) {
-					
+
 					foreach ( WC()->cart->get_cart() as $item_key => $item_values ) {
 						if ( ! empty( $item_values['product_id'] ) ) {
 
@@ -4553,7 +4553,6 @@ class Membership_For_Woocommerce_Public {
 
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-		
 
 			if ( object == gettype( $product ) ) {
 				$product_id = $product->get_id();
