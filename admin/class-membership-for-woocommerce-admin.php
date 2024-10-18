@@ -726,6 +726,7 @@ class Membership_For_Woocommerce_Admin {
 				'options' => array(
 					'temp1' => __( 'Template 1', 'membership-for-woocommerce' ),
 					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
+					'temp3' => __( 'Template 3', 'membership-for-woocommerce' ),
 				),
 			),
 			array(
