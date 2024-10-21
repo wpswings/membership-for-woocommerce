@@ -4185,11 +4185,10 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 		global $woocommerce;
-		$membership_name = '';
-		$the_user = get_user_by( 'email', $fields['billing_email'] );
-		$the_user_id = $the_user->ID;
-		$is_not_membership_applicable = false;
-		$is_membership_product = false;
+		$membership_name                = '';
+		$wps_user                       = get_user_by( 'email', $fields['billing_email'] );
+		$is_not_membership_applicable   = false;
+		$is_membership_product          = false;
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 		foreach ( WC()->cart->get_cart() as $cart_item ) {
 			$product = $cart_item['data'];
@@ -4202,10 +4201,10 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 
-		$is_member_meta = get_user_meta( $the_user->ID, 'is_member' );
+		$is_member_meta = get_user_meta( $wps_user->ID, 'is_member' );
 		if ( is_user_logged_in() || in_array( 'member', (array) $is_member_meta ) ) {
 			$data                = $this->custom_query_data;
-			$user_id             = $the_user->ID;
+			$user_id             = $wps_user->ID;
 
 			$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
 
