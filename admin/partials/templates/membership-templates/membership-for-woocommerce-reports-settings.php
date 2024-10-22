@@ -43,7 +43,10 @@ $args          = get_posts(
 	)
 );
 
+$wps_store_member_ids = array();
 foreach ( $args as $key => $value ) {
+
+	array_push( $wps_store_member_ids, $value );
 
 	$member_status = wps_membership_get_meta_data( $value, 'member_status', true );
 	$mfw_id        = $value - 1;
@@ -113,6 +116,7 @@ foreach ( $args as $key => $value ) {
 					<th><label><?php esc_html_e( 'Expired Members', 'membership-for-woocommerce' ); ?></label></th>
 					<td><?php echo esc_html( $expired ); ?></td>
 				</tr>
+				<?php do_action( 'wps_msfw_extend_report_section', $wps_store_member_ids ); ?>
 			</tbody>
 		</table>
 		<?php
