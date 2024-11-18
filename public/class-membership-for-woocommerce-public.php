@@ -2797,6 +2797,7 @@ class Membership_For_Woocommerce_Public {
 				}
 			}
 			$cart->add_fee( 'Membership Discount', -$discount, false );
+			update_option( 'wps_mfw_cart_discount', $discount );
 		}
 	}
 
@@ -4058,10 +4059,12 @@ class Membership_For_Woocommerce_Public {
 		$subscription = get_post( $subscription_i_d );
 		$parent_order_id  = $subscription->wps_parent_order;
 		$order = wc_get_order( $parent_order_id );
-		foreach ( $order->get_items() as $item_id => $order_item ) {
+		if ( ! empty( $order ) ) {
+			foreach ( $order->get_items() as $item_id => $order_item ) {
 
-			if ( ! empty( $order_item->get_meta( '_member_id' ) ) ) {
-				$member_id = $order_item->get_meta( '_member_id' );
+				if ( ! empty( $order_item->get_meta( '_member_id' ) ) ) {
+					$member_id = $order_item->get_meta( '_member_id' );
+				}
 			}
 		}
 
@@ -4621,6 +4624,35 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 		return $is_purchasable;
+	}
+
+	/**
+	 * This function is used to calculate total discount benefits.
+	 *
+	 * @param  object $order_data $order_data.
+	 * @return void
+	 */
+	public function wps_mfw_calculate_total_discount_benefits( $order_data ) {
+
+		// This function is triggered by two hooks, so we need to verify whether the parameter is an ID or an object.
+		if ( ! is_object( $order_data ) ) {
+
+			$order = wc_get_order( $order_data );
+		} else {
+
+			$order = $order_data;
+		}
+
+		$user_id               = $order->get_user_id();
+		$wps_mfw_cart_discount = get_option( 'wps_mfw_cart_discount', true );
+		if ( ! empty( $user_id ) && $wps_mfw_cart_discount > 0 ) {
+
+			$wps_mfw_total_discount_amount = get_user_meta( $user_id, 'wps_mfw_total_discount_amount', true );
+			$wps_mfw_total_discount_amount = ! empty( $wps_mfw_total_discount_amount ) ? $wps_mfw_total_discount_amount : 0;
+			$updated_amount                = $wps_mfw_cart_discount + $wps_mfw_total_discount_amount;
+			update_user_meta( $user_id, 'wps_mfw_total_discount_amount', $updated_amount );
+			delete_option( 'wps_mfw_cart_discount' );
+		}
 	}
 
 }

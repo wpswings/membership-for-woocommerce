@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.6.1';
+			$this->version = '2.6.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -469,6 +469,9 @@ class Membership_For_Woocommerce {
 
 			// block user unable to purchase include product.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
+			// update total discount benefits.
+			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
 		}
 	}
 
