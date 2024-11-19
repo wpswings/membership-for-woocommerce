@@ -138,14 +138,15 @@ class Membership_For_Woocommerce_Public {
 			$this->plugin_name,
 			'membership_public_obj',
 			array(
-				'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-				'nonce'              => wp_create_nonce( 'auth_adv_nonce' ),
-				'buy_now_text'       => $button_text,
-				'single_plan'        => $wps_mfw_single_plan,
-				'plan_page_template' => get_option( 'wps_membership_plan_page_temp' ),
-				'dark_mode'          => get_option( 'wps_membership_plan_page_dark_mode' ),
-				'enable_new_layout'  => get_option( 'wps_msfw_enable_new_layout_settings' ),
-				'new_layout_color'   => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? 'ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'ajaxurl'             => admin_url( 'admin-ajax.php' ),
+				'nonce'               => wp_create_nonce( 'auth_adv_nonce' ),
+				'buy_now_text'        => $button_text,
+				'single_plan'         => $wps_mfw_single_plan,
+				'plan_page_template'  => get_option( 'wps_membership_plan_page_temp' ),
+				'dark_mode'           => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'enable_new_layout'   => get_option( 'wps_msfw_enable_new_layout_settings' ),
+				'new_layout_color'    => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? '#ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'new_dashboard_color' => empty( get_option( 'wps_msfw_dashboard_color' ) ) ? '#7BCD66' : get_option( 'wps_msfw_dashboard_color' ),
 			)
 		);
 
@@ -995,6 +996,11 @@ class Membership_For_Woocommerce_Public {
 
 					if ( $is_product_exclude ) {
 						break;
+					}
+
+					if ( ! is_array( $exclude_product ) ) {
+
+						$exclude_product = array();
 					}
 
 					if ( in_array( $plan['ID'], $exclude_product ) && ! empty( $exclude_product ) ) {
@@ -3457,7 +3463,7 @@ class Membership_For_Woocommerce_Public {
 						break;
 					}
 
-					if ( ! empty( $exclude_product ) ) {
+					if ( ! empty( $exclude_product ) && is_array( $exclude_product ) ) {
 						if ( in_array( $plan['ID'], $exclude_product ) ) {
 							break;
 						}

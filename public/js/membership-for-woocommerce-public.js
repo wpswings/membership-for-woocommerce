@@ -215,8 +215,8 @@ jQuery(document).ready(function ($) {
 
  jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {
 	
-	var classes = jQuery(this.nextElementSibling).attr('class');
- var allclasses =classes.split(' ');
+var classes = jQuery(this.nextElementSibling).attr('class');
+var allclasses =classes.split(' ');
 if ( allclasses.length>1 ) {
 	if( allclasses[1]=='show__membership_details' ){
 	
@@ -229,4 +229,7 @@ if ( allclasses.length>1 ) {
 
  }); 
 
+// add members dashboard color.
+var root = jQuery(':root');
+root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_color );
  
