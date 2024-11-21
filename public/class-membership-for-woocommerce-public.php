@@ -462,7 +462,7 @@ class Membership_For_Woocommerce_Public {
 				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 					// If non logged in or not a member.
-					if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+					if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
 
 						$is_purchasable = false;
 					}
@@ -517,7 +517,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
-				if ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+				if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
 
 					return '';
 				} else {
@@ -688,7 +688,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-						if ( false == $page_link_found && ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) {
+						if ( false == $page_link_found && ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) {
 
 							$is_has_target_id = array();
 							$product_terms = $this->get_product_terms( get_the_ID() );
@@ -2610,7 +2610,7 @@ class Membership_For_Woocommerce_Public {
 							if ( ! empty( $membership_status ) && in_array( $membership_status, array( 'expired' ) ) ) {
 								$access = false;
 
-							} elseif ( 'pending' == $membership_status || 'hold' == $membership_status && 'publish' == $membership_plan['post_status'] ) {
+							} elseif ( ( 'pending' == $membership_status || 'hold' == $membership_status ) && ( 'publish' == $membership_plan['post_status'] ) ) {
 
 								$this->under_review_products = $this->under_review_products ? $this->under_review_products : array();
 								array_push( $this->under_review_products, $product->get_id() );
@@ -4223,7 +4223,7 @@ class Membership_For_Woocommerce_Public {
 
 					$member_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
 
-					if ( ! empty( $member_status ) && 'complete' == $member_status || 'pending' == $member_status || 'hold' == $member_status ) {
+					if ( ! empty( $member_status ) && ( 'complete' == $member_status || 'pending' == $member_status || 'hold' == $member_status ) ) {
 						$active_plan       = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 						$active_plan_title = ! empty( $active_plan['post_title'] ) ? $active_plan['post_title'] : '';
 						if ( $active_plan_title == $membership_name ) {
@@ -4651,7 +4651,8 @@ class Membership_For_Woocommerce_Public {
 
 		$user_id               = $order->get_user_id();
 		$wps_mfw_cart_discount = get_option( 'wps_mfw_cart_discount', true );
-		if ( ! empty( $user_id ) && $wps_mfw_cart_discount > 0 ) {
+		$wps_mfw_cart_discount = ! empty( $wps_mfw_cart_discount ) ? $wps_mfw_cart_discount : 0;
+		if ( ! empty( $user_id ) && $wps_mfw_cart_discount > 1 ) {
 
 			$wps_mfw_total_discount_amount = get_user_meta( $user_id, 'wps_mfw_total_discount_amount', true );
 			$wps_mfw_total_discount_amount = ! empty( $wps_mfw_total_discount_amount ) ? $wps_mfw_total_discount_amount : 0;

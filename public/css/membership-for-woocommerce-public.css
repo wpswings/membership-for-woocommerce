@@ -1302,7 +1302,7 @@ a {
 
 .wp-block-cover.wps-mfw-temp3 .wps_membership_plan_content_desc {
     padding: 0;
-    background: transparent!important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    background: transparent!important;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page.wps_mfw_membership_multiple_plan>.wps_membership_plan_content_title,
@@ -1320,8 +1320,8 @@ a {
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
     width: auto;
-    height: 75px;
-    background: #FC9918 !important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    height: 50px;
+    background: #FC9918 !important;
     border-radius: 10px 0 0 10px;
     display: flex;
     align-items: center;
@@ -1332,10 +1332,11 @@ a {
     right: 0;
     top: 15px;
     letter-spacing: 0;
+    padding: 0 20px;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page h2 {
-    padding: 0;
+    padding: 0 70px 0 0;
     margin: 0 0 15px;
     text-align: left;
     font-weight: 600;
@@ -1397,7 +1398,7 @@ a {
     font-size: 14px;
     flex: 1;
     margin: 0;
-    background: transparent!important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    background: transparent!important;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_membership_plan_content_desc .wps_membership_buy_now_btn {
@@ -1480,6 +1481,11 @@ a {
 
     .wp-block-cover.wps-mfw-temp3 .wps_all_plans_detail_wrapper {
         padding: 20px 20px 0 20px;
+    }
+
+    .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
+        height: 40px;
+        font-size: 16px;
     }
 }
 

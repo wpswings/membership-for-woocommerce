@@ -1467,56 +1467,54 @@ class Membership_For_Woocommerce_Global_Functions {
 			}
 		}
 	}
-}
 
-/**
- * Function for get all ids.
- *
- * @param string $plan_id is the id of plan.
- * @return array.
- */
-function wps_get_target_ids( $plan_id = '' ) {
+	/**
+	 * Function for get all ids.
+	 *
+	 * @param string $plan_id is the id of plan.
+	 * @return array.
+	 */
+	public function wps_get_target_ids( $plan_id = '' ) {
 
-	$target_ids      = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) : array();
-	$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) : array();
-	$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) : array();
-	if ( empty( $target_ids ) ) {
-		$target_ids = array();
-	}
-	if ( ! empty( $target_cat_ids ) ) {
-		foreach ( $target_cat_ids as $key => $value ) {
-			$cat_name = get_the_category_by_ID( $value );
-			$args = array(
-				'post_status' => 'publish',
-				'post_type' => 'product',
-				'fields' => 'ids',
-				'product_cat' => $cat_name,
+		$target_ids      = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_ids', true ) : array();
+		$target_cat_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_categories', true ) : array();
+		$target_tag_ids  = ! empty( wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) ) ? wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_target_tags', true ) : array();
+		if ( empty( $target_ids ) ) {
+			$target_ids = array();
+		}
+		if ( ! empty( $target_cat_ids ) ) {
+			foreach ( $target_cat_ids as $key => $value ) {
+				$cat_name = get_the_category_by_ID( $value );
+				$args = array(
+					'post_status' => 'publish',
+					'post_type' => 'product',
+					'fields' => 'ids',
+					'product_cat' => $cat_name,
 
-			);
-			$result = get_posts( $args );
-			if ( ! empty( $result ) ) {
-				$target_ids = array_merge( $target_ids, $result );
+				);
+				$result = get_posts( $args );
+				if ( ! empty( $result ) ) {
+					$target_ids = array_merge( $target_ids, $result );
+				}
 			}
 		}
-	}
-	if ( ! empty( $target_tag_ids ) ) {
-		foreach ( $target_tag_ids as $key => $value ) {
-			$tag = get_term( $value );
-			$args = array(
-				'post_status' => 'publish',
-				'post_type' => 'product',
-				'fields' => 'ids',
-				'product_cat' => $tag->name,
+		if ( ! empty( $target_tag_ids ) ) {
+			foreach ( $target_tag_ids as $key => $value ) {
+				$tag = get_term( $value );
+				$args = array(
+					'post_status' => 'publish',
+					'post_type' => 'product',
+					'fields' => 'ids',
+					'product_cat' => $tag->name,
 
-			);
-			$result1 = get_posts( $args );
-			if ( ! empty( $result ) ) {
-				$target_ids = array_merge( $target_ids, $result1 );
+				);
+				$result1 = get_posts( $args );
+				if ( ! empty( $result ) ) {
+					$target_ids = array_merge( $target_ids, $result1 );
+				}
 			}
 		}
+
+		return array_unique( $target_ids );
 	}
-
-	return array_unique( $target_ids );
 }
-
-

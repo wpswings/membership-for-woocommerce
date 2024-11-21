@@ -73,7 +73,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && ( 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) ) {
 
 			// multistep form css.
 			if ( ! wps_mfw_standard_check_multistep() ) {
@@ -144,7 +144,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && ( 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) ) {
 
 			if ( ! wps_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
