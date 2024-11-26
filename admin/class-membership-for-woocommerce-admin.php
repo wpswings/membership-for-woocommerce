@@ -1222,7 +1222,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_price'                  => array( 'default' => '0' ),
 			'wps_membership_plan_info'                   => array( 'default' => '' ),
 			'wps_membership_plan_name_access_type'       => array( 'default' => 'lifetime' ),
-			'wps_membership_plan_duration'               => array( 'default' => '0' ),
+			'wps_membership_plan_duration'               => array( 'default' => '' ),
 			'wps_membership_plan_duration_type'          => array( 'default' => 'days' ),
 			'wps_membership_subscription'                => array( 'default' => 'no' ),
 			'wps_membership_subscription_expiry'         => array( 'default' => '0' ),
@@ -1250,6 +1250,10 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
 			'wps_membership_product_offer_price_type'    => array( 'default' => '%' ),
 			'wps_memebership_product_discount_price'     => array( 'default' => '0' ),
+			'wps_mfw_enable_free_trial_settings'         => array( 'default' => 'no' ),
+			'wps_sfw_subscription_initial_signup_price'  => array( 'default' => '' ),
+			'wps_sfw_subscription_free_trial_number'     => array( 'default' => '' ),
+			'wps_sfw_subscription_free_trial_interval'   => array( 'default' => 'days' ),
 		);
 
 		/**
@@ -1910,6 +1914,10 @@ class Membership_For_Woocommerce_Admin {
 							wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_offer_price_type', true ),
 							wps_membership_get_meta_data( $single_post->ID, 'wps_memebership_plan_discount_price', true ),
 							wps_membership_get_meta_data( $single_post->ID, 'wps_memebership_plan_free_shipping', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_mfw_enable_free_trial_settings', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_initial_signup_price', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_number', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_interval', true ),
 							$this->global_class->csv_get_prod_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_ids', true ) ),
 							$this->global_class->csv_get_cat_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_categories', true ) ),
 							get_post_field( 'post_content', $single_post->ID ),

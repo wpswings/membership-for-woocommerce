@@ -226,7 +226,6 @@ select#membership_billing_country:focus,
     padding: 20px 15px 15px;
     color: #171717;
     letter-spacing: 1px;
-    text-transform: capitalize;
     font-weight: 600;
 }
 
@@ -1869,3 +1868,11 @@ span.wps_mfw_no_plan_found_msg {
     }
 }
 /* Membership dashboard end */
+
+.wps_msfw_free_trial_msg {
+    padding: 0 0 25px;
+}
+
+.wp-block-cover.wps-mfw-temp2 .wps_msfw_free_trial_msg {
+    text-align: left;
+}
