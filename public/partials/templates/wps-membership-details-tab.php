@@ -89,9 +89,12 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 	if ( ! empty( $wps_subscriptions ) && is_array( $wps_subscriptions ) ) {
 		foreach ( array_reverse( $wps_subscriptions ) as $subs_id ) {
 
-			$wps_mfw_order     = wc_get_order( $subs_id );
-			$active_subs_name .= $wps_mfw_order->get_meta( 'product_name' );
-			$active_subs_name .= ' , ';
+			$wps_mfw_order = wc_get_order( $subs_id );
+			if ( ! empty( $wps_mfw_order ) && is_object( $wps_mfw_order ) ) {
+
+				$active_subs_name .= $wps_mfw_order->get_meta( 'product_name' );
+				$active_subs_name .= ' , ';
+			}
 		}
 	}
 
@@ -116,7 +119,7 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 				</div>
 			</div>
 			<div class="wps-msfw_dms-art">
-				<strong><?php esc_html_e( 'Total Discount Benefits: ', 'membership-for-woocommerce' ); ?></strong><span><?php echo esc_html( wc_price( $wps_mfw_total_discount_amount ) ); ?></span>
+				<strong><?php esc_html_e( 'Total Discount Benefits: ', 'membership-for-woocommerce' ); ?></strong><span><?php echo wc_price( esc_html( $wps_mfw_total_discount_amount ) ); ?></span>
 			</div>
 		</section>
 		<section class="wps-msfw_dm-sec wps-msfw_dm-sec-content">
