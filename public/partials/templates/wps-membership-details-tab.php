@@ -119,7 +119,7 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 				</div>
 			</div>
 			<div class="wps-msfw_dms-art">
-				<strong><?php esc_html_e( 'Total Discount Benefits: ', 'membership-for-woocommerce' ); ?></strong><span><?php echo wc_price( esc_html( $wps_mfw_total_discount_amount ) ); ?></span>
+				<strong><?php esc_html_e( 'Total Discount Benefits: ', 'membership-for-woocommerce' ); ?></strong><span><?php echo wp_kses_post( wc_price( $wps_mfw_total_discount_amount ) ); ?></span>
 			</div>
 		</section>
 		<section class="wps-msfw_dm-sec wps-msfw_dm-sec-content">
@@ -581,7 +581,7 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 								<?php elseif ( 'members-actions' === $column_id ) : ?>
 									<?php
 
-									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership=' . $membership_id ) . '" class="woocommerce-button button alt' . esc_attr( $button_disable ) . ' ">' . esc_html__( 'View' ) . '</a>';
+									echo '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) . 'wps-membership-tab/?membership=' . $membership_id ) . '" class="woocommerce-button button alt' . esc_attr( $button_disable ) . ' ">' . esc_html__( 'View', 'membership-for-woocommerce' ) . '</a>';
 									if ( 'on' == get_option( 'wps_membership_allow_cancel_membership' ) && 'complete' == $membership_status ) {
 
 										echo '<div><button class="button memberhip-cancel-button" data-membership_id="' . esc_html( $membership_id ) . '" >' . esc_html__( 'Cancel', 'membership-for-woocommerce' ) . '</button></div>';

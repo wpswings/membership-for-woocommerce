@@ -688,7 +688,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-						if ( false == $page_link_found && ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) {
+						if ( ( false == $page_link_found ) && ( ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) || ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) ) ) {
 
 							$is_has_target_id = array();
 							$product_terms = $this->get_product_terms( get_the_ID() );
@@ -1789,55 +1789,68 @@ class Membership_For_Woocommerce_Public {
 					$description .= '<h2>' . $plan['post_title'] . '</h2>';
 					$description .= '<div class="wps_membership_plan_content_price">' . sprintf( '%s%s', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
 
-					// show signup fee and free trial msg.
+					// subscription duration and expiry.
 					$wps_membership_plan_name_access_type      = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_name_access_type', true );
 					$wps_membership_plan_duration              = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_duration', true );
 					$wps_membership_plan_duration_type         = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_duration_type', true );
+					$wps_membership_subscription_expiry        = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry', true );
+					$wps_membership_subscription_expiry_type   = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry_type', true );
+					
+					// show signup fee and free trial msg.
 					$wps_mfw_enable_free_trial_settings        = wps_membership_get_meta_data( $plan['ID'], 'wps_mfw_enable_free_trial_settings', true );
 					$wps_sfw_subscription_initial_signup_price = floatval( wps_membership_get_meta_data( $plan['ID'], 'wps_sfw_subscription_initial_signup_price', true ) );
 					$wps_sfw_subscription_free_trial_number    = floatval( wps_membership_get_meta_data( $plan['ID'], 'wps_sfw_subscription_free_trial_number', true ) );
 					$wps_sfw_subscription_free_trial_interval  = wps_membership_get_meta_data( $plan['ID'], 'wps_sfw_subscription_free_trial_interval', true );
 					$wps_mfw_trial_fee_html                    = '';
-					if ( 'limited' === $wps_membership_plan_name_access_type && 'yes' === $wps_mfw_enable_free_trial_settings ) {
+					if ( 'limited' === $wps_membership_plan_name_access_type && ! empty( $wps_membership_plan_duration ) ) {
 
 						if ( $wps_membership_plan_duration > 1 ) {
 
 							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s %s',
+								'%s %s %s %s %s %s',
 								' / ',
 								esc_html( $wps_membership_plan_duration ),
 								esc_html( $wps_membership_plan_duration_type ),
-								__( ' and ', 'membership-for-woocommerce' ),
+								__( ' For ', 'membership-for-woocommerce' ),
+								esc_html( $wps_membership_subscription_expiry ),
+								esc_html( $wps_membership_subscription_expiry_type ),
 							);
 						} else {
 
 							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s',
+								'%s %s %s %s %s',
 								' / ',
 								esc_html( $wps_membership_plan_duration_type ),
-								__( ' and ', 'membership-for-woocommerce' ),
+								__( ' For ', 'membership-for-woocommerce' ),
+								esc_html( $wps_membership_subscription_expiry ),
+								esc_html( $wps_membership_subscription_expiry_type ),
 							);
 						}
 
-						// show free trial notice.
-						if ( $wps_sfw_subscription_free_trial_number > 0 ) {
+						if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
 
-							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s',
-								esc_html( $wps_sfw_subscription_free_trial_number ),
-								esc_html( $wps_sfw_subscription_free_trial_interval ),
-								__( ' free trial and ', 'membership-for-woocommerce' ),
-							);
-						}
+							// show free trial notice.
+							if ( $wps_sfw_subscription_free_trial_number > 0 ) {
 
-						// show signup fee notice.
-						if ( $wps_sfw_subscription_initial_signup_price > 0 ) {
+								$wps_mfw_trial_fee_html .= sprintf(
+									'%s %s %s %s',
+									__( ' and ', 'membership-for-woocommerce' ),
+									esc_html( $wps_sfw_subscription_free_trial_number ),
+									esc_html( $wps_sfw_subscription_free_trial_interval ),
+									__( ' free trial and ', 'membership-for-woocommerce' ),
+								);
+							}
 
-							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s',
-								esc_html( $plan_currency . $wps_sfw_subscription_initial_signup_price ),
-								__( ' signup fee', 'membership-for-woocommerce' )
-							);
+							// show signup fee notice.
+							if ( $wps_sfw_subscription_initial_signup_price > 0 ) {
+
+								$wps_mfw_trial_fee_html .= sprintf(
+									'%s %s %s',
+									__( ' and ', 'membership-for-woocommerce' ),
+									esc_html( $plan_currency . $wps_sfw_subscription_initial_signup_price ),
+									__( ' signup fee', 'membership-for-woocommerce' ),
+								);
+							}
 						}
 						$description .= '<div class="wps_msfw_free_trial_msg">' . $wps_mfw_trial_fee_html . '</div>';
 					}
@@ -4202,7 +4215,7 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_subscription_get_status( $subscription_status, $subscription_i_d ) {
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-			return;
+			return $subscription_status;
 		}
 		$member_id = '';
 		$subscription = get_post( $subscription_i_d );
@@ -4237,7 +4250,7 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_subscription_next_payment_date( $wps_next_payment_date, $subscription_i_d ) {
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-			return;
+			return $wps_next_payment_date;
 		}
 		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );
@@ -4266,7 +4279,7 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_susbcription_end_date( $wps_susbcription_end, $subscription_i_d ) {
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-			return;
+			return $wps_susbcription_end;
 		}
 		$order_id = wps_membership_get_meta_data( $subscription_i_d, 'wps_parent_order', true );
 		$order = wc_get_order( $order_id );

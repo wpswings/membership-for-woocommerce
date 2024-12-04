@@ -304,10 +304,10 @@ function wps_mfw_upgrade_pro_popup() {
 				?>
 				<input type="number" min="0" id="wps_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="wps_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['wps_membership_subscription_expiry'] ); ?>" >
 				<select disabled="disabled" name="wps_membership_subscription_expiry_type" id="wps_membership_subscription_expiry_type">
-					<option <?php echo esc_html( 'day' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="day"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'week' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="week"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'month' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="month"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
-					<option <?php echo esc_html( 'year' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="year"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'days' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'weeks' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'months' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'years' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
 				</select>
 			</td>
 		</tr>
@@ -326,21 +326,7 @@ function wps_mfw_upgrade_pro_popup() {
 				</td>
 			</tr>
 			<!-- Enable initial fee and free trial end -->
-
-			<!-- enter initial fee start -->
-			<tr class="wps_msfw_initial_fee">
-				<th scope="row" class="titledesc">
-					<label for="wps_sfw_subscription_initial_signup_price"><?php esc_html_e( 'Enter Initial Signup fee', 'membership-for-woocommerce' ); ?></label>
-					<?php
-					$instance->tool_tip( esc_html__( 'Enter the initial signup fee for this membership plan, or leave it empty if there is no initial fee.', 'membership-for-woocommerce' ) );
-					?>
-				</th>
-				<td id="mfw_free_shipping" class="forminp forminp-text">
-				<input type="number" min="0" class="wps_membership wps_sfw_subscription_initial_signup_price" id="wps_sfw_subscription_initial_signup_price" name="wps_sfw_subscription_initial_signup_price" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_initial_signup_price'] ) ? $settings_fields['wps_sfw_subscription_initial_signup_price'] : '' ); ?>">
-				</td>
-			</tr>
-			<!-- enter initial fee end -->
-
+			
 			<!-- enter free trial interval start -->
 			<tr class="wps_msfw_free_interval">
 				<th scope="row" class="titledesc">
@@ -359,6 +345,20 @@ function wps_mfw_upgrade_pro_popup() {
 					</select>
 				</td>
 			</tr>
+
+			<!-- enter initial fee start -->
+			<tr class="wps_msfw_initial_fee">
+				<th scope="row" class="titledesc">
+					<label for="wps_sfw_subscription_initial_signup_price"><?php esc_html_e( 'Enter Initial Signup fee', 'membership-for-woocommerce' ); ?></label>
+					<?php
+					$instance->tool_tip( esc_html__( 'Enter the initial signup fee for this membership plan, or leave it empty if there is no initial fee.', 'membership-for-woocommerce' ) );
+					?>
+				</th>
+				<td id="mfw_free_shipping" class="forminp forminp-text">
+				<input type="number" min="0" class="wps_membership wps_sfw_subscription_initial_signup_price" id="wps_sfw_subscription_initial_signup_price" name="wps_sfw_subscription_initial_signup_price" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_initial_signup_price'] ) ? $settings_fields['wps_sfw_subscription_initial_signup_price'] : '' ); ?>">
+				</td>
+			</tr>
+			<!-- enter initial fee end -->
 				<?php
 			}
 			?>

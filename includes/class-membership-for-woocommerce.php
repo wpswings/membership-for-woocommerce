@@ -439,9 +439,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'wps_membership_add_to_cart_url', 20, 1 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_set_woocoomerce_session', 10 );
 			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'wps_membership_get_product_price_of_member', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_set_subscription_status', $mfw_plugin_public, 'wps_membership_subscription_get_status', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_next_payment_date', $mfw_plugin_public, 'wps_membership_subscription_next_payment_date', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_set_subscription_status', $mfw_plugin_public, 'wps_membership_subscription_get_status', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_next_payment_date', $mfw_plugin_public, 'wps_membership_subscription_next_payment_date', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'wps_membership_hide_quantity_fields_for_membership', 10, 2 );
 			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'wps_membership_validate_email', 10, 2 );
 

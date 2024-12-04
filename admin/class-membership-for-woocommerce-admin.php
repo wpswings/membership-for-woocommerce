@@ -839,7 +839,7 @@ class Membership_For_Woocommerce_Admin {
 				'type'  => 'text',
 				'description'  => __( 'Enter the name for the membership plans you are creating.', 'membership-for-woocommerce' ),
 				'id'    => 'wps_mfw_reg_plan_name',
-				'placeholder' => 'Enter Plan Name',
+				'placeholder' => __( 'Enter Plan name', 'membership-for-woocommerce' ),
 			),
 
 			array(
@@ -847,7 +847,7 @@ class Membership_For_Woocommerce_Admin {
 				'type'  => 'number',
 				'description'  => __( 'Enter the price for the membership plans you are creating.', 'membership-for-woocommerce' ),
 				'id'    => 'wps_mfw_reg_plan_price',
-				'placeholder' => 'Enter Plan Price',
+				'placeholder' => __( 'Enter plan price', 'membership-for-woocommerce' ),
 			),
 			array(
 				'title' => __( 'Set Access Type( Expiry of plan )', 'membership-for-woocommerce' ),
