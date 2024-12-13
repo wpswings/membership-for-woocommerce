@@ -83,7 +83,6 @@ if ( ! class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
 
 				self::$instance = new self();
 			}
-
 			return self::$instance;
 		}
 
@@ -136,7 +135,6 @@ if ( ! class_exists( 'WPS_Membership_Shortcode_Widget_Loader' ) ) {
 					$loader_file = 'shortcode-widget/elementor/class-elementor-widget-loader.php';
 					break;
 			}
-
 			return $loader_file;
 		}
 

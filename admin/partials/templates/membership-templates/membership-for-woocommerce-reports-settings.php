@@ -44,43 +44,48 @@ $args          = get_posts(
 );
 
 $wps_store_member_ids = array();
-foreach ( $args as $key => $value ) {
+if ( ! empty( $args ) && is_array( $args ) ) {
+	foreach ( $args as $key => $value ) {
 
-	array_push( $wps_store_member_ids, $value );
+		array_push( $wps_store_member_ids, $value );
 
-	$member_status = wps_membership_get_meta_data( $value, 'member_status', true );
-	$mfw_id        = $value - 1;
-	$orders        = wc_get_order( $mfw_id );
-	if ( empty( $orders ) ) {
-		continue;
-	}
+		$member_status = wps_membership_get_meta_data( $value, 'member_status', true );
+		$mfw_id        = $value - 1;
+		$orders        = wc_get_order( $mfw_id );
+		if ( empty( $orders ) ) {
+			continue;
+		}
 
-	$items = $orders->get_items();
-	foreach ( $items as $item ) {
-		if ( ! empty( $item->get_meta_data()[1] ) ) {
+		if ( ! empty( $orders ) && null != $orders->get_items() ) {
+			foreach ( $orders->get_items() as $item ) {
 
-			if ( '_member_id' === $item->get_meta_data()[1]->key ) {
-				if ( 'complete' === $member_status ) {
+				if ( ! empty( $item->get_meta_data()[1] ) ) {
+					if ( '_member_id' === $item->get_meta_data()[1]->key ) {
 
-					$complete ++;
-					if ( ! in_array( $mfw_id, $array_of_ids ) ) {
+						if ( 'complete' === $member_status ) {
 
-						$array_of_ids[] = $mfw_id;
+							$complete ++;
+							if ( ! in_array( $mfw_id, $array_of_ids ) ) {
+
+								$array_of_ids[] = $mfw_id;
+							}
+						}
+
+						if ( 'pending' === $member_status ) {
+							$pending ++;
+						}
+
+						if ( 'expired' === $member_status ) {
+
+							$expired ++;
+							if ( ! in_array( $mfw_id, $array_of_ids ) ) {
+
+								$array_of_ids[] = $mfw_id;
+							}
+						}
+						$total_members ++;
 					}
 				}
-
-				if ( 'pending' === $member_status ) {
-					$pending ++;
-				}
-
-				if ( 'expired' === $member_status ) {
-					$expired ++;
-					if ( ! in_array( $mfw_id, $array_of_ids ) ) {
-
-						$array_of_ids[] = $mfw_id;
-					}
-				}
-				$total_members ++;
 			}
 		}
 	}
@@ -147,9 +152,11 @@ foreach ( $args as $key => $value ) {
 				)
 			);
 			$result    = array();
-			foreach ( $order_ids as $key => $value ) {
+			if ( ! empty( $order_ids ) && is_array( $order_ids ) ) {
+				foreach ( $order_ids as $key => $value ) {
 
-				$result[]['order_id'] = $value;
+					$result[]['order_id'] = $value;
+				}
 			}
 
 			if ( ! empty( $result ) && is_array( $result ) ) {
@@ -167,8 +174,9 @@ foreach ( $args as $key => $value ) {
 						continue;
 					}
 
-					$items = wc_get_order( $value['order_id'] )->get_items();
-					if ( in_array( $value['order_id'], $array_of_ids ) ) {
+					$items        = wc_get_order( $value['order_id'] )->get_items();
+					$array_of_ids = ! empty( $array_of_ids ) && is_array( $array_of_ids ) ? $array_of_ids : array();
+					if ( ! empty( $items ) && in_array( $value['order_id'], $array_of_ids ) ) {
 						foreach ( $items as $item ) {
 
 							if ( '_member_id' === $item->get_meta_data()[1]->key ) {

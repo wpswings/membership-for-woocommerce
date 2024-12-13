@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $output = '';
-
 if ( ! empty( $post_id ) ) {
 
 	$plan_title       = get_the_title( $post_id );
@@ -44,6 +43,7 @@ if ( ! empty( $post_id ) ) {
 					<td>' . sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_price ) ) . '</td>
 				</tr>';
 	if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+
 		$check_licence = check_membership_pro_plugin_is_active();
 		if ( $check_licence ) {
 

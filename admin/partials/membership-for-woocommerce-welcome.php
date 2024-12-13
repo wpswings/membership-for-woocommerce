@@ -53,21 +53,21 @@ $mfw_tab_key = '';
 				'mfw_home_settings_array',
 				array(
 					array(
-						'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
-						'type'  => 'radio-switch',
-						'id'    => 'mfw_enable_tracking',
-						'value' => get_option( 'mfw_enable_tracking' ),
-						'class' => 'mfw-radio-switch-class',
+						'title'   => __( 'Enable Tracking', 'membership-for-woocommerce' ),
+						'type'    => 'radio-switch',
+						'id'      => 'mfw_enable_tracking',
+						'value'   => get_option( 'mfw_enable_tracking' ),
+						'class'   => 'mfw-radio-switch-class',
 						'options' => array(
 							'yes' => __( 'YES', 'membership-for-woocommerce' ),
-							'no' => __( 'NO', 'membership-for-woocommerce' ),
+							'no'  => __( 'NO', 'membership-for-woocommerce' ),
 						),
 					),
 					array(
-						'type'  => 'button',
-						'id'    => 'mfw_button_demo',
+						'type'        => 'button',
+						'id'          => 'mfw_button_demo',
 						'button_text' => __( 'Save', 'membership-for-woocommerce' ),
-						'class' => 'mfw-button-class',
+						'class'       => 'mfw-button-class',
 					),
 				)
 			);

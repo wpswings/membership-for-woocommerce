@@ -15,7 +15,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 
 	exit;
-
 }
 
 $first_name = ! empty( $member_details['membership_billing_first_name'] ) ? $member_details['membership_billing_first_name'] : '';
@@ -30,8 +29,8 @@ $country    = ! empty( $member_details['membership_billing_country'] ) ? $member
 $email      = ! empty( $member_details['membership_billing_email'] ) ? $member_details['membership_billing_email'] : '';
 $phone      = ! empty( $member_details['membership_billing_phone'] ) ? $member_details['membership_billing_phone'] : '';
 $payment    = ! empty( $member_details['payment_method'] ) ? $member_details['payment_method'] : '';
-$order_val = new WC_Order( wps_membership_get_meta_data( $post->ID, 'member_order_id', true ) );
-$payment = $order_val->get_payment_method_title();
+$order_val  = new WC_Order( wps_membership_get_meta_data( $post->ID, 'member_order_id', true ) );
+$payment    = $order_val->get_payment_method_title();
 // Getting all user ID's.
 $all_users = get_users(
 	array(
@@ -56,15 +55,13 @@ $current_user_assigned = wps_membership_get_meta_data( $post->ID, 'wps_member_us
 <div class="members_billing_details">
 
 	<h1><?php echo sprintf( 'Member #%u details', esc_html( $post->ID ) ); ?></h1>
-
 	<span class="wps_member_notice">
-	<?php
-	if ( wps_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+		<?php
+		if ( wps_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
 
-		esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
-	}
-	?>
-	
+			esc_html_e( 'Only membership will be purchased subscription will not be activated if Membership plan assigned from here !!', 'membership-for-woocommerce' );
+		}
+		?>
 	</span>
 
 	<div class="members_data_column_container">
@@ -80,25 +77,20 @@ $current_user_assigned = wps_membership_get_meta_data( $post->ID, 'wps_member_us
 				</label><br>
 				<select name="wps_member_user" id="wps_member_user">
 					<?php
-
-
 					if ( ! empty( $all_users ) && is_array( $all_users ) ) {
-
 						foreach ( $all_users as $users ) {
+
 							$user_info  = get_user_by( 'ID', $users->ID );
 							$user_meta  = get_userdata( $users->ID );
 							$user_roles = $user_meta->roles; // array of roles the user is part of.
-							$user_role = '';
+							$user_role  = '';
 							if ( ! empty( $user_roles ) ) {
+
 								$user_role = $user_roles[0];
 							}
-
-
-
 							?>
-							<option <?php echo esc_html( $users->ID === $current_user_assigned ? 'selected' : '' ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
-								<?php
-
+							<option <?php selected( $users->ID, $current_user_assigned ); ?> value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
+							<?php
 						}
 					}
 					?>
@@ -113,20 +105,22 @@ $current_user_assigned = wps_membership_get_meta_data( $post->ID, 'wps_member_us
 
 			<div class="member_address">
 				<p>
-				<strong><?php esc_html_e( 'Address :', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php
-					if ( ! empty( $first_name ) ) {
-						?>
-						<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
-						<?php echo esc_html( $company ); ?></br>
-						<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
-						<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
-						<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+					<strong><?php esc_html_e( 'Address :', 'membership-for-woocommerce' ); ?></strong></br>
 						<?php
-					} else {
-						esc_html_e( 'No billing details', 'membership-for-woocommerce' );
-					}
-					?>
+						if ( ! empty( $first_name ) ) {
+
+							?>
+							<?php echo sprintf( ' %s %s ', esc_html( $first_name ), esc_html( $last_name ) ); ?></br>
+							<?php echo esc_html( $company ); ?></br>
+							<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?></br>
+							<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?></br>
+							<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+							<?php
+						} else {
+
+							esc_html_e( 'No billing details', 'membership-for-woocommerce' );
+						}
+						?>
 				</p>
 
 				<p>
@@ -138,8 +132,8 @@ $current_user_assigned = wps_membership_get_meta_data( $post->ID, 'wps_member_us
 					<strong><?php esc_html_e( 'Phone :', 'membership-for-woocommerce' ); ?></strong></br>
 					<?php echo esc_html( $phone ); ?>
 				</p>
-					<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
-					<?php echo esc_html( $payment ); ?>
+				<strong><?php esc_html_e( 'Payment Method', 'membership-for-woocommerce' ); ?></strong></br>
+				<?php echo esc_html( $payment ); ?>
 			</div>
 
 			<div class="member_edit_address" >
@@ -206,12 +200,8 @@ $current_user_assigned = wps_membership_get_meta_data( $post->ID, 'wps_member_us
 					<label for="billing_phone"><?php esc_html_e( 'Phone', 'membership-for-woocommerce' ); ?></label>
 					<input type="text" name="billing_phone" id="billing_phone" value="<?php echo esc_html( $phone ); ?>">
 				</p>
-
-			
 			</div>
 		</div>
-
 	</div>
-
 </div>
 <!-- Members billing metabox end -->

@@ -24,11 +24,12 @@ if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 	function wps_membership_check_product_is_membership( $product ) {
 
 		$wps_is_membership = false;
-		if ( is_object( $product ) ) {
-			$product_id = $product->get_id();
-			$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
+		if ( ! empty( $product ) && is_object( $product ) ) {
 
+			$product_id                     = $product->get_id();
+			$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 			if ( $wps_membership_default_product == $product_id ) {
+
 				$wps_is_membership = true;
 			}
 		}
@@ -42,10 +43,6 @@ if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
 	}
 }
 
-
-
-
-
 /**
  * Function to get member from order.
  *
@@ -54,10 +51,12 @@ if ( ! function_exists( 'wps_membership_check_product_is_membership' ) ) {
  */
 function get_member_id_from_order( $order ) {
 	$member_id = '';
-	foreach ( $order->get_items() as $item_id => $item ) {
+	if ( ! empty( $order ) && null != $order->get_items() ) {
+		foreach ( $order->get_items() as $item_id => $item ) {
 
-		if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
-			$member_id = $item->get_meta( '_member_id' );
+			if ( ! empty( $item->get_meta( '_member_id' ) ) ) {
+				$member_id = $item->get_meta( '_member_id' );
+			}
 		}
 	}
 	return $member_id;
@@ -75,13 +74,9 @@ function mwb_membership_is_plugin_active( $plugin_slug = '' ) {
 	}
 
 	$active_plugins = (array) get_option( 'active_plugins', array() );
-
 	if ( is_multisite() ) {
 
 		$active_plugins = array_merge( $active_plugins, get_site_option( 'active_sitewide_plugins', array() ) );
 	}
-
 	return in_array( $plugin_slug, $active_plugins ) || array_key_exists( $plugin_slug, $active_plugins );
 }
-
-

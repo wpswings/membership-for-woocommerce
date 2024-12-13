@@ -49,7 +49,7 @@ class MEMBERSHIP_BUY_NOW_BUTTON extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'upsell-additional-offer-one';
+		return 'membership-offer-page-one';
 	}
 
 	/**

@@ -131,6 +131,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
+
 		/**
 		 * Function to check multistep function.
 		 *
@@ -277,9 +278,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	function wps_membership_schedule_hook() {
 		// Schedule cron for checking of membership expiration on daily basis.
 		if ( ! wp_next_scheduled( 'wps_membership_expiry_check' ) ) {
+
 			wp_schedule_event( time(), 'daily', 'wps_membership_expiry_check' );
 		}
-
 	}
 	add_action( 'init', 'wps_membership_schedule_hook' );
 
@@ -327,6 +328,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	if ( ! function_exists( 'wps_membership_check_plugin_enable' ) ) {
+
 		/**
 		 * This function is used to check plugin is enable.
 		 *
@@ -337,9 +339,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$is_enable = false;
 			$wps_membership_enable_plugin = get_option( 'wps_membership_enable_plugin', '' );
 			if ( 'on' == $wps_membership_enable_plugin ) {
+
 				$is_enable = true;
 			}
-
 			return $is_enable;
 		}
 	}
@@ -362,9 +364,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$meta_val = $order->get_meta( $key );
 			return $meta_val;
 		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+
 			$order    = new WPS_Subscription( $id );
 			$meta_val = $order->get_meta( $key );
-
 			return $meta_val;
 		} else {
 			// Traditional CPT-based orders are in use.
@@ -477,11 +479,10 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'plan-import-nonce' ) ) {
 
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-
 			if ( isset( $banner_id ) && '' != $banner_id ) {
+
 				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
 			}
-
 			wp_send_json_success();
 		}
 	}
@@ -537,7 +538,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
 
-
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *
@@ -556,10 +556,12 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		return $links_array;
 	}
-	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 
+	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 	add_action( 'activated_plugin', 'membership_for_woocommerce_redirect_on_settings' );
+
 	if ( ! function_exists( 'membership_for_woocommerce_redirect_on_settings' ) ) {
+
 		/**
 		 * Redirect plugin as plugin get activated function.
 		 *
@@ -603,18 +605,14 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 		// To hide Plugin activated notice.
 		unset( $_GET['activate'] );
-
 		?>
-
 		<?php if ( 'woo_inactive' === $wps_membership_plugin_activation['message'] ) { ?>
 
 			<div class="notice notice-error is-dismissible">
 				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
 			</div>
-
 			<?php
 		}
-
 	}
 }
 

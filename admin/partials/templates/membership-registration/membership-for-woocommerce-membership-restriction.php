@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $mfw_plugins = get_option( 'active_plugins' );
-
 if ( ! in_array( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $mfw_plugins ) ) {
 
 	wps_mfw_upgrade_pro_popup();
@@ -30,7 +29,7 @@ if ( ! in_array( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.
 function wps_mfw_upgrade_pro_popup() {
 	?>
 
-		<!-- Go pro popup wrap start. -->
+	<!-- Go pro popup wrap start. -->
 	<div class="wps_ubo_lite_go_pro_popup_wrap">
 		<!-- Go pro popup main start. -->
 		<div class="wps_ubo_lite_go_pro_popup">
@@ -62,8 +61,6 @@ function wps_mfw_upgrade_pro_popup() {
 		<!-- Go pro popup main end. -->
 	</div>
 	<!-- Go pro popup wrap end. -->
-
-
 	<?php
 }
 
@@ -72,11 +69,8 @@ $results = get_posts(
 		'post_type' => 'wps_cpt_membership',
 		'post_status' => 'publish',
 		'numberposts' => -1,
-
 	)
 );
-
-
 ?>
 
 <p>
@@ -98,129 +92,115 @@ $results = get_posts(
 							<span class="mdc-notched-outline__trailing"></span>
 						</span>
 						<select id="wps_membership_plan_for_restriction" name="wps_membership_plan_for_restriction" class="mdl-textfield__input mdc-text-field__input">
-						<option value=""><?php esc_html_e( 'Select plan', 'membership-for-woocommerce' ); ?></option>
+							<option value=""><?php esc_html_e( 'Select plan', 'membership-for-woocommerce' ); ?></option>
 							<?php
+							if ( ! empty( $results ) && is_array( $results ) ) {
+								foreach ( $results as $key => $value ) {
 
-							foreach ( $results as $key => $value ) {
-
-								?>
-
-								<option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
-
-								<?php
+									?>
+									<option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
+									<?php
+								}
 							}
-
 							?>
 						</select>
-
-
 						</label>
 				</div>
 			</div>
 		</div>
+		<?php
 
-			<?php
-
-
+		if ( ! empty( $results ) && is_array( $results ) ) {
 			foreach ( $results as $key => $value ) {
 				?>
-			<div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID ); ?>">
-				<div class="wps-form-group">
-					<div class="wps-form-group__label">
-					<label class="wps-form-label"><?php esc_html_e( 'Select Product to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
-					</div>
-					<div class="wps-form-group__control">
-						<div class="wps-form-select">
-							<select id="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
-								<?php
+				<div  class="wps_membership_plan_fields  wps_reg_plan_<?php echo esc_attr( $value->ID ); ?>">
+					<div class="wps-form-group">
+						<div class="wps-form-group__label">
+						<label class="wps-form-label"><?php esc_html_e( 'Select Product to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
+						</div>
+						<div class="wps-form-group__control">
+							<div class="wps-form-select">
+								<select id="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_ids_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'membership-for-woocommerce' ); ?>">
+									<?php
 
-								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_ids', true );
-								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+									$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_ids', true );
+									if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
+										foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
 
-										$product_name = get_the_title( $wps_membership_plan_single_target_product_ids );
-										?>
-										<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-										<?php
+											$product_name = get_the_title( $wps_membership_plan_single_target_product_ids );
+											?>
+											<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php selected( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+											<?php
+										}
 									}
-								}
-								?>
-							</select>
+									?>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="wps-form-group">
+						<div class="wps-form-group__label">
+						<label class="wps-form-label"><?php esc_html_e( 'Select Product Categories to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
+						</div>
+						<div class="wps-form-group__control">
+							<div class="wps-form-select">
+								<select id="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-category-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a Categories&hellip;', 'membership-for-woocommerce' ); ?>">
+									<?php
+
+									$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_categories', true );
+									if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
+										foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+
+											$product_name = get_the_category_by_ID( $wps_membership_plan_single_target_product_ids );
+											?>
+											<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php selected( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+											<?php
+										}
+									}
+									?>
+								
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="wps-form-group wps-membership__plan--pro-disabled">
+						<div class="wps-form-group__label">
+						<label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
+						</div>
+						<div class="wps-form-group__control">
+							<div class="wps-form-select">
+								<select id="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-tag-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a tags&hellip;', 'membership-for-woocommerce' ); ?>">
+									<?php
+
+									$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_tags', true );
+									if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
+										foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
+
+											$tagn = get_term_by( 'id', $wps_membership_plan_single_target_product_ids, 'product_tag' );
+											?>
+											<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php selected( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ); ?>><?php echo( esc_html( $tagn->name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
+											<?php
+										}
+									}
+									?>
+								</select>
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="wps-form-group">
-					<div class="wps-form-group__label">
-					<label class="wps-form-label"><?php esc_html_e( 'Select Product Categories to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
-					</div>
-					<div class="wps-form-group__control">
-						<div class="wps-form-select">
-							<select id="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_cats_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-category-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a Categories&hellip;', 'membership-for-woocommerce' ); ?>">
-								<?php
-
-								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_categories', true );
-								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
-
-										$product_name = get_the_category_by_ID( $wps_membership_plan_single_target_product_ids );
-										?>
-										<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-										<?php
-									}
-								}
-								?>
-							
-							</select>
-						</div>
-					</div>
-				</div>
-				
-				<div class="wps-form-group wps-membership__plan--pro-disabled">
-					<div class="wps-form-group__label">
-					<label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
-					</div>
-					<div class="wps-form-group__control">
-						<div class="wps-form-select">
-							<select id="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-tag-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a tags&hellip;', 'membership-for-woocommerce' ); ?>">
-								<?php
-
-								$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_tags', true );
-								if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-
-									foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
-										$tagn     = get_term_by( 'id', $wps_membership_plan_single_target_product_ids, 'product_tag' );
-										$product_name = $tagn->name;
-										?>
-
-								<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php echo ( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ? 'selected' : '' ); ?>><?php echo( esc_html( $product_name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-
-										<?php
-									}
-								}
-								?>
-							
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
-
-
-
-
-
 				<?php
 			}
-
-			?>
-			<?php $nonce = wp_create_nonce( 'wps-form-nonce' ); ?>
-			<input type="hidden" name="wps_nonce_name" value="<?php echo esc_attr( $nonce ); ?>" /> 
-			<div class="wps-form-group">
-				<div class="wps-form-group__control">
-					<button id="wps_membership_restriction_button" name="wps_membership_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
-					<span class="mdc-button__label"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ); ?></span>
-					</button>
-				</div>
+		}
+		?>
+		<?php $nonce = wp_create_nonce( 'wps-form-nonce' ); ?>
+		<input type="hidden" name="wps_nonce_name" value="<?php echo esc_attr( $nonce ); ?>" /> 
+		<div class="wps-form-group">
+			<div class="wps-form-group__control">
+				<button id="wps_membership_restriction_button" name="wps_membership_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
+				<span class="mdc-button__label"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ); ?></span>
+				</button>
 			</div>
 		</div>
+	</div>
 </form>

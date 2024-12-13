@@ -68,14 +68,15 @@ class Membership_For_Woocommerce_Activator {
 
 				$wps_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
 				if ( ! empty( $wps_membership_default_plans_page_id ) ) {
+
 					wp_delete_post( $wps_membership_default_plans_page_id );
 					delete_option( 'mwb_membership_default_plans_page' );
 				}
+
 				$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page' );
 				if ( empty( $wps_membership_default_plans_page_id ) ) {
 
 					$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[wps_membership_default_plans_page]';
-
 					if ( empty( $wps_membership_default_plans_page_id ) || 'publish' !== get_post_status( $wps_membership_default_plans_page_id ) ) {
 
 						$wps_membership_plans_page = array(
@@ -89,10 +90,10 @@ class Membership_For_Woocommerce_Activator {
 						);
 
 						$wps_membership_plans_post = wp_insert_post( $wps_membership_plans_page );
-
 						update_option( 'wps_membership_default_plans_page', $wps_membership_plans_post );
 					}
 				} else {
+
 					$current_post = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
 					$current_post['post_status'] = 'publish';
 					wp_update_post( $current_post );
@@ -102,7 +103,6 @@ class Membership_For_Woocommerce_Activator {
 				 * Generating default membership plans page at the time of plugin activation.
 				 */
 				$wps_membership_default_product = get_option( 'wps_membership_default_product' );
-
 				if ( empty( $wps_membership_default_product ) || 'private' !== get_post_status( $wps_membership_default_product ) ) {
 
 						 $wps_membership_product = array(
@@ -116,32 +116,27 @@ class Membership_For_Woocommerce_Activator {
 						 );
 
 						 $wps_membership_product_id = wp_insert_post( $wps_membership_product );
-
 						 if ( ! is_wp_error( $wps_membership_product_id ) ) {
 
-							 $product = wc_get_product( $wps_membership_product_id );
+							$product = wc_get_product( $wps_membership_product_id );
+							wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
+							wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
+							wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
+							wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
+							wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
 
-							 wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
-							 wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
-							 wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
-							 wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
-							 wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
+							if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
 
-							 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
-
-								 $product->set_reviews_allowed( false );
-								 $product->set_catalog_visibility( 'hidden' );
-								 $product->save();
-							 }
-
-							 update_option( 'wps_membership_default_product', $wps_membership_product_id );
-
+								$product->set_reviews_allowed( false );
+								$product->set_catalog_visibility( 'hidden' );
+								$product->save();
+							}
+							update_option( 'wps_membership_default_product', $wps_membership_product_id );
 						 }
 				}
 
 				restore_current_blog();
 			}
-
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 
 			/**
@@ -154,7 +149,6 @@ class Membership_For_Woocommerce_Activator {
 
 			// Creating Instance of the global functions class.
 			$global_class = Membership_For_Woocommerce_Global_Functions::get();
-
 			add_role(
 				'member',
 				__( 'Member', 'membership-for-woocommerce' ),
@@ -169,16 +163,15 @@ class Membership_For_Woocommerce_Activator {
 
 			$wps_membership_default_plans_page_id = get_option( 'mwb_membership_default_plans_page' );
 			if ( ! empty( $wps_membership_default_plans_page_id ) ) {
+
 				wp_delete_post( $wps_membership_default_plans_page_id );
 				delete_option( 'mwb_membership_default_plans_page' );
 			}
 
 			$wps_membership_default_plans_page_id = get_option( 'wps_membership_default_plans_page' );
-
 			if ( empty( $wps_membership_default_plans_page_id ) ) {
 
 				$page_content = '5' <= get_bloginfo( 'version' ) ? $global_class->gutenberg_content() : '[wps_membership_default_plans_page]';
-
 				if ( empty( $wps_membership_default_plans_page_id ) || 'publish' !== get_post_status( $wps_membership_default_plans_page_id ) ) {
 
 					$wps_membership_plans_page = array(
@@ -192,10 +185,10 @@ class Membership_For_Woocommerce_Activator {
 					);
 
 					$wps_membership_plans_post = wp_insert_post( $wps_membership_plans_page );
-
 					update_option( 'wps_membership_default_plans_page', $wps_membership_plans_post );
 				}
 			} else {
+
 				$current_post                = get_post( $wps_membership_default_plans_page_id, 'ARRAY_A' );
 				$current_post['post_status'] = 'publish';
 				wp_update_post( $current_post );
@@ -205,38 +198,36 @@ class Membership_For_Woocommerce_Activator {
 			 * Generating default membership plans page at the time of plugin activation.
 			 */
 			$wps_membership_default_product = get_option( 'wps_membership_default_product' );
-
 			if ( empty( $wps_membership_default_product ) || 'private' !== get_post_status( $wps_membership_default_product ) ) {
 
-				 $wps_membership_product = array(
-					 'post_name'    => 'membership-product',
-					 'post_status'  => 'publish',
-					 'post_title'   => 'Membership Product',
-					 'post_type'    => 'product',
-					 'post_author'  => 1,
-					 'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
-				 );
+				$wps_membership_product = array(
+					'post_name'    => 'membership-product',
+					'post_status'  => 'publish',
+					'post_title'   => 'Membership Product',
+					'post_type'    => 'product',
+					'post_author'  => 1,
+					'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
+				);
 
-				 $wps_membership_product_id = wp_insert_post( $wps_membership_product );
+				$wps_membership_product_id = wp_insert_post( $wps_membership_product );
+				if ( ! is_wp_error( $wps_membership_product_id ) ) {
 
-				 if ( ! is_wp_error( $wps_membership_product_id ) ) {
+				$product = wc_get_product( $wps_membership_product_id );
+				wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
+				wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
+				wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
+				wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
+				wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
 
-					 $product = wc_get_product( $wps_membership_product_id );
-					 wp_set_object_terms( $wps_membership_product_id, 'simple', 'product_type' );
-					 wps_membership_update_meta_data( $wps_membership_product_id, '_regular_price', 0 );
-					 wps_membership_update_meta_data( $wps_membership_product_id, '_price', 0 );
-					 wps_membership_update_meta_data( $wps_membership_product_id, '_visibility', 'public' );
-					 wps_membership_update_meta_data( $wps_membership_product_id, '_virtual', 'yes' );
+				if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
 
-					 if ( version_compare( WC_VERSION, '3.0', '>=' ) ) {
+				$product->set_reviews_allowed( false );
+				$product->set_catalog_visibility( 'hidden' );
+				$product->save();
+				}
 
-						 $product->set_reviews_allowed( false );
-						 $product->set_catalog_visibility( 'hidden' );
-						 $product->save();
-					 }
-
-					 update_option( 'wps_membership_default_product', $wps_membership_product_id );
-				 }
+				update_option( 'wps_membership_default_product', $wps_membership_product_id );
+				}
 			}
 			wp_clear_scheduled_hook( 'wpswings_tracker_send_event' );
 
