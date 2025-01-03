@@ -129,8 +129,10 @@ jQuery(document).ready(function($) {
               $("#wps_membership_duration").show('500');
               $("#wps_membership_subscription_tr").show('500');
               $("#wps_membership_subscription_expiry_tr").show('500');
-              
               $("#wps_membership_recurring_plan").show('500');
+              $(".wps_msfw_enable_trial_settings").show('500');
+              $(".wps_msfw_initial_fee").show('500');
+              $(".wps_msfw_free_interval").show('500');
               break;
 
           default:
@@ -138,7 +140,9 @@ jQuery(document).ready(function($) {
               $("#wps_membership_subscription_tr").hide('500');
               $("#wps_membership_recurring_plan").hide('500');
               $("#wps_membership_subscription_expiry_tr").hide('500');
-
+              $(".wps_msfw_enable_trial_settings").hide('500');
+              $(".wps_msfw_initial_fee").hide('500');
+              $(".wps_msfw_free_interval").hide('500');
       }
 
       switch (selection_radio) {
@@ -182,6 +186,9 @@ jQuery(document).ready(function($) {
               $("#wps_membership_duration").show('500');
               $("#wps_membership_subscription_tr").show('500');
               $("#wps_membership_subscription_expiry_tr").show('500');
+              $(".wps_msfw_enable_trial_settings").show('500');
+              $(".wps_msfw_initial_fee").show('500');
+              $(".wps_msfw_free_interval").show('500');
 
               $("#wps_membership_plan_duration_type").on("change", function() {
                   var duration_type = $("#wps_membership_plan_duration_type").val();
@@ -203,7 +210,9 @@ jQuery(document).ready(function($) {
               $("#wps_membership_plan_duration").val("");
               $("#wps_membership_plan_duration_type").prop("selectedIndex", 0);
               $("#wps_membership_recurring_plan").hide('500');
-
+              $(".wps_msfw_enable_trial_settings").hide('500');
+              $(".wps_msfw_initial_fee").hide('500');
+              $(".wps_msfw_free_interval").hide('500');
       }
   });
   

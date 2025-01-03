@@ -711,7 +711,7 @@ class Membership_For_Woocommerce_Common {
 						wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
 						wps_membership_update_meta_data( $subscription_id, 'wps_next_payment_date', $expiry_date );
 
-						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
+						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) && ! empty( $plan_obj['plan_id'] ) ) {
 							if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 								$access_type = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_access_type', true );
 								$current_date = gmdate( 'Y-m-d' );

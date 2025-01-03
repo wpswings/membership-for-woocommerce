@@ -73,7 +73,7 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function mfw_admin_enqueue_styles( $hook ) {
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && ( 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) ) {
 
 			// multistep form css.
 			if ( ! wps_mfw_standard_check_multistep() ) {
@@ -144,7 +144,7 @@ class Membership_For_Woocommerce_Admin {
 	public function mfw_admin_enqueue_scripts( $hook ) {
 
 		$screen = get_current_screen();
-		if ( isset( $screen->id ) && 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) {
+		if ( isset( $screen->id ) && ( 'wp-swings_page_home' === $screen->id || 'wp-swings_page_membership_for_woocommerce_menu' === $screen->id ) ) {
 
 			if ( ! wps_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
@@ -839,7 +839,7 @@ class Membership_For_Woocommerce_Admin {
 				'type'  => 'text',
 				'description'  => __( 'Enter the name for the membership plans you are creating.', 'membership-for-woocommerce' ),
 				'id'    => 'wps_mfw_reg_plan_name',
-				'placeholder' => 'Enter Plan Name',
+				'placeholder' => __( 'Enter Plan name', 'membership-for-woocommerce' ),
 			),
 
 			array(
@@ -847,7 +847,7 @@ class Membership_For_Woocommerce_Admin {
 				'type'  => 'number',
 				'description'  => __( 'Enter the price for the membership plans you are creating.', 'membership-for-woocommerce' ),
 				'id'    => 'wps_mfw_reg_plan_price',
-				'placeholder' => 'Enter Plan Price',
+				'placeholder' => __( 'Enter plan price', 'membership-for-woocommerce' ),
 			),
 			array(
 				'title' => __( 'Set Access Type( Expiry of plan )', 'membership-for-woocommerce' ),
@@ -1222,7 +1222,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_price'                  => array( 'default' => '0' ),
 			'wps_membership_plan_info'                   => array( 'default' => '' ),
 			'wps_membership_plan_name_access_type'       => array( 'default' => 'lifetime' ),
-			'wps_membership_plan_duration'               => array( 'default' => '0' ),
+			'wps_membership_plan_duration'               => array( 'default' => '' ),
 			'wps_membership_plan_duration_type'          => array( 'default' => 'days' ),
 			'wps_membership_subscription'                => array( 'default' => 'no' ),
 			'wps_membership_subscription_expiry'         => array( 'default' => '0' ),
@@ -1250,6 +1250,10 @@ class Membership_For_Woocommerce_Admin {
 			'wps_membership_plan_target_disc_ids'        => array( 'default' => array() ),
 			'wps_membership_product_offer_price_type'    => array( 'default' => '%' ),
 			'wps_memebership_product_discount_price'     => array( 'default' => '0' ),
+			'wps_mfw_enable_free_trial_settings'         => array( 'default' => 'no' ),
+			'wps_sfw_subscription_initial_signup_price'  => array( 'default' => '' ),
+			'wps_sfw_subscription_free_trial_number'     => array( 'default' => '' ),
+			'wps_sfw_subscription_free_trial_interval'   => array( 'default' => 'days' ),
 		);
 
 		/**
@@ -1910,6 +1914,10 @@ class Membership_For_Woocommerce_Admin {
 							wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_offer_price_type', true ),
 							wps_membership_get_meta_data( $single_post->ID, 'wps_memebership_plan_discount_price', true ),
 							wps_membership_get_meta_data( $single_post->ID, 'wps_memebership_plan_free_shipping', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_mfw_enable_free_trial_settings', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_initial_signup_price', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_number', true ),
+							wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_interval', true ),
 							$this->global_class->csv_get_prod_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_ids', true ) ),
 							$this->global_class->csv_get_cat_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_categories', true ) ),
 							get_post_field( 'post_content', $single_post->ID ),
@@ -3733,7 +3741,23 @@ class Membership_For_Woocommerce_Admin {
 				'title' => __( 'Choose the color scheme for the Membership tab layout', 'membership-for-woocommerce' ),
 				'type'  => 'color',
 				'id'    => 'wps_msfw_new_layout_color',
-				'value' => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? 'ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'value' => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? '#ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'class' => 'mfw-text-class',
+				'placeholder' => __( 'Background Color', 'membership-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Members Dashboard', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to display the members dashboard on the My Account page', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_members_dashboard',
+				'value'       => get_option( 'wps_msfw_enable_members_dashboard' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title' => __( 'Choose the color scheme for the Members Dashboard', 'membership-for-woocommerce' ),
+				'type'  => 'color',
+				'id'    => 'wps_msfw_dashboard_color',
+				'value' => empty( get_option( 'wps_msfw_dashboard_color' ) ) ? '#7BCD66' : get_option( 'wps_msfw_dashboard_color' ),
 				'class' => 'mfw-text-class',
 				'placeholder' => __( 'Background Color', 'membership-for-woocommerce' ),
 			),

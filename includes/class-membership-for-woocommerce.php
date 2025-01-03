@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.6.1';
+			$this->version = '2.6.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -421,7 +421,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wps_membership_expiry_check', $mfw_plugin_public, 'wps_membership_cron_expiry_check' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_membership_set_membership_product_price', 5 );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_membership_set_membership_product_price', );
 
 			// Settin membership price in cart.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_membership_make_membership_product_purchasable', 10, 2 );
@@ -439,9 +439,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'wps_membership_add_to_cart_url', 20, 1 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_set_woocoomerce_session', 10 );
 			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'wps_membership_get_product_price_of_member', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_set_subscription_status', $mfw_plugin_public, 'wps_membership_subscription_get_status', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_next_payment_date', $mfw_plugin_public, 'wps_membership_subscription_next_payment_date', 20, 2 );
-			$this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_set_subscription_status', $mfw_plugin_public, 'wps_membership_subscription_get_status', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_next_payment_date', $mfw_plugin_public, 'wps_membership_subscription_next_payment_date', 20, 2 );
+			// $this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'wps_membership_hide_quantity_fields_for_membership', 10, 2 );
 			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'wps_membership_validate_email', 10, 2 );
 
@@ -469,6 +469,9 @@ class Membership_For_Woocommerce {
 
 			// block user unable to purchase include product.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_mfw_block_user_unable_to_pruchase_include_product', 10, 2 );
+			// update total discount benefits.
+			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
 		}
 	}
 

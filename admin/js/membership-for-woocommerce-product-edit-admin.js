@@ -44,4 +44,13 @@ jQuery(document).ready(function($) {
         }
     });
 
+    // Unchecked Enable Free Trial Settings when click on Subscription Membership.
+    jQuery(document).on('change', 'input[type="checkbox"][class="wps_membership_subscription_"]', function() {
+
+        if ( ! jQuery(this).is(':checked') ) {
+
+            $('.wps_mfw_enable_free_trial_settings').prop( 'checked', false );
+        }
+    })
+
  } );

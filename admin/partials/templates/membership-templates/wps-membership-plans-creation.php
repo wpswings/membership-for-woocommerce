@@ -291,31 +291,74 @@ function wps_mfw_upgrade_pro_popup() {
 			<tr valign="top" id="wps_membership_subscription_expiry_tr" >
 
 		<th scope="row" class="titledesc">
-	<label for="wps_membership_subscription_expiry"><?php esc_html_e( 'Subscription expiry', 'membership-for-woocommerce' ); ?></label>
+				<label for="wps_membership_subscription_expiry"><?php esc_html_e( 'Subscription expiry', 'membership-for-woocommerce' ); ?></label>
 				<?php
 				$description = esc_html__( 'Subscription Expiry in terms of  \'DAYS\', \'WEEKS\', \'MONTHS\', \'YEARS\' for which the plan will be active.', 'membership-for-woocommerce' );
 
 				$instance->tool_tip( $description );
 				?>
-</th>
-
-<td class="forminp forminp-text">
-
+		</th>
+			<td class="forminp forminp-text">
 				<?php
-
 				$wps_membership_subscription_expiry_type = $settings_fields['wps_membership_subscription_expiry_type'];
 				?>
+				<input type="number" min="0" id="wps_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="wps_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['wps_membership_subscription_expiry'] ); ?>" >
+				<select disabled="disabled" name="wps_membership_subscription_expiry_type" id="wps_membership_subscription_expiry_type">
+					<option <?php echo esc_html( 'days' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'weeks' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'months' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+					<option <?php echo esc_html( 'years' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+				</select>
+			</td>
+		</tr>
+			<!-- Plan subscription expiry End -->
 
-	<input type="number" min="0" id="wps_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="wps_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['wps_membership_subscription_expiry'] ); ?>" >
-	<select disabled="disabled" name="wps_membership_subscription_expiry_type" id="wps_membership_subscription_expiry_type">
-		<option <?php echo esc_html( 'day' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="day"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-		<option <?php echo esc_html( 'week' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="week"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
-		<option <?php echo esc_html( 'month' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="month"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
-		<option <?php echo esc_html( 'year' === $wps_membership_subscription_expiry_type ? 'selected' : '' ); ?> value="year"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
-	</select>
-</td>
-</tr>
-<!-- Plan subscription expiry End -->
+			<!-- INITIAL FEE and FREE TRIAL settings start here. -->
+			<tr class="wps_msfw_enable_trial_settings">
+				<th scope="row" class="titledesc">
+					<label for="wps_mfw_enable_free_trial_settings"><?php esc_html_e( 'Enable Free Trial Settings', 'membership-for-woocommerce' ); ?></label>
+					<?php
+					$instance->tool_tip( esc_html__( 'Enable these settings to set a free trial and initial fee, allowing users to take advantage', 'membership-for-woocommerce' ) );
+					?>
+				</th>
+				<td id="mfw_free_shipping" class="forminp forminp-text">
+					<input type="checkbox"  class="wps_mfw_enable_free_trial_settings" name="wps_mfw_enable_free_trial_settings" value="yes" <?php checked( 'yes', $settings_fields['wps_mfw_enable_free_trial_settings'] ); ?> >
+				</td>
+			</tr>
+			<!-- Enable initial fee and free trial end -->
+			
+			<!-- enter free trial interval start -->
+			<tr class="wps_msfw_free_interval">
+				<th scope="row" class="titledesc">
+					<label for="wps_sfw_subscription_free_trial_number"><?php esc_html_e( 'Enter the free trial interval', 'membership-for-woocommerce' ); ?></label>
+				<?php
+				$instance->tool_tip( esc_html__( 'Specify discount applied to orders with this plan.', 'membership-for-woocommerce' ) );
+				?>
+				</th>
+				<td class="forminp forminp-text">
+					<input type="number" min="0" class="wps_membership plan_offer_input_type" id="wps_sfw_subscription_free_trial_number" name="wps_sfw_subscription_free_trial_number" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_free_trial_number'] ) ? $settings_fields['wps_sfw_subscription_free_trial_number'] : '' ); ?>">
+					<select name="wps_sfw_subscription_free_trial_interval" id='wps_sfw_subscription_free_trial_interval' >
+						<option value="days" <?php selected( 'days', $settings_fields['wps_sfw_subscription_free_trial_interval'] ); ?>><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+						<option value="weeks" <?php selected( 'weeks', $settings_fields['wps_sfw_subscription_free_trial_interval'] ); ?>><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+						<option value="months" <?php selected( 'months', $settings_fields['wps_sfw_subscription_free_trial_interval'] ); ?>><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+						<option value="years" <?php selected( 'years', $settings_fields['wps_sfw_subscription_free_trial_interval'] ); ?>><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+					</select>
+				</td>
+			</tr>
+
+			<!-- enter initial fee start -->
+			<tr class="wps_msfw_initial_fee">
+				<th scope="row" class="titledesc">
+					<label for="wps_sfw_subscription_initial_signup_price"><?php esc_html_e( 'Enter Initial Signup fee', 'membership-for-woocommerce' ); ?></label>
+					<?php
+					$instance->tool_tip( esc_html__( 'Enter the initial signup fee for this membership plan, or leave it empty if there is no initial fee.', 'membership-for-woocommerce' ) );
+					?>
+				</th>
+				<td id="mfw_free_shipping" class="forminp forminp-text">
+				<input type="number" min="0" class="wps_membership wps_sfw_subscription_initial_signup_price" id="wps_sfw_subscription_initial_signup_price" name="wps_sfw_subscription_initial_signup_price" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_initial_signup_price'] ) ? $settings_fields['wps_sfw_subscription_initial_signup_price'] : '' ); ?>">
+				</td>
+			</tr>
+			<!-- enter initial fee end -->
 				<?php
 			}
 			?>
@@ -1082,7 +1125,6 @@ function wps_mfw_upgrade_pro_popup() {
 					</td>
 				</tr>
 				<!-- Show Notice section end. -->
-
 			</table>
 		</div>
 		<!-- PAR Compatible -->

@@ -226,7 +226,6 @@ select#membership_billing_country:focus,
     padding: 20px 15px 15px;
     color: #171717;
     letter-spacing: 1px;
-    text-transform: capitalize;
     font-weight: 600;
 }
 
@@ -1302,7 +1301,7 @@ a {
 
 .wp-block-cover.wps-mfw-temp3 .wps_membership_plan_content_desc {
     padding: 0;
-    background: transparent!important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    background: transparent!important;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page.wps_mfw_membership_multiple_plan>.wps_membership_plan_content_title,
@@ -1320,8 +1319,8 @@ a {
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
     width: auto;
-    height: 75px;
-    background: #FC9918 !important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    height: 50px;
+    background: #FC9918 !important;
     border-radius: 10px 0 0 10px;
     display: flex;
     align-items: center;
@@ -1332,10 +1331,11 @@ a {
     right: 0;
     top: 15px;
     letter-spacing: 0;
+    padding: 0 20px;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page h2 {
-    padding: 0;
+    padding: 0 70px 0 0;
     margin: 0 0 15px;
     text-align: left;
     font-weight: 600;
@@ -1397,7 +1397,7 @@ a {
     font-size: 14px;
     flex: 1;
     margin: 0;
-    background: transparent!important;!importan;!importa;!import;!impor;!impo;!imp;!im;!i;!;
+    background: transparent!important;
 }
 
 .wp-block-cover.wps-mfw-temp3 .wps_membership_plan_content_desc .wps_membership_buy_now_btn {
@@ -1480,6 +1480,11 @@ a {
 
     .wp-block-cover.wps-mfw-temp3 .wps_all_plans_detail_wrapper {
         padding: 20px 20px 0 20px;
+    }
+
+    .wp-block-cover.wps-mfw-temp3 .wps_mfw_membership_front_page .wps_membership_plan_content_price {
+        height: 40px;
+        font-size: 16px;
     }
 }
 
@@ -1657,3 +1662,217 @@ span.wps_mfw_no_plan_found_msg {
 }
 
 /* Layout 2 End */
+
+/* Membership dashboard start */
+
+:root {
+    --wps-msfw-dashboard-primary: #7BCD66;
+}
+
+.wps-msfw_dashboard-main {
+    padding: 0 0 25px;
+    container-type: inline-size;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dm-sec-header {
+    position: relative;
+    margin: 0 0 32px;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dm-sec-content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-role {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.25;
+    text-transform: capitalize;
+    color: var(--wps-msfw-dashboard-primary);
+    z-index: 1;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-user-details {
+    padding: 32px 32px 0;
+    background: var(--wps-msfw-dashboard-primary);
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-user-details img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin: 0 0 -60px;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: 0.4px;
+    text-transform: capitalize;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-email {
+    color: #fff;
+    padding: 0 0 10px;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 400;
+    word-break: break-all;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-art {
+    text-align: right;
+    padding: 10px 0 10px 165px;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-art strong {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    line-height: 1.25;
+    padding: 0 5px 0 0;
+    display: inline-block;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-art span {
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dmsc-art {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    flex: 1 0 33%;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dmsc-art svg path {
+    stroke: var(--wps-msfw-dashboard-primary);
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dmsca-label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #000;
+    line-height: 1.25;
+    margin: 0 0 5px;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dmsca-item {
+    font-weight: 400;
+    font-size: 16px;
+    color: #000;
+    line-height: 1.25;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-role:before {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    content: '';
+    right: -5px;
+    top: -5px;
+    border-radius: 10px;
+    opacity: 0.1;
+    z-index: -1;
+    box-shadow: -20px 20px 0 rgba(255,255,255,0.4);
+}
+
+.wps-msfw_dash-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 20px;
+}
+
+.wps-msfw_dash-btn strong {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.25;
+}
+
+.wps-msfw_dash-btn a.wps_mfw_members_dashboard {
+    margin: 0;
+    background: transparent;
+    color: var(--wps-msfw-dashboard-primary);
+    text-decoration: underline!important;
+    line-height: 1.25;
+    padding: 0;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.25;
+}
+
+.wps-msfw_dash-btn a.wps_mfw_members_dashboard:hover {
+    background: transparent;
+    color: var(--wps-msfw-dashboard-primary);
+}
+
+.wps-msfw_dash-btn a.wps_mfw_members_dashboard:focus {
+    outline: none;
+}
+
+@container (max-width: 480px) {
+    .wps-msfw_dashboard-main .wps-msfw_dms-user-details {
+        padding: 55px 15px 0;
+        display: block;
+        text-align: center;
+    }
+    
+    .wps-msfw_dashboard-main .wps-msfw_dms-user-details img {
+        margin: 0 auto 10px;
+    }
+    
+    .wps-msfw_dashboard-main .wps-msfw_dms-art {
+        padding: 10px 15px;
+        text-align: center;
+    }
+    
+    .wps-msfw_dashboard-main .wps-msfw_dm-sec-header {
+        margin: 0 0 15px;
+    }
+    
+    .wps-msfw_dashboard-main .wps-msfw_dmsc-art {
+        min-width: 220px;
+    }
+
+    .wps-msfw_dashboard-main .wps-msfw_dms-role {
+        right: unset;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .wps-msfw_dashboard-main .wps-msfw_dms-role:before {
+        display: none;
+    }
+}
+/* Membership dashboard end */
+
+.wps_msfw_free_trial_msg {
+    padding: 0 0 25px;
+}
+
+.wp-block-cover.wps-mfw-temp2 .wps_msfw_free_trial_msg {
+    text-align: left;
+}
