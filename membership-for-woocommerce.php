@@ -391,10 +391,16 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$order->save();
 		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
-			$order = new WPS_Subscription( $id );
+			if (  class_exists( 'WPS_Subscription' ) ) {
 
-			$order->update_meta_data( $key, $value );
-			$order->save();
+				$order = new WPS_Subscription( $id );
+
+				$order->update_meta_data( $key, $value );
+				$order->save();
+			} else {
+
+				update_post_meta( $id, $key, $value );
+			}
 		} else {
 			// Traditional CPT-based orders are in use.
 			update_post_meta( $id, $key, $value );

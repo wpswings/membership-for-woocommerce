@@ -869,8 +869,8 @@ class Membership_For_Woocommerce_Common {
 
 					global $wpdb;
 					if ( is_multisite() ) {
-						$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 
+						$blogids = $wpdb->get_col( "SELECT blog_id FROM $wpdb->blogs" );
 						foreach ( $blogids as $blog_id ) {
 
 							switch_to_blog( $blog_id );

@@ -914,7 +914,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					<tr>
 						<td><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
 						<td><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
-						<td><?php esc_html_e( '1' ); ?></td>
+						<td><?php esc_html_e( '1', 'membership-for-woocommerce' ); ?></td>
 						<td><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
 					</tr>
 
@@ -1007,7 +1007,7 @@ class Membership_For_Woocommerce_Global_Functions {
 								<tr>
 									<td class="td_1"><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
 									<td class="td_2"><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
-									<td class="td_3"><?php esc_html_e( '1' ); ?></td>
+									<td class="td_3"><?php esc_html_e( '1', 'membership-for-woocommerce' ); ?></td>
 									<td class="td_4"><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
 								</tr>
 

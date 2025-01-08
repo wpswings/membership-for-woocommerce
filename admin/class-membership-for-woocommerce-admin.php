@@ -2691,7 +2691,7 @@ class Membership_For_Woocommerce_Admin {
 		);
 
 		$final_results = array(
-			''        => __( 'Select Membership plan', 'woocommerce' ),
+			''        => __( 'Select Membership plan', 'membership-for-woocommerce' ),
 		);
 
 		if ( ! empty( $results ) && is_array( $results ) ) {
