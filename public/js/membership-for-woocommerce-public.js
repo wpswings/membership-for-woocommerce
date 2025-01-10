@@ -212,22 +212,19 @@ jQuery(document).ready(function ($) {
 	 }
  });
 
+jQuery(document).on('click', '.wps_members_plans label', function() {
+    var $currentElement = jQuery(this).next('.wps_table_wrapper');
+    
+    // Check if the current element already has the class
+    if ($currentElement.hasClass('show__membership_details')) {
+        // Remove the class only from the current element
+        $currentElement.removeClass('show__membership_details');
+    } else {
+        // Add the class to the current element
+        $currentElement.addClass('show__membership_details');
+    }
+});
 
- jQuery(document).on('click','.wps_members_plans label',function(obj = this ) {
-	
-var classes = jQuery(this.nextElementSibling).attr('class');
-var allclasses =classes.split(' ');
-if ( allclasses.length>1 ) {
-	if( allclasses[1]=='show__membership_details' ){
-	
-		jQuery('.wps_members_plans .wps_table_wrapper').removeClass('show__membership_details');
-	}
- } else {
-		
-	jQuery(this.nextElementSibling).addClass('show__membership_details');
-	}
-
- }); 
 
 // add members dashboard color.
 var root = jQuery(':root');

@@ -272,10 +272,10 @@ function wps_mfw_upgrade_pro_popup() {
 						?>
 						<input type="number" min="0" id="wps_membership_subscription_expiry" maxlenght="4" step="1" pattern="[0-9]" name="wps_membership_subscription_expiry" value="<?php echo esc_attr( $settings_fields['wps_membership_subscription_expiry'] ); ?>" >
 						<select disabled="disabled" name="wps_membership_subscription_expiry_type" id="wps_membership_subscription_expiry_type">
-							<option <?php selected( $wps_membership_subscription_expiry_type, 'days' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
-							<option <?php selected( $wps_membership_subscription_expiry_type, 'weeks' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
-							<option <?php selected( $wps_membership_subscription_expiry_type, 'months' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
-							<option <?php selected( $wps_membership_subscription_expiry_type, 'years' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
+							<option <?php selected( $wps_membership_subscription_expiry_type, 'day' ); ?> value="days"><?php esc_html_e( 'Days', 'membership-for-woocommerce' ); ?></option>
+							<option <?php selected( $wps_membership_subscription_expiry_type, 'week' ); ?> value="weeks"><?php esc_html_e( 'Weeks', 'membership-for-woocommerce' ); ?></option>
+							<option <?php selected( $wps_membership_subscription_expiry_type, 'month' ); ?> value="months"><?php esc_html_e( 'Months', 'membership-for-woocommerce' ); ?></option>
+							<option <?php selected( $wps_membership_subscription_expiry_type, 'year' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
 						</select>
 					</td>
 				</tr>

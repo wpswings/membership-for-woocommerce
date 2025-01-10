@@ -1460,8 +1460,12 @@ class Membership_For_Woocommerce_Public {
 					$description .= __( 'Subscription Membership', 'membership-for-woocommerce' );
 					$description .= '</label><span>' . $plan_subscription . '</span></li>';
 					$description .= '<li><label>';
-					$description .= __( 'Subscription Membership Duration', 'membership-for-woocommerce' );
-					$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type ) ) . '</span></li>';
+					// check subscription plugin active or not.
+					if ( wps_membership_is_plugin_active( 'subscriptions-for-woocommerce/subscriptions-for-woocommerce.php' ) ) {
+
+						$description .= __( 'Subscription Membership Duration', 'membership-for-woocommerce' );
+						$description .= '</label><span>' . sprintf( ' %u %s ', esc_html( $plan_subscription_duration ), esc_html( $plan_subscription_duration_type ) ) . '</span></li>';
+					}
 					if ( ! empty( $plan_access ) ) {
 						$description .= '<li><label>';
 						$description .= __( 'Plan access', 'membership-for-woocommerce' );
@@ -1756,6 +1760,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '<div class="wps_membership_plan_content_price">' . sprintf( '%s%s', esc_html( $plan_currency ), esc_html( $plan_price ) ) . '</div>';
 
 					// subscription duration and expiry.
+					$wps_membership_subscription               = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription', true );
 					$wps_membership_plan_name_access_type      = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_name_access_type', true );
 					$wps_membership_plan_duration              = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_duration', true );
 					$wps_membership_plan_duration_type         = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_duration_type', true );
@@ -1770,25 +1775,35 @@ class Membership_For_Woocommerce_Public {
 					$wps_mfw_trial_fee_html                    = '';
 					if ( 'limited' === $wps_membership_plan_name_access_type && ! empty( $wps_membership_plan_duration ) ) {
 
-						if ( $wps_membership_plan_duration > 1 ) {
+						if ( 'yes' === $wps_membership_subscription ) {
+							if ( $wps_membership_plan_duration > 1 ) {
 
-							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s %s %s %s',
-								' / ',
-								esc_html( $wps_membership_plan_duration ),
-								esc_html( $wps_membership_plan_duration_type ),
-								__( ' For ', 'membership-for-woocommerce' ),
-								esc_html( $wps_membership_subscription_expiry ),
-								esc_html( $wps_membership_subscription_expiry_type ),
-							);
+								$wps_mfw_trial_fee_html .= sprintf(
+									'%s %s %s %s %s %s',
+									' / ',
+									esc_html( $wps_membership_plan_duration ),
+									esc_html( $wps_membership_plan_duration_type ),
+									__( ' For ', 'membership-for-woocommerce' ),
+									esc_html( $wps_membership_subscription_expiry ),
+									esc_html( $wps_membership_subscription_expiry_type ),
+								);
+							} else {
+
+								$wps_mfw_trial_fee_html .= sprintf(
+									'%s %s %s %s %s',
+									' / ',
+									esc_html( $wps_membership_plan_duration_type ),
+									__( ' For ', 'membership-for-woocommerce' ),
+									esc_html( $wps_membership_subscription_expiry ),
+									esc_html( $wps_membership_subscription_expiry_type ),
+								);
+							}
 						} else {
 
 							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s %s %s',
-								' / ',
-								esc_html( $wps_membership_plan_duration_type ),
+								'%s %s %s',
 								__( ' For ', 'membership-for-woocommerce' ),
-								esc_html( $wps_membership_subscription_expiry ),
+								esc_html( $wps_membership_plan_duration ),
 								esc_html( $wps_membership_subscription_expiry_type ),
 							);
 						}
@@ -1803,7 +1818,7 @@ class Membership_For_Woocommerce_Public {
 									__( ' and ', 'membership-for-woocommerce' ),
 									esc_html( $wps_sfw_subscription_free_trial_number ),
 									esc_html( $wps_sfw_subscription_free_trial_interval ),
-									__( ' free trial and ', 'membership-for-woocommerce' ),
+									__( ' free trial ', 'membership-for-woocommerce' ),
 								);
 							}
 
