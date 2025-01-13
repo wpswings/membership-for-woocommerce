@@ -1436,6 +1436,11 @@ class Membership_For_Woocommerce_Public {
 							break;
 
 						case 'limited':
+							// if duration is one than remove 's' from duration type.
+							if ( 1 == $plan_dura ) {
+
+								$dura_type = str_replace( 's', '', $dura_type );
+							}
 							$description .= '<li>
 								<label>' . esc_html__( 'Plan Duration', 'membership-for-woocommerce' ) . '</label>
 
