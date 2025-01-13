@@ -1519,7 +1519,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '</label><span>' . $shipping . '</span></li>';
 
 					$description .= '<li><label>';
-					$description .= __( 'Offered Products', 'membership-for-woocommerce' );
+					$description .= __( 'Inlucded Products', 'membership-for-woocommerce' );
 					$description .= '</label><span>';
 					$prod_ids     = maybe_unserialize( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
@@ -1775,6 +1775,13 @@ class Membership_For_Woocommerce_Public {
 					$wps_mfw_trial_fee_html                    = '';
 					if ( 'limited' === $wps_membership_plan_name_access_type && ! empty( $wps_membership_plan_duration ) ) {
 
+						// when duration is more than one, add 's' in duration.
+						if ( $wps_membership_plan_duration > 1 ) {
+
+							$wps_membership_subscription_expiry_type = $wps_membership_subscription_expiry_type . 's';
+						}
+
+						// check subs membership enable.
 						if ( 'yes' === $wps_membership_subscription ) {
 							if ( $wps_membership_plan_duration > 1 ) {
 
@@ -1800,6 +1807,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						} else {
 
+							// show membership duration.
 							$wps_mfw_trial_fee_html .= sprintf(
 								'%s %s %s',
 								__( ' For ', 'membership-for-woocommerce' ),
@@ -1808,6 +1816,7 @@ class Membership_For_Woocommerce_Public {
 							);
 						}
 
+						// check free trial features is enable.
 						if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
 
 							// show free trial notice.
