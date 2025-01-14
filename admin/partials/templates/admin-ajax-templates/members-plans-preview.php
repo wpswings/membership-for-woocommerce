@@ -13,26 +13,25 @@
 if ( ! defined( 'ABSPATH' ) ) {
 
 	exit;
-
 }
 
-$output = '';
+$output    = '';
 $order_val = new WC_Order( wps_membership_get_meta_data( $member_id, 'member_order_id', true ) );
-$payment = $order_val->get_payment_method_title();
-$output .= '<div class="members_preview_content">';
-
+$payment   = $order_val->get_payment_method_title();
+$output   .= '<div class="members_preview_content">';
 if ( ! empty( $member_id ) ) {
 
-	$billing_info = wps_membership_get_meta_data( $member_id, 'billing_details', true );
-	$plan_info    = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
-	$plan_status  = wps_membership_get_meta_data( $member_id, 'member_status', true );
-	$post_title = '';
+	$billing_info              = wps_membership_get_meta_data( $member_id, 'billing_details', true );
+	$plan_info                 = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
+	$plan_status               = wps_membership_get_meta_data( $member_id, 'member_status', true );
+	$post_title                = '';
 	$wps_membership_plan_price = '';
-	$post_content = '';
+	$post_content              = '';
 	if ( ! empty( $plan_info ) ) {
-		$post_title = $plan_info['post_title'];
-		$wps_membership_plan_price = $plan_info['wps_membership_plan_price'];
-		$post_content = $plan_info['post_content'];
+
+		$post_title                = ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '';
+		$wps_membership_plan_price = ! empty( $plan_info['wps_membership_plan_price'] ) ? $plan_info['wps_membership_plan_price'] : 0;
+		$post_content              = ! empty( $plan_info['post_content'] ) ? $plan_info['post_content'] : '';
 	}
 
 	$output .= '<div class="members_billing_preview_wrapper">
@@ -46,6 +45,7 @@ if ( ! empty( $member_id ) ) {
 					' . sprintf( ' %s %s ', esc_html( $billing_info['membership_billing_city'] ), esc_html( $billing_info['membership_billing_postcode'] ) ) . '
 					' . sprintf( ' %s, %s ', esc_html( $billing_info['membership_billing_state'] ), esc_html( $billing_info['membership_billing_country'] ) ) . '</br>';
 	} else {
+
 		$output .= esc_html__( 'No billing details', 'membership-for-woocommerce' ) . '</br>';
 	}
 
@@ -92,5 +92,4 @@ if ( ! empty( $member_id ) ) {
 }
 
 $output .= '</div>';
-
 echo wp_kses_post( wpautop( wptexturize( $output ) ) . PHP_EOL );

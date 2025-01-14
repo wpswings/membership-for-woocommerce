@@ -1464,16 +1464,27 @@ div#wp-wps_membership_email_content-wrap {
     .wps-form-select {
         max-width: 500px;
     }
-    .wps-mfw-nav-tab {
-        padding: 10px 20px 10px 20px !important;
-        font-size: 15px !important;
+    a.wps-mfw-nav-tab {
+        padding: 10px 10px 10px 10px !important;
+        font-size: 14px !important;
         font-weight: 400;
         color: #000;
         background-color: #fff;
+        border: none;
     }
-    .nav-tab-active.wps-mfw-nav-tab {
-        background-color: #21a3f6;
-        color: #fff;
+
+    a.nav-tab-active.wps-mfw-nav-tab{
+        /* background-color: #21a3f6; */
+        color: #21a3f6!important;
+        border-bottom: 3px solid var(--mdc-theme-primary);
+    }
+
+    a.nav-tab.wps-mfw-nav-tab:hover {
+        color: #21a3f6!important;
+    }
+
+    a.nav-tab-active.wps-mfw-nav-tab:hover {
+        background-color: transparent;
     }
 
 #mfw_button_api_settings {

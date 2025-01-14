@@ -45,7 +45,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		return self::$instance;
 	}
 
-
 	/**
 	 * Allowed html for description on admin side
 	 *
@@ -62,8 +61,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			$allowed_html .= '	<span class="icon">?</span>';
 			$allowed_html .= '<span class="description_tool_tip">' . esc_attr( $description ) . '</span>';
 			$allowed_html .= '	</div>';
-
-			 echo wp_kses_post( $allowed_html );
+			echo wp_kses_post( $allowed_html );
 		}
 	}
 
@@ -77,26 +75,20 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function get_product_title( $product_id = '' ) {
 
 		$result = esc_html__( 'Product not found', 'membership-for-woocommerce' );
-
 		if ( ! empty( $product_id ) ) {
 
 			$product = wc_get_product( $product_id );
-
 			if ( ! empty( $product ) ) {
-
 				if ( 'publish' !== $product->get_status() ) {
 
 					$result = esc_html__( 'Product unavailable', 'membership-for-woocommerce' );
-
 				} else {
 
 					$result = $product->get_name();
-
 				}
 			}
-
-			return $result;
 		}
+		return $result;
 	}
 
 	/**
@@ -108,20 +100,16 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function get_category_title( $cat_id = '' ) {
 
+		$result = esc_html__( 'Category not found', 'membership-for-woocommerce' );
 		if ( ! empty( $cat_id ) ) {
 
-			$result = esc_html__( 'Category not found', 'membership-for-woocommerce' );
-
 			$cat_name = get_the_category_by_ID( $cat_id );
-
 			if ( ! empty( $cat_name ) ) {
 
 				$result = $cat_name;
-
 			}
-
-			return $result;
 		}
+		return $result;
 	}
 
 	/**
@@ -144,11 +132,8 @@ class Membership_For_Woocommerce_Global_Functions {
 			'wps_membership_invoice_email'     => '',
 			'wps_membership_invoice_logo'      => '',
 			'wps_membership_for_woo_delete_data' => '',
-
 		);
-
 		return $default_global_settings;
-
 	}
 
 	/**
@@ -160,26 +145,20 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function csv_get_prod_title( $products ) {
 
+		$output = '';
 		if ( ! empty( $products ) && is_array( $products ) ) {
 
 			$product_ids = ! empty( $products ) ? array_map( 'absint', $products ) : null;
-
-			$output = '';
-
-			if ( $product_ids ) {
-
+			if ( ! empty( $product_ids ) && is_array( $product_ids ) ) {
 				foreach ( $product_ids as $single_id ) {
 
 					$single_name = $this->get_product_title( $single_id );
 					$output     .= esc_html( $single_name ) . '(#' . esc_html( $single_id ) . '),';
-
 				}
 			}
-
 			$output = preg_replace( '/,[^,]*$/', '', $output );
-			return $output;
 		}
-
+		return $output;
 	}
 
 	/**
@@ -191,24 +170,20 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function csv_get_cat_title( $categories ) {
 
+		$output = '';
 		if ( ! empty( $categories ) && is_array( $categories ) ) {
 
 			$category_ids = ! empty( $categories ) ? array_map( 'absint', $categories ) : null;
-
-			$output = '';
-
-			if ( $category_ids ) {
-
+			if ( ! empty( $category_ids ) && is_array( $category_ids ) ) {
 				foreach ( $category_ids as $cat_id ) {
 
 					$single_cat = $this->get_category_title( $cat_id );
 					$output    .= esc_html( $single_cat ) . '(#' . esc_html( $cat_id ) . '),';
 				}
 			}
-
 			$output = preg_replace( '/,[^,]*$/', '', $output );
-			return $output;
 		}
+		return $output;
 	}
 
 
@@ -219,22 +194,17 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function available_gateways() {
 
+		$woo_gateways     = array();
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
-
-		$woo_gateways = array();
-
 		if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
-
 			// Loop through Woocommerce available payment gateways.
 			foreach ( $payment_gateways as $gateway_id ) {
 
 				$woo_gateways[] = $gateway_id->id;
 			}
 		}
-
 		return $woo_gateways;
-
 	}
 
 	/**
@@ -246,18 +216,14 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function get_payment_method_title( $method_id ) {
 
-		$title = '';
-
+		$title            = '';
 		$wc_gateways      = new WC_Payment_Gateways();
 		$payment_gateways = $wc_gateways->get_available_payment_gateways();
-
 		if ( ! empty( $method_id ) ) {
-
 			if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
 
 				// Loop through Woocommerce available payment gateways.
 				foreach ( $payment_gateways as $gateway ) {
-
 					if ( $method_id === $gateway->id ) {
 
 						$title = $gateway->method_title;
@@ -267,6 +233,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 		return $title;
 	}
+
 	/**
 	 * Cart item Ids.
 	 *
@@ -274,18 +241,14 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function cart_item_ids() {
 
+		$prod_ids   = array();
 		$cart_items = WC()->cart->get_cart();
-
-		$prod_ids = array();
-
 		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
-
 			foreach ( $cart_items as $item ) {
 
 				$prod_ids[] = $item['product_id'];
 			}
 		}
-
 		return $prod_ids;
 	}
 
@@ -297,17 +260,13 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function cart_item_cat_ids() {
 
 		$cart_items = WC()->cart->get_cart();
-
-		$cat_ids = array();
-
+		$cat_ids    = array();
 		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
-
 			foreach ( $cart_items as $cart_item_key => $cart_item ) {
 
 				$cat_ids = array_merge( $cat_ids, $cart_item['data']->get_category_ids() );
 			}
 		}
-
 		return $cat_ids;
 	}
 
@@ -319,17 +278,13 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function cart_item_tag_ids() {
 
 		$cart_items = WC()->cart->get_cart();
-
-		$tag_ids = array();
-
+		$tag_ids    = array();
 		if ( ! empty( $cart_items ) && is_array( $cart_items ) ) {
-
 			foreach ( $cart_items as $cart_item_key => $cart_item ) {
 
 				$tag_ids = array_merge( $tag_ids, $cart_item['data']->get_tag_ids() );
 			}
 		}
-
 		return $tag_ids;
 	}
 
@@ -346,27 +301,21 @@ class Membership_For_Woocommerce_Global_Functions {
 			'numberposts' => -1,
 		);
 
-		$products = array();
-
-		$ids = array();
-
+		$ids       = array();
+		$products  = array();
 		$all_posts = get_posts( $args );
-
 		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
-
 			foreach ( $all_posts as $post ) {
 
 				$products = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_ids', true );
-
-				if ( is_array( $products ) ) {
-
+				if ( ! empty( $products ) && is_array( $products ) ) {
 					foreach ( $products as $id ) {
+
 						$ids[] = $id;
 					}
 				}
 			}
 		}
-
 		return $ids;
 	}
 
@@ -384,19 +333,13 @@ class Membership_For_Woocommerce_Global_Functions {
 		);
 
 		$categories = array();
-
-		$cat_ids = array();
-
-		$all_posts = get_posts( $args );
-
+		$cat_ids    = array();
+		$all_posts  = get_posts( $args );
 		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
-
 			foreach ( $all_posts as $post ) {
 
 				$categories = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_categories', true );
-
-				if ( is_array( $categories ) ) {
-
+				if ( ! empty( $categories ) && is_array( $categories ) ) {
 					foreach ( $categories as $id ) {
 
 						$cat_ids[] = $id;
@@ -404,7 +347,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 		}
-
 		return $cat_ids;
 	}
 
@@ -422,20 +364,14 @@ class Membership_For_Woocommerce_Global_Functions {
 			'numberposts' => -1,
 		);
 
-		$tag = array();
-
-		$tag_ids = array();
-
+		$tag       = array();
+		$tag_ids   = array();
 		$all_posts = get_posts( $args );
-
 		if ( ! empty( $all_posts ) && is_array( $all_posts ) ) {
-
 			foreach ( $all_posts as $post ) {
 
 				$tag = wps_membership_get_meta_data( $post->ID, 'wps_membership_plan_target_tags', true );
-
-				if ( is_array( $tag ) ) {
-
+				if ( ! empty( $tag ) && is_array( $tag ) ) {
 					foreach ( $tag as $id ) {
 
 						$tag_ids[] = $id;
@@ -443,10 +379,8 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 		}
-
 		return $tag_ids;
 	}
-
 
 	/**
 	 * Gutenberg offer plan content.
@@ -488,10 +422,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			<input type="submit" value="Upload File" name="upload_csv_file" id="upload_csv_file" >
 		</div>
 		<?php
-
 	}
-
-
 
 	/**
 	 * Check if any plan exist or not.
@@ -507,10 +438,8 @@ class Membership_For_Woocommerce_Global_Functions {
 			'numberposts' => -1,
 		);
 
-		$check = '';
-
+		$check     = '';
 		$all_plans = get_posts( $args );
-
 		if ( ! empty( $all_plans ) && is_array( $all_plans ) ) {
 
 			$check = true;
@@ -518,9 +447,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			$check = false;
 		}
-
 		return $check;
-
 	}
 
 	/**
@@ -541,18 +468,14 @@ class Membership_For_Woocommerce_Global_Functions {
 		);
 
 		$all_membership = get_posts( $args );
-
 		if ( ! empty( $all_membership ) && is_array( $all_membership ) ) {
-
 			foreach ( $all_membership as $key => $id ) {
 
 				$formatted_all_membership[ $id ] = get_the_title( $id );
 			}
 		}
-
 		return $formatted_all_membership;
 	}
-
 
 	/**
 	 * Maps the CSV data.
@@ -565,9 +488,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function csv_data_map( $csv_data ) {
 
 		$formatted_data = array();
-
 		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
-
 			foreach ( $csv_data as $key => $value ) {
 
 				$formatted_data[] = array(
@@ -588,11 +509,9 @@ class Membership_For_Woocommerce_Global_Functions {
 					'wps_membership_plan_target_ids'       => ! empty( $value[14] ) ? $this->import_csv_ids( $value[14] ) : '',
 					'wps_membership_plan_target_categories' => ! empty( $value[15] ) ? $this->import_csv_ids( $value[15] ) : '',
 					'post_content'                         => ! empty( $value[16] ) ? $value[16] : '',
-
 				);
 			}
 		}
-
 		return $formatted_data;
 	}
 
@@ -607,24 +526,19 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function import_csv_ids( $csv_string ) {
 
 		$ids = array();
-
 		if ( ! empty( $csv_string ) ) {
 
 			$ids_array = explode( ',', $csv_string );
-
 			foreach ( $ids_array as $key => $id ) {
 
 				$matches = array();
-
-				$check = preg_match( '/(#[0-9][0-9])+/', $id, $matches );
-
+				$check   = preg_match( '/(#[0-9][0-9])+/', $id, $matches );
 				if ( $check ) {
 
 					$ids[] = str_replace( '#', '', $matches[0] );
 				}
 			}
 		}
-
 		return $ids;
 	}
 
@@ -639,9 +553,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$csv_prod_title = array();
 		$prod_array     = array();
-
 		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
-
 			foreach ( $csv_data as $key => $value ) {
 
 				if ( ! empty( $value[14] ) ) {
@@ -652,15 +564,11 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		if ( ! empty( $prod_array ) && is_array( $prod_array ) ) {
-
 			foreach ( $prod_array as $key ) {
-
 				foreach ( $key as $index => $title ) {
 
 					$matches = array();
-
-					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
-
+					$check   = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
 					if ( $check ) {
 
 						$csv_prod_title[] = $matches[0];
@@ -668,7 +576,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 		}
-
 		return $csv_prod_title;
 	}
 
@@ -683,9 +590,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$csv_cat_title = array();
 		$cat_array     = array();
-
 		if ( ! empty( $csv_data ) && is_array( $csv_data ) ) {
-
 			foreach ( $csv_data as $key => $value ) {
 
 				if ( ! empty( $value[15] ) ) {
@@ -696,15 +601,11 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		if ( ! empty( $cat_array ) && is_array( $cat_array ) ) {
-
 			foreach ( $cat_array as $key ) {
-
 				foreach ( $key as $index => $title ) {
 
 					$matches = array();
-
-					$check = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
-
+					$check   = preg_match( '/[A-Za-z\s\#\-0-9]+/', $title, $matches );
 					if ( $check ) {
 
 						$csv_cat_title[] = $matches[0];
@@ -723,9 +624,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function all_prod_title() {
 
-		$product_titles = array();
-
 		// Getting all Product ids from woocommerce.
+		$product_titles = array();
 		$all_prod_ids = get_posts(
 			array(
 				'posts_per_page' => -1,
@@ -735,14 +635,11 @@ class Membership_For_Woocommerce_Global_Functions {
 		);
 
 		if ( ! empty( $all_prod_ids ) && is_array( $all_prod_ids ) ) {
-
 			foreach ( $all_prod_ids as $id ) {
 
 				$product_titles[] = get_the_title( $id );
-
 			}
 		}
-
 		return $product_titles;
 	}
 
@@ -754,9 +651,8 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function all_cat_title() {
 
-		$cate_titles = array();
-
 		// Getting all Category ids from woocommerce.
+		$cate_titles = array();
 		$all_cat_ids = get_terms(
 			array(
 				'taxonomy' => 'product_cat',
@@ -765,20 +661,16 @@ class Membership_For_Woocommerce_Global_Functions {
 		);
 
 		if ( ! empty( $all_cat_ids ) && is_array( $all_cat_ids ) ) {
-
 			foreach ( $all_cat_ids as $id ) {
 
 				$term = get_term_by( 'id', $id, 'product_cat' );
-
 				if ( $term ) {
 
 					$cate_titles[] = $term->name;
 				}
 			}
 		}
-
 		return $cate_titles;
-
 	}
 
 	/**
@@ -797,8 +689,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		if ( ! empty( $plan_id ) && ! empty( $fields ) ) {
 
 			// Getting plan data.
-			$plan_obj = get_post( $plan_id, ARRAY_A );
-
+			$plan_obj  = get_post( $plan_id, ARRAY_A );
 			$post_meta = get_post_meta( $plan_id );
 
 			// Formatting array.
@@ -808,7 +699,6 @@ class Membership_For_Woocommerce_Global_Functions {
 			}
 
 			$plan_meta = array_merge( $plan_obj, $post_meta );
-
 			// Checking if user exist or not by email.
 			$_user = get_user_by( 'email', $fields['membership_billing_email'] );
 
@@ -820,45 +710,42 @@ class Membership_For_Woocommerce_Global_Functions {
 			} else {
 
 				$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
-
 				if ( 'on' == $is_user_created ) {
+
 					$users = get_users();
 					$max_user_id = '';
 					foreach ( $users as $key => $value ) {
-						// code...
-
 						if ( $value->ID > $max_user_id ) {
+
 							$max_user_id = $value->ID;
 						}
 					}
 
-								$user_id   = $max_user_id + 1;
-								$user_name = '---';
+					$user_id   = $max_user_id + 1;
+					$user_name = '---';
 
 				} else {
 
-					$website = get_site_url();
-
+					$website   = get_site_url();
 					$user_name = $fields['membership_billing_first_name'] . '-' . rand();
-					$password = $fields['membership_billing_first_name'] . substr( $fields['membership_billing_phone'], -4, 4 );
+					$password  = $fields['membership_billing_first_name'] . substr( $fields['membership_billing_phone'], -4, 4 );
 					update_option( 'user_password', $password );
 					$userdata = array(
-						'user_login' => $user_name,
-						'user_url'   => $website,
-						'user_pass'  => $password, // When creating an user, `user_pass` is expected.
-						'user_email' => $fields['membership_billing_email'],
-						'first_name' => $fields['membership_billing_first_name'],
-						'last_name' => $fields['membership_billing_last_name'],
+						'user_login'   => $user_name,
+						'user_url'     => $website,
+						'user_pass'    => $password, // When creating an user, `user_pass` is expected.
+						'user_email'   => $fields['membership_billing_email'],
+						'first_name'   => $fields['membership_billing_first_name'],
+						'last_name'    => $fields['membership_billing_last_name'],
 						'display_name' => $fields['membership_billing_first_name'],
-						'nickname' => $fields['membership_billing_first_name'],
+						'nickname'     => $fields['membership_billing_first_name'],
 					);
 
 					$_user = wp_insert_user( $userdata );
 					update_user_meta( $_user, 'user_created_by_membership', 'yes' );
-
 					update_option( 'user_name', $user_name );
-
 					if ( $_user ) {
+
 						$user_id   = $_user;
 						$user_ob   = get_user_by( 'id', $user_id );
 						$user_name = $user_ob->display_name;
@@ -1027,7 +914,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					<tr>
 						<td><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
 						<td><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
-						<td><?php esc_html_e( '1' ); ?></td>
+						<td><?php esc_html_e( '1', 'membership-for-woocommerce' ); ?></td>
 						<td><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
 					</tr>
 
@@ -1120,13 +1007,13 @@ class Membership_For_Woocommerce_Global_Functions {
 								<tr>
 									<td class="td_1"><?php echo esc_html( ! empty( $plan_info['post_title'] ) ? $plan_info['post_title'] : '' ); ?></td>
 									<td class="td_2"><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
-									<td class="td_3"><?php esc_html_e( '1' ); ?></td>
+									<td class="td_3"><?php esc_html_e( '1', 'membership-for-woocommerce' ); ?></td>
 									<td class="td_4"><?php echo esc_html( ! empty( $plan_info['wps_membership_plan_price'] ) ? get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] : '' ); ?></td>
 								</tr>
 
 								<tr align="right">
 									<td colspan="4" class="td_5">
-										<strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong>
+										<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong>
 									</td>
 								</tr>
 							</tbody>
@@ -1184,8 +1071,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			}
 
 			$subject = 'Thanks for purchasing ' . $plan_info['post_title'];
-
-			$mail = wp_mail(
+			$mail    = wp_mail(
 				$to,
 				! empty( $wps_membership_global_settings['wps_membership_email_subject'] ) ? $wps_membership_global_settings['wps_membership_email_subject'] : $subject,
 				! empty( $wps_membership_global_settings['wps_membership_email_content'] ) ? $wps_membership_global_settings['wps_membership_email_content'] . $email_content : $email_content,
@@ -1202,7 +1088,6 @@ class Membership_For_Woocommerce_Global_Functions {
 				return false;
 			}
 		}
-
 	}
 
 	/**
@@ -1238,7 +1123,6 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$post_id = '';
 		$result  = false;
-
 		if ( ! empty( $post ) ) {
 			$post_id = $post->ID;
 		}
@@ -1246,7 +1130,6 @@ class Membership_For_Woocommerce_Global_Functions {
 		$billing_info = wps_membership_get_meta_data( $post_id, 'billing_details', true );
 		$plan_info    = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
 		$plan_status  = wps_membership_get_meta_data( $post_id, 'member_status', true );
-
 		if ( ! empty( $fields ) && ! empty( $billing_info ) ) {
 
 			switch ( $fields ) {
@@ -1482,13 +1365,14 @@ class Membership_For_Woocommerce_Global_Functions {
 		if ( empty( $target_ids ) ) {
 			$target_ids = array();
 		}
-		if ( ! empty( $target_cat_ids ) ) {
+		if ( ! empty( $target_cat_ids ) && is_array( $target_cat_ids ) ) {
 			foreach ( $target_cat_ids as $key => $value ) {
+
 				$cat_name = get_the_category_by_ID( $value );
-				$args = array(
+				$args     = array(
 					'post_status' => 'publish',
-					'post_type' => 'product',
-					'fields' => 'ids',
+					'post_type'   => 'product',
+					'fields'      => 'ids',
 					'product_cat' => $cat_name,
 
 				);
@@ -1498,13 +1382,15 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 		}
-		if ( ! empty( $target_tag_ids ) ) {
+
+		if ( ! empty( $target_tag_ids ) && is_array( $target_tag_ids ) ) {
 			foreach ( $target_tag_ids as $key => $value ) {
-				$tag = get_term( $value );
+
+				$tag  = get_term( $value );
 				$args = array(
 					'post_status' => 'publish',
-					'post_type' => 'product',
-					'fields' => 'ids',
+					'post_type'   => 'product',
+					'fields'      => 'ids',
 					'product_cat' => $tag->name,
 
 				);

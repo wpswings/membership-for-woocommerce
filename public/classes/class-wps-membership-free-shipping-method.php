@@ -35,6 +35,13 @@ class WPS_Membership_Free_Shipping_Method extends WC_Shipping_Method {
 	public $global_class;
 
 	/**
+	 * Undocumented variable.
+	 *
+	 * @var array
+	 */
+	public $allowed_membership;
+
+	/**
 	 * Constructor for your shipping class
 	 *
 	 * @param mixed $instance_id used to store instance.

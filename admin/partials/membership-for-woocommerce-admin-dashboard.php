@@ -27,12 +27,13 @@ if ( ! wps_mfw_standard_check_multistep() ) {
 
 $mfw_active_tab   = isset( $_GET['mfw_tab'] ) ? sanitize_key( $_GET['mfw_tab'] ) : 'membership-for-woocommerce-general';
 $mfw_default_tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
-$plugin_name = $mfw_wps_mfw_obj->mfw_get_plugin_name();
+$plugin_name      = $mfw_wps_mfw_obj->mfw_get_plugin_name();
 if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+
 	$check_licence = check_membership_pro_plugin_is_active();
 	if ( $check_licence ) {
-		$plugin_name = $plugin_name . '-pro';
 
+		$plugin_name = $plugin_name . '-pro';
 	}
 }
 

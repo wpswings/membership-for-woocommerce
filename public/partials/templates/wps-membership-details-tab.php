@@ -28,22 +28,23 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 
 	// Get active membership plan name.
 	$active_plan_name = '';
-	foreach ( $memberships as $key => $membership_id ) {
+	if ( ! empty( $memberships ) && is_array( $memberships ) ) {
+		foreach ( $memberships as $key => $membership_id ) {
 
-		$membership_data = get_post_meta( $membership_id );
-		$membership_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+			$membership_data = get_post_meta( $membership_id );
+			$membership_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+			// if plan is not exist than continue loop from here.
+			if ( empty( $membership_plan ) ) {
 
-		// if plan is not exist than continue loop from here.
-		if ( empty( $membership_plan ) ) {
+				continue;
+			}
 
-			continue;
-		}
+			$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
+			if ( 'complete' === $membership_status ) {
 
-		$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
-		if ( 'complete' === $membership_status ) {
-
-			$active_plan_name .= ! empty( $membership_plan['post_title'] ) ? $membership_plan['post_title'] : '';
-			$active_plan_name .= ' , ';
+				$active_plan_name .= ! empty( $membership_plan['post_title'] ) ? $membership_plan['post_title'] : '';
+				$active_plan_name .= ' , ';
+			}
 		}
 	}
 
@@ -151,8 +152,8 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 	?>
 	<div class="wps_msfw__new_layout_billing">
 	<?php
-		$membership_id = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 
+		$membership_id      = ! empty( $_GET['membership'] ) ? sanitize_text_field( wp_unslash( $_GET['membership'] ) ) : '';
 		$membership_data    = get_post_meta( $membership_id );
 		$membership_plan    = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 		$membership_billing = wps_membership_get_meta_data( $membership_id, 'billing_details', true );
@@ -188,21 +189,17 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 			}
 
 			$expiry = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
-
 			if ( ! empty( $membership_plan ) ) {
 
 				$access_type = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_access_type', true );
-
 				if ( 'delay_type' == $access_type ) {
+
 					$time_duration      = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_time_duration', true );
 					$time_duration_type = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_plan_time_duration_type', true );
-					$current_date = gmdate( 'Y-m-d' );
-
-					$current_date = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-
+					$current_date       = gmdate( 'Y-m-d' );
+					$current_date       = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 				}
 			}
-
 
 			$membership_expiry  = wps_membership_get_meta_data( $membership_id, 'member_expiry', true );
 			if ( in_array( $membership_status, array( 'hold', 'pending' ) ) ) {
@@ -221,291 +218,275 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 				?>
 				<p><?php echo esc_html( 'Membership plan ', 'membership-for-woocommerce' ) . '#'; ?><mark class="order-number"><?php echo esc_html( $membership_id ); ?></mark><?php esc_html_e( ' was placed on ', 'membership-for-woocommerce' ); ?> <mark class="order-date"><?php echo esc_html( get_the_date( 'j F Y', $membership_id ) ); ?></mark><?php esc_html_e( ' and is currently ', 'membership-for-woocommerce' ); ?><mark class="order-status"><?php echo esc_html( ucwords( $membership_status ) ); ?></mark> <?php esc_html_e( ' and will expire on ', 'membership-for-woocommerce' ); ?> <mark> <?php echo esc_html( gmdate( 'j F Y', intval( $membership_expiry ) ) ); ?> </mark>.</p>
 				<?php } ?>
-
-			<section class="woocommerce-order-details">
-				<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Membership details', 'membership-for-woocommerce' ); ?></h2>
-				<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
-					<thead>
-						<tr>
-							<th class="woocommerce-table__product-name product-name"><?php esc_html_e( 'Product', 'membership-for-woocommerce' ); ?></th>
-							<th class="woocommerce-table__product-table product-total"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
-						</tr>
-					</thead>
-
-					<tbody>
-						<tr class="woocommerce-table__line-item order_item">
-							<th class="woocommerce-table__product-name product-name">
-								<span href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </span> <strong class="product-quantity">&nbsp;<?php esc_html( 1 ); ?></strong>	</th>
-							<td class="woocommerce-table__product-total product-total">
-								<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
-						</tr>
-					</tbody>
-
-					<tfoot>
-
-						<tr>
-							<th scope="row"><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></th>
-							<td><?php echo esc_html( $instance->get_payment_method_title( $membership_billing['payment_method'] ) ); ?></td>
-						</tr>
-						<tr>
-							<th scope="row"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
-							<td><span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
-						</tr>
-					</tfoot>
-				</table>
-
-			</section>
-
-			<section class="woocommerce-customer-details">
-
-				<article class="woocommerce-columns woocommerce-columns--2 woocommerce-columns--addresses col2-set addresses">
-					<div class="woocommerce-column woocommerce-column--1 woocommerce-column--billing-address col-1">
-
-						<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'membership-for-woocommerce' ); ?></h2>
-						<address>
-							<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_first_name'] ), esc_html( $membership_billing['membership_billing_last_name'] ) ); ?></br>
-							<?php echo esc_html( $membership_billing['membership_billing_company'] ); ?></br>
-							<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_address_1'] ), esc_html( $membership_billing['membership_billing_address_2'] ) ); ?></br>
-							<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_city'] ), esc_html( $membership_billing['membership_billing_postcode'] ) ); ?></br>
-							<?php echo sprintf( ' %s, %s ', esc_html( $membership_billing['membership_billing_state'] ), esc_html( $membership_billing['membership_billing_country'] ) ); ?>
-							<p class="woocommerce-customer-details--phone"><?php echo esc_html( $membership_billing['membership_billing_phone'] ); ?></p>
-							<p class="woocommerce-customer-details--email"><?php echo esc_html( $membership_billing['membership_billing_email'] ); ?></p>
-						</address>
-
-					</div>
-
-					<div class="woocommerce-column woocommerce-column--2 woocommerce-column--plan-details col-2">
-						<h2 class="woocommerce-column__title"><?php esc_html_e( 'Plan details', 'membership-for-woocommerce' ); ?></h2>
-						<address>
-							<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
-							<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
-							<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_plan_discount_price'] ), esc_html( $membership_plan['wps_membership_plan_offer_price_type'] ) ); ?></br>
-							<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_product_discount_price'] ), esc_html( $membership_plan['wps_membership_product_offer_price_type'] ) ); ?></br>
-							<?php echo sprintf( ' %s %s ', esc_html__( 'Subscription Membership: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription'] ) ); ?></br>
-							<?php echo sprintf( ' %s %u %s ', esc_html__( 'Subscription Membership Duration: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription_expiry'] ), esc_html( 'days' === $membership_plan['wps_membership_subscription_expiry_type'] ) ? esc_html( $membership_plan['wps_membership_subscription_expiry_type'] ) : esc_html( $membership_plan['wps_membership_subscription_expiry_type'] ) . 's' ); ?></br>
-							<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['wps_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
-						</address>
-					</div>
-							<table>
-							
+				<section class="woocommerce-order-details">
+					<h2 class="woocommerce-order-details__title"><?php esc_html_e( 'Membership details', 'membership-for-woocommerce' ); ?></h2>
+					<table class="woocommerce-table woocommerce-table--order-details shop_table order_details">
+						<thead>
 							<tr>
-							<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
-						
-							<td>
+								<th class="woocommerce-table__product-name product-name"><?php esc_html_e( 'Product', 'membership-for-woocommerce' ); ?></th>
+								<th class="woocommerce-table__product-table product-total"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<tr class="woocommerce-table__line-item order_item">
+								<th class="woocommerce-table__product-name product-name">
+									<span href="javascript:void(0)" ><?php echo esc_html( $membership_plan['post_name'] ); ?> </span> <strong class="product-quantity">&nbsp;<?php esc_html( 1 ); ?></strong>	</th>
+								<td class="woocommerce-table__product-total product-total">
+									<span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
+							</tr>
+						</tbody>
+
+						<tfoot>
+
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Payment method', 'membership-for-woocommerce' ); ?></th>
+								<td><?php echo esc_html( $instance->get_payment_method_title( $membership_billing['payment_method'] ) ); ?></td>
+							</tr>
+							<tr>
+								<th scope="row"><?php esc_html_e( 'Total', 'membership-for-woocommerce' ); ?></th>
+								<td><span class="woocommerce-Price-amount amount"><?php echo sprintf( ' %s %s ', esc_html( get_woocommerce_currency_symbol() ), esc_html( $membership_plan['wps_membership_plan_price'] ) ); ?></span></td>
+							</tr>
+						</tfoot>
+					</table>
+				</section>
+
+				<section class="woocommerce-customer-details">
+
+					<article class="woocommerce-columns woocommerce-columns--2 woocommerce-columns--addresses col2-set addresses">
+						<div class="woocommerce-column woocommerce-column--1 woocommerce-column--billing-address col-1">
+
+							<h2 class="woocommerce-column__title"><?php esc_html_e( 'Billing address', 'membership-for-woocommerce' ); ?></h2>
+							<address>
+								<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_first_name'] ), esc_html( $membership_billing['membership_billing_last_name'] ) ); ?></br>
+								<?php echo esc_html( $membership_billing['membership_billing_company'] ); ?></br>
+								<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_address_1'] ), esc_html( $membership_billing['membership_billing_address_2'] ) ); ?></br>
+								<?php echo sprintf( ' %s %s ', esc_html( $membership_billing['membership_billing_city'] ), esc_html( $membership_billing['membership_billing_postcode'] ) ); ?></br>
+								<?php echo sprintf( ' %s, %s ', esc_html( $membership_billing['membership_billing_state'] ), esc_html( $membership_billing['membership_billing_country'] ) ); ?>
+								<p class="woocommerce-customer-details--phone"><?php echo esc_html( $membership_billing['membership_billing_phone'] ); ?></p>
+								<p class="woocommerce-customer-details--email"><?php echo esc_html( $membership_billing['membership_billing_email'] ); ?></p>
+							</address>
+						</div>
+
+						<div class="woocommerce-column woocommerce-column--2 woocommerce-column--plan-details col-2">
+							<h2 class="woocommerce-column__title"><?php esc_html_e( 'Plan details', 'membership-for-woocommerce' ); ?></h2>
+							<address>
+								<?php echo sprintf( ' %s %s ', esc_html__( 'Plan Name: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['post_title'] ) ); ?></br>
+								<?php echo sprintf( ' %s %s ', esc_html__( 'Status: ', 'membership-for-woocommerce' ), esc_html( ucwords( $membership_status ) ) ); ?></br>
+								<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on cart: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_plan_discount_price'] ), esc_html( $membership_plan['wps_membership_plan_offer_price_type'] ) ); ?></br>
+								<?php echo sprintf( ' %s %u %s ', esc_html__( 'Discount on Product: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_memebership_product_discount_price'] ), esc_html( $membership_plan['wps_membership_product_offer_price_type'] ) ); ?></br>
+								<?php echo sprintf( ' %s %s ', esc_html__( 'Subscription Membership: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription'] ) ); ?></br>
+								<?php echo sprintf( ' %s %u %s ', esc_html__( 'Subscription Membership Duration: ', 'membership-for-woocommerce' ), esc_html( $membership_plan['wps_membership_subscription_expiry'] ), esc_html( 'days' === $membership_plan['wps_membership_subscription_expiry_type'] ) ? esc_html( $membership_plan['wps_membership_subscription_expiry_type'] ) : esc_html( $membership_plan['wps_membership_subscription_expiry_type'] ) . 's' ); ?></br>
+								<?php echo sprintf( ' %s %s ', esc_html__( 'Free Shipping: ', 'membership-for-woocommerce' ), esc_html( ! empty( $membership_plan['wps_memebership_plan_free_shipping'] ) ? 'Yes' : 'No' ) ); ?></br>
+							</address>
+						</div>
+								<table>
+								
+								<tr>
+								<th><label><?php esc_html_e( 'Include Membership', 'membership-for-woocommerce' ); ?></label></th>
+								<td>
+									<?php
+									$club_membership = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_club', true );
+									if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
+										foreach ( $club_membership as $ids ) {
+											$include_membership_data = get_post( $ids );
+
+											echo( esc_html( $include_membership_data->post_title ) );
+										}
+									}
+									?>
+								</td>
+							</tr>
+									
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+											$prod_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_ids'] );
+
+										if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
+											foreach ( $prod_ids as $ids ) {
+												echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
+										}
+
+										?>
+									</td>
+								</tr>
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Products Categories: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+
+										$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_categories'] );
+										if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+											foreach ( $cat_ids as $ids ) {
+												echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
 								<?php
+								if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
+									$check_licence = check_membership_pro_plugin_is_active();
+									if ( $check_licence ) {
 
-								$club_membership = wps_membership_get_meta_data( $membership_plan['ID'], 'wps_membership_club', true );
+										?>
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+										$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_tags'] );
 
-								if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
-									foreach ( $club_membership as $ids ) {
-										$include_membership_data = get_post( $ids );
+										if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+											foreach ( $tag_ids as $ids ) {
 
-										echo( esc_html( $include_membership_data->post_title ) );
+												$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+												$tag_name = $tagn->name;
+												echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+								
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Posts: ', 'membership-for-woocommerce' ); ?></label></th>
+								
+									<td>
+										<?php
+										$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_post_target_ids'] );
+										if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+											foreach ( $post_ids as $ids ) {
+
+												echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Posts Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+										$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_categories'] );
+										if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+											foreach ( $cat_ids as $ids ) {
+												echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+										$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_tags'] );
+										if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+											foreach ( $tag_ids as $ids ) {
+												$tagn     = get_term_by( 'id', $ids, 'post_tag' );
+												$tag_name = $tagn->name;
+												echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Post Tags Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+
+										$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_page_target_ids'] );
+										if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+											foreach ( $post_ids as $ids ) {
+
+												echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Page Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Product (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+
+										$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_ids'] );
+										if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
+											foreach ( $post_ids as $ids ) {
+
+												echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Product Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+
+
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Product Categories (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+
+										$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_categories'] );
+										if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
+											foreach ( $cat_ids as $ids ) {
+												echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No categories Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>
+
+								<tr>
+									<th><label><?php esc_html_e( 'Offered Product Tags (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
+									<td>
+										<?php
+
+										$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_tags'] );
+										if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
+											foreach ( $tag_ids as $ids ) {
+												$tagn     = get_term_by( 'id', $ids, 'product_tag' );
+												$tag_name = $tagn->name;
+												echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
+											}
+										} else {
+											esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
+										}
+										?>
+									</td>
+								</tr>				
+										<?php
 									}
 								}
 								?>
-							</td>
-						</tr>
-								
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Products: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-										$prod_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_ids'] );
-
-									if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
-										foreach ( $prod_ids as $ids ) {
-											echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Products Offered in this Plan', 'membership-for-woocommerce' );
-									}
-
-									?>
-								</td>
-							</tr>
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Products Categories: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-
-									$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_categories'] );
-
-									if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
-										foreach ( $cat_ids as $ids ) {
-											echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-							<?php
-							if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
-								$check_licence = check_membership_pro_plugin_is_active();
-								if ( $check_licence ) {
-
-									?>
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-									$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_tags'] );
-
-									if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
-										foreach ( $tag_ids as $ids ) {
-											$tagn     = get_term_by( 'id', $ids, 'product_tag' );
-											$tag_name = $tagn->name;
-											echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-							
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Posts: ', 'membership-for-woocommerce' ); ?></label></th>
-							
-								<td>
-									<?php
-									$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_post_target_ids'] );
-
-									if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
-										foreach ( $post_ids as $ids ) {
-
-											echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Posts Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-									$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_categories'] );
-
-									if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
-										foreach ( $cat_ids as $ids ) {
-											echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Product Categories Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-									$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_post_tags'] );
-
-									if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
-										foreach ( $tag_ids as $ids ) {
-											$tagn     = get_term_by( 'id', $ids, 'post_tag' );
-											$tag_name = $tagn->name;
-											echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Post Tags Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Pages: ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-
-									$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_page_target_ids'] );
-
-									if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
-										foreach ( $post_ids as $ids ) {
-
-											echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Page Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-
-
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Product (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-
-									$post_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_ids'] );
-
-									if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
-										foreach ( $post_ids as $ids ) {
-
-											echo( esc_html( get_post_field( 'post_title', $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Product Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-
-
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Product Categories (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-
-									$cat_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_categories'] );
-
-
-									if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
-										foreach ( $cat_ids as $ids ) {
-											echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No categories Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>
-
-
-							<tr>
-								<th><label><?php esc_html_e( 'Offered Product Tags (under Product discount): ', 'membership-for-woocommerce' ); ?></label></th>
-								<td>
-									<?php
-
-									$tag_ids = maybe_unserialize( $membership_plan['wps_membership_plan_target_disc_tags'] );
-
-									if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
-										foreach ( $tag_ids as $ids ) {
-											$tagn     = get_term_by( 'id', $ids, 'product_tag' );
-											$tag_name = $tagn->name;
-											echo( esc_html( $tag_name ) . '(#' . esc_html( $ids ) . ') ' );
-										}
-									} else {
-										esc_html_e( 'No Product Tags Offered in this Plan', 'membership-for-woocommerce' );
-									}
-									?>
-								</td>
-							</tr>				
-									<?php
-								}
-							}
-							?>
-						</table>
-					</article>
-			</article>
+							</table>
+						</article>
+				</article>
 			<?php
 		} else {
 			?>

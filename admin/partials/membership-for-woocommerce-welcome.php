@@ -29,7 +29,7 @@ $mfw_tab_key = '';
 	do_action( 'wps_mfw_settings_saved_notice' );
 	?>
 	<div class="wps-header-container wps-bg-white wps-r-8">
-		<h1 class="wps-header-title"><?php echo esc_attr( __( 'WP Swings' ) ); ?></h1>
+		<h1 class="wps-header-title"><?php esc_html_e( 'WP Swings', 'membership-for-woocommerce' ); ?></h1>
 	</div>
 </header>
 <main class="wps-main wps-bg-white wps-r-8">
@@ -53,21 +53,21 @@ $mfw_tab_key = '';
 				'mfw_home_settings_array',
 				array(
 					array(
-						'title' => __( 'Enable Tracking', 'membership-for-woocommerce' ),
-						'type'  => 'radio-switch',
-						'id'    => 'mfw_enable_tracking',
-						'value' => get_option( 'mfw_enable_tracking' ),
-						'class' => 'mfw-radio-switch-class',
+						'title'   => __( 'Enable Tracking', 'membership-for-woocommerce' ),
+						'type'    => 'radio-switch',
+						'id'      => 'mfw_enable_tracking',
+						'value'   => get_option( 'mfw_enable_tracking' ),
+						'class'   => 'mfw-radio-switch-class',
 						'options' => array(
 							'yes' => __( 'YES', 'membership-for-woocommerce' ),
-							'no' => __( 'NO', 'membership-for-woocommerce' ),
+							'no'  => __( 'NO', 'membership-for-woocommerce' ),
 						),
 					),
 					array(
-						'type'  => 'button',
-						'id'    => 'mfw_button_demo',
+						'type'        => 'button',
+						'id'          => 'mfw_button_demo',
 						'button_text' => __( 'Save', 'membership-for-woocommerce' ),
-						'class' => 'mfw-button-class',
+						'class'       => 'mfw-button-class',
 					),
 				)
 			);

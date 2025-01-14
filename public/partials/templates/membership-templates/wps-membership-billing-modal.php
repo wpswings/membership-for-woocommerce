@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
-
+echo '<pre>'; echo 'data'; print_r( 'data' ); echo '</pre>';
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
 
@@ -131,7 +131,7 @@ $email      = ! empty( get_user_meta( $user_id, 'billing_email', true ) ) ? get_
 								<?php
 								foreach ( $country_class->__get( 'countries' ) as $code => $name ) {
 									?>
-									<option <?php echo esc_html( $code == $country ? 'selected' : '' ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
+									<option <?php selected( $country, $code ); ?>  value="<?php echo esc_html( $code ); ?>"><?php echo esc_html( $name ); ?></option>
 								<?php } ?>
 							</select>
 						</span>

@@ -38,50 +38,44 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 				$payment_gateways   = $instance->supported_gateways();
 				$available_gateways = $instance->available_gateways();
-
 				// Loop through Woocommerce available payment gateways.
-				foreach ( $payment_gateways as $gateway ) {
+				if ( ! empty( $payment_gateways ) && is_array( $payment_gateways ) ) {
+					foreach ( $payment_gateways as $gateway ) {
 
-					?>
-
-					<!-- Membership supported gateway start. -->
-					<tr valign="top">
-						<th scope="row" class="titledesc">
-							<label><?php echo esc_html( $instance->get_payment_method_title( $gateway ) ? $instance->get_payment_method_title( $gateway ) : ucfirst( str_replace( '-', ' ', $gateway ) ) ); ?></label>
-						</th>
-
-						<td class="forminp forminp-text">
-
-						<?php
-
-						if ( in_array( $gateway, $available_gateways, true ) ) {
-
-							?>
-							<div class="wps_membership_gateway_div">
-								<p class="wps_membership_gateway">
-
-									<a class="button" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=checkout&section=' . $gateway ); ?>"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
-								</p>
-
-							</div>
-
-							<?php
-						} else {
-							?>
-							<div class="wps_membership_gateway_div">
-								<p class="wps_membership_gateway">
-
-									<a class="button disabled" href="javascript:void(0)"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
-								</p>
-
-							</div>
-							<?php
-						}
 						?>
-						</td>
+						<!-- Membership supported gateway start. -->
+						<tr valign="top">
+							<th scope="row" class="titledesc">
+								<label><?php echo esc_html( $instance->get_payment_method_title( $gateway ) ? $instance->get_payment_method_title( $gateway ) : ucfirst( str_replace( '-', ' ', $gateway ) ) ); ?></label>
+							</th>
+							<td class="forminp forminp-text">
+							<?php
 
-					</tr>
-					<?php
+							if ( in_array( $gateway, $available_gateways, true ) ) {
+
+								?>
+								<div class="wps_membership_gateway_div">
+									<p class="wps_membership_gateway">
+
+										<a class="button" href="<?php echo esc_html( admin_url( 'admin.php' ) . '?page=wc-settings&tab=checkout&section=' . $gateway ); ?>"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
+									</p>
+								</div>
+								<?php
+							} else {
+								?>
+								<div class="wps_membership_gateway_div">
+									<p class="wps_membership_gateway">
+
+										<a class="button disabled" href="javascript:void(0)"><?php esc_html_e( 'Manage', 'membership-for-woocommerce' ); ?></a>
+									</p>
+								</div>
+								<?php
+							}
+							?>
+							</td>
+						</tr>
+						<?php
+					}
 				}
 			}
 			?>

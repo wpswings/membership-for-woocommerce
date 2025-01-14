@@ -49,7 +49,7 @@ class MEMBERSHIP_PLAN_DESCRIPTION extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'upsell-additional-offer-five';
+		return 'membership-offer-page-five';
 	}
 
 	/**

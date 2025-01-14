@@ -5,8 +5,8 @@ Tags: user registration, content restriction, member, user profile, membership
 Requires at least: 5.5.0
 Tested up to: 6.7.1
 WC requires at least: 6.5.0
-WC tested up to: 9.5.1
-Stable tag: 2.6.2
+WC tested up to: 9.5.2
+Stable tag: 2.6.3
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -28,7 +28,7 @@ It helps you easily manage memberships, restrict content, and offer paid access 
 [youtube https://www.youtube.com/watch?v=J_wuUo-QQSU?rel=0]
 
 Note: Our Membership for WooCommerce Plugin is Compatible with WooCommerce High Order Performance Storage (HPOS) to ensure the smooth workflow of your WooCommerce store.
-[**Membership For WooCommerce Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=demo) | [**Membership WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=documentation) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=contact-us)
+[**Membership For WooCommerce Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=demo) | [**Membership WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc) | [**Contact Us**](https://wpswings.com/contact-us/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=contact-us)
 
 
 
@@ -267,6 +267,11 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 2.6.3 - Released on 14 January 2025 =
+* New : Compatibility with latest WP(6.7.1) & WC(9.5.2)
+* Fix : Plugin stability
+
+
 = 2.6.2 - Released on 03 January 2025 =
 * New : Members dashboard on user end
 * New : Free trial and signup fee option in Membership Plan
@@ -443,10 +448,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.6.2 - Released on 03 January 2025 =
-* New : Members dashboard on user end
-* New : Free trial and signup fee option in Membership Plan
-* New : Compatibility with latest WP( 6.7.1 ) & WC( 9.5.1 )
-* Fix    : Validation Issues
-
-
+= 2.6.3 - Released on 14 January 2025 =
+* New : Compatibility with latest WP(6.7.1) & WC(9.5.2)
+* Fix : Plugin stability

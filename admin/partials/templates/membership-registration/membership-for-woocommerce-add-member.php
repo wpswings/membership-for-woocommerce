@@ -17,10 +17,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 $results = get_posts(
 	array(
-		'post_type' => 'wps_cpt_membership',
+		'post_type'   => 'wps_cpt_membership',
 		'post_status' => 'publish',
 		'numberposts' => -1,
-
 	)
 );
 
@@ -35,7 +34,6 @@ $results = get_posts(
 			</div>
 			<div class="wps-form-group__control">
 				<div class="wps-form-select">
-					
 					<select name="wps_member_user" id="wps_member_user_reg" required class="mdl-textfield__input mdc-text-field__input">
 						<option value=""><?php esc_html_e( 'Select User', 'membership-for-woocommerce' ); ?></option>
 						<?php
@@ -46,24 +44,20 @@ $results = get_posts(
 								),
 							)
 						);
-
 						if ( ! empty( $all_users ) && is_array( $all_users ) ) {
-
 							foreach ( $all_users as $users ) {
+
 								$user_info  = get_user_by( 'ID', $users->ID );
 								$user_meta  = get_userdata( $users->ID );
 								$user_roles = $user_meta->roles; // array of roles the user is part of.
-								$user_role = '';
+								$user_role  = '';
 								if ( ! empty( $user_roles ) ) {
+
 									$user_role = $user_roles[0];
 								}
-
-
-
 								?>
 								<option  value="<?php echo esc_html( $users->ID ); ?>"><?php echo esc_html( $user_info->user_login ) . '(#' . esc_html( $users->ID ) . ')'; ?></option>
-									<?php
-
+								<?php
 							}
 						}
 						?>
@@ -79,24 +73,24 @@ $results = get_posts(
 			<div class="wps-form-group__control">
 				<div class="wps-form-select">
 					<label class="mdc-text-field mdc-text-field--outlined">
-					<span class="mdc-notched-outline mdc-notched-outline--no-label">
+						<span class="mdc-notched-outline mdc-notched-outline--no-label">
 							<span class="mdc-notched-outline__leading"></span>
 							<span class="mdc-notched-outline__notch"></span>
 							<span class="mdc-notched-outline__trailing"></span>
 						</span>
-			
-					<select id="wps_membership_add_member" name="members_plan_assign" required class="mdl-textfield__input mdc-text-field__input">
-						<option value=""><?php esc_html_e( 'Select', 'membership-for-woocommerce' ); ?></option>
-						<?php
-
-						foreach ( $results as $key => $value ) {
-							?>
-						<option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
+						<select id="wps_membership_add_member" name="members_plan_assign" required class="mdl-textfield__input mdc-text-field__input">
+							<option value=""><?php esc_html_e( 'Select', 'membership-for-woocommerce' ); ?></option>
 							<?php
-						}
+							if ( ! empty( $results ) && is_array( $results ) ) {
+								foreach ( $results as $key => $value ) {
 
-						?>
-					</select>
+									?>
+									<option value="<?php echo esc_attr( $value->ID ); ?>"><?php echo esc_html( $value->post_title ); ?></option>
+									<?php
+								}
+							}
+							?>
+						</select>
 					</label>
 				</div>
 			</div>

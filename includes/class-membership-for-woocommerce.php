@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.6.2';
+			$this->version = '2.6.3';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -133,7 +133,7 @@ class Membership_For_Woocommerce {
 		if ( class_exists( 'Membership_For_Woocommerce_Onboarding_Steps' ) ) {
 			$mfw_onboard_steps = new Membership_For_Woocommerce_Onboarding_Steps();
 		}
-				  // The class responsible for defining all actions that occur in the admin area.
+		// The class responsible for defining all actions that occur in the admin area.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
@@ -162,7 +162,6 @@ class Membership_For_Woocommerce {
 		}
 
 		$this->loader = new Membership_For_Woocommerce_Loader();
-
 	}
 
 	/**
@@ -176,9 +175,7 @@ class Membership_For_Woocommerce {
 	private function membership_for_woocommerce_locale() {
 
 		$plugin_i18n = new Membership_For_Woocommerce_I18n();
-
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
 	}
 
 	/**
@@ -324,9 +321,7 @@ class Membership_For_Woocommerce {
 	private function membership_for_woocommerce_common_hooks() {
 
 		$mfw_plugin_common = new Membership_For_Woocommerce_Common( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
-
 		$this->loader->add_action( 'wp_enqueue_scripts', $mfw_plugin_common, 'mfw_common_enqueue_styles' );
-
 		$this->loader->add_action( 'wp_enqueue_scripts', $mfw_plugin_common, 'mfw_common_enqueue_scripts' );
 
 		// AJAX handlers to save tnx data.
@@ -359,10 +354,8 @@ class Membership_For_Woocommerce {
 
 		// Getting global options.
 		$wps_membership_global_settings = get_option( 'wps_membership_global_options', $global_class->default_global_options() );
-
 		// By default plugin will be enabled.
 		$wps_membership_enable_plugin = ! empty( $wps_membership_global_settings['wps_membership_enable_plugin'] ) ? $wps_membership_global_settings['wps_membership_enable_plugin'] : 'off';
-
 		if ( 'on' === $wps_membership_enable_plugin ) {
 
 			$mfw_plugin_public = new Membership_For_Woocommerce_Public( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
@@ -492,7 +485,6 @@ class Membership_For_Woocommerce {
 			$mfw_plugin_api = new Membership_For_Woocommerce_Rest_Api( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
 			$this->loader->add_action( 'rest_api_init', $mfw_plugin_api, 'wps_mfw_add_endpoint' );
 		}
-
 	}
 
 	/**
@@ -627,7 +619,6 @@ class Membership_For_Woocommerce {
 			 * @since 1.0.0
 			 */
 			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
-
 			return $mfw_default_tabs;
 	}
 
@@ -675,7 +666,6 @@ class Membership_For_Woocommerce {
 		 * @since 1.0.0
 		 */
 		apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_sub_tabs', $mfw_default_sub_tabs );
-
 		return $mfw_default_sub_tabs;
 	}
 
@@ -731,7 +721,6 @@ class Membership_For_Woocommerce {
 		$mfw_notice  = '<div class="' . esc_attr( $mfw_classes ) . '">';
 		$mfw_notice .= '<p>' . esc_html( $mfw_message ) . '</p>';
 		$mfw_notice .= '</div>';
-
 		echo wp_kses_post( $mfw_notice );
 	}
 

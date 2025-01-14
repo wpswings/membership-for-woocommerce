@@ -49,7 +49,7 @@ class MEMBERSHIP_REGISTRATION_FORM extends Widget_Base {
 	 * @return string Widget name.
 	 */
 	public function get_name() {
-		return 'upsell-additional-offer-six';
+		return 'membership-offer-page-six';
 	}
 
 	/**

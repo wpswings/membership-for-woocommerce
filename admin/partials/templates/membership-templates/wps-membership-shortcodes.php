@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Buy Now &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_buy_now plan_id=278]' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_buy_now plan_id=278]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode only returns the buy now button. Use it as [wps_membership_buy_now plan_id=your plan ID].', 'membership-for-woocommerce' );
 							 $instance = Membership_For_Woocommerce_Global_Functions::get();
@@ -52,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'No Thanks &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_no]' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_no]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode only returns no thanks button. Use it as [wps_membership_no].', 'membership-for-woocommerce' );
 							$instance->tool_tip( $shortcode_desc );
@@ -75,7 +75,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Title &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_title_name plan_id=278]' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_title_name plan_id=278]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode returns the title of Membership Plan. Use it as [wps_membership_title_name plan_id=your plan ID]', 'membership-for-woocommerce' );
 							 $instance->tool_tip( $shortcode_desc );
@@ -86,7 +86,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Price &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_price plan_id=278]' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_price plan_id=278]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode returns the price of Membership Plan. Use it as [wps_membership_price plan_id=your plan ID]', 'membership-for-woocommerce' );
 							 $instance->tool_tip( $shortcode_desc );
@@ -97,7 +97,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Membership Plan Desc &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_desc_data plan_id=278]' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_desc_data plan_id=278]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode returns the description of Membership Plan. Use it as [wps_membership_desc_data plan_id=your plan ID]', 'membership-for-woocommerce' );
 							 $instance->tool_tip( $shortcode_desc );
@@ -126,7 +126,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="wps_membership_shortcode_div">
 						<div class="wps_membership_shortcode">
 							<span class="wps_membership_shortcode_title"><?php esc_html_e( 'Membership Registration Form &rarr;', 'membership-for-woocommerce' ); ?></span>
-							<span class="wps_membership_shortcode_content"><?php echo esc_html__( '[wps_membership_registration_form]  ' ); ?></span>
+							<span class="wps_membership_shortcode_content"><?php echo esc_html( '[wps_membership_registration_form]' ); ?></span>
 							<?php
 							$shortcode_desc = esc_html__( 'This shortcode returns the Membership Registration Form. Use it as [wps_membership_registration_form]', 'membership-for-woocommerce' );
 								$instance->tool_tip( $shortcode_desc );

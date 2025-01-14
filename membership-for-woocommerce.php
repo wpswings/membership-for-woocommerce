@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           2.6.2
+ * Version:           2.6.3
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
@@ -25,7 +25,7 @@
  * Requires at least: 5.0
  * Tested up to:      6.7.1
  * WC requires at least: 5.0
- * WC tested up to:   9.5.1
+ * WC tested up to:   9.5.2
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -84,7 +84,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @since 1.0.0
 	 */
 	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.6.2' );
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '2.6.3' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -131,6 +131,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	if ( ! function_exists( 'wps_mfw_standard_check_multistep' ) ) {
+
 		/**
 		 * Function to check multistep function.
 		 *
@@ -277,9 +278,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	function wps_membership_schedule_hook() {
 		// Schedule cron for checking of membership expiration on daily basis.
 		if ( ! wp_next_scheduled( 'wps_membership_expiry_check' ) ) {
+
 			wp_schedule_event( time(), 'daily', 'wps_membership_expiry_check' );
 		}
-
 	}
 	add_action( 'init', 'wps_membership_schedule_hook' );
 
@@ -327,6 +328,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	}
 
 	if ( ! function_exists( 'wps_membership_check_plugin_enable' ) ) {
+
 		/**
 		 * This function is used to check plugin is enable.
 		 *
@@ -337,9 +339,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$is_enable = false;
 			$wps_membership_enable_plugin = get_option( 'wps_membership_enable_plugin', '' );
 			if ( 'on' == $wps_membership_enable_plugin ) {
+
 				$is_enable = true;
 			}
-
 			return $is_enable;
 		}
 	}
@@ -362,9 +364,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$meta_val = $order->get_meta( $key );
 			return $meta_val;
 		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
+
 			$order    = new WPS_Subscription( $id );
 			$meta_val = $order->get_meta( $key );
-
 			return $meta_val;
 		} else {
 			// Traditional CPT-based orders are in use.
@@ -389,10 +391,16 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$order->save();
 		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
-			$order = new WPS_Subscription( $id );
+			if (  class_exists( 'WPS_Subscription' ) ) {
 
-			$order->update_meta_data( $key, $value );
-			$order->save();
+				$order = new WPS_Subscription( $id );
+
+				$order->update_meta_data( $key, $value );
+				$order->save();
+			} else {
+
+				update_post_meta( $id, $key, $value );
+			}
 		} else {
 			// Traditional CPT-based orders are in use.
 			update_post_meta( $id, $key, $value );
@@ -477,11 +485,10 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		if ( isset( $_REQUEST['wps_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['wps_nonce'] ) ), 'plan-import-nonce' ) ) {
 
 			$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-
 			if ( isset( $banner_id ) && '' != $banner_id ) {
+
 				update_option( 'wps_wgm_notify_hide_baneer_notification', $banner_id );
 			}
-
 			wp_send_json_success();
 		}
 	}
@@ -537,7 +544,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		wp_clear_scheduled_hook( 'wps_wgm_check_for_notification_update' );
 	}
 
-
 	/**
 	 * Adding custom setting links at the plugin activation list.
 	 *
@@ -556,10 +562,12 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 		return $links_array;
 	}
-	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 
+	add_filter( 'plugin_row_meta', 'membership_for_woocommerce_custom_settings_at_plugin_tab', 10, 2 );
 	add_action( 'activated_plugin', 'membership_for_woocommerce_redirect_on_settings' );
+
 	if ( ! function_exists( 'membership_for_woocommerce_redirect_on_settings' ) ) {
+
 		/**
 		 * Redirect plugin as plugin get activated function.
 		 *
@@ -603,18 +611,14 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 		// To hide Plugin activated notice.
 		unset( $_GET['activate'] );
-
 		?>
-
 		<?php if ( 'woo_inactive' === $wps_membership_plugin_activation['message'] ) { ?>
 
 			<div class="notice notice-error is-dismissible">
 				<p><strong><?php esc_html_e( 'WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'membership-for-woocommerce' ); ?><strong><?php esc_html_e( 'Membership For WooCommerce', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( '.', 'membership-for-woocommerce' ); ?></p>
 			</div>
-
 			<?php
 		}
-
 	}
 }
 
