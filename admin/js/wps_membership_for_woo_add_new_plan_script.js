@@ -1,5 +1,6 @@
 jQuery( document ).ready( function( $ ){
 
+    jQuery(document).find('.wps_org_offer_plan_id').select2();
     // Target products search.
     jQuery( ".wc-membership-product-search" ).select2({
 
@@ -87,5 +88,42 @@ jQuery( document ).ready( function( $ ){
                 jQuery('#wps_membership_discount_amount_'+plan_id).attr( 'max', '100' );
             }
         });
+    });
+
+    // send offer notification on whatsapp.
+    jQuery(document).on('click', '#wps_wpr_send_on_whatsap_btn', function(){
+
+        var wps_org_offer_plan_id = jQuery('.wps_org_offer_plan_id').val();
+        var wps_wpr_offer_message = jQuery('.wps_wpr_offer_message').val();
+        if (Array.isArray(wps_org_offer_plan_id) && wps_org_offer_plan_id.length !== 0) {
+
+            jQuery('.wps_wpr_offer_msg_notice').hide();
+            jQuery('.wps_wpr_whatsapp_loader').show();
+            jQuery('#wps_wpr_send_on_whatsap_btn').prop('disabled', true);
+            var data = {
+                'action'                : 'send_offer_message_on_whatsapp',
+                'nonce'                 : add_new_obj.wps_nonce,
+                'wps_org_offer_plan_id' : wps_org_offer_plan_id,
+                'wps_wpr_offer_message' : wps_wpr_offer_message,
+            };
+
+            jQuery.ajax({
+                'method' : 'POST',
+                'url'    : add_new_obj.ajax_url,
+                'data'   : data,
+                success  : function(response) {
+
+                    jQuery('.wps_wpr_whatsapp_loader').hide();
+                    jQuery('#wps_wpr_send_on_whatsap_btn').prop('disabled', false);
+                    console.log(response);
+                }
+            });
+        } else {
+
+            jQuery('.wps_wpr_offer_msg_notice').show();
+            jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+            jQuery('.wps_wpr_offer_msg_notice').html('This is a required fields, please enter some values !!');
+            return false;
+        }
     });
 });

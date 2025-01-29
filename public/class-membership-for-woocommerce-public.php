@@ -511,7 +511,7 @@ class Membership_For_Woocommerce_Public {
 
 			if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
-				if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+				if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) && has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || ( ! empty( $this->global_class->plans_tag_ids() ) && has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) ) {
 
 					return '';
 				} else {

@@ -310,6 +310,12 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
 		}
+
+		// whatsapp api notification settings.
+		$this->loader->add_filter( 'mfw_whatsapp_api_settings_array', $mfw_plugin_admin, 'wps_mfw_whatsapp_api_settings', 10, 1 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_whatsapp_api_settings' );
+		// send offer message on whatsapp.
+		$this->loader->add_action( 'wp_ajax_send_offer_message_on_whatsapp', $mfw_plugin_admin, 'wps_wpr_send_offer_message_on_whatsapp', 10 );
 	}
 
 	/**
@@ -592,6 +598,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-reports-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-offer-notify-settings'] = array(
+				'title'       => esc_html__( 'Offer Notification', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-offer-notify-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php',
 			);
 
 			/**
