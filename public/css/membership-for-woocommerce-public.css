@@ -1876,3 +1876,21 @@ span.wps_mfw_no_plan_found_msg {
 .wp-block-cover.wps-mfw-temp2 .wps_msfw_free_trial_msg {
     text-align: left;
 }
+
+/* Mute whatsapp notification Start */
+
+.wps_wpr_enable_offer_setting_wrapper label {
+    display: inline-flex;
+    gap: 10px;
+    flex-wrap: nowrap;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+h4.wps_wpr_offer_notify_settings_heading {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Mute whatsapp notification End */

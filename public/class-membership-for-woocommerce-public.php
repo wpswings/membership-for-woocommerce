@@ -4813,4 +4813,30 @@ class Membership_For_Woocommerce_Public {
 		}
 	}
 
+	/**
+	 * This function is used to stop whatsapp notification.
+	 *
+	 * @param  string $user_id user id.
+	 * @return void
+	 */
+	public function wps_mfw_unsubscribe_whatsapp_notification( $user_id ) {
+
+		$wps_mfw_stop_whatsapp = get_user_meta( $user_id, 'wps_mfw_stop_whatsapp', true );
+		?>
+		<div class="wps_wpr_offer_notify_main_wrappers">
+			<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate Whatsapp Notification', 'membership-for-woocommerce' ); ?></h4>
+			<main class="wps_wpr_main_offer_wrapper">
+				<section>
+					<article>
+						<div class="wps_wpr_enable_offer_setting_wrapper">
+							<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Tap Mute notifications', 'membership-for-woocommerce' ); ?></label>
+						</div>
+						<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
+					</article>
+				</section>
+			</main>
+		</div>
+		<?php
+	}
+
 }

@@ -79,5 +79,50 @@ jQuery(document).ready(function ($) {
 		} 
 	} );
 
+	// stop whatsapp notify ajax.
+	jQuery(document).on('change', '.wps_mfw_stop_whatsapp_notify', function(){
+
+		if ( jQuery('.wps_mfw_stop_whatsapp_notify').prop('checked') ) {
+
+			wps_mfw_stop_whatsapp_notify( jQuery(this).val() );
+		} else {
+	
+			wps_mfw_stop_whatsapp_notify( 'no' );
+		}
+	});
+
+	function wps_mfw_stop_whatsapp_notify( value ) {
+
+		var data = {
+			'action' : 'stop_whatsapp_notification',
+			'nonce'  : mfw_common_param.nonce,
+			'stop'   : value,
+		};
+
+		jQuery.ajax({
+			'url'    : mfw_common_param.ajaxurl,
+			'method' : 'POST',
+			'data'   : data,
+			success  : function( response ) {
+
+				if ( response.result == true ) {
+
+					jQuery('.mfw_whatsapp_stop_notice').show();
+					jQuery('.mfw_whatsapp_stop_notice').css('color', 'green');
+					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
+				} else {
+
+					jQuery('.mfw_whatsapp_stop_notice').show();
+					jQuery('.mfw_whatsapp_stop_notice').css('color', 'red');
+					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
+				}
+
+				setTimeout(() => {
+					jQuery('.mfw_whatsapp_stop_notice').hide();
+				}, 15000);
+			}
+		});
+	}
+
 });
 

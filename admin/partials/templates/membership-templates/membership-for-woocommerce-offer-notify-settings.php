@@ -43,7 +43,7 @@ $existing_plans                  = get_posts( $args );
 
 <!--    +++++++++++    whatsapp notification settings   ++++++++++++     -->
 <div class="wps_wpr_offer_notify_main_wrappers">
-	<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Offer Notify', 'points-and-rewards-for-woocommerce' ); ?></h4>
+	<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Send Offer Notification', 'points-and-rewards-for-woocommerce' ); ?></h4>
 	<form method="POST" action="" class="wps_wpr_offer_form">
 		<main class="wps_wpr_main_offer_wrapper">
             <section>
@@ -57,7 +57,7 @@ $existing_plans                  = get_posts( $args );
                                     ?>
                                     <option value="<?php echo esc_html( $all_plans_obj->ID ); ?>"><?php echo esc_html( $all_plans_obj->post_title ); ?></option>
                                     <?php
-                                } 
+                                }
                             }
                             ?>
                         </select>
@@ -78,7 +78,7 @@ $existing_plans                  = get_posts( $args );
         <div class="wps_wpr_whatsapp_wrappers">
             <input type="button" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" value="<?php esc_html_e( 'Whatsapp', 'points-and-rewards-for-woocommerce' ); ?>">
             <span style="display: none;" class="wps_wpr_whatsapp_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
+			<div style="display: none;" class="wps_wpr_offer_msg_notice"></div>
         </div>
-        <div style="display: none;" class="wps_wpr_offer_msg_notice"></div>
     </form>
 </div>

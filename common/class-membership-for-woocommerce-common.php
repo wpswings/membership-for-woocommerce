@@ -946,4 +946,30 @@ class Membership_For_Woocommerce_Common {
 		}
 	}
 
+	/**
+	 * Stop whatsapp notify via ajax call.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_stop_whatsapp_notification() {
+		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
+
+		$user_id  = get_current_user_id();
+		$stop     = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
+		$response = array();
+		if ( 'yes' === $stop ) {
+
+			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'yes' );
+			$response['result'] = true;
+			$response['msg']    = esc_html__( 'whatsapp notification deactivated successfully !!', 'membership-for-woocommerce' );
+		} else {
+
+			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'no' );
+			$response['result'] = true;
+			$response['msg']    = esc_html__( 'whatsapp notification activated!!', 'membership-for-woocommerce' );
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
 }

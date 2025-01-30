@@ -346,6 +346,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
+		// ajax to stop whatsapp notification.
+		$this->loader->add_action( 'wp_ajax_stop_whatsapp_notification', $mfw_plugin_common, 'wps_mfw_stop_whatsapp_notification' );
 	}
 
 	/**
@@ -471,6 +473,8 @@ class Membership_For_Woocommerce {
 			// update total discount benefits.
 			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
+			// html unssubcribe whatsapp notification.
+			$this->loader->add_action( 'wps_mfw_extend_membership_account_tab', $mfw_plugin_public, 'wps_mfw_unsubscribe_whatsapp_notification', 10, 1 );
 		}
 	}
 

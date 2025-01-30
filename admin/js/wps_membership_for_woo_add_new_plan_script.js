@@ -108,14 +108,30 @@ jQuery( document ).ready( function( $ ){
             };
 
             jQuery.ajax({
-                'method' : 'POST',
-                'url'    : add_new_obj.ajax_url,
-                'data'   : data,
-                success  : function(response) {
+                'method'   : 'POST',
+                'url'      : add_new_obj.ajax_url,
+                'dataType' : 'json',
+                'data'     : data,
+                success    : function(response) {
 
                     jQuery('.wps_wpr_whatsapp_loader').hide();
                     jQuery('#wps_wpr_send_on_whatsap_btn').prop('disabled', false);
-                    console.log(response);
+                    if ( ( response.messages && Array.isArray(response.messages) ) && ( response.messages[0] && response.messages[0].message_status ) ) {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'green');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.messages[0].message_status);
+                    } else if ( response.error ) {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.error.message);
+                    } else {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.msg);
+                    }
                 }
             });
         } else {
