@@ -361,7 +361,7 @@ class Membership_For_Woocommerce_Admin {
 			global $product;
 			$products_array [ $product->get_id() ] = $product->get_name();
 		endwhile;
-		wp_reset_query();
+		wp_reset_postdata();
 		return $products_array;
 	}
 
@@ -3835,6 +3835,9 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_mfw_whatsapp_api_settings( $wps_whatsapp_settings ) {
 
+		$url              = '<a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F967217188484687%2Fwhatsapp-business%2Fwa-dev-console%2F%3Fbusiness_id%3D1466242894064567#" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+		$num              = '<a href="https://developers.facebook.com/apps/1306844587187157/whatsapp-business/wa-dev-console/?business_id=1466242894064567" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+		$preview          = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
 		$wps_app_settings = array(
 			array(
 				'title'       => __( 'Enable Whatsapp API Features', 'membership-for-woocommerce' ),
@@ -3851,7 +3854,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter Access Token', 'membership-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Please enter you access token.', 'membership-for-woocommerce' ),
+				'description' => sprintf( __( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), $url ),
 				'placeholder' => __( 'Enter Coupon', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_access_token',
 				'value'       => get_option( 'wps_wpr_whatsapp_access_token' ),
@@ -3859,18 +3862,18 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter Phone Number ID', 'membership-for-woocommerce' ),
 				'type'        => 'number',
-				'description' => __( 'Please enter you phone number id.', 'membership-for-woocommerce' ),
+				'description' => sprintf( __( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), $num ),
 				'placeholder' => __( 'Phone no.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_phone_num_id',
 				'value'       => get_option( 'wps_wpr_whatsapp_phone_num_id' ),
 			),
 			array(
-				'title'       => __( 'Enter Message Template Name', 'membership-for-woocommerce' ),
+				'title'       => __( 'Enter whatsapp template name', 'membership-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => __( 'Please enter whatsapp template name.', 'membership-for-woocommerce' ),
+				'description' => sprintf( __( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), $preview ),
 				'placeholder' => __( 'Template Name', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_msg_temp_name',
-				'value'       => get_option( 'wps_wpr_whatsapp_msg_temp_name' ),
+				'value'       => ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : 'membership_template',
 			),
 			array(
 				'type'        => 'multi-button',
@@ -3951,6 +3954,7 @@ class Membership_For_Woocommerce_Admin {
 			$wps_wpr_offer_message  = ! empty( $_POST['wps_wpr_offer_message'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_offer_message'] ) ) : esc_html__( 'Limited-time deal: Grab amazing discounts on your favorite items!', 'membership-for-woocommerce' );
 			$users                  = get_users( array( 'fields' => 'ids' ) );
 			$wps_wpr_store_match_id = array();
+			update_option( 'wps_wpr_offer_message', $wps_wpr_offer_message );
 			if ( ! empty( $users ) && is_array( $users ) ) {
 				foreach ( $users as $user_id ) {
 
@@ -3985,7 +3989,7 @@ class Membership_For_Woocommerce_Admin {
 						$user_obj                       = get_user_by( 'id', $user_id );
 						$wps_wpr_whatsapp_access_token  = ! empty( get_option( 'wps_wpr_whatsapp_access_token' ) ) ? get_option( 'wps_wpr_whatsapp_access_token' ) : '';
 						$wps_wpr_whatsapp_phone_num_id  = ! empty( get_option( 'wps_wpr_whatsapp_phone_num_id' ) ) ? get_option( 'wps_wpr_whatsapp_phone_num_id' ) : '';
-						$wps_wpr_whatsapp_msg_temp_name = ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : '';
+						$wps_wpr_whatsapp_msg_temp_name = ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : 'membership_template';
 						$api_header                     = array(
 							'Content-Type: application/json',
 							'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,

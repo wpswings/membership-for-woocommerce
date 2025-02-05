@@ -885,7 +885,7 @@ class Membership_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? wp_kses_post( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>

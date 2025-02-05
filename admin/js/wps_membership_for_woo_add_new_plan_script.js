@@ -90,6 +90,8 @@ jQuery( document ).ready( function( $ ){
         });
     });
 
+    // disabled membership template name.
+    jQuery(document).find('#wps_wpr_whatsapp_msg_temp_name').prop('disabled', true);
     // send offer notification on whatsapp.
     jQuery(document).on('click', '#wps_wpr_send_on_whatsap_btn', function(){
 
@@ -141,5 +143,25 @@ jQuery( document ).ready( function( $ ){
             jQuery('.wps_wpr_offer_msg_notice').html('This is a required fields, please enter some values !!');
             return false;
         }
+    });
+    
+    // open whatsapp sample template.
+    jQuery(document).on('click', '.wps_wpr_preview_whatsapp_sample', function(e){
+
+        jQuery(document).find('.wps_wpr_preview_whatsapp_sample').css('color', '#2271b1');
+        e.preventDefault();
+        jQuery('.wps_wpr_preview_template_img').show();
+    });
+
+    // Hide modal when clicking outside the image.
+    jQuery(document).on('click', '.wps_wpr_preview_template_img', function(){
+
+        jQuery('.wps_wpr_preview_template_img').hide();
+    });
+
+    // make same while clicking on click here url for creating token.
+    jQuery(document).on('click', '.wps_wpr_create_whatsapp_token_link', function(){
+
+        jQuery(document).find('.wps_wpr_create_whatsapp_token_link').css('color', '#2271b1');
     });
 });

@@ -727,7 +727,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				} else {
 
 					$website   = get_site_url();
-					$user_name = $fields['membership_billing_first_name'] . '-' . rand();
+					$user_name = $fields['membership_billing_first_name'] . '-' . wp_rand();
 					$password  = $fields['membership_billing_first_name'] . substr( $fields['membership_billing_phone'], -4, 4 );
 					update_option( 'user_password', $password );
 					$userdata = array(

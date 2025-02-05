@@ -76,7 +76,7 @@
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Complete Customer History.jpg' ); ?>" alt="Complete Customer History image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-complete-customers-history.jpg' ); ?>" alt="Complete Customer History image">
 					</div>
 					<div class="wps-overview__keywords-text">
 						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Complete Customer History', 'membership-for-woocommerce' ); ?></h3>
@@ -91,7 +91,7 @@
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Membership Details.jpg' ); ?>" alt="Membership Details image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-memberships-details.jpg' ); ?>" alt="Membership Details image">
 					</div>
 					<div class="wps-overview__keywords-text">
 						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></h3>
@@ -106,7 +106,7 @@
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Data Export.jpg' ); ?>" alt="Data Export image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-data-exports.jpg' ); ?>" alt="Data Export image">
 					</div>
 					<div class="wps-overview__keywords-text">
 						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Data Export', 'membership-for-woocommerce' ); ?></h3>
@@ -121,7 +121,7 @@
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_Perfectly Neat Shortcodes For Customization.jpg' ); ?>" alt="Perfectly Neat Shortcodes For Customization image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-perfectly-neat-shortcodes-for-customization.jpg' ); ?>" alt="Perfectly Neat Shortcodes For Customization image">
 					</div>
 					<div class="wps-overview__keywords-text">
 						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Perfectly Neat Shortcodes For Customization', 'membership-for-woocommerce' ); ?></h3>
@@ -136,7 +136,7 @@
 			<div class="wps-overview__keywords-item">
 				<div class="wps-overview__keywords-card">
 					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons_1_User Cart Total Discount.jpg' ); ?>" alt="User Cart Total Discount image">
+						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-user-cart-total-discount.jpg' ); ?>" alt="User Cart Total Discount image">
 					</div>
 					<div class="wps-overview__keywords-text">
 						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'User Cart Total Discount', 'membership-for-woocommerce' ); ?></h3>

@@ -642,7 +642,7 @@ class Membership_For_Woocommerce_Common {
 					if ( 'on' == $is_user_created ) {
 
 						$website   = get_site_url();
-						$user_name = $billing_first_name . '-' . rand();
+						$user_name = $billing_first_name . '-' . wp_rand();
 						$password  = $billing_first_name . substr( $billing_phone, -4, 4 );
 						update_option( 'user_password', $password );
 						$userdata = array(
