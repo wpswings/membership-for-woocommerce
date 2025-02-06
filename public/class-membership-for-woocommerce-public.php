@@ -3268,6 +3268,17 @@ class Membership_For_Woocommerce_Public {
 	 * @param OBJECT $cart cart.
 	 */
 	public function wps_membership_set_membership_product_price( $cart ) {
+
+		// This is necessary for WC 3.0+.
+		if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
+			return;
+		}
+
+		// Avoiding hook repetition (when using price calculations for example | optional).
+		if ( did_action( 'woocommerce_before_calculate_totals' ) >= 2 ) {
+			return;
+		}
+
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
 			return;
