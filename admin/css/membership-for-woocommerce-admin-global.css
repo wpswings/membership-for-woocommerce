@@ -346,6 +346,7 @@ input#wps_wpr_send_on_whatsap_btn:hover {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     text-align: center;
+    z-index: 99999;
 }
 
 /* Centered Image */

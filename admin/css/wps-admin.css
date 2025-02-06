@@ -259,10 +259,6 @@ select {
   opacity: 1;
 }
 
-.select2.select2-container {
-  max-width: 100%;
-}
-
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;

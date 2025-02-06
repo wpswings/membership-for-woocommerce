@@ -705,15 +705,15 @@ class Membership_For_Woocommerce_Common {
 
 						wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
 						wps_membership_update_meta_data( $subscription_id, 'wps_next_payment_date', $expiry_date );
-						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) && ! empty( $plan_obj['plan_id'] ) ) {
+						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) && ! empty( $plan_obj['ID'] ) ) {
 							if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 
-								$access_type = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_access_type', true );
+								$access_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
 								$current_date = gmdate( 'Y-m-d' );
 								if ( 'delay_type' == $access_type ) {
 
-									$time_duration      = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_time_duration', true );
-									$time_duration_type = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_time_duration_type', true );
+									$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
+									$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
 									$current_date       = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 								}
 								$current_time         = current_time( 'timestamp' );

@@ -459,7 +459,6 @@ class Membership_For_Woocommerce_Public {
 						$is_purchasable = false;
 					}
 				} else {
-
 					// Check if current product is accessible by any activated membership id.
 					if ( true == $this->is_accessible_to_member( $product ) ) {
 
@@ -4279,13 +4278,13 @@ class Membership_For_Woocommerce_Public {
 				if ( ! empty( $plan['wps_membership_subscription_expiry'] ) ) {
 					if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 
-						$access_type = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_access_type', true );
+						$access_type = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_access_type', true );
 						// $current_date = gmdate( 'Y-m-d' );
 						$current_time = current_time( 'timestamp' );
 						if ( 'delay_type' == $access_type ) {
 
-							$time_duration      = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_time_duration', true );
-							$time_duration_type = wps_membership_get_meta_data( $plan['plan_id'], 'wps_membership_plan_time_duration_type', true );
+							$time_duration      = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_time_duration', true );
+							$time_duration_type = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_time_duration_type', true );
 							$current_time = strtotime( gmdate( 'Y-m-d', strtotime( $current_time . ' + ' . $time_duration . ' ' . $time_duration_type ) ) );
 						}
 						$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_i_d, $current_time );

@@ -73,7 +73,10 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 					<label for="wps_wpr_offer_message"><?php esc_html_e( 'Enter Offer Message', 'membership-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_offer_setting_wrapper">
 						<textarea class="wps_wpr_offer_message" rows="4" cols="40"><?php echo esc_html( $wps_wpr_offer_message ); ?></textarea>
-						<span class="wps_wpr_enable_offer_notices wps_wpr_label_notice"><?php echo sprintf( esc_html__( 'This offer message will be sent to the user via WhatsApp. You can check the sending status in the log. To check, %s.', 'membership-for-woocommerce' ), $log_url ); ?></span>
+						<span class="wps_wpr_enable_offer_notices wps_wpr_label_notice">
+							<!-- translators: %s: whatsapp notify -->
+							<?php echo sprintf( esc_html__( 'This offer message will be sent to the user via WhatsApp. You can check the sending status in the log. To check, %s.', 'membership-for-woocommerce' ), wp_kses_post( $log_url ) ); ?>
+						</span>
 					</div>
 				</article>
 			</section>

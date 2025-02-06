@@ -3854,7 +3854,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter Access Token', 'membership-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), $url ),
+				'description' => /* translators: %s: token */ sprintf( __( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ),
 				'placeholder' => __( 'Enter Coupon', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_access_token',
 				'value'       => get_option( 'wps_wpr_whatsapp_access_token' ),
@@ -3862,7 +3862,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter Phone Number ID', 'membership-for-woocommerce' ),
 				'type'        => 'number',
-				'description' => sprintf( __( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), $num ),
+				'description' => /* translators: %s: Phone number */ sprintf( __( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $num ) ),
 				'placeholder' => __( 'Phone no.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_phone_num_id',
 				'value'       => get_option( 'wps_wpr_whatsapp_phone_num_id' ),
@@ -3870,7 +3870,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter whatsapp template name', 'membership-for-woocommerce' ),
 				'type'        => 'text',
-				'description' => sprintf( __( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), $preview ),
+				'description' => /* translators: %s: template */ sprintf( __( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), wp_kses_post( $preview ) ),
 				'placeholder' => __( 'Template Name', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_whatsapp_msg_temp_name',
 				'value'       => ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : 'membership_template',
@@ -4024,7 +4024,7 @@ class Membership_For_Woocommerce_Admin {
 
 						$data = json_encode( $curl_data );
 
-						// LOAD THE WC LOGGER
+						// LOAD THE WC LOGGER.
 						$logger = wc_get_logger();
 
 						$curl = curl_init();
@@ -4044,7 +4044,7 @@ class Membership_For_Woocommerce_Admin {
 
 						$response = curl_exec($curl);
 
-						// LOG THE Result
+						// LOG THE Result.
 						$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
 						curl_close($curl);
 
