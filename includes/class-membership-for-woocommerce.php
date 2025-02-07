@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.6.3';
+			$this->version = '2.7.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -310,6 +310,12 @@ class Membership_For_Woocommerce {
 
 			$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
 		}
+
+		// whatsapp api notification settings.
+		$this->loader->add_filter( 'mfw_whatsapp_api_settings_array', $mfw_plugin_admin, 'wps_mfw_whatsapp_api_settings', 10, 1 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_whatsapp_api_settings' );
+		// send offer message on whatsapp.
+		$this->loader->add_action( 'wp_ajax_send_offer_message_on_whatsapp', $mfw_plugin_admin, 'wps_wpr_send_offer_message_on_whatsapp', 10 );
 	}
 
 	/**
@@ -340,6 +346,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
+		// ajax to stop whatsapp notification.
+		$this->loader->add_action( 'wp_ajax_stop_whatsapp_notification', $mfw_plugin_common, 'wps_mfw_stop_whatsapp_notification' );
 	}
 
 	/**
@@ -414,7 +422,7 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'wps_membership_expiry_check', $mfw_plugin_public, 'wps_membership_cron_expiry_check' );
 
 			// Settin membership price in cart.
-			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_membership_set_membership_product_price', );
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_membership_set_membership_product_price', PHP_INT_MIN, 1 );
 
 			// Settin membership price in cart.
 			$this->loader->add_action( 'woocommerce_is_purchasable', $mfw_plugin_public, 'wps_membership_make_membership_product_purchasable', 10, 2 );
@@ -465,6 +473,8 @@ class Membership_For_Woocommerce {
 			// update total discount benefits.
 			$this->loader->add_action( 'woocommerce_checkout_update_order_meta', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
+			// html unssubcribe whatsapp notification.
+			$this->loader->add_action( 'wps_mfw_extend_membership_account_tab', $mfw_plugin_public, 'wps_mfw_unsubscribe_whatsapp_notification', 10, 1 );
 		}
 	}
 
@@ -592,6 +602,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-reports-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-offer-notify-settings'] = array(
+				'title'       => esc_html__( 'Offer Notification', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-offer-notify-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php',
 			);
 
 			/**
@@ -870,7 +885,7 @@ class Membership_For_Woocommerce {
 									>
 								</label>
 								<div class="mdc-text-field-helper-line">
-									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? esc_attr( $mfw_component['description'] ) : '' ); ?></div>
+									<div class="mdc-text-field-helper-text--persistent wps-helper-text" id="" aria-hidden="true"><?php echo ( isset( $mfw_component['description'] ) ? wp_kses_post( $mfw_component['description'] ) : '' ); ?></div>
 								</div>
 							</div>
 						</div>

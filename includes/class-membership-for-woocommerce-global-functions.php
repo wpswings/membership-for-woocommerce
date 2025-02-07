@@ -727,7 +727,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				} else {
 
 					$website   = get_site_url();
-					$user_name = $fields['membership_billing_first_name'] . '-' . rand();
+					$user_name = $fields['membership_billing_first_name'] . '-' . wp_rand();
 					$password  = $fields['membership_billing_first_name'] . substr( $fields['membership_billing_phone'], -4, 4 );
 					update_option( 'user_password', $password );
 					$userdata = array(
@@ -919,7 +919,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					</tr>
 
 					<tr align="right">
-						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html_e( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong></td>
+						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -1162,6 +1162,9 @@ class Membership_For_Woocommerce_Global_Functions {
 
 				case 'plan_name':
 					$result = $plan_info['post_title'];
+					break;
+				case 'expiration':
+					$result = wps_membership_get_meta_data( $post_id, 'member_expiry', true );
 					break;
 			}
 		}

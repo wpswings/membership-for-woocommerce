@@ -606,7 +606,7 @@ function wps_mfw_upgrade_pro_popup() {
 			<!-- Offer categories section start -->
 			<tr>
 				<th scope="row" class="titledesc">
-					<label for="wps_membership_offer_category_select"><?php esc_html_e( 'Included Product Categories', 'membership-for-woocommerce' ); ?></label>
+					<label for="wps_membership_offer_category_select"><?php esc_html_e( 'Included Product Categories Test', 'membership-for-woocommerce' ); ?></label>
 					<?php
 					$description = esc_html__( 'Select the categories you want to include in Membership Plan.', 'membership-for-woocommerce' );
 					$instance->tool_tip( $description );
@@ -625,7 +625,7 @@ function wps_mfw_upgrade_pro_popup() {
 
 									$category_name = $instance->get_category_title( $single_target_category_id );
 									?>
-									<option value="<?php echo esc_html( $single_target_category_id ); ?>" <?php selected( $single_target_category_id, $wps_membership_plan_target_categories, true ); ?>><?php echo( esc_html( $category_name ) . '(#' . esc_html( $single_target_category_id ) . ')' ); ?></option>
+									<option value="<?php echo esc_html( $single_target_category_id ); ?>"<?php selected( in_array( $single_target_category_id, $wps_membership_plan_target_categories, true ) ); ?>><?php echo( esc_html( $category_name ) . '(#' . esc_html( $single_target_category_id ) . ')' ); ?></option>
 									<?php
 								}
 							}

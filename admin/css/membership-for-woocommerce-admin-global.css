@@ -271,3 +271,102 @@ input[type=number] {
     }
 }
 
+/* Notify on whatsapp start */
+
+
+.wps_wpr_main_offer_wrapper article {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 290px 1fr;
+    margin: 0 0 20px;
+    align-items: center;
+    font-family: 'NunitoSans-SemiBold';
+}
+
+.wps_wpr_offer_notify_main_wrappers {
+    margin: 40px 0;
+}
+
+h4.wps_wpr_offer_notify_settings_heading {
+    font-weight: 600;
+    line-height: 1.25;
+    font-size: 24px;
+    margin: 0 0 25px;
+}
+
+.wps_wpr_main_offer_wrapper article label {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px;
+    letter-spacing: 0.3px;
+    color: #3c434a;
+}
+
+.wps_wpr_main_offer_wrapper article .wps_wpr_enable_offer_notices.wps_wpr_label_notice {
+    display: block;
+    margin: 5px 0 0;
+}
+
+.wps_wpr_enable_offer_setting_wrapper .select2 {
+    max-width: 345px;
+    width: 100%!important;
+}
+
+input#wps_wpr_send_on_whatsap_btn {
+    padding: 18px 24px;
+    border-radius: 50px;
+    border: none;
+    background: #0d9d4b;
+    color: white;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s linear;
+}
+
+input#wps_wpr_send_on_whatsap_btn:hover {
+    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+    opacity: 0.9;
+}
+
+.wps_wpr_offer_msg_notice {
+    font-size: 16px;
+    padding: 15px;
+    display: inline-block;
+}
+
+.wps_wpr_preview_template_img {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    text-align: center;
+    z-index: 99999;
+}
+
+/* Centered Image */
+.wps_wpr_preview_template_img img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px){
+    .wps_wpr_main_offer_wrapper article {
+        grid-template-columns: 1fr;
+    }
+
+    textarea.wps_wpr_offer_message {
+        width: 100%;
+    }
+    
+}

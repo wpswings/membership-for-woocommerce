@@ -17,7 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 
 }
-echo '<pre>'; echo 'data'; print_r( 'data' ); echo '</pre>';
 // Creating Instance of the WC_Countries class.
 $country_class = new WC_Countries();
 

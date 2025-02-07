@@ -642,7 +642,7 @@ class Membership_For_Woocommerce_Common {
 					if ( 'on' == $is_user_created ) {
 
 						$website   = get_site_url();
-						$user_name = $billing_first_name . '-' . rand();
+						$user_name = $billing_first_name . '-' . wp_rand();
 						$password  = $billing_first_name . substr( $billing_phone, -4, 4 );
 						update_option( 'user_password', $password );
 						$userdata = array(
@@ -705,15 +705,15 @@ class Membership_For_Woocommerce_Common {
 
 						wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
 						wps_membership_update_meta_data( $subscription_id, 'wps_next_payment_date', $expiry_date );
-						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) && ! empty( $plan_obj['plan_id'] ) ) {
+						if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) && ! empty( $plan_obj['ID'] ) ) {
 							if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
 
-								$access_type = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_access_type', true );
+								$access_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
 								$current_date = gmdate( 'Y-m-d' );
 								if ( 'delay_type' == $access_type ) {
 
-									$time_duration      = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_time_duration', true );
-									$time_duration_type = wps_membership_get_meta_data( $plan_obj['plan_id'], 'wps_membership_plan_time_duration_type', true );
+									$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
+									$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
 									$current_date       = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
 								}
 								$current_time         = current_time( 'timestamp' );
@@ -944,6 +944,32 @@ class Membership_For_Woocommerce_Common {
 				wps_membership_update_meta_data( $membership_id - 1, 'wps_subscription_status', 'cancelled' );
 			}
 		}
+	}
+
+	/**
+	 * Stop whatsapp notify via ajax call.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_stop_whatsapp_notification() {
+		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
+
+		$user_id  = get_current_user_id();
+		$stop     = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
+		$response = array();
+		if ( 'yes' === $stop ) {
+
+			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'yes' );
+			$response['result'] = true;
+			$response['msg']    = esc_html__( 'whatsapp notification deactivated successfully !!', 'membership-for-woocommerce' );
+		} else {
+
+			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'no' );
+			$response['result'] = true;
+			$response['msg']    = esc_html__( 'whatsapp notification activated!!', 'membership-for-woocommerce' );
+		}
+		wp_send_json( $response );
+		wp_die();
 	}
 
 }

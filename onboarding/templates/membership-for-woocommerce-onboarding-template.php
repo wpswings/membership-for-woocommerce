@@ -23,7 +23,7 @@ apply_filters( 'wps_mfw_on_boarding_form_fields', array() );
 ?>
 
 <?php if ( ! empty( $mfw_onboarding_form_fields ) ) : ?>
-	<div class="mdc-dialog mdc-dialog--scrollable <? echo
+	<div class="mdc-dialog mdc-dialog--scrollable <?php echo
 	wp_kses_post( apply_filters('wps_stand_dialog_classes', 'membership-for-woocommerce' ) ); ?>">
 		<div class="wps-mfw-on-boarding-wrapper-background mdc-dialog__container">
 			<div class="wps-mfw-on-boarding-wrapper mdc-dialog__surface" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title" aria-describedby="my-dialog-content">

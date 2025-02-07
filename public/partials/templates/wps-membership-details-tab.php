@@ -595,5 +595,7 @@ if ( isset( $_GET['view-dashboard'] ) ) {
 		</div>
 		<?php
 	endif;
+
+	do_action( 'wps_mfw_extend_membership_account_tab', $user_id );
 }
 ?>

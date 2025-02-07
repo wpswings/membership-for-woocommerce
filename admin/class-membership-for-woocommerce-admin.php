@@ -286,7 +286,8 @@ class Membership_For_Woocommerce_Admin {
 					'wps_membership_for_woo_add_new_plan_script',
 					'add_new_obj',
 					array(
-						'ajax_url' => admin_url( 'admin-ajax.php' ),
+						'ajax_url'  => admin_url( 'admin-ajax.php' ),
+						'wps_nonce' => wp_create_nonce( 'wps-offer-nonce' ),
 					)
 				);
 
@@ -360,7 +361,7 @@ class Membership_For_Woocommerce_Admin {
 			global $product;
 			$products_array [ $product->get_id() ] = $product->get_name();
 		endwhile;
-		wp_reset_query();
+		wp_reset_postdata();
 		return $products_array;
 	}
 
@@ -1752,12 +1753,20 @@ class Membership_For_Woocommerce_Admin {
 
 				//phpcs:disable
 				foreach ( $all_posts as $post_datas ) {
+
+					if ( 'Lifetime' == $this->global_class->get_member_details( $post_datas, 'expiration' ) ) {
+
+						$expiry = $this->global_class->get_member_details( $post_datas, 'expiration' );
+					} else {
+
+						$expiry = gmdate( 'Y-m-d', $this->global_class->get_member_details( $post_datas, 'expiration' ) );
+					}
 					setup_postdata( $post_datas );
 					fputcsv(
 						$file,
 						array(
 							$post_datas->ID,
-							! empty( $post_datas->post_author ) ? get_the_author_meta( 'display_name', $post_datas->post_author ) : '',
+							get_the_author_meta( 'display_name', wps_membership_get_meta_data( $post_datas->ID, 'wps_member_user', true ) ),
 							get_the_author_meta( 'user_email' ),
 							$this->global_class->get_member_details( $post_datas, 'name' ),
 							$this->global_class->get_member_details( $post_datas, 'email' ),
@@ -1765,7 +1774,7 @@ class Membership_For_Woocommerce_Admin {
 							$this->global_class->get_member_details( $post_datas, 'plan_id' ),
 							$this->global_class->get_member_details( $post_datas, 'plan_name' ),
 							$this->global_class->get_member_details( $post_datas, 'plan_status' ),
-							'',
+							$expiry,
 						)
 					);
 				}
@@ -3807,7 +3816,7 @@ class Membership_For_Woocommerce_Admin {
 	 * This function is used to set array index.
 	 *
 	 * @param  array  $arr            arr.
-	 * @param  array  $inserted_array inserted_array.
+	 * @param  array  $inserted_array inserted_array.wps_mfw_other_html_settings
 	 * @param  string $index          index.
 	 * @return array
 	 */
@@ -3817,5 +3826,290 @@ class Membership_For_Woocommerce_Admin {
 		$arraystart = array_splice( $arr, 0, $index );
 		return ( array_merge( $arraystart, $inserted_array, $arrayend ) );
 	}
+
+	/**
+	 * This function is used to create whatsapp api notification settings.
+	 *
+	 * @param  array $wps_whatsapp_settings wps_whatsapp_settings.
+	 * @return array
+	 */
+	public function wps_mfw_whatsapp_api_settings( $wps_whatsapp_settings ) {
+
+		$url              = '<a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F967217188484687%2Fwhatsapp-business%2Fwa-dev-console%2F%3Fbusiness_id%3D1466242894064567#" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+		$num              = '<a href="https://developers.facebook.com/apps/1306844587187157/whatsapp-business/wa-dev-console/?business_id=1466242894064567" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+		$preview          = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
+		$wps_app_settings = array(
+			array(
+				'title'       => __( 'Enable Whatsapp API Features', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this settings to use whatsapp notification features.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_enable_whatsapp_api_feature',
+				'value'       => get_option( 'wps_wpr_enable_whatsapp_api_feature' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Enter Access Token', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => /* translators: %s: token */ sprintf( __( 'Please enter your access token. To create a token, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ),
+				'placeholder' => __( 'Enter Coupon', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_whatsapp_access_token',
+				'value'       => get_option( 'wps_wpr_whatsapp_access_token' ),
+			),
+			array(
+				'title'       => __( 'Enter Phone Number ID', 'membership-for-woocommerce' ),
+				'type'        => 'number',
+				'description' => /* translators: %s: Phone number */ sprintf( __( 'Please enter you phone number id. To get Phone number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $num ) ),
+				'placeholder' => __( 'Phone no.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_whatsapp_phone_num_id',
+				'value'       => get_option( 'wps_wpr_whatsapp_phone_num_id' ),
+			),
+			array(
+				'title'       => __( 'Enter whatsapp template name', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => /* translators: %s: template */ sprintf( __( 'The WhatsApp template name must remain fixed and cannot be modified. You can use this name when creating a custom template, %s', 'membership-for-woocommerce' ), wp_kses_post( $preview ) ),
+				'placeholder' => __( 'Template Name', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_whatsapp_msg_temp_name',
+				'value'       => ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : 'membership_template',
+			),
+			array(
+				'type'        => 'multi-button',
+				'id'          => 'wps_wpr_save_whatsapp_api_settings',
+				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+		);
+		$wps_whatsapp_settings = array_merge( $wps_whatsapp_settings, $wps_app_settings );
+		return $wps_whatsapp_settings;
+	}
+
+	/**
+	 * Save Whatsapp API settings here.
+	 *
+	 * @return void
+	 */
+	public function mfw_admin_save_whatsapp_api_settings() {
+
+		global $mfw_wps_mfw_obj;
+		if ( isset( $_POST['wps_wpr_save_whatsapp_api_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag     = false;
+			$mfw_genaral_settings = apply_filters( 'mfw_whatsapp_api_settings_array', array() );
+			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
+			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
+			}
+
+			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+				unset( $mfw_genaral_settings[ $mfw_button_index ] );
+				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
+
+					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
+						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+							} else {
+
+								update_option( $mfw_genaral_setting['id'], '' );
+							}
+						} else {
+
+							$wps_mfw_gen_flag = true;
+						}
+					}
+				}
+
+				if ( $wps_mfw_gen_flag ) {
+
+					$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+				} else {
+
+					$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+				}
+			}
+		}
+	}
+
+	/**
+	 * This function is used to send offer notification on whatsapp.
+	 *
+	 * @return void
+	 */
+	public function wps_wpr_send_offer_message_on_whatsapp() {
+		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
+		
+		$response        = array();
+		$response['msg'] = esc_html__( 'Whatsapp Notification feature is not enable.', 'membership-for-woocommerce' );
+		if ( 'on' === get_option( 'wps_wpr_enable_whatsapp_api_feature', 'no' ) ) {
+
+			$wps_org_offer_plan_id  = ! empty( $_POST['wps_org_offer_plan_id'] ) && is_array( $_POST['wps_org_offer_plan_id'] ) ? map_deep( wp_unslash( $_POST['wps_org_offer_plan_id'] ), 'sanitize_text_field' ) : array();
+			$wps_wpr_offer_message  = ! empty( $_POST['wps_wpr_offer_message'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_offer_message'] ) ) : esc_html__( 'Limited-time deal: Grab amazing discounts on your favorite items!', 'membership-for-woocommerce' );
+			$users                  = get_users( array( 'fields' => 'ids' ) );
+			$wps_wpr_store_match_id = array();
+			update_option( 'wps_wpr_offer_message', $wps_wpr_offer_message );
+			if ( ! empty( $users ) && is_array( $users ) ) {
+				foreach ( $users as $user_id ) {
+
+					$wps_mfw_stop_whatsapp = get_user_meta( $user_id, 'wps_mfw_stop_whatsapp', true );
+					if ( 'yes' === $wps_mfw_stop_whatsapp ) {
+
+						continue;
+					}
+
+					$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+					if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+						foreach ( $current_memberships as $member_assigned_id ) {
+
+							$active_plan = wps_membership_get_meta_data( $member_assigned_id, 'plan_obj', true );
+							if ( empty( $active_plan ) ) {
+
+								continue;
+							}
+							if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
+
+								$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+							}
+						}
+					}
+
+					if ( array_key_exists( $user_id, $wps_wpr_store_match_id ) ) {
+
+						$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
+						$country_code                   = $this->get_country_code_by_name( $country_code_name );
+						$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
+						$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
+						$user_obj                       = get_user_by( 'id', $user_id );
+						$wps_wpr_whatsapp_access_token  = ! empty( get_option( 'wps_wpr_whatsapp_access_token' ) ) ? get_option( 'wps_wpr_whatsapp_access_token' ) : '';
+						$wps_wpr_whatsapp_phone_num_id  = ! empty( get_option( 'wps_wpr_whatsapp_phone_num_id' ) ) ? get_option( 'wps_wpr_whatsapp_phone_num_id' ) : '';
+						$wps_wpr_whatsapp_msg_temp_name = ! empty( get_option( 'wps_wpr_whatsapp_msg_temp_name' ) ) ? get_option( 'wps_wpr_whatsapp_msg_temp_name' ) : 'membership_template';
+						$api_header                     = array(
+							'Content-Type: application/json',
+							'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
+						);
+						
+						$curl_data = array(
+							"messaging_product" => "whatsapp",
+							"to" => $whatsapp_number,
+							"type" => "template",
+							"template" => array(
+								"name" => $wps_wpr_whatsapp_msg_temp_name,
+								"language" => array(
+									"code" => "en_US"
+								),
+								"components" => array(
+									array(
+										"type" => "body",
+										"parameters" => array(
+											array(
+												"type" => "text",
+												"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+											),
+											array(
+												"type" => "text",
+												"text" => $wps_wpr_offer_message,
+											),
+										)
+									)
+								)
+							)
+						);
+
+						$data = json_encode( $curl_data );
+
+						// LOAD THE WC LOGGER.
+						$logger = wc_get_logger();
+
+						$curl = curl_init();
+
+						curl_setopt_array( $curl, array(
+						CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
+						CURLOPT_RETURNTRANSFER => true,
+						CURLOPT_ENCODING => '',
+						CURLOPT_MAXREDIRS => 10,
+						CURLOPT_TIMEOUT => 0,
+						CURLOPT_FOLLOWLOCATION => true,
+						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+						CURLOPT_CUSTOMREQUEST => 'POST',
+						CURLOPT_POSTFIELDS =>$data,
+						CURLOPT_HTTPHEADER => $api_header,
+						));
+
+						$response = curl_exec($curl);
+
+						// LOG THE Result.
+						$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
+						curl_close($curl);
+
+						$response = json_decode( $response, true );
+					}
+				}
+			}
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  string $country_code_name country_code_name.
+	 * @return string
+	 */
+	public function get_country_code_by_name( $country_code_name ) {
+
+		$countries = array(
+			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
+			"AL" => ["name" => "Albania", "dial_code" => "+355"],
+			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
+			"US" => ["name" => "United States", "dial_code" => "+1"],
+			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
+			"IN" => ["name" => "India", "dial_code" => "+91"],
+			"AU" => ["name" => "Australia", "dial_code" => "+61"],
+			"CA" => ["name" => "Canada", "dial_code" => "+1"],
+			"CN" => ["name" => "China", "dial_code" => "+86"],
+			"FR" => ["name" => "France", "dial_code" => "+33"],
+			"DE" => ["name" => "Germany", "dial_code" => "+49"],
+			"IT" => ["name" => "Italy", "dial_code" => "+39"],
+			"JP" => ["name" => "Japan", "dial_code" => "+81"],
+			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
+			"RU" => ["name" => "Russia", "dial_code" => "+7"],
+			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
+			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
+			"ES" => ["name" => "Spain", "dial_code" => "+34"],
+			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
+			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
+			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
+			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
+			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
+			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
+			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
+			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
+			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
+			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
+			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
+			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
+			"AT" => ["name" => "Austria", "dial_code" => "+43"],
+			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
+			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
+			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
+			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
+			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
+			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
+			"IL" => ["name" => "Israel", "dial_code" => "+972"],
+			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
+		);
+
+		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
+		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
+	}
+	
 
 }

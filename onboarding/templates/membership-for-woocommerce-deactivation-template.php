@@ -29,7 +29,7 @@ apply_filters( 'wps_mfw_deactivation_form_fields', array() );
 
 ?>
 <?php if ( ! empty( $mfw_onboarding_form_deactivate ) ) : ?>
-	<div id="<?php echo esc_attr( $wps_plugin_onboarding_popup_id ); ?>" class="mdc-dialog mdc-dialog--scrollable <? echo 
+	<div id="<?php echo esc_attr( $wps_plugin_onboarding_popup_id ); ?>" class="mdc-dialog mdc-dialog--scrollable <?php echo 
 	
 	wp_kses_post( apply_filters('wps_stand_dialog_classes', 'membership-for-woocommerce' ) ); ?>">
 		<div class="wps-mfw-on-boarding-wrapper-background mdc-dialog__container">
@@ -53,7 +53,7 @@ apply_filters( 'wps_mfw_deactivation_form_fields', array() );
 								<input type="submit" class="wps-mfw-on-boarding-submit wps-on-boarding-verify mdc-button mdc-button--raised" value="Send Us">
 							</div>
 							<div class="wps-mfw-on-boarding-form-no_thanks">
-								<a href="#" id="<?php echo esc_attr( $wps_plugin_deactivation_id ); ?>" class="<? echo
+								<a href="#" id="<?php echo esc_attr( $wps_plugin_deactivation_id ); ?>" class="<?php echo
 								//desc - filter for trial.
 								wp_kses_post( apply_filters( 'wps_stand_no_thank_classes', 'membership-for-woocommerce-no_thanks' ) ); ?> mdc-button"><?php esc_html_e( 'Skip and Deactivate Now', 'membership-for-woocommerce' ); ?></a>
 							</div>
