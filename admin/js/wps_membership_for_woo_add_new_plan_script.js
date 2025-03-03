@@ -140,7 +140,7 @@ jQuery( document ).ready( function( $ ){
 
             jQuery('.wps_wpr_offer_msg_notice').show();
             jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
-            jQuery('.wps_wpr_offer_msg_notice').html('This is a required fields, please enter some values !!');
+            jQuery('.wps_wpr_offer_msg_notice').html('Please choose a plan !!');
             return false;
         }
     });
@@ -163,5 +163,99 @@ jQuery( document ).ready( function( $ ){
     jQuery(document).on('click', '.wps_wpr_create_whatsapp_token_link', function(){
 
         jQuery(document).find('.wps_wpr_create_whatsapp_token_link').css('color', '#2271b1');
+    });
+
+    // Send SMS notification.
+    jQuery(document).on('click', '#wps_wpr_send_on_sms_btn', function(){
+        
+        var wps_org_offer_plan_id = jQuery('.wps_org_offer_plan_id').val();
+        var wps_wpr_offer_message = jQuery('.wps_wpr_offer_message').val();
+        if (Array.isArray(wps_org_offer_plan_id) && wps_org_offer_plan_id.length !== 0) {
+
+            jQuery('.wps_wpr_offer_msg_notice').hide();
+            jQuery('.wps_wpr_whatsapp_loader').show();
+            jQuery('#wps_wpr_send_on_sms_btn').prop('disabled', true);
+            var data = {
+                'action'                : 'send_offer_message_via_sms',
+                'nonce'                 : add_new_obj.wps_nonce,
+                'wps_org_offer_plan_id' : wps_org_offer_plan_id,
+                'wps_wpr_offer_message' : wps_wpr_offer_message,
+            };
+            jQuery.ajax({
+                'method'   : 'POST',
+                'url'      : add_new_obj.ajax_url,
+                'dataType' : 'json',
+                'data'     : data,
+                success    : function(response) {
+
+                    jQuery('.wps_wpr_whatsapp_loader').hide();
+                    jQuery('#wps_wpr_send_on_sms_btn').prop('disabled', false);
+                    if ( response.result == true ) {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'green');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.msg);
+                    } else {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.msg);
+                    }           
+                }
+            });
+        } else {
+
+            jQuery('.wps_wpr_offer_msg_notice').show();
+            jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+            jQuery('.wps_wpr_offer_msg_notice').html('Please choose a plan !!');
+            return false;
+        }
+    });
+
+    // send offer notify on Mail.
+    jQuery(document).on('click', '#wps_wpr_send_on_mail_btn', function(){
+        
+        var wps_org_offer_plan_id = jQuery('.wps_org_offer_plan_id').val();
+        var wps_wpr_offer_message = jQuery('.wps_wpr_offer_message').val();
+        if (Array.isArray(wps_org_offer_plan_id) && wps_org_offer_plan_id.length !== 0) {
+
+            jQuery('.wps_wpr_offer_msg_notice').hide();
+            jQuery('.wps_wpr_whatsapp_loader').show();
+            jQuery('#wps_wpr_send_on_mail_btn').prop('disabled', true);
+            var data = {
+                'action'                : 'send_offer_messages_via_email',
+                'nonce'                 : add_new_obj.wps_nonce,
+                'wps_org_offer_plan_id' : wps_org_offer_plan_id,
+                'wps_wpr_offer_message' : wps_wpr_offer_message,
+            };
+            jQuery.ajax({
+                'method'   : 'POST',
+                'url'      : add_new_obj.ajax_url,
+                'dataType' : 'json',
+                'data'     : data,
+                success    : function(response) {
+
+                    jQuery('.wps_wpr_whatsapp_loader').hide();
+                    jQuery('#wps_wpr_send_on_mail_btn').prop('disabled', false);
+                    if ( response.result == true ) {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'green');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.msg);
+                    } else {
+
+                        jQuery('.wps_wpr_offer_msg_notice').show();
+                        jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+                        jQuery('.wps_wpr_offer_msg_notice').html(response.msg);
+                    }
+                }
+            });
+        } else {
+
+            jQuery('.wps_wpr_offer_msg_notice').show();
+            jQuery('.wps_wpr_offer_msg_notice').css('color', 'red');
+            jQuery('.wps_wpr_offer_msg_notice').html('Please choose a plan !!');
+            return false;
+        }
     });
 });
