@@ -3926,9 +3926,8 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_mfw_sms_api_settings( $sms_settings ) {
 
-		$url              = '<a href="https://business.facebook.com/business/loginpage/?next=https%3A%2F%2Fdevelopers.facebook.com%2Fapps%2F967217188484687%2Fwhatsapp-business%2Fwa-dev-console%2F%3Fbusiness_id%3D1466242894064567#" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
-		$num              = '<a href="https://developers.facebook.com/apps/1306844587187157/whatsapp-business/wa-dev-console/?business_id=1466242894064567" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
-		$preview          = '<a href="#" target="_blank" class="wps_wpr_preview_whatsapp_sample">Preview Sample Template</a>';
+		$url              = '<a href="https://console.twilio.com/?frameUrl=%2Fconsole%3Fx-target-region%3Dus1" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
+		$num              = '<a href="https://console.twilio.com/us1/develop/phone-numbers/manage/search?isoCountry=US&types[]=Local&types[]=Mobile&types[]=Tollfree&capabilities[]=Fax&capabilities[]=Mms&capabilities[]=Sms&capabilities[]=Voice&searchTerm=&searchFilter=left&searchType=number" class="wps_wpr_create_whatsapp_token_link" target="_blank">Click Here</a>';
 		$wps_app_settings = array(
 			array(
 				'title'       => __( 'Enable SMS API Features', 'membership-for-woocommerce' ),
@@ -3961,7 +3960,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'title'       => __( 'Enter Account Twilio Number', 'membership-for-woocommerce' ),
 				'type'        => 'number',
-				'description' => /* translators: %s: twilio number */ sprintf( __( 'Please enter your twilio account number. To get twilio number ID, %s', 'membership-for-woocommerce' ), wp_kses_post( $num ) ),
+				'description' => /* translators: %s: twilio number */ sprintf( __( 'Please enter a valid twilio account number. To Buy a Twilio Number, %s', 'membership-for-woocommerce' ), wp_kses_post( $num ) ),
 				'placeholder' => __( 'Enter Twilio no', 'membership-for-woocommerce' ),
 				'id'          => 'wps_wpr_sms_twilio_num_id',
 				'value'       => get_option( 'wps_wpr_sms_twilio_num_id' ),
