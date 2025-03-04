@@ -125,18 +125,18 @@ jQuery(document).ready(function ($) {
 
 				if ( response.result == true ) {
 
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').show();
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').css('color', 'green');
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').html(response.msg);
+					jQuery('.mfw_whatsapp_stop_notice').show();
+					jQuery('.mfw_whatsapp_stop_notice').css('color', 'red');
+					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
 				} else {
 
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').show();
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').css('color', 'red');
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').html(response.msg);
+					jQuery('.mfw_whatsapp_stop_notice').show();
+					jQuery('.mfw_whatsapp_stop_notice').css('color', 'green');
+					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
 				}
 
 				setTimeout(() => {
-					_this.parents('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').hide();
+					jQuery('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').hide();
 				}, 15000);
 			}
 		});

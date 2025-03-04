@@ -229,4 +229,81 @@ jQuery(document).on('click', '.wps_members_plans label', function() {
 // add members dashboard color.
 var root = jQuery(':root');
 root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_color );
+
+jQuery(document).on('click','.wps-msfw_membership-history',function(){
+	jQuery('.wps_msfw__new_layout-table-for-detail').toggleClass('wps_msfw__new_layout-table-for-detail--show');
+});
+jQuery(document).ready(function ($) {
+	var rowsPerPage = 3; // Number of rows per page
+    var $table = $(".wps_msfw__new_layout"); // Select the table
+    var $rows = $table.find("tbody tr"); // Select all rows inside tbody
+    var totalRows = $rows.length;
+    var totalPages = Math.ceil(totalRows / rowsPerPage);
+    var currentPage = 1;
+
+    function showPage(page) {
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+        currentPage = page;
+
+        var start = (currentPage - 1) * rowsPerPage;
+        var end = start + rowsPerPage;
+        $rows.hide().slice(start, end).show();
+
+        updatePagination();
+    }
+
+    function updatePagination() {
+        var paginationHtml = `
+            <button class="prev-btn">Prev</button>
+            <button class="first-btn">First</button>
+            <input type="number" class="page-input" value="${currentPage}" min="1" max="${totalPages}" />
+            <button class="last-btn">Last</button>
+            <button class="next-btn">Next</button>
+        `;
+
+        $(".wps-mfw_md-pagination").html(paginationHtml);
+
+        // Disable buttons when at the start or end
+        $(".prev-btn").prop("disabled", currentPage === 1);
+        $(".next-btn").prop("disabled", currentPage === totalPages);
+    }
+
+    // Initial load
+    showPage(currentPage);
+
+    // Click event for buttons
+    $(document).on("click", ".prev-btn", function () {
+        showPage(currentPage - 1);
+    });
+
+    $(document).on("click", ".next-btn", function () {
+        showPage(currentPage + 1);
+    });
+
+    $(document).on("click", ".first-btn", function () {
+        showPage(1);
+    });
+
+    $(document).on("click", ".last-btn", function () {
+        showPage(totalPages);
+    });
+
+    // Handle input field
+    $(document).on("change", ".page-input", function () {
+        var page = parseInt($(this).val());
+        if (!isNaN(page)) {
+            showPage(page);
+        }
+    });
+
+    $(document).on("keypress", ".page-input", function (e) {
+        if (e.which === 13) { // Enter key
+            var page = parseInt($(this).val());
+            if (!isNaN(page)) {
+                showPage(page);
+            }
+        }
+    });
+});
  

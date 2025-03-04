@@ -93,10 +93,16 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 				</article>
 			</section>
         </main>
-        <div class="wps_wpr_whatsapp_wrappers">
-            <input type="button" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" value="<?php esc_html_e( 'Whatsapp', 'membership-for-woocommerce' ); ?>">
-			<input type="button" name="wps_wpr_send_on_sms_btn" id="wps_wpr_send_on_sms_btn" value="<?php esc_html_e( 'Send SMS', 'membership-for-woocommerce' ); ?>">
-			<input type="button" name="wps_wpr_send_on_mail_btn" id="wps_wpr_send_on_mail_btn" value="<?php esc_html_e( 'Send Mail', 'membership-for-woocommerce' ); ?>">
+        <div class="wps_wpr_offer-notice_wrappers">
+            <button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" title="Whatsapp">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/whatsapp-two.png'; ?>'>
+			</button>
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_sms_btn" id="wps_wpr_send_on_sms_btn" title="Send SMS">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/sms.png'; ?>'>
+			</button>
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_mail_btn" id="wps_wpr_send_on_mail_btn" title="Send Email">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/email.png'; ?>'>
+			</button>
             <span style="display: none;" class="wps_wpr_whatsapp_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
 			<div style="display: none;" class="wps_wpr_offer_msg_notice"></div>
         </div>

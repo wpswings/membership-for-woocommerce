@@ -741,10 +741,11 @@ class Membership_For_Woocommerce_Admin {
 		$mfw_settings_general_before = array_merge( $mfw_settings_general_before, $after_email );
 		$mfw_settings_general_button = array(
 			array(
-				'type'  => 'button',
+				'type'  => 'multi-button',
 				'id'    => 'mfw_button_demo',
-				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
 				'class' => 'mfw-button-class',
+				'multi-class' => 'wps_mfw_floating_button',
 			),
 		);
 		$mfw_settings_general = array_merge( $mfw_settings_general_before, $mfw_settings_general_button );
@@ -3503,7 +3504,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_api_settings',
-				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
 				'class'       => 'mfw-button-class',
 			),
 			array(
@@ -3641,6 +3642,7 @@ class Membership_For_Woocommerce_Admin {
 				'value' => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? '#ff7700' : get_option( 'wps_msfw_new_layout_color' ),
 				'class' => 'mfw-text-class',
 				'placeholder' => __( 'Background Color', 'membership-for-woocommerce' ),
+				'form-title'  => 'wps_mfw_add_border',
 			),
 			array(
 				'title'       => __( 'Enable this to show the active membership section', 'membership-for-woocommerce' ),
@@ -3659,7 +3661,7 @@ class Membership_For_Woocommerce_Admin {
 				'class'       => 'mfw-radio-switch-class',
 			),
 			array(
-				'title'       => __( 'Enable this to show the cart maximun discount section', 'membership-for-woocommerce' ),
+				'title'       => __( 'Enable this to show the cart maximum discount section', 'membership-for-woocommerce' ),
 				'type'        => 'radio-switch',
 				'description' => __( 'Enable this setting to display the maximum cart discount amount section on the membership dashboard.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_mfw_show_cart_max_discount_section',
@@ -3673,6 +3675,7 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_mfw_mute_offer_notify',
 				'value'       => get_option( 'wps_mfw_mute_offer_notify' ),
 				'class'       => 'mfw-radio-switch-class',
+				'form-title'  => 'wps_mfw_add_border',
 			),
 			array(
 				'title'       => __( 'Enable Redirection Settings', 'membership-for-woocommerce' ),
@@ -3693,6 +3696,7 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_msfw_page_for_redirection_user',
 				'value'       => get_option( 'wps_msfw_page_for_redirection_user' ),
 				'options'     => $this->wps_msfw_list_all_wprdpress_pages(),
+				'form-title'  => 'wps_mfw_add_border',
 			),
 			array(
 				'title'       => __( 'Display the header on the Membership page.', 'membership-for-woocommerce' ),
@@ -3709,6 +3713,7 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_show_footer_on_membership_page',
 				'value'       => get_option( 'wps_show_footer_on_membership_page' ),
 				'class'       => 'mfw-radio-switch-class',
+				'form-title'  => 'wps_mfw_add_border',
 			),
 			array(
 				'title'       => __( 'Create a one-time discount coupon for new members.', 'membership-for-woocommerce' ),
@@ -3737,8 +3742,9 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
-				'button_text' => __( 'Save', 'membership-for-woocommerce' ),
+				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
 				'class'       => 'mfw-button-class',
+				'multi-class' => 'wps_mfw_floating_button',
 			),
 		);
 		$mfw_settings_other = array_merge( $mfw_settings_other, $wps_other_settings );
@@ -3965,6 +3971,7 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_wpr_save_whatsapp_api_settings',
 				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
 				'class'       => 'mfw-button-class',
+				'multi-class' => 'wps_mfw_floating_button',
 			),
 		);
 		$sms_settings = array_merge( $sms_settings, $wps_app_settings );

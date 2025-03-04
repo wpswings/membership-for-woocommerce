@@ -4836,42 +4836,26 @@ class Membership_For_Woocommerce_Public {
 		$wps_mfw_email_sms     = get_user_meta( $user_id, 'wps_mfw_email_sms', true );
 		if ( 'on' === get_option( 'wps_mfw_mute_offer_notify', 'on' ) ) : ?>
 			<div class="wps_wpr_offer_notify_main_wrappers">
-				<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate Whatsapp Notification', 'membership-for-woocommerce' ); ?></h4>
+				<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate Notification', 'membership-for-woocommerce' ); ?></h4>
 				<main class="wps_wpr_main_offer_wrapper">
 					<section>
 						<article>
 							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Tap To Mute notifications', 'membership-for-woocommerce' ); ?></label>
+								<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Whatsapp Notification', 'membership-for-woocommerce' ); ?></label>
 							</div>
-							<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
 						</article>
-					</section>
-				</main>
-			</div>
-			<div class="wps_wpr_offer_notify_main_wrappers">
-				<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate SMS Notification', 'membership-for-woocommerce' ); ?></h4>
-				<main class="wps_wpr_main_offer_wrapper">
-					<section>
 						<article>
 							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_mfw_stop_sms_notify" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?>><?php esc_html_e( 'Tap To Mute notifications', 'membership-for-woocommerce' ); ?></label>
+								<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_mfw_stop_sms_notify" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?>><?php esc_html_e( 'SMS Notifications', 'membership-for-woocommerce' ); ?></label>
 							</div>
-							<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
 						</article>
-					</section>
-				</main>
-			</div>
-			<div class="wps_wpr_offer_notify_main_wrappers">
-				<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate Email Notification', 'membership-for-woocommerce' ); ?></h4>
-				<main class="wps_wpr_main_offer_wrapper">
-					<section>
 						<article>
 							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_mfw_stop_email_notify" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?>><?php esc_html_e( 'Tap To Mute notifications', 'membership-for-woocommerce' ); ?></label>
+								<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_mfw_stop_email_notify" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?>><?php esc_html_e( 'Email Notifications', 'membership-for-woocommerce' ); ?></label>
 							</div>
-							<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
 						</article>
 					</section>
+					<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
 				</main>
 			</div>
 		<?php endif;

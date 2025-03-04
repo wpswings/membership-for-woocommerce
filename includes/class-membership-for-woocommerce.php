@@ -870,7 +870,7 @@ class Membership_For_Woocommerce {
 						case 'email':
 						case 'text':
 							?>
-						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?> <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
@@ -1024,7 +1024,7 @@ class Membership_For_Woocommerce {
 						case 'select':
 						case 'multiselect':
 							?>
-						<div class="wps-form-group">
+						<div class="wps-form-group <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label class="wps-form-label" for="<?php echo esc_attr( $mfw_component['id'] ); ?>"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 								<?php
@@ -1139,7 +1139,7 @@ class Membership_For_Woocommerce {
 						case 'radio-switch':
 							?>
 
-						<div class="wps-form-group">
+						<div class="wps-form-group <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label for="" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							
@@ -1188,10 +1188,12 @@ class Membership_For_Woocommerce {
 							break;
 						case 'multi-button':
 							?>
-							<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
-								id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
-								<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
-							</button>
+							<div class="<?php echo ( isset( $mfw_component['multi-class'] ) ? esc_html( $mfw_component['multi-class'] ) : '' ); ?>">
+								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
+								</button>
+							</div>
 							<?php
 							break;
 
@@ -1252,7 +1254,7 @@ class Membership_For_Woocommerce {
 						case 'date':
 						case 'file':
 							?>
-							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?> <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 								<div class="wps-form-group__label">
 									<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 								</div>
