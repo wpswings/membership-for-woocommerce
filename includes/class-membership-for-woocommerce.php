@@ -316,6 +316,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_whatsapp_api_settings' );
 		// sms api notification settings.
 		$this->loader->add_filter( 'mfw_sms_api_settings_array', $mfw_plugin_admin, 'wps_mfw_sms_api_settings', 10, 1 );
+		// email api notification settings.
+		$this->loader->add_filter( 'mfw_email_api_settings_array', $mfw_plugin_admin, 'wps_mfw_email_api_settings', 20, 1 );
 		// send offer message on whatsapp.
 		$this->loader->add_action( 'wp_ajax_send_offer_message_on_whatsapp', $mfw_plugin_admin, 'wps_wpr_send_offer_message_on_whatsapp', 10 );
 		// send offer message via sms.

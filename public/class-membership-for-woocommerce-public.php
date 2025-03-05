@@ -1809,30 +1809,21 @@ class Membership_For_Woocommerce_Public {
 									esc_html( $wps_membership_subscription_expiry_type ),
 								);
 							}
-						} else {
 
-							// show membership duration.
-							$wps_mfw_trial_fee_html .= sprintf(
-								'%s %s %s',
-								__( ' For ', 'membership-for-woocommerce' ),
-								esc_html( $wps_membership_plan_duration ),
-								esc_html( $wps_membership_subscription_expiry_type ),
-							);
-						}
+							// check free trial features is enable.
+							if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
 
-						// check free trial features is enable.
-						if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
+								// show free trial notice.
+								if ( $wps_sfw_subscription_free_trial_number > 0 ) {
 
-							// show free trial notice.
-							if ( $wps_sfw_subscription_free_trial_number > 0 ) {
-
-								$wps_mfw_trial_fee_html .= sprintf(
-									'%s %s %s %s',
-									__( ' and ', 'membership-for-woocommerce' ),
-									esc_html( $wps_sfw_subscription_free_trial_number ),
-									esc_html( $wps_sfw_subscription_free_trial_interval ),
-									__( ' free trial ', 'membership-for-woocommerce' ),
-								);
+									$wps_mfw_trial_fee_html .= sprintf(
+										'%s %s %s %s',
+										__( ' and ', 'membership-for-woocommerce' ),
+										esc_html( $wps_sfw_subscription_free_trial_number ),
+										esc_html( $wps_sfw_subscription_free_trial_interval ),
+										__( ' free trial ', 'membership-for-woocommerce' ),
+									);
+								}
 							}
 
 							// show signup fee notice.
@@ -1845,6 +1836,15 @@ class Membership_For_Woocommerce_Public {
 									__( ' signup fee', 'membership-for-woocommerce' ),
 								);
 							}
+						} else {
+
+							// show membership duration.
+							$wps_mfw_trial_fee_html .= sprintf(
+								'%s %s %s',
+								__( ' For ', 'membership-for-woocommerce' ),
+								esc_html( $wps_membership_plan_duration ),
+								esc_html( $wps_membership_subscription_expiry_type ),
+							);
 						}
 						$description .= '<div class="wps_msfw_free_trial_msg">' . $wps_mfw_trial_fee_html . '</div>';
 					}
@@ -3321,31 +3321,32 @@ class Membership_For_Woocommerce_Public {
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
 
-							// calculating initial fee and free trial membership.
+							// get membership subscription settings values.
 							$wps_mfw_enable_free_trial_settings        = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_mfw_enable_free_trial_settings', true );
 							$wps_sfw_subscription_initial_signup_price = floatval( wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_initial_signup_price', true ) );
 							$wps_sfw_subscription_free_trial_number    = floatval( wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_free_trial_number', true ) );
 							$wps_sfw_subscription_free_trial_interval  = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_free_trial_interval', true );
 							$plan_price                                = $cart_contents_value['plan_price'];
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_membership_plan_price', $plan_price );
-							if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
-								if ( $wps_sfw_subscription_free_trial_number > 0 ) {
+							// calculating free trial membership.
+							if ( 'yes' === $wps_mfw_enable_free_trial_settings && $wps_sfw_subscription_free_trial_number > 0 ) {
 
-									$plan_price = $wps_sfw_subscription_initial_signup_price;
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', intval($wps_sfw_subscription_free_trial_number) );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', substr( $wps_sfw_subscription_free_trial_interval, 0, -1  ) );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
-								} else {
-					
-									$plan_price = $plan_price + $wps_sfw_subscription_initial_signup_price;
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', '' );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', '' );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
-								}
+								$plan_price = $wps_sfw_subscription_initial_signup_price;
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', intval($wps_sfw_subscription_free_trial_number) );
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', substr( $wps_sfw_subscription_free_trial_interval, 0, -1  ) );
 							} else {
 
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', '' );
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', '' );
+							}
+							// initial fee calculation.
+							if ( $wps_sfw_subscription_initial_signup_price > 0 ) {
+
+								$plan_price = $plan_price + $wps_sfw_subscription_initial_signup_price;
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
+							} else {
+
+								$plan_price = $wps_sfw_subscription_initial_signup_price;
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', '' );
 							}
 							wps_membership_update_meta_data( $wps_membership_default_product, '_regular_price', intval( $plan_price ) );
@@ -3392,34 +3393,35 @@ class Membership_For_Woocommerce_Public {
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_number', intval( $wps_membership_subscription_expiry ) );
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_expiry_interval', $wps_membership_subscription_expiry_type );
 
-							// calculating initial fee and free trial membership.
+							// get membership subscription settings values.
 							$wps_mfw_enable_free_trial_settings        = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_mfw_enable_free_trial_settings', true );
 							$wps_sfw_subscription_initial_signup_price = floatval( wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_initial_signup_price', true ) );
 							$wps_sfw_subscription_free_trial_number    = floatval( wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_free_trial_number', true ) );
 							$wps_sfw_subscription_free_trial_interval  = wps_membership_get_meta_data( $cart_contents_value['plan_id'], 'wps_sfw_subscription_free_trial_interval', true );
-
-							$plan_price = $cart_contents_value['plan_price'];
+							$plan_price                                = $cart_contents_value['plan_price'];
 							wps_membership_update_meta_data( $wps_membership_default_product, 'wps_membership_plan_price', $plan_price );
-							if ( 'yes' === $wps_mfw_enable_free_trial_settings ) {
-								if ( $wps_sfw_subscription_free_trial_number > 0 ) {
+							// calculating free trial membership.
+							if ( 'yes' === $wps_mfw_enable_free_trial_settings && $wps_sfw_subscription_free_trial_number > 0 ) {
 
-									$plan_price = $wps_sfw_subscription_initial_signup_price;
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', intval($wps_sfw_subscription_free_trial_number) );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', substr( $wps_sfw_subscription_free_trial_interval, 0, -1  ) );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
-								} else {
-					
-									$plan_price = $plan_price + $wps_sfw_subscription_initial_signup_price;
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', '' );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', '' );
-									wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
-								}
+								$plan_price = $wps_sfw_subscription_initial_signup_price;
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', intval($wps_sfw_subscription_free_trial_number) );
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', substr( $wps_sfw_subscription_free_trial_interval, 0, -1  ) );
 							} else {
 
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_number', '' );
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_free_trial_interval', '' );
+							}
+							// initial fee calculation.
+							if ( $wps_sfw_subscription_initial_signup_price > 0 ) {
+
+								$plan_price = $plan_price + $wps_sfw_subscription_initial_signup_price;
+								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', intval( $wps_sfw_subscription_initial_signup_price ) );
+							} else {
+
+								$plan_price = $wps_sfw_subscription_initial_signup_price;
 								wps_membership_update_meta_data( $wps_membership_default_product, 'wps_sfw_subscription_initial_signup_price', '' );
 							}
+							wps_membership_update_meta_data( $wps_membership_default_product, '_regular_price', intval( $plan_price ) );
 						} else {
 
 							wps_membership_update_meta_data( $wps_membership_default_product, '_wps_sfw_product', 'no' );
@@ -4839,21 +4841,27 @@ class Membership_For_Woocommerce_Public {
 				<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Deactivate Notification', 'membership-for-woocommerce' ); ?></h4>
 				<main class="wps_wpr_main_offer_wrapper">
 					<section>
-						<article>
-							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Whatsapp Notification', 'membership-for-woocommerce' ); ?></label>
-							</div>
-						</article>
-						<article>
-							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_mfw_stop_sms_notify" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?>><?php esc_html_e( 'SMS Notifications', 'membership-for-woocommerce' ); ?></label>
-							</div>
-						</article>
-						<article>
-							<div class="wps_wpr_enable_offer_setting_wrapper">
-								<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_mfw_stop_email_notify" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?>><?php esc_html_e( 'Email Notifications', 'membership-for-woocommerce' ); ?></label>
-							</div>
-						</article>
+						<?php if ( 'on' === get_option( 'wps_wpr_enable_whatsapp_api_feature' ) ) : ?>
+							<article>
+								<div class="wps_wpr_enable_offer_setting_wrapper">
+									<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Whatsapp Notification', 'membership-for-woocommerce' ); ?></label>
+								</div>
+							</article>
+						<?php endif;
+						if ( 'on' === get_option( 'wps_wpr_enable_sms_api_feature' ) ) : ?>
+							<article>
+								<div class="wps_wpr_enable_offer_setting_wrapper">
+									<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_mfw_stop_sms_notify" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?>><?php esc_html_e( 'SMS Notifications', 'membership-for-woocommerce' ); ?></label>
+								</div>
+							</article>
+						<?php endif;
+						if ( 'on' === get_option( 'wps_wpr_enable_email_api_feature' ) ) : ?>
+							<article>
+								<div class="wps_wpr_enable_offer_setting_wrapper">
+									<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_mfw_stop_email_notify" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?>><?php esc_html_e( 'Email Notifications', 'membership-for-woocommerce' ); ?></label>
+								</div>
+							</article>
+						<?php endif; ?>
 					</section>
 					<div class="mfw_whatsapp_stop_notice" style="display:none"></div>
 				</main>

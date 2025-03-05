@@ -3732,14 +3732,6 @@ class Membership_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
 			),
 			array(
-				'title'       => __( 'Send Welcome Mail', 'membership-for-woocommerce' ),
-				'type'        => 'radio-switch',
-				'description' => __( 'Please enable this setting to send a welcome email to new members.', 'membership-for-woocommerce' ),
-				'id'          => 'wps_mfw_send_welcome_mail',
-				'value'       => get_option( 'wps_mfw_send_welcome_mail' ),
-				'class'       => 'mfw-radio-switch-class',
-			),
-			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
 				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
@@ -3965,6 +3957,32 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_wpr_sms_twilio_num_id',
 				'value'       => get_option( 'wps_wpr_sms_twilio_num_id' ),
 			),
+		);
+		$sms_settings = array_merge( $sms_settings, $wps_app_settings );
+		return $sms_settings;
+	}
+
+	/**
+	 * Creating email setting for sending offer notifications.
+	 *
+	 * @param  array $email_settings email_settings.
+	 * @return array
+	 */
+	public function wps_mfw_email_api_settings( $email_settings ) {
+
+		$wps_app_settings = array(
+			array(
+				'title'       => __( 'Enable Email Features', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this settings to use email notification features.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_enable_email_api_feature',
+				'value'       => get_option( 'wps_wpr_enable_email_api_feature' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 			array(
 				'type'        => 'multi-button',
 				'id'          => 'wps_wpr_save_whatsapp_api_settings',
@@ -3973,8 +3991,8 @@ class Membership_For_Woocommerce_Admin {
 				'multi-class' => 'wps_mfw_floating_button',
 			),
 		);
-		$sms_settings = array_merge( $sms_settings, $wps_app_settings );
-		return $sms_settings;
+		$email_settings = array_merge( $email_settings, $wps_app_settings );
+		return $email_settings;
 	}
 
 	/**
@@ -3990,7 +4008,8 @@ class Membership_For_Woocommerce_Admin {
 			$wps_mfw_gen_flag      = false;
 			$whatsapp_settings_arr = apply_filters( 'mfw_whatsapp_api_settings_array', array() );
 			$sms_settings_arr      = apply_filters( 'mfw_sms_api_settings_array', array() );
-			$mfw_genaral_settings  = array_merge( $whatsapp_settings_arr, $sms_settings_arr );
+			$email_settings_arr    = apply_filters( 'mfw_email_api_settings_array', array() );
+			$mfw_genaral_settings  = array_merge( $whatsapp_settings_arr, $sms_settings_arr, $email_settings_arr );
 			$mfw_button_index      = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
 			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
 
@@ -4040,7 +4059,7 @@ class Membership_For_Woocommerce_Admin {
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
 		$response        = array();
-		$response['msg'] = esc_html__( 'Whatsapp Notification feature is not enable.', 'membership-for-woocommerce' );
+		$response['msg'] = esc_html__( 'Whatsapp Notification feature is not enable!', 'membership-for-woocommerce' );
 		if ( 'on' === get_option( 'wps_wpr_enable_whatsapp_api_feature', 'no' ) ) {
 
 			$wps_org_offer_plan_id  = ! empty( $_POST['wps_org_offer_plan_id'] ) && is_array( $_POST['wps_org_offer_plan_id'] ) ? map_deep( wp_unslash( $_POST['wps_org_offer_plan_id'] ), 'sanitize_text_field' ) : array();
@@ -4219,7 +4238,7 @@ class Membership_For_Woocommerce_Admin {
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
 		$response                        = array();
-		$response['msg']                 = esc_html__( 'SMS Notification feature is not enable!!', 'membership-for-woocommerce' );
+		$response['msg']                 = esc_html__( 'SMS Notification feature is not enable!', 'membership-for-woocommerce' );
 		$wps_wpr_enable_sms_api_feature  = ! empty( get_option( 'wps_wpr_enable_sms_api_feature' ) ) ? get_option( 'wps_wpr_enable_sms_api_feature' ) : 'no';
 		if ( 'on' === $wps_wpr_enable_sms_api_feature ) {
 
@@ -4338,63 +4357,68 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_wpr_send_offer_messages_via_email() {
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
-		// get selected plans ids and offer msg.
-		$wps_org_offer_plan_id  = ! empty( $_POST['wps_org_offer_plan_id'] ) && is_array( $_POST['wps_org_offer_plan_id'] ) ? map_deep( wp_unslash( $_POST['wps_org_offer_plan_id'] ), 'sanitize_text_field' ) : array();
-		$wps_wpr_offer_message  = ! empty( $_POST['wps_wpr_offer_message'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_offer_message'] ) ) : esc_html__( 'Limited-time deal: Grab amazing discounts on your favorite items!', 'membership-for-woocommerce' );
-		if ( ! empty( $wps_org_offer_plan_id ) && is_array( $wps_org_offer_plan_id ) ) {
+		$response        = array();
+		$response['msg'] = esc_html__( 'Email Notification feature is not enable!', 'membership-for-woocommerce' );
+		if ( 'on' === get_option( 'wps_wpr_enable_email_api_feature' ) ) {
 
-			$success_count          = 0;
-			$error_count            = 0;
-			$users                  = get_users( array( 'fields' => 'ids' ) );
-			$wps_wpr_store_match_id = array();
-			update_option( 'wps_wpr_offer_message', $wps_wpr_offer_message );
-			if ( ! empty( $users ) && is_array( $users ) ) {
-				foreach ( $users as $user_id ) {
+			// get selected plans ids and offer msg.
+			$wps_org_offer_plan_id  = ! empty( $_POST['wps_org_offer_plan_id'] ) && is_array( $_POST['wps_org_offer_plan_id'] ) ? map_deep( wp_unslash( $_POST['wps_org_offer_plan_id'] ), 'sanitize_text_field' ) : array();
+			$wps_wpr_offer_message  = ! empty( $_POST['wps_wpr_offer_message'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_wpr_offer_message'] ) ) : esc_html__( 'Limited-time deal: Grab amazing discounts on your favorite items!', 'membership-for-woocommerce' );
+			if ( ! empty( $wps_org_offer_plan_id ) && is_array( $wps_org_offer_plan_id ) ) {
 
-					$wps_mfw_email_sms = get_user_meta( $user_id, 'wps_mfw_email_sms', true );
-					if ( 'yes' === $wps_mfw_email_sms ) {
+				$success_count          = 0;
+				$error_count            = 0;
+				$users                  = get_users( array( 'fields' => 'ids' ) );
+				$wps_wpr_store_match_id = array();
+				update_option( 'wps_wpr_offer_message', $wps_wpr_offer_message );
+				if ( ! empty( $users ) && is_array( $users ) ) {
+					foreach ( $users as $user_id ) {
 
-						continue;
-					}
+						$wps_mfw_email_sms = get_user_meta( $user_id, 'wps_mfw_email_sms', true );
+						if ( 'yes' === $wps_mfw_email_sms ) {
 
-					// get user specific membership.
-					$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-					if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
-						foreach ( $current_memberships as $member_assigned_id ) {
+							continue;
+						}
 
-							$active_plan = wps_membership_get_meta_data( $member_assigned_id, 'plan_obj', true );
-							if ( empty( $active_plan ) ) {
+						// get user specific membership.
+						$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+						if ( ! empty( $current_memberships ) && is_array( $current_memberships ) ) {
+							foreach ( $current_memberships as $member_assigned_id ) {
 
-								continue;
-							}
-							if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
+								$active_plan = wps_membership_get_meta_data( $member_assigned_id, 'plan_obj', true );
+								if ( empty( $active_plan ) ) {
 
-								$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+									continue;
+								}
+								if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
+
+									$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+								}
 							}
 						}
+
+						// check users id found or not.
+						if ( array_key_exists( $user_id, $wps_wpr_store_match_id ) ) {
+
+							$user    = get_user_by( 'ID', $user_id );
+							$to      = $user->user_email;
+							$subject = esc_html__( 'Exclusive Membership Offer!', 'membership-for-woocommerce' ); 
+							$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+							wp_mail( $to, $subject, $wps_wpr_offer_message, $headers );
+							++$success_count;
+						} else {
+
+							++$error_count;
+						}
 					}
+				} else {
 
-					// check users id found or not.
-					if ( array_key_exists( $user_id, $wps_wpr_store_match_id ) ) {
-
-						$user    = get_user_by( 'ID', $user_id );
-						$to      = $user->user_email;
-						$subject = esc_html__( 'Exclusive Membership Offer!', 'membership-for-woocommerce' ); 
-						$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-						wp_mail( $to, $subject, $wps_wpr_offer_message, $headers );
-						++$success_count;
-					} else {
-
-						++$error_count;
-					}
+					$response['msg'] = esc_html__( 'No user found!', 'membership-for-woocommerce' );
 				}
 			} else {
 
-				$response['msg'] = esc_html__( 'No user found!', 'membership-for-woocommerce' );
+				$response['msg'] = esc_html__( 'Please choose plan!', 'membership-for-woocommerce' );
 			}
-		} else {
-
-			$response['msg'] = esc_html__( 'Please choose plan!', 'membership-for-woocommerce' );
 		}
 
 		if ( $success_count > 0 ) {

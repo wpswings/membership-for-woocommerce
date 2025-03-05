@@ -145,6 +145,8 @@ class Membership_For_Woocommerce_Activator {
 			 * @since 1.0.0
 			 */
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
+
+			self::wps_wpr_enable_members_dashboard();
 		} else {
 
 			// Creating Instance of the global functions class.
@@ -237,6 +239,22 @@ class Membership_For_Woocommerce_Activator {
 			 * @since 1.0.0
 			 */
 			wp_schedule_event( time() + 10, apply_filters( 'wpswings_tracker_event_recurrence', 'daily' ), 'wpswings_tracker_send_event' );
+
+			self::wps_wpr_enable_members_dashboard();
+		}
+	}
+
+	/**
+	 * Enable membership dashboard on account page.
+	 *
+	 * @return void
+	 */
+	public static function wps_wpr_enable_members_dashboard() {
+
+		$wps_msfw_enable_members_dashboard = get_option( 'wps_msfw_enable_members_dashboard', 'off' );
+		if ( 'off' === $wps_msfw_enable_members_dashboard ) {
+
+			update_option( 'wps_msfw_enable_members_dashboard', 'on' );
 		}
 	}
 }

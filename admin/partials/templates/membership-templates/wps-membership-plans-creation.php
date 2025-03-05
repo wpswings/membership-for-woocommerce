@@ -240,7 +240,7 @@ function wps_mfw_upgrade_pro_popup() {
 					<!-- Plan subscription start. -->
 					<tr valign="top" id="wps_membership_subscription_tr" >
 						<th scope="row" class="titledesc">
-							<label for="wps_membership_subscription"><?php esc_html_e( 'Subscription Membership', 'membership-for-woocommerce' ); ?></label>
+							<label for="wps_membership_subscription"><?php esc_html_e( 'Enable Subscription Membership', 'membership-for-woocommerce' ); ?></label>
 								<?php
 								$description = esc_html__( 'Enable it to make membership plan as subscription.', 'membership-for-woocommerce' );
 								$instance->tool_tip( $description );
@@ -278,8 +278,22 @@ function wps_mfw_upgrade_pro_popup() {
 							<option <?php selected( $wps_membership_subscription_expiry_type, 'year' ); ?> value="years"><?php esc_html_e( 'Years', 'membership-for-woocommerce' ); ?></option>
 						</select>
 					</td>
-				</tr>
+					</tr>
 					<!-- Plan subscription expiry End -->
+
+					<!-- enter initial fee start -->
+					<tr class="wps_msfw_initial_fee">
+						<th scope="row" class="titledesc">
+							<label for="wps_sfw_subscription_initial_signup_price"><?php esc_html_e( 'Enter Initial Signup fee', 'membership-for-woocommerce' ); ?></label>
+							<?php
+							$instance->tool_tip( esc_html__( 'Enter the initial signup fee for this membership plan, or leave it empty if there is no initial fee.', 'membership-for-woocommerce' ) );
+							?>
+						</th>
+						<td id="mfw_free_shipping" class="forminp forminp-text">
+						<input type="number" min="0" class="wps_membership wps_sfw_subscription_initial_signup_price" id="wps_sfw_subscription_initial_signup_price" name="wps_sfw_subscription_initial_signup_price" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_initial_signup_price'] ) ? $settings_fields['wps_sfw_subscription_initial_signup_price'] : '' ); ?>">
+						</td>
+					</tr>
+					<!-- enter initial fee end -->
 
 					<!-- INITIAL FEE and FREE TRIAL settings start here. -->
 					<tr class="wps_msfw_enable_trial_settings">
@@ -313,20 +327,6 @@ function wps_mfw_upgrade_pro_popup() {
 							</select>
 						</td>
 					</tr>
-
-					<!-- enter initial fee start -->
-					<tr class="wps_msfw_initial_fee">
-						<th scope="row" class="titledesc">
-							<label for="wps_sfw_subscription_initial_signup_price"><?php esc_html_e( 'Enter Initial Signup fee', 'membership-for-woocommerce' ); ?></label>
-							<?php
-							$instance->tool_tip( esc_html__( 'Enter the initial signup fee for this membership plan, or leave it empty if there is no initial fee.', 'membership-for-woocommerce' ) );
-							?>
-						</th>
-						<td id="mfw_free_shipping" class="forminp forminp-text">
-						<input type="number" min="0" class="wps_membership wps_sfw_subscription_initial_signup_price" id="wps_sfw_subscription_initial_signup_price" name="wps_sfw_subscription_initial_signup_price" value="<?php echo esc_attr( ! empty( $settings_fields['wps_sfw_subscription_initial_signup_price'] ) ? $settings_fields['wps_sfw_subscription_initial_signup_price'] : '' ); ?>">
-						</td>
-					</tr>
-					<!-- enter initial fee end -->
 					<?php
 			}
 			?>

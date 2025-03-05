@@ -53,4 +53,12 @@ jQuery(document).ready(function($) {
         }
     })
 
+    // checked whether his parent settings is enable or not then enable this settings.
+    jQuery(document).on('change', 'input[type="checkbox"][class="wps_mfw_enable_free_trial_settings"]', function() {
+        if ( ! jQuery('input[type="checkbox"][class="wps_membership_subscription_"]').is(':checked') ) {
+
+            jQuery(this).prop( 'checked', false );
+        }
+    })
+
  } );

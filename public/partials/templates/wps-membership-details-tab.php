@@ -378,7 +378,7 @@ if ( isset( $_GET['membership'] ) ) {
 } else {
 	
 	// membership dashboard.
-	if ( 'on' === get_option( 'wps_msfw_enable_members_dashboard' ) ) {
+	if ( 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'on' ) ) {
 
 		// Get active membership plan name.
 		$active_plan_name     = '';
@@ -520,7 +520,7 @@ if ( isset( $_GET['membership'] ) ) {
 						</svg>
 						<div class="wps-msfw_dmsca-in">
 							<div class="wps-msfw_dmsca-label"><?php esc_html_e( 'Maximum Cart Discount ', 'membership-for-woocommerce' ); ?></div>
-							<div class="wps-msfw_dmsca-item"><?php echo esc_html( max( $cart_discount_amount ) . '%' ); ?></div>
+							<div class="wps-msfw_dmsca-item"><?php echo ! empty( $cart_discount_amount ) ? esc_html( max( $cart_discount_amount ) . '%' ) : ''; ?></div>
 						</div>
 					</div>
 				<?php endif;
