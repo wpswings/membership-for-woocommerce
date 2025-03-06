@@ -3489,13 +3489,13 @@ class Membership_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_membership_api_consumer_secret_keys' ),
 			),
 			array(
-				'type'        => 'multi-button',
+				'type'        => 'simple-button',
 				'id'          => 'mfw_button_api_settings',
 				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
 				'class'       => 'mfw-button-class',
 			),
 			array(
-				'type'        => 'multi-button',
+				'type'        => 'simple-button',
 				'id'          => 'mfw_button_generate_keys_settings',
 				'button_text' => __( 'Generate Keys', 'membership-for-woocommerce' ),
 				'class'       => 'mfw-button-class',
