@@ -4404,54 +4404,57 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		$order = new WC_Order( $order_id );
-		$items = $order->get_items();
-		foreach ( $items as $item ) {
+		if ( ! empty( $order_id ) ) {
 
-			$product_id       = $item['product_id'];
-			$product          = wc_get_product( $product_id );
-			$plan_id          = wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true );
-			$is_plan_assigned = false;
-			$user             = get_user_by( 'email', $order->get_billing_email() );
-			if ( $plan_id ) {
+			$order = new WC_Order( $order_id );
+			$items = $order->get_items();
+			foreach ( $items as $item ) {
 
+				$product_id       = $item['product_id'];
+				$product          = wc_get_product( $product_id );
+				$plan_id          = wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true );
 				$is_plan_assigned = false;
-			}
+				$user             = get_user_by( 'email', $order->get_billing_email() );
+				if ( $plan_id ) {
 
-			if ( ! empty( $user ) ) {
+					$is_plan_assigned = false;
+				}
 
-				$user_id             = $user->ID;
-				$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
-				if ( ! empty( $current_memberships ) && is_array( $current_memberships ) && $plan_id ) {
-					foreach ( $current_memberships as $key => $membership_id ) {
+				if ( ! empty( $user ) ) {
 
-						$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
-						$status      = wps_membership_get_meta_data( $membership_id, 'member_status', true );
-						if ( ! empty( $active_plan['ID'] ) ) {
-							if ( $plan_id == $active_plan['ID'] && 'cancelled' != $status && ! empty( $status ) ) {
+					$user_id             = $user->ID;
+					$current_memberships = get_user_meta( $user_id, 'mfw_membership_id', true );
+					if ( ! empty( $current_memberships ) && is_array( $current_memberships ) && $plan_id ) {
+						foreach ( $current_memberships as $key => $membership_id ) {
 
-								$is_plan_assigned = true;
-								break;
+							$active_plan = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+							$status      = wps_membership_get_meta_data( $membership_id, 'member_status', true );
+							if ( ! empty( $active_plan['ID'] ) ) {
+								if ( $plan_id == $active_plan['ID'] && 'cancelled' != $status && ! empty( $status ) ) {
 
+									$is_plan_assigned = true;
+									break;
+
+								}
 							}
 						}
 					}
 				}
-			}
 
-			if ( 'Membership Product' == $product->get_title() || ! $is_plan_assigned ) {
-				if ( ! is_user_logged_in() ) {
+				if ( 'Membership Product' == $product->get_title() || ! $is_plan_assigned ) {
+					if ( ! is_user_logged_in() ) {
 
-					$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
-					if ( 'on' !== $is_user_created ) {
+						$is_user_created = get_option( 'wps_membership_create_user_after_payment', true );
+						if ( 'on' !== $is_user_created ) {
 
-						$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Plan! Check your mail for the login Credential', 'membership-for-woocommerce' ) .
-						'</strong><br><span style="color:red;">' . esc_html__( ' To Access Membership Please Login/Signup First. ', 'membership-for-woocommerce' ) . '</span><a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
-					</div>';
-						echo wp_kses_post( $html );
-					} else {
-						$html = '<div style="color:red;"><strong>' . esc_html__( ' Thank You For Purchasing Membership Plan!', 'membership-for-woocommerce' ) . '<br><span style="color:blue;">' . esc_html__( 'You will get your Login Credential when Shop Owner will complete your Order and then after You can Login and access your membership.', 'membership-for-woocommerce' ) . '</span></div>';
-						echo wp_kses_post( $html );
+							$html = '<div><strong>' . esc_html__( ' Thank You For Purchasing Membership Plan! Check your mail for the login Credential', 'membership-for-woocommerce' ) .
+							'</strong><br><span style="color:red;">' . esc_html__( ' To Access Membership Please Login/Signup First. ', 'membership-for-woocommerce' ) . '</span><a class="button alt mfw-membership" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '" target="_blank" style="color:#ffffff;">' . esc_html__( 'Login/Sign-up first', 'membership-for-woocommerce' ) . '</a>
+						</div>';
+							echo wp_kses_post( $html );
+						} else {
+							$html = '<div style="color:red;"><strong>' . esc_html__( ' Thank You For Purchasing Membership Plan!', 'membership-for-woocommerce' ) . '<br><span style="color:blue;">' . esc_html__( 'You will get your Login Credential when Shop Owner will complete your Order and then after You can Login and access your membership.', 'membership-for-woocommerce' ) . '</span></div>';
+							echo wp_kses_post( $html );
+						}
 					}
 				}
 			}
