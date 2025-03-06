@@ -65,7 +65,7 @@ function wps_mfw_upgrade_pro_popup() {
 ?>
 
 <p>
-	<?php esc_html_e( 'Test In this Section whatever the pages you will select, ONLY MEMBERS can access the pages.', 'membership-for-woocommerce' ); ?>
+	<?php esc_html_e( 'In this Section whatever the pages you will select, ONLY MEMBERS can access the pages.', 'membership-for-woocommerce' ); ?>
 </p>
 <form action method="POST" class="wps-mfw-gen-section-form">
 	<div class="mfw-secion-wrap">
@@ -166,7 +166,7 @@ function wps_mfw_upgrade_pro_popup() {
 		<div class="wps-form-group">
 			<div class="wps-form-group__control">
 				<button id="wps_membership_content_restriction_button" name="wps_membership_content_restriction_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
-				<span class="mdc-button__label"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ); ?></span>
+				<span class="mdc-button__label"><?php esc_html_e( 'Save Settings', 'membership-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 		</div>

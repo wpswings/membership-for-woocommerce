@@ -230,7 +230,7 @@ $results = get_posts(
 		<div class="wps-form-group ">
 			<div class="wps-form-group__control">
 				<button id="wps_membership_discount_button" name="wps_membership_discount_button" class="mdc-button mdc-button--raised"><span class="mdc-button__ripple"></span>
-				<span class="mdc-button__label"><?php esc_html_e( 'Save', 'membership-for-woocommerce' ); ?></span>
+				<span class="mdc-button__label"><?php esc_html_e( 'Save Settings', 'membership-for-woocommerce' ); ?></span>
 				</button>
 			</div>
 		</div>

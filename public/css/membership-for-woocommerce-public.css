@@ -1554,6 +1554,15 @@ span.wps_mfw_no_plan_found_msg {
     --wps-msfw-primary-color : #f7f7f7;
 }
 
+
+.wps_msfw__new_layout-table-for-detail {
+    display: none;
+}
+
+.wps_msfw__new_layout-table-for-detail.wps_msfw__new_layout-table-for-detail--show {
+    display: block;
+}
+
 .wps_msfw__new_layout.wps_msf_new_layout_dynamic_one th {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     color: #000;
@@ -1706,6 +1715,11 @@ span.wps_mfw_no_plan_found_msg {
     display: flex;
     align-items: flex-end;
     gap: 16px;
+    position: relative;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dms-user-details .wps-msfw_dmsa-in {
+    flex: 1;
 }
 
 .wps-msfw_dashboard-main .wps-msfw_dms-user-details img {
@@ -1761,7 +1775,11 @@ span.wps_mfw_no_plan_found_msg {
     padding: 10px;
     display: flex;
     gap: 10px;
-    flex: 1 0 33%;
+    flex: 1 0 40%;
+}
+
+.wps-msfw_dashboard-main .wps-msfw_dmsc-art svg {
+    flex: 0 0 32px;
 }
 
 .wps-msfw_dashboard-main .wps-msfw_dmsc-art svg path {
@@ -1778,9 +1796,19 @@ span.wps_mfw_no_plan_found_msg {
 
 .wps-msfw_dashboard-main .wps-msfw_dmsca-item {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 14px;
     color: #000;
     line-height: 1.25;
+}
+
+.wps-msfw_membership-history {
+    cursor: pointer;
+}
+
+.wps_wpr_main_offer_wrapper section {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .wps-msfw_dashboard-main .wps-msfw_dms-role:before {
@@ -1833,6 +1861,73 @@ span.wps_mfw_no_plan_found_msg {
     outline: none;
 }
 
+.wps-mfw_md-pagination {
+    text-align: right;
+    margin: 0 0 25px;
+}
+
+.wps-mfw_md-pagination button {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.wps-mfw_md-pagination .page-input {
+    box-shadow: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 0;
+    background: transparent;
+    border-bottom: 2px solid var(--wps-msfw-dashboard-primary);
+    text-align: center;
+    max-width: 50px;
+}
+
+/* Checkbox input to toggle End */
+
+.wps_wpr_enable_offer_setting_wrapper input[type=checkbox] {
+    width: 32px;
+    appearance: none;
+    border: 1px solid #ccc;
+    height: 16px;
+    margin: 0;
+    line-height: 0;
+    border-radius: 50px;
+    background: #f2f2f2;
+    position: relative;
+    cursor: pointer;
+}
+
+.wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:checked {
+    background: #fff;
+}
+
+.wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:before {
+    content: '';
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    background: #fff;
+    border-radius: 50px;
+    top: -4px;
+    left: -3px;
+    border: 1px solid #ccc;
+    transition: all 0.3s linear;
+}
+
+.wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:checked::before {
+    left: 12px;
+    background: var(--wps-msfw-dashboard-primary);
+    border-color: #fff;
+}
+
+.wps_wpr_enable_offer_setting_wrapper input[type=checkbox]:focus {
+    outline: none;
+}
+
+/* Checkbox input to toggle End */
+
+
 @container (max-width: 480px) {
     .wps-msfw_dashboard-main .wps-msfw_dms-user-details {
         padding: 55px 15px 0;
@@ -1881,11 +1976,12 @@ span.wps_mfw_no_plan_found_msg {
 
 .wps_wpr_enable_offer_setting_wrapper label {
     display: inline-flex;
-    gap: 10px;
+    gap: 8px;
     flex-wrap: nowrap;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 1.5;
+    align-items: center;
 }
 
 h4.wps_wpr_offer_notify_settings_heading {

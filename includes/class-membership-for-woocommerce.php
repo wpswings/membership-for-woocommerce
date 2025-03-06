@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.7.0';
+			$this->version = '2.8.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -314,8 +314,16 @@ class Membership_For_Woocommerce {
 		// whatsapp api notification settings.
 		$this->loader->add_filter( 'mfw_whatsapp_api_settings_array', $mfw_plugin_admin, 'wps_mfw_whatsapp_api_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_whatsapp_api_settings' );
+		// sms api notification settings.
+		$this->loader->add_filter( 'mfw_sms_api_settings_array', $mfw_plugin_admin, 'wps_mfw_sms_api_settings', 10, 1 );
+		// email api notification settings.
+		$this->loader->add_filter( 'mfw_email_api_settings_array', $mfw_plugin_admin, 'wps_mfw_email_api_settings', 20, 1 );
 		// send offer message on whatsapp.
 		$this->loader->add_action( 'wp_ajax_send_offer_message_on_whatsapp', $mfw_plugin_admin, 'wps_wpr_send_offer_message_on_whatsapp', 10 );
+		// send offer message via sms.
+		$this->loader->add_action( 'wp_ajax_send_offer_message_via_sms', $mfw_plugin_admin, 'wps_wpr_send_offer_message_via_sms', 10 );
+		// send offer message via email.
+		$this->loader->add_action( 'wp_ajax_send_offer_messages_via_email', $mfw_plugin_admin, 'wps_wpr_send_offer_messages_via_email', 10 );
 	}
 
 	/**
@@ -348,6 +356,10 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
 		// ajax to stop whatsapp notification.
 		$this->loader->add_action( 'wp_ajax_stop_whatsapp_notification', $mfw_plugin_common, 'wps_mfw_stop_whatsapp_notification' );
+		// ajax to stop sms notification.
+		$this->loader->add_action( 'wp_ajax_stop_sms_notification', $mfw_plugin_common, 'wps_mfw_stop_sms_notification' );
+		// ajax to stop email notification.
+		$this->loader->add_action( 'wp_ajax_stop_email_notification', $mfw_plugin_common, 'wps_mfw_stop_email_notification' );
 	}
 
 	/**
@@ -594,7 +606,7 @@ class Membership_For_Woocommerce {
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
 			);
 			$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
-				'title'       => esc_html__( 'Other Settings', 'membership-for-woocommerce' ),
+				'title'       => esc_html__( 'Layout Settings', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-other-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
 			);
@@ -860,7 +872,7 @@ class Membership_For_Woocommerce {
 						case 'email':
 						case 'text':
 							?>
-						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+						<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?> <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							</div>
@@ -1014,7 +1026,7 @@ class Membership_For_Woocommerce {
 						case 'select':
 						case 'multiselect':
 							?>
-						<div class="wps-form-group">
+						<div class="wps-form-group <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label class="wps-form-label" for="<?php echo esc_attr( $mfw_component['id'] ); ?>"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 								<?php
@@ -1129,7 +1141,7 @@ class Membership_For_Woocommerce {
 						case 'radio-switch':
 							?>
 
-						<div class="wps-form-group">
+						<div class="wps-form-group <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 							<div class="wps-form-group__label">
 								<label for="" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 							
@@ -1178,7 +1190,17 @@ class Membership_For_Woocommerce {
 							break;
 						case 'multi-button':
 							?>
-							<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+							<div class="<?php echo ( isset( $mfw_component['multi-class'] ) ? esc_html( $mfw_component['multi-class'] ) : '' ); ?>">
+								<button class="mdc-button mdc-button--raised" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
+									id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
+									<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
+								</button>
+							</div>
+							<?php
+							break;
+						case 'simple-button':
+							?>
+							<button class="mdc-button mdc-button--raised <?php echo ( isset( $mfw_component['simple-class'] ) ? esc_html( $mfw_component['simple-class'] ) : '' ); ?>" name= "<?php echo ( isset( $mfw_component['name'] ) ? esc_html( $mfw_component['name'] ) : esc_html( $mfw_component['id'] ) ); ?>"
 								id="<?php echo esc_attr( $mfw_component['id'] ); ?>"> <span class="mdc-button__ripple"></span>
 								<span class="mdc-button__label <?php echo ( isset( $mfw_component['class'] ) ? esc_attr( $mfw_component['class'] ) : '' ); ?>"><?php echo ( isset( $mfw_component['button_text'] ) ? esc_html( $mfw_component['button_text'] ) : '' ); ?></span>
 							</button>
@@ -1242,7 +1264,7 @@ class Membership_For_Woocommerce {
 						case 'date':
 						case 'file':
 							?>
-							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?>">
+							<div class="wps-form-group wps-mfw-<?php echo esc_attr( $mfw_component['type'] ); ?> <?php echo ( isset( $mfw_component['form-title'] ) ? esc_html( $mfw_component['form-title'] ) : '' ); // WPCS: XSS ok. ?>">
 								<div class="wps-form-group__label">
 									<label for="<?php echo esc_attr( $mfw_component['id'] ); ?>" class="wps-form-label"><?php echo ( isset( $mfw_component['title'] ) ? esc_html( $mfw_component['title'] ) : '' ); // WPCS: XSS ok. ?></label>
 								</div>

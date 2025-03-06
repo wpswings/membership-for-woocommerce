@@ -93,7 +93,6 @@ if ( ! empty( $wps_membership_global_settings['wps_membership_for_woo_delete_dat
 
 	delete_option( 'wps_membership_enable_plugin' );
 	delete_option( 'wps_membership_for_woo_delete_data' );
-	delete_option( 'wps_membership_plan_user_history' );
 	delete_option( 'mfw_mfw_plugin_standard_multistep_done' );
 
 	// Deleting options at last during plugin uninstall.

@@ -123,7 +123,6 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			'wps_membership_enable_plugin'     => 'on',
 			'wps_membership_delete_data'       => 'off',
-			'wps_membership_plan_user_history' => 'on',
 			'wps_membership_email_subject'     => 'Thank you for Shopping, Do not reply.',
 			'wps_membership_email_content'     => '',
 			'wps_membership_attach_invoice'    => 'off',
@@ -1405,5 +1404,66 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 
 		return array_unique( $target_ids );
+	}
+
+	/**
+	 * This function is used check wither user is a member or not.
+	 *
+	 * @param  string $user_id user_id.
+	 * @return bool
+	 */
+	public function wps_mfw_check_user_has_active_membership( $user_id ) {
+
+		$is_member         = get_user_meta( $user_id, 'is_member', true );
+		$mfw_membership_id = get_user_meta( $user_id, 'mfw_membership_id', true );
+		$flag              = false;
+		if ( ( ! empty( $mfw_membership_id ) && is_array( $mfw_membership_id ) ) && 'member' === $is_member ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * This function is used to get specific user all assigned membership.
+	 *
+	 * @param  string $user_id user_id.
+	 * @return array
+	 */
+	public function wps_mfw_get_all_specific_user_membership( $user_id ) {
+
+		$membership_send_arr = array();
+		$mfw_membership_id   = get_user_meta( $user_id, 'mfw_membership_id', true );
+		if ( ! empty( $mfw_membership_id ) && is_array( $mfw_membership_id ) ) {
+			foreach ( $mfw_membership_id as $membership_id ) {
+
+				// check whether is exists or get from post meta.
+				if ( function_exists( 'wps_membership_get_meta_data' ) ) {
+
+					$membership_plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+					$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
+				} else {
+
+					$membership_plan   = get_post_meta( $membership_id, 'plan_obj', true );
+					$membership_status = get_post_meta( $membership_id, 'member_status', true );
+				}
+
+				// return if no plan found.
+				if ( empty( $membership_plan ) ) {
+
+					continue;
+				}
+
+				// return if plan status is not completed.
+				if ( 'complete' !== $membership_status ) {
+
+					continue;
+				}
+				
+				// push all active plan data.
+				array_push( $membership_send_arr, $membership_plan );
+			}
+		}
+		return $membership_send_arr;
 	}
 }

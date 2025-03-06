@@ -32,12 +32,32 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 <!--  template file for admin settings. -->
 <form action="" method="POST" class="wps-mfw-gen-section-form">
 	<div class="mfw-secion-wrap">
-	<?php
-		do_action( 'mfw_whatsapp_api_settings_before' );
-	?>
-	<div class="wps-sm__modal"></div>
+		<?php
+			do_action( 'mfw_whatsapp_api_settings_before' );
+		?>
+		<!-- Whatsapp Integration Settings -->
+		<div class="wps-sm__modal"></div>
+		<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Whatsapp Integration', 'membership-for-woocommerce' ); ?></h4>
 		<?php
 		$mfw_general_html = $mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_whatsapp_api_settings_array );
+		echo esc_html( $mfw_general_html );
+		wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
+		?>
+		<!-- SMS Integration Settings -->
+		<div class="wps-sm__modal"></div>
+		<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'SMS Integration', 'membership-for-woocommerce' ); ?></h4>
+		<?php
+		$mfw_sms_api_settings_array = apply_filters( 'mfw_sms_api_settings_array', array() );
+		$mfw_general_html           = $mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_sms_api_settings_array );
+		echo esc_html( $mfw_general_html );
+		wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
+		?>
+		<!-- Email Integration Settings -->
+		<div class="wps-sm__modal"></div>
+		<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Email Integration', 'membership-for-woocommerce' ); ?></h4>
+		<?php
+		$mfw_email_api_settings_array = apply_filters( 'mfw_email_api_settings_array', array() );
+		$mfw_general_html             = $mfw_wps_mfw_obj->wps_mfw_plug_generate_html( $mfw_email_api_settings_array );
 		echo esc_html( $mfw_general_html );
 		wp_nonce_field( 'admin_save_data', 'wps_tabs_nonce' );
 		?>
@@ -74,15 +94,25 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 					<div class="wps_wpr_enable_offer_setting_wrapper">
 						<textarea class="wps_wpr_offer_message" rows="4" cols="40"><?php echo esc_html( $wps_wpr_offer_message ); ?></textarea>
 						<span class="wps_wpr_enable_offer_notices wps_wpr_label_notice">
-							<!-- translators: %s: whatsapp notify -->
-							<?php echo sprintf( esc_html__( 'This offer message will be sent to the user via WhatsApp. You can check the sending status in the log. To check, %s.', 'membership-for-woocommerce' ), wp_kses_post( $log_url ) ); ?>
+							<?php
+							// translators: %s: whatsapp notify.
+							echo sprintf( esc_html__( 'This offer message will be sent to the user via WhatsApp, SMS, and Email. You can track the WhatsApp delivery status in the log. To check, %s.', 'membership-for-woocommerce' ), wp_kses_post( $log_url ) );
+							?>
 						</span>
 					</div>
 				</article>
 			</section>
         </main>
-        <div class="wps_wpr_whatsapp_wrappers">
-            <input type="button" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" value="<?php esc_html_e( 'Whatsapp', 'membership-for-woocommerce' ); ?>">
+        <div class="wps_wpr_offer-notice_wrappers">
+            <button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" title="Whatsapp">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/whatsapp-two.png'; ?>'>
+			</button>
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_sms_btn" id="wps_wpr_send_on_sms_btn" title="Send SMS">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/sms.png'; ?>'>
+			</button>
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_mail_btn" id="wps_wpr_send_on_mail_btn" title="Send Email">
+				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/email.png'; ?>'>
+			</button>
             <span style="display: none;" class="wps_wpr_whatsapp_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
 			<div style="display: none;" class="wps_wpr_offer_msg_notice"></div>
         </div>

@@ -313,22 +313,25 @@ h4.wps_wpr_offer_notify_settings_heading {
     width: 100%!important;
 }
 
-input#wps_wpr_send_on_whatsap_btn {
-    padding: 18px 24px;
-    border-radius: 50px;
-    border: none;
-    background: #0d9d4b;
+.wps_wpr_offer-notice_wrappers .wps_wpr_send_on_click_btn {
+    width: 64px;
+    height: 64px;
+    border-radius: 65px;
+    border: 2px solid var(--mdc-theme-primary, #6200ee);
+    background: #ffffff;
     color: white;
-    font-size: 16px;
-    line-height: 1.5;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    transition: all 0.3s linear;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s linear;
+    margin: 0 10px 0 0;
 }
 
-input#wps_wpr_send_on_whatsap_btn:hover {
-    box-shadow: 0 4px 5px rgba(0,0,0,0.2);
-    opacity: 0.9;
+.wps_wpr_offer-notice_wrappers .wps_wpr_send_on_click_btn:hover {
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+.wps_wpr_offer-notice_wrappers img {
+    max-width: 35px;
 }
 
 .wps_wpr_offer_msg_notice {
@@ -358,6 +361,20 @@ input#wps_wpr_send_on_whatsap_btn:hover {
     max-width: 90%;
     max-height: 90%;
     border-radius: 10px;
+}
+
+.wps-form-group.wps_mfw_add_border {
+    border-bottom: 2px solid #e2e2e2;
+    padding-bottom: 15px;
+}
+
+.wps_mfw_floating_button {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    margin: 0 -15px;
+    padding: 10px;
 }
 
 @media (max-width: 768px){
