@@ -598,7 +598,6 @@ class Membership_For_Woocommerce_Admin {
 
 		$wps_membership_global_settings['wps_membership_enable_plugin']       = ! empty( get_option( 'wps_membership_enable_plugin' ) ) ? get_option( 'wps_membership_enable_plugin' ) : '';
 		$wps_membership_global_settings['wps_membership_delete_data']         = ! empty( get_option( 'wps_membership_delete_data' ) ) ? get_option( 'wps_membership_delete_data' ) : '';
-		$wps_membership_global_settings['wps_membership_plan_user_history']   = get_option( 'wps_membership_plan_user_history' );
 		$wps_membership_global_settings['wps_membership_email_subject']       = ! empty( get_option( 'wps_membership_email_subject' ) ) ? get_option( 'wps_membership_email_subject' ) : '';
 		$wps_membership_global_settings['wps_membership_email_content']       = ! empty( get_option( 'wps_membership_email_content' ) ) ? get_option( 'wps_membership_email_content' ) : '';
 		$wps_membership_global_settings['wps_membership_for_woo_delete_data'] = ! empty( get_option( 'wps_membership_for_woo_delete_data' ) ) ? get_option( 'wps_membership_for_woo_delete_data' ) : '';
@@ -638,18 +637,6 @@ class Membership_For_Woocommerce_Admin {
 				'description' => __( 'If enabled, this will delete all data at plugin uninstall.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_membership_for_woo_delete_data',
 				'value'       => get_option( 'wps_membership_for_woo_delete_data' ),
-				'class'       => 'mfw-radio-switch-class',
-				'options'     => array(
-					'yes'     => __( 'YES', 'membership-for-woocommerce' ),
-					'no'      => __( 'NO', 'membership-for-woocommerce' ),
-				),
-			),
-			array(
-				'title'       => __( 'Show History to User', 'membership-for-woocommerce' ),
-				'type'        => 'radio-switch',
-				'description' => __( 'This will Enable Users to visit and see Plans History in Membership tab  on My Account page.', 'membership-for-woocommerce' ),
-				'id'          => 'wps_membership_plan_user_history',
-				'value'       => get_option( 'wps_membership_plan_user_history' ),
 				'class'       => 'mfw-radio-switch-class',
 				'options'     => array(
 					'yes'     => __( 'YES', 'membership-for-woocommerce' ),
@@ -784,7 +771,7 @@ class Membership_For_Woocommerce_Admin {
 			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
 			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
 
-				$mfw_button_index = array_search( 'button', array_column( $mfw_genaral_settings, 'type' ) );
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
 			}
 
 			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {

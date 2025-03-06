@@ -264,20 +264,15 @@ class Membership_For_Woocommerce_Public {
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
 			return $items;
 		}
-		// Getting global options.
-		$wps_membership_global_settings = get_option( 'wps_membership_global_options', $this->global_class->default_global_options() );
 
-		if ( ! empty( $wps_membership_global_settings ) ) {
+		if ( 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'off' ) ) {
 
-			if ( ! empty( $wps_membership_global_settings['wps_membership_plan_user_history'] ) && 'on' == $wps_membership_global_settings['wps_membership_plan_user_history'] ) {
+			$logout = $items['customer-logout'];
+			unset( $items['customer-logout'] );
 
-				$logout = $items['customer-logout'];
-				unset( $items['customer-logout'] );
-
-				// Placing the custom tab just above logout tab.
-				$items['wps-membership-tab'] = esc_html__( 'Membership Details', 'membership-for-woocommerce' );
-				$items['customer-logout'] = $logout;
-			}
+			// Placing the custom tab just above logout tab.
+			$items['wps-membership-tab'] = esc_html__( 'Membership Details', 'membership-for-woocommerce' );
+			$items['customer-logout']    = $logout;
 		}
 
 		/**
@@ -395,7 +390,6 @@ class Membership_For_Woocommerce_Public {
 		$default_global_settings = array(
 			'wps_membership_enable_plugin'     => 'on',
 			'wps_membership_delete_data'       => 'off',
-			'wps_membership_plan_user_history' => 'on',
 			'wps_membership_email_subject'     => esc_html__( 'Thank you for Shopping, Do not reply.', 'membership-for-woocommerce' ),
 			'wps_membership_email_content'     => '',
 			'wps_membership_attach_invoice'    => 'off',
