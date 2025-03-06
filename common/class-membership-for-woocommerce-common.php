@@ -700,7 +700,7 @@ class Membership_For_Woocommerce_Common {
 
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
 				wps_membership_update_meta_data( $member_id, 'wps_member_user', $wps_membership_posts );
-				if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
+				if ( isset( $plan_obj['wps_membership_subscription'] ) && 'yes' == $plan_obj['wps_membership_subscription'] ) {
 					if ( ! empty( $subscription_id ) ) {
 
 						wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
