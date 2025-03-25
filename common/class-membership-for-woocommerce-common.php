@@ -262,7 +262,7 @@ class Membership_For_Woocommerce_Common {
 					echo wp_json_encode(
 						array(
 							'status'   => 'success',
-							'message'  => 'File Imported Successfully',
+							'message'  => esc_html__( 'File Imported Successfully', 'membership-for-woocommerce' ),
 							'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
 						)
 					);
@@ -272,7 +272,7 @@ class Membership_For_Woocommerce_Common {
 					echo wp_json_encode(
 						array(
 							'status'   => 'failed',
-							'message'  => 'Something Went Wrong. Either Products or Categories are not available!',
+							'message'  => esc_html__( 'Something Went Wrong. Either Products or Categories are not available!', 'membership-for-woocommerce' ),
 							'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
 						)
 					);
@@ -282,7 +282,7 @@ class Membership_For_Woocommerce_Common {
 				echo wp_json_encode(
 					array(
 						'status'   => 'failed',
-						'message'  => 'Invalid File type',
+						'message'  => esc_html__( 'Invalid File type', 'membership-for-woocommerce' ),
 						'redirect' => admin_url( 'edit.php?post_type=wps_cpt_membership' ),
 					)
 				);
@@ -906,21 +906,21 @@ class Membership_For_Woocommerce_Common {
 			$user_password = get_option( 'user_password', true );
 			// Now we are ready to build our welcome email.
 			$to      = $user_email;
-			$subject = 'Hi ' . $user_full_name . ', welcome to our site!';
+			$subject = 'Hi ' . esc_attr( $user_full_name ) . ', welcome to our site!';
 			$body    = '
-					  <h1>Dear ' . $user_full_name . ',</h1></br>
+					  <h1>Dear ' . esc_attr( $user_full_name ) . ',</h1></br>
 					  <p>Thank you for joining our site. Your account is now active.</p>
 					  <p>Please go ahead and navigate around your account.</p>
 					  <p>Here is your Credentials </p>
-					  <p> User ID - ' . $user_login . ' </p>
-					  <p> Password - ' . $user_password . ' </p>
+					  <p> User ID - ' . esc_attr( $user_login ) . ' </p>
+					  <p> Password - ' . esc_attr( $user_password ) . ' </p>
 			';
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 			if ( wp_mail( $to, $subject, $body, $headers ) ) {
-				error_log( 'email has been successfully sent to user whose email is ' . $user_email );
+				error_log( 'email has been successfully sent to user whose email is ' . esc_attr( $user_email ) );
 				$user_password = get_option( 'user_password', '' );
 			} else {
-				error_log( 'email failed to sent to user whose email is ' . $user_email );
+				error_log( 'email failed to sent to user whose email is ' . esc_attr( $user_email ) );
 			}
 		}
 	}
