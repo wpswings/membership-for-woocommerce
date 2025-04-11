@@ -1990,3 +1990,215 @@ h4.wps_wpr_offer_notify_settings_heading {
 }
 
 /* Mute whatsapp notification End */
+/* Login signup start */
+
+:root {
+    --wps-mfw_login-primary: #9BC53D;
+}
+
+.wps_mfw_account_page_parent_wrapper .storefront-breadcrumb {
+    margin: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #secondary {
+    display: none;
+}
+
+.wps_mfw_account_page_parent_wrapper #primary {
+    width: 100%;
+    margin: 0;
+    float: unset;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login {
+    padding: 40px;
+    /* background: #f7f7f7; */
+}
+
+.wps_mfw_account_page_parent_wrapper .container #left-area {
+    width: 100%;
+    padding: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #main-content .container {
+    padding: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper .container:before {
+    display: none;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .wps-mfw_apw-col {
+    width: 100%;
+    margin: 0 auto;
+    max-width: 400px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0, 0, 0, 0.1);
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login a {
+    text-decoration: underline;
+    color: var(--wps-mfw_login-primary);
+    font-size: 14px;
+    line-height: 1.25;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login h2 {
+    font-size: 28px;
+    text-align: center;
+    line-height: 1.25;
+    color: #000;
+    font-weight: 600;
+    margin: 0 0 5px;
+    position: relative;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login h2:after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    height: 4px;
+    width: 80%;
+    left: 50%;
+    background: var(--wps-mfw_login-primary);
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login h5 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #b1b1b1;
+    text-align: center;
+    margin: 0 0 25px;
+}
+
+
+.wps_mfw_account_page_parent_wrapper #customer_login form {
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row {
+    margin: 0 0 10px;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .wps-mfw_apw-col p.woocommerce-LostPassword {
+    margin: 0 0 15px;
+    float: unset;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #4d4d4d;
+    line-height: 1.5;
+    margin: 0 0 10px !important;
+    display: block;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row .woocommerce-Input {
+    border: 1px solid #ccc;
+    box-shadow: none;
+    border-radius: 5px;
+    background: #fff;
+    min-height: 33px;
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 10px;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row .woocommerce-Input:focus,
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-login__rememberme input[type=checkbox]:focus,
+.wps_mfw_account_page_parent_wrapper #customer_login button[type=submit]:focus,
+.wps_mfw_account_page_parent_wrapper #customer_login a:focus,.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row button.show-password-input:focus {
+    outline: none !important;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row .woocommerce-Input:focus {
+    border: 1px solid var(--wps-mfw_login-primary);
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .g-recaptcha {
+    margin: 20px 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login button[type=submit] {
+    background: var(--wps-mfw_login-primary);
+    border: 1px solid var(--wps-mfw_login-primary);
+    color: #fff;
+    border-radius: 5px;
+    padding: 12px 24px;
+    line-height: 1.25;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-decoration: none;
+    transition: all 0.2s linear;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login button[type=submit]:hover {
+    background: transparent;
+    color: var(--wps-mfw_login-primary);
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-login__rememberme,.wps_mfw_account_page_parent_wrapper #customer_login p.mc4wp-checkbox {
+    margin: 0 0 20px;
+    font-size: 16px;
+    color: #474747;
+    line-height: 1.5;
+    display: inline-block;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login p.mc4wp-checkbox {
+    margin: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-login__rememberme input[type=checkbox],.wps_mfw_account_page_parent_wrapper #customer_login p.mc4wp-checkbox input[type=checkbox] {
+    margin: 0 5px 0 0;
+    vertical-align: text-top;
+    width: 16px;
+    height: 16px;
+}
+
+.wps_mfw_account_page_parent_wrapper #content .woocommerce-error {
+    background: #fff1f1;
+    color: red !important;
+    margin: 0 0 15px;
+    padding: 10px !important;
+    border: none !important;
+    border-left: 5px solid red !important;
+    line-height: 1.25;
+    outline: none;
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+    border-radius: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #content .woocommerce-error::after,
+.wps_mfw_account_page_parent_wrapper #content .woocommerce-error::before {
+    display: none;
+}
+
+.wps_mfw_account_page_parent_wrapper #primary .owp-account-links {
+    margin: 0;
+}
+
+.wps_mfw_account_page_parent_wrapper #primary {
+    padding: 0;
+    border: none;
+}
+
+.wps_mfw_account_page_parent_wrapper .woocommerce-privacy-policy-text {
+    display: none;
+}
+
+.wps_mfw_account_page_parent_wrapper #customer_login .woocommerce-form-row button.show-password-input {
+    background: transparent;
+}
+
+/* Login signup End */

@@ -233,21 +233,24 @@ root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_col
 jQuery(document).on('click','.wps-msfw_membership-history',function(){
 	jQuery('.wps_msfw__new_layout-table-for-detail').toggleClass('wps_msfw__new_layout-table-for-detail--show');
 });
+
 jQuery(document).ready(function ($) {
+
 	var rowsPerPage = 3; // Number of rows per page
-    var $table = $(".wps_msfw__new_layout"); // Select the table
-    var $rows = $table.find("tbody tr"); // Select all rows inside tbody
-    var totalRows = $rows.length;
-    var totalPages = Math.ceil(totalRows / rowsPerPage);
+    var $table      = $(".wps_msfw__new_layout"); // Select the table
+    var $rows       = $table.find("tbody tr"); // Select all rows inside tbody
+    var totalRows   = $rows.length;
+    var totalPages  = Math.ceil(totalRows / rowsPerPage);
     var currentPage = 1;
 
     function showPage(page) {
+
         if (page < 1) page = 1;
         if (page > totalPages) page = totalPages;
-        currentPage = page;
 
-        var start = (currentPage - 1) * rowsPerPage;
-        var end = start + rowsPerPage;
+        currentPage = page;
+        var start   = (currentPage - 1) * rowsPerPage;
+        var end     = start + rowsPerPage;
         $rows.hide().slice(start, end).show();
 
         updatePagination();
@@ -269,10 +272,10 @@ jQuery(document).ready(function ($) {
         $(".next-btn").prop("disabled", currentPage === totalPages);
     }
 
-    // Initial load
+    // Initial load.
     showPage(currentPage);
 
-    // Click event for buttons
+    // Click event for buttons.
     $(document).on("click", ".prev-btn", function () {
         showPage(currentPage - 1);
     });
@@ -289,7 +292,7 @@ jQuery(document).ready(function ($) {
         showPage(totalPages);
     });
 
-    // Handle input field
+    // Handle input field.
     $(document).on("change", ".page-input", function () {
         var page = parseInt($(this).val());
         if (!isNaN(page)) {
@@ -298,12 +301,60 @@ jQuery(document).ready(function ($) {
     });
 
     $(document).on("keypress", ".page-input", function (e) {
-        if (e.which === 13) { // Enter key
+        if (e.which === 13) {
+
             var page = parseInt($(this).val());
-            if (!isNaN(page)) {
+            if ( ! isNaN(page) ) {
                 showPage(page);
             }
         }
     });
+
+	// login and signup js.
+	// check login and signup override features is enable.
+	if ( 'on' === membership_public_obj.enable_login_and_signup ) {
+
+		 // change points tab layout color.
+		 var root = $(':root');
+		 root.css('--wps-mfw_login-primary', membership_public_obj.account_page_colors );
+		// when click on signup, hold the signup page.
+		var wps_mfw_store_login_signup_value = localStorage.getItem( 'wps_mfw_store_login_signup_value' );
+		if ( 'signup' === wps_mfw_store_login_signup_value ) {
+
+			jQuery('.wps_mfw_registration_wrapper').show();
+			jQuery('.wps_mfw_login_wrapper').hide();
+		}
+
+		// show signup and hide login page.
+		jQuery('.wps_mfw_show_signup_option').on('click', function(e){
+
+			e.preventDefault();
+			localStorage.setItem( 'wps_mfw_store_login_signup_value', 'signup' );
+			jQuery('.wps_mfw_registration_wrapper').show();
+			jQuery('.wps_mfw_login_wrapper').hide();
+		});
+
+		// show login and hide signup page.
+		jQuery('.wps_mfw_show_login_option').on('click', function(e){
+
+			e.preventDefault();
+			localStorage.setItem( 'wps_mfw_store_login_signup_value', 'login' );
+			jQuery('.wps_mfw_login_wrapper').show();
+			jQuery('.wps_mfw_registration_wrapper').hide();
+		});
+
+		// disable register btn by default and rest work on clicking on checkbox.
+		jQuery('.wps_mfw_mem_register_btn').prop('disabled', true);
+		jQuery('#wps_mfw_terms_and_condition').on('change', function(){
+
+			if ( jQuery(this).is(':checked') ) {
+
+				jQuery('.wps_mfw_mem_register_btn').prop('disabled', false);
+			} else {
+
+				jQuery('.wps_mfw_mem_register_btn').prop('disabled', true);
+			}
+		});
+	}
+	
 });
- 

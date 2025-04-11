@@ -1574,4 +1574,79 @@ h4.wps-plan-msg {
     -ms-transform: translateX(26px);
     transform: translateX(26px);
 }
- 
+
+/* Google Recaptcha Start */
+
+#wps_mfw_save_google_recaptcha {
+    position: sticky;
+    bottom: 10px;
+}
+
+.wps_mfw_captcha_wrap {
+    opacity: 0;
+    z-index: -999999;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+}
+
+.wps_mfw_captcha_wrap.wps-mfw_captcha--active {
+    opacity: 1;
+    z-index: 999999;
+    pointer-events: unset;
+}
+
+.wps_mfw_captcha_wrap .wps_mfw_captcha_in {
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 40px 25px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.wps_mfw_captcha_wrap .wps_mfw_captcha_in .wps_mfw_captcha_closed {
+    font-size: 24px;
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    width: 28px;
+    height: 28px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 0;
+    cursor: pointer;
+    color: #7d7d7d;
+    font-weight: 400;
+}
+
+.wps_mfw_captcha_wrap .wps_mfw_captcha_in 
+ #wps_mfw_verify_captcha {
+    margin: 20px 0 0;
+    padding: 14px 20px;
+    border-radius: 99px;
+    border: none;
+    background: #2196f3;
+    color: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    line-height: 1.5;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s linear;
+}
+
+.wps_mfw_captcha_wrap .wps_mfw_captcha_in #wps_mfw_verify_captcha:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Google Recaptcha End */

@@ -241,179 +241,226 @@ jQuery(document).ready(function($) {
   });
 
 
-  // Import CSV modal.
-  $("#import_all_membership").on("click", function(e) {
-      e.preventDefault();
+    // Import CSV modal.
+    $("#import_all_membership").on("click", function(e) {
+        e.preventDefault();
 
-      $(".import_csv_field_wrapper").dialog("open");
+        $(".import_csv_field_wrapper").dialog("open");
 
-      // Ajax call for import CSV.
-      $("#upload_csv_file").on("click", function(e) {
-          e.preventDefault();
+        // Ajax call for import CSV.
+        $("#upload_csv_file").on("click", function(e) {
+            e.preventDefault();
 
-          var empty_check = $("#wps_membership_csv_file_upload").val();
+            var empty_check = $("#wps_membership_csv_file_upload").val();
 
-          // If no file selected close the dialog box and show 'failure' sweet alert.
-          if (empty_check.length == 0) {
+            // If no file selected close the dialog box and show 'failure' sweet alert.
+            if (empty_check.length == 0) {
 
-              // CLose the import modal.
-              $(".import_csv_field_wrapper").dialog("close");
+                // CLose the import modal.
+                $(".import_csv_field_wrapper").dialog("close");
 
-              // Show "failure" response via sweet-alert.
-              Swal.fire({
-                  icon: 'error',
-                  title: 'Oops..!!',
-                  text: 'No file selected',
-              });
+                // Show "failure" response via sweet-alert.
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops..!!',
+                    text: 'No file selected',
+                });
 
-          } else {
+            } else {
 
-              var form = new FormData();
-              var file = $(document).find("#wps_membership_csv_file_upload");
+                var form = new FormData();
+                var file = $(document).find("#wps_membership_csv_file_upload");
 
-              var single_file = file[0].files[0];
+                var single_file = file[0].files[0];
 
-              form.append("file", single_file);
-              form.append("action", "wps_membership_csv_file_upload");
-              form.append("nonce", admin_ajax_obj.nonce)
+                form.append("file", single_file);
+                form.append("action", "wps_membership_csv_file_upload");
+                form.append("nonce", admin_ajax_obj.nonce)
 
-              $.ajax({
-                  url: admin_ajax_obj.ajaxurl,
-                  type: "POST",
-                  data: form,
-                  dataType: 'json',
-                  contentType: false,
-                  processData: false,
+                $.ajax({
+                    url: admin_ajax_obj.ajaxurl,
+                    type: "POST",
+                    data: form,
+                    dataType: 'json',
+                    contentType: false,
+                    processData: false,
 
-                  success: function(response) {
-                    
+                    success: function(response) {
+                        
 
-                      // Close the import modal.
-                      $(".import_csv_field_wrapper").dialog("close");
+                        // Close the import modal.
+                        $(".import_csv_field_wrapper").dialog("close");
 
-                      if ('success' == response['status']) {
+                        if ('success' == response['status']) {
 
-                          // Show "success" response via sweet-alert.
-                          Swal.fire({
-                              icon: 'success',
-                              title: response['message'],
-                          });
+                            // Show "success" response via sweet-alert.
+                            Swal.fire({
+                                icon: 'success',
+                                title: response['message'],
+                            });
 
-                          // Reload page after click on ok in
-                          $(".swal2-confirm").on("click", function() {
-                              window.location.href = response['redirect'];
-                          });
-                      } else if ('failed' == response['status']) {
+                            // Reload page after click on ok in
+                            $(".swal2-confirm").on("click", function() {
+                                window.location.href = response['redirect'];
+                            });
+                        } else if ('failed' == response['status']) {
 
-                          // Show "failure" response via sweet-alert.
-                          Swal.fire({
-                              icon: 'error',
-                              title: 'Oops..!!',
-                              text: response['message']
-                          });
-                      }
-                  },
+                            // Show "failure" response via sweet-alert.
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops..!!',
+                                text: response['message']
+                            });
+                        }
+                    },
 
-              });
-          }
+                });
+            }
 
-      });
-  });
+        });
+    });
 
+    // Applying script to admin part in all product list page
+    var wps_status = $('.membership_status').each(function() {
 
-  
- 
+        if ($(this).text() == 'Live') {
+            $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' });
+        } else if ($(this).text() == 'Sandbox') {
+            $(this).css({ 'background-color': '#f8dda7', 'color': '#94660c' });
+        }
 
-  // Applying script to admin part in all product list page
-  var wps_status = $('.membership_status').each(function() {
-
-      if ($(this).text() == 'Live') {
-          $(this).css({ 'background-color': '#c6e1c6', 'color': '#5b841b' });
-      } else if ($(this).text() == 'Sandbox') {
-          $(this).css({ 'background-color': '#f8dda7', 'color': '#94660c' });
-      }
-
-  });
+    });
 
 
-  // Image uploader in global settings email log.
-  $('#upload_img').on( 'click', function(e) {
-      e.preventDefault();
+    // Image uploader in global settings email log.
+    $('#upload_img').on( 'click', function(e) {
+        e.preventDefault();
 
-      if ( jQuery('.media-modal-content').length == 0) {
-            
-     var media_modals = wp.media.frames.media_modal = wp.media({
-          title: 'Upload a logo.',
-          button: { text: 'Select' },
-          library: { type: 'image' },
-      });
+        if ( jQuery('.media-modal-content').length == 0) {
+                
+        var media_modals = wp.media.frames.media_modal = wp.media({
+            title: 'Upload a logo.',
+            button: { text: 'Select' },
+            library: { type: 'image' },
+        });
 
-      media_modals.on('select', function() {
+        media_modals.on('select', function() {
 
-          var attachment = media_modals.state().get('selection').first().toJSON();
-          var img = attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.full;
-          $('#wps_membership_invoice_logo').val(attachment.url);
-          $('#img_thumbnail').find('img').attr('src', img.url);
-          $('#img_thumbnail').show(500);
-          $('#upload_img').addClass('button_hide');
-          $('#remove_img').removeClass('button_hide');
-      });
+            var attachment = media_modals.state().get('selection').first().toJSON();
+            var img = attachment.sizes.thumbnail || attachment.sizes.medium || attachment.sizes.full;
+            $('#wps_membership_invoice_logo').val(attachment.url);
+            $('#img_thumbnail').find('img').attr('src', img.url);
+            $('#img_thumbnail').show(500);
+            $('#upload_img').addClass('button_hide');
+            $('#remove_img').removeClass('button_hide');
+        });
 
-      media_modals.open();
+        media_modals.open();
+        }
+    });
+
+    // Remove image button.
+    $(document).on('click', '#remove_img', function(e) {
+        e.preventDefault();
+        $('#wps_membership_invoice_logo').val('');
+        $('#img_thumbnail').hide(500);
+        $('#img_thumbnail').find('img').attr('src', '');
+        $('#upload_img').removeClass('button_hide');
+        $('#remove_img').addClass('button_hide');
+    });
+    
+    // Add default plan title.
+    var post_title = $('input[name="post_title"]').val();
+    var post_id = $('input[name="post_ID"]').val();
+
+    if (!post_title) {
+        $('input[name="post_title"]').val( admin_ajax_obj.Plan + '#' + post_id);
     }
-  });
 
-  // Remove image button.
-  $(document).on('click', '#remove_img', function(e) {
-      e.preventDefault();
-      $('#wps_membership_invoice_logo').val('');
-      $('#img_thumbnail').hide(500);
-      $('#img_thumbnail').find('img').attr('src', '');
-      $('#upload_img').removeClass('button_hide');
-      $('#remove_img').addClass('button_hide');
-  });
- 
-  // Add default plan title.
-  var post_title = $('input[name="post_title"]').val();
-  var post_id = $('input[name="post_ID"]').val();
+    // Display warning if plan title field is empty.
+    $('input[name="post_title"]').on('keyup', function() {
+        var post_title = $('input[name="post_title"]').val();
+        var title_warning = jQuery('.title_warning').html()
 
-  if (!post_title) {
-      $('input[name="post_title"]').val( admin_ajax_obj.Plan + '#' + post_id);
-  }
+        if (!post_title) {
+            if ( title_warning == undefined ) {
+                var title_msg = '<span class="title_warning">*'+ admin_ajax_obj.Plan_warning +'</span>';
+                $('div#titlewrap').append(title_msg);
+            }
+            
+        }
+    });
 
-  // Display warning if plan title field is empty.
-  $('input[name="post_title"]').on('keyup', function() {
-      var post_title = $('input[name="post_title"]').val();
-     var title_warning = jQuery('.title_warning').html()
-
-      if (!post_title) {
-          if ( title_warning == undefined ) {
-            var title_msg = '<span class="title_warning">*'+ admin_ajax_obj.Plan_warning +'</span>';
-            $('div#titlewrap').append(title_msg);
-          }
-         
-      }
-  });
-
- // overview buttons animation
- $('.mfw_overview-contact').children('a').on('mouseenter', function(){
-  $(this).children('span').css({'width':'150px','opacity':'1'});
-}).on('mouseleave',function(){
-  $(this).children('span').css({'width':'0','opacity':'0'});
-});
+    // overview buttons animation
+    $('.mfw_overview-contact').children('a').on('mouseenter', function(){
+    $(this).children('span').css({'width':'150px','opacity':'1'});
+    }).on('mouseleave',function(){
+    $(this).children('span').css({'width':'0','opacity':'0'});
+    });
 
 
 
 
-jQuery(".import_csv_field_wrapper").dialog({
-  modal: true,
-  autoOpen: false,
-  show: { effect: "blind", duration: 800 },
-  width: 600
-});
+    jQuery(".import_csv_field_wrapper").dialog({
+        modal: true,
+        autoOpen: false,
+        show: { effect: "blind", duration: 800 },
+        width: 600
+    });
 
+    // Google recaptcha JS Start.
 
+    // disabled google enable when login fiels are not enable.
+    // Initial check on page load
+    if (!$('#wps_mfw_enable_override_login_signup').is(':checked')) {
+        disableRecaptcha();
+    }
 
+    // Toggle on checkbox change
+    $('#wps_mfw_enable_override_login_signup').on('change', function() {
+        if (!$(this).is(':checked')) {
+            disableRecaptcha();
+        } else {
+            enableRecaptcha();
+        }
+    });
+
+    function disableRecaptcha() {
+        const $recaptcha = $('#wps_mfw_enable_google_recaptcha');
+        $recaptcha.prop('disabled', true)
+                    .prop('checked', false)
+                    .attr('aria-checked', 'false')
+                    .val('');
+        $recaptcha.closest('.mdc-switch--checked').removeClass('mdc-switch--checked');
+    }
+
+    function enableRecaptcha() {
+        const $recaptcha = $('#wps_mfw_enable_google_recaptcha');
+        $recaptcha.prop('disabled', false)
+                    .prop('checked', true)
+                    .attr('aria-checked', 'true')
+                    .val('on');
+        $recaptcha.closest('.mdc-switch').addClass('mdc-switch--checked');
+    }
+    
+    
+
+    $(document).on('click','#wps_mfw_open_captcha_modal', function(e){
+        e.preventDefault();
+        $('.wps_mfw_captcha_wrap').addClass('wps-mfw_captcha--active');
+    })
+
+    $(document).on('click','.wps_mfw_captcha_closed', function(e){
+        $('.wps_mfw_captcha_wrap').removeClass('wps-mfw_captcha--active');
+    })
+
+    // disabled verify captcha button when site is empty.
+    if ( '' === mfw_admin_param.is_captcha_site_key ) {
+
+        jQuery('button#wps_mfw_open_captcha_modal').prop('disabled', true);
+    }
+
+    // Google recaptcha JS End.
 });
 
 
@@ -463,8 +510,6 @@ $(document).ready(function() {
 
     
   });
-
-  
 
 })(jQuery);
 // License.

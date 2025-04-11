@@ -134,15 +134,17 @@ class Membership_For_Woocommerce_Public {
 			$this->plugin_name,
 			'membership_public_obj',
 			array(
-				'ajaxurl'             => admin_url( 'admin-ajax.php' ),
-				'nonce'               => wp_create_nonce( 'auth_adv_nonce' ),
-				'buy_now_text'        => $button_text,
-				'single_plan'         => $wps_mfw_single_plan,
-				'plan_page_template'  => get_option( 'wps_membership_plan_page_temp' ),
-				'dark_mode'           => get_option( 'wps_membership_plan_page_dark_mode' ),
-				'enable_new_layout'   => get_option( 'wps_msfw_enable_new_layout_settings' ),
-				'new_layout_color'    => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? '#ff7700' : get_option( 'wps_msfw_new_layout_color' ),
-				'new_dashboard_color' => empty( get_option( 'wps_msfw_dashboard_color' ) ) ? '#7BCD66' : get_option( 'wps_msfw_dashboard_color' ),
+				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
+				'nonce'                   => wp_create_nonce( 'auth_adv_nonce' ),
+				'buy_now_text'            => $button_text,
+				'single_plan'             => $wps_mfw_single_plan,
+				'plan_page_template'      => get_option( 'wps_membership_plan_page_temp' ),
+				'dark_mode'               => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'enable_new_layout'       => get_option( 'wps_msfw_enable_new_layout_settings' ),
+				'new_layout_color'        => empty( get_option( 'wps_msfw_new_layout_color' ) ) ? '#ff7700' : get_option( 'wps_msfw_new_layout_color' ),
+				'new_dashboard_color'     => empty( get_option( 'wps_msfw_dashboard_color' ) ) ? '#7BCD66' : get_option( 'wps_msfw_dashboard_color' ),
+				'enable_login_and_signup' => $this->wps_mfw_is_login_and_signup_enable() ? 'on' : 'off',
+				'account_page_colors'     => ! empty( get_option( 'wps_mfw_login_form_color' ) ) ? get_option( 'wps_mfw_login_form_color' ) : '#9BC53D',
 			)
 		);
 
@@ -186,6 +188,12 @@ class Membership_For_Woocommerce_Public {
 					'nonce'     => wp_create_nonce( 'paypal-nonce' ),
 				)
 			);
+		}
+
+		// enqueue google captcha api library.
+		if ( $this->wps_mfw_is_google_captcha_enable() ) {
+
+			wp_enqueue_script( 'wpcaptcha-recaptcha', 'https://www.google.com/recaptcha/api.js', array(), $this->version, true );
 		}
 	}
 
@@ -4883,6 +4891,399 @@ class Membership_For_Woocommerce_Public {
 				</main>
 			</div>
 		<?php endif;
+	}
+
+	/**
+	 * Check is signup and login features is enable.
+	 *
+	 * @return bool
+	 */
+	public function wps_mfw_is_login_and_signup_enable() {
+
+		$flag = false;
+		if ( 'on' === get_option( 'wps_mfw_enable_override_login_signup' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * Check is google captcha is enable.
+	 *
+	 * @return bool
+	 */
+	public function wps_mfw_is_google_captcha_enable() {
+
+		$flag = false;
+		if ( 'on' === get_option( 'wps_mfw_enable_google_recaptcha' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
+	}
+
+	/**
+	 * This function is used to override login and singup page.
+	 *
+	 * @param  string $path path.
+	 * @param  string $template_name template name.
+	 * @return string
+	 */
+	public function wps_mfw_override_login_page( $path, $template_name ) {
+
+		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
+			if ( 'myaccount/form-login.php' == $template_name ) {
+
+				return plugin_dir_path( __FILE__ ) . '/woocommerce/templates/myaccount/form-login.php';
+			}
+		}
+		return $path;
+	}
+
+	/**
+	 * This function is used to change my account name for guest users
+	 *
+	 * @param  string $title title.
+	 * @return string
+	 */
+	public function wps_mfw_change_my_account_title_for_guests( $title ) {
+
+		if ( $this->wps_mfw_is_login_and_signup_enable() && ( is_account_page() && ! is_user_logged_in() && in_the_loop() ) ) {
+			if ( strtolower( $title ) === 'my account' ) {
+
+				$title = '';
+			}
+		}
+		return $title;
+	}
+
+	/**
+	 * Accept our terms and conditions to create account.
+	 *
+	 * @param  array  $errors   errors.
+	 * @param  string $username username.
+	 * @param  string $email    email.
+	 * @return array
+	 */
+	public function wps_mfw_woocommerce_register_post( $errors, $username, $email ) {
+
+		// nonce verification.
+		$nonce_value = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$nonce_value = isset( $_POST['woocommerce-register-nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['woocommerce-register-nonce'] ) ) : $nonce_value; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( $this->wps_mfw_is_login_and_signup_enable() && wp_verify_nonce( $nonce_value, 'woocommerce-register' ) ) {
+
+			// check google captcha is enable.
+			if ( $this->wps_mfw_is_google_captcha_enable() ) {
+
+				// return if captcha is not set.
+				if ( empty( $_POST['g-recaptcha-response'] ) ) {
+
+					return new WP_Error( 'registration-error-missing-password', __( 'Please verify that you are not a robot!.', 'membership-for-woocommerce' ) );
+				}
+
+				// verify of catpcha.
+				$recaptcha_secret    = get_option( 'wps_mfw_captcha_secret_key' );
+				$recaptcha_response  = ! empty( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+				$remote_addr        = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+				$verify_url          = 'https://www.google.com/recaptcha/api/siteverify';
+				$response            = wp_remote_get( $verify_url, [
+					'body' => [
+						'secret'   => $recaptcha_secret,
+						'response' => $recaptcha_response,
+						'remoteip' => $remote_addr
+					]
+				]);
+
+				// get succes/error and return notices.
+				$result = json_decode( wp_remote_retrieve_body( $response ), true );
+				if ( ! $result['success'] ) {
+
+					return new WP_Error( 'registration-error-missing-password', __( 'reCAPTCHA verification failed : invalid-input-response.', 'membership-for-woocommerce' ) );
+				}
+			}
+
+			// check terms is accept or not and throw error.
+			if ( empty( $_POST['wps_mfw_terms_and_condition'] ) ) {
+
+				return new WP_Error( 'registration-error-missing-password', __( 'Please review and accept our Terms and Conditions policy to proceed!.', 'membership-for-woocommerce' ) );
+			}
+		}
+		return $errors;
+	}
+
+	/**
+	 * Verify captcha when user is logging on the site.
+	 *
+	 * @param  object $validation_error validation_error.
+	 * @param  string $user_login user_login.
+	 * @param  string $user_password user_password.
+	 * @return object
+	 */
+	public function wps_mfw_woocommerce_login_process( $validation_error, $user_login, $user_password ) {
+		
+		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
+
+			$user = get_user_by( 'email', $user_login );
+			if ( ! empty( $user ) ) {
+				$is_member = get_user_meta( $user->ID, 'is_member', true );
+				if ( 'member' != $is_member ) {
+
+					return new WP_Error( 'registration-error-missing-password', __( 'You are not a member and therefore cannot log in to the site!.', 'membership-for-woocommerce' ) );
+				}
+			}
+
+			if ( $this->wps_mfw_is_google_captcha_enable() ) {
+
+				$wp_nonce = ! empty( $_REQUEST['woocommerce-login-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-login-nonce'] ) ) : sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
+				if ( wp_verify_nonce( $wp_nonce, 'woocommerce-login' ) ) {
+
+					if ( empty( $_POST['g-recaptcha-response'] ) ) {
+
+						return new WP_Error( 'registration-error-missing-password', __( 'Please verify that you are not a robot!.', 'membership-for-woocommerce' ) );
+					}
+
+					// verify of catpcha.
+					$recaptcha_secret   = get_option( 'wps_mfw_captcha_secret_key' );
+					$recaptcha_response = ! empty( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+					$remote_addr        = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+					$verify_url         = 'https://www.google.com/recaptcha/api/siteverify';
+					$response           = wp_remote_get( $verify_url, [
+						'body' => [
+							'secret'   => $recaptcha_secret,
+							'response' => $recaptcha_response,
+							'remoteip' => $remote_addr
+						]
+					]);
+
+					// get succes/error and return notices.
+					$result = json_decode( wp_remote_retrieve_body( $response ), true );
+					if ( ! $result['success'] ) {
+
+						$validation_error->add( 'wps_mfw_captcha_error', __( 'reCAPTCHA verification failed : invalid-input-response.', 'membership-for-woocommerce' ) );
+					}
+				}
+			}
+		}
+		return $validation_error;
+	}
+
+	/**
+	 * This function is used to assign membership when new user register on site.
+	 *
+	 * @param  string $user_id user id.
+	 * @return void
+	 */
+	public function wps_msfw_assign_membership_to_new_user( $user_id ) {
+
+		// check login and sigup feature is enable or not.
+		$wps_msfw_enable_assign_default_membership_setting = get_option( 'wps_msfw_enable_assign_default_membership_setting' );
+		$wps_msfw_membership_assign_to_new_user            = get_option( 'wps_msfw_membership_assign_to_new_user' );
+
+		// when user is regitering from membership registration form, we will make him members.
+		update_user_meta( $user_id, 'is_member', 'member' );
+		if ( 'on' === $wps_msfw_enable_assign_default_membership_setting ) {
+
+			$post_id                                = wp_insert_post(
+				array(
+					'post_type'   => 'wps_cpt_members',
+					'post_status' => 'publish',
+					'post_author' => $user_id,
+				),
+				true
+			);
+
+			wps_membership_update_meta_data( $post_id, 'member_status', 'complete' );
+			$actions = array(
+				'member_status'  => 'complete',
+				'member_actions' => '',
+			);
+			
+			// When plans are assigned manually.
+			$plan_id         = '';
+			$wps_success_msg = true;
+			if ( isset( $wps_msfw_membership_assign_to_new_user ) ) {
+
+				$plan_id = $wps_msfw_membership_assign_to_new_user;
+				if ( ! empty( $plan_id ) ) {
+
+					$plan_obj    = get_post( $plan_id, ARRAY_A );
+					$plan_status = ! empty( $plan_obj['post_status'] ) ? $plan_obj['post_status'] : '';
+					if ( ! is_array( $plan_obj ) || 'publish' != $plan_status ) {
+
+						return;
+					}
+
+					$post_meta = get_post_meta( $plan_id );
+					foreach ( $post_meta as $post_meta_key => $post_meta_value ) {
+
+						$post_meta[ $post_meta_key ] = reset( $post_meta_value );
+					}
+
+					$plan_meta = array_merge( $plan_obj, $post_meta );
+					wps_membership_update_meta_data( $post_id, 'plan_obj', $plan_meta );
+				}
+			}
+
+			$current_assigned_user = $user_id;
+			if ( $current_assigned_user ) {
+
+				wps_membership_update_meta_data( $post_id, 'wps_member_user', $current_assigned_user );
+			}
+
+			$current_memberships = get_user_meta( $current_assigned_user, 'mfw_membership_id', true );
+			$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
+			if ( ! in_array( $post_id, (array) $current_memberships ) ) {
+
+				array_push( $current_memberships, $post_id );
+			}
+
+			if ( 'yes' == wps_membership_get_meta_data( $plan_id, 'wps_membership_subscription', true ) ) {
+
+				wps_membership_update_meta_data( $post_id, 'is_subscription_plan_member', 'yes' );
+			} else {
+				wps_membership_update_meta_data( $post_id, 'is_subscription_plan_member', '' );
+			}
+
+			// Assign membership plan to user and assign 'member' role to it.
+			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
+			// send welcome mail while new user register.
+			$this->global_class->wps_mfw_membership_welcome_mail( $user_id );
+
+			// Getting current activation date.
+			$current_date = gmdate( 'Y-m-d' );
+			$plan_obj     = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
+			// Save expiry date in post.
+			if ( ! empty( $plan_obj ) && is_array( $plan_obj ) ) {
+
+				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
+				$membership_plubic->assign_club_membership_to_member( $plan_obj['ID'], $plan_obj, $post_id );
+				$access_type       = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
+				if ( 'delay_type' == $access_type ) {
+
+					$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
+					$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
+					$current_date       = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
+				}
+
+				if ( 'lifetime' == $plan_obj['wps_membership_plan_name_access_type'] ) {
+
+					wps_membership_update_meta_data( $post_id, 'member_expiry', 'Lifetime' );
+
+				} elseif ( 'limited' == $plan_obj['wps_membership_plan_name_access_type'] ) {
+
+					$duration    = $plan_obj['wps_membership_plan_duration'] . ' ' . $plan_obj['wps_membership_plan_duration_type'];
+					$today_date  = gmdate( 'Y-m-d' );
+					$expiry_date = strtotime( $today_date . $duration );
+					wps_membership_update_meta_data( $post_id, 'member_expiry', $expiry_date );
+					$order_id = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
+					if ( array_key_exists( 'wps_membership_subscription', $plan_obj ) ) {
+
+						if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
+							$subscription_id = wps_membership_get_meta_data( $order_id, 'wps_subscription_id', true );
+							if ( ! empty( $subscription_id ) ) {
+
+								wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
+								wps_membership_update_meta_data( $subscription_id, 'wps_next_payment_date', $expiry_date );
+								if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
+									if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
+
+										$current_time         = current_time( 'timestamp' );
+										$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
+										wps_membership_update_meta_data( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
+									}
+								} else {
+									wps_membership_update_meta_data( $subscription_id, 'wps_susbcription_end', '' );
+								}
+							}
+						}
+					}
+				}
+
+				$user        = get_userdata( $current_assigned_user );
+				$user        = new WP_User( $current_assigned_user ); // create a new user object for this user.
+				$expiry_date = wps_membership_get_meta_data( $post_id, 'member_expiry', true );
+				if ( 'Lifetime' == $expiry_date ) {
+
+					$expiry_date = 'Lifetime';
+				} else {
+					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
+				}
+
+				$order_id  = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
+				$user_name = '';
+				if ( isset( $user->data->display_name ) ) {
+
+					$user_name = $user->data->display_name;
+				}
+
+				$customer_email = '';
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+
+					$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				}
+
+				if ( ! empty( $customer_email ) ) {
+					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
+				}
+			}
+
+			update_user_meta( $current_assigned_user, 'is_member', 'member' );
+			foreach ( $actions as $action => $value ) {
+				if ( array_key_exists( $action, $_POST ) ) {
+
+					wps_membership_update_meta_data( $post_id, $action, $value );
+				}
+			}
+
+			// Saving member billing details metabox fields.
+			if ( isset( $_POST['payment_gateway_select'] ) ) {
+
+				$payment = ! empty( $_POST['payment_gateway_select'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_gateway_select'] ) ) : '';
+
+			} elseif ( isset( $_POST['billing_payment'] ) ) {
+
+				$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
+			} else {
+				$payment = ! empty( wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) ) ? wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) : '';
+			}
+
+			// phpcs:disable.
+			$fields = array(
+				'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
+				'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
+				'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
+				'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
+				'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
+				'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
+				'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
+				'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
+				'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
+				'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
+				'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
+				'payment_method'                => $payment,
+			);
+			// phpcs:enable.
+			wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
+		}
+	}
+
+	/**
+	 * Adding class on body.
+	 *
+	 * @param  array $classes classes.
+	 * @return array
+	 */
+	public function wps_mfw_adding_class_on_body( $classes ) {
+
+		// You can also add conditionally, for example.
+		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
+			if ( is_account_page() && ! is_user_logged_in() ) {
+
+				$classes[] = 'wps_mfw_account_page_parent_wrapper';
+			}
+		}
+		return $classes;
 	}
 
 }
