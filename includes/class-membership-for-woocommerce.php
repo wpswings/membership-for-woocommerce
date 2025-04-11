@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.8.0';
+			$this->version = '2.8.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -324,6 +324,9 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_send_offer_message_via_sms', $mfw_plugin_admin, 'wps_wpr_send_offer_message_via_sms', 10 );
 		// send offer message via email.
 		$this->loader->add_action( 'wp_ajax_send_offer_messages_via_email', $mfw_plugin_admin, 'wps_wpr_send_offer_messages_via_email', 10 );
+		// create and save google captcha settings.
+		$this->loader->add_filter( 'mfw_google_captcha_settings', $mfw_plugin_admin, 'wps_msfw_google_captcha_settings', 10, 1 );
+		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'wps_msfw_save_google_captcha_settings', 10, 1 );
 	}
 
 	/**
@@ -452,9 +455,6 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'add_to_cart_url', $mfw_plugin_public, 'wps_membership_add_to_cart_url', 20, 1 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_set_woocoomerce_session', 10 );
 			$this->loader->add_filter( 'mmcsfw_get_product_price_of_member', $mfw_plugin_public, 'wps_membership_get_product_price_of_member', 20, 2 );
-			// $this->loader->add_filter( 'wps_sfw_set_subscription_status', $mfw_plugin_public, 'wps_membership_subscription_get_status', 20, 2 );
-			// $this->loader->add_filter( 'wps_sfw_next_payment_date', $mfw_plugin_public, 'wps_membership_subscription_next_payment_date', 20, 2 );
-			// $this->loader->add_filter( 'wps_sfw_susbcription_end_date', $mfw_plugin_public, 'wps_membership_susbcription_end_date', 20, 2 );
 			$this->loader->add_filter( 'woocommerce_is_sold_individually', $mfw_plugin_public, 'wps_membership_hide_quantity_fields_for_membership', 10, 2 );
 			$this->loader->add_action( 'woocommerce_after_checkout_validation', $mfw_plugin_public, 'wps_membership_validate_email', 10, 2 );
 
@@ -487,6 +487,18 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_store_api_checkout_order_processed', $mfw_plugin_public, 'wps_mfw_calculate_total_discount_benefits' );
 			// html unssubcribe whatsapp notification.
 			$this->loader->add_action( 'wps_mfw_extend_membership_account_tab', $mfw_plugin_public, 'wps_mfw_unsubscribe_whatsapp_notification', 10, 1 );
+			// override login and signup templates.
+			$this->loader->add_filter( 'wc_get_template', $mfw_plugin_public, 'wps_mfw_override_login_page', 10, 2 );
+			// unset my account name.
+			$this->loader->add_filter( 'the_title', $mfw_plugin_public, 'wps_mfw_change_my_account_title_for_guests', 10, 2 );
+			// verify accept terms and condition and captcha while registering.
+			$this->loader->add_filter( 'woocommerce_registration_errors', $mfw_plugin_public, 'wps_mfw_woocommerce_register_post', 10, 3 );
+			// verify captcha when user is login.
+			$this->loader->add_filter( 'woocommerce_process_login_errors', $mfw_plugin_public, 'wps_mfw_woocommerce_login_process', 10, 3 );
+			// assign membership to new user.
+			$this->loader->add_action( 'user_register', $mfw_plugin_public, 'wps_msfw_assign_membership_to_new_user', 10, 1 );
+			// adding class on body.
+			$this->loader->add_filter( 'body_class', $mfw_plugin_public, 'wps_mfw_adding_class_on_body', 10, 1 );
 		}
 	}
 
@@ -619,6 +631,11 @@ class Membership_For_Woocommerce {
 				'title'       => esc_html__( 'Offer Notification', 'membership-for-woocommerce' ),
 				'name'        => 'membership-for-woocommerce-offer-notify-settings',
 				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php',
+			);
+			$mfw_default_tabs['membership-for-woocommerce-google-recaptcha-settings'] = array(
+				'title'       => esc_html__( 'Google reCaptcha', 'membership-for-woocommerce' ),
+				'name'        => 'membership-for-woocommerce-google-recaptcha-settings',
+				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-google-recaptcha-settings.php',
 			);
 
 			/**

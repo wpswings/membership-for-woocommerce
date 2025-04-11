@@ -192,6 +192,7 @@ class Membership_For_Woocommerce_Admin {
 					'reloadurl' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
 					'mfw_gen_tab_enable' => get_option( 'mfw_radio_switch_demo' ),
 					'mfw_admin_param_location' => ( admin_url( 'admin.php' ) . '?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ),
+					'is_captcha_site_key' => get_option( 'wps_mfw_site_captcha_key' ),
 				)
 			);
 
@@ -208,6 +209,12 @@ class Membership_For_Woocommerce_Admin {
 					'Plan_warning'  => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
 				)
 			);
+
+			// enqueue google captcha api library.
+			if ( 'on' === get_option( 'wps_mfw_enable_google_recaptcha' ) ) {
+
+				wp_enqueue_script( 'wpcaptcha-recaptcha', 'https://www.google.com/recaptcha/api.js', array(), $this->version, true );
+			}
 
 			wp_register_script( 'membership-for-woocommerce-registration-js', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-registration.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 			wp_localize_script(
@@ -4417,6 +4424,238 @@ class Membership_For_Woocommerce_Admin {
 		}
 		wp_send_json( $response );
 		wp_die();
+	}
+
+	/**
+	 * Google Captcha HMTL.
+	 *
+	 * @param  array $captcha_settings captcha_settings.
+	 * @return array
+	 */
+	public function wps_msfw_google_captcha_settings( $captcha_settings ) {
+		$url              = '<a href="https://www.google.com/recaptcha/admin/create" target="_blank">' . esc_html__( 'Click Here', 'membership-for-woocommerce' ) . '</a>';
+		$wps_app_settings = array(
+			array(
+				'title'       => __( 'Enable to override the Login and Sign Up pages', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Override the default registration and signup page with the membership registration and signup page.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_enable_override_login_signup',
+				'value'       => get_option( 'wps_mfw_enable_override_login_signup' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Enter Welcome message for user', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'Enter a welcome message that will appear on the login and signup form.', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'enter welcome message', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_user_welcome_msg',
+				'value'       => get_option( 'wps_mfw_user_welcome_msg' ),
+			),
+			array(
+				'title' => __( 'Choose form color', 'membership-for-woocommerce' ),
+				'type'  => 'color',
+				'id'    => 'wps_mfw_login_form_color',
+				'value' => get_option( 'wps_mfw_login_form_color' ),
+				'class' => 'mfw-text-class',
+				'placeholder' => __( 'Background Color', 'membership-for-woocommerce' ),
+			),
+			array(
+				'title'       => __( 'Enable Google reCaptcha', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Google reCAPTCHA will be displayed on the Login and Signup pages for enhanced security. This setting depends on the Login and Signup settings.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_enable_google_recaptcha',
+				'value'       => get_option( 'wps_mfw_enable_google_recaptcha' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Enter Captcha Site Key', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => /* translators: %s: auth token */ sprintf( __( 'Please enter your auth token. To create a auth token, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ),
+				'placeholder' => __( 'Enter site key', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_site_captcha_key',
+				'value'       => get_option( 'wps_mfw_site_captcha_key' ),
+			),
+			array(
+				'title'       => __( 'Enter Captcha Secret Key', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => /* translators: %s: auth token */ sprintf( __( 'Please enter your auth token. To create a auth token, %s', 'membership-for-woocommerce' ), wp_kses_post( $url ) ),
+				'placeholder' => __( 'Enter captcha key', 'membership-for-woocommerce' ),
+				'id'          => 'wps_mfw_captcha_secret_key',
+				'value'       => get_option( 'wps_mfw_captcha_secret_key' ),
+			),
+			array(
+				'title'       => __( 'Assign membership to a new user', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to automatically assign a membership when a new user registers on your site.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_assign_default_membership_setting',
+				'value'       => get_option( 'wps_msfw_enable_assign_default_membership_setting' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Choose Membership', 'membership-for-woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Select the membership that will be assigned to a new user upon registration.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_membership_assign_to_new_user',
+				'value'       => get_option( 'wps_msfw_membership_assign_to_new_user' ),
+				'options'     => $this->wps_msfw_list_all_membership(),
+			),
+			array(
+				'type'        => 'simple-button',
+				'id'          => 'wps_mfw_save_google_recaptcha',
+				'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+				'multi-class' => 'wps_mfw_floating_button',
+			),
+			array(
+				'type'        => 'simple-button',
+				'id'          => 'wps_mfw_open_captcha_modal',
+				'button_text' => __( 'Verify Captcha', 'membership-for-woocommerce' ),
+				'class'       => 'mfw-button-class',
+			),
+		);
+		$captcha_settings = array_merge( $captcha_settings, $wps_app_settings );
+		return $captcha_settings;
+	}
+
+	/**
+	 * Save and verify google captcha settings.
+	 *
+	 * @return void
+	 */
+	public function wps_msfw_save_google_captcha_settings() {
+
+		global $mfw_wps_mfw_obj;
+		// save captcha settings.
+		if ( isset( $_POST['wps_mfw_save_google_recaptcha'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag      = false;
+			$mfw_genaral_settings = apply_filters( 'mfw_google_captcha_settings', array() );
+			$mfw_button_index      = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
+			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+				$mfw_button_index = array_search( 'simple-button', array_column( $mfw_genaral_settings, 'type' ) );
+			}
+
+			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+				unset( $mfw_genaral_settings[ $mfw_button_index ] );
+				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
+
+					foreach ( $mfw_genaral_settings as $mfw_genaral_setting ) {
+						if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+							if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+								update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+							} else {
+
+								update_option( $mfw_genaral_setting['id'], '' );
+							}
+						} else {
+
+							$wps_mfw_gen_flag = true;
+						}
+					}
+				}
+
+				if ( $wps_mfw_gen_flag ) {
+
+					$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+				} else {
+
+					$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+					$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+				}
+			}
+		}
+
+		// verify captcha.
+		if ( isset( $_POST['wps_mfw_verify_captcha'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+			$wps_mfw_gen_flag                = false;
+			$wps_mfw_enable_google_recaptcha = ! empty( $_POST['wps_mfw_enable_google_recaptcha'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_mfw_enable_google_recaptcha'] ) ) : 'off';
+			if ( 'on' === $wps_mfw_enable_google_recaptcha ) {
+
+				$recaptcha_response       = ! empty( $_POST['g-recaptcha-response'] ) ? sanitize_text_field( wp_unslash( $_POST['g-recaptcha-response'] ) ) : '';
+				$wps_mfw_site_captcha_key = ! empty( $_POST['wps_mfw_site_captcha_key'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_mfw_site_captcha_key'] ) ) : '';
+				$recaptcha_secret         = ! empty( $_POST['wps_mfw_captcha_secret_key'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_mfw_captcha_secret_key'] ) ) : '';
+				$remote_addr              = ! empty( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+				if ( ! empty( $recaptcha_response ) ) {
+
+					$verify_url = 'https://www.google.com/recaptcha/api/siteverify';
+					$response   = wp_remote_get( $verify_url, [
+						'body' => [
+							'secret'   => $recaptcha_secret,
+							'response' => $recaptcha_response,
+							'remoteip' => $remote_addr
+						]
+					]);
+
+					$response_body = wp_remote_retrieve_body($response);
+					$result        = json_decode($response_body, true);
+
+					if ( $result['success'] ) {
+
+						$msg              = esc_html__( 'Captcha has been verified successfully!', 'membership-for-woocommerce' );
+						$wps_mfw_gen_flag = true;
+					} else {
+
+						$msg = esc_html__( 'reCAPTCHA verification failed : invalid-input-response.', 'membership-for-woocommerce' );
+					}
+				} else {
+
+					$msg = esc_html__( 'Invalid key details', 'membership-for-woocommerce' );
+				}
+			} else {
+
+				$msg = esc_html__( 'Plese enable captcha settings!', 'membership-for-woocommerce' );
+			}
+
+			if ( $wps_mfw_gen_flag ) {
+
+				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $msg, 'success' );
+			} else {
+
+				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $msg, 'error' );
+			}
+		}
+	}
+
+	/**
+	 * This function is used to list all membership.
+	 *
+	 * @return array
+	 */
+	public function wps_msfw_list_all_membership() {
+
+		$results = get_posts(
+			array(
+				'post_type'   => 'wps_cpt_membership',
+				'post_status' => 'publish',
+				'numberposts' => -1,
+			)
+		);
+
+		$wps_msfw_all_pages = array();
+		if ( ! empty( $results ) && is_array( $results ) ) {
+			foreach ( $results as $key => $value ) {
+
+				$wps_msfw_all_pages[ $value->ID ] = $value->post_title;
+			}
+		}
+		return $wps_msfw_all_pages;
 	}
 
 }
