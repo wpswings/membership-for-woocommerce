@@ -1466,4 +1466,58 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 		return $membership_send_arr;
 	}
+
+	/**
+	 * Undocumented function.
+	 *
+	 * @param  string $country_code_name country_code_name.
+	 * @return string
+	 */
+	public function get_country_code_by_name( $country_code_name ) {
+
+		$countries = array(
+			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
+			"AL" => ["name" => "Albania", "dial_code" => "+355"],
+			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
+			"US" => ["name" => "United States", "dial_code" => "+1"],
+			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
+			"IN" => ["name" => "India", "dial_code" => "+91"],
+			"AU" => ["name" => "Australia", "dial_code" => "+61"],
+			"CA" => ["name" => "Canada", "dial_code" => "+1"],
+			"CN" => ["name" => "China", "dial_code" => "+86"],
+			"FR" => ["name" => "France", "dial_code" => "+33"],
+			"DE" => ["name" => "Germany", "dial_code" => "+49"],
+			"IT" => ["name" => "Italy", "dial_code" => "+39"],
+			"JP" => ["name" => "Japan", "dial_code" => "+81"],
+			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
+			"RU" => ["name" => "Russia", "dial_code" => "+7"],
+			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
+			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
+			"ES" => ["name" => "Spain", "dial_code" => "+34"],
+			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
+			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
+			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
+			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
+			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
+			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
+			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
+			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
+			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
+			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
+			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
+			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
+			"AT" => ["name" => "Austria", "dial_code" => "+43"],
+			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
+			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
+			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
+			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
+			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
+			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
+			"IL" => ["name" => "Israel", "dial_code" => "+972"],
+			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
+		);
+
+		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
+		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
+	}
 }

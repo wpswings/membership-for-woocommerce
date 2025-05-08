@@ -153,6 +153,12 @@ class Membership_For_Woocommerce_Common {
 	 * Callback function for file Upload and import.
 	 */
 	public function wps_membership_csv_file_upload() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;  
+		}
+
 		check_ajax_referer( 'plan-import-nonce', 'nonce' );
 		if ( is_admin() || ( is_multisite() && is_super_admin() ) ) {
 
@@ -792,6 +798,12 @@ class Membership_For_Woocommerce_Common {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_save_settings_filter() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;   
+		}
+
 		check_ajax_referer( 'ajax-nonce', 'nonce' );
 
 		$term_accpted = ! empty( $_POST['consetCheck'] ) ? sanitize_text_field( wp_unslash( $_POST['consetCheck'] ) ) : ' ';
@@ -931,6 +943,12 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_membership_cancel_membership_count() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;   
+		}
+
 		check_ajax_referer( 'wps_common_ajax_nonce', 'security' );
 
 		$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
@@ -952,6 +970,12 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_mfw_stop_whatsapp_notification() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;   
+		}
+
 		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
 
 		$user_id  = get_current_user_id();
@@ -978,6 +1002,12 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_mfw_stop_sms_notification() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;   
+		}
+
 		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
 
 		$user_id  = get_current_user_id();
@@ -1004,6 +1034,12 @@ class Membership_For_Woocommerce_Common {
 	 * @return void
 	 */
 	public function wps_mfw_stop_email_notification() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;   
+		}
+
 		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
 
 		$user_id  = get_current_user_id();
@@ -1023,5 +1059,94 @@ class Membership_For_Woocommerce_Common {
 		wp_send_json( $response );
 		wp_die();
 	}
+
+	/**
+	 * This function is used to send sms to community users.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_send_sms_community_user() {
+
+		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
+		$user_id  = ! empty( $_POST['user_id'] ) ? sanitize_text_field( wp_unslash( $_POST['user_id'] ) ) : '';
+		$message  = ! empty( $_POST['message'] ) ? sanitize_text_field( wp_unslash( $_POST['message'] ) ) : esc_html__( 'You have received a message from a member of your community', 'membership-for-woocommerce' );
+		if ( ! empty( $user_id ) ) {
+
+			$response = $this->wps_mfw_send_sms_community_members( $user_id, $message );
+		} else {
+
+			$response = array(
+				'result' => false,
+				'msg'    => esc_html__( 'Invalid user!.', 'membership-for-woocommerce' ),
+			);
+		}
+		wp_send_json( $response );
+		wp_die();
+	}
+
+	/**
+	 * Send SMS to a community member about earning or redeeming points.
+	 *
+	 * @param int    $user_id User ID.
+	 * @param string $message Message content.
+	 * @return object
+	 */
+	function wps_mfw_send_sms_community_members( $user_id, $message ) {
+
+		$response              = array( 'result' => false, 'msg'    => esc_html__( 'The admin has not activated this feature yet.', 'membership-for-woocommerce' ),	);
+		$enable_community      = get_option( 'wps_msfw_enable_to_show_members_community' );
+		$enable_sms_between    = get_option( 'wps_wpr_enable_sms_btw_comm_user' );
+		if ( 'on' === $enable_community && 'on' === $enable_sms_between ) {
+
+			// Get SMS integration settings.
+			$sid       = get_option( 'wps_wpr_sms_account_sid', '' );
+			$auth      = get_option( 'wps_wpr_sms_auth_token', '' );
+			$twilio_id = get_option( 'wps_wpr_sms_twilio_num_id', '' );
+			if ( ! empty( $sid ) && ! empty( $auth ) && ! empty( $twilio_id ) ) {
+
+				// Get user's phone number and prepend country code.
+				$country_name = get_user_meta( $user_id, 'billing_country', true );
+				$phone        = get_user_meta( $user_id, 'billing_phone', true );
+				$country_code = $this->global_class->get_country_code_by_name( $country_name );
+				if ( ! empty( $phone ) && ! empty( $country_code ) ) {
+					$to = '+' . $country_code . $phone;
+
+					// Send SMS using Twilio.
+					$url       = "https://api.twilio.com/2010-04-01/Accounts/{$sid}/Messages.json";
+					$curl_data = array(
+						'From' => $twilio_id,
+						'To'   => $to,
+						'Body' => $message,
+					);
+
+					$ch = curl_init();
+					curl_setopt( $ch, CURLOPT_URL, $url );
+					curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+					curl_setopt( $ch, CURLOPT_TIMEOUT, 30 );
+					curl_setopt( $ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC );
+					curl_setopt( $ch, CURLOPT_USERPWD, "{$sid}:{$auth}" );
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query( $curl_data ) );
+
+					$curl_response = curl_exec( $ch );
+					$http_code     = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+					curl_close( $ch );
+
+					if ( 201 === $http_code ) {
+
+						$response['result'] = true;
+						$response['msg']    = esc_html__( 'SMS sent successfully.', 'membership-for-woocommerce' );
+					} else {
+						$response['msg'] = esc_html__( 'Failed to send SMS.', 'membership-for-woocommerce' );
+					}
+				} else {
+					$response['msg'] = esc_html__( 'User phone number or country code is missing.', 'membership-for-woocommerce' );
+				}
+			} else {
+				$response['msg'] = esc_html__( 'SMS service is not properly configured.', 'membership-for-woocommerce' );
+			}
+		}
+		return $response;
+	}
+
 
 }

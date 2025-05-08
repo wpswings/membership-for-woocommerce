@@ -315,6 +315,7 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'nonce'   => wp_create_nonce( 'members-nonce' ),
+						'wsfw_ajax_error' => 'there is some ajax error on the site!',
 					)
 				);
 			}
@@ -1407,6 +1408,10 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_membership_get_membership_content() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
 
@@ -1541,6 +1546,10 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_membership_get_member_content() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce Verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
 
@@ -2764,6 +2773,10 @@ class Membership_For_Woocommerce_Admin {
 	 */
 	public function wps_membership_save_member_status() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce verification.
 		check_ajax_referer( 'members-nonce', 'nonce' );
 
@@ -2894,9 +2907,16 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
 				}
 
-				$order_id       = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
-				$user_name      = $user->data->display_name;
-				$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				$order_id  = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
+				$user_name = '';
+				if ( ! empty( $user ) && is_object( $user ) && isset( $user->data->display_name ) ) {
+
+					$user_name = $user->data->display_name;
+				}
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+
+					$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				}
 				if ( ! empty( $customer_email ) ) {
 
 					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
@@ -3054,6 +3074,11 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function wps_membership_create_plan_reg_callback() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 
 		check_ajax_referer( 'membership-registration-nonce', 'nonce' );
 
@@ -3724,6 +3749,23 @@ class Membership_For_Woocommerce_Admin {
 				'placeholder' => __( 'Coupon Amount', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_one_time_coupon_amount',
 				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
+				'form-title'  => 'wps_mfw_add_border',
+			),
+			array(
+				'title'       => __( 'Enable this to establish a community for users.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Activate these settings to create and manage a member community based on membership plans, displayed on the My Account page.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_to_show_members_community',
+				'value'       => get_option( 'wps_msfw_enable_to_show_members_community' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title'       => __( "Enter the user's BG image URL", 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( "The entered image URL will be used as the background image in the user's community section on the My Account page.", 'membership-for-woocommerce' ),
+				'placeholder' => __( 'enter image url', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_user_community_bg_image',
+				'value'       => get_option( 'wps_msfw_user_community_bg_image' ),
 			),
 			array(
 				'type'        => 'multi-button',
@@ -3951,6 +3993,18 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_wpr_sms_twilio_num_id',
 				'value'       => get_option( 'wps_wpr_sms_twilio_num_id' ),
 			),
+			array(
+				'title'       => __( 'Allow SMS between community users', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to allow community users to send SMS messages to each other.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_enable_sms_btw_comm_user',
+				'value'       => get_option( 'wps_wpr_enable_sms_btw_comm_user' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 		);
 		$sms_settings = array_merge( $sms_settings, $wps_app_settings );
 		return $sms_settings;
@@ -4050,6 +4104,12 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function wps_wpr_send_offer_message_on_whatsapp() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
 		$response        = array();
@@ -4089,7 +4149,7 @@ class Membership_For_Woocommerce_Admin {
 					if ( array_key_exists( $user_id, $wps_wpr_store_match_id ) ) {
 
 						$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
-						$country_code                   = $this->get_country_code_by_name( $country_code_name );
+						$country_code                   = $this->global_class->get_country_code_by_name( $country_code_name );
 						$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
 						$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
 						$user_obj                       = get_user_by( 'id', $user_id );
@@ -4170,65 +4230,17 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Undocumented function.
-	 *
-	 * @param  string $country_code_name country_code_name.
-	 * @return string
-	 */
-	public function get_country_code_by_name( $country_code_name ) {
-
-		$countries = array(
-			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
-			"AL" => ["name" => "Albania", "dial_code" => "+355"],
-			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
-			"US" => ["name" => "United States", "dial_code" => "+1"],
-			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
-			"IN" => ["name" => "India", "dial_code" => "+91"],
-			"AU" => ["name" => "Australia", "dial_code" => "+61"],
-			"CA" => ["name" => "Canada", "dial_code" => "+1"],
-			"CN" => ["name" => "China", "dial_code" => "+86"],
-			"FR" => ["name" => "France", "dial_code" => "+33"],
-			"DE" => ["name" => "Germany", "dial_code" => "+49"],
-			"IT" => ["name" => "Italy", "dial_code" => "+39"],
-			"JP" => ["name" => "Japan", "dial_code" => "+81"],
-			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
-			"RU" => ["name" => "Russia", "dial_code" => "+7"],
-			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
-			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
-			"ES" => ["name" => "Spain", "dial_code" => "+34"],
-			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
-			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
-			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
-			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
-			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
-			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
-			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
-			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
-			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
-			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
-			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
-			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
-			"AT" => ["name" => "Austria", "dial_code" => "+43"],
-			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
-			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
-			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
-			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
-			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
-			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
-			"IL" => ["name" => "Israel", "dial_code" => "+972"],
-			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
-		);
-
-		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
-		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
-	}
-
-	/**
 	 * This function is used to send offer notification via sms.
 	 *
 	 * @return void
 	 */
 	public function wps_wpr_send_offer_message_via_sms() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
 		$response                        = array();
@@ -4282,7 +4294,7 @@ class Membership_For_Woocommerce_Admin {
 
 							// get user billing number and country code.
 							$country_code_name = get_user_meta( $user_id, 'billing_country', true );
-							$country_code      = $this->get_country_code_by_name( $country_code_name );
+							$country_code      = $this->global_class->get_country_code_by_name( $country_code_name );
 							$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
 							$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
 							$wps_send_contact  = '+' . $billing_phone;
@@ -4349,6 +4361,12 @@ class Membership_For_Woocommerce_Admin {
 	 * @return void
 	 */
 	public function wps_wpr_send_offer_messages_via_email() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
 		
 		$response        = array();

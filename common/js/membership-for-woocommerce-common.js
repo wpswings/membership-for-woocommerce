@@ -31,8 +31,6 @@
 
 })( jQuery );
 
-
-
 jQuery(document).ready(function ($) {
 	$(".wps_membership_buynow").on("click", function (e) {
 		e.preventDefault();
@@ -141,6 +139,67 @@ jQuery(document).ready(function ($) {
 			}
 		});
 	}
+
+	// popup to send sms to user.
+	var popupOverlay = jQuery(".wps-mfw_ul-popup-overlay");
+	jQuery('.wps-mfw_u-list-wrap ul.wps-mfw_u-list li .wps-mfw_ul-cta button').on('click', function(e) {
+
+		jQuery('.wps-mfw_uld-msg').html('');
+		var dataId = jQuery(this).attr('data-id');
+    	jQuery('.wps-mfw_ul-send').attr('data-id', dataId);
+
+		// Show the popup using jQuery
+		popupOverlay.css("display", "flex"); // or "block"
+	});
+
+	// Handle Close button
+	jQuery(".wps-mfw_ul-close").on("click", function () {
+		popupOverlay.css("display", "none");
+	});
+
+	// send sms to community users.
+	jQuery(document).on('click', '.wps-mfw_ul-send', function () {
+
+		const $button     = jQuery(this);
+		const userId      = $button.attr('data-id');
+		const message     = jQuery('.wps-mfw_ul-description').val();
+		const $loader     = jQuery('.wps_wpr_sms_community_loader');
+		const $msgBox     = jQuery('.wps-mfw_uld-msg');
+		const $popup      = jQuery('.wps-mfw_ul-popup-overlay'); // Make sure this selector matches your HTML.
+	
+		$button.prop('disabled', true);
+		$loader.show();
+	
+		jQuery.ajax({
+			type : 'POST',
+			url  : mfw_common_param.ajaxurl,
+			data : {
+				action  : 'send_sms_community_user',
+				nonce   : mfw_common_param.nonce,
+				user_id : userId,
+				message : message,
+			},
+			success : function (response) {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox
+					.css('color', response.result ? 'green' : 'red')
+					.html(response.msg)
+					.show();
+				jQuery('.wps-mfw_ul-description').val('');
+	
+				setTimeout(() => {
+					$popup.hide();
+					$msgBox.hide();
+				}, 2000);
+			},
+			error: function () {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox.css('color', 'red').text('Something went wrong. Please try again.').show();
+			}
+		});
+	});
 
 });
 
