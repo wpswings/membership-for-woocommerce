@@ -166,9 +166,15 @@ jQuery(document).ready(function ($) {
 		const $loader     = jQuery('.wps_wpr_sms_community_loader');
 		const $msgBox     = jQuery('.wps-mfw_uld-msg');
 		const $popup      = jQuery('.wps-mfw_ul-popup-overlay'); // Make sure this selector matches your HTML.
-	
+		
+		if ( ! message ) {
+
+			$msgBox.css('color', 'red').html(mfw_common_param.msg_error).show().focus();
+			return false;
+		}
 		$button.prop('disabled', true);
 		$loader.show();
+		$msgBox.hide();
 	
 		jQuery.ajax({
 			type : 'POST',
@@ -196,7 +202,7 @@ jQuery(document).ready(function ($) {
 			error: function () {
 				$button.prop('disabled', false);
 				$loader.hide();
-				$msgBox.css('color', 'red').text('Something went wrong. Please try again.').show();
+				$msgBox.css('color', 'red').text(mfw_common_param.ajax_error).show();
 			}
 		});
 	});

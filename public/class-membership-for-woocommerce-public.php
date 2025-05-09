@@ -5423,7 +5423,7 @@ class Membership_For_Woocommerce_Public {
 				<div class="wps-mfw_ul-popup--shadow"></div>
 				<div class="wps-mfw_ul-popup">
 					<h2 class="wps-mfw_ul-message"><?php esc_html_e( 'Enter Message', 'membership-for-woocommerce' ); ?></h2>
-					<textarea class="wps-mfw_ul-description" placeholder="<?php esc_html_e( 'start typing to send sms', 'membership-for-woocommerce' ); ?>"></textarea>
+					<textarea class="wps-mfw_ul-description" placeholder="<?php esc_html_e( 'Type your message here...', 'membership-for-woocommerce' ); ?>"></textarea>
 					<p class="wps-mfw_uld-msg"></p>
 					<div class="wps-mfw_ul-buttons">
 						<button class="wps-mfw_ul-send"><?php esc_html_e( 'Send', 'membership-for-woocommerce' ); ?></button>

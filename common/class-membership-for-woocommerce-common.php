@@ -77,8 +77,10 @@ class Membership_For_Woocommerce_Common {
 			$this->plugin_name . 'common',
 			'mfw_common_param',
 			array(
-				'ajaxurl' => admin_url( 'admin-ajax.php' ),
-				'nonce' => wp_create_nonce( 'wps_common_ajax_nonce' ),
+				'ajaxurl'    => admin_url( 'admin-ajax.php' ),
+				'nonce'      => wp_create_nonce( 'wps_common_ajax_nonce' ),
+				'msg_error'  => esc_html__( 'Kindly enter a message before sending to the selected user', 'membership-for-woocommerce' ),
+				'ajax_error' => esc_html__( 'Oops! Something went wrong. Please try again.', 'membership-for-woocommerce' ),
 			)
 		);
 		wp_enqueue_script( $this->plugin_name . 'common' );
