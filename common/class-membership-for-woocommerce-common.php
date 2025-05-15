@@ -967,97 +967,54 @@ class Membership_For_Woocommerce_Common {
 	}
 
 	/**
-	 * Stop whatsapp notify via ajax call.
+	 * Handle stop notification settings (WhatsApp, SMS, Email) via AJAX.
 	 *
 	 * @return void
 	 */
-	public function wps_mfw_stop_whatsapp_notification() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-
-			return false;   
-		}
+	public function wps_mfw_stop_notification() {
 
 		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
 
-		$user_id  = get_current_user_id();
-		$stop     = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
-		$response = array();
-		if ( 'yes' === $stop ) {
+		$type    = isset( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : '';
+		$stop    = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
+		$user_id = get_current_user_id();
 
-			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'yes' );
-			$response['result'] = true;
-			$response['msg']    = esc_html__( 'whatsapp notification deactivated successfully!', 'membership-for-woocommerce' );
-		} else {
+		$type_meta_map = array(
+			'whatsapp' => array(
+				'meta_key' => 'wps_mfw_stop_whatsapp',
+				'label'    => 'WhatsApp',
+			),
+			'sms' => array(
+				'meta_key' => 'wps_mfw_stop_sms',
+				'label'    => 'SMS',
+			),
+			'email' => array(
+				'meta_key' => 'wps_mfw_email_sms',
+				'label'    => 'Email',
+			),
+		);
 
-			update_user_meta( $user_id, 'wps_mfw_stop_whatsapp', 'no' );
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'whatsapp notification activated!', 'membership-for-woocommerce' );
-		}
-		wp_send_json( $response );
-		wp_die();
-	}
+		if ( ! isset( $type_meta_map[ $type ] ) ) {
 
-	/**
-	 * Stop whatsapp notify via ajax call.
-	 *
-	 * @return void
-	 */
-	public function wps_mfw_stop_sms_notification() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-
-			return false;   
+			wp_send_json_error( esc_html__( 'Invalid notification type.', 'membership-for-woocommerce' ) );
+			wp_die();
 		}
 
-		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
+		$meta_key = $type_meta_map[ $type ]['meta_key'];
+		$label    = $type_meta_map[ $type ]['label'];
 
-		$user_id  = get_current_user_id();
-		$stop     = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
-		$response = array();
-		if ( 'yes' === $stop ) {
+		update_user_meta( $user_id, $meta_key, $stop );
 
-			update_user_meta( $user_id, 'wps_mfw_stop_sms', 'yes' );
-			$response['result'] = true;
-			$response['msg']    = esc_html__( 'sms notification deactivated successfully!', 'membership-for-woocommerce' );
-		} else {
+		$response = array(
+			'result' => ( 'yes' === $stop ),
+			'msg'    => sprintf(
+				/* translators: %s: Notification type */
+				esc_html__( '%s notification %s successfully!', 'membership-for-woocommerce' ),
+				esc_html( $label ),
+				( 'yes' === $stop ) ? esc_html__( 'deactivated', 'membership-for-woocommerce' ) : esc_html__( 'activated', 'membership-for-woocommerce' )
+			),
+		);
 
-			update_user_meta( $user_id, 'wps_mfw_stop_sms', 'no' );
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'sms notification activated!', 'membership-for-woocommerce' );
-		}
-		wp_send_json( $response );
-		wp_die();
-	}
-
-	/**
-	 * Stop whatsapp notify via ajax call.
-	 *
-	 * @return void
-	 */
-	public function wps_mfw_stop_email_notification() {
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-
-			return false;   
-		}
-
-		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
-
-		$user_id  = get_current_user_id();
-		$stop     = ! empty( $_POST['stop'] ) ? sanitize_text_field( wp_unslash( $_POST['stop'] ) ) : 'no';
-		$response = array();
-		if ( 'yes' === $stop ) {
-
-			update_user_meta( $user_id, 'wps_mfw_email_sms', 'yes' );
-			$response['result'] = true;
-			$response['msg']    = esc_html__( 'email notification deactivated successfully!', 'membership-for-woocommerce' );
-		} else {
-
-			update_user_meta( $user_id, 'wps_mfw_email_sms', 'no' );
-			$response['result'] = false;
-			$response['msg']    = esc_html__( 'email notification activated!', 'membership-for-woocommerce' );
-		}
 		wp_send_json( $response );
 		wp_die();
 	}

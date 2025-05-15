@@ -356,12 +356,8 @@ class Membership_For_Woocommerce {
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-		// ajax to stop whatsapp notification.
-		$this->loader->add_action( 'wp_ajax_stop_whatsapp_notification', $mfw_plugin_common, 'wps_mfw_stop_whatsapp_notification' );
-		// ajax to stop sms notification.
-		$this->loader->add_action( 'wp_ajax_stop_sms_notification', $mfw_plugin_common, 'wps_mfw_stop_sms_notification' );
-		// ajax to stop email notification.
-		$this->loader->add_action( 'wp_ajax_stop_email_notification', $mfw_plugin_common, 'wps_mfw_stop_email_notification' );
+		// ajax to stop notification.
+		$this->loader->add_action( 'wp_ajax_stops_notification', $mfw_plugin_common, 'wps_mfw_stop_notification' );
 		// send sms to community users.
 		$this->loader->add_action( 'wp_ajax_send_sms_community_user', $mfw_plugin_common, 'wps_mfw_send_sms_community_user' );
 	}

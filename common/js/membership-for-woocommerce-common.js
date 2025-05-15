@@ -77,65 +77,36 @@ jQuery(document).ready(function ($) {
 		} 
 	} );
 
-	// stop whatsapp notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_whatsapp_notify', function(){
+	// Unified event listener for all notification toggles.
+	$(document).on('change', '.wps_msfw_stop_notifications', function() {
 
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_whatsapp_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
-		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
+		wps_mfw_toggle_notification( $(this), $(this).attr('data-type') );
 	});
+	
+	function wps_mfw_toggle_notification( $checkbox, type ) {
 
-	// stop sms notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_sms_notify', function(){
-
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_sms_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
+		let isChecked = $checkbox.is(':checked') ? $checkbox.val() : 'no';
+		let data     = {
+			action : 'stops_notification',
+			nonce  : mfw_common_param.nonce,
+			stop   : isChecked,
+			type   : type, // 'whatsapp', 'sms', or 'email'
 		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
-	});
 
-	// stop email notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_email_notify', function(){
-
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_email_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
-		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
-	});
-
-	function wps_mfw_stop_whatsapp_notify( value, _this ) {
-		
-		jQuery.ajax({
-			'url'    : mfw_common_param.ajaxurl,
-			'method' : 'POST',
-			'data'   : value,
-			success  : function( response ) {
-
-				if ( response.result == true ) {
-
-					jQuery('.mfw_whatsapp_stop_notice').show();
-					jQuery('.mfw_whatsapp_stop_notice').css('color', 'red');
-					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
-				} else {
-
-					jQuery('.mfw_whatsapp_stop_notice').show();
-					jQuery('.mfw_whatsapp_stop_notice').css('color', 'green');
-					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
-				}
+		$.ajax({
+			url     : mfw_common_param.ajaxurl,
+			method  : 'POST',
+			data    : data,
+			success : function(response) {
+				let $notice = $('.mfw_whatsapp_stop_notice');
+				$notice
+					.show()
+					.css('color', response.result ? 'red' : 'green')
+					.html(response.msg);
 
 				setTimeout(() => {
-					jQuery('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').hide();
-				}, 15000);
+					$notice.hide();
+				}, 2000);
 			}
 		});
 	}
