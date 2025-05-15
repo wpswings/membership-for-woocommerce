@@ -946,22 +946,20 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function wps_membership_cancel_membership_count() {
 
-		if ( ! current_user_can( 'manage_options' ) ) {
+		if ( is_user_logged_in() ) {
 
-			return false;   
-		}
+			check_ajax_referer( 'wps_common_ajax_nonce', 'security' );
 
-		check_ajax_referer( 'wps_common_ajax_nonce', 'security' );
+			$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
+			if ( ! empty( $membership_id ) ) {
 
-		$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
-		if ( ! empty( $membership_id ) ) {
+				wps_membership_update_meta_data( $membership_id, 'member_status', 'cancelled' );
+				$user_id = get_current_user_id();
+				update_user_meta( $user_id, 'is_member', '' );
+				if ( ! empty( wps_membership_get_meta_data( $membership_id - 1, 'wps_subscription_status', true ) ) ) {
 
-			wps_membership_update_meta_data( $membership_id, 'member_status', 'cancelled' );
-			$user_id = get_current_user_id();
-			update_user_meta( $user_id, 'is_member', '' );
-			if ( ! empty( wps_membership_get_meta_data( $membership_id - 1, 'wps_subscription_status', true ) ) ) {
-
-				wps_membership_update_meta_data( $membership_id - 1, 'wps_subscription_status', 'cancelled' );
+					wps_membership_update_meta_data( $membership_id - 1, 'wps_subscription_status', 'cancelled' );
+				}
 			}
 		}
 	}

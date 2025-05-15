@@ -1525,7 +1525,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '</label><span>' . esc_attr( $shipping ) . '</span></li>';
 
 					$description .= '<li><label>';
-					$description .= __( 'Inlucded Products', 'membership-for-woocommerce' );
+					$description .= __( 'Include Products', 'membership-for-woocommerce' );
 					$description .= '</label><span>';
 					$prod_ids     = maybe_unserialize( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
