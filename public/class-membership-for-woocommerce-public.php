@@ -5316,7 +5316,7 @@ class Membership_For_Woocommerce_Public {
 			$membership_to_users = [];
 			$user_memberships    = []; // Store the memberships per user.
 		
-			// Select appropriate meta function
+			// Select appropriate meta function.
 			$get_meta = function_exists( 'wps_membership_get_meta_data' ) ? 'wps_membership_get_meta_data' : 'get_post_meta';
 		
 			// Step 1: Pre-process memberships by user.
@@ -5339,7 +5339,7 @@ class Membership_For_Woocommerce_Public {
 						$status = $get_meta( $membership_id, 'member_status', true );
 			
 						// Only process memberships that are complete and valid.
-						if ( empty( $plan ) || $status !== 'complete' ) {
+						if ( empty( $plan ) || 'complete' !== $status ) {
 							continue;
 						}
 			
@@ -5406,7 +5406,7 @@ class Membership_For_Woocommerce_Public {
 
 						echo '<li>';
 							echo '<div class="wps-mfw_ul-img" style="background-image: url(\'' . esc_url( $user_bg_img ) . '\');">';
-								echo '<img src="' . esc_url( $img_url ) . '" alt="' . $display_name . '">';
+								echo '<img src="' . esc_url( $img_url ) . '" alt="' . esc_html( $display_name ) . '">';
 							echo '</div>';
 							echo '<div class="wps-mfw_ul-name">' . esc_html( $display_name ) . '</div>';
 							echo '<div class="wps-mfw_ul-id">#' . esc_html( $user_id ) . '</div>';

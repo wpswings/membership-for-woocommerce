@@ -565,8 +565,9 @@ class Membership_For_Woocommerce_Common {
 			}
 		}
 
-		$plan_obj   = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
-		$today_date = gmdate( 'Y-m-d' );
+		$plan_obj    = wps_membership_get_meta_data( $member_id, 'plan_obj', true );
+		$today_date  = gmdate( 'Y-m-d' );
+		$access_type = '';
 		// Save expiry date in post.
 		if ( ! empty( $plan_obj ) ) {
 
@@ -1007,7 +1008,7 @@ class Membership_For_Woocommerce_Common {
 			'result' => ( 'yes' === $stop ),
 			'msg'    => sprintf(
 				/* translators: %s: Notification type */
-				esc_html__( '%s notification %s successfully!', 'membership-for-woocommerce' ),
+				esc_html__( '%1$s notification %2$s successfully!', 'membership-for-woocommerce' ),
 				esc_html( $label ),
 				( 'yes' === $stop ) ? esc_html__( 'deactivated', 'membership-for-woocommerce' ) : esc_html__( 'activated', 'membership-for-woocommerce' )
 			),
@@ -1048,7 +1049,7 @@ class Membership_For_Woocommerce_Common {
 	 * @param string $message Message content.
 	 * @return object
 	 */
-	function wps_mfw_send_sms_community_members( $user_id, $message ) {
+	public function wps_mfw_send_sms_community_members( $user_id, $message ) {
 
 		$response              = array( 'result' => false, 'msg'    => esc_html__( 'The admin has not activated this feature yet.', 'membership-for-woocommerce' ),	);
 		$enable_community      = get_option( 'wps_msfw_enable_to_show_members_community' );
