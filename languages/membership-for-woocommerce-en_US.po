@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2025-04-11 14:40+0530\n"
-"PO-Revision-Date: 2025-04-11 14:40+0530\n"
+"POT-Creation-Date: 2025-05-16 13:45+0530\n"
+"PO-Revision-Date: 2025-05-16 13:45+0530\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en_US\n"
@@ -78,39 +78,19 @@ msgstr ""
 msgid "Export"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:446
+#: admin/class-membership-for-woocommerce-admin.php:447
 #: membership-for-woocommerce.php:187 membership-for-woocommerce.php:193
-#: membership-for-woocommerce.php:617
+#: membership-for-woocommerce.php:618
 msgid "Membership For WooCommerce"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:626
+#: admin/class-membership-for-woocommerce-admin.php:627
 msgid "Enable Membership Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:628
-#: admin/class-membership-for-woocommerce-admin.php:3473
+#: admin/class-membership-for-woocommerce-admin.php:629
+#: admin/class-membership-for-woocommerce-admin.php:3498
 msgid "Enable plugin to start the functionality."
-msgstr ""
-
-#: admin/class-membership-for-woocommerce-admin.php:633
-#: admin/class-membership-for-woocommerce-admin.php:646
-#: admin/class-membership-for-woocommerce-admin.php:658
-#: admin/class-membership-for-woocommerce-admin.php:670
-#: admin/class-membership-for-woocommerce-admin.php:682
-#: admin/class-membership-for-woocommerce-admin.php:695
-#: admin/class-membership-for-woocommerce-admin.php:718
-#: admin/class-membership-for-woocommerce-admin.php:3478
-#: admin/class-membership-for-woocommerce-admin.php:3674
-#: admin/class-membership-for-woocommerce-admin.php:3822
-#: admin/class-membership-for-woocommerce-admin.php:3866
-#: admin/class-membership-for-woocommerce-admin.php:3918
-#: admin/class-membership-for-woocommerce-admin.php:3968
-#: admin/class-membership-for-woocommerce-admin.php:4564
-#: admin/class-membership-for-woocommerce-admin.php:4592
-#: admin/class-membership-for-woocommerce-admin.php:4620
-#: admin/partials/membership-for-woocommerce-welcome.php:62
-msgid "YES"
 msgstr ""
 
 #: admin/class-membership-for-woocommerce-admin.php:634
@@ -120,833 +100,889 @@ msgstr ""
 #: admin/class-membership-for-woocommerce-admin.php:683
 #: admin/class-membership-for-woocommerce-admin.php:696
 #: admin/class-membership-for-woocommerce-admin.php:719
-#: admin/class-membership-for-woocommerce-admin.php:3479
-#: admin/class-membership-for-woocommerce-admin.php:3675
-#: admin/class-membership-for-woocommerce-admin.php:3823
-#: admin/class-membership-for-woocommerce-admin.php:3867
-#: admin/class-membership-for-woocommerce-admin.php:3919
-#: admin/class-membership-for-woocommerce-admin.php:3969
-#: admin/class-membership-for-woocommerce-admin.php:4565
-#: admin/class-membership-for-woocommerce-admin.php:4593
-#: admin/class-membership-for-woocommerce-admin.php:4621
+#: admin/class-membership-for-woocommerce-admin.php:3503
+#: admin/class-membership-for-woocommerce-admin.php:3699
+#: admin/class-membership-for-woocommerce-admin.php:3864
+#: admin/class-membership-for-woocommerce-admin.php:3908
+#: admin/class-membership-for-woocommerce-admin.php:3960
+#: admin/class-membership-for-woocommerce-admin.php:3996
+#: admin/class-membership-for-woocommerce-admin.php:4022
+#: admin/class-membership-for-woocommerce-admin.php:4465
+#: admin/class-membership-for-woocommerce-admin.php:4493
+#: admin/class-membership-for-woocommerce-admin.php:4521
+#: admin/partials/membership-for-woocommerce-welcome.php:62
+msgid "YES"
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:635
+#: admin/class-membership-for-woocommerce-admin.php:648
+#: admin/class-membership-for-woocommerce-admin.php:660
+#: admin/class-membership-for-woocommerce-admin.php:672
+#: admin/class-membership-for-woocommerce-admin.php:684
+#: admin/class-membership-for-woocommerce-admin.php:697
+#: admin/class-membership-for-woocommerce-admin.php:720
+#: admin/class-membership-for-woocommerce-admin.php:3504
+#: admin/class-membership-for-woocommerce-admin.php:3700
+#: admin/class-membership-for-woocommerce-admin.php:3865
+#: admin/class-membership-for-woocommerce-admin.php:3909
+#: admin/class-membership-for-woocommerce-admin.php:3961
+#: admin/class-membership-for-woocommerce-admin.php:3997
+#: admin/class-membership-for-woocommerce-admin.php:4023
+#: admin/class-membership-for-woocommerce-admin.php:4466
+#: admin/class-membership-for-woocommerce-admin.php:4494
+#: admin/class-membership-for-woocommerce-admin.php:4522
 #: admin/partials/membership-for-woocommerce-welcome.php:63
 msgid "NO"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:639
+#: admin/class-membership-for-woocommerce-admin.php:640
 msgid "Delete data at Uninstall"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:641
+#: admin/class-membership-for-woocommerce-admin.php:642
 msgid "If enabled, this will delete all data at plugin uninstall."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:651
+#: admin/class-membership-for-woocommerce-admin.php:652
 msgid "Create User after payment done"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:653
+#: admin/class-membership-for-woocommerce-admin.php:654
 msgid "Enable this to create user when payment is done."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:663
+#: admin/class-membership-for-woocommerce-admin.php:664
 msgid "Allow your members to Cancel their membership accounts."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:665
+#: admin/class-membership-for-woocommerce-admin.php:666
 msgid "Enable this Allow your members to Cancel their membership accounts."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:675
+#: admin/class-membership-for-woocommerce-admin.php:676
 msgid "Create member on Processing order status."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:677
+#: admin/class-membership-for-woocommerce-admin.php:678
 msgid "Enable this Create member on processing order status."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:688
+#: admin/class-membership-for-woocommerce-admin.php:689
 msgid "Change Buy Now button text."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:690
+#: admin/class-membership-for-woocommerce-admin.php:691
 msgid "Change the text of Buy Now Button."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:691
+#: admin/class-membership-for-woocommerce-admin.php:692
 msgid "Add Text"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:700
+#: admin/class-membership-for-woocommerce-admin.php:701
 msgid "Membership Plan Page Template"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:702
+#: admin/class-membership-for-woocommerce-admin.php:703
 msgid "Select Template for Plan Page"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:706
+#: admin/class-membership-for-woocommerce-admin.php:707
 msgid "Template 1"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:707
+#: admin/class-membership-for-woocommerce-admin.php:708
 msgid "Template 2"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:708
+#: admin/class-membership-for-woocommerce-admin.php:709
 msgid "Template 3"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:712
+#: admin/class-membership-for-woocommerce-admin.php:713
 msgid "Enable Dark Mode"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:714
+#: admin/class-membership-for-woocommerce-admin.php:715
 msgid "Enable to display plan page in dark mode."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:737
-#: admin/class-membership-for-woocommerce-admin.php:3493
-#: admin/class-membership-for-woocommerce-admin.php:3723
-#: admin/class-membership-for-woocommerce-admin.php:3975
-#: admin/class-membership-for-woocommerce-admin.php:4635
+#: admin/class-membership-for-woocommerce-admin.php:738
+#: admin/class-membership-for-woocommerce-admin.php:3518
+#: admin/class-membership-for-woocommerce-admin.php:3765
+#: admin/class-membership-for-woocommerce-admin.php:4029
+#: admin/class-membership-for-woocommerce-admin.php:4536
 #: admin/partials/templates/membership-registration/membership-for-woocommerce-content-restriction.php:169
 #: admin/partials/templates/membership-registration/membership-for-woocommerce-membership-restriction.php:201
 #: admin/partials/templates/membership-registration/membership-for-woocommerce-purchasing-discount-offer.php:233
 msgid "Save Settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:804
-#: admin/class-membership-for-woocommerce-admin.php:3548
-#: admin/class-membership-for-woocommerce-admin.php:3581
-#: admin/class-membership-for-woocommerce-admin.php:3773
-#: admin/class-membership-for-woocommerce-admin.php:4028
-#: admin/class-membership-for-woocommerce-admin.php:4692
+#: admin/class-membership-for-woocommerce-admin.php:805
+#: admin/class-membership-for-woocommerce-admin.php:3573
+#: admin/class-membership-for-woocommerce-admin.php:3606
+#: admin/class-membership-for-woocommerce-admin.php:3815
+#: admin/class-membership-for-woocommerce-admin.php:4082
+#: admin/class-membership-for-woocommerce-admin.php:4593
 msgid "Id of some field is missing"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:808
-#: admin/class-membership-for-woocommerce-admin.php:3552
-#: admin/class-membership-for-woocommerce-admin.php:3585
-#: admin/class-membership-for-woocommerce-admin.php:3777
-#: admin/class-membership-for-woocommerce-admin.php:4032
-#: admin/class-membership-for-woocommerce-admin.php:4696
+#: admin/class-membership-for-woocommerce-admin.php:809
+#: admin/class-membership-for-woocommerce-admin.php:3577
+#: admin/class-membership-for-woocommerce-admin.php:3610
+#: admin/class-membership-for-woocommerce-admin.php:3819
+#: admin/class-membership-for-woocommerce-admin.php:4086
+#: admin/class-membership-for-woocommerce-admin.php:4597
 msgid "Settings saved !"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:824
-#: admin/class-membership-for-woocommerce-admin.php:828
+#: admin/class-membership-for-woocommerce-admin.php:825
+#: admin/class-membership-for-woocommerce-admin.php:829
 msgid "Enter Plan name"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:826
+#: admin/class-membership-for-woocommerce-admin.php:827
 msgid "Enter the name for the membership plans you are creating."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:832
-#: admin/class-membership-for-woocommerce-admin.php:836
+#: admin/class-membership-for-woocommerce-admin.php:833
+#: admin/class-membership-for-woocommerce-admin.php:837
 msgid "Enter plan price"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:834
+#: admin/class-membership-for-woocommerce-admin.php:835
 msgid "Enter the price for the membership plans you are creating."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:839
+#: admin/class-membership-for-woocommerce-admin.php:840
 msgid "Set Access Type( Expiry of plan )"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:841
+#: admin/class-membership-for-woocommerce-admin.php:842
 msgid "Set the expiry of the membership plan."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:849
+#: admin/class-membership-for-woocommerce-admin.php:850
 msgid "Create plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:882
+#: admin/class-membership-for-woocommerce-admin.php:883
 msgid "Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:883
-#: admin/class-membership-for-woocommerce-admin.php:2408
-#: includes/class-membership-for-woocommerce-activator.php:58
-#: includes/class-membership-for-woocommerce-activator.php:155
+#: admin/class-membership-for-woocommerce-admin.php:884
+#: admin/class-membership-for-woocommerce-admin.php:2417
+#: includes/class-membership-for-woocommerce-activator.php:59
+#: includes/class-membership-for-woocommerce-activator.php:156
 msgid "Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:884
+#: admin/class-membership-for-woocommerce-admin.php:885
 msgid "All Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:885
+#: admin/class-membership-for-woocommerce-admin.php:886
 msgid "Edit Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:886
+#: admin/class-membership-for-woocommerce-admin.php:887
 msgid "New Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:887
+#: admin/class-membership-for-woocommerce-admin.php:888
 msgid "View Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:888
+#: admin/class-membership-for-woocommerce-admin.php:889
 msgid "Search Member"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:889
+#: admin/class-membership-for-woocommerce-admin.php:890
 msgid "No Members Found"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:890
+#: admin/class-membership-for-woocommerce-admin.php:891
 msgid "No Members Found In Trash"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:906
+#: admin/class-membership-for-woocommerce-admin.php:907
 msgid "Displays the list of all members."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:910
+#: admin/class-membership-for-woocommerce-admin.php:911
 msgid "members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:970
+#: admin/class-membership-for-woocommerce-admin.php:971
 #: admin/partials/templates/membership-templates/wps-membership-overview.php:97
 #: public/class-membership-for-woocommerce-public.php:282
 #: public/class-membership-for-woocommerce-public.php:311
-#: public/class-membership-for-woocommerce-public.php:1424
+#: public/class-membership-for-woocommerce-public.php:1427
 msgid "Membership Details"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:973
+#: admin/class-membership-for-woocommerce-admin.php:974
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:39
 #: public/partials/templates/membership-templates/wps-membership-billing-modal.php:57
 msgid "Billing details"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:979
+#: admin/class-membership-for-woocommerce-admin.php:980
 msgid "Member actions"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1087
+#: admin/class-membership-for-woocommerce-admin.php:1088
 msgid "Memberships"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1088
+#: admin/class-membership-for-woocommerce-admin.php:1089
 msgid "Membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1089
+#: admin/class-membership-for-woocommerce-admin.php:1090
 msgid "Add Membership plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1090
+#: admin/class-membership-for-woocommerce-admin.php:1091
 msgid "All Membership plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1091
+#: admin/class-membership-for-woocommerce-admin.php:1092
 msgid "Add New Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1092
+#: admin/class-membership-for-woocommerce-admin.php:1093
 msgid "Edit Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1093
+#: admin/class-membership-for-woocommerce-admin.php:1094
 msgid "New Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1094
+#: admin/class-membership-for-woocommerce-admin.php:1095
 msgid "View Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1095
+#: admin/class-membership-for-woocommerce-admin.php:1096
 msgid "Search Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1096
+#: admin/class-membership-for-woocommerce-admin.php:1097
 msgid "No Membership plans Found"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1097
+#: admin/class-membership-for-woocommerce-admin.php:1098
 msgid "No Membership plans Found In Trash"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1115
+#: admin/class-membership-for-woocommerce-admin.php:1116
 msgid "Membership Plans will be created here."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1123
+#: admin/class-membership-for-woocommerce-admin.php:1124
 msgid "membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1136
+#: admin/class-membership-for-woocommerce-admin.php:1137
 msgid "Create Plan     "
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1260
+#: admin/class-membership-for-woocommerce-admin.php:1261
 msgid "Membership Default Page"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1303
+#: admin/class-membership-for-woocommerce-admin.php:1304
 msgid "Membership Plan Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1304
+#: admin/class-membership-for-woocommerce-admin.php:1305
 msgid "Membership Plan Cost"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1327
+#: admin/class-membership-for-woocommerce-admin.php:1328
 msgid "Membership ID"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1328
+#: admin/class-membership-for-woocommerce-admin.php:1329
 msgid "Membership Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1329
+#: admin/class-membership-for-woocommerce-admin.php:1330
 msgid "User"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1330
+#: admin/class-membership-for-woocommerce-admin.php:1331
 msgid "Plan Associated"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1331
+#: admin/class-membership-for-woocommerce-admin.php:1332
 msgid "Plan Preview"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1332
+#: admin/class-membership-for-woocommerce-admin.php:1333
 msgid "Expiry Date"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1357
+#: admin/class-membership-for-woocommerce-admin.php:1358
 msgid "Membership ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1366
+#: admin/class-membership-for-woocommerce-admin.php:1367
 msgid "Disabled from settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1374
-#: admin/class-membership-for-woocommerce-admin.php:1378
+#: admin/class-membership-for-woocommerce-admin.php:1375
+#: admin/class-membership-for-woocommerce-admin.php:1379
 msgid "Sandbox"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1382
+#: admin/class-membership-for-woocommerce-admin.php:1383
 msgid "Live"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1457
+#: admin/class-membership-for-woocommerce-admin.php:1462
 msgid "complete"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1461
-#: admin/class-membership-for-woocommerce-admin.php:1473
+#: admin/class-membership-for-woocommerce-admin.php:1466
+#: admin/class-membership-for-woocommerce-admin.php:1478
 msgid "cancelled"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1465
+#: admin/class-membership-for-woocommerce-admin.php:1470
 msgid "expired"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1471
-#: admin/class-membership-for-woocommerce-admin.php:1675
+#: admin/class-membership-for-woocommerce-admin.php:1476
+#: admin/class-membership-for-woocommerce-admin.php:1684
 msgid "Complete"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1472
-#: admin/class-membership-for-woocommerce-admin.php:1677
+#: admin/class-membership-for-woocommerce-admin.php:1477
+#: admin/class-membership-for-woocommerce-admin.php:1686
 #: admin/partials/templates/members-templates/wps-members-actions.php:29
 msgid "Pending"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1508
+#: admin/class-membership-for-woocommerce-admin.php:1513
 #: public/partials/templates/wps-membership-details-tab.php:371
 msgid "No Plan Found"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1514
+#: admin/class-membership-for-woocommerce-admin.php:1519
 msgid "Member ID #"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1673
+#: admin/class-membership-for-woocommerce-admin.php:1682
 msgid "Filter By Status"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1674
 #: admin/class-membership-for-woocommerce-admin.php:1683
+#: admin/class-membership-for-woocommerce-admin.php:1692
 msgid "Show All"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1676
+#: admin/class-membership-for-woocommerce-admin.php:1685
 msgid "Expired"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1678
+#: admin/class-membership-for-woocommerce-admin.php:1687
 #: admin/partials/templates/members-templates/wps-members-actions.php:32
 msgid "Cancelled"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1682
+#: admin/class-membership-for-woocommerce-admin.php:1691
 msgid "Filter By Membership Plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1700
+#: admin/class-membership-for-woocommerce-admin.php:1709
 msgid "Export Members"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1886
+#: admin/class-membership-for-woocommerce-admin.php:1895
 msgid "Export Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:1887
+#: admin/class-membership-for-woocommerce-admin.php:1896
 msgid "Import Plans"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2326
+#: admin/class-membership-for-woocommerce-admin.php:2335
 msgid ""
 "Membership plan published successfully, Now you can manage membership free "
 "shipping "
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2665
+#: admin/class-membership-for-woocommerce-admin.php:2674
 msgid "Attach Membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2693
+#: admin/class-membership-for-woocommerce-admin.php:2702
 msgid "Select Membership plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2707
-#: public/class-membership-for-woocommerce-public.php:4641
+#: admin/class-membership-for-woocommerce-admin.php:2716
+#: public/class-membership-for-woocommerce-public.php:4654
 msgid "Select Plan"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:2709
+#: admin/class-membership-for-woocommerce-admin.php:2718
 msgid "Choose plan to attach with product."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3035
+#: admin/class-membership-for-woocommerce-admin.php:3055
 msgid "Membership Status changed"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3404
+#: admin/class-membership-for-woocommerce-admin.php:3429
 msgid "Member added successfully !"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3471
+#: admin/class-membership-for-woocommerce-admin.php:3496
 msgid "Enable API Settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3483
+#: admin/class-membership-for-woocommerce-admin.php:3508
 msgid "Consumer Secret"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3485
+#: admin/class-membership-for-woocommerce-admin.php:3510
 msgid "Use this keys to fetch plugin API"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3486
+#: admin/class-membership-for-woocommerce-admin.php:3511
 msgid "Secret Key"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3499
+#: admin/class-membership-for-woocommerce-admin.php:3524
 msgid "Generate Keys"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3601
+#: admin/class-membership-for-woocommerce-admin.php:3626
 msgid "Enable Members Dashboard"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3603
+#: admin/class-membership-for-woocommerce-admin.php:3628
 msgid ""
 "Enable this setting to display the members dashboard on the My Account page"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3609
+#: admin/class-membership-for-woocommerce-admin.php:3634
 msgid "Choose the color scheme for the Members Dashboard"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3614
-#: admin/class-membership-for-woocommerce-admin.php:3630
-#: admin/class-membership-for-woocommerce-admin.php:4582
+#: admin/class-membership-for-woocommerce-admin.php:3639
+#: admin/class-membership-for-woocommerce-admin.php:3655
+#: admin/class-membership-for-woocommerce-admin.php:4483
 msgid "Background Color"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3617
+#: admin/class-membership-for-woocommerce-admin.php:3642
 msgid "Membership Tab Layout Settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3619
+#: admin/class-membership-for-woocommerce-admin.php:3644
 msgid ""
 "Enable this setting to apply the new layout to membership tab areas for an "
 "improved user experience."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3625
+#: admin/class-membership-for-woocommerce-admin.php:3650
 msgid "Choose the color scheme for the Membership tab layout"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3634
+#: admin/class-membership-for-woocommerce-admin.php:3659
 msgid "Enable this to show the active membership section"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3636
+#: admin/class-membership-for-woocommerce-admin.php:3661
 msgid ""
 "Enable this setting to display the active membership list name section on "
 "the membership dashboard."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3642
+#: admin/class-membership-for-woocommerce-admin.php:3667
 msgid "Enable this to show the active susbcription section"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3644
+#: admin/class-membership-for-woocommerce-admin.php:3669
 msgid ""
 "Enable this setting to display the active susbcription list name section on "
 "the membership dashboard."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3650
+#: admin/class-membership-for-woocommerce-admin.php:3675
 msgid "Enable this to show the cart maximum discount section"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3652
+#: admin/class-membership-for-woocommerce-admin.php:3677
 msgid ""
 "Enable this setting to display the maximum cart discount amount section on "
 "the membership dashboard."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3658
+#: admin/class-membership-for-woocommerce-admin.php:3683
 msgid "Enable this to allow users to mute offer notifications"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3660
+#: admin/class-membership-for-woocommerce-admin.php:3685
 msgid ""
 "Give users access to mute offer notifications from WhatsApp, SMS, and email."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3667
+#: admin/class-membership-for-woocommerce-admin.php:3692
 msgid "Enable Redirection Settings"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3669
+#: admin/class-membership-for-woocommerce-admin.php:3694
 msgid "Enable this setting to redirect users when they register on your site."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3679
+#: admin/class-membership-for-woocommerce-admin.php:3704
 msgid "Choose the page for redirection."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3681
+#: admin/class-membership-for-woocommerce-admin.php:3706
 msgid ""
 "Select the page where you want to redirect users when they register on the "
 "site."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3688
+#: admin/class-membership-for-woocommerce-admin.php:3713
 msgid "Display the header on the Membership page."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3690
+#: admin/class-membership-for-woocommerce-admin.php:3715
 msgid "Enable this setting to display the header on the membership page."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3696
+#: admin/class-membership-for-woocommerce-admin.php:3721
 msgid "Display the footer on the Membership page."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3698
+#: admin/class-membership-for-woocommerce-admin.php:3723
 msgid "Enable this setting to display the footer on the membership page."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3705
+#: admin/class-membership-for-woocommerce-admin.php:3730
 msgid "Create a one-time discount coupon for new members."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3707
+#: admin/class-membership-for-woocommerce-admin.php:3732
 msgid ""
 "Enable this setting to reward new members with a coupon. Ensure that the "
 "membership order status is set to either processing or completed."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3713
+#: admin/class-membership-for-woocommerce-admin.php:3738
 msgid "Enter Coupon Amount"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3715
+#: admin/class-membership-for-woocommerce-admin.php:3740
 msgid "Please enter the coupon amount to assign to new members."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3716
+#: admin/class-membership-for-woocommerce-admin.php:3741
 msgid "Coupon Amount"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3815
+#: admin/class-membership-for-woocommerce-admin.php:3747
+msgid "Enable this to establish a community for users."
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3749
+msgid ""
+"Activate these settings to create and manage a member community based on "
+"membership plans, displayed on the My Account page."
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3755
+msgid "Enter the user's BG image URL"
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3757
+msgid ""
+"The entered image URL will be used as the background image in the user's "
+"community section on the My Account page."
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3758
+msgid "enter image url"
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3857
 msgid "Enable this setting to restrict payment via Wallet."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3817
+#: admin/class-membership-for-woocommerce-admin.php:3859
 msgid ""
 "Enable this setting to restrict wallet payments on the cart and checkout "
 "pages."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3859
+#: admin/class-membership-for-woocommerce-admin.php:3901
 msgid "Enable Whatsapp API Features"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3861
+#: admin/class-membership-for-woocommerce-admin.php:3903
 msgid "Enable this settings to use whatsapp notification features."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3871
-#: admin/class-membership-for-woocommerce-admin.php:3874
+#: admin/class-membership-for-woocommerce-admin.php:3913
+#: admin/class-membership-for-woocommerce-admin.php:3916
 msgid "Enter Access Token"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3873
+#: admin/class-membership-for-woocommerce-admin.php:3915
 #, php-format
 msgid "Please enter your access token. To create a token, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3879
+#: admin/class-membership-for-woocommerce-admin.php:3921
 msgid "Enter Phone Number ID"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3881
+#: admin/class-membership-for-woocommerce-admin.php:3923
 #, php-format
 msgid "Please enter you phone number id. To get Phone number ID, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3882
+#: admin/class-membership-for-woocommerce-admin.php:3924
 msgid "Enter Phone no"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3887
+#: admin/class-membership-for-woocommerce-admin.php:3929
 msgid "Enter whatsapp template name"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3889
+#: admin/class-membership-for-woocommerce-admin.php:3931
 #, php-format
 msgid ""
 "The WhatsApp template name must remain fixed and cannot be modified. You can "
 "use this name when creating a custom template, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3890
+#: admin/class-membership-for-woocommerce-admin.php:3932
 msgid "Template Name"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3911
+#: admin/class-membership-for-woocommerce-admin.php:3953
 msgid "Enable SMS API Features"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3913
+#: admin/class-membership-for-woocommerce-admin.php:3955
 msgid "Enable this settings to use sms notification features."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3923
-#: admin/class-membership-for-woocommerce-admin.php:3926
+#: admin/class-membership-for-woocommerce-admin.php:3965
+#: admin/class-membership-for-woocommerce-admin.php:3968
 msgid "Enter Account SID"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3925
+#: admin/class-membership-for-woocommerce-admin.php:3967
 #, php-format
 msgid "Please enter your Account SID. To create a SID, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3931
+#: admin/class-membership-for-woocommerce-admin.php:3973
 msgid "Enter Account Auth Token"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3933
-#: admin/class-membership-for-woocommerce-admin.php:4599
-#: admin/class-membership-for-woocommerce-admin.php:4607
+#: admin/class-membership-for-woocommerce-admin.php:3975
+#: admin/class-membership-for-woocommerce-admin.php:4500
+#: admin/class-membership-for-woocommerce-admin.php:4508
 #, php-format
 msgid "Please enter your auth token. To create a auth token, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3934
+#: admin/class-membership-for-woocommerce-admin.php:3976
 msgid "Enter Auth Token"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3939
+#: admin/class-membership-for-woocommerce-admin.php:3981
 msgid "Enter Account Twilio Number"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3941
+#: admin/class-membership-for-woocommerce-admin.php:3983
 #, php-format
 msgid "Please enter a valid twilio account number. To Buy a Twilio Number, %s"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3942
+#: admin/class-membership-for-woocommerce-admin.php:3984
 msgid "Enter Twilio no"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3961
+#: admin/class-membership-for-woocommerce-admin.php:3989
+msgid "Allow SMS between community users"
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:3991
+msgid ""
+"Enable this setting to allow community users to send SMS messages to each "
+"other."
+msgstr ""
+
+#: admin/class-membership-for-woocommerce-admin.php:4015
 msgid "Enable Email Features"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:3963
+#: admin/class-membership-for-woocommerce-admin.php:4017
 msgid "Enable this settings to use email notification features."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4048
+#: admin/class-membership-for-woocommerce-admin.php:4108
 msgid "Whatsapp Notification feature is not enable!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4052
-#: admin/class-membership-for-woocommerce-admin.php:4362
-#: admin/class-membership-for-woocommerce-admin.php:4475
+#: admin/class-membership-for-woocommerce-admin.php:4112
+#: admin/class-membership-for-woocommerce-admin.php:4257
+#: admin/class-membership-for-woocommerce-admin.php:4376
 msgid "Limited-time deal: Grab amazing discounts on your favorite items!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4155
+#: admin/class-membership-for-woocommerce-admin.php:4215
 msgid "This selected membership does not belong to any user."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4160
+#: admin/class-membership-for-woocommerce-admin.php:4220
 msgid "No user found."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4347
+#: admin/class-membership-for-woocommerce-admin.php:4242
 msgid "SMS Notification feature is not enable!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4435
-#: admin/class-membership-for-woocommerce-admin.php:4525
+#: admin/class-membership-for-woocommerce-admin.php:4330
+#: admin/class-membership-for-woocommerce-admin.php:4426
 msgid "No user found!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4439
+#: admin/class-membership-for-woocommerce-admin.php:4334
 msgid "Fields are empty in the SMS integration settings!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4448
-#: admin/class-membership-for-woocommerce-admin.php:4537
+#: admin/class-membership-for-woocommerce-admin.php:4343
+#: admin/class-membership-for-woocommerce-admin.php:4438
 msgid "Your offer messages has been sent successfully!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4452
+#: admin/class-membership-for-woocommerce-admin.php:4347
 msgid "Invalid phone number!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4455
-#: admin/class-membership-for-woocommerce-admin.php:4541
+#: admin/class-membership-for-woocommerce-admin.php:4350
+#: admin/class-membership-for-woocommerce-admin.php:4442
 msgid "The selected membership does not belong to any user!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4470
+#: admin/class-membership-for-woocommerce-admin.php:4371
 msgid "Email Notification feature is not enable!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4514
+#: admin/class-membership-for-woocommerce-admin.php:4415
 msgid "Exclusive Membership Offer!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4529
+#: admin/class-membership-for-woocommerce-admin.php:4430
 msgid "Please choose plan!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4554
+#: admin/class-membership-for-woocommerce-admin.php:4455
 msgid "Click Here"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4557
+#: admin/class-membership-for-woocommerce-admin.php:4458
 msgid "Enable to override the Login and Sign Up pages"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4559
+#: admin/class-membership-for-woocommerce-admin.php:4460
 msgid ""
 "Override the default registration and signup page with the membership "
 "registration and signup page."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4569
+#: admin/class-membership-for-woocommerce-admin.php:4470
 msgid "Enter Welcome message for user"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4571
+#: admin/class-membership-for-woocommerce-admin.php:4472
 msgid "Enter a welcome message that will appear on the login and signup form."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4572
+#: admin/class-membership-for-woocommerce-admin.php:4473
 msgid "enter welcome message"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4577
+#: admin/class-membership-for-woocommerce-admin.php:4478
 msgid "Choose form color"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4585
+#: admin/class-membership-for-woocommerce-admin.php:4486
 msgid "Enable Google reCaptcha"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4587
+#: admin/class-membership-for-woocommerce-admin.php:4488
 msgid ""
 "Google reCAPTCHA will be displayed on the Login and Signup pages for "
 "enhanced security. This setting depends on the Login and Signup settings."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4597
+#: admin/class-membership-for-woocommerce-admin.php:4498
 msgid "Enter Captcha Site Key"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4600
+#: admin/class-membership-for-woocommerce-admin.php:4501
 msgid "Enter site key"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4605
+#: admin/class-membership-for-woocommerce-admin.php:4506
 msgid "Enter Captcha Secret Key"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4608
+#: admin/class-membership-for-woocommerce-admin.php:4509
 msgid "Enter captcha key"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4613
+#: admin/class-membership-for-woocommerce-admin.php:4514
 msgid "Assign membership to a new user"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4615
+#: admin/class-membership-for-woocommerce-admin.php:4516
 msgid ""
 "Enable this setting to automatically assign a membership when a new user "
 "registers on your site."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4625
+#: admin/class-membership-for-woocommerce-admin.php:4526
 #: admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php:74
 msgid "Choose Membership"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4627
+#: admin/class-membership-for-woocommerce-admin.php:4528
 msgid ""
 "Select the membership that will be assigned to a new user upon registration."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4642
+#: admin/class-membership-for-woocommerce-admin.php:4543
 #: admin/partials/templates/membership-templates/membership-for-woocommerce-google-recaptcha-settings.php:43
 msgid "Verify Captcha"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4731
+#: admin/class-membership-for-woocommerce-admin.php:4633
 msgid "Captcha has been verified successfully!"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4735
-#: public/class-membership-for-woocommerce-public.php:4998
-#: public/class-membership-for-woocommerce-public.php:5061
+#: admin/class-membership-for-woocommerce-admin.php:4637
+#: public/class-membership-for-woocommerce-public.php:5003
+#: public/class-membership-for-woocommerce-public.php:5064
 msgid "reCAPTCHA verification failed : invalid-input-response."
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4739
+#: admin/class-membership-for-woocommerce-admin.php:4641
 msgid "Invalid key details"
 msgstr ""
 
-#: admin/class-membership-for-woocommerce-admin.php:4743
+#: admin/class-membership-for-woocommerce-admin.php:4645
 msgid "Plese enable captcha settings!"
 msgstr ""
 
@@ -976,12 +1012,12 @@ msgid "Title to be displayed on front-end."
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:61
-#: membership-for-woocommerce.php:557
+#: membership-for-woocommerce.php:558
 msgid "Documentation"
 msgstr ""
 
 #: admin/partials/membership-for-woocommerce-admin-dashboard.php:63
-#: membership-for-woocommerce.php:558
+#: membership-for-woocommerce.php:559
 msgid "Support"
 msgstr ""
 
@@ -1086,9 +1122,9 @@ msgid "Product"
 msgstr ""
 
 #: admin/partials/templates/admin-ajax-templates/members-plans-preview.php:76
-#: includes/class-membership-for-woocommerce-global-functions.php:906
-#: includes/class-membership-for-woocommerce-global-functions.php:999
-#: includes/class-membership-for-woocommerce-global-functions.php:1099
+#: includes/class-membership-for-woocommerce-global-functions.php:908
+#: includes/class-membership-for-woocommerce-global-functions.php:1001
+#: includes/class-membership-for-woocommerce-global-functions.php:1101
 #: public/partials/templates/wps-membership-details-tab.php:103
 #: public/partials/templates/wps-membership-details-tab.php:123
 msgid "Total"
@@ -1123,7 +1159,7 @@ msgid "Plan Description"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-actions.php:27
-#: includes/class-membership-for-woocommerce-global-functions.php:1098
+#: includes/class-membership-for-woocommerce-global-functions.php:1100
 msgid "Status"
 msgstr ""
 
@@ -1199,7 +1235,7 @@ msgid "Postcode/ZIP"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-billing.php:177
-#: public/class-membership-for-woocommerce-public.php:4652
+#: public/class-membership-for-woocommerce-public.php:4665
 msgid "Country"
 msgstr ""
 
@@ -1222,8 +1258,8 @@ msgid "Phone"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:69
-#: includes/class-membership-for-woocommerce-global-functions.php:904
-#: includes/class-membership-for-woocommerce-global-functions.php:997
+#: includes/class-membership-for-woocommerce-global-functions.php:906
+#: includes/class-membership-for-woocommerce-global-functions.php:999
 msgid "Price"
 msgstr ""
 
@@ -1233,38 +1269,38 @@ msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:83
 #: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:192
-#: public/class-membership-for-woocommerce-public.php:1479
+#: public/class-membership-for-woocommerce-public.php:1482
 msgid "Access Type"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:97
-#: public/class-membership-for-woocommerce-public.php:1443
+#: public/class-membership-for-woocommerce-public.php:1446
 msgid "Plan Duration"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:105
 #: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:214
-#: public/class-membership-for-woocommerce-public.php:1451
+#: public/class-membership-for-woocommerce-public.php:1454
 msgid "Duration"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:112
-#: public/class-membership-for-woocommerce-public.php:1458
+#: public/class-membership-for-woocommerce-public.php:1461
 msgid "Plan duration not defined"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:117
-#: public/class-membership-for-woocommerce-public.php:1463
+#: public/class-membership-for-woocommerce-public.php:1466
 msgid "Subscription Membership"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:124
-#: public/class-membership-for-woocommerce-public.php:1469
+#: public/class-membership-for-woocommerce-public.php:1472
 msgid "Subscription Membership Duration"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:137
-#: public/class-membership-for-woocommerce-public.php:1474
+#: public/class-membership-for-woocommerce-public.php:1477
 msgid "Plan access"
 msgstr ""
 
@@ -1274,33 +1310,33 @@ msgid "Accessibility Type"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:161
-#: public/class-membership-for-woocommerce-public.php:1488
+#: public/class-membership-for-woocommerce-public.php:1491
 msgid "Delay Duration"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:168
-#: public/class-membership-for-woocommerce-public.php:1495
+#: public/class-membership-for-woocommerce-public.php:1498
 msgid "Access type duration not defined"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:173
-#: public/class-membership-for-woocommerce-public.php:1499
+#: public/class-membership-for-woocommerce-public.php:1502
 msgid "Discount on cart"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:180
-#: public/class-membership-for-woocommerce-public.php:1503
+#: public/class-membership-for-woocommerce-public.php:1506
 msgid "Discount on Product"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:187
-#: public/class-membership-for-woocommerce-public.php:1509
+#: public/class-membership-for-woocommerce-public.php:1512
 #: public/partials/templates/wps-membership-details-tab.php:162
 msgid "Include Membership"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:201
-#: public/class-membership-for-woocommerce-public.php:1521
+#: public/class-membership-for-woocommerce-public.php:1524
 msgid "Free Shipping"
 msgstr ""
 
@@ -1310,7 +1346,7 @@ msgid "Offered Products"
 msgstr ""
 
 #: admin/partials/templates/members-templates/wps-members-plans-details.php:222
-#: public/class-membership-for-woocommerce-public.php:1539
+#: public/class-membership-for-woocommerce-public.php:1542
 msgid "Offered Categories"
 msgstr ""
 
@@ -1426,7 +1462,7 @@ msgid "Enter Full Name"
 msgstr ""
 
 #: admin/partials/templates/membership-registration/membership-for-woocommerce-add-member.php:118
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:368
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:369
 #: public/partials/templates/membership-templates/wps-membership-billing-modal.php:99
 msgid "Email"
 msgstr ""
@@ -1569,6 +1605,7 @@ msgid "Message"
 msgstr ""
 
 #: admin/partials/templates/membership-registration/membership-for-woocommerce-send-message-to-members.php:29
+#: public/class-membership-for-woocommerce-public.php:5430
 msgid "Enter Message"
 msgstr ""
 
@@ -2011,7 +2048,7 @@ msgid "Search for a category&hellip;"
 msgstr ""
 
 #: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:437
-#: public/class-membership-for-woocommerce-public.php:1556
+#: public/class-membership-for-woocommerce-public.php:1559
 msgid "Offered Product Tags"
 msgstr ""
 
@@ -2048,7 +2085,7 @@ msgstr ""
 
 #: admin/partials/templates/membership-templates/wps-membership-plans-creation.php:525
 msgid ""
-"In Inlucde Section whatever the products, categories, tags you will choose, "
+"In Include Section whatever the products, categories, tags you will choose, "
 "ONLY MEMBERS can buy these products and can access the pages."
 msgstr ""
 
@@ -2298,41 +2335,70 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
-#: common/class-membership-for-woocommerce-common.php:265
+#: common/class-membership-for-woocommerce-common.php:82
+msgid "Kindly enter a message before sending to the selected user"
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:83
+msgid "Oops! Something went wrong. Please try again."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:273
 msgid "File Imported Successfully"
 msgstr ""
 
-#: common/class-membership-for-woocommerce-common.php:275
+#: common/class-membership-for-woocommerce-common.php:283
 msgid "Something Went Wrong. Either Products or Categories are not available!"
 msgstr ""
 
-#: common/class-membership-for-woocommerce-common.php:285
+#: common/class-membership-for-woocommerce-common.php:293
 #: includes/class-membership-activity-helper.php:184
 msgid "Invalid File type"
 msgstr ""
 
-#: common/class-membership-for-woocommerce-common.php:959
-msgid "whatsapp notification deactivated successfully!"
-msgstr ""
-
-#: common/class-membership-for-woocommerce-common.php:964
-msgid "whatsapp notification activated!"
-msgstr ""
-
-#: common/class-membership-for-woocommerce-common.php:985
-msgid "sms notification deactivated successfully!"
-msgstr ""
-
-#: common/class-membership-for-woocommerce-common.php:990
-msgid "sms notification activated!"
+#: common/class-membership-for-woocommerce-common.php:998
+msgid "Invalid notification type."
 msgstr ""
 
 #: common/class-membership-for-woocommerce-common.php:1011
-msgid "email notification deactivated successfully!"
+#, php-format
+msgid "%1$s notification %2$s successfully!"
 msgstr ""
 
-#: common/class-membership-for-woocommerce-common.php:1016
-msgid "email notification activated!"
+#: common/class-membership-for-woocommerce-common.php:1013
+msgid "deactivated"
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1013
+msgid "activated"
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1030
+msgid "You have received a message from a member of your community"
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1038
+msgid "Invalid user!."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1054
+msgid "The admin has not activated this feature yet."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1095
+msgid "SMS sent successfully."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1097
+msgid "Failed to send SMS."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1100
+msgid "User phone number or country code is missing."
+msgstr ""
+
+#: common/class-membership-for-woocommerce-common.php:1103
+msgid "SMS service is not properly configured."
 msgstr ""
 
 #: includes/class-membership-activity-helper.php:166
@@ -2355,138 +2421,138 @@ msgstr ""
 msgid "Category not found"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:866
+#: includes/class-membership-for-woocommerce-global-functions.php:868
 msgid "Membership Invoice #"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:880
-#: includes/class-membership-for-woocommerce-global-functions.php:972
+#: includes/class-membership-for-woocommerce-global-functions.php:882
+#: includes/class-membership-for-woocommerce-global-functions.php:974
 msgid "Invoice to : "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:893
-#: includes/class-membership-for-woocommerce-global-functions.php:985
+#: includes/class-membership-for-woocommerce-global-functions.php:895
+#: includes/class-membership-for-woocommerce-global-functions.php:987
 msgid "Status : "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:894
-#: includes/class-membership-for-woocommerce-global-functions.php:986
+#: includes/class-membership-for-woocommerce-global-functions.php:896
+#: includes/class-membership-for-woocommerce-global-functions.php:988
 msgid "Invoice Date : "
-msgstr ""
-
-#: includes/class-membership-for-woocommerce-global-functions.php:903
-#: includes/class-membership-for-woocommerce-global-functions.php:996
-msgid "Item name"
 msgstr ""
 
 #: includes/class-membership-for-woocommerce-global-functions.php:905
 #: includes/class-membership-for-woocommerce-global-functions.php:998
+msgid "Item name"
+msgstr ""
+
+#: includes/class-membership-for-woocommerce-global-functions.php:907
+#: includes/class-membership-for-woocommerce-global-functions.php:1000
 msgid "Quantity"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:913
 #: includes/class-membership-for-woocommerce-global-functions.php:915
-#: includes/class-membership-for-woocommerce-global-functions.php:919
-#: includes/class-membership-for-woocommerce-global-functions.php:973
-#: includes/class-membership-for-woocommerce-global-functions.php:1006
+#: includes/class-membership-for-woocommerce-global-functions.php:917
+#: includes/class-membership-for-woocommerce-global-functions.php:921
+#: includes/class-membership-for-woocommerce-global-functions.php:975
 #: includes/class-membership-for-woocommerce-global-functions.php:1008
-#: includes/class-membership-for-woocommerce-global-functions.php:1013
+#: includes/class-membership-for-woocommerce-global-functions.php:1010
+#: includes/class-membership-for-woocommerce-global-functions.php:1015
 #: includes/class-membership-for-woocommerce.php:1364
 msgid " "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:914
-#: includes/class-membership-for-woocommerce-global-functions.php:1007
+#: includes/class-membership-for-woocommerce-global-functions.php:916
+#: includes/class-membership-for-woocommerce-global-functions.php:1009
 msgid "1"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:919
-#: includes/class-membership-for-woocommerce-global-functions.php:1013
+#: includes/class-membership-for-woocommerce-global-functions.php:921
+#: includes/class-membership-for-woocommerce-global-functions.php:1015
 msgid "Grand total : "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:923
-#: includes/class-membership-for-woocommerce-global-functions.php:1023
+#: includes/class-membership-for-woocommerce-global-functions.php:925
+#: includes/class-membership-for-woocommerce-global-functions.php:1025
 msgid "Thank you for shopping with us"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:943
+#: includes/class-membership-for-woocommerce-global-functions.php:945
 msgid "Membership Invoice"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:952
+#: includes/class-membership-for-woocommerce-global-functions.php:954
 msgid "Membership Invoice "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:952
-#: public/partials/templates/wps-membership-details-tab.php:575
+#: includes/class-membership-for-woocommerce-global-functions.php:954
+#: public/partials/templates/wps-membership-details-tab.php:568
 msgid "#"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1096
+#: includes/class-membership-for-woocommerce-global-functions.php:1098
 msgid "Member ID"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1097
+#: includes/class-membership-for-woocommerce-global-functions.php:1099
 msgid "Date"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1100
+#: includes/class-membership-for-woocommerce-global-functions.php:1102
 msgid "Actions"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1229
+#: includes/class-membership-for-woocommerce-global-functions.php:1231
 msgid "use this Coupon Code to get discount on Cart."
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1299
+#: includes/class-membership-for-woocommerce-global-functions.php:1301
 msgid ""
 "Welcome to the [Name] Membership! We are thrilled to have you as a part of "
 "our community. As a [Name] member, you now enjoy immediate access to a wide "
 "range of exclusive features and premium benefits designed just for you."
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-global-functions.php:1343
+#: includes/class-membership-for-woocommerce-global-functions.php:1345
 msgid "Congratulations! You are Officially a Member"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:308
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:309
 msgid "What is your monthly revenue?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:327
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:328
 msgid "What industry defines your business?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:333
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:334
 msgid "Industry Type"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:364
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:365
 msgid "What is the best email address to contact you?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:376
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:377
 msgid "What is your contact number?"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:381
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:382
 msgid "Contact Number"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:492
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:493
 msgid "Let us know why you are deactivating "
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:492
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:493
 msgid " so we can improve the plugin"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:496
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:497
 msgid "Reason"
 msgstr ""
 
-#: includes/class-membership-for-woocommerce-onboarding-steps.php:735
+#: includes/class-membership-for-woocommerce-onboarding-steps.php:736
 msgid "Unexpected Error Occured"
 msgstr ""
 
@@ -2655,75 +2721,75 @@ msgstr ""
 msgid "oops looks like nothing is here"
 msgstr ""
 
-#: membership-for-woocommerce.php:319
+#: membership-for-woocommerce.php:320
 msgid "Settings"
 msgstr ""
 
-#: membership-for-woocommerce.php:324
+#: membership-for-woocommerce.php:325
 msgid "GO PRO"
 msgstr ""
 
-#: membership-for-woocommerce.php:555
+#: membership-for-woocommerce.php:556
 msgid "Demo"
 msgstr ""
 
-#: membership-for-woocommerce.php:556
+#: membership-for-woocommerce.php:557
 msgid "Video"
 msgstr ""
 
-#: membership-for-woocommerce.php:559
+#: membership-for-woocommerce.php:560
 msgid "Services"
 msgstr ""
 
-#: membership-for-woocommerce.php:617
+#: membership-for-woocommerce.php:618
 msgid "WooCommerce"
 msgstr ""
 
-#: membership-for-woocommerce.php:617
+#: membership-for-woocommerce.php:618
 msgid " is not activated, Please activate WooCommerce first to activate "
 msgstr ""
 
-#: membership-for-woocommerce.php:617
+#: membership-for-woocommerce.php:618
 msgid "."
 msgstr ""
 
-#: onboarding/templates/membership-for-woocommerce-deactivation-template.php:47
+#: onboarding/templates/membership-for-woocommerce-deactivation-template.php:45
 msgid "May we have a little info about why you are deactivating?"
 msgstr ""
 
-#: onboarding/templates/membership-for-woocommerce-deactivation-template.php:63
+#: onboarding/templates/membership-for-woocommerce-deactivation-template.php:58
 msgid "Skip and Deactivate Now"
 msgstr ""
 
-#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:37
+#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:34
 #: src/App.js:116
 msgid "Welcome to WP Swings"
 msgstr ""
 
-#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:38
+#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:35
 msgid ""
 "We love making new friends! Subscribe below and we promise to keep you up-to-"
 "date with our latest new plugins, updates, awesome deals and a few special "
 "offers."
 msgstr ""
 
-#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:50
+#: onboarding/templates/membership-for-woocommerce-onboarding-template.php:47
 msgid "Skip For Now"
 msgstr ""
 
-#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:91
+#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:92
 msgid "No membership found"
 msgstr ""
 
-#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:155
+#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:156
 msgid "No membership assigned"
 msgstr ""
 
-#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:186
+#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:187
 msgid "Invalid user ID"
 msgstr ""
 
-#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:194
+#: package/rest-api/version1/class-membership-for-woocommerce-api-process.php:195
 msgid "User not found"
 msgstr ""
 
@@ -2731,276 +2797,296 @@ msgstr ""
 msgid "Thank you for Shopping, Do not reply."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:633
-#: public/class-membership-for-woocommerce-public.php:725
-#: public/class-membership-for-woocommerce-public.php:1033
+#: public/class-membership-for-woocommerce-public.php:635
+#: public/class-membership-for-woocommerce-public.php:727
+#: public/class-membership-for-woocommerce-public.php:1036
 msgid "Membership Under Review"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:661
-#: public/class-membership-for-woocommerce-public.php:752
+#: public/class-membership-for-woocommerce-public.php:663
+#: public/class-membership-for-woocommerce-public.php:754
 msgid "Membership :- "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:668
-#: public/class-membership-for-woocommerce-public.php:759
+#: public/class-membership-for-woocommerce-public.php:670
+#: public/class-membership-for-woocommerce-public.php:761
 msgid "Become a  "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:668
-#: public/class-membership-for-woocommerce-public.php:759
+#: public/class-membership-for-woocommerce-public.php:670
+#: public/class-membership-for-woocommerce-public.php:761
 msgid "  member and buy this product"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:745
-#: public/class-membership-for-woocommerce-public.php:884
+#: public/class-membership-for-woocommerce-public.php:747
+#: public/class-membership-for-woocommerce-public.php:886
 msgid "Other Available Membership"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:894
+#: public/class-membership-for-woocommerce-public.php:896
 msgid "Memberships\t :- "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1041
+#: public/class-membership-for-woocommerce-public.php:1044
 msgid "Membership Product "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1115
+#: public/class-membership-for-woocommerce-public.php:1118
 msgid "One Membership, Many Benefits"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1121
-#: public/class-membership-for-woocommerce-public.php:1966
-#: public/class-membership-for-woocommerce-public.php:2018
+#: public/class-membership-for-woocommerce-public.php:1124
+#: public/class-membership-for-woocommerce-public.php:1969
+#: public/class-membership-for-woocommerce-public.php:2021
 msgid "Buy Now!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1127
+#: public/class-membership-for-woocommerce-public.php:1130
 msgid "No thanks!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1165
+#: public/class-membership-for-woocommerce-public.php:1168
 msgid "You ran out of session."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1172
+#: public/class-membership-for-woocommerce-public.php:1175
 msgid "Go back to Shop page."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1428
+#: public/class-membership-for-woocommerce-public.php:1431
 msgid "Plan Type"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1525
-msgid "Inlucded Products"
+#: public/class-membership-for-woocommerce-public.php:1528
+msgid "Include Products"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1573
+#: public/class-membership-for-woocommerce-public.php:1576
 msgid "Offered Posts"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1589
+#: public/class-membership-for-woocommerce-public.php:1592
 msgid "Offered Posts Categories"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1604
+#: public/class-membership-for-woocommerce-public.php:1607
 msgid "Offered Post Tags"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1621
+#: public/class-membership-for-woocommerce-public.php:1624
 msgid "Offered Pages"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1638
+#: public/class-membership-for-woocommerce-public.php:1641
 msgid "Offered Product (under Product Discount)"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1655
+#: public/class-membership-for-woocommerce-public.php:1658
 msgid "Offered Product Categories (under Product Discount)"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1671
+#: public/class-membership-for-woocommerce-public.php:1674
 msgid "Offered Product Tags (under Product Discount)"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1760
+#: public/class-membership-for-woocommerce-public.php:1763
 msgid "Buy Now"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1796
-#: public/class-membership-for-woocommerce-public.php:1806
-#: public/class-membership-for-woocommerce-public.php:1843
+#: public/class-membership-for-woocommerce-public.php:1799
+#: public/class-membership-for-woocommerce-public.php:1809
+#: public/class-membership-for-woocommerce-public.php:1846
 msgid " For "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1820
-#: public/class-membership-for-woocommerce-public.php:1833
+#: public/class-membership-for-woocommerce-public.php:1823
+#: public/class-membership-for-woocommerce-public.php:1836
 msgid " and "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1823
+#: public/class-membership-for-woocommerce-public.php:1826
 msgid " free trial "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1835
+#: public/class-membership-for-woocommerce-public.php:1838
 msgid " signup fee"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:1869
+#: public/class-membership-for-woocommerce-public.php:1872
 msgid "Plans Not Available"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:2069
+#: public/class-membership-for-woocommerce-public.php:2072
 msgid "No Thanks!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:2869
+#: public/class-membership-for-woocommerce-public.php:2876
 msgid "Membership Discount"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3943
+#: public/class-membership-for-woocommerce-public.php:3951
 msgid ""
 "Sorry we cannot add membership products with other products, either empty "
 "cart or add membership product later when cart is empty"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3944
-#: public/class-membership-for-woocommerce-public.php:3965
+#: public/class-membership-for-woocommerce-public.php:3952
+#: public/class-membership-for-woocommerce-public.php:3973
 msgid "empty"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:3964
+#: public/class-membership-for-woocommerce-public.php:3972
 msgid ""
 "Sorry we cannot add  other products with membership products , either empty "
 "cart or add  product later when cart is empty"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4470
+#: public/class-membership-for-woocommerce-public.php:4478
 msgid ""
 " Thank You For Purchasing Membership Plan! Check your mail for the login "
 "Credential"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4471
+#: public/class-membership-for-woocommerce-public.php:4479
 msgid " To Access Membership Please Login/Signup First. "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4471
+#: public/class-membership-for-woocommerce-public.php:4479
 msgid "Login/Sign-up first"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4475
+#: public/class-membership-for-woocommerce-public.php:4483
 msgid " Thank You For Purchasing Membership Plan!"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4475
+#: public/class-membership-for-woocommerce-public.php:4483
 msgid ""
 "You will get your Login Credential when Shop Owner will complete your Order "
 "and then after You can Login and access your membership."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4532
-#: public/class-membership-for-woocommerce-public.php:4565
-#: public/class-membership-for-woocommerce-public.php:4595
+#: public/class-membership-for-woocommerce-public.php:4540
+#: public/class-membership-for-woocommerce-public.php:4574
+#: public/class-membership-for-woocommerce-public.php:4606
 msgid "Product with Membership Plan "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4547
-#: public/class-membership-for-woocommerce-public.php:4580
-#: public/class-membership-for-woocommerce-public.php:4609
+#: public/class-membership-for-woocommerce-public.php:4555
+#: public/class-membership-for-woocommerce-public.php:4589
+#: public/class-membership-for-woocommerce-public.php:4620
 msgid "Buy this product and become a member of "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4549
-#: public/class-membership-for-woocommerce-public.php:4582
-#: public/class-membership-for-woocommerce-public.php:4611
+#: public/class-membership-for-woocommerce-public.php:4557
+#: public/class-membership-for-woocommerce-public.php:4591
+#: public/class-membership-for-woocommerce-public.php:4622
 msgid " membership plan. "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4641
+#: public/class-membership-for-woocommerce-public.php:4654
 msgid "Choose Plan"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4649
+#: public/class-membership-for-woocommerce-public.php:4662
 msgid " Click here for all plans details "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4650
+#: public/class-membership-for-woocommerce-public.php:4663
 msgid "First Name"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4651
+#: public/class-membership-for-woocommerce-public.php:4664
 msgid "Last Name"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4653
+#: public/class-membership-for-woocommerce-public.php:4666
 msgid "Street "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4653
+#: public/class-membership-for-woocommerce-public.php:4666
 msgid "Street Address"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4654
+#: public/class-membership-for-woocommerce-public.php:4667
 msgid "City "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4655
+#: public/class-membership-for-woocommerce-public.php:4668
 msgid "State "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4656
+#: public/class-membership-for-woocommerce-public.php:4669
 msgid "Pin Code "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4656
+#: public/class-membership-for-woocommerce-public.php:4669
 msgid "Pin Code"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4657
+#: public/class-membership-for-woocommerce-public.php:4670
 msgid "Phone No "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4657
+#: public/class-membership-for-woocommerce-public.php:4670
 msgid "Phone Number"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4658
+#: public/class-membership-for-woocommerce-public.php:4671
 msgid "Email Address "
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4662
+#: public/class-membership-for-woocommerce-public.php:4675
 #: public/woocommerce/templates/myaccount/form-login.php:108
 msgid "Register"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4854
+#: public/class-membership-for-woocommerce-public.php:4866
 msgid "Deactivate Notification"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4860
+#: public/class-membership-for-woocommerce-public.php:4872
 msgid "Whatsapp Notification"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4869
+#: public/class-membership-for-woocommerce-public.php:4879
 msgid "SMS Notifications"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4878
+#: public/class-membership-for-woocommerce-public.php:4886
 msgid "Email Notifications"
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:4976
-#: public/class-membership-for-woocommerce-public.php:5039
+#: public/class-membership-for-woocommerce-public.php:4983
+#: public/class-membership-for-woocommerce-public.php:5044
 msgid "Please verify that you are not a robot!."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:5005
+#: public/class-membership-for-woocommerce-public.php:5010
 msgid "Please review and accept our Terms and Conditions policy to proceed!."
 msgstr ""
 
-#: public/class-membership-for-woocommerce-public.php:5028
+#: public/class-membership-for-woocommerce-public.php:5033
 msgid "You are not a member and therefore cannot log in to the site!."
+msgstr ""
+
+#: public/class-membership-for-woocommerce-public.php:5387
+msgid "User's Community"
+msgstr ""
+
+#: public/class-membership-for-woocommerce-public.php:5415
+msgid "Send Message"
+msgstr ""
+
+#: public/class-membership-for-woocommerce-public.php:5431
+msgid "Type your message here..."
+msgstr ""
+
+#: public/class-membership-for-woocommerce-public.php:5434
+msgid "Send"
+msgstr ""
+
+#: public/class-membership-for-woocommerce-public.php:5435
+msgid "Close"
 msgstr ""
 
 #: public/partials/templates/membership-templates/wps-membership-billing-modal.php:72
@@ -3219,31 +3305,31 @@ msgstr ""
 msgid "Active Membership "
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:513
+#: public/partials/templates/wps-membership-details-tab.php:511
 msgid "Active Subscription "
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:526
+#: public/partials/templates/wps-membership-details-tab.php:522
 msgid "Maximum Cart Discount "
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:527
+#: public/partials/templates/wps-membership-details-tab.php:523
 msgid "%"
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:595
+#: public/partials/templates/wps-membership-details-tab.php:588
 msgid "View"
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:598
+#: public/partials/templates/wps-membership-details-tab.php:591
 msgid "Cancel"
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:624
+#: public/partials/templates/wps-membership-details-tab.php:617
 msgid "Browse products"
 msgstr ""
 
-#: public/partials/templates/wps-membership-details-tab.php:625
+#: public/partials/templates/wps-membership-details-tab.php:618
 msgid "No Membership has been purchased yet."
 msgstr ""
 
@@ -3293,6 +3379,10 @@ msgstr ""
 
 #: public/woocommerce/templates/myaccount/form-login.php:105
 msgid "I agree to the "
+msgstr ""
+
+#: public/woocommerce/templates/myaccount/form-login.php:105
+msgid "Terms & Conditions"
 msgstr ""
 
 #: public/woocommerce/templates/myaccount/form-login.php:112
