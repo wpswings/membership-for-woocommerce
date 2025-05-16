@@ -315,6 +315,7 @@ class Membership_For_Woocommerce_Admin {
 					array(
 						'ajaxurl' => admin_url( 'admin-ajax.php' ),
 						'nonce'   => wp_create_nonce( 'members-nonce' ),
+						'wsfw_ajax_error' => 'there is some ajax error on the site!',
 					)
 				);
 			}
@@ -399,17 +400,14 @@ class Membership_For_Woocommerce_Admin {
 					add_submenu_page( 'wps-plugins', $mfw_value['name'], $mfw_value['name'], 'manage_options', $mfw_value['menu_link'], array( $mfw_value['instance'], $mfw_value['function'] ) );
 				}
 			}
-		} else {
-			if ( ! empty( $submenu['wps-plugins'] ) ) {
+		} elseif ( ! empty( $submenu['wps-plugins'] ) ) {
 
-				if ( ! in_array( 'Home', (array) $submenu['wps-plugins'] ) ) {
-					if ( wps_mfw_standard_check_multistep() ) {
-						add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
-					}
+			if ( ! in_array( 'Home', (array) $submenu['wps-plugins'] ) ) {
+				if ( wps_mfw_standard_check_multistep() ) {
+					add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -1392,7 +1390,7 @@ class Membership_For_Woocommerce_Admin {
 
 				if ( ! empty( $currency ) && ! empty( $plan_cost ) ) {
 
-					echo sprintf( ' %s %s ', esc_html( $currency ), esc_html( $plan_cost ) );
+					printf( ' %s %s ', esc_html( $currency ), esc_html( $plan_cost ) );
 				}
 				break;
 		}
@@ -1401,12 +1399,16 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Get membership post data ( Ajax handler)
 	 *
-	 * @return void
+	 * @return bool
 	 *
 	 * @since 1.0.0
 	 */
 	public function wps_membership_get_membership_content() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
 
@@ -1440,7 +1442,7 @@ class Membership_For_Woocommerce_Admin {
 				$display_name = get_the_author_meta( 'display_name', wps_membership_get_meta_data( $post_id, 'wps_member_user', true ) );
 				$withdrawal_status = wps_membership_get_meta_data( $post_id, 'member_status', true );
 				?>
-				<strong class="wps_hide_<?php echo esc_attr( $withdrawal_status ); ?>" bulk-user-id="<?php echo esc_html( $author_id ); ?>"><?php echo sprintf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
+				<strong class="wps_hide_<?php echo esc_attr( $withdrawal_status ); ?>" bulk-user-id="<?php echo esc_html( $author_id ); ?>"><?php printf( ' #%u %s ', esc_html( $post_id ), esc_html( $display_name ) ); ?></strong>
 				<?php
 				break;
 
@@ -1536,11 +1538,15 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Get members post data (Ajax handler).
 	 *
-	 * @return void
+	 * @return bool
 	 * @since 1.0.0
 	 */
 	public function wps_membership_get_member_content() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce Verification.
 		check_ajax_referer( 'preview-nonce', 'nonce' );
 
@@ -2668,11 +2674,9 @@ class Membership_For_Woocommerce_Admin {
 				'label'  => __( 'Attach Membership', 'membership-for-woocommerce' ),
 				'target' => 'wps_attach_membership',
 			);
-		} else {
-			if ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
+		} elseif ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
 				wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
-			}
 		}
 		return $product_data_tabs;
 	}
@@ -2746,12 +2750,9 @@ class Membership_For_Woocommerce_Admin {
 				if ( ! empty( $selected_plan ) ) {
 
 					wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', $selected_plan );
-				} else {
-
-					if ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
+				} elseif ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
 						wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
-					}
 				}
 			}
 		}
@@ -2760,10 +2761,14 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Members billing metabox save.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function wps_membership_save_member_status() {
 
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 		// Nonce verification.
 		check_ajax_referer( 'members-nonce', 'nonce' );
 
@@ -2894,9 +2899,16 @@ class Membership_For_Woocommerce_Admin {
 					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
 				}
 
-				$order_id       = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
-				$user_name      = $user->data->display_name;
-				$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				$order_id  = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
+				$user_name = '';
+				if ( ! empty( $user ) && is_object( $user ) && isset( $user->data->display_name ) ) {
+
+					$user_name = $user->data->display_name;
+				}
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+
+					$customer_email = WC()->mailer()->emails['membership_creation_email'];
+				}
 				if ( ! empty( $customer_email ) ) {
 
 					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
@@ -3051,9 +3063,14 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Create plan ajax callback.
 	 *
-	 * @return void
+	 * @return bool
 	 */
 	public function wps_membership_create_plan_reg_callback() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
 
 		check_ajax_referer( 'membership-registration-nonce', 'nonce' );
 
@@ -3217,7 +3234,7 @@ class Membership_For_Woocommerce_Admin {
 				array(
 					'post_type'    => 'wps_cpt_members',
 					'post_status'  => 'publish',
-					'post_author'  => $wps_mfw_user_id
+					'post_author'  => $wps_mfw_user_id,
 				),
 				true
 			);
@@ -3724,6 +3741,23 @@ class Membership_For_Woocommerce_Admin {
 				'placeholder' => __( 'Coupon Amount', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_one_time_coupon_amount',
 				'value'       => get_option( 'wps_msfw_one_time_coupon_amount' ),
+				'form-title'  => 'wps_mfw_add_border',
+			),
+			array(
+				'title'       => __( 'Enable this to establish a community for users.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Activate these settings to create and manage a member community based on membership plans, displayed on the My Account page.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_to_show_members_community',
+				'value'       => get_option( 'wps_msfw_enable_to_show_members_community' ),
+				'class'       => 'mfw-radio-switch-class',
+			),
+			array(
+				'title'       => __( "Enter the user's BG image URL", 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( "The entered image URL will be used as the background image in the user's community section on the My Account page.", 'membership-for-woocommerce' ),
+				'placeholder' => __( 'enter image url', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_user_community_bg_image',
+				'value'       => get_option( 'wps_msfw_user_community_bg_image' ),
 			),
 			array(
 				'type'        => 'multi-button',
@@ -3795,13 +3829,13 @@ class Membership_For_Woocommerce_Admin {
 	 * @return array
 	 */
 	public function wps_msfw_list_all_wprdpress_pages() {
-    
+
 		$wps_msfw_all_pages = array();
 		if ( ! empty( get_pages() ) && is_array( get_pages() ) ) {
-			foreach ( get_pages() as $page) {
+			foreach ( get_pages() as $page ) {
 				if ( 'Checkout' !== $page->post_title ) {
 
-					$wps_msfw_all_pages[$page->ID] = $page->post_title;
+					$wps_msfw_all_pages[ $page->ID ] = $page->post_title;
 				}
 			}
 		}
@@ -3840,7 +3874,7 @@ class Membership_For_Woocommerce_Admin {
 	 * This function is used to set array index.
 	 *
 	 * @param  array  $arr            arr.
-	 * @param  array  $inserted_array inserted_array.wps_mfw_other_html_settings
+	 * @param  array  $inserted_array inserted_array.wps_mfw_other_html_settings.
 	 * @param  string $index          index.
 	 * @return array
 	 */
@@ -3951,6 +3985,18 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_wpr_sms_twilio_num_id',
 				'value'       => get_option( 'wps_wpr_sms_twilio_num_id' ),
 			),
+			array(
+				'title'       => __( 'Allow SMS between community users', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable this setting to allow community users to send SMS messages to each other.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_wpr_enable_sms_btw_comm_user',
+				'value'       => get_option( 'wps_wpr_enable_sms_btw_comm_user' ),
+				'class'       => 'mfw-radio-switch-class',
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
 		);
 		$sms_settings = array_merge( $sms_settings, $wps_app_settings );
 		return $sms_settings;
@@ -4047,11 +4093,17 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * This function is used to send offer notification on whatsapp.
 	 *
-	 * @return void
+	 * @return object
 	 */
 	public function wps_wpr_send_offer_message_on_whatsapp() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
-		
+
 		$response        = array();
 		$response['msg'] = esc_html__( 'Whatsapp Notification feature is not enable!', 'membership-for-woocommerce' );
 		if ( 'on' === get_option( 'wps_wpr_enable_whatsapp_api_feature', 'no' ) ) {
@@ -4081,7 +4133,7 @@ class Membership_For_Woocommerce_Admin {
 							}
 							if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
 
-								$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+								$wps_wpr_store_match_id[ $user_id ][] = $active_plan['ID'];
 							}
 						}
 					}
@@ -4089,7 +4141,7 @@ class Membership_For_Woocommerce_Admin {
 					if ( array_key_exists( $user_id, $wps_wpr_store_match_id ) ) {
 
 						$country_code_name              = get_user_meta( $user_id, 'billing_country', true );
-						$country_code                   = $this->get_country_code_by_name( $country_code_name );
+						$country_code                   = $this->global_class->get_country_code_by_name( $country_code_name );
 						$whatsapp_number                = get_user_meta( $user_id, 'billing_phone', true );
 						$whatsapp_number                = ! empty( $whatsapp_number ) ? $country_code . $whatsapp_number : '';
 						$user_obj                       = get_user_by( 'id', $user_id );
@@ -4100,32 +4152,32 @@ class Membership_For_Woocommerce_Admin {
 							'Content-Type: application/json',
 							'Authorization: Bearer ' . $wps_wpr_whatsapp_access_token,
 						);
-						
+
 						$curl_data = array(
-							"messaging_product" => "whatsapp",
-							"to" => $whatsapp_number,
-							"type" => "template",
-							"template" => array(
-								"name" => $wps_wpr_whatsapp_msg_temp_name,
-								"language" => array(
-									"code" => "en_US"
+							'messaging_product' => 'whatsapp',
+							'to' => $whatsapp_number,
+							'type' => 'template',
+							'template' => array(
+								'name' => $wps_wpr_whatsapp_msg_temp_name,
+								'language' => array(
+									'code' => 'en_US',
 								),
-								"components" => array(
+								'components' => array(
 									array(
-										"type" => "body",
-										"parameters" => array(
+										'type' => 'body',
+										'parameters' => array(
 											array(
-												"type" => "text",
-												"text" => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
+												'type' => 'text',
+												'text' => ! empty( $user_obj->display_name ) ? $user_obj->display_name : $user_obj->user_name,
 											),
 											array(
-												"type" => "text",
-												"text" => $wps_wpr_offer_message,
+												'type' => 'text',
+												'text' => $wps_wpr_offer_message,
 											),
-										)
-									)
-								)
-							)
+										),
+									),
+								),
+							),
 						);
 
 						$data = json_encode( $curl_data );
@@ -4135,24 +4187,27 @@ class Membership_For_Woocommerce_Admin {
 
 						$curl = curl_init();
 
-						curl_setopt_array( $curl, array(
-						CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
-						CURLOPT_RETURNTRANSFER => true,
-						CURLOPT_ENCODING => '',
-						CURLOPT_MAXREDIRS => 10,
-						CURLOPT_TIMEOUT => 0,
-						CURLOPT_FOLLOWLOCATION => true,
-						CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-						CURLOPT_CUSTOMREQUEST => 'POST',
-						CURLOPT_POSTFIELDS =>$data,
-						CURLOPT_HTTPHEADER => $api_header,
-						));
+						curl_setopt_array(
+							$curl,
+							array(
+								CURLOPT_URL => 'https://graph.facebook.com/v21.0/' . $wps_wpr_whatsapp_phone_num_id . '/messages',
+								CURLOPT_RETURNTRANSFER => true,
+								CURLOPT_ENCODING => '',
+								CURLOPT_MAXREDIRS => 10,
+								CURLOPT_TIMEOUT => 0,
+								CURLOPT_FOLLOWLOCATION => true,
+								CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+								CURLOPT_CUSTOMREQUEST => 'POST',
+								CURLOPT_POSTFIELDS => $data,
+								CURLOPT_HTTPHEADER => $api_header,
+							)
+						);
 
-						$response = curl_exec($curl);
+						$response = curl_exec( $curl );
 
 						// LOG THE Result.
-						$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );				
-						curl_close($curl);
+						$logger->info( wc_print_r( 'User ID : ' . $user_id . ' Response from Whatsapp API :' . $response, true ), array( 'source' => 'response-whatsapp-api' ) );
+						curl_close( $curl );
 
 						$response = json_decode( $response, true );
 					} else {
@@ -4170,67 +4225,19 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Undocumented function.
-	 *
-	 * @param  string $country_code_name country_code_name.
-	 * @return string
-	 */
-	public function get_country_code_by_name( $country_code_name ) {
-
-		$countries = array(
-			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
-			"AL" => ["name" => "Albania", "dial_code" => "+355"],
-			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
-			"US" => ["name" => "United States", "dial_code" => "+1"],
-			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
-			"IN" => ["name" => "India", "dial_code" => "+91"],
-			"AU" => ["name" => "Australia", "dial_code" => "+61"],
-			"CA" => ["name" => "Canada", "dial_code" => "+1"],
-			"CN" => ["name" => "China", "dial_code" => "+86"],
-			"FR" => ["name" => "France", "dial_code" => "+33"],
-			"DE" => ["name" => "Germany", "dial_code" => "+49"],
-			"IT" => ["name" => "Italy", "dial_code" => "+39"],
-			"JP" => ["name" => "Japan", "dial_code" => "+81"],
-			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
-			"RU" => ["name" => "Russia", "dial_code" => "+7"],
-			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
-			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
-			"ES" => ["name" => "Spain", "dial_code" => "+34"],
-			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
-			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
-			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
-			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
-			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
-			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
-			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
-			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
-			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
-			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
-			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
-			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
-			"AT" => ["name" => "Austria", "dial_code" => "+43"],
-			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
-			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
-			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
-			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
-			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
-			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
-			"IL" => ["name" => "Israel", "dial_code" => "+972"],
-			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
-		);
-
-		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
-		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
-	}
-
-	/**
 	 * This function is used to send offer notification via sms.
 	 *
-	 * @return void
+	 * @return object
 	 */
 	public function wps_wpr_send_offer_message_via_sms() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
-		
+
 		$response                        = array();
 		$response['msg']                 = esc_html__( 'SMS Notification feature is not enable!', 'membership-for-woocommerce' );
 		$wps_wpr_enable_sms_api_feature  = ! empty( get_option( 'wps_wpr_enable_sms_api_feature' ) ) ? get_option( 'wps_wpr_enable_sms_api_feature' ) : 'no';
@@ -4272,7 +4279,7 @@ class Membership_For_Woocommerce_Admin {
 								}
 								if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
 
-									$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+									$wps_wpr_store_match_id[ $user_id ][] = $active_plan['ID'];
 								}
 							}
 						}
@@ -4282,7 +4289,7 @@ class Membership_For_Woocommerce_Admin {
 
 							// get user billing number and country code.
 							$country_code_name = get_user_meta( $user_id, 'billing_country', true );
-							$country_code      = $this->get_country_code_by_name( $country_code_name );
+							$country_code      = $this->global_class->get_country_code_by_name( $country_code_name );
 							$billing_phone     = get_user_meta( $user_id, 'billing_phone', true );
 							$billing_phone     = ! empty( $billing_phone ) ? $country_code . $billing_phone : '';
 							$wps_send_contact  = '+' . $billing_phone;
@@ -4327,11 +4334,14 @@ class Membership_For_Woocommerce_Admin {
 				$response['msg'] = esc_html__( 'Fields are empty in the SMS integration settings!', 'membership-for-woocommerce' );
 			}
 		}
-		
+
 		// send success/error response.
 		if ( $success_count > 0 ) {
 
-			$response = array( 'result' => true, 'msg' => esc_html__( 'Your offer messages has been sent successfully!', 'membership-for-woocommerce' ) );
+			$response = array(
+				'result' => true,
+				'msg' => esc_html__( 'Your offer messages has been sent successfully!', 'membership-for-woocommerce' ),
+			);
 		} elseif ( $error_count > 0 ) {
 
 			$response = array( 'msg' => esc_html__( 'Invalid phone number!', 'membership-for-woocommerce' ) );
@@ -4342,15 +4352,21 @@ class Membership_For_Woocommerce_Admin {
 		wp_send_json( $response );
 		wp_die();
 	}
-	
+
 	/**
 	 * This function is used to send offer messages on email wps_wpr_send_offer_message_via_sms.
 	 *
-	 * @return void
+	 * @return object
 	 */
 	public function wps_wpr_send_offer_messages_via_email() {
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		check_ajax_referer( 'wps-offer-nonce', 'nonce' );
-		
+
 		$response        = array();
 		$response['msg'] = esc_html__( 'Email Notification feature is not enable!', 'membership-for-woocommerce' );
 		if ( 'on' === get_option( 'wps_wpr_enable_email_api_feature' ) ) {
@@ -4386,7 +4402,7 @@ class Membership_For_Woocommerce_Admin {
 								}
 								if ( in_array( $active_plan['ID'], $wps_org_offer_plan_id ) ) {
 
-									$wps_wpr_store_match_id[$user_id][] = $active_plan['ID'];
+									$wps_wpr_store_match_id[ $user_id ][] = $active_plan['ID'];
 								}
 							}
 						}
@@ -4396,7 +4412,7 @@ class Membership_For_Woocommerce_Admin {
 
 							$user    = get_user_by( 'ID', $user_id );
 							$to      = $user->user_email;
-							$subject = esc_html__( 'Exclusive Membership Offer!', 'membership-for-woocommerce' ); 
+							$subject = esc_html__( 'Exclusive Membership Offer!', 'membership-for-woocommerce' );
 							$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 							wp_mail( $to, $subject, $wps_wpr_offer_message, $headers );
 							++$success_count;
@@ -4417,7 +4433,10 @@ class Membership_For_Woocommerce_Admin {
 
 		if ( $success_count > 0 ) {
 
-			$response = array( 'result' => true, 'msg' => esc_html__( 'Your offer messages has been sent successfully!', 'membership-for-woocommerce' ) );
+			$response = array(
+				'result' => true,
+				'msg' => esc_html__( 'Your offer messages has been sent successfully!', 'membership-for-woocommerce' ),
+			);
 		} elseif ( $error_count > 0 ) {
 
 			$response = array( 'msg' => esc_html__( 'The selected membership does not belong to any user!', 'membership-for-woocommerce' ) );
@@ -4595,16 +4614,19 @@ class Membership_For_Woocommerce_Admin {
 				if ( ! empty( $recaptcha_response ) ) {
 
 					$verify_url = 'https://www.google.com/recaptcha/api/siteverify';
-					$response   = wp_remote_get( $verify_url, [
-						'body' => [
-							'secret'   => $recaptcha_secret,
-							'response' => $recaptcha_response,
-							'remoteip' => $remote_addr
-						]
-					]);
+					$response   = wp_remote_get(
+						$verify_url,
+						array(
+							'body' => array(
+								'secret'   => $recaptcha_secret,
+								'response' => $recaptcha_response,
+								'remoteip' => $remote_addr,
+							),
+						)
+					);
 
-					$response_body = wp_remote_retrieve_body($response);
-					$result        = json_decode($response_body, true);
+					$response_body = wp_remote_retrieve_body( $response );
+					$result        = json_decode( $response_body, true );
 
 					if ( $result['success'] ) {
 
@@ -4657,5 +4679,4 @@ class Membership_For_Woocommerce_Admin {
 		}
 		return $wps_msfw_all_pages;
 	}
-
 }

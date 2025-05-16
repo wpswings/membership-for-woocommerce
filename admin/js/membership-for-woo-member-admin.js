@@ -126,6 +126,7 @@ jQuery(document).ready(function($) {
 
 
         	// update wallet and status on changing status of wallet request
+            // alert(members_admin_obj.wsfw_ajax_error);
 		$(document).on( 'change', 'select#wps-wpg-gen-table_status', function() {
 			var user_id = $('#wps-wpg-gen-table_status').attr('user_id');
             var post_id = $('#wps-wpg-gen-table_status').attr('post_id_value');
@@ -158,7 +159,7 @@ jQuery(document).ready(function($) {
 
 			})
 			.fail(function ( response ) {
-				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + wsfw_admin_param.wsfw_ajax_error + '</p></div>');		
+				$( '.wps-wpg-withdrawal-section-table' ).before('<div class="notice notice-error is-dismissible wps-errorr-8"><p>' + members_admin_obj.wsfw_ajax_error + '</p></div>');		
 				loader.hide();
 			});
         });

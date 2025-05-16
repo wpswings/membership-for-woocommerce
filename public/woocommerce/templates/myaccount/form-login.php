@@ -40,7 +40,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 			<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 				<label for="username"><?php esc_html_e( 'Username or email address', 'membership-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'membership-for-woocommerce' ); ?></span></label>
-				<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+				<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? sanitize_text_field( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
 			</p>
 			<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 				<label for="password"><?php esc_html_e( 'Password', 'membership-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'membership-for-woocommerce' ); ?></span></label>
@@ -76,14 +76,14 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 
 				<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 					<label for="reg_username"><?php esc_html_e( 'Username', 'membership-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'membership-for-woocommerce' ); ?></span></label>
-					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+					<input type="text" class="woocommerce-Input woocommerce-Input--text input-text" name="username" id="reg_username" autocomplete="username" value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_html( sanitize_text_field( wp_unslash( $_POST['username'] ) ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
 				</p>
 
 			<?php endif; ?>
 
 			<p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
 				<label for="reg_email"><?php esc_html_e( 'Email address', 'membership-for-woocommerce' ); ?>&nbsp;<span class="required" aria-hidden="true">*</span><span class="screen-reader-text"><?php esc_html_e( 'Required', 'membership-for-woocommerce' ); ?></span></label>
-				<input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_attr( wp_unslash( $_POST['email'] ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
+				<input type="email" class="woocommerce-Input woocommerce-Input--text input-text" name="email" id="reg_email" autocomplete="email" value="<?php echo ( ! empty( $_POST['email'] ) ) ? esc_html( sanitize_text_field( wp_unslash( $_POST['email'] ) ) ) : ''; ?>" required aria-required="true" /><?php // @codingStandardsIgnoreLine ?>
 			</p>
 
 			<?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
@@ -102,7 +102,7 @@ do_action( 'woocommerce_before_customer_login_form' ); ?>
 			<div class="woocommerce-form-row form-row">
 				<div class="g-recaptcha" data-sitekey="<?php echo esc_html( $wps_mfw_site_captcha_key ); ?>"></div>
 				<label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
-					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="wps_mfw_terms_and_condition" type="checkbox" id="wps_mfw_terms_and_condition" value="forever" required /><span><?php esc_html_e( 'I agree to the ', 'membership-for-woocommerce' ); ?><a href="<?php echo esc_url( site_url() ) . '/privacy-policy' ?>" target="_blank"><?php esc_html_e( 'Terms & Conditions', 'membership-for-woocommerce' ); ?></a></span>
+					<input class="woocommerce-form__input woocommerce-form__input-checkbox" name="wps_mfw_terms_and_condition" type="checkbox" id="wps_mfw_terms_and_condition" value="forever" required /><span><?php esc_html_e( 'I agree to the ', 'membership-for-woocommerce' ); ?><a href="<?php echo esc_url( site_url() . '/privacy-policy' ); ?>" target="_blank"><?php esc_html_e( 'Terms & Conditions', 'membership-for-woocommerce' ); ?></a></span>
 				</label>
 				<?php wp_nonce_field( 'woocommerce-register', 'woocommerce-register-nonce' ); ?>
 				<button type="submit" class="woocommerce-Button wps_mfw_mem_register_btn woocommerce-button button<?php echo esc_attr( wc_wp_theme_get_element_class_name( 'button' ) ? ' ' . wc_wp_theme_get_element_class_name( 'button' ) : '' ); ?> woocommerce-form-register__submit" name="register" value="<?php esc_attr_e( 'Register', 'membership-for-woocommerce' ); ?>"><?php esc_html_e( 'Register', 'membership-for-woocommerce' ); ?></button>

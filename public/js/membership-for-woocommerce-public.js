@@ -202,47 +202,47 @@ jQuery(document).ready(function ($) {
 		jQuery(document).find('.wps_msfw__new_layout').addClass('wps_msf_new_layout_dynamic_one');
 		jQuery(document).find('.wps_msfw__new_layout_billing').addClass('wps_msf_new_layout_dynamic_one');
 	}
- });
 
- jQuery(document).ready(function($){
+	jQuery(document).ready(function($){
 
-	 var single_page = membership_public_obj.single_plan;
-	 if('yes' == single_page ){
-		jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
-	 }
- });
+		var single_page = membership_public_obj.single_plan;
+		if('yes' == single_page ){
 
-jQuery(document).on('click', '.wps_members_plans label', function() {
-    var $currentElement = jQuery(this).next('.wps_table_wrapper');
-    
-    // Check if the current element already has the class
-    if ($currentElement.hasClass('show__membership_details')) {
-        // Remove the class only from the current element
-        $currentElement.removeClass('show__membership_details');
-    } else {
-        // Add the class to the current element
-        $currentElement.addClass('show__membership_details');
-    }
-});
+			jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
+		}
+	});
 
+	jQuery(document).on('click', '.wps_members_plans label', function() {
+		var $currentElement = jQuery(this).next('.wps_table_wrapper');
+		
+		// Check if the current element already has the class
+		if ($currentElement.hasClass('show__membership_details')) {
+			// Remove the class only from the current element
+			$currentElement.removeClass('show__membership_details');
+		} else {
+			// Add the class to the current element
+			$currentElement.addClass('show__membership_details');
+		}
+	});
 
-// add members dashboard color.
-var root = jQuery(':root');
-root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_color );
+	// add members dashboard color.
+	var root = jQuery(':root');
+	root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_color );
 
-jQuery(document).on('click','.wps-msfw_membership-history',function(){
-	jQuery('.wps_msfw__new_layout-table-for-detail').toggleClass('wps_msfw__new_layout-table-for-detail--show');
-});
+	// show membership history on membership tabs.
+	jQuery(document).on('click','.wps-msfw_membership-history',function(){
+		jQuery('.wps_msfw__new_layout-table-for-detail').toggleClass('wps_msfw__new_layout-table-for-detail--show');
+	});
 
-jQuery(document).ready(function ($) {
-
-	var rowsPerPage = 3; // Number of rows per page
-    var $table      = $(".wps_msfw__new_layout"); // Select the table
-    var $rows       = $table.find("tbody tr"); // Select all rows inside tbody
+	// create pagination for membership history.
+	var rowsPerPage = 3; // Number of rows per page.
+    var $table      = $(".wps_msfw__new_layout"); // Select the table.
+    var $rows       = $table.find("tbody tr"); // Select all rows inside tbody.
     var totalRows   = $rows.length;
     var totalPages  = Math.ceil(totalRows / rowsPerPage);
     var currentPage = 1;
 
+	// show pages.
     function showPage(page) {
 
         if (page < 1) page = 1;
@@ -256,6 +256,7 @@ jQuery(document).ready(function ($) {
         updatePagination();
     }
 
+	// updating page numbers.
     function updatePagination() {
         var paginationHtml = `
             <button class="prev-btn">Prev</button>
@@ -300,6 +301,7 @@ jQuery(document).ready(function ($) {
         }
     });
 
+	// when enter value in pagination.
     $(document).on("keypress", ".page-input", function (e) {
         if (e.which === 13) {
 
@@ -355,6 +357,6 @@ jQuery(document).ready(function ($) {
 				jQuery('.wps_mfw_mem_register_btn').prop('disabled', true);
 			}
 		});
-	}
+	}	
 	
 });

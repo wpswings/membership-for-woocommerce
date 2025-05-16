@@ -260,10 +260,10 @@ input#s2id_autogen1 {
     width: 100%;
 }
 
-.mdc-button {
+.wps-main .mdc-button {
     border-radius: 35px!important;
     padding: 12px 24px!important;
-    height: 100%;
+    height: auto;
 }
 
 .wps-mfw-on-boarding-submit {

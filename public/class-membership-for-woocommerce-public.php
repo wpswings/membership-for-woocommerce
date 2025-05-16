@@ -1143,9 +1143,9 @@ class Membership_For_Woocommerce_Public {
 
 			$output .= '<input type="hidden" id="wps_membership_plan_id" value="' . esc_attr( $plan_id ) . '">';
 
-			$output .= '<div class="wps_membership_plan_content_desc">' . esc_attr( $plan_desc ) . '</div>';
+			$output .= '<div class="wps_membership_plan_content_desc">' . wp_kses_post( $plan_desc ) . '</div>';
 
-			$output .= '<div class="wps_membership_plan_info">' . esc_attr( $plan_info ) . '</div>';
+			$output .= '<div class="wps_membership_plan_info">' . wp_kses_post( $plan_info ) . '</div>';
 
 			$output .= '</div>';
 
@@ -1525,7 +1525,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '</label><span>' . esc_attr( $shipping ) . '</span></li>';
 
 					$description .= '<li><label>';
-					$description .= __( 'Inlucded Products', 'membership-for-woocommerce' );
+					$description .= __( 'Include Products', 'membership-for-woocommerce' );
 					$description .= '</label><span>';
 					$prod_ids     = maybe_unserialize( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
@@ -1719,17 +1719,17 @@ class Membership_For_Woocommerce_Public {
 			$plan_desc = get_post_field( 'post_content', $plan_id );
 			if ( ! empty( $plan_desc ) ) {
 
-				$description .= '<div class="wps_membership_plan_content_description">' . esc_attr( $plan_desc ) . '</div>';
+				$description .= '<div class="wps_membership_plan_content_description">' . wp_kses_post( $plan_desc ) . '</div>';
 				$description .= $this->get_plan_details( $plan_id );
 			} else {
-				$description .= '<div class="wps_membership_plan_content_desc">' . esc_attr( $content ) . '</div>';
+				$description .= '<div class="wps_membership_plan_content_desc">' . wp_kses_post( $content ) . '</div>';
 				$description .= $this->get_plan_details( $plan_id );
 			}
 
 			$plan_info = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
 			if ( ! empty( $plan_info ) ) {
 
-				$description .= '<div class="wps_membership_plan_info">' . esc_attr( $plan_info ) . '</div>';
+				$description .= '<div class="wps_membership_plan_info">' . wp_kses_post( $plan_info ) . '</div>';
 			}
 		} else {
 
@@ -1853,11 +1853,11 @@ class Membership_For_Woocommerce_Public {
 					$plan_desc = get_post_field( 'post_content', $plan['ID'] );
 					if ( ! empty( $plan_desc ) ) {
 
-						$description .= '<div class="wps_membership_plan_content_description">' . esc_attr( $plan_desc ) . '</div>';
+						$description .= '<div class="wps_membership_plan_content_description">' . wp_kses_post( $plan_desc ) . '</div>';
 					}
 					if ( ! empty( $plan_info ) ) {
 
-						$description .= '<div class="wps_membership_plan_info">' . esc_attr( $plan_info ) . '</div>';
+						$description .= '<div class="wps_membership_plan_info">' . wp_kses_post( $plan_info ) . '</div>';
 					}
 					$description .= $this->get_plan_details( $plan['ID'] );
 					$description .= '</div>';
@@ -1910,15 +1910,15 @@ class Membership_For_Woocommerce_Public {
 			$plan_desc = get_post_field( 'post_content', $plan_id );
 			if ( ! empty( $plan_desc ) ) {
 
-				$description .= '<div class="wps_membership_plan_content_desc">' . esc_attr( $plan_desc ) . '</div>';
+				$description .= '<div class="wps_membership_plan_content_desc">' . wp_kses_post( $plan_desc ) . '</div>';
 			} else {
-				$description .= '<div class="wps_membership_plan_content_desc">' . esc_attr( $content ) . '</div>';
+				$description .= '<div class="wps_membership_plan_content_desc">' . wp_kses_post( $content ) . '</div>';
 			}
 
 			$plan_info = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_info', true );
 			if ( ! empty( $plan_info ) ) {
 
-				$description .= '<div class="wps_membership_plan_info">' . esc_attr( $plan_info ) . '</div>';
+				$description .= '<div class="wps_membership_plan_info">' . wp_kses_post( $plan_info ) . '</div>';
 			}
 		}
 
@@ -2529,9 +2529,10 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
 		// If manually completing membership then set its expiry date.
-		if ( 'complete' == $member_status[0] ) {
+		$member_status = wps_membership_get_meta_data( $member_id, 'member_status', true );
+		$member_status = ! empty( $member_status ) && is_array( $member_status ) ? $member_status : array();
+		if ( isset( $member_status[0] ) && 'complete' == $member_status[0] ) {
 
 			// Getting current activation date.
 			$current_date = gmdate( 'Y-m-d' );
@@ -4868,21 +4869,21 @@ class Membership_For_Woocommerce_Public {
 						<?php if ( 'on' === get_option( 'wps_wpr_enable_whatsapp_api_feature' ) ) : ?>
 							<article>
 								<div class="wps_wpr_enable_offer_setting_wrapper">
-									<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_mfw_stop_whatsapp_notify" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?>><?php esc_html_e( 'Whatsapp Notification', 'membership-for-woocommerce' ); ?></label>
+									<label for="wps_mfw_stop_whatsapp_notify"><input type="checkbox" class="wps_msfw_stop_notifications" id="wps_mfw_stop_whatsapp_notify" value="yes" <?php checked( $wps_mfw_stop_whatsapp, 'yes' ) ?> data-type="whatsapp"><?php esc_html_e( 'Whatsapp Notification', 'membership-for-woocommerce' ); ?></label>
 								</div>
 							</article>
 						<?php endif;
 						if ( 'on' === get_option( 'wps_wpr_enable_sms_api_feature' ) ) : ?>
 							<article>
 								<div class="wps_wpr_enable_offer_setting_wrapper">
-									<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_mfw_stop_sms_notify" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?>><?php esc_html_e( 'SMS Notifications', 'membership-for-woocommerce' ); ?></label>
+									<label for="wps_mfw_stop_sms_notify"><input type="checkbox" class="wps_msfw_stop_notifications" id="wps_mfw_stop_sms_notify" value="yes" <?php checked( $wps_mfw_stop_sms, 'yes' ) ?> data-type="sms"><?php esc_html_e( 'SMS Notifications', 'membership-for-woocommerce' ); ?></label>
 								</div>
 							</article>
 						<?php endif;
 						if ( 'on' === get_option( 'wps_wpr_enable_email_api_feature' ) ) : ?>
 							<article>
 								<div class="wps_wpr_enable_offer_setting_wrapper">
-									<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_mfw_stop_email_notify" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?>><?php esc_html_e( 'Email Notifications', 'membership-for-woocommerce' ); ?></label>
+									<label for="wps_mfw_stop_email_notify"><input type="checkbox" class="wps_msfw_stop_notifications" id="wps_mfw_stop_email_notify" value="yes" <?php checked( $wps_mfw_email_sms, 'yes' ) ?> data-type="email"><?php esc_html_e( 'Email Notifications', 'membership-for-woocommerce' ); ?></label>
 								</div>
 							</article>
 						<?php endif; ?>
@@ -5286,4 +5287,158 @@ class Membership_For_Woocommerce_Public {
 		return $classes;
 	}
 
+	/**
+	 * This function is used to show community users.
+	 *
+	 * @param  string $user_id user_id.
+	 * @return void
+	 */
+	public function wps_mfw_members_community_html( $user_id ) {
+
+		$wps_msfw_enable_to_show_members_community = get_option( 'wps_msfw_enable_to_show_members_community' );
+		if ( 'on' === $wps_msfw_enable_to_show_members_community ) {
+
+			global $wpdb;
+		
+			// Get the current user ID.
+			$current_user_id = get_current_user_id();
+		
+			// Fetch membership data (non-empty) with user details.
+			$results = $wpdb->get_results(
+				"SELECT u.ID as user_id, um.meta_value 
+				FROM $wpdb->users u
+				JOIN $wpdb->usermeta um ON u.ID = um.user_id
+				WHERE um.meta_key = 'mfw_membership_id' AND um.meta_value != ''", 
+				ARRAY_A
+			);
+		
+			// Group users by their membership titles.
+			$membership_to_users = [];
+			$user_memberships    = []; // Store the memberships per user.
+		
+			// Select appropriate meta function.
+			$get_meta = function_exists( 'wps_membership_get_meta_data' ) ? 'wps_membership_get_meta_data' : 'get_post_meta';
+		
+			// Step 1: Pre-process memberships by user.
+			if ( ! empty( $results ) && is_array( $results ) ) {
+				foreach ( $results as $row ) {
+
+					$user_id = (int) $row['user_id'];
+					$membership_ids = @unserialize( $row['meta_value'] );
+			
+					if ( ! is_array( $membership_ids ) ) {
+						continue;
+					}
+			
+					// Avoid processing memberships multiple times.
+					$user_memberships[$user_id] = [];
+					$titles_seen = [];
+			
+					foreach ( $membership_ids as $membership_id ) {
+						$plan = $get_meta( $membership_id, 'plan_obj', true );
+						$status = $get_meta( $membership_id, 'member_status', true );
+			
+						// Only process memberships that are complete and valid.
+						if ( empty( $plan ) || 'complete' !== $status ) {
+							continue;
+						}
+			
+						$title = $plan['post_title'];
+			
+						// Avoid processing the same title for a user multiple times.
+						if ( isset( $titles_seen[ $title ] ) ) {
+							continue;
+						}
+			
+						// Mark the title as seen for this user.
+						$titles_seen[ $title ] = true;
+			
+						// Add this user to the appropriate membership group.
+						$membership_to_users[ $title ][] = $user_id;
+			
+						// Add the membership to the user’s membership list.
+						$user_memberships[$user_id][] = $title;
+					}
+				}
+			}
+		
+			// Step 2: Output users for the current user's memberships.
+			if ( ! empty( $user_memberships ) && is_array( $user_memberships ) && isset( $user_memberships[ $current_user_id ] ) ) {
+				foreach ( $user_memberships[ $current_user_id ] as $title ) {
+
+					// Get the user IDs for this title (excluding current user).
+					$user_ids = array_diff( $membership_to_users[ $title ], [$current_user_id] );
+			
+					if ( empty( $user_ids ) ) {
+
+						continue;
+					}
+			
+					// Fetch the user data in a single query.
+					$id_list    = implode( ',', array_map( 'intval', $user_ids ) );
+					$users_data = $wpdb->get_results( "
+						SELECT ID, display_name, user_email 
+						FROM $wpdb->users 
+						WHERE ID IN ($id_list)
+					", ARRAY_A );
+			
+					// Output the matching users.
+					echo "<div class='wps-mfw_u-list-wrap'>";
+					echo '<h3>' . esc_html( $title ) . ' ' . esc_html__( "User's Community", 'membership-for-woocommerce' ) . '</h3>';
+					echo '<ul class="wps-mfw_u-list">';
+					foreach ( $users_data as $user ) {
+
+						$user_id     = intval( $user['ID'] );
+						$display_name = esc_html( $user['display_name'] );
+						$user_email   = esc_html( $user['user_email'] );
+
+						// Get avatar URL or fallback to placeholder.
+						$img_url = get_avatar_url( $user_id );
+						if ( empty( $img_url ) ) {
+							$img_url = 'https://secure.gravatar.com/avatar/?s=96&d=mm&r=g';
+						}
+
+						// Get background image or default.
+						$user_bg_img = get_option( 'wps_msfw_user_community_bg_image' );
+						if ( empty( $user_bg_img ) ) {
+							$user_bg_img = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/user-commu-cover.png';
+						}
+
+						echo '<li>';
+							echo '<div class="wps-mfw_ul-img" style="background-image: url(\'' . esc_url( $user_bg_img ) . '\');">';
+								echo '<img src="' . esc_url( $img_url ) . '" alt="' . esc_html( $display_name ) . '">';
+							echo '</div>';
+							echo '<div class="wps-mfw_ul-name">' . esc_html( $display_name ) . '</div>';
+							echo '<div class="wps-mfw_ul-id">#' . esc_html( $user_id ) . '</div>';
+							echo '<div class="wps-mfw_ul-email">' . esc_html( $user_email ) . '</div>';
+							echo '<div class="wps-mfw_ul-cta">';
+								echo '<button type="button" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'Send Message', 'membership-for-woocommerce' ) . '</button>';
+							echo '</div>';
+						echo '</li>';
+					}
+
+					echo '</ul>';
+					echo '</div>';
+				}
+			}
+
+			// popup for send sms.
+			?>
+			<div class="wps-mfw_ul-popup-overlay">
+				<div class="wps-mfw_ul-popup--shadow"></div>
+				<div class="wps-mfw_ul-popup">
+					<h2 class="wps-mfw_ul-message"><?php esc_html_e( 'Enter Message', 'membership-for-woocommerce' ); ?></h2>
+					<textarea class="wps-mfw_ul-description" placeholder="<?php esc_html_e( 'Type your message here...', 'membership-for-woocommerce' ); ?>"></textarea>
+					<p class="wps-mfw_uld-msg"></p>
+					<div class="wps-mfw_ul-buttons">
+						<button class="wps-mfw_ul-send"><?php esc_html_e( 'Send', 'membership-for-woocommerce' ); ?></button>
+						<button class="wps-mfw_ul-close"><?php esc_html_e( 'Close', 'membership-for-woocommerce' ); ?></button>
+					</div>
+					<span class="wps_wpr_sms_community_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
+				</div>
+			</div>
+			<?php
+		}
+	}
+	
 }

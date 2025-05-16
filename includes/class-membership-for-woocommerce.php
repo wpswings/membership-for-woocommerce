@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.8.1';
+			$this->version = '2.8.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -355,14 +355,11 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'user_register', $mfw_plugin_common, 'wps_membership_sen_email_to_new_registered_user' );
 
 		$this->loader->add_action( 'wp_ajax_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
-		$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_cancel_membership_count', $mfw_plugin_common, 'wps_membership_cancel_membership_count' );
 		$this->loader->add_action( 'woocommerce_order_status_changed', $mfw_plugin_common, 'wps_membership_woo_order_status_change_custom', 10, 3 );
-		// ajax to stop whatsapp notification.
-		$this->loader->add_action( 'wp_ajax_stop_whatsapp_notification', $mfw_plugin_common, 'wps_mfw_stop_whatsapp_notification' );
-		// ajax to stop sms notification.
-		$this->loader->add_action( 'wp_ajax_stop_sms_notification', $mfw_plugin_common, 'wps_mfw_stop_sms_notification' );
-		// ajax to stop email notification.
-		$this->loader->add_action( 'wp_ajax_stop_email_notification', $mfw_plugin_common, 'wps_mfw_stop_email_notification' );
+		// ajax to stop notification.
+		$this->loader->add_action( 'wp_ajax_stops_notification', $mfw_plugin_common, 'wps_mfw_stop_notification' );
+		// send sms to community users.
+		$this->loader->add_action( 'wp_ajax_send_sms_community_user', $mfw_plugin_common, 'wps_mfw_send_sms_community_user' );
 	}
 
 	/**
@@ -499,6 +496,8 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'user_register', $mfw_plugin_public, 'wps_msfw_assign_membership_to_new_user', 10, 1 );
 			// adding class on body.
 			$this->loader->add_filter( 'body_class', $mfw_plugin_public, 'wps_mfw_adding_class_on_body', 10, 1 );
+			// community user html.
+			$this->loader->add_action( 'wps_mfw_extend_membership_account_tab', $mfw_plugin_public, 'wps_mfw_members_community_html', 10, 1 );
 		}
 	}
 

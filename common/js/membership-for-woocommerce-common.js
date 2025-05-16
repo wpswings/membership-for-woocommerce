@@ -31,8 +31,6 @@
 
 })( jQuery );
 
-
-
 jQuery(document).ready(function ($) {
 	$(".wps_membership_buynow").on("click", function (e) {
 		e.preventDefault();
@@ -79,68 +77,106 @@ jQuery(document).ready(function ($) {
 		} 
 	} );
 
-	// stop whatsapp notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_whatsapp_notify', function(){
+	// Unified event listener for all notification toggles.
+	$(document).on('change', '.wps_msfw_stop_notifications', function() {
 
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_whatsapp_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
-		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
+		wps_mfw_toggle_notification( $(this), $(this).attr('data-type') );
 	});
+	
+	function wps_mfw_toggle_notification( $checkbox, type ) {
 
-	// stop sms notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_sms_notify', function(){
-
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_sms_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
+		let isChecked = $checkbox.is(':checked') ? $checkbox.val() : 'no';
+		let data     = {
+			action : 'stops_notification',
+			nonce  : mfw_common_param.nonce,
+			stop   : isChecked,
+			type   : type, // 'whatsapp', 'sms', or 'email'
 		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
-	});
 
-	// stop email notify ajax.
-	jQuery(document).on('change', '.wps_mfw_stop_email_notify', function(){
-
-		var checked = jQuery(this).is(':checked') ? jQuery(this).val() : 'no';
-		var data    = {
-			'action' : 'stop_email_notification',
-			'nonce'  : mfw_common_param.nonce,
-			'stop'   : checked,
-		};
-		wps_mfw_stop_whatsapp_notify( data, jQuery(this) );
-	});
-
-	function wps_mfw_stop_whatsapp_notify( value, _this ) {
-		
-		jQuery.ajax({
-			'url'    : mfw_common_param.ajaxurl,
-			'method' : 'POST',
-			'data'   : value,
-			success  : function( response ) {
-
-				if ( response.result == true ) {
-
-					jQuery('.mfw_whatsapp_stop_notice').show();
-					jQuery('.mfw_whatsapp_stop_notice').css('color', 'red');
-					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
-				} else {
-
-					jQuery('.mfw_whatsapp_stop_notice').show();
-					jQuery('.mfw_whatsapp_stop_notice').css('color', 'green');
-					jQuery('.mfw_whatsapp_stop_notice').html(response.msg);
-				}
+		$.ajax({
+			url     : mfw_common_param.ajaxurl,
+			method  : 'POST',
+			data    : data,
+			success : function(response) {
+				let $notice = $('.mfw_whatsapp_stop_notice');
+				$notice
+					.show()
+					.css('color', response.result ? 'red' : 'green')
+					.html(response.msg);
 
 				setTimeout(() => {
-					jQuery('.wps_wpr_enable_offer_setting_wrapper').next('.mfw_whatsapp_stop_notice').hide();
-				}, 15000);
+					$notice.hide();
+				}, 2000);
 			}
 		});
 	}
+
+	// popup to send sms to user.
+	var popupOverlay = jQuery(".wps-mfw_ul-popup-overlay");
+	jQuery('.wps-mfw_u-list-wrap ul.wps-mfw_u-list li .wps-mfw_ul-cta button').on('click', function(e) {
+
+		jQuery('.wps-mfw_uld-msg').html('');
+		var dataId = jQuery(this).attr('data-id');
+    	jQuery('.wps-mfw_ul-send').attr('data-id', dataId);
+
+		// Show the popup using jQuery
+		popupOverlay.css("display", "flex"); // or "block"
+	});
+
+	// Handle Close button
+	jQuery(".wps-mfw_ul-close").on("click", function () {
+		popupOverlay.css("display", "none");
+	});
+
+	// send sms to community users.
+	jQuery(document).on('click', '.wps-mfw_ul-send', function () {
+
+		const $button     = jQuery(this);
+		const userId      = $button.attr('data-id');
+		const message     = jQuery('.wps-mfw_ul-description').val();
+		const $loader     = jQuery('.wps_wpr_sms_community_loader');
+		const $msgBox     = jQuery('.wps-mfw_uld-msg');
+		const $popup      = jQuery('.wps-mfw_ul-popup-overlay'); // Make sure this selector matches your HTML.
+		
+		if ( ! message ) {
+
+			$msgBox.css('color', 'red').html(mfw_common_param.msg_error).show().focus();
+			return false;
+		}
+		$button.prop('disabled', true);
+		$loader.show();
+		$msgBox.hide();
+	
+		jQuery.ajax({
+			type : 'POST',
+			url  : mfw_common_param.ajaxurl,
+			data : {
+				action  : 'send_sms_community_user',
+				nonce   : mfw_common_param.nonce,
+				user_id : userId,
+				message : message,
+			},
+			success : function (response) {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox
+					.css('color', response.result ? 'green' : 'red')
+					.html(response.msg)
+					.show();
+				jQuery('.wps-mfw_ul-description').val('');
+	
+				setTimeout(() => {
+					$popup.hide();
+					$msgBox.hide();
+				}, 2000);
+			},
+			error: function () {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox.css('color', 'red').text(mfw_common_param.ajax_error).show();
+			}
+		});
+	});
 
 });
 

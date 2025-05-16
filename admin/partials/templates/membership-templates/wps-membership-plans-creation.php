@@ -522,7 +522,7 @@ function wps_mfw_upgrade_pro_popup() {
 				<?php esc_html_e( 'Included Section', 'membership-for-woocommerce' ); ?>
 			</h2>
 			<h3>
-				<?php esc_html_e( 'In Inlucde Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
+				<?php esc_html_e( 'In Include Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
 			</h3>
 			<table>
 
