@@ -1351,6 +1351,9 @@ class Membership_For_Woocommerce_Global_Functions {
 				}
 			}
 		}
+
+		// add members to buddypress group.
+		do_action( 'wps_msfw_add_members_to_buudypress_group', $user_id );
 	}
 
 	/**
@@ -1519,5 +1522,20 @@ class Membership_For_Woocommerce_Global_Functions {
 
 		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
 		return ! empty( $code ) ? str_replace( '+', '', $code ) : 0;
+	}
+
+	/**
+	 * Check Buddy Press plugin active or not.
+	 *
+	 * @return bool
+	 */
+	public function wps_mfsw_is_buddy_press_active() {
+
+		$flag = false;
+		if ( is_plugin_active( 'buddypress/bp-loader.php' ) ) {
+
+			$flag = true;
+		}
+		return $flag;
 	}
 }

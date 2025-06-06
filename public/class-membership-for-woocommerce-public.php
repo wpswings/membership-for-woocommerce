@@ -5440,5 +5440,106 @@ class Membership_For_Woocommerce_Public {
 			<?php
 		}
 	}
+
+	/**
+	 * Display data on the BuddyPress dashboard.
+	 *
+	 * @return void
+	 */
+	public function wps_msfw_show_membership_details_on_buddy_dash() {
+		if ( $this->global_class->wps_mfsw_is_buddy_press_active() && get_current_user_id() && 'on' === get_option( 'wps_msfw_show_members_details_on_buddy_dash' )	) {
+
+			$user_id = get_current_user_id();
+			$user    = get_user_by( 'ID', $user_id );
+
+			if ( ! $user ) {
+				return;
+			}
+
+			$memberships       = get_user_meta( $user_id, 'mfw_membership_id', true );
+			$active_plan_names = array();
+			$discounts         = array();
+			if ( ! empty( $memberships ) && is_array( $memberships ) ) {
+				foreach ( $memberships as $membership_id ) {
+
+					$plan     = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+					$status   = wps_membership_get_meta_data( $membership_id, 'member_status', true );
+
+					if ( empty( $plan ) ) {
+						continue;
+					}
+
+					if ( 'complete' === $status && ! empty( $plan['post_title'] ) ) {
+						$active_plan_names[] = $plan['post_title'];
+					}
+
+					if ( ! empty( $plan['wps_memebership_plan_discount_price'] ) ) {
+						$discounts[] = (float) $plan['wps_memebership_plan_discount_price'];
+					}
+				}
+			}
+
+			$active_plan_string = implode( ', ', $active_plan_names );
+			$max_discount       = ! empty( $discounts ) ? max( $discounts ) : 0;
+
+			?>
+
+			<div class="wps-msfw-buddy-press-membership-info-wrapper">
+				<h3 class="wps-msfw-buddy-press-membership-info-title"><strong><?php esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></strong></h3>
+				<table class="wps-msfw-buddy-press-membership-info-table">
+					<tr>
+						<th><?php esc_html_e( 'User Name', 'membership-for-woocommerce' ); ?></th>
+						<td><?php echo esc_html( $user->display_name ); ?></td>
+					</tr>
+					<tr>
+						<th><?php esc_html_e( 'User Email', 'membership-for-woocommerce' ); ?></th>
+						<td><?php echo esc_html( $user->user_email ); ?></td>
+					</tr>
+					<tr>
+						<th><?php esc_html_e( 'Active Plan Name(s)', 'membership-for-woocommerce' ); ?></th>
+						<td><?php echo esc_html( $active_plan_string ); ?></td>
+					</tr>
+					<tr>
+						<th><?php esc_html_e( 'Max Cart Discount', 'membership-for-woocommerce' ); ?></th>
+						<td><?php echo wc_price( esc_html( $max_discount ) ); ?></td>
+					</tr>
+				</table>
+			</div>
+
+			<?php
+		}
+	}
+
+	/**
+	 * Redirect user that are members and try to access BuddyPress Dashboard on user end.
+	 *
+	 * @return void
+	 */
+	public function wps_msfw_show_buddy_to_only_members_users() {
+		// Bail early if BuddyPress isn't active, user isn't logged in, or restriction isn't enabled.
+		if ( ! $this->global_class->wps_mfsw_is_buddy_press_active() || ! is_user_logged_in() || 'on' !== get_option( 'wps_msfw_restrict_buddy_dashboard' ) ) {
+			return;
+		}
+
+		// Ensure we're on a BuddyPress user page.
+		if ( ! function_exists( 'bp_is_user' ) || ! bp_is_user() ) {
+			return;
+		}
+
+		// Get the displayed user ID or fallback to current user.
+		$user_id = bp_displayed_user_id() ?: get_current_user_id();
+
+		// Get the redirect page ID or URL.
+		$redirect_page_id = get_option( 'wps_msfw_redirect_buddy_press_user' );
+		if ( empty( $redirect_page_id ) ) {
+			return;
+		}
+
+		// Redirect if the user is not marked as a member.
+		if ( ! get_user_meta( $user_id, 'is_member', true ) ) {
+			wp_safe_redirect( get_permalink( $redirect_page_id ) );
+			exit;
+		}
+	}
 	
 }

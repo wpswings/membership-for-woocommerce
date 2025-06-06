@@ -2430,3 +2430,63 @@ h4.wps_wpr_offer_notify_settings_heading {
   }
 
 /* User List End */
+
+/* Buudy Press CSS */
+
+.wps-msfw-buddy-press-membership-info-wrapper {
+    max-width: 700px;
+    margin: 30px auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(145deg, #2c3e50, #34495e);
+    border-radius: 16px;
+    padding: 25px;
+    color: black;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.wps-msfw-buddy-press-membership-info-title {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 25px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 10px;
+}
+
+.wps-msfw-buddy-press-membership-info-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.wps-msfw-buddy-press-membership-info-table th,
+.wps-msfw-buddy-press-membership-info-table td {
+    padding: 14px 18px;
+    text-align: left;
+}
+
+.wps-msfw-buddy-press-membership-info-table th {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.wps-msfw-buddy-press-membership-info-table td {
+    background-color: rgba(255, 255, 255, 0.07);
+    color: black;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+.wps-msfw-buddy-press-membership-info-table tr:hover td {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.wps-msfw-buddy-press-membership-info-table tr:first-child td {
+    border-top: none;
+}
+
