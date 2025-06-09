@@ -5412,7 +5412,8 @@ class Membership_For_Woocommerce_Public {
 							echo '<div class="wps-mfw_ul-id">#' . esc_html( $user_id ) . '</div>';
 							echo '<div class="wps-mfw_ul-email">' . esc_html( $user_email ) . '</div>';
 							echo '<div class="wps-mfw_ul-cta">';
-								echo '<button type="button" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'Send Message', 'membership-for-woocommerce' ) . '</button>';
+								echo '<button type="button" class="wps_msfw_sms" data-id="' . esc_html( $user_id ) . '">' . esc_html__( 'SMS', 'membership-for-woocommerce' ) . '</button>&nbsp';
+								echo '<button type="button" class="wps_msfw_email" data-email="' . esc_html( $user_email ) . '">' . esc_html__( 'Mail', 'membership-for-woocommerce' ) . '</button>';
 							echo '</div>';
 						echo '</li>';
 					}
@@ -5432,6 +5433,23 @@ class Membership_For_Woocommerce_Public {
 					<p class="wps-mfw_uld-msg"></p>
 					<div class="wps-mfw_ul-buttons">
 						<button class="wps-mfw_ul-send"><?php esc_html_e( 'Send', 'membership-for-woocommerce' ); ?></button>
+						<button class="wps-mfw_ul-close"><?php esc_html_e( 'Close', 'membership-for-woocommerce' ); ?></button>
+					</div>
+					<span class="wps_wpr_sms_community_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
+				</div>
+			</div>
+
+			<!-- popup html for email -->
+			<div class="wps-mfw_ul-popup-2overlay">
+				<div class="wps-mfw_ul-popup--shadow"></div>
+				<div class="wps-mfw_ul-popup">
+					<h3 class="wps-mfw_ul-message"><?php esc_html_e( 'User Email', 'membership-for-woocommerce' ); ?></h3>
+					<input type="email" class="wps_msfw_send_mail_to_comm_user" value="" readonly>
+					<h3 class="wps-mfw_ul-message"><?php esc_html_e( 'Enter Message', 'membership-for-woocommerce' ); ?></h3>
+					<textarea class="wps-mfw_ul-description" id="wps-mfw_ul-email-description" placeholder="<?php esc_html_e( 'Type your message here...', 'membership-for-woocommerce' ); ?>"></textarea>
+					<p class="wps-mfw_uld-msg"></p>
+					<div class="wps-mfw_ul-buttons">
+						<button class="wps-mfw_ul-email-send"><?php esc_html_e( 'Send', 'membership-for-woocommerce' ); ?></button>
 						<button class="wps-mfw_ul-close"><?php esc_html_e( 'Close', 'membership-for-woocommerce' ); ?></button>
 					</div>
 					<span class="wps_wpr_sms_community_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>

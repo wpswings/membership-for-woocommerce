@@ -2328,7 +2328,7 @@ h4.wps_wpr_offer_notify_settings_heading {
 
 /* Popup sms css */
 
-.wps-mfw_ul-popup-overlay {
+.wps-mfw_ul-popup-overlay, .wps-mfw_ul-popup-2overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -2355,13 +2355,19 @@ h4.wps_wpr_offer_notify_settings_heading {
   }
   
   h2.wps-mfw_ul-message {
-    margin: 0 0 15px;
+    margin: 0 0 5px;
     font-size: 24px;
     color: #333;
     line-height: 1.25;
   }
   
-  textarea.wps-mfw_ul-description {
+  .wps-mfw_ul-popup h3 {
+    text-align: left;
+    font-size: 16px;
+    margin: 0;
+}
+
+  textarea.wps-mfw_ul-description, input[type=email].wps_msfw_send_mail_to_comm_user {
     color: #666;
     margin: 10px 0 20px;
     padding: 10px 20px;
@@ -2373,7 +2379,13 @@ h4.wps_wpr_offer_notify_settings_heading {
     box-shadow: none;
     min-height: 130px;
   }
-  
+
+input[type=email].wps_msfw_send_mail_to_comm_user {
+    min-height: auto;
+    margin: 0 0 15px;
+    width: 100%;
+}
+
   .wps-mfw_ul-buttons button {
     padding: 10px 20px;
     min-width: 120px;
@@ -2384,14 +2396,14 @@ h4.wps_wpr_offer_notify_settings_heading {
     display: inline-block;
   }
   
-  .wps-mfw_ul-send {
+  .wps-mfw_ul-send, .wps-mfw_ul-email-send {
     border:1px solid #0ACF84 !important;
     background-color: #0ACF84;
     color: #fff;
   transition: all 0.2s linear;
   }
       
-  button.wps-mfw_ul-send:hover {
+  button.wps-mfw_ul-send:hover, button.wps-mfw_ul-email-send:hover {
     background-color: transparent;
     color: #0ACF84;
   }
@@ -2425,7 +2437,7 @@ h4.wps_wpr_offer_notify_settings_heading {
     margin: 0;
   }
 
-  .wps-mfw_uld-msg, .wps_wpr_sms_community_loader, .wps-mfw_ul-popup-overlay {
+  .wps-mfw_uld-msg, .wps_wpr_sms_community_loader, .wps-mfw_ul-popup-overlay, .wps-mfw_ul-popup-2overlay {
     display: none;
   }
 

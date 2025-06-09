@@ -364,6 +364,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_stops_notification', $mfw_plugin_common, 'wps_mfw_stop_notification' );
 		// send sms to community users.
 		$this->loader->add_action( 'wp_ajax_send_sms_community_user', $mfw_plugin_common, 'wps_mfw_send_sms_community_user' );
+		// send email to community users.
+		$this->loader->add_action( 'wp_ajax_send_mail_to_community_users', $mfw_plugin_common, 'wps_mfw_send_mail_to_community_users' );
 	}
 
 	/**
