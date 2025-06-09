@@ -1116,8 +1116,11 @@ class Membership_For_Woocommerce_Common {
 
 		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
 
-		$user_email = ! empty( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
-		$messages   = ! empty( $_POST['messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['messages'] ) ) : '';
+		$current_user_id  = get_current_user_id();
+		$current_user_obj = get_user_by( 'id', $current_user_id );
+		$user_name	      = ! empty( $user_name ) ? $current_user_obj->display_name : $current_user_obj->user_nicename;
+		$user_email       = ! empty( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+		$messages         = ! empty( $_POST['messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['messages'] ) ) : '';
 
 		// Basic validation.
 		if ( empty( $user_email ) || ! is_email( $user_email ) ) {
@@ -1161,7 +1164,7 @@ class Membership_For_Woocommerce_Common {
 			. '<div style="padding:15px 20px; background:#f0f8ff; border-left:4px solid #0073aa; font-style:italic; color:#444;">'
 			. nl2br( esc_html( $messages ) )
 			. '</div>'
-			. '<p style="margin: 30px 0 0;">' . esc_html__( 'Warm regards,', 'membership-for-woocommerce' ) . '<br><strong>' . esc_html__( 'The Membership Community Team', 'membership-for-woocommerce' ) . '</strong></p>'
+			. '<p style="margin: 30px 0 0;">' . esc_html__( 'Warm regards,', 'membership-for-woocommerce' ) . '<br><strong>' . esc_html__( sprintf( '%s From The Membership Community', $user_name ), 'membership-for-woocommerce' ) . '</strong></p>'
 			. '</td>'
 			. '</tr>'
 			. '<tr>'
