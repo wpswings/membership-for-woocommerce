@@ -5077,12 +5077,15 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_assign_membership_to_new_user( $user_id ) {
 
+		// when user is regitering from membership registration form, we will make him members.
+		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
+
+			update_user_meta( $user_id, 'is_member', 'member' );
+		}
+
 		// check login and sigup feature is enable or not.
 		$wps_msfw_enable_assign_default_membership_setting = get_option( 'wps_msfw_enable_assign_default_membership_setting' );
 		$wps_msfw_membership_assign_to_new_user            = get_option( 'wps_msfw_membership_assign_to_new_user' );
-
-		// when user is regitering from membership registration form, we will make him members.
-		update_user_meta( $user_id, 'is_member', 'member' );
 		if ( 'on' === $wps_msfw_enable_assign_default_membership_setting ) {
 
 			$post_id                                = wp_insert_post(

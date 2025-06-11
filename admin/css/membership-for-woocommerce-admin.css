@@ -1696,3 +1696,7 @@ img.wps_go_pro_images {
 
   /* pro popup end  */
 
+
+.wps_msfw_pro_settings_tag .wps-helper-text {
+    padding-left: 20px;
+}
