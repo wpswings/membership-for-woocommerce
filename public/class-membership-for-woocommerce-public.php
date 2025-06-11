@@ -5470,7 +5470,7 @@ class Membership_For_Woocommerce_Public {
 	public function wps_msfw_show_membership_details_on_buddy_dash() {
 		if ( $this->global_class->wps_mfsw_is_buddy_press_active() && get_current_user_id() && 'on' === get_option( 'wps_msfw_show_members_details_on_buddy_dash' )	) {
 
-			$user_id = get_current_user_id();
+			$user_id = bp_displayed_user_id() ?: get_current_user_id();
 			$user    = get_user_by( 'ID', $user_id );
 
 			if ( ! $user ) {
@@ -5501,6 +5501,7 @@ class Membership_For_Woocommerce_Public {
 			}
 
 			$active_plan_string = implode( ', ', $active_plan_names );
+			$active_plan_string = ! empty( $active_plan_string ) ? $active_plan_string : esc_html__( 'No active plans', 'membership-for-woocommerce' );
 			$max_discount       = ! empty( $discounts ) ? max( $discounts ) : 0;
 
 			?>
@@ -5548,7 +5549,7 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		// Get the displayed user ID or fallback to current user.
-		$user_id = bp_displayed_user_id() ?: get_current_user_id();
+		$user_id = get_current_user_id();
 
 		// Get the redirect page ID or URL.
 		$redirect_page_id = get_option( 'wps_msfw_redirect_buddy_press_user' );
