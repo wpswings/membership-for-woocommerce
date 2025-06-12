@@ -4686,11 +4686,11 @@ class Membership_For_Woocommerce_Admin {
 	/**
 	 * Create separate tab for BuddyPress Settings.
 	 *
-	 * @param  array $tabs tabs.
+	 * @param  array $mfw_default_tabs mfw_default_tabs.
 	 * @return array
 	 */
 	public function wps_msfw_add_buddy_press_tabs( $mfw_default_tabs ) {
-		
+
 		if ( $this->global_class->wps_mfsw_is_buddy_press_active() ) {
 
 			// The new tab to add.
@@ -4701,7 +4701,7 @@ class Membership_For_Woocommerce_Admin {
 			);
 
 			// Get the position directly by searching for the tab name.
-			$position = array_search( 'membership-for-woocommerce-google-recaptcha-settings', array_keys( $mfw_default_tabs) );
+			$position = array_search( 'membership-for-woocommerce-google-recaptcha-settings', array_keys( $mfw_default_tabs ) );
 
 			// Insert the new tab after the specified tab.
 			// Combine before and after parts, ensuring the new tab is inserted at the correct place.
@@ -4832,21 +4832,21 @@ class Membership_For_Woocommerce_Admin {
 		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) && $this->global_class->wps_mfsw_is_buddy_press_active() ) {
 			$new_arr = array(
 				array(
-					'title'       => __( 'Enable the option to add members to a BuddyPress group', 'membership-for-woocommerce-pro' ),
+					'title'       => __( 'Enable the option to add members to a BuddyPress group', 'membership-for-woocommerce' ),
 					'type'        => 'radio-switch',
-					'description' => __( 'Turn on this setting to add users to a BuddyPress group automatically when they buy a membership.', 'membership-for-woocommerce-pro' ),
+					'description' => __( 'Turn on this setting to add users to a BuddyPress group automatically when they buy a membership.', 'membership-for-woocommerce' ),
 					'id'          => 'wps_msfw_enable_to_add_dummy_members_in_buddy_group',
 					'value'       => get_option( 'wps_msfw_enable_to_add_dummy_members_in_buddy_group' ),
 					'class'       => 'mfw-radio-switch-class',
 					'options'     => array(
-						'yes' => __( 'YES', 'membership-for-woocommerce-pro' ),
-						'no'  => __( 'NO', 'membership-for-woocommerce-pro' ),
+						'yes' => __( 'YES', 'membership-for-woocommerce' ),
+						'no'  => __( 'NO', 'membership-for-woocommerce' ),
 					),
 				),
 				array(
-					'title'       => __( 'Select the BuddyPress group to assign new members to.', 'membership-for-woocommerce-pro' ),
+					'title'       => __( 'Select the BuddyPress group to assign new members to.', 'membership-for-woocommerce' ),
 					'type'        => 'select',
-					'description' => __( 'Choose the BuddyPress group where new members will be automatically added after purchasing a membership.', 'membership-for-woocommerce-pro' ),
+					'description' => __( 'Choose the BuddyPress group where new members will be automatically added after purchasing a membership.', 'membership-for-woocommerce' ),
 					'id'          => 'wps_msfw_members_dummy_buddy_groups',
 					'value'       => get_option( 'wps_msfw_members_dummy_buddy_groups' ),
 					'options'     => '',
@@ -4857,5 +4857,4 @@ class Membership_For_Woocommerce_Admin {
 		}
 		return $buddy_settings;
 	}
-
 }

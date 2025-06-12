@@ -239,7 +239,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		$mfw_mfw_plugin_standard = new Membership_For_Woocommerce();
 		$mfw_mfw_plugin_standard->mfw_run();
 		$GLOBALS['mfw_wps_mfw_obj'] = $mfw_mfw_plugin_standard;
-
 	}
 	run_membership_for_woocommerce();
 	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
@@ -391,7 +390,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			$order->save();
 		} elseif ( 'wps_subscriptions' === OrderUtil::get_order_type( $id ) && OrderUtil::custom_orders_table_usage_is_enabled() ) {
 			// HPOS usage is enabled.
-			if (  class_exists( 'WPS_Subscription' ) ) {
+			if ( class_exists( 'WPS_Subscription' ) ) {
 
 				$order = new WPS_Subscription( $id );
 
@@ -624,7 +623,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 
 add_action(
 	'before_woocommerce_init',
-	function() {
+	function () {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		}
