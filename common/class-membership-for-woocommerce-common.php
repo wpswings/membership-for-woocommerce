@@ -536,11 +536,8 @@ class Membership_For_Woocommerce_Common {
 				$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
 				update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
 			}
-		}
 
-		// send welcome mail.
-		if ( $_user && 'completed' === $new_status ) {
-
+			// send welcome mail.
 			$wps_mfw_send_welcome_mail_once_check = get_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', true );
 			if ( empty( $wps_mfw_send_welcome_mail_once_check ) ) {
 
