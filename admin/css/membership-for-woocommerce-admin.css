@@ -1650,3 +1650,53 @@ h4.wps-plan-msg {
 }
 
 /* Google Recaptcha End */
+
+/*  Pro  start */
+
+img.wps_go_pro_images {
+    max-height: 100px;
+}
+.wps_msfw_pro_settings_tag {
+  position: relative;
+}
+
+.wps_msfw_pro_settings_tag #wps_msfw_enable_to_add_dummy_members_in_buddy_group, .wps_msfw_pro_settings_tag #wps_msfw_members_dummy_buddy_groups {
+    pointer-events: none;
+}
+
+.wps_msfw_pro_settings_tag:before{
+  background-color: #008000;
+  position: absolute;
+  content: '';
+  left: 0;
+  bottom: 0;
+  width: 32px;
+  aspect-ratio: 1;
+  z-index: 99;
+  clip-path: polygon(0 0, 0% 100%, 100% 100%);
+}
+.wps_msfw_pro_settings_tag:after {
+  position: absolute;
+  content: 'pro';
+  left: 0px;
+  padding: 0px 2px;
+  transform: rotate(45deg);
+  z-index: 999;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+  bottom: 0;
+  color: #fff;
+}
+
+
+.wps_msfw_pro_settings_tag>.wps-form-group__label {
+    padding-bottom: 10px;
+}
+
+  /* pro popup end  */
+
+
+.wps_msfw_pro_settings_tag .wps-helper-text {
+    padding-left: 20px;
+}

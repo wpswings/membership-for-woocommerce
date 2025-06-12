@@ -112,12 +112,17 @@ jQuery(document).ready(function ($) {
 	}
 
 	// popup to send sms to user.
-	var popupOverlay = jQuery(".wps-mfw_ul-popup-overlay");
-	jQuery('.wps-mfw_u-list-wrap ul.wps-mfw_u-list li .wps-mfw_ul-cta button').on('click', function(e) {
 
-		jQuery('.wps-mfw_uld-msg').html('');
-		var dataId = jQuery(this).attr('data-id');
-    	jQuery('.wps-mfw_ul-send').attr('data-id', dataId);
+	// Cache the popup overlay
+	var popupOverlay   = $(".wps-mfw_ul-popup-overlay");
+	var popup_Overlay2 = $(".wps-mfw_ul-popup-2overlay");
+
+	// SMS button click
+	$('.wps-mfw_u-list-wrap ul.wps-mfw_u-list li .wps-mfw_ul-cta .wps_msfw_sms').on('click', function(e) {
+
+		$('.wps-mfw_uld-msg').html('');
+		var dataId = $(this).attr('data-id');
+		$('.wps-mfw_ul-send').attr('data-id', dataId);
 
 		// Show the popup using jQuery
 		popupOverlay.css("display", "flex"); // or "block"
@@ -126,6 +131,7 @@ jQuery(document).ready(function ($) {
 	// Handle Close button
 	jQuery(".wps-mfw_ul-close").on("click", function () {
 		popupOverlay.css("display", "none");
+		popup_Overlay2.css("display", "none");
 	});
 
 	// send sms to community users.
@@ -136,7 +142,6 @@ jQuery(document).ready(function ($) {
 		const message     = jQuery('.wps-mfw_ul-description').val();
 		const $loader     = jQuery('.wps_wpr_sms_community_loader');
 		const $msgBox     = jQuery('.wps-mfw_uld-msg');
-		const $popup      = jQuery('.wps-mfw_ul-popup-overlay'); // Make sure this selector matches your HTML.
 		
 		if ( ! message ) {
 
@@ -166,7 +171,72 @@ jQuery(document).ready(function ($) {
 				jQuery('.wps-mfw_ul-description').val('');
 	
 				setTimeout(() => {
-					$popup.hide();
+					popupOverlay.hide();
+					$msgBox.hide();
+				}, 2000);
+			},
+			error: function () {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox.css('color', 'red').text(mfw_common_param.ajax_error).show();
+			}
+		});
+	});
+
+	// Open modal for sending mail.
+	$('.wps-mfw_u-list-wrap ul.wps-mfw_u-list li .wps-mfw_ul-cta .wps_msfw_email').on('click', function(e) {
+
+		jQuery('.wps_msfw_send_mail_to_comm_user').val(jQuery(this).attr('data-email'));// add email to input field.
+		popup_Overlay2.css("display", "flex"); // or "block".
+	});
+
+	// Send mail to community users.
+	jQuery(document).on('click', '.wps-mfw_ul-email-send', function(){
+
+		const $button   = jQuery(this);
+		const userEmail = jQuery('.wps_msfw_send_mail_to_comm_user').val();
+		const message   = jQuery('#wps-mfw_ul-email-description').val();
+		const $loader   = jQuery('.wps_wpr_sms_community_loader');
+		const $msgBox   = jQuery('.wps-mfw_uld-msg');
+
+		// validate email field.
+		if ( ! userEmail ) {
+			$msgBox.css('color', 'red').html(mfw_common_param.mail_error).show().focus();
+			return false;
+		}
+
+		// validate mesage field.
+		if ( ! message ) {
+
+			$msgBox.css('color', 'red').html(mfw_common_param.msg_error).show().focus();
+			return false;
+		}
+
+		$button.prop('disabled', true);
+		$loader.show();
+		$msgBox.hide();
+
+		const data = {
+			'action'     : 'send_mail_to_community_users',
+			'nonce'      : mfw_common_param.nonce,
+			'user_email' : userEmail,
+			'messages'   : message,
+		};
+
+		jQuery.ajax({
+			type: 'POST',
+			url: mfw_common_param.ajaxurl,
+			data: data,
+			success: function (response) {
+				$button.prop('disabled', false);
+				$loader.hide();
+				$msgBox
+					.css('color', response.result ? 'green' : 'red')
+					.html(response.msg)
+					.show();
+				jQuery('#wps-mfw_ul-email-description').val('');
+				setTimeout(() => {
+					popup_Overlay2.hide();
 					$msgBox.hide();
 				}, 2000);
 			},

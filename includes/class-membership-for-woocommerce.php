@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.8.2';
+			$this->version = '2.9.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -327,6 +327,10 @@ class Membership_For_Woocommerce {
 		// create and save google captcha settings.
 		$this->loader->add_filter( 'mfw_google_captcha_settings', $mfw_plugin_admin, 'wps_msfw_google_captcha_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'wps_msfw_save_google_captcha_settings', 10, 1 );
+		// buddy press integration.
+		$this->loader->add_filter( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_plugin_admin, 'wps_msfw_add_buddy_press_tabs', PHP_INT_MAX, 1 );
+		$this->loader->add_filter( 'mfw_buddy_press_settings_array', $mfw_plugin_admin, 'mfw_buddy_press_setting_html', 10, 1 );
+		$this->loader->add_filter( 'wps_msfw_extend_buddy_press_settings', $mfw_plugin_admin, 'wps_msfw_buddypress_group_dummy_html', 10, 1 );
 	}
 
 	/**
@@ -360,6 +364,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_stops_notification', $mfw_plugin_common, 'wps_mfw_stop_notification' );
 		// send sms to community users.
 		$this->loader->add_action( 'wp_ajax_send_sms_community_user', $mfw_plugin_common, 'wps_mfw_send_sms_community_user' );
+		// send email to community users.
+		$this->loader->add_action( 'wp_ajax_send_mail_to_community_users', $mfw_plugin_common, 'wps_mfw_send_mail_to_community_users' );
 	}
 
 	/**
@@ -498,6 +504,9 @@ class Membership_For_Woocommerce {
 			$this->loader->add_filter( 'body_class', $mfw_plugin_public, 'wps_mfw_adding_class_on_body', 10, 1 );
 			// community user html.
 			$this->loader->add_action( 'wps_mfw_extend_membership_account_tab', $mfw_plugin_public, 'wps_mfw_members_community_html', 10, 1 );
+			// buddy press compatibility.
+			$this->loader->add_action( 'bp_after_member_body', $mfw_plugin_public, 'wps_msfw_show_membership_details_on_buddy_dash' );
+			$this->loader->add_action( 'bp_template_redirect', $mfw_plugin_public, 'wps_msfw_show_buddy_to_only_members_users' );
 		}
 	}
 
@@ -591,78 +600,78 @@ class Membership_For_Woocommerce {
 	public function wps_mfw_plug_default_tabs() {
 		$mfw_default_tabs = array();
 
-			$mfw_default_tabs['membership-for-woocommerce-overview'] = array(
-				'title'       => esc_html__( 'Overview', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-overview',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-overview.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-general'] = array(
-				'title'       => esc_html__( 'General Settings', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-general',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-general.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-membership-using-registration-form'] = array(
-				'title'       => esc_html__( 'Membership Settings', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-general',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-membership-using-registration-form.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-shortcodes'] = array(
-				'title'       => esc_html__( 'Shortcodes', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-shortcodes',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-api-settings'] = array(
-				'title'       => esc_html__( 'API Settings', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-api-settings',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
-				'title'       => esc_html__( 'Layout Settings', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-other-settings',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-reports-settings'] = array(
-				'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-reports-settings',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-offer-notify-settings'] = array(
-				'title'       => esc_html__( 'Offer Notification', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-offer-notify-settings',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php',
-			);
-			$mfw_default_tabs['membership-for-woocommerce-google-recaptcha-settings'] = array(
-				'title'       => esc_html__( 'Google reCaptcha', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-google-recaptcha-settings',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-google-recaptcha-settings.php',
-			);
+		$mfw_default_tabs['membership-for-woocommerce-overview'] = array(
+			'title'       => esc_html__( 'Overview', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-overview',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-overview.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-general'] = array(
+			'title'       => esc_html__( 'General Settings', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-general',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-general.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-membership-using-registration-form'] = array(
+			'title'       => esc_html__( 'Membership Settings', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-general',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-membership-using-registration-form.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-shortcodes'] = array(
+			'title'       => esc_html__( 'Shortcodes', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-shortcodes',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/wps-membership-shortcodes.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-api-settings'] = array(
+			'title'       => esc_html__( 'API Settings', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-api-settings',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-api-settings.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
+			'title'       => esc_html__( 'Layout Settings', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-other-settings',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-reports-settings'] = array(
+			'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-reports-settings',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-reports-settings.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-offer-notify-settings'] = array(
+			'title'       => esc_html__( 'Offer Notification', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-offer-notify-settings',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-offer-notify-settings.php',
+		);
+		$mfw_default_tabs['membership-for-woocommerce-google-recaptcha-settings'] = array(
+			'title'       => esc_html__( 'Google reCaptcha', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-google-recaptcha-settings',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-google-recaptcha-settings.php',
+		);
 
-			/**
-			 * Filter for admin tab setting.
-			 *
-			 * @since 1.0.0
-			 */
-			$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
-			$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
-				'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-system-status',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-system-status.php',
-			);
+		/**
+		 * Filter for admin tab setting.
+		 *
+		 * @since 1.0.0
+		 */
+		$mfw_default_tabs = apply_filters( 'wps_mfw_plugin_standard_admin_settings_tabs_after_system_status', $mfw_default_tabs );
+		$mfw_default_tabs['membership-for-woocommerce-system-status'] = array(
+			'title'       => esc_html__( 'System Status', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-system-status',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-system-status.php',
+		);
 
-			$mfw_default_tabs['membership-for-woocommerce-developer'] = array(
-				'title'       => esc_html__( 'Developer', 'membership-for-woocommerce' ),
-				'name'        => 'membership-for-woocommerce-developer',
-				'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
-			);
-			$mfw_default_tabs =
+		$mfw_default_tabs['membership-for-woocommerce-developer'] = array(
+			'title'       => esc_html__( 'Developer', 'membership-for-woocommerce' ),
+			'name'        => 'membership-for-woocommerce-developer',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-developer.php',
+		);
+		$mfw_default_tabs =
 
-			/**
-			 * Filter for admin setting tabs.
-			 *
-			 * @since 1.0.0
-			 */
-			apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
-			return $mfw_default_tabs;
+		/**
+		 * Filter for admin setting tabs.
+		 *
+		 * @since 1.0.0
+		 */
+		apply_filters( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_default_tabs );
+		return $mfw_default_tabs;
 	}
 
 	/**

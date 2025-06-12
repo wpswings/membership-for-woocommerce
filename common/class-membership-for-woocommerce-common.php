@@ -81,6 +81,7 @@ class Membership_For_Woocommerce_Common {
 				'nonce'      => wp_create_nonce( 'wps_common_ajax_nonce' ),
 				'msg_error'  => esc_html__( 'Kindly enter a message before sending to the selected user', 'membership-for-woocommerce' ),
 				'ajax_error' => esc_html__( 'Oops! Something went wrong. Please try again.', 'membership-for-woocommerce' ),
+				'mail_error' => esc_html__( 'Kindly enter a valid email address.', 'membership-for-woocommerce' ),
 			)
 		);
 		wp_enqueue_script( $this->plugin_name . 'common' );
@@ -158,13 +159,13 @@ class Membership_For_Woocommerce_Common {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 
-			return false;  
+			return false;
 		}
 
 		check_ajax_referer( 'plan-import-nonce', 'nonce' );
 		if ( is_admin() || ( is_multisite() && is_super_admin() ) ) {
 
-			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-activity-helper.php';
+			include_once plugin_dir_path( __DIR__ ) . 'includes/class-membership-activity-helper.php';
 
 			// Handling file upload using activity helper class..
 			$activity_class = new Membership_Activity_Helper( 'csv-uploads', 'uploads' );
@@ -297,7 +298,6 @@ class Membership_For_Woocommerce_Common {
 			}
 			wp_die();
 		}
-
 	}
 
 	/**
@@ -535,11 +535,8 @@ class Membership_For_Woocommerce_Common {
 				$this->global_class->wps_msfw_assign_one_time_discount_coupon( $_user );
 				update_post_meta( $order_id, 'wps_wpr_one_time_coupon_assignment', 'done' );
 			}
-		}
 
-		// send welcome mail.
-		if ( $_user && 'completed' === $new_status ) {
-
+			// send welcome mail.
 			$wps_mfw_send_welcome_mail_once_check = get_post_meta( $order_id, 'wps_mfw_send_welcome_mail_once_check', true );
 			if ( empty( $wps_mfw_send_welcome_mail_once_check ) ) {
 
@@ -697,14 +694,12 @@ class Membership_For_Woocommerce_Common {
 
 						$wps_membership_posts = get_post_field( 'post_author', $member_id );
 					}
-				} else {
-					if ( ! empty( $_user ) ) {
+				} elseif ( ! empty( $_user ) ) {
 
 						$wps_membership_posts = $_user->ID;
-					} else {
+				} else {
 
-						$wps_membership_posts = get_post_field( 'post_author', $member_id );
-					}
+					$wps_membership_posts = get_post_field( 'post_author', $member_id );
 				}
 
 				update_user_meta( $wps_membership_posts, 'is_member', 'member' );
@@ -735,11 +730,9 @@ class Membership_For_Woocommerce_Common {
 						}
 					}
 				}
-			} else {
+			} elseif ( ! empty( $subscription_id ) ) {
 
-				if ( ! empty( $subscription_id ) ) {
 					wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', $order_st );
-				}
 			}
 		}
 		wps_membership_update_meta_data( $member_id, 'billing_details_payment', wps_membership_get_meta_data( $order_id, '_payment_method', true ) );
@@ -804,7 +797,7 @@ class Membership_For_Woocommerce_Common {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 
-			return false;   
+			return false;
 		}
 
 		check_ajax_referer( 'ajax-nonce', 'nonce' );
@@ -1051,7 +1044,10 @@ class Membership_For_Woocommerce_Common {
 	 */
 	public function wps_mfw_send_sms_community_members( $user_id, $message ) {
 
-		$response              = array( 'result' => false, 'msg'    => esc_html__( 'The admin has not activated this feature yet.', 'membership-for-woocommerce' ),	);
+		$response              = array(
+			'result' => false,
+			'msg'    => esc_html__( 'The admin has not activated this feature yet.', 'membership-for-woocommerce' ),
+		);
 		$enable_community      = get_option( 'wps_msfw_enable_to_show_members_community' );
 		$enable_sms_between    = get_option( 'wps_wpr_enable_sms_btw_comm_user' );
 		if ( 'on' === $enable_community && 'on' === $enable_sms_between ) {
@@ -1106,5 +1102,99 @@ class Membership_For_Woocommerce_Common {
 		return $response;
 	}
 
+	/**
+	 * Undocumented function.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_send_mail_to_community_users() {
 
+		check_ajax_referer( 'wps_common_ajax_nonce', 'nonce' );
+
+		$current_user_id  = get_current_user_id();
+		$current_user_obj = get_user_by( 'id', $current_user_id );
+		$user_name        = ! empty( $user_name ) ? $current_user_obj->display_name : $current_user_obj->user_nicename;
+		$user_email       = ! empty( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+		$messages         = ! empty( $_POST['messages'] ) ? sanitize_textarea_field( wp_unslash( $_POST['messages'] ) ) : '';
+
+		// Basic validation.
+		if ( empty( $user_email ) || ! is_email( $user_email ) ) {
+			wp_send_json(
+				array(
+					'msg' => esc_html__( 'Please provide a valid email address.', 'membership-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
+		if ( empty( $messages ) ) {
+			wp_send_json(
+				array(
+					'msg' => esc_html__( 'Message content cannot be empty.', 'membership-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
+		$user = get_user_by( 'email', $user_email );
+
+		if ( ! $user ) {
+			wp_send_json(
+				array(
+					'msg' => esc_html__( 'User with this email does not exist.', 'membership-for-woocommerce' ),
+				)
+			);
+			wp_die();
+		}
+
+		$subject = esc_html__( '📩 You’ve Received a New Message from the Community Team', 'membership-for-woocommerce' );
+		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
+		$email_body =
+			'<div style="background-color:#f7f7f7; padding: 30px 15px; font-family: Arial, sans-serif;">'
+			. '<table align="center" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px; background:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">'
+			. '<tr>'
+			. '<td style="background-color:#0073aa; color:#ffffff; padding:20px 30px; text-align:center; font-size:20px; font-weight:bold;">'
+			. esc_html__( 'Membership Community Team Message', 'membership-for-woocommerce' )
+			. '</td>'
+			. '</tr>'
+			. '<tr>'
+			. '<td style="padding: 30px; color:#333; font-size: 15px;">'
+			. '<p style="margin:0 0 10px;">' . /* translators: %s: Notification type */ sprintf( esc_html__( 'Hi %s,', 'membership-for-woocommerce' ), '<strong>' . esc_html( $user->display_name ) . '</strong>' ) . '</p>'
+			. '<p style="margin:0 0 20px;">' . esc_html__( 'You have received a new message from the community team:', 'membership-for-woocommerce' ) . '</p>'
+			. '<div style="padding:15px 20px; background:#f0f8ff; border-left:4px solid #0073aa; font-style:italic; color:#444;">'
+			. nl2br( esc_html( $messages ) )
+			. '</div>'
+			. '<p style="margin: 30px 0 0;">' . esc_html__( 'Warm regards,', 'membership-for-woocommerce' ) . '<br><strong>' . /* translators: %s: Notification type */ sprintf( esc_html__( '%s From The Membership Community', 'membership-for-woocommerce' ), $user_name ) . '</strong></p>'
+			. '</td>'
+			. '</tr>'
+			. '<tr>'
+			. '<td style="background:#f0f0f0; color:#999; font-size:13px; text-align:center; padding:15px;">'
+			. '&copy; ' . esc_html( gmdate( 'Y' ) ) . ' ' . esc_html__( 'Your Company. All rights reserved.', 'membership-for-woocommerce' )
+			. '</td>'
+			. '</tr>'
+			. '</table>'
+			. '</div>';
+
+		// Send email.
+		$mail_sent = wp_mail( $user_email, $subject, $email_body, $headers );
+
+		if ( $mail_sent ) {
+			wp_send_json(
+				array(
+					'result' => true,
+					/* translators: %s: Notification type */
+					'msg' => sprintf( esc_html__( 'Email sent successfully to %s.', 'membership-for-woocommerce' ), esc_html( $user_email ) ),
+				)
+			);
+		} else {
+			wp_send_json(
+				array(
+					'msg' => esc_html__( 'Failed to send email. Please try again later.', 'membership-for-woocommerce' ),
+				)
+			);
+		}
+
+		wp_die();
+	}
 }

@@ -192,7 +192,6 @@ class Membership_For_Woocommerce_Admin {
 					'reloadurl' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
 					'mfw_gen_tab_enable' => get_option( 'mfw_radio_switch_demo' ),
 					'mfw_admin_param_location' => ( admin_url( 'admin.php' ) . '?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ),
-					'is_captcha_site_key' => get_option( 'wps_mfw_site_captcha_key' ),
 				)
 			);
 
@@ -285,6 +284,7 @@ class Membership_For_Woocommerce_Admin {
 						'nonce'        => wp_create_nonce( 'plan-import-nonce' ),
 						'Plan'         => __( 'Plan ', 'membership-for-woocommerce' ),
 						'Plan_warning' => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
+						'is_captcha_site_key' => get_option( 'wps_mfw_site_captcha_key' ),
 					)
 				);
 
@@ -3821,6 +3821,9 @@ class Membership_For_Woocommerce_Admin {
 				}
 			}
 		}
+
+		// save buudy press settings.
+		$this->wps_msfw_save_buddy_press_settings();
 	}
 
 	/**
@@ -3874,7 +3877,7 @@ class Membership_For_Woocommerce_Admin {
 	 * This function is used to set array index.
 	 *
 	 * @param  array  $arr            arr.
-	 * @param  array  $inserted_array inserted_array.wps_mfw_other_html_settings.
+	 * @param  array  $inserted_array inserted_array.
 	 * @param  string $index          index.
 	 * @return array
 	 */
@@ -4678,5 +4681,180 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 		return $wps_msfw_all_pages;
+	}
+
+	/**
+	 * Create separate tab for BuddyPress Settings.
+	 *
+	 * @param  array $mfw_default_tabs mfw_default_tabs.
+	 * @return array
+	 */
+	public function wps_msfw_add_buddy_press_tabs( $mfw_default_tabs ) {
+
+		if ( $this->global_class->wps_mfsw_is_buddy_press_active() ) {
+
+			// The new tab to add.
+			$new_tab['membership-for-woocommerce-buddy-press-settings'] = array(
+				'title'     => esc_html__( 'Buddy Press', 'membership-for-woocommerce' ),
+				'name'      => 'membership-for-woocommerce-buddy-press-settings',
+				'file_path' => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-buddy-press-settings.php',
+			);
+
+			// Get the position directly by searching for the tab name.
+			$position = array_search( 'membership-for-woocommerce-google-recaptcha-settings', array_keys( $mfw_default_tabs ) );
+
+			// Insert the new tab after the specified tab.
+			// Combine before and after parts, ensuring the new tab is inserted at the correct place.
+			$mfw_default_tabs = array_merge( array_slice( $mfw_default_tabs, 0, $position + 1 ), $new_tab, array_slice( $mfw_default_tabs, $position + 1 ) );
+		}
+		return $mfw_default_tabs;
+	}
+
+	/**
+	 * Creating BuddyPress Settings.
+	 *
+	 * @param  array $buddy_press_settings buddy_press_settings.
+	 * @return array
+	 */
+	public function mfw_buddy_press_setting_html( $buddy_press_settings ) {
+		if ( $this->global_class->wps_mfsw_is_buddy_press_active() ) {
+
+			$add_setting_arr_one = array(
+				array(
+					'title'       => __( 'Display member details on the BuddyPress dashboard.', 'membership-for-woocommerce' ),
+					'type'        => 'radio-switch',
+					'description' => __( 'Enable this setting to display members and their membership details on the BuddyPress dashboard.', 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_show_members_details_on_buddy_dash',
+					'value'       => get_option( 'wps_msfw_show_members_details_on_buddy_dash' ),
+					'class'       => 'mfw-radio-switch-class',
+					'form-title'  => 'wps_mfw_add_border',
+				),
+				array(
+					'title'       => __( 'Show the BuddyPress dashboard to members only', 'membership-for-woocommerce' ),
+					'type'        => 'radio-switch',
+					'description' => __( 'Turn on this setting to ensure only members can access the BuddyPress dashboard.', 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_restrict_buddy_dashboard',
+					'value'       => get_option( 'wps_msfw_restrict_buddy_dashboard' ),
+					'class'       => 'mfw-radio-switch-class',
+					'options'     => array(
+						'yes' => __( 'YES', 'membership-for-woocommerce' ),
+						'no'  => __( 'NO', 'membership-for-woocommerce' ),
+					),
+				),
+				array(
+					'title'       => __( 'Choose the page for redirection.', 'membership-for-woocommerce' ),
+					'type'        => 'select',
+					'description' => __( 'Choose the page to which users should be redirected when they attempt to access the BuddyPress dashboard.', 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_redirect_buddy_press_user',
+					'value'       => get_option( 'wps_msfw_redirect_buddy_press_user' ),
+					'options'     => $this->wps_msfw_list_all_wprdpress_pages(),
+					'form-title'  => 'wps_mfw_add_border',
+				),
+			);
+
+			$add_setting_arr_one = apply_filters( 'wps_msfw_extend_buddy_press_settings', $add_setting_arr_one );
+			$add_setting_arr_two = array(
+				array(
+					'type'        => 'multi-button',
+					'id'          => 'mfw_button_buddy_settings',
+					'button_text' => __( 'Save Settings', 'membership-for-woocommerce' ),
+					'class'       => 'mfw-button-class',
+					'multi-class' => 'wps_mfw_floating_button',
+				),
+			);
+			$buddy_press_settings = array_merge( $add_setting_arr_one, $add_setting_arr_two, $buddy_press_settings );
+		}
+		return $buddy_press_settings;
+	}
+
+	/**
+	 * Saving BuddyPress Data.
+	 *
+	 * @return void
+	 */
+	public function wps_msfw_save_buddy_press_settings() {
+
+		global $mfw_wps_mfw_obj;
+		if ( $this->global_class->wps_mfsw_is_buddy_press_active() ) {
+			if ( isset( $_POST['mfw_button_buddy_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
+
+				$wps_mfw_gen_flag     = false;
+				$mfw_buddy_press_settings_array = apply_filters( 'mfw_buddy_press_settings_array', array() );
+				$mfw_button_index     = array_search( 'submit', array_column( $mfw_buddy_press_settings_array, 'type' ) );
+				if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+
+					$mfw_button_index = array_search( 'multi-button', array_column( $mfw_buddy_press_settings_array, 'type' ) );
+				}
+
+				if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+
+					unset( $mfw_buddy_press_settings_array[ $mfw_button_index ] );
+					if ( is_array( $mfw_buddy_press_settings_array ) && ! empty( $mfw_buddy_press_settings_array ) ) {
+
+						foreach ( $mfw_buddy_press_settings_array as $mfw_genaral_setting ) {
+							if ( isset( $mfw_genaral_setting['id'] ) && '' !== $mfw_genaral_setting['id'] ) {
+								if ( isset( $_POST[ $mfw_genaral_setting['id'] ] ) ) {
+
+									update_option( $mfw_genaral_setting['id'], is_array( $_POST[ $mfw_genaral_setting['id'] ] ) ? map_deep( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ), 'sanitize_text_field' ) : sanitize_text_field( wp_unslash( $_POST[ $mfw_genaral_setting['id'] ] ) ) );
+								} else {
+
+									update_option( $mfw_genaral_setting['id'], '' );
+								}
+							} else {
+
+								$wps_mfw_gen_flag = true;
+							}
+						}
+					}
+
+					if ( $wps_mfw_gen_flag ) {
+
+						$wps_mfw_error_text = esc_html__( 'Id of some field is missing', 'membership-for-woocommerce' );
+						$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'error' );
+					} else {
+
+						$wps_mfw_error_text = esc_html__( 'Settings saved !', 'membership-for-woocommerce' );
+						$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $wps_mfw_error_text, 'success' );
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Adding dummy hmtl in BuddyPress Settings when pro is not active.
+	 *
+	 * @param  array $buddy_settings buddy_settings.
+	 * @return array
+	 */
+	public function wps_msfw_buddypress_group_dummy_html( $buddy_settings ) {
+
+		if ( ! is_plugin_active( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php' ) && $this->global_class->wps_mfsw_is_buddy_press_active() ) {
+			$new_arr = array(
+				array(
+					'title'       => __( 'Enable the option to add members to a BuddyPress group', 'membership-for-woocommerce' ),
+					'type'        => 'radio-switch',
+					'description' => __( 'Turn on this setting to add users to a BuddyPress group automatically when they buy a membership.', 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_enable_to_add_dummy_members_in_buddy_group',
+					'value'       => get_option( 'wps_msfw_enable_to_add_dummy_members_in_buddy_group' ),
+					'class'       => 'mfw-radio-switch-class',
+					'options'     => array(
+						'yes' => __( 'YES', 'membership-for-woocommerce' ),
+						'no'  => __( 'NO', 'membership-for-woocommerce' ),
+					),
+				),
+				array(
+					'title'       => __( 'Select the BuddyPress group to assign new members to.', 'membership-for-woocommerce' ),
+					'type'        => 'select',
+					'description' => __( 'Choose the BuddyPress group where new members will be automatically added after purchasing a membership.', 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_members_dummy_buddy_groups',
+					'value'       => get_option( 'wps_msfw_members_dummy_buddy_groups' ),
+					'options'     => '',
+					'form-title'  => 'wps_mfw_add_border',
+				),
+			);
+			$buddy_settings = array_merge( $buddy_settings, $new_arr );
+		}
+		return $buddy_settings;
 	}
 }
