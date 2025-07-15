@@ -1719,6 +1719,12 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_membership_for_woo_export_csv_members() {
 
 		global $post;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		if ( isset( $_GET['export_all_members'] ) ) {
 
 			$args = array(
@@ -1794,6 +1800,12 @@ class Membership_For_Woocommerce_Admin {
 	public function wps_membership_for_woo_export_csv_membership() {
 
 		global $post;
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+
+			return false;
+		}
+
 		if ( isset( $_GET['export_all_membership'] ) ) {
 
 			$args = array(
@@ -3758,6 +3770,15 @@ class Membership_For_Woocommerce_Admin {
 				'placeholder' => __( 'enter image url', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_user_community_bg_image',
 				'value'       => get_option( 'wps_msfw_user_community_bg_image' ),
+				'form-title'  => 'wps_mfw_add_border',
+			),
+			array(
+				'title'       => __( 'Enable this option to display the PDF icon only for member users.', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( "Enable this feature to ensure that only members can access the PDF icon. The 'PDF Generator for WP by WP Swings' plugin is required for this functionality.", 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_pdf_icon_for_member_users',
+				'value'       => get_option( 'wps_msfw_enable_pdf_icon_for_member_users' ),
+				'class'       => 'mfw-radio-switch-class',
 			),
 			array(
 				'type'        => 'multi-button',

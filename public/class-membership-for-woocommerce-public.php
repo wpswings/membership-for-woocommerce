@@ -2499,13 +2499,16 @@ class Membership_For_Woocommerce_Public {
 				$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
 			}
 
-			$user      = get_userdata( $user_id );
-			$user_name = $user->data->display_name;
-			if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+			$user = get_userdata( $user_id );
+			if ( ! empty( $user ) ) {
 
-				$customer_email = WC()->mailer()->emails['membership_creation_email'];
-				if ( ! empty( $customer_email ) ) {
-					$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
+				$user_name = $user->data->display_name;
+				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
+
+					$customer_email = WC()->mailer()->emails['membership_creation_email'];
+					if ( ! empty( $customer_email ) ) {
+						$email_status = $customer_email->trigger( $user_id, $plan_obj, $user_name, $expiry_date, $order_id );
+					}
 				}
 			}
 		}
@@ -5566,4 +5569,107 @@ class Membership_For_Woocommerce_Public {
 			exit;
 		}
 	}
+
+	/**
+	 * This function is used to show PDF download option icon only to members users.
+	 *
+	 * @param  string $html    HTML content for the PDF download option.
+	 * @param  int    $post_id The ID of the post for which the PDF download option is being displayed.
+	 * @return void
+	 */
+	public function wps_msfw_show_pdf_download_option_icon_only_to_members_users( $html, $post_id ) {
+
+		$user_id   = get_current_user_id();
+		$is_member = get_user_meta( $user_id, 'is_member', true );
+
+		$wps_msfw_enable_pdf_icon_for_member_users = get_option( 'wps_msfw_enable_pdf_icon_for_member_users' );
+
+		// If the setting is enabled, then only allow members to see the icon.
+		if ( 'on' === $wps_msfw_enable_pdf_icon_for_member_users ) {
+
+			// Check if user is a member.
+			if ( ! empty( $is_member ) && 'member' === $is_member ) {
+
+				return $html; // Allow the icon (return the HTML as-is).
+			} else {
+
+				return ''; // Not a member – hide the icon.
+			}
+		}
+
+		// If the setting is not enabled, return original HTML regardless of membership.
+		return $html;
+	}
+
+	/**
+	 * Prevents users from adding duplicate membership plans to the cart.
+	 *
+	 * @param WC_Cart $cart WooCommerce cart object.
+	 */
+	public function wps_msfw_block_duplicate_membership_in_cart( $cart ) {
+
+		// Skip for admin, AJAX calls, or if not logged in.
+		if ( is_admin() || ! is_user_logged_in() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			return;
+		}
+
+		// Avoid running multiple times during WooCommerce lifecycle.
+		if ( did_action( 'woocommerce_before_calculate_totals' ) > 1 ) {
+			return;
+		}
+
+		$user_id      = get_current_user_id();
+		$memberships  = get_user_meta( $user_id, 'mfw_membership_id', true );
+
+		if ( empty( $memberships ) || ! is_array( $memberships ) ) {
+			return;
+		}
+
+		$default_product_id = get_option( 'wps_membership_default_product' );
+		$cart_items         = $cart->get_cart();
+
+		if ( empty( $cart_items ) ) {
+			return;
+		}
+
+		foreach ( $cart_items as $cart_item_key => $cart_item ) {
+
+			// Skip if product is not the membership product.
+			if ( (int) $default_product_id !== (int) $cart_item['product_id'] ) {
+				return;
+			}
+
+			// Skip if cart item does not contain a plan title (i.e., not a membership product).
+			if ( empty( $cart_item['plan_title'] ) ) {
+				return;
+			}
+
+			foreach ( $memberships as $membership_id ) {
+
+				$plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+				$status = strtolower( wps_membership_get_meta_data( $membership_id, 'member_status', true ) );
+
+				// Skip if plan is not complete or invalid.
+				if ( empty( $plan ) || $status !== 'complete' ) {
+					continue;
+				}
+
+				// Compare current plan with what's in the cart.
+				if ( isset( $plan['post_title'] ) && $plan['post_title'] === $cart_item['plan_title'] ) {
+
+					// Remove the duplicate and notify the user.
+					wc_add_notice(
+						sprintf(
+							esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'woocommerce' ),
+							esc_html( $plan['post_title'] )
+						),
+						'error'
+					);
+					$cart->remove_cart_item( $cart_item_key );
+					break; // Stop checking other memberships for this item.
+				}
+			}
+		}
+	}
+
 }

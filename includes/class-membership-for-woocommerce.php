@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.9.0';
+			$this->version = '3.0.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -507,6 +507,10 @@ class Membership_For_Woocommerce {
 			// buddy press compatibility.
 			$this->loader->add_action( 'bp_after_member_body', $mfw_plugin_public, 'wps_msfw_show_membership_details_on_buddy_dash' );
 			$this->loader->add_action( 'bp_template_redirect', $mfw_plugin_public, 'wps_msfw_show_buddy_to_only_members_users' );
+			// PDF compatibility.
+			$this->loader->add_action( 'pgfw_pdf_download_button_filter', $mfw_plugin_public, 'wps_msfw_show_pdf_download_option_icon_only_to_members_users', 10, 2 );
+			// restrict user to purchase same membership plan.
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_msfw_block_duplicate_membership_in_cart', 10, 1 );
 		}
 	}
 

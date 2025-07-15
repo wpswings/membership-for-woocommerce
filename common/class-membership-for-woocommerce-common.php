@@ -668,6 +668,10 @@ class Membership_For_Woocommerce_Common {
 						if ( $_user ) {
 
 							$user_id   = $_user;
+
+							// send user id and password to the user.
+							$this->global_class->wps_msfw_send_user_login_details_to_users( $user_id );
+
 							$user_ob   = get_user_by( 'id', $user_id );
 							$user_name = $user_ob->display_name;
 							// assign one time discount coupon.
