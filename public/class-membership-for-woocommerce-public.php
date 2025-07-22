@@ -5579,6 +5579,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_show_pdf_download_option_icon_only_to_members_users( $html, $post_id ) {
 
+		// user is blocked.
+		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+
+			return '';
+		}
+
 		$user_id   = get_current_user_id();
 		$is_member = get_user_meta( $user_id, 'is_member', true );
 
@@ -5660,13 +5666,79 @@ class Membership_For_Woocommerce_Public {
 					// Remove the duplicate and notify the user.
 					wc_add_notice(
 						sprintf(
-							esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'woocommerce' ),
+							esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						'error'
 					);
 					$cart->remove_cart_item( $cart_item_key );
 					break; // Stop checking other memberships for this item.
+				}
+			}
+		}
+	}
+
+	/**
+	 * Prevents users for placing duplicate membership order, this is work for guest user.
+	 *
+	 * @param WC_Cart $cart WooCommerce cart object.
+	 */
+	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
+
+		// Get billing email from request
+		$billing_email = $request['billing_address']['email'] ?? '';
+
+		if ( empty( $billing_email ) || ! is_email( $billing_email ) ) {
+			return;
+		}
+
+		$user = get_user_by( 'email', $billing_email );
+
+		if ( ! $user || ! $user->ID ) {
+			return; // Not a registered user
+		}
+
+		$memberships = get_user_meta( $user->ID, 'mfw_membership_id', true );
+
+		if ( empty( $memberships ) || ! is_array( $memberships ) ) {
+			return;
+		}
+
+		$default_product_id = get_option( 'wps_membership_default_product' );
+		$cart_items         = WC()->cart->get_cart();
+
+		if ( empty( $cart_items ) ) {
+			return;
+		}
+
+		foreach ( $cart_items as $cart_item_key => $cart_item ) {
+
+			if ( (int) $default_product_id !== (int) $cart_item['product_id'] ) {
+				break;
+			}
+
+			if ( empty( $cart_item['plan_title'] ) ) {
+				break;
+			}
+
+			foreach ( $memberships as $membership_id ) {
+
+				$plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
+				$status = strtolower( wps_membership_get_meta_data( $membership_id, 'member_status', true ) );
+
+				if ( empty( $plan ) || $status !== 'complete' ) {
+					continue;
+				}
+
+				if ( isset( $plan['post_title'] ) && $plan['post_title'] === $cart_item['plan_title'] ) {
+					throw new \WC_REST_Exception(
+						'woocommerce_rest_duplicate_membership',
+						sprintf(
+							esc_html__( 'You already have the "%s" membership plan associated with this email. Please remove it from your cart to proceed.', 'membership-for-woocommerce' ),
+							esc_html( $plan['post_title'] )
+						),
+						400
+					);
 				}
 			}
 		}

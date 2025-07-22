@@ -400,12 +400,22 @@ class Membership_For_Woocommerce_Admin {
 					add_submenu_page( 'wps-plugins', $mfw_value['name'], $mfw_value['name'], 'manage_options', $mfw_value['menu_link'], array( $mfw_value['instance'], $mfw_value['function'] ) );
 				}
 			}
-		} elseif ( ! empty( $submenu['wps-plugins'] ) ) {
+		} elseif ( ! empty( $submenu['wps-plugins'] ) && is_array( $submenu['wps-plugins'] ) ) {
 
-			if ( ! in_array( 'Home', (array) $submenu['wps-plugins'] ) ) {
-				if ( wps_mfw_standard_check_multistep() ) {
-					add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
+			$found = false;
+			// check home is exist or not.
+			foreach ( $submenu['wps-plugins'] as $sub_array ) {
+				if ( in_array( 'Home', $sub_array ) ) {
+
+					$found = true;
+					break;
 				}
+			}
+
+			// if home is not exist then add home submenu.
+			if ( ! $found && wps_mfw_standard_check_multistep() ) {
+
+				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
 			}
 		}
 	}
@@ -3631,7 +3641,7 @@ class Membership_For_Woocommerce_Admin {
 	 * @param  array $mfw_settings_other mfw_settings_other.
 	 * @return array
 	 */
-	public function wps_mfw_other_html_settings( $mfw_settings_other ) {
+	public function wps_mfw_layout_html_settings( $mfw_settings_other ) {
 
 		$wps_other_settings = array(
 			array(
@@ -3772,14 +3782,14 @@ class Membership_For_Woocommerce_Admin {
 				'value'       => get_option( 'wps_msfw_user_community_bg_image' ),
 				'form-title'  => 'wps_mfw_add_border',
 			),
-			array(
-				'title'       => __( 'Enable this option to display the PDF icon only for member users.', 'membership-for-woocommerce' ),
-				'type'        => 'radio-switch',
-				'description' => __( "Enable this feature to ensure that only members can access the PDF icon. The 'PDF Generator for WP by WP Swings' plugin is required for this functionality.", 'membership-for-woocommerce' ),
-				'id'          => 'wps_msfw_enable_pdf_icon_for_member_users',
-				'value'       => get_option( 'wps_msfw_enable_pdf_icon_for_member_users' ),
-				'class'       => 'mfw-radio-switch-class',
-			),
+			// array(
+			// 	'title'       => __( 'Enable this option to display the PDF icon only for member users.', 'membership-for-woocommerce' ),
+			// 	'type'        => 'radio-switch',
+			// 	'description' => __( "Enable this feature to ensure that only members can access the PDF icon. The 'PDF Generator for WP by WP Swings' plugin is required for this functionality.", 'membership-for-woocommerce' ),
+			// 	'id'          => 'wps_msfw_enable_pdf_icon_for_member_users',
+			// 	'value'       => get_option( 'wps_msfw_enable_pdf_icon_for_member_users' ),
+			// 	'class'       => 'mfw-radio-switch-class',
+			// ),
 			array(
 				'type'        => 'multi-button',
 				'id'          => 'mfw_button_other_settings',
@@ -3793,6 +3803,30 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
+	 * This function is used to create pdf settings.
+	 *
+	 * @param  array $layout_settings layout_settings.
+	 * @return array
+	 */
+	public function wps_msfw_pdf_settings( $layout_settings ) {
+		if ( is_plugin_active( 'pdf-generator-for-wp/pdf-generator-for-wp.php' ) ) {
+
+			$pdf_settings = array(
+				array(
+					'title'       => __( 'Enable this option to display the PDF icon only for member users.', 'membership-for-woocommerce' ),
+					'type'        => 'radio-switch',
+					'description' => __( "Enable this feature to ensure that only members can access the PDF icon. The 'PDF Generator for WP by WP Swings' plugin is required for this functionality.", 'membership-for-woocommerce' ),
+					'id'          => 'wps_msfw_enable_pdf_icon_for_member_users',
+					'value'       => get_option( 'wps_msfw_enable_pdf_icon_for_member_users' ),
+					'class'       => 'mfw-radio-switch-class',
+				),
+			);
+			$layout_settings = $this->wps_msfw_insert_org_key_value_pair( $layout_settings, $pdf_settings, 16 );
+		}
+		return $layout_settings;
+	}
+
+	/**
 	 * Save API settings here.
 	 *
 	 * @return void
@@ -3803,7 +3837,7 @@ class Membership_For_Woocommerce_Admin {
 		if ( isset( $_POST['mfw_button_other_settings'] ) && ( ! empty( $_POST['wps_tabs_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wps_tabs_nonce'] ) ), 'admin_save_data' ) ) ) {
 
 			$wps_mfw_gen_flag     = false;
-			$mfw_genaral_settings = apply_filters( 'mfw_other_settings_array', array() );
+			$mfw_genaral_settings = apply_filters( 'mfw_layout_settings_array', array() );
 			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
 			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
 
