@@ -1235,13 +1235,7 @@ class Membership_For_Woocommerce_Global_Functions {
 							$body    = $coupon_code . ' ' . esc_html__( 'use this Coupon Code to get discount on Cart.', 'membership-for-woocommerce' );
 							$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 							$headers = 'From: ' . get_option( 'admin_email' ) . "\r\n";
-							if ( wp_mail( $user->user_email, $subject, $body, $headers ) ) {
-
-								error_log( "The coupon has been sent to the user's email." );
-							} else {
-
-								error_log( 'There is some issues while sending the coupon.' );
-							}
+							wp_mail( $user->user_email, $subject, $body, $headers );
 						}
 					}
 				}
@@ -1571,12 +1565,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					  <p> Password - ' . esc_attr( $user_password ) . ' </p>
 			';
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-			if ( wp_mail( $to, $subject, $body, $headers ) ) {
-				error_log( 'email has been successfully sent to user whose email is ' . esc_attr( $user_email ) );
-				$user_password = get_option( 'user_password', '' );
-			} else {
-				error_log( 'email failed to sent to user whose email is ' . esc_attr( $user_email ) );
-			}
+			wp_mail( $to, $subject, $body, $headers );
 		}
 	}
 }

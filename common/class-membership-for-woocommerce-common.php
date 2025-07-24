@@ -928,12 +928,7 @@ class Membership_For_Woocommerce_Common {
 					  <p> Password - ' . esc_attr( $user_password ) . ' </p>
 			';
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-			if ( wp_mail( $to, $subject, $body, $headers ) ) {
-				error_log( 'email has been successfully sent to user whose email is ' . esc_attr( $user_email ) );
-				$user_password = get_option( 'user_password', '' );
-			} else {
-				error_log( 'email failed to sent to user whose email is ' . esc_attr( $user_email ) );
-			}
+			wp_mail( $to, $subject, $body, $headers );
 		}
 	}
 

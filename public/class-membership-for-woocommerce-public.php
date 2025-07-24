@@ -5666,7 +5666,7 @@ class Membership_For_Woocommerce_Public {
 					// Remove the duplicate and notify the user.
 					wc_add_notice(
 						sprintf(
-							esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'membership-for-woocommerce' ),
+							/* translators: %s: notice */                            esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						'error'
@@ -5681,11 +5681,13 @@ class Membership_For_Woocommerce_Public {
 	/**
 	 * Prevents users for placing duplicate membership order, this is work for guest user.
 	 *
-	 * @param WC_Cart $cart WooCommerce cart object.
+	 * @param  object $order   order.
+	 * @param  string $request request.
+	 * @return void
 	 */
 	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
 
-		// Get billing email from request
+		// Get billing email from request.
 		$billing_email = $request['billing_address']['email'] ?? '';
 
 		if ( empty( $billing_email ) || ! is_email( $billing_email ) ) {
@@ -5695,7 +5697,7 @@ class Membership_For_Woocommerce_Public {
 		$user = get_user_by( 'email', $billing_email );
 
 		if ( ! $user || ! $user->ID ) {
-			return; // Not a registered user
+			return; // Not a registered user.
 		}
 
 		$memberships = get_user_meta( $user->ID, 'mfw_membership_id', true );
@@ -5726,7 +5728,7 @@ class Membership_For_Woocommerce_Public {
 				$plan   = wps_membership_get_meta_data( $membership_id, 'plan_obj', true );
 				$status = strtolower( wps_membership_get_meta_data( $membership_id, 'member_status', true ) );
 
-				if ( empty( $plan ) || $status !== 'complete' ) {
+				if ( empty( $plan ) || 'complete' !== $status ) {
 					continue;
 				}
 
@@ -5734,7 +5736,7 @@ class Membership_For_Woocommerce_Public {
 					throw new \WC_REST_Exception(
 						'woocommerce_rest_duplicate_membership',
 						sprintf(
-							esc_html__( 'You already have the "%s" membership plan associated with this email. Please remove it from your cart to proceed.', 'membership-for-woocommerce' ),
+							/* translators: %s: notice */                            esc_html__( 'You already have the "%s" membership plan associated with this email. Please remove it from your cart to proceed.', 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						400
@@ -5743,5 +5745,4 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 	}
-
 }
