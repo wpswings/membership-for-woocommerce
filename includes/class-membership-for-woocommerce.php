@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '2.9.0';
+			$this->version = '3.0.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -303,12 +303,12 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_api_settings' );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_generate_api_keys_settings' );
 		// Other settings.
-		$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_mfw_other_html_settings', 10, 1 );
+		$this->loader->add_filter( 'mfw_layout_settings_array', $mfw_plugin_admin, 'wps_mfw_layout_html_settings', 10, 1 );
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_other_settings' );
 		// wallet plugin compatible.
 		if ( wps_msfw_is_wallet_plugin_active() ) {
 
-			$this->loader->add_filter( 'mfw_other_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
+			$this->loader->add_filter( 'mfw_layout_settings_array', $mfw_plugin_admin, 'wps_msfw_restrict_wallet_payment', 20, 1 );
 		}
 
 		// whatsapp api notification settings.
@@ -331,6 +331,8 @@ class Membership_For_Woocommerce {
 		$this->loader->add_filter( 'wps_mfw_mfw_plugin_standard_admin_settings_tabs', $mfw_plugin_admin, 'wps_msfw_add_buddy_press_tabs', PHP_INT_MAX, 1 );
 		$this->loader->add_filter( 'mfw_buddy_press_settings_array', $mfw_plugin_admin, 'mfw_buddy_press_setting_html', 10, 1 );
 		$this->loader->add_filter( 'wps_msfw_extend_buddy_press_settings', $mfw_plugin_admin, 'wps_msfw_buddypress_group_dummy_html', 10, 1 );
+		// pdf compatibility.
+		$this->loader->add_filter( 'mfw_layout_settings_array', $mfw_plugin_admin, 'wps_msfw_pdf_settings', 10, 1 );
 	}
 
 	/**
@@ -507,6 +509,12 @@ class Membership_For_Woocommerce {
 			// buddy press compatibility.
 			$this->loader->add_action( 'bp_after_member_body', $mfw_plugin_public, 'wps_msfw_show_membership_details_on_buddy_dash' );
 			$this->loader->add_action( 'bp_template_redirect', $mfw_plugin_public, 'wps_msfw_show_buddy_to_only_members_users' );
+			// PDF compatibility.
+			$this->loader->add_action( 'pgfw_pdf_download_button_filter', $mfw_plugin_public, 'wps_msfw_show_pdf_download_option_icon_only_to_members_users', 10, 2 );
+			// restrict user to purchase same membership plan.
+			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_msfw_block_duplicate_membership_in_cart', 10, 1 );
+			$this->loader->add_action( 'woocommerce_store_api_checkout_update_order_from_request', $mfw_plugin_public, 'wps_msfw_restrict_user_to_purchase_duplicate_membership_block', 10, 2 );
+
 		}
 	}
 
@@ -628,7 +636,7 @@ class Membership_For_Woocommerce {
 		$mfw_default_tabs['membership-for-woocommerce-other-settings'] = array(
 			'title'       => esc_html__( 'Layout Settings', 'membership-for-woocommerce' ),
 			'name'        => 'membership-for-woocommerce-other-settings',
-			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-other-settings.php',
+			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-templates/membership-for-woocommerce-layout-settings.php',
 		);
 		$mfw_default_tabs['membership-for-woocommerce-reports-settings'] = array(
 			'title'       => esc_html__( 'Report', 'membership-for-woocommerce' ),

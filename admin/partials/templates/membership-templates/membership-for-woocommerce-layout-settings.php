@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 global $mfw_wps_mfw_obj;
-$mfw_other_settings_array = apply_filters( 'mfw_other_settings_array', array() );
+$mfw_other_settings_array = apply_filters( 'mfw_layout_settings_array', array() );
 ?>
 
 <!--  template file for admin settings. -->

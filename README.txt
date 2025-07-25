@@ -1,27 +1,35 @@
-=== Membership For WooCommerce ===
+=== Membership For WooCommerce - WordPress Membership Plugin, Restrict Content, Build Online Communities, Paywall & Content Dripping ===
 Contributors: wpswings
 Donate link:  https://wpswings.com/
-Tags: membership, user registration, content restriction, member, user profile
-Requires at least: 5.5.0
-Tested up to: 6.8.1
+Tags: membership, user registration, content restriction, member, community
+Requires at least: 6.7.0
+Tested up to: 6.8.2
 WC requires at least: 6.5.0
-WC tested up to: 9.9.3
-Stable tag: 2.9.0
+WC tested up to: 10.0.4
+Stable tag: 3.0.0
 Requires PHP: 7.3.5
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Membership for WooCommerce Plugin provides a restriction on access to any facility and adds recurring revenue by engaging customers.
-
+The membership plugin wordpress lets you easily restrict content, build online communities, customize user roles, & quickly manage access permissions.
 == Description ==
 
-**Introducing the Membership for WooCommerce plugin, Effortlessly manage multiple subscriptions and create unlimited membership levels on your membership site. Restrict content, use coupon codes, and monetize your membership site while enjoying the benefits of recurring revenue**
+**Get the best membership plugin wordpress for businesses seeking to manage online communities, restrict content, and create unlimited membership levels. It is especially suitable for businesses offering online courses, coaching, digital products, or community driven services.**
 
-The [**Membership for WooCommerce plugin**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro) is perfect for creating an exclusive, members-only section in your eCommerce store, helping you generate recurring revenue through membership plans. 
-This plugin is especially beneficial for niches like educational platforms, fitness and wellness businesses, and digital content providers, where exclusivity and special access are key to engaging customers. 
+WordPress membership plugin is perfect for creating an exclusive, members-only section in your eCommerce store, helping you generate recurring revenue through membership plans. 
+
+Go for the premium [**Membership for WooCommerce plugin**](https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-page&utm_campaign=membership-pro) if you are looking for additional features like:
+
+* [**Multiple Membership Plan Page Templates**](https://demo.wpswings.com/membership-for-woocommerce-pro/elementor-341/).
+* [**WooCommerce Membership Plans**](https://demo.wpswings.com/membership-for-woocommerce-pro/membership-plans/).
+* [**One-Time Discount Coupons for New Members**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/).
+* [**Manually Assign Memberships**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/).
+* [**Build Online Community Plugin WordPress & Participate In Forums**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/).
+* [**Restrict Content, Pages and User Role**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/).
+
 It helps you easily manage memberships, restrict content, and offer paid access to products or services, making it an essential tool for businesses looking to build long-term customer relationships and generate steady revenue.
 
- * Restrict content with the Membership plugin.
+ * Restrict content with the Membership plugin wordpress.
  * Adding recurring revenue based on memberships.
  * Engaging customers using membership plans. 
 
@@ -32,7 +40,7 @@ It helps you easily manage memberships, restrict content, and offer paid access 
 Note: Our Membership for WooCommerce Plugin is Compatible with WooCommerce High Order Performance Storage (HPOS) to ensure the smooth workflow of your WooCommerce store.
 
 
-== WOOCOMMERCE MEMBERSHIP PLUGIN MEETS YOUR REQUIREMENT, SO ==
+== MEMBERSHIP PLUGIN WORDPRESS MEETS YOUR REQUIREMENT, SO ==
 
 [**Download Now !!**](https://downloads.wordpress.org/plugin/membership-for-woocommerce.zip)
 
@@ -40,42 +48,92 @@ Note: Our Membership for WooCommerce Plugin is Compatible with WooCommerce High 
 
 WooCommerce store owners already have so much to handle. And we want to simplify things for you to the bare minimum. So, we exhibit to you the most appropriate and must-have features for your membership website.
 
-**1) Integration With BuddyPress** With the integration with BuddyPress, you can display membership information over the BuddyPress dashboard and restrict access to BuddyPress dashboard so only members can access it. Giving you an extra revenue opportunity.
+####1) Integration With BuddyPress:
 
-**2) Community For Same Level Membership** We have launched the long-awaited feature, the community for users with the same membership, where they can view each other's details and directly communicate via messages and emails.
+With the integration with BuddyPress, you can display membership information over the BuddyPress dashboard and restrict access to BuddyPress dashboard so only members can access it. Giving you an extra revenue opportunity.
 
-**3) ReCaptcha on Login and Signup** Our Membership plugin now offers the option to integrate recaptcha by Google on your login and signup page to reduce bot activities. Plus, you can customize the form color, add a custom message on the page, and assign your chosen membership to the users upon registration.
+####2) Community Plugin WordPress For Same Level Membership:
 
-**4) Quickly Enable/Disable Notifications For Users** Let your customers easily turn on or off different notifications, like emails, SMS, and WhatsApp messages, directly from their member dashboard. They get total control over how they receive updates. This handy feature saves them time, cuts down on unwanted messages, and makes using your service more fun and tailored to their preferences.
+We have launched the long-awaited feature, the community for users with the same membership, where they can view each other's details and directly communicate via messages and emails.
 
-**5) Offer Notifications To Members Via SMS** Send special offer alerts to your members through SMS with Twilio! The membership plugin makes it easy to let members at different levels know about great deals. Just set it up with your Twilio Account SID, Auth Token, and phone number. After that, you can send simple text messages to your members. They can also decide if they want to get these sms or turn them off.
+####3) ReCaptcha on Login and Signup: 
 
-**6) Offer Notifications To Members Via WhatsApp** Easily send offer notifications to your members via WhatsApp! This plugin lets you notify members at different levels about special deals. Just configure the WhatsApp integration with your Access Token, Phone ID, and template. Once set up, you can send custom messages directly to users on selected membership levels. Members can also choose to receive or disable these notifications.
+Our Membership plugin now offers the option to integrate recaptcha by Google on your login and signup page to reduce bot activities. Plus, you can customize the form color, add a custom message on the page, and assign your chosen membership to the users upon registration.
 
-**7) Members Dashboard**  A "Membership Details" tab has been added to the My Account section, giving customers easy access to important details like total discounts earned, Active Subscriptions and membership information. This feature enhances user experience by providing a centralized view of their membership benefits.
+####4) Quickly Enable/Disable Notifications For Users: 
 
-**8) New Membership Plan Page Template** We've added a new membership offer page with a better design and clearer information. It now includes a collapsible section where users can click an arrow to show or hide the membership details. This makes it easier for customers to see what they need, helping them decide faster and improving conversions.
+Let your customers easily turn on or off different notifications, like emails, SMS, and WhatsApp messages, directly from their member dashboard. They get total control over how they receive updates. This handy feature saves them time, cuts down on unwanted messages, and makes using your service more fun and tailored to their preferences.
 
-**9) Details and Plan Creation** Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WordPress membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plans like:
+####5) Offer Notifications To Members Via SMS
+
+Send special offer alerts to your members through SMS with Twilio! The membership plugin wordpress makes it easy to let members at different levels know about great deals. Just set it up with your Twilio Account SID, Auth Token, and phone number. After that, you can send simple text messages to your members. They can also decide if they want to get these sms or turn them off.
+
+####6) Offer Notifications To Members Via WhatsApp
+
+Easily send offer notifications to your members via WhatsApp! This plugin lets you notify members at different levels about special deals. Just configure the WhatsApp integration with your Access Token, Phone ID, and template. Once set up, you can send custom messages directly to users on selected membership levels. Members can also choose to receive or disable these notifications.
+
+####7) Members Dashboard:
+
+A "Membership Details" tab has been added to the My Account section, giving customers easy access to important details like total discounts earned, Active Subscriptions and membership information. This feature enhances user experience by providing a centralized view of their membership benefits.
+
+####8) New Membership Plan Page Template:
+
+We've added a new membership offer page with a better design and clearer information. It now includes a collapsible section where users can click an arrow to show or hide the membership details. This makes it easier for customers to see what they need, helping them decide faster and improving conversions.
+
+####9) Details and Plan Creation:
+
+Admin can display offered products and product categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the WordPress membership plan. Admin is completely entitled to the creation and detailing of WooCommerce membership plans like:
 
 * Plan Price
 * Plan Name
 * Plan Description
 * Access Type (Lifetime or Limited accessibility)
 
-**10) Discount On Membership User Cart Total** With this plugin, admin can apply discounts based on user roles. Give discounts only to Woo Membership users. Admin can grant discounts to his membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice.
-**11) One-time Discount Coupon For New Members** Using our plugin, you can create discount coupons exclusively for new members. After new users sign up on your website and buy a membership, they'll receive an email with their unique coupon, granting them discounts on their membership plan.
-**12) Send Quick Notifications to All Users** Using the plugin, you can send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
-**13) Allow Your Members to Cancel their Membership Accounts** Using our plugin, admins can allow their members to cancel their membership anytime. Our plugin allows users to discontinue their plan whenever they want to. Enable the setting in general settings and your customers will get access to cancel your plan.
-**14) Perfectly Neat Shortcodes For Your Plan Page Customization** We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default membership plan but also on the membership plugin custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
-**15) Membership User Data Export and Import** Store owners can effortlessly export the membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all membership users as a CSV file. Admin can also import the membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database.
-**16) APIs for Offer Details and Purchased Membership Plans** Our plugin offers APIs to fetch details about active membership plans (Membership ID, Name, Type, Price, & Duration) and purchased memberships by any user (Membership ID, Name, Price, Validity, Duration, & Status). Apply the required parameters along with the API secret key and show these details in any web application, desktop application, mobile application, scripting language, or API documentation.
-**17) Buy Now Button text can be changed to Dynamic Text** Using This plugin, store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
-**18) Addition of Quick Status Update in Member Table** Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly
-**19) User Table for Admin** In Membership Plugin, instead of assigning roles to members individually, metadata will be saved and displayed in the user table as member type, making it easier to track and manage memberships
-**20) New Membership Details Layout** A new layout has been introduced for the membership details page in the "My Account" section. You can apply this new layout and customize the colors of the membership details to match your preferences
+####10) Discount On Membership User Cart Total:
 
-== Drive Engagement, Foster Loyalty, and Increase Cash Flow with These Curated Features ==
+With this plugin, admin can apply discounts based on user roles. Give discounts only to Woo Membership users. Admin can grant discounts to his membership customers on total cart value and even offer them free shipping as per their membership plans. This discount can be fixed or percentage-based. Entirely the admin’s choice.
+
+####11) One-time Discount Coupon For New Members:
+
+Using our plugin, you can create discount coupons exclusively for new members. After new users sign up on your website and buy a membership, they'll receive an email with their unique coupon, granting them discounts on their membership plan.
+
+####12) Send Quick Notifications to All Users:
+
+Using the plugin, you can send email notifications to your users in bulk. You can send emails regarding any subject you deem worthy. For example, new membership plan launches, offers, Woo membership discounts, etc.
+
+####13) Allow Your Members to Cancel their Membership Accounts:
+
+Using our plugin, admins can allow their members to cancel their membership anytime. Our plugin allows users to discontinue their plan whenever they want to. Enable the setting in general settings and your customers will get access to cancel your plan.
+
+####14) Perfectly Neat Shortcodes For Your Plan Page Customization:
+
+We provide the admin with a remarkable collection of shortcodes that work not only on purchasing the default membership plan but also on the membership plugin custom page. Admin can design their plan page at ease with membership action shortcodes and membership plan shortcodes. They are for the admin’s utter convenience.
+
+####15) Membership User Data Export and Import:
+
+Store owners can effortlessly export the membership plans along with the user data and its related settings. Similarly, the admin can also import the details of all membership users as a CSV file. Admin can also import the membership plans and successfully apply this import if the CSV file products are available in the store. Otherwise, it will fail. Admin can delete the plugin data on the plugin and uninstall the plugin from the database.
+
+####16) APIs for Offer Details and Purchased Membership Plans:
+
+Our plugin offers APIs to fetch details about active membership plans (Membership ID, Name, Type, Price, & Duration) and purchased memberships by any user (Membership ID, Name, Price, Validity, Duration, & Status). Apply the required parameters along with the API secret key and show these details in any web application, desktop application, mobile application, scripting language, or API documentation.
+
+####17) Buy Now Button text can be changed to Dynamic Text:
+
+Using This plugin, store owners can now give the dynamic look to the Buy Now Button by changing it into a different format. For example: Purchase Now, Grab Now, and many more
+
+####18) Addition of Quick Status Update in Member Table:
+
+Admin can change the status directly from the member table if the status is pending. Else status is changed from an individual product. Go to all members and click on pending statuses to change the status directly
+
+####19) User Table for Admin:
+
+In Membership Plugin, instead of assigning roles to members individually, metadata will be saved and displayed in the user table as member type, making it easier to track and manage memberships
+
+####20) New Membership Details Layout:
+
+A new layout has been introduced for the membership details page in the "My Account" section. You can apply this new layout and customize the colors of the membership details to match your preferences
+
+== Key Features of Our WordPress Membership Plugin to Manage and Engage Your Members ==
 * Dynamically send a welcome email to new members when they join a membership program
 * Membership Reports Dashboard for Better Insights
 * Stimulate your user’s experience with Dark Mode on Membership Plan Pages (New)
@@ -94,13 +152,17 @@ Have a Query? Visit [**Membership for WooCommerce Documentation**](https://docs.
 
 == LIVE DEMO OF MEMBERSHIP FOR WOOCOMMERCE  PLUGIN ==
 
-* [**Membership plugin Frontend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=frontend-demo)
+* [**Membership Plugin WordPress Frontend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=frontend-demo)
 
-* [**Membership plugin Backend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=backend-demo)
+* [**Membership Plugin WordPress Backend Demo**](https://demo.wpswings.com/membership-for-woocommerce-pro/get-personal-demo/?utm_source=wpswings-membership-demo&utm_medium=membership-org-page&utm_campaign=backend-demo)
 
 
 
 == WOOCOMMERCE MEMBERSHIP PLUGIN COMPATIBILITIES == 
+
+* Event Tickets Manager for Woocommerce: WooCommerce Membership plugin is compatible with our [**Events Ticket Plugin for WooCommerce**](https://wordpress.org/plugins/event-tickets-manager-for-woocommerce/), letting you connect exclusive events with membership plans. This feature ensures that only selected members can access specific events, helping you maintain exclusivity for your premium offerings
+
+* PDF Plugin: Our WooCommerce Membership plugin is compatible with the [**WordPress PDF Generator plugin**](https://wordpress.org/plugins/pdf-generator-for-wp/). With this integration, you can restrict PDF download access to members Plugin WordPress only, making blog post downloads or other content available exclusively to your registered members
 
 * [**BuddyPress**](https://buddypress.org/) With BuddyPress compatibility, you can show membership details on the BuddyPress dashboard and limit access so that only members can view it. 
 
@@ -120,19 +182,31 @@ Have a Query? Visit [**Membership for WooCommerce Documentation**](https://docs.
 * **WooCommerce HPOS Compatibility:** Our Plugin is Compatible with High-Performance Order Storage (HPOS). HPOS Compatibility allows you to use an alternate storage mechanism for your orders to increase your WooCommerce store’s performance.
 
 
-== WHAT PREMIUM VERSION OF MEMBERSHIP FOR WOOCOMMERCE PLUGIN OFFERS == 
+== WHAT PREMIUM VERSION OF WORDPRESS MEMBERSHIP PLUGIN OFFERS == 
 
-**1) Customize emails:**  Membership Pro plugin lets you easily customize email subject lines and messages for membership creation, expiration, and cancellation.
+####1) Customize emails:
 
-**2) Show Discounts to Non-Members:** Display discounted products to non-members or customers without a WooCommerce membership plan. This encourages them to join and enjoy exclusive member discounts.
+Membership Pro plugin lets you easily customize email subject lines and messages for membership creation, expiration, and cancellation.
 
-**3) Detailed Membership Reports:** Get clear insights into your memberships with easy-to-read reports and better graphics. See member growth, earnings, and trends at a glance
+####2) Show Discounts to Non-Members:
 
-**4) Restrict Access to Content:** Membership Pro plugin lets you control access to products, pages, and posts for membership plan users. You can restrict premium content to members only
+Display discounted products to non-members or customers without a WooCommerce membership plan. This encourages them to join and enjoy exclusive member discounts.
 
-**5) Shortcode to Show Membership Plans:** Display membership plans using shortcodes like [wps_membership_title_name], [wps_membership_price], [wps_membership_desc_data], and more for customization.
+####3) Detailed Membership Reports:
 
-**6) Two Best Templates**  Two free templates are available to display membership plans: "Simple Plan Template" and "Comparison Plan Template.
+Get clear insights into your memberships with easy-to-read reports and better graphics. See member growth, earnings, and trends at a glance
+
+####4) Restrict Access to Content:
+
+Membership Pro plugin lets you control access to products, pages, and posts for membership plan users. You can restrict premium content to members only
+
+####5) Shortcode to Show Membership Plans:
+
+Display membership plans using shortcodes like [wps_membership_title_name], [wps_membership_price], [wps_membership_desc_data], and more for customization.
+
+####6) Two Best Templates
+
+Two free templates are available to display membership plans: "Simple Plan Template" and "Comparison Plan Template.
 
 == TAKE ADVANTAGE OF EXCLUSIVE FEATURES OF THE MEMBERSHIP FOR WOOCOMMERCE PRO PLUGIN ==
 
@@ -171,7 +245,7 @@ Automatic updates should work like a charm; as always though, ensure you backup 
 
 == Frequently Asked Questions ==
 
-= What is the basic purpose of using the Membership for WooCommerce plugin? =
+= What is the basic purpose of using the WordPress Membership for WooCommerce plugin? =
 The Membership for WooCommerce plugin lets the WooCommerce store owners create and sell memberships and assign membership levels to their users. The store owner can give discounts to WooCommerce members based on their memberships.
 
 = What are the features regarding the Membership Plans available using the WooCommerce Membership plugin? =
@@ -190,7 +264,7 @@ The Admin panel will have the memberships Menu. In this submenu, you can find al
 * Expiry date
 You can also Import and export members’ details & add new members.
 
-= Are there any shortcodes available in the WooCommerce  Membership extension? = 
+= Are there any shortcodes available in the WooCommerce Membership extension? = 
 Yes, Membership for WooCommerce provides functionality to the admin to customize the membership plan page and notifications through the shortcodes provided in Memberships >> Shortcodes space. The Membership for WooCommerce extension has an improved set of shortcodes for:
 
 * Membership Action Shortcodes
@@ -208,6 +282,12 @@ Yes, Admin can enable the visibility of the user history from the General Settin
 = Will this WooCommerce Membership plugin be compatible with my current theme? =
 Yes, The Membership for WooCommerce plugin is compatible with all popular themes that follow WooCommerce standards.
 
+= What is the best way to manage users with a members plugin WordPress supports? =
+The Membership for WooCommerce plugin is an excellent members plugin WordPress users can rely on to create and manage membership plans. It allows store owners to restrict content, offer exclusive discounts, and control product visibility based on membership levels—all without needing to write any code.
+
+= Can I restrict product access using a membership plugin WordPress offers? =
+Yes, with the Membership for WooCommerce plugin, you can easily restrict access to specific products, categories, or pages. This powerful membership plugin WordPress users love gives you full control over what content is visible to members based on their subscription level.
+
 = Does the Membership for WooCommerce plugin provide the Shortcode to display the membership plan/price? =
 Yes, The Membership for WooCommerce plugin has a shortcode section to display the Membership plan, price, and description.
 
@@ -218,8 +298,14 @@ Yes, The Membership for WooCommerce plugin has a shortcode section to display th
 = Can I add as many levels of Membership as I want using the Membership for WooCommerce plugin? = 
 Yes, you can create as many levels as you want using the Membership for WooCommerce plugin.
 
-= Is there any option in a Membership for WooCommerce plugin to provide the user with lifetime membership or limited membership? =
+= Can I build a members-only community using a Community Plugin WordPress supports? =
+Yes, you can create a private or public members-only community using a Community Plugin WordPress supports, such as Membership for WooCommerce. It allows you to restrict content, manage user roles, and offer exclusive benefits—making it easy to build an engaged online community around your WooCommerce store.
+
+= Is there any option in a WordPress membership plugin to provide the user with lifetime membership or limited membership? =
 Yes, The admin can set the membership to lifetime or limited using the Membership for WooCommerce plugin. The admin can set either of the two.
+
+= What is the membership meaning in an eCommerce store? =
+In an eCommerce context, membership meaning refers to a system where customers sign up for exclusive access to certain products, discounts, or content. With the Membership for WooCommerce plugin, you can create different membership levels to offer perks like free shipping, special pricing, or early product access, encouraging customer loyalty and repeat purchases.
 
 = My question is not listed =
 Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/wordpress-plugins-knowledge-base/category/membership-for-woocommerce/?utm_source=wpswings-membership-kb&utm_medium=membership-org-page&utm_campaign=membership-kb) and for a more detailed visit [**Membership for WooCommerce Documentation**](https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-page&utm_campaign=membership-doc).
@@ -253,9 +339,16 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 25. Google Recaptcha Setting
 26. Membership User’s Community
 27. BuddyPress Integration
+28. Pdf Compatibility
 
 
 == Changelog ==
+
+= 3.0.0 - Released on 25 July 2025 =
+* New: Compatibility with PDF Generator For WP Plugin by WP Swings
+* New: Compatibility with Event Tickets Manager for WooCommerce Plugin by WP Swings
+* Fix: Prevent user to purchase same membership multiple times
+* New: Compatibility with latest WP(6.8.2) & WC(10.0.4)
 
 = 2.9.0 - Released on 12 June 2025 =
 * New : Compatibility with BuddyPress
@@ -473,11 +566,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 2.9.0 - Released on 12 June 2025 =
-* New : Compatibility with BuddyPress
-* New : Display membership plugin data on the BuddyPress user dashboard
-* New : Restrict BuddyPress dashboard access to members only
-* New : Send emails to community users
-* New : Compatible with the latest versions of WordPress (6.8.1) and WooCommerce (9.9.3)
+= 3.0.0 - Released on 25 July 2025 =
+* New: Compatibility with PDF Generator For WP Plugin by WP Swings
+* New: Compatibility with Event Tickets Manager for WooCommerce Plugin by WP Swings
+* Fix: Prevent user to purchase same membership multiple times
+* New: Compatibility with latest WP(6.8.2) & WC(10.0.4)
 
 

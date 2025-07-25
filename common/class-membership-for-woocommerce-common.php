@@ -668,6 +668,10 @@ class Membership_For_Woocommerce_Common {
 						if ( $_user ) {
 
 							$user_id   = $_user;
+
+							// send user id and password to the user.
+							$this->global_class->wps_msfw_send_user_login_details_to_users( $user_id );
+
 							$user_ob   = get_user_by( 'id', $user_id );
 							$user_name = $user_ob->display_name;
 							// assign one time discount coupon.
@@ -924,12 +928,7 @@ class Membership_For_Woocommerce_Common {
 					  <p> Password - ' . esc_attr( $user_password ) . ' </p>
 			';
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
-			if ( wp_mail( $to, $subject, $body, $headers ) ) {
-				error_log( 'email has been successfully sent to user whose email is ' . esc_attr( $user_email ) );
-				$user_password = get_option( 'user_password', '' );
-			} else {
-				error_log( 'email failed to sent to user whose email is ' . esc_attr( $user_email ) );
-			}
+			wp_mail( $to, $subject, $body, $headers );
 		}
 	}
 
