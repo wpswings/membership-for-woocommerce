@@ -4573,7 +4573,7 @@ class Membership_For_Woocommerce_Admin {
 				'description' => __( 'Select the membership that will be assigned to a new user upon registration.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_membership_assign_to_new_user',
 				'value'       => get_option( 'wps_msfw_membership_assign_to_new_user' ),
-				'options'     => $this->wps_msfw_list_all_membership(),
+				'options'     => $this->global_class->wps_msfw_list_all_membership(),
 			),
 			array(
 				'type'        => 'simple-button',
@@ -4698,31 +4698,6 @@ class Membership_For_Woocommerce_Admin {
 				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $msg, 'error' );
 			}
 		}
-	}
-
-	/**
-	 * This function is used to list all membership.
-	 *
-	 * @return array
-	 */
-	public function wps_msfw_list_all_membership() {
-
-		$results = get_posts(
-			array(
-				'post_type'   => 'wps_cpt_membership',
-				'post_status' => 'publish',
-				'numberposts' => -1,
-			)
-		);
-
-		$wps_msfw_all_pages = array();
-		if ( ! empty( $results ) && is_array( $results ) ) {
-			foreach ( $results as $key => $value ) {
-
-				$wps_msfw_all_pages[ $value->ID ] = $value->post_title;
-			}
-		}
-		return $wps_msfw_all_pages;
 	}
 
 	/**
