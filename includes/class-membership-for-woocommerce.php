@@ -514,7 +514,9 @@ class Membership_For_Woocommerce {
 			// restrict user to purchase same membership plan.
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_msfw_block_duplicate_membership_in_cart', 10, 1 );
 			$this->loader->add_action( 'woocommerce_store_api_checkout_update_order_from_request', $mfw_plugin_public, 'wps_msfw_restrict_user_to_purchase_duplicate_membership_block', 10, 2 );
-
+			// set product max limit.
+			$this->loader->add_action( 'woocommerce_check_cart_items', $mfw_plugin_public, 'wps_msfw_restrict_purchase_quantity_by_membership', 10 );
+			$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $mfw_plugin_public, 'wps_msfw_validate_quantity_before_add', 10, 3 );
 		}
 	}
 

@@ -1234,6 +1234,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_sfw_subscription_initial_signup_price'  => array( 'default' => '' ),
 			'wps_sfw_subscription_free_trial_number'     => array( 'default' => '' ),
 			'wps_sfw_subscription_free_trial_interval'   => array( 'default' => 'days' ),
+			'wps_set_maximum_product_purchase_limit'     => array( 'default' => '0' ),
 		);
 
 		/**
@@ -1887,6 +1888,7 @@ class Membership_For_Woocommerce_Admin {
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_initial_signup_price', true ),
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_number', true ),
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_interval', true ),
+								wps_membership_get_meta_data( $single_post->ID, 'wps_set_maximum_product_purchase_limit', true ),
 								$this->global_class->csv_get_prod_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_ids', true ) ),
 								$this->global_class->csv_get_cat_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_categories', true ) ),
 								get_post_field( 'post_content', $single_post->ID ),

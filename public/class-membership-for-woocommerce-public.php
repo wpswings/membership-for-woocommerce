@@ -5568,4 +5568,100 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 	}
+
+	/**
+	 * This function restricts the purchase quantity of products based on the user's membership plan on cart page.
+	 *
+	 * @return bool
+	 */
+	public function wps_msfw_restrict_purchase_quantity_by_membership() {
+		// Only for logged-in users with a cart.
+		if ( ! is_user_logged_in() || ! WC()->cart || WC()->cart->is_empty() ) {
+			return;
+		}
+
+		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		if ( empty( $membership_ids ) || ! is_array( $membership_ids ) ) {
+			return;
+		}
+
+		// Find highest purchase limit among memberships.
+		$max_limit = 0;
+		foreach ( $membership_ids as $id ) {
+			$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+			if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+				$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+			}
+		}
+
+		if ( $max_limit <= 0 ) {
+			return; // No limit set.
+		}
+
+		static $notice_added = false; // Prevent duplicate notices.
+
+		// Enforce limit in cart.
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+			if ( $cart_item['quantity'] > $max_limit ) {
+				WC()->cart->set_quantity( $cart_item_key, $max_limit );
+
+				if ( ! $notice_added ) {
+					wc_add_notice(
+						sprintf(
+							__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
+							$max_limit
+						),
+						'error'
+					);
+					$notice_added = true;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Enforce purchase limit on single product page before adding to cart.
+	 *
+	 * @param  bool $passed     passed.
+	 * @param  int $product_id product_id.
+	 * @param  int $quantity   quantity.
+	 * @return bool
+	 */
+	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
+
+		// Only for logged-in users.
+		if ( ! is_user_logged_in() ) {
+			return $passed;
+		}
+
+		$membership_ids = (array) get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+
+		if ( empty( $membership_ids ) ) {
+			return $passed;
+		}
+
+		$max_limit = 0;
+
+		foreach ( $membership_ids as $id ) {
+			$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+
+			if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+				$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+			}
+		}
+
+		if ( $max_limit > 0 && $quantity > $max_limit ) {
+			wc_add_notice(
+				sprintf(
+					__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
+					$max_limit
+				),
+				'error'
+			);
+			return false;
+		}
+
+		return $passed;
+	}
+
 }

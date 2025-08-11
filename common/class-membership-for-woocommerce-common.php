@@ -264,6 +264,7 @@ class Membership_For_Woocommerce_Common {
 								wps_membership_update_meta_data( $plan_id, 'wps_memebership_plan_free_shipping', $value['wps_memebership_plan_free_shipping'] );
 								wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_target_ids', $value['wps_membership_plan_target_ids'] );
 								wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_target_categories', $value['wps_membership_plan_target_categories'] );
+								wps_membership_update_meta_data( $plan_id, 'wps_set_maximum_product_purchase_limit', $value['wps_set_maximum_product_purchase_limit'] );
 							}
 						}
 					}
