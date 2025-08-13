@@ -290,7 +290,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
 
 		// add custom menu in product edit page.
-		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', 99, 1 );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', PHP_INT_MIN, 1 );
 		$this->loader->add_action( 'woocommerce_product_data_panels', $mfw_plugin_admin, 'mfw_attach_plan_product_data_fields' );
 
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );

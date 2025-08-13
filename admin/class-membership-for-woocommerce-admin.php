@@ -2697,10 +2697,11 @@ class Membership_For_Woocommerce_Admin {
 			$product_data_tabs['attach-membership'] = array(
 				'label'  => __( 'Attach Membership', 'membership-for-woocommerce' ),
 				'target' => 'wps_attach_membership',
+				'priority' => 1100,
 			);
 		} elseif ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
-				wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
+			wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
 		}
 		return $product_data_tabs;
 	}
@@ -2733,7 +2734,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-		echo '<div class="wps_membership_dropdown hidden ">';
+		echo '<div id="wps_attach_membership" class="wps_membership_dropdown hidden ">';
 		woocommerce_wp_select(
 			array(
 				'id'          => 'wps_attach_plans',

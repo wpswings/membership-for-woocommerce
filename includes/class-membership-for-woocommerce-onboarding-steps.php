@@ -199,7 +199,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	public function wps_mfw_onboarding_enqueue_scripts() {
 		global $pagenow;
 		$is_valid = false;
-		if ( ! $is_valid && 'plugins.php' == $pagenow ) {
+		if ( ! $is_valid && 'plugins.php' == $pagenow || 'dashboard' == get_current_screen()->id ) {
 			$is_valid = true;
 		}
 		if ( $this->wps_mfw_valid_page_screen_check() || $is_valid ) {
@@ -219,6 +219,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'mfw_auth_nonce'    => wp_create_nonce( 'wps_mfw_onboarding_nonce' ),
 					'mfw_current_screen'    => $pagenow,
+					'wps_nonce'             => wp_create_nonce( 'plan-import-nonce' ),
 					'mfw_current_supported_slug'    =>
 					/**
 					 * Desc filter for trial.

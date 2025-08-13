@@ -25,7 +25,7 @@
  * Requires at least: 6.7.0
  * Tested up to:      6.8.2
  * WC requires at least: 5.0
- * WC tested up to:   10.0.4
+ * WC tested up to:   10.1.0
  *
  * License:           GNU General Public License v3.0
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.html
@@ -36,6 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 use Automattic\WooCommerce\Utilities\OrderUtil;
+use Automattic\WooCommerce\Utilities\FeaturesUtil;
 require_once ABSPATH . 'wp-admin/includes/plugin.php';
 
 /**
@@ -440,7 +441,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			update_option( 'wps_wgm_notify_new_banner_image', $banner_image );
 			update_option( 'wps_wgm_notify_new_banner_url', $banner_url );
 			if ( 'regular' == $banner_type ) {
-				update_option( 'wps_wgm_notify_hide_baneer_notification', '' );
+				update_option( 'wps_wgm_notify_hide_baneer_notification', 0 );
 			}
 		}
 	}
@@ -492,40 +493,74 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
-
 	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
 	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 		/**
-		 * Common Function To show banner image.
+		 * Common Function To show banner image on Wordpress dashboard, plugin page and plugin home page.
 		 *
 		 * @return void
 		 */
 		function wps_banner_notification_plugin_html() {
 
 			$screen = get_current_screen();
-			if ( isset( $screen->id ) ) {
-				$pagescreen = $screen->id;
+			if ( ! $screen || empty( $screen->id ) ) {
+				return;
 			}
-			if ( ( isset( $pagescreen ) && 'plugins' === $pagescreen ) || ( 'wp-swings_page_home' == $pagescreen ) || ( 'wp-swings_page_membership_for_woocommerce_menu' == $pagescreen ) ) {
+
+			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+			if ( in_array( $screen->id, $target_screens, true ) ) {
+
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
-				if ( isset( $banner_id ) && '' !== $banner_id ) {
-					$hidden_banner_id            = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
-					$banner_image = get_option( 'wps_wgm_notify_new_banner_image', '' );
-					$banner_url = get_option( 'wps_wgm_notify_new_banner_url', '' );
-					if ( isset( $hidden_banner_id ) && $hidden_banner_id < $banner_id ) {
+				if ( ! empty( $banner_id ) ) {
 
-						if ( '' !== $banner_image && '' !== $banner_url ) {
+					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
-							?>
-								<div class="wps-offer-notice notice notice-warning is-dismissible">
-									<div class="notice-container">
-										<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
-									</div>
-									<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						?>
+							<div class="wps-offer-notice notice notice-warning is-dismissible">
+								<div class="notice-container">
+									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
 								</div>
-								
-							<?php
-						}
+								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+							</div>
+							
+						<?php
+					}
+				}
+			}
+		}
+	}
+
+	add_action( 'admin_notices', 'wps_msfw_banner_notify_html' );
+	/**
+	 * This function is used to show banner image on plugin settings dashboard.
+	 *
+	 * @return void
+	 */
+	function wps_msfw_banner_notify_html() {
+
+		$nonce = wp_create_nonce( 'wps_banner_check' );
+		if ( wp_verify_nonce( $nonce, 'wps_banner_check' ) ) {
+			if ( isset( $_GET['page'] ) && 'membership_for_woocommerce_menu' === $_GET['page'] ) {
+
+				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
+				if ( ! empty( $banner_id ) ) {
+
+					$hidden_banner_id = get_option( 'wps_wgm_notify_hide_baneer_notification', false );
+					$banner_image     = get_option( 'wps_wgm_notify_new_banner_image', '' );
+					$banner_url       = get_option( 'wps_wgm_notify_new_banner_url', '' );
+					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
+
+						?>
+						<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="notice-container">
+								<a href="<?php echo esc_url( $banner_url ); ?>"target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+							</div>
+							<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
+						</div>
+						<?php
 					}
 				}
 			}
@@ -627,5 +662,8 @@ add_action(
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		}
+		if ( class_exists( FeaturesUtil::class ) ) {
+           FeaturesUtil::declare_compatibility( 'product_block_editor', plugin_basename( __FILE__ ), true );
+       }
 	}
 );

@@ -9,6 +9,9 @@
  * @subpackage Membership_For_Woocommerce/common
  */
 
+use Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+use Automattic\WooCommerce\Admin\BlockTemplates\LayoutTemplateInterface;
+
 /**
  * The common functionality of the plugin.
  *
@@ -1197,4 +1200,5 @@ class Membership_For_Woocommerce_Common {
 
 		wp_die();
 	}
+
 }
