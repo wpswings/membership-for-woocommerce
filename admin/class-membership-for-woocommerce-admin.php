@@ -730,6 +730,25 @@ class Membership_For_Woocommerce_Admin {
 					'no'  => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title'       => __( 'Restrict how many units of a product a customer can buy', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'This setting works globally, but once a user becomes a member and purchases a membership, product purchase limitations will apply based on their membership level.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_product_limit_restriction_globally',
+				'value'       => get_option( 'wps_msfw_enable_product_limit_restriction_globally' ),
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Set quantity limit', 'membership-for-woocommerce' ),
+				'type'        => 'number',
+				'description' => __( 'Limit the maximum product quantity a user can purchase.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_global_product_purchase_limit_qty',
+				'value'       => get_option( 'wps_msfw_global_product_purchase_limit_qty' ),
+				'placeholder' => __( 'Set per-user product purchase restrictions', 'membership-for-woocommerce' ),
+			),
 
 		);
 		$after_email = array();

@@ -5570,56 +5570,6 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * This function restricts the purchase quantity of products based on the user's membership plan on cart page.
-	 *
-	 * @return bool
-	 */
-	public function wps_msfw_restrict_purchase_quantity_by_membership() {
-		// Only for logged-in users with a cart.
-		if ( ! is_user_logged_in() || ! WC()->cart || WC()->cart->is_empty() ) {
-			return;
-		}
-
-		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		if ( empty( $membership_ids ) || ! is_array( $membership_ids ) ) {
-			return;
-		}
-
-		// Find highest purchase limit among memberships.
-		$max_limit = 0;
-		foreach ( $membership_ids as $id ) {
-			$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-			if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
-				$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
-			}
-		}
-
-		if ( $max_limit <= 0 ) {
-			return; // No limit set.
-		}
-
-		static $notice_added = false; // Prevent duplicate notices.
-
-		// Enforce limit in cart.
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
-			if ( $cart_item['quantity'] > $max_limit ) {
-				WC()->cart->set_quantity( $cart_item_key, $max_limit );
-
-				if ( ! $notice_added ) {
-					wc_add_notice(
-						sprintf(
-							__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
-							$max_limit
-						),
-						'error'
-					);
-					$notice_added = true;
-				}
-			}
-		}
-	}
-
-	/**
 	 * Enforce purchase limit on single product page before adding to cart.
 	 *
 	 * @param  bool $passed     passed.
@@ -5629,39 +5579,123 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
-		// Only for logged-in users.
-		if ( ! is_user_logged_in() ) {
-			return $passed;
-		}
+		// membership wise restriction.
+		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+			$max_limit = 0;
 
-		$membership_ids = (array) get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+			foreach ( $membership_ids as $id ) {
+				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
 
-		if ( empty( $membership_ids ) ) {
-			return $passed;
-		}
+				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+				}
+			}
 
-		$max_limit = 0;
+			// check qty limit and show error notice.
+			if ( $max_limit > 0 && $quantity > $max_limit ) {
+				wc_add_notice(
+					sprintf(
+						__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
+						$max_limit
+					),
+					'error'
+				);
+				return false;
+			}
+			// globally restriction ( it work when user have not any membership plan ).
+		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
 
-		foreach ( $membership_ids as $id ) {
-			$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-
-			if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
-				$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+			// check qty limit and show error notice.
+			$wps_msfw_global_product_purchase_limit_qty = get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			if ( $wps_msfw_global_product_purchase_limit_qty > 0 && $quantity > $wps_msfw_global_product_purchase_limit_qty ) {
+				wc_add_notice(
+					sprintf(
+						__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+						$wps_msfw_global_product_purchase_limit_qty
+					),
+					'error'
+				);
+				return false;
 			}
 		}
 
-		if ( $max_limit > 0 && $quantity > $max_limit ) {
-			wc_add_notice(
-				sprintf(
-					__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
-					$max_limit
-				),
-				'error'
-			);
-			return false;
+		return $passed;
+	}
+
+	/**
+	 * This function restricts the purchase quantity of products based on the user's membership plan on cart page.
+	 *
+	 * @return bool
+	 */
+	public function wps_msfw_restrict_purchase_quantity_by_membership() {
+		// Only for logged-in users with a cart.
+		if ( ! WC()->cart || WC()->cart->is_empty() ) {
+			return;
 		}
 
-		return $passed;
+		// membership wise restriction.
+		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+
+			// Find highest purchase limit among memberships.
+			$max_limit = 0;
+			foreach ( $membership_ids as $id ) {
+
+				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+
+					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+				}
+			}
+
+			if ( $max_limit <= 0 ) {
+				return; // No limit set.
+			}
+
+			static $notice_added = false; // Prevent duplicate notices.
+
+			// Enforce limit in cart.
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+				if ( $cart_item['quantity'] > $max_limit ) {
+					WC()->cart->set_quantity( $cart_item_key, $max_limit );
+
+					if ( ! $notice_added ) {
+						wc_add_notice(
+							sprintf(
+								__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
+								$max_limit
+							),
+							'error'
+						);
+						$notice_added = true;
+					}
+				}
+			}
+			// globally restriction ( it work when user have not any membership plan ).
+		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
+
+			$wps_msfw_global_product_purchase_limit_qty = get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			static $notice_added                        = false; // Prevent duplicate notices.
+
+			// Enforce limit in cart.
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+				if ( $cart_item['quantity'] > $wps_msfw_global_product_purchase_limit_qty ) {
+					WC()->cart->set_quantity( $cart_item_key, $wps_msfw_global_product_purchase_limit_qty );
+
+					if ( ! $notice_added ) {
+						wc_add_notice(
+							sprintf(
+								__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+								$wps_msfw_global_product_purchase_limit_qty
+							),
+							'error'
+						);
+						$notice_added = true;
+					}
+				}
+			}
+		}
 	}
 
 }
