@@ -5590,7 +5590,7 @@ class Membership_For_Woocommerce_Public {
 			$max_limit = 0;
 			foreach ( $membership_ids as $id ) {
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-				if ( 'publish' !== $plan['post_status'] ) {
+				if ( isset( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
 
 					continue;
 				}
@@ -5654,7 +5654,7 @@ class Membership_For_Woocommerce_Public {
 			foreach ( $membership_ids as $id ) {
 
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-				if ( 'publish' !== $plan['post_status'] ) {
+				if ( isset( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
 
 					continue;
 				}
