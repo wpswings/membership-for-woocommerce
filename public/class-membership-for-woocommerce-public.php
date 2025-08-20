@@ -5589,12 +5589,20 @@ class Membership_For_Woocommerce_Public {
 
 			$max_limit = 0;
 			foreach ( $membership_ids as $id ) {
+
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-				if ( isset( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+				if ( empty( $plan ) ) {
 
 					continue;
 				}
+
+				if ( ! empty( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+
+					continue;
+				}
+
 				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+
 					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
 				}
 			}
@@ -5654,10 +5662,16 @@ class Membership_For_Woocommerce_Public {
 			foreach ( $membership_ids as $id ) {
 
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-				if ( isset( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+				if ( empty( $plan ) ) {
 
 					continue;
 				}
+
+				if ( ! empty( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+
+					continue;
+				}
+
 				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
 
 					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
