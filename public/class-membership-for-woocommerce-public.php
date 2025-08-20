@@ -5579,14 +5579,20 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
-		// membership wise restriction.
-		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+		// membership wise restriction member_status is_member.
+		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
+		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
+		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) && array_diff( $membership_ids, $cancelled_memberships ) ) {
 			$max_limit = 0;
 
 			foreach ( $membership_ids as $id ) {
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+				if ( 'publish' !== $plan['publish'] ) {
 
+					continue;
+				}
 				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
 					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
 				}
@@ -5635,8 +5641,11 @@ class Membership_For_Woocommerce_Public {
 		}
 
 		// membership wise restriction.
-		$membership_ids = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
+		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
+		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) && array_diff( $membership_ids, $cancelled_memberships ) ) {
 
 			// Find highest purchase limit among memberships.
 			$max_limit = 0;
