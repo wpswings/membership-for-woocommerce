@@ -5585,6 +5585,13 @@ class Membership_For_Woocommerce_Public {
 		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
 		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
 		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+
+		// Keep only existing posts
+		$membership_ids = array_filter( $membership_ids, function( $post_id ) {
+			return $post_id && get_post( absint( $post_id ) );
+		});
+
+		// restrict user based on his membership.
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			$max_limit = 0;
@@ -5655,6 +5662,13 @@ class Membership_For_Woocommerce_Public {
 		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
 		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
 		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+
+		// Keep only existing posts.
+		$membership_ids = array_filter( $membership_ids, function( $post_id ) {
+			return $post_id && get_post( absint( $post_id ) );
+		});
+
+		// restrict user based on his membership.
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			// Find highest purchase limit among memberships.
