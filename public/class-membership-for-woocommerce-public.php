@@ -5584,12 +5584,13 @@ class Membership_For_Woocommerce_Public {
 		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
 		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
 		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) && array_diff( $membership_ids, $cancelled_memberships ) ) {
-			$max_limit = 0;
+		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
+			$max_limit = 0;
 			foreach ( $membership_ids as $id ) {
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
-				if ( 'publish' !== $plan['publish'] ) {
+				if ( 'publish' !== $plan['post_status'] ) {
 
 					continue;
 				}
@@ -5613,7 +5614,7 @@ class Membership_For_Woocommerce_Public {
 		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
 
 			// check qty limit and show error notice.
-			$wps_msfw_global_product_purchase_limit_qty = get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
 			if ( $wps_msfw_global_product_purchase_limit_qty > 0 && $quantity > $wps_msfw_global_product_purchase_limit_qty ) {
 				wc_add_notice(
 					sprintf(
@@ -5645,13 +5646,18 @@ class Membership_For_Woocommerce_Public {
 		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
 		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
 		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) && array_diff( $membership_ids, $cancelled_memberships ) ) {
+		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			// Find highest purchase limit among memberships.
 			$max_limit = 0;
 			foreach ( $membership_ids as $id ) {
 
 				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+				if ( 'publish' !== $plan['post_status'] ) {
+
+					continue;
+				}
 				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
 
 					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
@@ -5684,7 +5690,7 @@ class Membership_For_Woocommerce_Public {
 			// globally restriction ( it work when user have not any membership plan ).
 		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
 
-			$wps_msfw_global_product_purchase_limit_qty = get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
 			static $notice_added                        = false; // Prevent duplicate notices.
 
 			// Enforce limit in cart.
