@@ -330,6 +330,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 26. Membership User’s Community
 27. BuddyPress Integration
 28. Pdf Compatibility
+29. Restrict Product Maximum Quantity
 
 
 == Changelog ==
