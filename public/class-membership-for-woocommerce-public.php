@@ -5394,11 +5394,15 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * This function is used to show PDF download option icon only to members users.
+	 * Display the PDF download option icon for member users only.
 	 *
-	 * @param  string $html    HTML content for the PDF download option.
-	 * @param  int    $post_id The ID of the post for which the PDF download option is being displayed.
-	 * @return void
+	 * @param string $html    The HTML content for the PDF download option.
+	 * @param int    $post_id The ID of the post for which the PDF download option is being displayed.
+	 *
+	 * @throws InvalidArgumentException If the post ID or user ID is invalid.
+	 * @throws Exception If the PDF download option could not be generated.
+	 *
+	 * @return string Modified HTML content with or without the PDF download option.
 	 */
 	public function wps_msfw_show_pdf_download_option_icon_only_to_members_users( $html, $post_id ) {
 
@@ -5479,7 +5483,7 @@ class Membership_For_Woocommerce_Public {
 				$status = strtolower( wps_membership_get_meta_data( $membership_id, 'member_status', true ) );
 
 				// Skip if plan is not complete or invalid.
-				if ( empty( $plan ) || $status !== 'complete' ) {
+				if ( empty( $plan ) || 'complete' !== $status ) {
 					continue;
 				}
 
@@ -5489,7 +5493,7 @@ class Membership_For_Woocommerce_Public {
 					// Remove the duplicate and notify the user.
 					wc_add_notice(
 						sprintf(
-							/* translators: %s: notice */ esc_html__( "The %s membership plan is already active on your account. You don't need to buy it again", 'membership-for-woocommerce' ),
+							/* translators: %s: notice */                            esc_html__( "The %s membership plan is already active on your account. You don't need to buy it again", 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						'error'
@@ -5505,7 +5509,7 @@ class Membership_For_Woocommerce_Public {
 	 * Prevents users for placing duplicate membership order, this is work for guest user.
 	 *
 	 * @param  object $order   order.
-	 * @param  string $request request.
+	 * @param  array  $request request.
 	 * @return void
 	 */
 	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
@@ -5559,7 +5563,7 @@ class Membership_For_Woocommerce_Public {
 					throw new \WC_REST_Exception(
 						'woocommerce_rest_duplicate_membership',
 						sprintf(
-							/* translators: %s: notice */ esc_html__( 'You already have the "%s" membership plan associated with this email. Please remove it from your cart to proceed.', 'membership-for-woocommerce' ),
+							/* translators: %s: notice */                            esc_html__( 'You already have the "%s" membership plan associated with this email. Please remove it from your cart to proceed.', 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						400
@@ -5573,8 +5577,8 @@ class Membership_For_Woocommerce_Public {
 	 * Enforce purchase limit on single product page before adding to cart.
 	 *
 	 * @param  bool $passed     passed.
-	 * @param  int $product_id product_id.
-	 * @param  int $quantity   quantity.
+	 * @param  int  $product_id product_id.
+	 * @param  int  $quantity   quantity.
 	 * @return bool
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
@@ -5586,10 +5590,13 @@ class Membership_For_Woocommerce_Public {
 		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
 		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
 
-		// Keep only existing posts
-		$membership_ids = array_filter( $membership_ids, function( $post_id ) {
-			return $post_id && get_post( absint( $post_id ) );
-		});
+		// Keep only existing posts.
+		$membership_ids = array_filter(
+			$membership_ids,
+			function ( $post_id ) {
+				return $post_id && get_post( absint( $post_id ) );
+			}
+		);
 
 		// restrict user based on his membership.
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
@@ -5618,7 +5625,7 @@ class Membership_For_Woocommerce_Public {
 			if ( $max_limit > 0 && $quantity > $max_limit ) {
 				wc_add_notice(
 					sprintf(
-						__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
+						/* translators: %s: notice */                        esc_html__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
 						$max_limit
 					),
 					'error'
@@ -5633,7 +5640,7 @@ class Membership_For_Woocommerce_Public {
 			if ( $wps_msfw_global_product_purchase_limit_qty > 0 && $quantity > $wps_msfw_global_product_purchase_limit_qty ) {
 				wc_add_notice(
 					sprintf(
-						__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+						/* translators: %s: notice */                        esc_html__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
 						$wps_msfw_global_product_purchase_limit_qty
 					),
 					'error'
@@ -5664,9 +5671,12 @@ class Membership_For_Woocommerce_Public {
 		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
 
 		// Keep only existing posts.
-		$membership_ids = array_filter( $membership_ids, function( $post_id ) {
-			return $post_id && get_post( absint( $post_id ) );
-		});
+		$membership_ids = array_filter(
+			$membership_ids,
+			function ( $post_id ) {
+				return $post_id && get_post( absint( $post_id ) );
+			}
+		);
 
 		// restrict user based on his membership.
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
@@ -5706,7 +5716,7 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $notice_added ) {
 						wc_add_notice(
 							sprintf(
-								__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
+								/* translators: %s: notice */                                esc_html__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
 								$max_limit
 							),
 							'error'
@@ -5729,7 +5739,7 @@ class Membership_For_Woocommerce_Public {
 					if ( ! $notice_added ) {
 						wc_add_notice(
 							sprintf(
-								__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+								/* translators: %s: notice */                                esc_html__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
 								$wps_msfw_global_product_purchase_limit_qty
 							),
 							'error'
@@ -5740,5 +5750,4 @@ class Membership_For_Woocommerce_Public {
 			}
 		}
 	}
-
 }

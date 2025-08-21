@@ -951,12 +951,12 @@ class Membership_For_Woocommerce_Common {
 			$user_id       = get_current_user_id();
 			if ( ! empty( $membership_id ) ) {
 
-				// Update cancelled membership IDs
+				// Update cancelled membership IDs.
 				$cancelled_memberships = get_user_meta( $user_id, 'wps_msfw_cancel_membership_ids', true );
 				$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
 
 				if ( ! in_array( $membership_id, $cancelled_memberships ) ) {
-					$cancelled_memberships[] = $membership_id; // append safely
+					$cancelled_memberships[] = $membership_id; // append safely.
 				}
 
 				update_user_meta( $user_id, 'wps_msfw_cancel_membership_ids', $cancelled_memberships );
@@ -1209,5 +1209,4 @@ class Membership_For_Woocommerce_Common {
 
 		wp_die();
 	}
-
 }
