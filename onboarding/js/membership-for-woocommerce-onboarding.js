@@ -167,4 +167,27 @@ jQuery(document).ready(function($) {
     }
 
     // End of scripts.
+    // Dismiss banner notification.
+    $( document ).on(
+        'click',
+        '#dismiss-banner',
+        function(e){
+            e.preventDefault();
+            var data = {
+                action:'wps_mfw_dismiss_notice_banner',
+                wps_nonce:wps_mfw_onboarding.wps_nonce
+            };
+            $.ajax(
+                {
+                    url: wps_mfw_onboarding.ajaxurl,
+                    type: "POST",
+                    data: data,
+                    success: function(response)
+                    {
+                        window.location.reload();
+                    }
+                }
+            );
+        }
+    );
 });

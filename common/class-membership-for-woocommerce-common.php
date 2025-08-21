@@ -9,6 +9,9 @@
  * @subpackage Membership_For_Woocommerce/common
  */
 
+use Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
+use Automattic\WooCommerce\Admin\BlockTemplates\LayoutTemplateInterface;
+
 /**
  * The common functionality of the plugin.
  *
@@ -264,6 +267,7 @@ class Membership_For_Woocommerce_Common {
 								wps_membership_update_meta_data( $plan_id, 'wps_memebership_plan_free_shipping', $value['wps_memebership_plan_free_shipping'] );
 								wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_target_ids', $value['wps_membership_plan_target_ids'] );
 								wps_membership_update_meta_data( $plan_id, 'wps_membership_plan_target_categories', $value['wps_membership_plan_target_categories'] );
+								wps_membership_update_meta_data( $plan_id, 'wps_set_maximum_product_purchase_limit', $value['wps_set_maximum_product_purchase_limit'] );
 							}
 						}
 					}
@@ -944,10 +948,19 @@ class Membership_For_Woocommerce_Common {
 			check_ajax_referer( 'wps_common_ajax_nonce', 'security' );
 
 			$membership_id = isset( $_POST['membership_id'] ) ? sanitize_text_field( wp_unslash( $_POST['membership_id'] ) ) : '';
+			$user_id       = get_current_user_id();
 			if ( ! empty( $membership_id ) ) {
 
+				// Update cancelled membership IDs.
+				$cancelled_memberships = get_user_meta( $user_id, 'wps_msfw_cancel_membership_ids', true );
+				$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+
+				if ( ! in_array( $membership_id, $cancelled_memberships ) ) {
+					$cancelled_memberships[] = $membership_id; // append safely.
+				}
+
+				update_user_meta( $user_id, 'wps_msfw_cancel_membership_ids', $cancelled_memberships );
 				wps_membership_update_meta_data( $membership_id, 'member_status', 'cancelled' );
-				$user_id = get_current_user_id();
 				update_user_meta( $user_id, 'is_member', '' );
 				if ( ! empty( wps_membership_get_meta_data( $membership_id - 1, 'wps_subscription_status', true ) ) ) {
 

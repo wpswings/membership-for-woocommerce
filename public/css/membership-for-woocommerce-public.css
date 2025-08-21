@@ -1674,10 +1674,6 @@ span.wps_mfw_no_plan_found_msg {
 
 /* Membership dashboard start */
 
-:root {
-    --wps-msfw-dashboard-primary: #7BCD66;
-}
-
 .wps-msfw_dashboard-main {
     padding: 0 0 25px;
     container-type: inline-size;

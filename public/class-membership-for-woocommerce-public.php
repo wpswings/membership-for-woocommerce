@@ -1057,7 +1057,7 @@ class Membership_For_Woocommerce_Public {
 	 * Validate shortcode for rendering content according to user( live offer )
 	 * and admin ( for viewing purpose ).
 	 *
-	 * @since    3.0.0
+	 * @since    3.0.1
 	 */
 	public function wps_membership_validate_mode() {
 		// user is blocked.
@@ -5089,189 +5089,12 @@ class Membership_For_Woocommerce_Public {
 		// check login and sigup feature is enable or not.
 		$wps_msfw_enable_assign_default_membership_setting = get_option( 'wps_msfw_enable_assign_default_membership_setting' );
 		$wps_msfw_membership_assign_to_new_user            = get_option( 'wps_msfw_membership_assign_to_new_user' );
-		if ( 'on' === $wps_msfw_enable_assign_default_membership_setting ) {
+		if ( 'on' === $wps_msfw_enable_assign_default_membership_setting && ! empty( $wps_msfw_membership_assign_to_new_user ) ) {
 
-			$post_id                                = wp_insert_post(
-				array(
-					'post_type'   => 'wps_cpt_members',
-					'post_status' => 'publish',
-					'post_author' => $user_id,
-				),
-				true
-			);
-
-			wps_membership_update_meta_data( $post_id, 'member_status', 'complete' );
-			$actions = array(
-				'member_status'  => 'complete',
-				'member_actions' => '',
-			);
-
-			// When plans are assigned manually.
-			$plan_id         = '';
-			$wps_success_msg = true;
-			if ( isset( $wps_msfw_membership_assign_to_new_user ) ) {
-
-				$plan_id = $wps_msfw_membership_assign_to_new_user;
-				if ( ! empty( $plan_id ) ) {
-
-					$plan_obj    = get_post( $plan_id, ARRAY_A );
-					$plan_status = ! empty( $plan_obj['post_status'] ) ? $plan_obj['post_status'] : '';
-					if ( ! is_array( $plan_obj ) || 'publish' != $plan_status ) {
-
-						return;
-					}
-
-					$post_meta = get_post_meta( $plan_id );
-					foreach ( $post_meta as $post_meta_key => $post_meta_value ) {
-
-						$post_meta[ $post_meta_key ] = reset( $post_meta_value );
-					}
-
-					$plan_meta = array_merge( $plan_obj, $post_meta );
-					wps_membership_update_meta_data( $post_id, 'plan_obj', $plan_meta );
-				}
-			}
-
-			$current_assigned_user = $user_id;
-			if ( $current_assigned_user ) {
-
-				wps_membership_update_meta_data( $post_id, 'wps_member_user', $current_assigned_user );
-			}
-
-			$current_memberships = get_user_meta( $current_assigned_user, 'mfw_membership_id', true );
-			$current_memberships = ! empty( $current_memberships ) ? $current_memberships : array();
-			if ( ! in_array( $post_id, (array) $current_memberships ) ) {
-
-				array_push( $current_memberships, $post_id );
-			}
-
-			if ( 'yes' == wps_membership_get_meta_data( $plan_id, 'wps_membership_subscription', true ) ) {
-
-				wps_membership_update_meta_data( $post_id, 'is_subscription_plan_member', 'yes' );
-			} else {
-				wps_membership_update_meta_data( $post_id, 'is_subscription_plan_member', '' );
-			}
-
-			// Assign membership plan to user and assign 'member' role to it.
-			update_user_meta( $current_assigned_user, 'mfw_membership_id', $current_memberships );
+			// assign membership to new user.
+			$this->global_class->wps_msfw_assigned_membership_by_user_id( $user_id, $wps_msfw_membership_assign_to_new_user );
 			// send welcome mail while new user register.
 			$this->global_class->wps_mfw_membership_welcome_mail( $user_id );
-
-			// Getting current activation date.
-			$current_date = gmdate( 'Y-m-d' );
-			$plan_obj     = wps_membership_get_meta_data( $post_id, 'plan_obj', true );
-			// Save expiry date in post.
-			if ( ! empty( $plan_obj ) && is_array( $plan_obj ) ) {
-
-				$membership_plubic = new Membership_For_Woocommerce_Public( $this->plugin_name, $this->version );
-				$membership_plubic->assign_club_membership_to_member( $plan_obj['ID'], $plan_obj, $post_id );
-				$access_type       = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_access_type', true );
-				if ( 'delay_type' == $access_type ) {
-
-					$time_duration      = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration', true );
-					$time_duration_type = wps_membership_get_meta_data( $plan_obj['ID'], 'wps_membership_plan_time_duration_type', true );
-					$current_date       = gmdate( 'Y-m-d', strtotime( $current_date . ' + ' . $time_duration . ' ' . $time_duration_type ) );
-				}
-
-				if ( 'lifetime' == $plan_obj['wps_membership_plan_name_access_type'] ) {
-
-					wps_membership_update_meta_data( $post_id, 'member_expiry', 'Lifetime' );
-
-				} elseif ( 'limited' == $plan_obj['wps_membership_plan_name_access_type'] ) {
-
-					$duration    = $plan_obj['wps_membership_plan_duration'] . ' ' . $plan_obj['wps_membership_plan_duration_type'];
-					$today_date  = gmdate( 'Y-m-d' );
-					$expiry_date = strtotime( $today_date . $duration );
-					wps_membership_update_meta_data( $post_id, 'member_expiry', $expiry_date );
-					$order_id = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
-					if ( array_key_exists( 'wps_membership_subscription', $plan_obj ) ) {
-
-						if ( 'yes' == $plan_obj['wps_membership_subscription'] ) {
-							$subscription_id = wps_membership_get_meta_data( $order_id, 'wps_subscription_id', true );
-							if ( ! empty( $subscription_id ) ) {
-
-								wps_membership_update_meta_data( $subscription_id, 'wps_subscription_status', 'active' );
-								wps_membership_update_meta_data( $subscription_id, 'wps_next_payment_date', $expiry_date );
-								if ( ! empty( $plan_obj['wps_membership_subscription_expiry'] ) ) {
-									if ( function_exists( 'wps_sfw_susbcription_expiry_date' ) ) {
-
-										$current_time         = current_time( 'timestamp' );
-										$wps_susbcription_end = wps_sfw_susbcription_expiry_date( $subscription_id, $current_time );
-										wps_membership_update_meta_data( $subscription_id, 'wps_susbcription_end', $wps_susbcription_end );
-									}
-								} else {
-									wps_membership_update_meta_data( $subscription_id, 'wps_susbcription_end', '' );
-								}
-							}
-						}
-					}
-				}
-
-				$user        = get_userdata( $current_assigned_user );
-				$user        = new WP_User( $current_assigned_user ); // create a new user object for this user.
-				$expiry_date = wps_membership_get_meta_data( $post_id, 'member_expiry', true );
-				if ( 'Lifetime' == $expiry_date ) {
-
-					$expiry_date = 'Lifetime';
-				} else {
-					$expiry_date = esc_html( ! empty( $expiry_date ) ? gmdate( 'Y-m-d', $expiry_date ) : '' );
-				}
-
-				$order_id  = wps_membership_get_meta_data( $post_id, 'member_order_id', true );
-				$user_name = '';
-				if ( isset( $user->data->display_name ) ) {
-
-					$user_name = $user->data->display_name;
-				}
-
-				$customer_email = '';
-				if ( key_exists( 'membership_creation_email', WC()->mailer()->emails ) ) {
-
-					$customer_email = WC()->mailer()->emails['membership_creation_email'];
-				}
-
-				if ( ! empty( $customer_email ) ) {
-					$email_status = $customer_email->trigger( $current_assigned_user, $plan_obj, $user_name, $expiry_date, $order_id );
-				}
-			}
-
-			update_user_meta( $current_assigned_user, 'is_member', 'member' );
-			foreach ( $actions as $action => $value ) {
-				if ( array_key_exists( $action, $_POST ) ) {
-
-					wps_membership_update_meta_data( $post_id, $action, $value );
-				}
-			}
-
-			// Saving member billing details metabox fields.
-			if ( isset( $_POST['payment_gateway_select'] ) ) {
-
-				$payment = ! empty( $_POST['payment_gateway_select'] ) ? sanitize_text_field( wp_unslash( $_POST['payment_gateway_select'] ) ) : '';
-
-			} elseif ( isset( $_POST['billing_payment'] ) ) {
-
-				$payment = ! empty( $_POST['billing_payment'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_payment'] ) ) : '';
-			} else {
-				$payment = ! empty( wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) ) ? wps_membership_get_meta_data( $post_id, 'billing_details_payment', true ) : '';
-			}
-
-			// phpcs:disable.
-			$fields = array(
-				'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
-				'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
-				'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
-				'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
-				'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
-				'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
-				'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
-				'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
-				'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
-				'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
-				'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
-				'payment_method'                => $payment,
-			);
-			// phpcs:enable.
-			wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
 		}
 	}
 
@@ -5571,11 +5394,15 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * This function is used to show PDF download option icon only to members users.
+	 * Display the PDF download option icon for member users only.
 	 *
-	 * @param  string $html    HTML content for the PDF download option.
-	 * @param  int    $post_id The ID of the post for which the PDF download option is being displayed.
-	 * @return void
+	 * @param string $html    The HTML content for the PDF download option.
+	 * @param int    $post_id The ID of the post for which the PDF download option is being displayed.
+	 *
+	 * @throws InvalidArgumentException If the post ID or user ID is invalid.
+	 * @throws Exception If the PDF download option could not be generated.
+	 *
+	 * @return string Modified HTML content with or without the PDF download option.
 	 */
 	public function wps_msfw_show_pdf_download_option_icon_only_to_members_users( $html, $post_id ) {
 
@@ -5656,7 +5483,7 @@ class Membership_For_Woocommerce_Public {
 				$status = strtolower( wps_membership_get_meta_data( $membership_id, 'member_status', true ) );
 
 				// Skip if plan is not complete or invalid.
-				if ( empty( $plan ) || $status !== 'complete' ) {
+				if ( empty( $plan ) || 'complete' !== $status ) {
 					continue;
 				}
 
@@ -5666,7 +5493,7 @@ class Membership_For_Woocommerce_Public {
 					// Remove the duplicate and notify the user.
 					wc_add_notice(
 						sprintf(
-							/* translators: %s: notice */                            esc_html__( 'You already have the "%s" membership plan. It has been removed from your cart.', 'membership-for-woocommerce' ),
+							/* translators: %s: notice */                            esc_html__( "The %s membership plan is already active on your account. You don't need to buy it again", 'membership-for-woocommerce' ),
 							esc_html( $plan['post_title'] )
 						),
 						'error'
@@ -5682,7 +5509,7 @@ class Membership_For_Woocommerce_Public {
 	 * Prevents users for placing duplicate membership order, this is work for guest user.
 	 *
 	 * @param  object $order   order.
-	 * @param  string $request request.
+	 * @param  array  $request request.
 	 * @return void
 	 */
 	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
@@ -5741,6 +5568,184 @@ class Membership_For_Woocommerce_Public {
 						),
 						400
 					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Enforce purchase limit on single product page before adding to cart.
+	 *
+	 * @param  bool $passed     passed.
+	 * @param  int  $product_id product_id.
+	 * @param  int  $quantity   quantity.
+	 * @return bool
+	 */
+	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
+
+		// membership wise restriction member_status is_member.
+		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
+		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
+		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+
+		// Keep only existing posts.
+		$membership_ids = array_filter(
+			$membership_ids,
+			function ( $post_id ) {
+				return $post_id && get_post( absint( $post_id ) );
+			}
+		);
+
+		// restrict user based on his membership.
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+
+			$max_limit = 0;
+			foreach ( $membership_ids as $id ) {
+
+				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+				if ( empty( $plan ) ) {
+
+					continue;
+				}
+
+				if ( ! empty( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+
+					continue;
+				}
+
+				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+
+					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+				}
+			}
+
+			// check qty limit and show error notice.
+			if ( $max_limit > 0 && $quantity > $max_limit ) {
+				wc_add_notice(
+					sprintf(
+						/* translators: %s: notice */                        esc_html__( 'Your membership level allows you to add a maximum of %d units of this product to your cart.', 'membership-for-woocommerce' ),
+						$max_limit
+					),
+					'error'
+				);
+				return false;
+			}
+			// globally restriction ( it work when user have not any membership plan ).
+		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
+
+			// check qty limit and show error notice.
+			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			if ( $wps_msfw_global_product_purchase_limit_qty > 0 && $quantity > $wps_msfw_global_product_purchase_limit_qty ) {
+				wc_add_notice(
+					sprintf(
+						/* translators: %s: notice */                        esc_html__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+						$wps_msfw_global_product_purchase_limit_qty
+					),
+					'error'
+				);
+				return false;
+			}
+		}
+
+		return $passed;
+	}
+
+	/**
+	 * This function restricts the purchase quantity of products based on the user's membership plan on cart page.
+	 *
+	 * @return bool
+	 */
+	public function wps_msfw_restrict_purchase_quantity_by_membership() {
+		// Only for logged-in users with a cart.
+		if ( ! WC()->cart || WC()->cart->is_empty() ) {
+			return;
+		}
+
+		// membership wise restriction.
+		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
+		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
+		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
+		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
+
+		// Keep only existing posts.
+		$membership_ids = array_filter(
+			$membership_ids,
+			function ( $post_id ) {
+				return $post_id && get_post( absint( $post_id ) );
+			}
+		);
+
+		// restrict user based on his membership.
+		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
+
+			// Find highest purchase limit among memberships.
+			$max_limit = 0;
+			foreach ( $membership_ids as $id ) {
+
+				$plan = wps_membership_get_meta_data( $id, 'plan_obj', true );
+				if ( empty( $plan ) ) {
+
+					continue;
+				}
+
+				if ( ! empty( $plan['post_status'] ) && 'publish' !== $plan['post_status'] ) {
+
+					continue;
+				}
+
+				if ( ! empty( $plan['wps_set_maximum_product_purchase_limit'] ) ) {
+
+					$max_limit = max( $max_limit, (int) $plan['wps_set_maximum_product_purchase_limit'] );
+				}
+			}
+
+			if ( $max_limit <= 0 ) {
+				return; // No limit set.
+			}
+
+			static $notice_added = false; // Prevent duplicate notices.
+
+			// Enforce limit in cart.
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+				if ( $cart_item['quantity'] > $max_limit ) {
+					WC()->cart->set_quantity( $cart_item_key, $max_limit );
+
+					if ( ! $notice_added ) {
+						wc_add_notice(
+							sprintf(
+								/* translators: %s: notice */                                esc_html__( 'You can only purchase up to %d units of this product based on your membership limit.', 'membership-for-woocommerce' ),
+								$max_limit
+							),
+							'error'
+						);
+						$notice_added = true;
+					}
+				}
+			}
+			// globally restriction ( it work when user have not any membership plan ).
+		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
+
+			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+			static $notice_added                        = false; // Prevent duplicate notices.
+
+			// Enforce limit in cart.
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
+				if ( $cart_item['quantity'] > $wps_msfw_global_product_purchase_limit_qty ) {
+					WC()->cart->set_quantity( $cart_item_key, $wps_msfw_global_product_purchase_limit_qty );
+
+					if ( ! $notice_added ) {
+						wc_add_notice(
+							sprintf(
+								/* translators: %s: notice */                                esc_html__( 'Only %d units allowed per product. Get a membership for higher limits.', 'membership-for-woocommerce' ),
+								$wps_msfw_global_product_purchase_limit_qty
+							),
+							'error'
+						);
+						$notice_added = true;
+					}
 				}
 			}
 		}

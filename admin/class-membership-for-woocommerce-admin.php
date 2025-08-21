@@ -730,6 +730,25 @@ class Membership_For_Woocommerce_Admin {
 					'no'  => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
+			array(
+				'title'       => __( 'Restrict how many units of a product a customer can buy', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'This setting works globally, but once a user becomes a member and purchases a membership, product purchase limitations will apply based on their membership level.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_enable_product_limit_restriction_globally',
+				'value'       => get_option( 'wps_msfw_enable_product_limit_restriction_globally' ),
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Set quantity limit', 'membership-for-woocommerce' ),
+				'type'        => 'number',
+				'description' => __( 'Limit the maximum product quantity a user can purchase.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_msfw_global_product_purchase_limit_qty',
+				'value'       => get_option( 'wps_msfw_global_product_purchase_limit_qty' ),
+				'placeholder' => __( 'Set per-user product purchase restrictions', 'membership-for-woocommerce' ),
+			),
 
 		);
 		$after_email = array();
@@ -1234,6 +1253,7 @@ class Membership_For_Woocommerce_Admin {
 			'wps_sfw_subscription_initial_signup_price'  => array( 'default' => '' ),
 			'wps_sfw_subscription_free_trial_number'     => array( 'default' => '' ),
 			'wps_sfw_subscription_free_trial_interval'   => array( 'default' => 'days' ),
+			'wps_set_maximum_product_purchase_limit'     => array( 'default' => '0' ),
 		);
 
 		/**
@@ -1887,6 +1907,7 @@ class Membership_For_Woocommerce_Admin {
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_initial_signup_price', true ),
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_number', true ),
 								wps_membership_get_meta_data( $single_post->ID, 'wps_sfw_subscription_free_trial_interval', true ),
+								wps_membership_get_meta_data( $single_post->ID, 'wps_set_maximum_product_purchase_limit', true ),
 								$this->global_class->csv_get_prod_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_ids', true ) ),
 								$this->global_class->csv_get_cat_title( wps_membership_get_meta_data( $single_post->ID, 'wps_membership_plan_target_categories', true ) ),
 								get_post_field( 'post_content', $single_post->ID ),
@@ -2695,10 +2716,11 @@ class Membership_For_Woocommerce_Admin {
 			$product_data_tabs['attach-membership'] = array(
 				'label'  => __( 'Attach Membership', 'membership-for-woocommerce' ),
 				'target' => 'wps_attach_membership',
+				'priority' => 1100,
 			);
 		} elseif ( ! empty( wps_membership_get_meta_data( $product_id, 'wps_membership_plan_with_product', true ) ) ) {
 
-				wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
+			wps_membership_update_meta_data( $product_id, 'wps_membership_plan_with_product', '' );
 		}
 		return $product_data_tabs;
 	}
@@ -2731,7 +2753,7 @@ class Membership_For_Woocommerce_Admin {
 			}
 		}
 
-		echo '<div class="wps_membership_dropdown hidden ">';
+		echo '<div id="wps_attach_membership" class="wps_membership_dropdown hidden ">';
 		woocommerce_wp_select(
 			array(
 				'id'          => 'wps_attach_plans',
@@ -4573,7 +4595,7 @@ class Membership_For_Woocommerce_Admin {
 				'description' => __( 'Select the membership that will be assigned to a new user upon registration.', 'membership-for-woocommerce' ),
 				'id'          => 'wps_msfw_membership_assign_to_new_user',
 				'value'       => get_option( 'wps_msfw_membership_assign_to_new_user' ),
-				'options'     => $this->wps_msfw_list_all_membership(),
+				'options'     => $this->global_class->wps_msfw_list_all_membership(),
 			),
 			array(
 				'type'        => 'simple-button',
@@ -4698,31 +4720,6 @@ class Membership_For_Woocommerce_Admin {
 				$mfw_wps_mfw_obj->wps_mfw_plug_admin_notice( $msg, 'error' );
 			}
 		}
-	}
-
-	/**
-	 * This function is used to list all membership.
-	 *
-	 * @return array
-	 */
-	public function wps_msfw_list_all_membership() {
-
-		$results = get_posts(
-			array(
-				'post_type'   => 'wps_cpt_membership',
-				'post_status' => 'publish',
-				'numberposts' => -1,
-			)
-		);
-
-		$wps_msfw_all_pages = array();
-		if ( ! empty( $results ) && is_array( $results ) ) {
-			foreach ( $results as $key => $value ) {
-
-				$wps_msfw_all_pages[ $value->ID ] = $value->post_title;
-			}
-		}
-		return $wps_msfw_all_pages;
 	}
 
 	/**

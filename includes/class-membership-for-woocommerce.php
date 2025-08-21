@@ -77,7 +77,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.0.0';
+			$this->version = '3.0.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -290,7 +290,7 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'wp_ajax_wps_membership_ajax_callbacks', $mfw_plugin_admin, 'wps_membership_ajax_callbacks' );
 
 		// add custom menu in product edit page.
-		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', 99, 1 );
+		$this->loader->add_filter( 'woocommerce_product_data_tabs', $mfw_plugin_admin, 'mfw_attach_plan_product_data_tab', PHP_INT_MIN, 1 );
 		$this->loader->add_action( 'woocommerce_product_data_panels', $mfw_plugin_admin, 'mfw_attach_plan_product_data_fields' );
 
 		$this->loader->add_action( 'save_post', $mfw_plugin_admin, 'wps_mfw_save_product_data' );
@@ -514,7 +514,9 @@ class Membership_For_Woocommerce {
 			// restrict user to purchase same membership plan.
 			$this->loader->add_action( 'woocommerce_before_calculate_totals', $mfw_plugin_public, 'wps_msfw_block_duplicate_membership_in_cart', 10, 1 );
 			$this->loader->add_action( 'woocommerce_store_api_checkout_update_order_from_request', $mfw_plugin_public, 'wps_msfw_restrict_user_to_purchase_duplicate_membership_block', 10, 2 );
-
+			// set product max limit.
+			$this->loader->add_action( 'woocommerce_check_cart_items', $mfw_plugin_public, 'wps_msfw_restrict_purchase_quantity_by_membership', 10 );
+			$this->loader->add_filter( 'woocommerce_add_to_cart_validation', $mfw_plugin_public, 'wps_msfw_validate_quantity_before_add', 10, 3 );
 		}
 	}
 

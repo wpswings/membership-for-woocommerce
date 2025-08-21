@@ -965,6 +965,23 @@ function wps_mfw_upgrade_pro_popup() {
 					</td>
 				</tr>
 				<!-- Show Notice section end. -->
+				 <!-- Restrict maximum product purchase limit. -->
+				<tr>
+					<th scope="row" class="titledesc">
+						<label for="wps_set_maximum_product_purchase_limit"><?php esc_html_e( 'Set Maximum Purchase Quantity for Products', 'membership-for-woocommerce' ); ?></label>
+					<?php
+					$description = esc_html__( 'Set the maximum product quantity a member is allowed to purchase under this membership plan.', 'membership-for-woocommerce' );
+					$instance->tool_tip( $description );
+					?>
+					</th>
+					<td id="mfw_set_product_limit" class="forminp forminp-text">
+						<?php
+						$wps_set_maximum_product_purchase_limit = $settings_fields['wps_set_maximum_product_purchase_limit'];
+						?>
+						<input type="number" name="wps_set_maximum_product_purchase_limit" value="<?php echo esc_html( $wps_set_maximum_product_purchase_limit ); ?>" min="0">
+					</td>
+				</tr>
+				<!-- Restrict maximum product purchase limit end. -->
 			</table>
 		</div>
 		<!-- PAR Compatible -->
