@@ -1057,7 +1057,7 @@ class Membership_For_Woocommerce_Public {
 	 * Validate shortcode for rendering content according to user( live offer )
 	 * and admin ( for viewing purpose ).
 	 *
-	 * @since    3.0.1
+	 * @since    3.0.2
 	 */
 	public function wps_membership_validate_mode() {
 		// user is blocked.
