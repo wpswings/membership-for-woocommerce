@@ -5583,22 +5583,8 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
-		// membership wise restriction member_status is_member.
-		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
-		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
-		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
-
-		// Keep only existing posts.
-		$membership_ids = array_filter(
-			$membership_ids,
-			function ( $post_id ) {
-				return $post_id && get_post( absint( $post_id ) );
-			}
-		);
-
 		// restrict user based on his membership.
+		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			$max_limit = 0;
@@ -5658,27 +5644,9 @@ class Membership_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function wps_msfw_restrict_purchase_quantity_by_membership() {
-		// Only for logged-in users with a cart.
-		if ( ! WC()->cart || WC()->cart->is_empty() ) {
-			return;
-		}
-
-		// membership wise restriction.
-		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
-		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
-		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
-
-		// Keep only existing posts.
-		$membership_ids = array_filter(
-			$membership_ids,
-			function ( $post_id ) {
-				return $post_id && get_post( absint( $post_id ) );
-			}
-		);
 
 		// restrict user based on his membership.
+		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			// Find highest purchase limit among memberships.
