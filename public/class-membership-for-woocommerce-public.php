@@ -3145,7 +3145,7 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Ajax function for membership checkout.
+	 * Undocumented function
 	 *
 	 * @return void
 	 */
@@ -3162,11 +3162,21 @@ class Membership_For_Woocommerce_Public {
 		$plan_price                     = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
 		$plan_title                     = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
-		$product                        = wc_get_product( $wps_membership_default_product );
-		$wp_session['plan_price']       = $plan_price;
-		$wp_session['plan_title']       = $plan_title;
-		$wp_session['plan_id']          = $plan_id;
+		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
+		// Ensure Woo session/cart are initialized in this custom AJAX request.
+		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
+			wc_load_cart(); // also initializes WC()->session
+		}
+
+		// Make sure a customer session cookie exists (critical for new users / first request).
+		WC()->session->set_customer_session_cookie( true );
+
+		// Write to Woo session.
 		WC()->session->set( 'plan_id', $plan_id );
+		WC()->session->set( 'plan_title', $plan_title );
+		WC()->session->set( 'plan_price', $plan_price );
+		WC()->session->set( 'product_id', (int) $wps_membership_default_product );
+
 		$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 		$redirect_url   = ( $cart_item_data ) ? wc_get_checkout_url() : wc_get_cart_url();
 		echo wp_json_encode( $redirect_url );
@@ -3807,6 +3817,7 @@ class Membership_For_Woocommerce_Public {
 					wp_safe_redirect( wc_get_cart_url() );
 				}
 			}
+
 			WC()->session->__unset( 'product_id' );
 			WC()->session->__unset( 'form_submit' );
 			WC()->session->__unset( 'wps_fname' );
