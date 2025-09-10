@@ -3165,7 +3165,7 @@ class Membership_For_Woocommerce_Public {
 		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
 		// Ensure Woo session/cart are initialized in this custom AJAX request.
 		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
-			wc_load_cart(); // also initializes WC()->session
+			wc_load_cart(); // also initializes WC()->session.
 		}
 
 		// Make sure a customer session cookie exists (critical for new users / first request).
@@ -5037,17 +5037,10 @@ class Membership_For_Woocommerce_Public {
 		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
 
 			$user = get_user_by( 'email', $user_login );
-			if ( ! empty( $user ) ) {
-				$is_member = get_user_meta( $user->ID, 'is_member', true );
-				if ( 'member' != $is_member ) {
-
-					return new WP_Error( 'registration-error-missing-password', __( 'You are not a member and therefore cannot log in to the site!.', 'membership-for-woocommerce' ) );
-				}
-			}
 
 			if ( $this->wps_mfw_is_google_captcha_enable() ) {
 
-				$wp_nonce = ! empty( $_REQUEST['woocommerce-login-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-login-nonce'] ) ) : sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
+				$wp_nonce = ! empty( $_REQUEST['woocommerce-login-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-login-nonce'] ) ) : ( isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '' );
 				if ( wp_verify_nonce( $wp_nonce, 'woocommerce-login' ) ) {
 
 					if ( empty( $_POST['g-recaptcha-response'] ) ) {
@@ -5522,6 +5515,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param  object $order   order.
 	 * @param  array  $request request.
 	 * @return void
+	 * @throws \WC_REST_Exception If a duplicate membership is detected.
 	 */
 	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
 
