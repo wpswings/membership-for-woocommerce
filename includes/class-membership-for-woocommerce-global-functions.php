@@ -767,16 +767,14 @@ class Membership_For_Woocommerce_Global_Functions {
 				} elseif ( 'cancelled' == $order_status ) {
 					$order_st = 'cancelled';
 				}
-			} else {
-				if ( 'completed' == $order_status ) {
+			} elseif ( 'completed' == $order_status ) {
 					$order_st = 'complete';
-				} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
-					$order_st = 'hold';
-				} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'processing' == $order_status ) {
-					$order_st = 'pending';
-				} elseif ( 'cancelled' == $order_status ) {
-					$order_st = 'cancelled';
-				}
+			} elseif ( 'on-hold' == $order_status || 'refunded' == $order_status ) {
+				$order_st = 'hold';
+			} elseif ( 'pending' == $order_status || 'failed' == $order_status || 'processing' == $order_status ) {
+				$order_st = 'pending';
+			} elseif ( 'cancelled' == $order_status ) {
+				$order_st = 'cancelled';
 			}
 
 			// Creating post for members, keeping its status to pending.
@@ -887,17 +885,17 @@ class Membership_For_Woocommerce_Global_Functions {
 							<strong><?php echo esc_html( $first_name . $last_name ); ?></strong>
 							<br/>
 								<?php echo esc_html( $company ); ?><br/>
-								<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
-								<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
-								<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+								<?php printf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
+								<?php printf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
+								<?php printf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
 							<br/>
 							<?php echo esc_html( $phone ); ?>
 							<br/>
 							<?php echo esc_html( $email ); ?>
 						</td>
 						<td align="right">
-							<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br/>
-							<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
+							<strong><?php printf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br/>
+							<?php printf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
 						</td>
 					</tr>
 				</tbody>
@@ -922,7 +920,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					</tr>
 
 					<tr align="right">
-						<td class="td_1" colspan="4"><strong><?php echo sprintf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong></td>
+						<td class="td_1" colspan="4"><strong><?php printf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong></td>
 					</tr>
 					<tr>
 						<td colspan="4">
@@ -979,17 +977,17 @@ class Membership_For_Woocommerce_Global_Functions {
 									<strong><?php echo esc_html( $first_name . ' ' . $last_name ); ?></strong>
 									<br>
 									<?php echo esc_html( $company ); ?><br/>
-									<?php echo sprintf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
-									<?php echo sprintf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
-									<?php echo sprintf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
+									<?php printf( ' %s %s ', esc_html( $address_1 ), esc_html( $address_2 ) ); ?><br/>
+									<?php printf( ' %s %s ', esc_html( $city ), esc_html( $postcode ) ); ?><br/>
+									<?php printf( ' %s, %s ', esc_html( $state ), esc_html( $country ) ); ?>
 									<br>
 									<?php echo esc_html( $phone ); ?>
 									<br/>
 									<?php echo esc_html( $email ); ?>
 								</td>
 								<td class="td_2">
-									<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br>
-									<?php echo sprintf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
+									<strong><?php printf( ' %s %s ', esc_html__( 'Status : ', 'membership-for-woocommerce' ), esc_html( $status ) ); ?></strong><br>
+									<?php printf( ' %s %s ', esc_html__( 'Invoice Date : ', 'membership-for-woocommerce' ), esc_html( gmdate( 'd-m-Y' ) ) ); ?>
 								</td>
 							</tr>
 						</tbody>
@@ -1016,7 +1014,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 								<tr align="right">
 									<td colspan="4" class="td_5">
-										<strong><?php echo sprintf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong>
+										<strong><?php printf( ' %s %s ', esc_html__( 'Grand total : ', 'membership-for-woocommerce' ), esc_html( get_woocommerce_currency() . ' ' . $plan_info['wps_membership_plan_price'] ) ); ?></strong>
 									</td>
 								</tr>
 							</tbody>
@@ -1213,7 +1211,7 @@ class Membership_For_Woocommerce_Global_Functions {
 							'post_content' => '',
 							'post_status'  => 'publish',
 							'post_author'  => 1,
-							'post_type'    => 'shop_coupon'
+							'post_type'    => 'shop_coupon',
 						);
 
 						$new_coupon_id = wp_insert_post( $coupon );
@@ -1460,7 +1458,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 					continue;
 				}
-				
+
 				// push all active plan data.
 				array_push( $membership_send_arr, $membership_plan );
 			}
@@ -1477,45 +1475,162 @@ class Membership_For_Woocommerce_Global_Functions {
 	public function get_country_code_by_name( $country_code_name ) {
 
 		$countries = array(
-			"AF" => ["name" => "Afghanistan", "dial_code" => "+93"],
-			"AL" => ["name" => "Albania", "dial_code" => "+355"],
-			"DZ" => ["name" => "Algeria", "dial_code" => "+213"],
-			"US" => ["name" => "United States", "dial_code" => "+1"],
-			"GB" => ["name" => "United Kingdom", "dial_code" => "+44"],
-			"IN" => ["name" => "India", "dial_code" => "+91"],
-			"AU" => ["name" => "Australia", "dial_code" => "+61"],
-			"CA" => ["name" => "Canada", "dial_code" => "+1"],
-			"CN" => ["name" => "China", "dial_code" => "+86"],
-			"FR" => ["name" => "France", "dial_code" => "+33"],
-			"DE" => ["name" => "Germany", "dial_code" => "+49"],
-			"IT" => ["name" => "Italy", "dial_code" => "+39"],
-			"JP" => ["name" => "Japan", "dial_code" => "+81"],
-			"MX" => ["name" => "Mexico", "dial_code" => "+52"],
-			"RU" => ["name" => "Russia", "dial_code" => "+7"],
-			"ZA" => ["name" => "South Africa", "dial_code" => "+27"],
-			"KR" => ["name" => "South Korea", "dial_code" => "+82"],
-			"ES" => ["name" => "Spain", "dial_code" => "+34"],
-			"SE" => ["name" => "Sweden", "dial_code" => "+46"],
-			"CH" => ["name" => "Switzerland", "dial_code" => "+41"],
-			"AE" => ["name" => "United Arab Emirates", "dial_code" => "+971"],
-			"BR" => ["name" => "Brazil", "dial_code" => "+55"],
-			"AR" => ["name" => "Argentina", "dial_code" => "+54"],
-			"NG" => ["name" => "Nigeria", "dial_code" => "+234"],
-			"PK" => ["name" => "Pakistan", "dial_code" => "+92"],
-			"BD" => ["name" => "Bangladesh", "dial_code" => "+880"],
-			"EG" => ["name" => "Egypt", "dial_code" => "+20"],
-			"TR" => ["name" => "Turkey", "dial_code" => "+90"],
-			"NL" => ["name" => "Netherlands", "dial_code" => "+31"],
-			"BE" => ["name" => "Belgium", "dial_code" => "+32"],
-			"AT" => ["name" => "Austria", "dial_code" => "+43"],
-			"TH" => ["name" => "Thailand", "dial_code" => "+66"],
-			"MY" => ["name" => "Malaysia", "dial_code" => "+60"],
-			"SG" => ["name" => "Singapore", "dial_code" => "+65"],
-			"NZ" => ["name" => "New Zealand", "dial_code" => "+64"],
-			"PH" => ["name" => "Philippines", "dial_code" => "+63"],
-			"VN" => ["name" => "Vietnam", "dial_code" => "+84"],
-			"IL" => ["name" => "Israel", "dial_code" => "+972"],
-			"SA" => ["name" => "Saudi Arabia", "dial_code" => "+966"],
+			'AF' => array(
+				'name' => 'Afghanistan',
+				'dial_code' => '+93',
+			),
+			'AL' => array(
+				'name' => 'Albania',
+				'dial_code' => '+355',
+			),
+			'DZ' => array(
+				'name' => 'Algeria',
+				'dial_code' => '+213',
+			),
+			'US' => array(
+				'name' => 'United States',
+				'dial_code' => '+1',
+			),
+			'GB' => array(
+				'name' => 'United Kingdom',
+				'dial_code' => '+44',
+			),
+			'IN' => array(
+				'name' => 'India',
+				'dial_code' => '+91',
+			),
+			'AU' => array(
+				'name' => 'Australia',
+				'dial_code' => '+61',
+			),
+			'CA' => array(
+				'name' => 'Canada',
+				'dial_code' => '+1',
+			),
+			'CN' => array(
+				'name' => 'China',
+				'dial_code' => '+86',
+			),
+			'FR' => array(
+				'name' => 'France',
+				'dial_code' => '+33',
+			),
+			'DE' => array(
+				'name' => 'Germany',
+				'dial_code' => '+49',
+			),
+			'IT' => array(
+				'name' => 'Italy',
+				'dial_code' => '+39',
+			),
+			'JP' => array(
+				'name' => 'Japan',
+				'dial_code' => '+81',
+			),
+			'MX' => array(
+				'name' => 'Mexico',
+				'dial_code' => '+52',
+			),
+			'RU' => array(
+				'name' => 'Russia',
+				'dial_code' => '+7',
+			),
+			'ZA' => array(
+				'name' => 'South Africa',
+				'dial_code' => '+27',
+			),
+			'KR' => array(
+				'name' => 'South Korea',
+				'dial_code' => '+82',
+			),
+			'ES' => array(
+				'name' => 'Spain',
+				'dial_code' => '+34',
+			),
+			'SE' => array(
+				'name' => 'Sweden',
+				'dial_code' => '+46',
+			),
+			'CH' => array(
+				'name' => 'Switzerland',
+				'dial_code' => '+41',
+			),
+			'AE' => array(
+				'name' => 'United Arab Emirates',
+				'dial_code' => '+971',
+			),
+			'BR' => array(
+				'name' => 'Brazil',
+				'dial_code' => '+55',
+			),
+			'AR' => array(
+				'name' => 'Argentina',
+				'dial_code' => '+54',
+			),
+			'NG' => array(
+				'name' => 'Nigeria',
+				'dial_code' => '+234',
+			),
+			'PK' => array(
+				'name' => 'Pakistan',
+				'dial_code' => '+92',
+			),
+			'BD' => array(
+				'name' => 'Bangladesh',
+				'dial_code' => '+880',
+			),
+			'EG' => array(
+				'name' => 'Egypt',
+				'dial_code' => '+20',
+			),
+			'TR' => array(
+				'name' => 'Turkey',
+				'dial_code' => '+90',
+			),
+			'NL' => array(
+				'name' => 'Netherlands',
+				'dial_code' => '+31',
+			),
+			'BE' => array(
+				'name' => 'Belgium',
+				'dial_code' => '+32',
+			),
+			'AT' => array(
+				'name' => 'Austria',
+				'dial_code' => '+43',
+			),
+			'TH' => array(
+				'name' => 'Thailand',
+				'dial_code' => '+66',
+			),
+			'MY' => array(
+				'name' => 'Malaysia',
+				'dial_code' => '+60',
+			),
+			'SG' => array(
+				'name' => 'Singapore',
+				'dial_code' => '+65',
+			),
+			'NZ' => array(
+				'name' => 'New Zealand',
+				'dial_code' => '+64',
+			),
+			'PH' => array(
+				'name' => 'Philippines',
+				'dial_code' => '+63',
+			),
+			'VN' => array(
+				'name' => 'Vietnam',
+				'dial_code' => '+84',
+			),
+			'IL' => array(
+				'name' => 'Israel',
+				'dial_code' => '+972',
+			),
+			'SA' => array(
+				'name' => 'Saudi Arabia',
+				'dial_code' => '+966',
+			),
 		);
 
 		$code = isset( $countries[ $country_code_name ] ) ? $countries[ $country_code_name ]['dial_code'] : '';
@@ -1753,23 +1868,61 @@ class Membership_For_Woocommerce_Global_Functions {
 			}
 
 			// phpcs:disable.
-			$fields = array(
-				'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
-				'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
-				'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
-				'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
-				'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
-				'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
-				'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
-				'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
-				'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
-				'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
-				'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
-				'payment_method'                => $payment,
-			);
-			// phpcs:enable.
-			wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
+			$nonce = wp_create_nonce( 'membership_billing_nonce' );
+			if ( wp_verify_nonce( $nonce, 'membership_billing_nonce' ) ) {
+
+				$fields = array(
+					'membership_billing_first_name' => ! empty( $_POST['billing_first_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_first_name'] ) ) : '',
+					'membership_billing_last_name'  => ! empty( $_POST['billing_last_name'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_last_name'] ) ) : '',
+					'membership_billing_company'    => ! empty( $_POST['billing_company'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_company'] ) ) : '',
+					'membership_billing_address_1'  => ! empty( $_POST['billing_address_1'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_1'] ) ) : '',
+					'membership_billing_address_2'  => ! empty( $_POST['billing_address_2'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_address_2'] ) ) : '',
+					'membership_billing_city'       => ! empty( $_POST['billing_city'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_city'] ) ) : '',
+					'membership_billing_postcode'   => ! empty( $_POST['billing_postcode'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_postcode'] ) ) : '',
+					'membership_billing_country'    => ! empty( $_POST['billing_country'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_country'] ) ) : '',
+					'membership_billing_state'      => ! empty( $_POST['billing_state'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_state'] ) ) : '',
+					'membership_billing_email'      => ! empty( $_POST['billing_email'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_email'] ) ) : '',
+					'membership_billing_phone'      => ! empty( $_POST['billing_phone'] ) ? sanitize_text_field( wp_unslash( $_POST['billing_phone'] ) ) : '',
+					'payment_method'                => $payment,
+				);
+				// phpcs:enable.
+				wps_membership_update_meta_data( $post_id, 'billing_details', $fields );
+			}
 		}
 	}
 
+	/**
+	 * Return only valid and publish membership ids.
+	 *
+	 * @param mixed $user_id user_id.
+	 * @return array
+	 */
+	public function wps_msfw_check_membership_id_is_valid( $user_id ) {
+
+		// membership wise buddy groups settings.
+		$membership_ids = get_user_meta( $user_id, 'mfw_membership_id', true );
+		$membership_ids = is_array( $membership_ids ) ? $membership_ids : array();
+
+		$cancelled_memberships = get_user_meta( $user_id, 'wps_msfw_cancel_membership_ids', true );
+		$cancelled_memberships = is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
+
+		// Remove cancelled memberships if any.
+		if ( ! empty( $cancelled_memberships ) ) {
+			$membership_ids = array_diff( $membership_ids, $cancelled_memberships );
+		}
+
+		// Keep only existing posts; sanitize IDs and reindex.
+		$membership_ids = array_values(
+			array_filter(
+				$membership_ids,
+				static function ( $post_id ) {
+					$post_id = absint( $post_id );
+					return ( $post_id > 0 ) && get_post( $post_id );
+				}
+			)
+		);
+
+		// Preserve original behavior: return only if non-empty array.
+		return ! empty( $membership_ids ) ? $membership_ids : array();
+	}
 }

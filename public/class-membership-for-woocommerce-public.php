@@ -1057,7 +1057,7 @@ class Membership_For_Woocommerce_Public {
 	 * Validate shortcode for rendering content according to user( live offer )
 	 * and admin ( for viewing purpose ).
 	 *
-	 * @since    3.0.1
+	 * @since    3.0.2
 	 */
 	public function wps_membership_validate_mode() {
 		// user is blocked.
@@ -3145,7 +3145,7 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
-	 * Ajax function for membership checkout.
+	 * Undocumented function
 	 *
 	 * @return void
 	 */
@@ -3162,11 +3162,21 @@ class Membership_For_Woocommerce_Public {
 		$plan_price                     = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
 		$plan_title                     = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
 		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
-		$product                        = wc_get_product( $wps_membership_default_product );
-		$wp_session['plan_price']       = $plan_price;
-		$wp_session['plan_title']       = $plan_title;
-		$wp_session['plan_id']          = $plan_id;
+		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
+		// Ensure Woo session/cart are initialized in this custom AJAX request.
+		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
+			wc_load_cart(); // also initializes WC()->session.
+		}
+
+		// Make sure a customer session cookie exists (critical for new users / first request).
+		WC()->session->set_customer_session_cookie( true );
+
+		// Write to Woo session.
 		WC()->session->set( 'plan_id', $plan_id );
+		WC()->session->set( 'plan_title', $plan_title );
+		WC()->session->set( 'plan_price', $plan_price );
+		WC()->session->set( 'product_id', (int) $wps_membership_default_product );
+
 		$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 		$redirect_url   = ( $cart_item_data ) ? wc_get_checkout_url() : wc_get_cart_url();
 		echo wp_json_encode( $redirect_url );
@@ -3807,6 +3817,7 @@ class Membership_For_Woocommerce_Public {
 					wp_safe_redirect( wc_get_cart_url() );
 				}
 			}
+
 			WC()->session->__unset( 'product_id' );
 			WC()->session->__unset( 'form_submit' );
 			WC()->session->__unset( 'wps_fname' );
@@ -5026,17 +5037,10 @@ class Membership_For_Woocommerce_Public {
 		if ( $this->wps_mfw_is_login_and_signup_enable() ) {
 
 			$user = get_user_by( 'email', $user_login );
-			if ( ! empty( $user ) ) {
-				$is_member = get_user_meta( $user->ID, 'is_member', true );
-				if ( 'member' != $is_member ) {
-
-					return new WP_Error( 'registration-error-missing-password', __( 'You are not a member and therefore cannot log in to the site!.', 'membership-for-woocommerce' ) );
-				}
-			}
 
 			if ( $this->wps_mfw_is_google_captcha_enable() ) {
 
-				$wp_nonce = ! empty( $_REQUEST['woocommerce-login-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-login-nonce'] ) ) : sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
+				$wp_nonce = ! empty( $_REQUEST['woocommerce-login-nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['woocommerce-login-nonce'] ) ) : ( isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : '' );
 				if ( wp_verify_nonce( $wp_nonce, 'woocommerce-login' ) ) {
 
 					if ( empty( $_POST['g-recaptcha-response'] ) ) {
@@ -5511,6 +5515,7 @@ class Membership_For_Woocommerce_Public {
 	 * @param  object $order   order.
 	 * @param  array  $request request.
 	 * @return void
+	 * @throws \WC_REST_Exception If a duplicate membership is detected.
 	 */
 	public function wps_msfw_restrict_user_to_purchase_duplicate_membership_block( $order, $request ) {
 
@@ -5583,22 +5588,8 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
-		// membership wise restriction member_status is_member.
-		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
-		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
-		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
-
-		// Keep only existing posts.
-		$membership_ids = array_filter(
-			$membership_ids,
-			function ( $post_id ) {
-				return $post_id && get_post( absint( $post_id ) );
-			}
-		);
-
 		// restrict user based on his membership.
+		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			$max_limit = 0;
@@ -5658,27 +5649,9 @@ class Membership_For_Woocommerce_Public {
 	 * @return bool
 	 */
 	public function wps_msfw_restrict_purchase_quantity_by_membership() {
-		// Only for logged-in users with a cart.
-		if ( ! WC()->cart || WC()->cart->is_empty() ) {
-			return;
-		}
-
-		// membership wise restriction.
-		$membership_ids        = get_user_meta( get_current_user_id(), 'mfw_membership_id', true );
-		$membership_ids        = ! empty( $membership_ids ) && is_array( $membership_ids ) ? $membership_ids : array();
-		$cancelled_memberships = get_user_meta( get_current_user_id(), 'wps_msfw_cancel_membership_ids', true );
-		$cancelled_memberships = ! empty( $cancelled_memberships ) && is_array( $cancelled_memberships ) ? $cancelled_memberships : array();
-		$membership_ids        = array_diff( $membership_ids, $cancelled_memberships );
-
-		// Keep only existing posts.
-		$membership_ids = array_filter(
-			$membership_ids,
-			function ( $post_id ) {
-				return $post_id && get_post( absint( $post_id ) );
-			}
-		);
 
 		// restrict user based on his membership.
+		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
 
 			// Find highest purchase limit among memberships.

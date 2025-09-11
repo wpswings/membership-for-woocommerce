@@ -85,6 +85,7 @@ class Membership_For_Woocommerce_Common {
 				'msg_error'  => esc_html__( 'Kindly enter a message before sending to the selected user', 'membership-for-woocommerce' ),
 				'ajax_error' => esc_html__( 'Oops! Something went wrong. Please try again.', 'membership-for-woocommerce' ),
 				'mail_error' => esc_html__( 'Kindly enter a valid email address.', 'membership-for-woocommerce' ),
+				'check_nonce' => wp_create_nonce( 'auth_adv_nonce' ),
 			)
 		);
 		wp_enqueue_script( $this->plugin_name . 'common' );
@@ -107,15 +108,20 @@ class Membership_For_Woocommerce_Common {
 		$plan_id                        = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
 		$plan_price                     = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
 		$plan_title                     = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
-		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
-		$wp_session['plan_price']       = $plan_price;
-		$wp_session['plan_title']       = $plan_title;
-		$wp_session['plan_id']          = $plan_id;
+		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
+		// Ensure Woo session/cart are initialized in this custom AJAX request.
+		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
+			wc_load_cart(); // also initializes WC()->session.
+		}
 
+		// Make sure a customer session cookie exists (critical for new users / first request).
+		WC()->session->set_customer_session_cookie( true );
+
+		// Write to Woo session.
 		WC()->session->set( 'plan_id', $plan_id );
 		WC()->session->set( 'plan_title', $plan_title );
 		WC()->session->set( 'plan_price', $plan_price );
-		WC()->session->set( 'product_id', $wps_membership_default_product );
+		WC()->session->set( 'product_id', (int) $wps_membership_default_product );
 
 		$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
 		$redirect_url   = wc_get_cart_url();

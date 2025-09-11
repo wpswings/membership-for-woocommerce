@@ -34,9 +34,9 @@
 jQuery(document).ready(function ($) {
 	$(".wps_membership_buynow").on("click", function (e) {
 		e.preventDefault();
-		let plan_price = $('#wps_membership_plan_price').val();
-		let plan_id = $('#wps_membership_plan_id').val();
-		let plan_title = $('#wps_membership_title').val();
+		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_price')).val();
+		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_id')).val();
+		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_title')).val();
 
 		$.ajax({
 			url: mfw_common_param.ajaxurl,
@@ -46,11 +46,15 @@ jQuery(document).ready(function ($) {
 				plan_price: plan_price,
 				plan_id: plan_id,
 				plan_title: plan_title,
+				nonce : mfw_common_param.check_nonce,
 			},
 
 			success: function (response) {
 
-				
+				// setTimeout(() => {
+					
+				// 	window.location.replace('cart');
+				// }, 1000);
 			}
 		});
 	});
