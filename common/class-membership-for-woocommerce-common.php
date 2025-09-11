@@ -111,7 +111,7 @@ class Membership_For_Woocommerce_Common {
 		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
 		// Ensure Woo session/cart are initialized in this custom AJAX request.
 		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
-			wc_load_cart(); // also initializes WC()->session
+			wc_load_cart(); // also initializes WC()->session.
 		}
 
 		// Make sure a customer session cookie exists (critical for new users / first request).
