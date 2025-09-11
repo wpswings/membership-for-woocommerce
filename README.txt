@@ -5,8 +5,8 @@ Tags: membership, user registration, content restriction, member, community
 Requires at least: 6.7.0
 Tested up to: 6.8.2
 WC requires at least: 6.5.0
-WC tested up to: 10.1.1
-Stable tag: 3.0.1
+WC tested up to: 10.1.2
+Stable tag: 3.0.2
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -335,6 +335,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 3.0.2 - Released on 11 September 2025 =
+* New: Compatible with WP(6.8.2) & WC(10.1.2)
+* Fixes: Minor Fixes
+
 = 3.0.1 - Released on 21 August 2025 =
 * New : Set Maximum Purchase Quantity for Products based on membership
 * New: Compatible with WP(6.8.2) & WC(10.1.1)
@@ -561,8 +565,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.0.1 - Released on 21 August 2025 =
-* New : Set Maximum Purchase Quantity for Products based on membership
-* New: Compatible with WP(6.8.2) & WC(10.1.1)
-
+= 3.0.2 - Released on 11 September 2025 =
+* New: Compatible with WP(6.8.2) & WC(10.1.2)
+* Fixes: Minor Fixes
 
