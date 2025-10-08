@@ -8,6 +8,10 @@ table {
     table-layout: auto;
 }
 
+.wps-header-container a:focus {
+    color: black;
+}
+
 #wps-mfw__invoice-table {
     background-color: #222222;
     color: #fff;
