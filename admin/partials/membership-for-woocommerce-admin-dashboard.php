@@ -58,6 +58,8 @@ do_action( 'wps_mfw_before_general_settings_tab_setting', $mfw_active_tab, $mfw_
 	<div class="wps-header-container wps-bg-white wps-r-8">
 		<h1 class="wps-header-title"><?php echo esc_attr( strtoupper( str_replace( '-', ' ', $plugin_name ) ) ); ?>	
 		</h1>
+		<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership&utm_medium=membership-pro-backend&utm_campaign=services" target="_blank" class="wps-link"><?php esc_html_e( 'Services', 'membership-for-woocommerce' ); ?></a>	
+		<span>|</span>
 		<a href="https://docs.wpswings.com/membership-for-woocommerce/?utm_source=wpswings-membership-doc&utm_medium=membership-org-backend&utm_campaign=documentation" target="_blank" class="wps-link"><?php esc_html_e( 'Documentation', 'membership-for-woocommerce' ); ?></a>
 		<span>|</span>
 		<a href="https://wpswings.com/submit-query/?utm_source=wpswings-membership-support&utm_medium=membership-org-backend&utm_campaign=support" target="_blank" class="wps-link"><?php esc_html_e( 'Support', 'membership-for-woocommerce' ); ?></a>

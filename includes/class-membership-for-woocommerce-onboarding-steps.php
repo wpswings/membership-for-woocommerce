@@ -198,10 +198,14 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	 */
 	public function wps_mfw_onboarding_enqueue_scripts() {
 		global $pagenow;
+
 		$is_valid = false;
-		if ( ! $is_valid && 'plugins.php' == $pagenow || 'dashboard' == get_current_screen()->id ) {
+
+		// Check if on Plugins page or Dashboard.
+		if ( ( 'plugins.php' === $pagenow ) || ( 'dashboard' === get_current_screen()->id ) ) {
 			$is_valid = true;
 		}
+
 		if ( $this->wps_mfw_valid_page_screen_check() || $is_valid ) {
 			wp_enqueue_script( 'wps-mfw-onboarding-select2-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/select-2/membership-for-woocommerce-select2.js', array( 'jquery' ), '1.0.0', false );
 

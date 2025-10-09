@@ -106,7 +106,7 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 			$request_response      = $mfw_request->get_params();
 			$user_id               = ! empty( $request_response['user_id'] ) ? absint( trim( $request_response['user_id'] ) ) : '';
 
-			if ( 'success' === $this->wps_mfw_validate_user_id( $user_id )['data']['status'] && '200' === $this->wps_mfw_validate_user_id( $user_id )['data']['code'] ) {
+			if ( 'success' === $this->wps_mfw_validate_user_id( $user_id )['status'] && '200' === $this->wps_mfw_validate_user_id( $user_id )['code'] ) {
 
 				$membership_id_arr   = get_user_meta( $user_id, 'mfw_membership_id', true );
 				$membership_send_arr = array();
@@ -163,40 +163,39 @@ if ( ! class_exists( 'Membership_For_Woocommerce_Api_Process' ) ) {
 		}
 
 		/**
-		 * This function is used to check whether user is exist or not.
+		 * Validate a given user ID.
 		 *
-		 * @param string $user_id user_id.
-		 * @return array
+		 * @param int $user_id The user ID to validate.
+		 * @return array REST response with status and message.
 		 */
 		public function wps_mfw_validate_user_id( $user_id ) {
-			$data = array();
-			if ( ! empty( $user_id ) ) {
-				$customer = new WP_User( $user_id );
+			$wps_mfw_rest_response = array();
 
-				if ( $customer->ID > 0 ) {
+			if ( ! empty( $user_id ) && is_numeric( $user_id ) ) {
 
-					$data = array(
+				$user = get_userdata( $user_id );
+
+				if ( $user ) {
+					$wps_mfw_rest_response = array(
 						'status' => 'success',
 						'code'   => '200',
 					);
 				} else {
-
-					$data = array(
+					$wps_mfw_rest_response = array(
 						'status'  => 'error',
 						'code'    => '404',
 						'message' => esc_html__( 'Invalid user ID', 'membership-for-woocommerce' ),
 					);
 				}
 			} else {
-
-				$data = array(
+				$wps_mfw_rest_response = array(
 					'status'  => 'error',
 					'code'    => '404',
 					'message' => esc_html__( 'User not found', 'membership-for-woocommerce' ),
 
 				);
 			}
-			$wps_mfw_rest_response['data'] = $data;
+
 			return $wps_mfw_rest_response;
 		}
 	}

@@ -165,5 +165,7 @@ $mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
 		</pre>';
 		?>
 	</div>
+
+	<?php do_action( 'wps_add_additional_api_details' ); ?>
 </div>
 

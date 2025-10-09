@@ -118,6 +118,26 @@ class Membership_For_Woocommerce_Rest_Api {
 	}
 
 	/**
+	 * Begins execution of api endpoint.
+	 *
+	 * @param   object $request          All information related with the api request containing in this array.
+	 * @return  object $wps_mfw_response return rest response to server from where the endpoint hits.
+	 * @since    1.0.0
+	 */
+	public function wps_mfw_default_callback( $request ) {
+
+		$wps_mfw_resultsdata = $this->wps_mfw_creating_api_process_class_obj()->wps_mfw_default_process( $request );
+		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 'success' == $wps_mfw_resultsdata['status'] ) {
+
+			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata, 200 );
+		} else {
+
+			$wps_mfw_response = new WP_Error( $wps_mfw_resultsdata );
+		}
+		return $wps_mfw_response;
+	}
+
+	/**
 	 * Begins validation process of api endpoint.
 	 *
 	 * @param   object $request    All information related with the api request containing in this array.
@@ -136,26 +156,6 @@ class Membership_For_Woocommerce_Rest_Api {
 			$result = true;
 		}
 		return $result;
-	}
-
-	/**
-	 * Begins execution of api endpoint.
-	 *
-	 * @param   object $request          All information related with the api request containing in this array.
-	 * @return  object $wps_mfw_response return rest response to server from where the endpoint hits.
-	 * @since    1.0.0
-	 */
-	public function wps_mfw_default_callback( $request ) {
-
-		$wps_mfw_resultsdata = $this->wps_mfw_creating_api_process_class_obj()->wps_mfw_default_process( $request );
-		if ( is_array( $wps_mfw_resultsdata ) && isset( $wps_mfw_resultsdata['status'] ) && 'success' == $wps_mfw_resultsdata['status'] ) {
-
-			$wps_mfw_response = new WP_REST_Response( $wps_mfw_resultsdata, 200 );
-		} else {
-
-			$wps_mfw_response = new WP_Error( $wps_mfw_resultsdata );
-		}
-		return $wps_mfw_response;
 	}
 
 	/**
