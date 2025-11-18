@@ -5,8 +5,8 @@ Tags: membership, user registration, content restriction, member, community
 Requires at least: 6.7.0
 Tested up to: 6.8.3
 WC requires at least: 6.5.0
-WC tested up to: 10.2.2
-Stable tag: 3.0.3
+WC tested up to: 10.3.5
+Stable tag: 3.0.4
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -335,6 +335,10 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 3.0.4 - Released on 18 November 2025 =
+* New : Compatibility with latest WP(6.8.3) & WC(10.3.5)
+* Fix : Minor validation issues
+
 = 3.0.3 - Released on 09 October 2025 =
 * New: Compatibility with latest WP(6.8.3) & WC(10.2.2)
 
@@ -390,7 +394,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 = 2.6.3 - Released on 14 January 2025 =
 * New : Compatibility with latest WP(6.7.1) & WC(9.5.2)
 * Fix : Plugin stability
-
 
 = 2.6.2 - Released on 03 January 2025 =
 * New : Members dashboard on user end
@@ -510,7 +513,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 = 2.1.3 - Released on 24 June 2022 =
 * New: Change Buy Now button text
 * New: Allow customers to cancel membership
-
 * New: Attach membership plan with product
 * New: Compatible with the latest WP and WC
 
@@ -568,5 +570,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.0.3 - Released on 09 October 2025 =
-* New: Compatibility with latest WP(6.8.3) & WC(10.2.2)
+= 3.0.4 - Released on 18 November 2025 =
+* New : Compatibility with latest WP(6.8.3) & WC(10.3.5)
+* Fix : Minor validation issues
+
