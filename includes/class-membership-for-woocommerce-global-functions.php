@@ -1925,4 +1925,215 @@ class Membership_For_Woocommerce_Global_Functions {
 		// Preserve original behavior: return only if non-empty array.
 		return ! empty( $membership_ids ) ? $membership_ids : array();
 	}
+
+	/**
+	 * This function is used to build data for membership report export.
+	 *
+	 * @return array
+	 */
+	public function wps_mfw_build_membership_report_data() {
+
+		// 1) Total membership plans
+		$total_membership_plans = 0;
+		$args = array(
+			'post_type'      => 'wps_cpt_membership',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+		);
+
+		$loop = new WP_Query( $args );
+		while ( $loop->have_posts() ) {
+			$loop->the_post();
+			$total_membership_plans++;
+		}
+		wp_reset_postdata();
+
+		// 2) Members status counts (same as your logic)
+		$total_members = 0;
+		$complete      = 0;
+		$pending       = 0;
+		$expired       = 0;
+
+		$member_ids = get_posts(
+			array(
+				'post_type'   => 'wps_cpt_members',
+				'post_status' => 'publish',
+				'numberposts' => -1,
+				'fields'      => 'ids',
+			)
+		);
+
+		$array_of_ids           = array(); // store related order ids
+		$wps_store_member_ids   = array();
+
+		if ( ! empty( $member_ids ) && is_array( $member_ids ) ) {
+
+			foreach ( $member_ids as $member_post_id ) {
+
+				$wps_store_member_ids[] = $member_post_id;
+
+				$member_status = wps_membership_get_meta_data( $member_post_id, 'member_status', true );
+
+				// IMPORTANT: keep your existing assumption so export matches screen.
+				// (If you want, later we can replace this with a proper stored order-id meta.)
+				$order_id = $member_post_id - 1;
+
+				$order = wc_get_order( $order_id );
+				if ( ! $order ) {
+					continue;
+				}
+
+				$items = $order->get_items();
+				if ( empty( $items ) ) {
+					continue;
+				}
+
+				foreach ( $items as $item ) {
+
+					// FIX: never use get_meta_data()[1] — it’s not guaranteed.
+					$member_id_meta = $item->get_meta( '_member_id', true );
+
+					if ( empty( $member_id_meta ) ) {
+						continue;
+					}
+
+					// Same counters as your screen
+					if ( 'complete' === $member_status ) {
+						$complete++;
+						if ( ! in_array( $order_id, $array_of_ids, true ) ) {
+							$array_of_ids[] = $order_id;
+						}
+					}
+
+					if ( 'pending' === $member_status ) {
+						$pending++;
+					}
+
+					if ( 'expired' === $member_status ) {
+						$expired++;
+						if ( ! in_array( $order_id, $array_of_ids, true ) ) {
+							$array_of_ids[] = $order_id;
+						}
+					}
+
+					$total_members++;
+				}
+			}
+		}
+
+		// 3) Last Activated Members (date buckets)
+		$today       = 0;
+		$yesterday   = 0;
+		$last_7_days = 0;
+		$this_month  = 0;
+		$last_month  = 0;
+		$this_year   = 0;
+		$last_year   = 0;
+
+		$today_timestamp = current_time( 'timestamp' );
+		$today_start     = strtotime( 'today', $today_timestamp );
+
+		$this_year_start = strtotime( date( 'Y-01-01 00:00:00', $today_timestamp ) );
+		$last_year_start = strtotime( date( 'Y-01-01 00:00:00', strtotime( '-1 year', $today_timestamp ) ) );
+		$last_year_end   = strtotime( date( 'Y-12-31 23:59:59', strtotime( '-1 year', $today_timestamp ) ) );
+
+		$last_7_days_start = strtotime( '-7 days', $today_timestamp );
+		$yesterday_start   = strtotime( 'yesterday', $today_timestamp );
+
+		$this_month_start = strtotime( date( 'Y-m-01 00:00:00', $today_timestamp ) );
+		$last_month_start = strtotime( date( 'Y-m-01 00:00:00', strtotime( '-1 month', $today_timestamp ) ) );
+		$last_month_end   = strtotime( date( 'Y-m-t 23:59:59', strtotime( '-1 month', $today_timestamp ) ) );
+
+		// Pull completed orders only (as you did)
+		$order_ids = get_posts(
+			array(
+				'post_type'   => 'shop_order',
+				'post_status' => 'wc-completed', // FIX: correct Woo status
+				'numberposts' => -1,
+				'fields'      => 'ids',
+			)
+		);
+
+		if ( ! empty( $order_ids ) && is_array( $order_ids ) && ! empty( $array_of_ids ) ) {
+
+			foreach ( $order_ids as $oid ) {
+
+				// only orders we stored from membership loop
+				if ( ! in_array( $oid, $array_of_ids, true ) ) {
+					continue;
+				}
+
+				$order = wc_get_order( $oid );
+				if ( ! $order ) {
+					continue;
+				}
+
+				// FIX: use order created date (stable) instead of first order note date
+				$date_created = $order->get_date_created();
+				if ( ! $date_created ) {
+					continue;
+				}
+				$order_timestamp = $date_created->getTimestamp();
+
+				$items = $order->get_items();
+				if ( empty( $items ) ) {
+					continue;
+				}
+
+				foreach ( $items as $item ) {
+
+					if ( empty( $item->get_meta( '_member_id', true ) ) ) {
+						continue;
+					}
+
+					if ( $yesterday_start <= $order_timestamp && $order_timestamp < $today_start ) {
+						$yesterday++;
+					}
+
+					if ( $today_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
+						$today++;
+					}
+
+					if ( $last_7_days_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
+						$last_7_days++;
+					}
+
+					if ( $this_month_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
+						$this_month++;
+					}
+
+					if ( $last_month_start <= $order_timestamp && $order_timestamp <= $last_month_end ) {
+						$last_month++;
+					}
+
+					if ( $last_year_start <= $order_timestamp && $order_timestamp <= $last_year_end ) {
+						$last_year++;
+					}
+
+					if ( $this_year_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
+						$this_year++;
+					}
+				}
+			}
+		}
+
+		return array(
+			'total_membership_plans' => $total_membership_plans,
+			'total_members'          => $total_members,
+			'complete'               => $complete,
+			'pending'                => $pending,
+			'expired'                => $expired,
+			'wps_store_member_ids'   => $wps_store_member_ids,
+			'activity'               => array(
+				'today'       => $today,
+				'yesterday'   => $yesterday,
+				'last_7_days' => $last_7_days,
+				'this_month'  => $this_month,
+				'last_month'  => $last_month,
+				'this_year'   => $this_year,
+				'last_year'   => $last_year,
+			),
+		);
+	}
+
 }
