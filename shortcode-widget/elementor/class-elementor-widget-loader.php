@@ -93,7 +93,7 @@ final class Elementor_Widget_Loader {
 	 */
 	public function admin_notice_minimum_elementor_version() {
 		?>
-		<div class="notice notice-warning is-dismissible"><p><strong><?php esc_html_e( 'Elementor Widgets ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( 'requires ', 'membership-for-woocommerce' ); ?><strong> <?php esc_html_e( 'Elementor ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' version ', 'membership-for-woocommerce' ); ?><?php echo esc_html( self::MINIMUM_ELEMENTOR_VERSION ); ?><?php esc_html__( ' or greater.', 'membership-for-woocommerce' ); ?></p></div>
+		<div class="notice notice-warning is-dismissible"><p><strong><?php esc_html_e( 'Elementor Widgets ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( 'requires ', 'membership-for-woocommerce' ); ?><strong> <?php esc_html_e( 'Elementor ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' version ', 'membership-for-woocommerce' ); ?><?php echo esc_html( self::MINIMUM_ELEMENTOR_VERSION ); ?><?php esc_html_e( ' or greater.', 'membership-for-woocommerce' ); ?></p></div>
 		<?php
 	}
 
@@ -107,7 +107,7 @@ final class Elementor_Widget_Loader {
 	 */
 	public function admin_notice_minimum_php_version() {
 		?>
-		<div class="notice notice-warning is-dismissible"><p><strong><?php esc_html_e( 'Elementor Widgets ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( 'requires ', 'membership-for-woocommerce' ); ?><strong> <?php esc_html_e( 'PHP ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' version ', 'membership-for-woocommerce' ); ?><?php echo esc_html( self::MINIMUM_PHP_VERSION ); ?><?php esc_html__( ' or greater.', 'membership-for-woocommerce' ); ?></p></div>
+		<div class="notice notice-warning is-dismissible"><p><strong><?php esc_html_e( 'Elementor Widgets ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( 'requires ', 'membership-for-woocommerce' ); ?><strong> <?php esc_html_e( 'PHP ', 'membership-for-woocommerce' ); ?></strong><?php esc_html_e( ' version ', 'membership-for-woocommerce' ); ?><?php echo esc_html( self::MINIMUM_PHP_VERSION ); ?><?php esc_html_e( ' or greater.', 'membership-for-woocommerce' ); ?></p></div>
 		<?php
 	}
 }
