@@ -4910,10 +4910,8 @@ class Membership_For_Woocommerce_Admin {
 			return;
 		}
 
-		if (
-			empty( $_POST['wps_mfw_export_csv_nonce'] ) ||
-			! wp_verify_nonce( $_POST['wps_mfw_export_csv_nonce'], 'wps_mfw_export_csv' )
-		) {
+		$wps_mfw_export_csv_nonce = ! empty( $_POST['wps_mfw_export_csv_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_mfw_export_csv_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $wps_mfw_export_csv_nonce, 'wps_mfw_export_csv' ) ) {
 			return;
 		}
 
@@ -4924,7 +4922,7 @@ class Membership_For_Woocommerce_Admin {
 		$report = $this->global_class->wps_mfw_build_membership_report_data();
 
 		header( 'Content-Type: text/csv; charset=utf-8' );
-		header( 'Content-Disposition: attachment; filename=membership-report-' . date( 'Y-m-d' ) . '.csv' );
+		header( 'Content-Disposition: attachment; filename=membership-report-' . gmdate( 'Y-m-d' ) . '.csv' );
 
 		$out = fopen( 'php://output', 'w' );
 
@@ -4947,5 +4945,4 @@ class Membership_For_Woocommerce_Admin {
 		fclose( $out );
 		exit;
 	}
-
 }

@@ -1933,7 +1933,7 @@ class Membership_For_Woocommerce_Global_Functions {
 	 */
 	public function wps_mfw_build_membership_report_data() {
 
-		// 1) Total membership plans
+		// 1) Total membership plans.
 		$total_membership_plans = 0;
 		$args = array(
 			'post_type'      => 'wps_cpt_membership',
@@ -1948,7 +1948,7 @@ class Membership_For_Woocommerce_Global_Functions {
 		}
 		wp_reset_postdata();
 
-		// 2) Members status counts (same as your logic)
+		// 2) Members status counts (same as your logic).
 		$total_members = 0;
 		$complete      = 0;
 		$pending       = 0;
@@ -1963,7 +1963,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			)
 		);
 
-		$array_of_ids           = array(); // store related order ids
+		$array_of_ids           = array(); // store related order ids.
 		$wps_store_member_ids   = array();
 
 		if ( ! empty( $member_ids ) && is_array( $member_ids ) ) {
@@ -1975,7 +1975,7 @@ class Membership_For_Woocommerce_Global_Functions {
 				$member_status = wps_membership_get_meta_data( $member_post_id, 'member_status', true );
 
 				// IMPORTANT: keep your existing assumption so export matches screen.
-				// (If you want, later we can replace this with a proper stored order-id meta.)
+				// (If you want, later we can replace this with a proper stored order-id meta.).
 				$order_id = $member_post_id - 1;
 
 				$order = wc_get_order( $order_id );
@@ -1997,7 +1997,7 @@ class Membership_For_Woocommerce_Global_Functions {
 						continue;
 					}
 
-					// Same counters as your screen
+					// Same counters as your screen.
 					if ( 'complete' === $member_status ) {
 						$complete++;
 						if ( ! in_array( $order_id, $array_of_ids, true ) ) {
@@ -2021,7 +2021,7 @@ class Membership_For_Woocommerce_Global_Functions {
 			}
 		}
 
-		// 3) Last Activated Members (date buckets)
+		// 3) Last Activated Members (date buckets).
 		$today       = 0;
 		$yesterday   = 0;
 		$last_7_days = 0;
@@ -2033,22 +2033,22 @@ class Membership_For_Woocommerce_Global_Functions {
 		$today_timestamp = current_time( 'timestamp' );
 		$today_start     = strtotime( 'today', $today_timestamp );
 
-		$this_year_start = strtotime( date( 'Y-01-01 00:00:00', $today_timestamp ) );
-		$last_year_start = strtotime( date( 'Y-01-01 00:00:00', strtotime( '-1 year', $today_timestamp ) ) );
-		$last_year_end   = strtotime( date( 'Y-12-31 23:59:59', strtotime( '-1 year', $today_timestamp ) ) );
+		$this_year_start = strtotime( gmdate( 'Y-01-01 00:00:00', $today_timestamp ) );
+		$last_year_start = strtotime( gmdate( 'Y-01-01 00:00:00', strtotime( '-1 year', $today_timestamp ) ) );
+		$last_year_end   = strtotime( gmdate( 'Y-12-31 23:59:59', strtotime( '-1 year', $today_timestamp ) ) );
 
 		$last_7_days_start = strtotime( '-7 days', $today_timestamp );
 		$yesterday_start   = strtotime( 'yesterday', $today_timestamp );
 
-		$this_month_start = strtotime( date( 'Y-m-01 00:00:00', $today_timestamp ) );
-		$last_month_start = strtotime( date( 'Y-m-01 00:00:00', strtotime( '-1 month', $today_timestamp ) ) );
-		$last_month_end   = strtotime( date( 'Y-m-t 23:59:59', strtotime( '-1 month', $today_timestamp ) ) );
+		$this_month_start = strtotime( gmdate( 'Y-m-01 00:00:00', $today_timestamp ) );
+		$last_month_start = strtotime( gmdate( 'Y-m-01 00:00:00', strtotime( '-1 month', $today_timestamp ) ) );
+		$last_month_end   = strtotime( gmdate( 'Y-m-t 23:59:59', strtotime( '-1 month', $today_timestamp ) ) );
 
-		// Pull completed orders only (as you did)
+		// Pull completed orders only (as you did).
 		$order_ids = get_posts(
 			array(
 				'post_type'   => 'shop_order',
-				'post_status' => 'wc-completed', // FIX: correct Woo status
+				'post_status' => 'wc-completed', // FIX: correct Woo status.
 				'numberposts' => -1,
 				'fields'      => 'ids',
 			)
@@ -2058,7 +2058,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 			foreach ( $order_ids as $oid ) {
 
-				// only orders we stored from membership loop
+				// only orders we stored from membership loop.
 				if ( ! in_array( $oid, $array_of_ids, true ) ) {
 					continue;
 				}
@@ -2068,7 +2068,7 @@ class Membership_For_Woocommerce_Global_Functions {
 					continue;
 				}
 
-				// FIX: use order created date (stable) instead of first order note date
+				// FIX: use order created date (stable) instead of first order note date.
 				$date_created = $order->get_date_created();
 				if ( ! $date_created ) {
 					continue;
@@ -2135,5 +2135,4 @@ class Membership_For_Woocommerce_Global_Functions {
 			),
 		);
 	}
-
 }
