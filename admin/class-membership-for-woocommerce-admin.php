@@ -1921,6 +1921,8 @@ class Membership_For_Woocommerce_Admin {
 				exit;
 			}
 		}
+
+		$this->wps_mfw_export_membership_report_csv();
 	}
 
 	/**
@@ -4895,5 +4897,52 @@ class Membership_For_Woocommerce_Admin {
 			$buddy_settings = array_merge( $buddy_settings, $new_arr );
 		}
 		return $buddy_settings;
+	}
+
+	/**
+	 * This function is used to export membership report in csv format.
+	 *
+	 * @return void
+	 */
+	public function wps_mfw_export_membership_report_csv() {
+
+		if ( empty( $_POST['wps_mfw_export_csv'] ) ) {
+			return;
+		}
+
+		$wps_mfw_export_csv_nonce = ! empty( $_POST['wps_mfw_export_csv_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['wps_mfw_export_csv_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $wps_mfw_export_csv_nonce, 'wps_mfw_export_csv' ) ) {
+			return;
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$report = $this->global_class->wps_mfw_build_membership_report_data();
+
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename=membership-report-' . gmdate( 'Y-m-d' ) . '.csv' );
+
+		$out = fopen( 'php://output', 'w' );
+
+		fputcsv( $out, array( 'Membership Report' ) );
+		fputcsv( $out, array( 'Metric', 'Count' ) );
+		fputcsv( $out, array( 'Membership Plans', $report['total_membership_plans'] ) );
+		fputcsv( $out, array( 'Total Members', $report['total_members'] ) );
+		fputcsv( $out, array( 'Active Members', $report['complete'] ) );
+		fputcsv( $out, array( 'Pending Members', $report['pending'] ) );
+		fputcsv( $out, array( 'Expired Members', $report['expired'] ) );
+
+		fputcsv( $out, array() );
+
+		fputcsv( $out, array( 'Last Activated Members' ) );
+		fputcsv( $out, array( 'Period', 'Count' ) );
+		foreach ( $report['activity'] as $period => $count ) {
+			fputcsv( $out, array( ucwords( str_replace( '_', ' ', $period ) ), $count ) );
+		}
+
+		fclose( $out );
+		exit;
 	}
 }

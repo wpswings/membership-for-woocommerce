@@ -385,6 +385,11 @@ h4.wps_wpr_offer_notify_settings_heading {
     opacity: 0;
 }
 
+.wps_msfw_membership_report_wrap {
+    text-align: right;
+    margin: 12px 0;
+}
+
 @media (max-width: 768px){
     .wps_wpr_main_offer_wrapper article {
         grid-template-columns: 1fr;

@@ -92,6 +92,14 @@ if ( ! empty( $args ) && is_array( $args ) ) {
 }
 
 ?>
+<form method="post" class="wps_msfw_membership_report_wrap">
+	<?php wp_nonce_field( 'wps_mfw_export_csv', 'wps_mfw_export_csv_nonce' ); ?>
+	<input type="hidden" name="wps_mfw_export_csv" value="1">
+	<button class="button button-primary">
+		<?php esc_html_e( 'Export Membership Report', 'membership-for-woocommerce' ); ?>
+	</button>
+</form>
+
 <div class="membership_report">
 	<div class="wps_members_plans">
 		<h2 class="wps-members__plans--title"><?php esc_html_e( 'membership report', 'membership-for-woocommerce' ); ?></h2>
