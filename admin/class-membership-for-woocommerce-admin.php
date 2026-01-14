@@ -694,42 +694,6 @@ class Membership_For_Woocommerce_Admin {
 					'no'      => __( 'NO', 'membership-for-woocommerce' ),
 				),
 			),
-
-			array(
-				'title'       => __( 'Change Buy Now button text.', 'membership-for-woocommerce' ),
-				'type'        => 'text',
-				'description' => __( 'Change the text of Buy Now Button.', 'membership-for-woocommerce' ),
-				'placeholder' => __( 'Add Text', 'membership-for-woocommerce' ),
-				'id'          => 'wps_membership_change_buy_now_text',
-				'value'       => get_option( 'wps_membership_change_buy_now_text' ),
-				'options'     => array(
-					'yes'     => __( 'YES', 'membership-for-woocommerce' ),
-					'no'      => __( 'NO', 'membership-for-woocommerce' ),
-				),
-			),
-			array(
-				'title'       => __( 'Membership Plan Page Template', 'membership-for-woocommerce' ),
-				'type'        => 'select',
-				'description' => __( 'Select Template for Plan Page', 'membership-for-woocommerce' ),
-				'id'          => 'wps_membership_plan_page_temp',
-				'value'       => get_option( 'wps_membership_plan_page_temp' ),
-				'options'     => array(
-					'temp1' => __( 'Template 1', 'membership-for-woocommerce' ),
-					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
-					'temp3' => __( 'Template 3', 'membership-for-woocommerce' ),
-				),
-			),
-			array(
-				'title'       => __( 'Enable Dark Mode', 'membership-for-woocommerce' ),
-				'type'        => 'radio-switch',
-				'description' => __( 'Enable to display plan page in dark mode.', 'membership-for-woocommerce' ),
-				'id'          => 'wps_membership_plan_page_dark_mode',
-				'value'       => get_option( 'wps_membership_plan_page_dark_mode' ),
-				'options'     => array(
-					'yes' => __( 'YES', 'membership-for-woocommerce' ),
-					'no'  => __( 'NO', 'membership-for-woocommerce' ),
-				),
-			),
 			array(
 				'title'       => __( 'Restrict how many units of a product a customer can buy', 'membership-for-woocommerce' ),
 				'type'        => 'radio-switch',
@@ -3800,6 +3764,41 @@ class Membership_For_Woocommerce_Admin {
 				'id'          => 'wps_msfw_user_community_bg_image',
 				'value'       => get_option( 'wps_msfw_user_community_bg_image' ),
 				'form-title'  => 'wps_mfw_add_border',
+			),
+			array(
+				'title'       => __( 'Membership Plan Page Template', 'membership-for-woocommerce' ),
+				'type'        => 'select',
+				'description' => __( 'Select Template for Plan Page', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_plan_page_temp',
+				'value'       => get_option( 'wps_membership_plan_page_temp' ),
+				'options'     => array(
+					'temp1' => __( 'Template 1', 'membership-for-woocommerce' ),
+					'temp2' => __( 'Template 2', 'membership-for-woocommerce' ),
+					'temp3' => __( 'Template 3', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Change Buy Now button text.', 'membership-for-woocommerce' ),
+				'type'        => 'text',
+				'description' => __( 'Change the text of Buy Now Button.', 'membership-for-woocommerce' ),
+				'placeholder' => __( 'Add Text', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_change_buy_now_text',
+				'value'       => get_option( 'wps_membership_change_buy_now_text' ),
+				'options'     => array(
+					'yes'     => __( 'YES', 'membership-for-woocommerce' ),
+					'no'      => __( 'NO', 'membership-for-woocommerce' ),
+				),
+			),
+			array(
+				'title'       => __( 'Enable Dark Mode', 'membership-for-woocommerce' ),
+				'type'        => 'radio-switch',
+				'description' => __( 'Enable to display plan page in dark mode.', 'membership-for-woocommerce' ),
+				'id'          => 'wps_membership_plan_page_dark_mode',
+				'value'       => get_option( 'wps_membership_plan_page_dark_mode' ),
+				'options'     => array(
+					'yes' => __( 'YES', 'membership-for-woocommerce' ),
+					'no'  => __( 'NO', 'membership-for-woocommerce' ),
+				),
 			),
 			array(
 				'type'        => 'multi-button',
