@@ -16,7 +16,11 @@
  * This template will only display the content you entered in the page editor
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
 
+	exit;
+}
 ?>
 
 <html <?php language_attributes(); ?> class="no-js">
