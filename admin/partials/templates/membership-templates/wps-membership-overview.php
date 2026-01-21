@@ -11,6 +11,12 @@
  * @subpackage Membership_For_Woocommerce/admin/partials
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 ?>
 <div class="wps-overview__wrapper">
 	<div class="wps-overview__banner">
