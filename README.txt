@@ -6,7 +6,7 @@ Requires at least: 6.7.0
 Tested up to: 6.9
 WC requires at least: 6.5.0
 WC tested up to: 10.4.3
-Stable tag: 3.0.7
+Stable tag: 3.0.8
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -373,7 +373,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 3.0.7 - Released on 30 January 2026 =
+= 3.0.8 - Released on 30 January 2026 =
 * Fix : Critical error
 
 = 3.0.6 - Released on 22 January 2026 =
@@ -619,5 +619,5 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.0.7 - Released on 30 January 2026 =
+= 3.0.8 - Released on 30 January 2026 =
 * Fix : Critical error
