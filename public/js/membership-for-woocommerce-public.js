@@ -170,9 +170,17 @@ jQuery(document).ready(function ($) {
 
 	$('.wps_membership_buynow').on("click", function (e) {
 		e.preventDefault();
-		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_price')).val();
-		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_id')).val();
-		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_title')).val();
+
+		let $button = jQuery(this);
+		let $form = $button.closest('form');
+		let $scope = $form.length ? $form : $button.closest('.wps-mfw-plan-summary, .wps-mfw-plan-card, .wps_mfw_membership_front_page');
+		let plan_price = $scope.find('#wps_membership_plan_price').first().val();
+		let plan_id = $scope.find('#wps_membership_plan_id').first().val();
+		let plan_title = $scope.find('#wps_membership_title').first().val();
+
+		if ( ! plan_id ) {
+			return;
+		}
 
 		$.ajax({
 			url: membership_public_obj.ajaxurl,
@@ -186,8 +194,17 @@ jQuery(document).ready(function ($) {
 			},
 
 			success: function (response) {
+				let redirectUrl = 'cart';
 
-				window.location.replace('cart');
+				try {
+					if ( response ) {
+						redirectUrl = JSON.parse(response);
+					}
+				} catch (error) {
+					redirectUrl = response || redirectUrl;
+				}
+
+				window.location.replace(redirectUrl);
 			}
 		});
 	});

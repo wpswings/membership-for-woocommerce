@@ -65,30 +65,34 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 </form>
 
 <!--    +++++++++++    whatsapp notification settings   ++++++++++++     -->
-<div class="wps_wpr_offer_notify_main_wrappers">
-	<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Send Offer Notification', 'membership-for-woocommerce' ); ?></h4>
+<div class="wps_wpr_offer_notify_main_wrappers mfw-offer-notify-card">
+	<div class="mfw-settings-card__header mfw-offer-notify-card__header">
+		<span class="mfw-admin-panel__eyebrow"><?php esc_html_e( 'Offer Messaging', 'membership-for-woocommerce' ); ?></span>
+		<h4 class="wps_wpr_offer_notify_settings_heading"><?php esc_html_e( 'Send Offer Notification', 'membership-for-woocommerce' ); ?></h4>
+		<p><?php esc_html_e( 'Send targeted offer messages to members over WhatsApp, SMS, and email using the selected membership plans.', 'membership-for-woocommerce' ); ?></p>
+	</div>
 	<form method="POST" action="" class="wps_wpr_offer_form">
-		<main class="wps_wpr_main_offer_wrapper">
-            <section>
+		<main class="wps_wpr_main_offer_wrapper mfw-offer-notify-form">
+			<section class="mfw-offer-notify-form__row">
 				<article>
 					<label for="wps_wpr_enable_offer_settings"><?php esc_html_e( 'Choose Membership', 'membership-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_offer_setting_wrapper">
-                        <select class="wps_org_offer_plan_id" multiple>
-                            <?php
-                            if ( ! empty( $existing_plans ) && is_array( $existing_plans ) ) {
-                                foreach ( $existing_plans as $all_plans_obj ) {
-                                    ?>
-                                    <option value="<?php echo esc_html( $all_plans_obj->ID ); ?>"><?php echo esc_html( $all_plans_obj->post_title ); ?></option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </select>
+						<select class="wps_org_offer_plan_id" multiple>
+							<?php
+							if ( ! empty( $existing_plans ) && is_array( $existing_plans ) ) {
+								foreach ( $existing_plans as $all_plans_obj ) {
+									?>
+									<option value="<?php echo esc_html( $all_plans_obj->ID ); ?>"><?php echo esc_html( $all_plans_obj->post_title ); ?></option>
+									<?php
+								}
+							}
+							?>
+						</select>
 						<span class="wps_wpr_enable_offer_notices wps_wpr_label_notice"><?php esc_html_e( 'Please select the membership plan name to send the offer message to the user based on their membership plan.', 'membership-for-woocommerce' ); ?></span>
 					</div>
 				</article>
 			</section>
-            <section>
+			<section class="mfw-offer-notify-form__row">
 				<article>
 					<label for="wps_wpr_offer_message"><?php esc_html_e( 'Enter Offer Message', 'membership-for-woocommerce' ); ?></label>
 					<div class="wps_wpr_enable_offer_setting_wrapper">
@@ -102,21 +106,21 @@ $wps_wpr_offer_message           = get_option( 'wps_wpr_offer_message' );
 					</div>
 				</article>
 			</section>
-        </main>
-        <div class="wps_wpr_offer-notice_wrappers">
-            <button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" title="Whatsapp">
+		</main>
+		<div class="wps_wpr_offer-notice_wrappers mfw-offer-notify-actions">
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_whatsap_btn" id="wps_wpr_send_on_whatsap_btn" title="Whatsapp" type="button">
 				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/whatsapp-two.png'; ?>'>
 			</button>
-			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_sms_btn" id="wps_wpr_send_on_sms_btn" title="Send SMS">
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_sms_btn" id="wps_wpr_send_on_sms_btn" title="Send SMS" type="button">
 				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/sms.png'; ?>'>
 			</button>
-			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_mail_btn" id="wps_wpr_send_on_mail_btn" title="Send Email">
+			<button class="wps_wpr_send_on_click_btn" name="wps_wpr_send_on_mail_btn" id="wps_wpr_send_on_mail_btn" title="Send Email" type="button">
 				<img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/email.png'; ?>'>
 			</button>
-            <span style="display: none;" class="wps_wpr_whatsapp_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
+			<span style="display: none;" class="wps_wpr_whatsapp_loader"><img src='<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL ) . 'admin/image/loader.gif'; ?>' width="50" height="50" /></span>
 			<div style="display: none;" class="wps_wpr_offer_msg_notice"></div>
-        </div>
-    </form>
+		</div>
+	</form>
 </div>
 
 <!-- Whatsapp Sample template -->

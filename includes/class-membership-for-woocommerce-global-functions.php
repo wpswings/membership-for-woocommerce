@@ -1927,212 +1927,433 @@ class Membership_For_Woocommerce_Global_Functions {
 	}
 
 	/**
+	 * Normalize meta ids for report processing.
+	 *
+	 * @param mixed $raw_value Raw meta value.
+	 * @return array
+	 */
+	public function wps_mfw_normalize_report_ids( $raw_value ) {
+
+		$raw_value = maybe_unserialize( $raw_value );
+		if ( empty( $raw_value ) ) {
+			return array();
+		}
+
+		$raw_value = is_array( $raw_value ) ? $raw_value : array( $raw_value );
+		$raw_value = array_map( 'absint', $raw_value );
+		$raw_value = array_filter( $raw_value );
+
+		return array_values( array_unique( $raw_value ) );
+	}
+
+	/**
+	 * Get a readable report term title.
+	 *
+	 * @param int    $term_id Term ID.
+	 * @param string $taxonomy Taxonomy name.
+	 * @return string
+	 */
+	public function wps_mfw_get_report_term_title( $term_id, $taxonomy ) {
+
+		$term = get_term( absint( $term_id ), $taxonomy );
+		if ( ! $term || is_wp_error( $term ) ) {
+			return esc_html__( 'Term not found', 'membership-for-woocommerce' );
+		}
+
+		return $term->name;
+	}
+
+	/**
+	 * Return membership-related line total from an order for a member.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @param int      $member_id Member post ID.
+	 * @param int      $plan_id Membership plan ID.
+	 * @return float
+	 */
+	public function wps_mfw_get_membership_order_amount( $order, $member_id, $plan_id ) {
+
+		$membership_total = 0;
+		$fallback_total   = 0;
+		$fallback_found   = false;
+
+		if ( empty( $order ) || ! is_a( $order, 'WC_Order' ) ) {
+			return $membership_total;
+		}
+
+		$items = $order->get_items();
+		if ( empty( $items ) ) {
+			return $membership_total;
+		}
+
+		foreach ( $items as $item ) {
+			$item_total     = (float) $item->get_total() + (float) $item->get_total_tax();
+			$item_member_id = absint( $item->get_meta( '_member_id', true ) );
+			$item_plan_id   = absint( $item->get_meta( '_wps_plan_id', true ) );
+
+			if ( $item_member_id === absint( $member_id ) ) {
+				$membership_total += $item_total;
+				continue;
+			}
+
+			if ( ! $fallback_found && $plan_id > 0 && $item_plan_id === absint( $plan_id ) ) {
+				$fallback_total += $item_total;
+				$fallback_found  = true;
+			}
+		}
+
+		if ( $membership_total > 0 ) {
+			return $membership_total;
+		}
+
+		return $fallback_total;
+	}
+
+	/**
+	 * Default activity buckets for reports.
+	 *
+	 * @return array
+	 */
+	public function wps_mfw_get_default_report_activity() {
+		return array(
+			'today'       => 0,
+			'yesterday'   => 0,
+			'last_7_days' => 0,
+			'this_month'  => 0,
+			'last_month'  => 0,
+			'this_year'   => 0,
+			'last_year'   => 0,
+		);
+	}
+
+	/**
+	 * Increment report activity buckets for a timestamp.
+	 *
+	 * @param array $activity Report activity buckets.
+	 * @param int   $order_timestamp Order timestamp.
+	 * @param int   $current_timestamp Current timestamp.
+	 * @return array
+	 */
+	public function wps_mfw_track_report_activity( $activity, $order_timestamp, $current_timestamp ) {
+
+		$today_start       = strtotime( 'today', $current_timestamp );
+		$yesterday_start   = strtotime( 'yesterday', $current_timestamp );
+		$last_7_days_start = strtotime( '-7 days', $current_timestamp );
+		$this_month_start  = strtotime( gmdate( 'Y-m-01 00:00:00', $current_timestamp ) );
+		$last_month_start  = strtotime( gmdate( 'Y-m-01 00:00:00', strtotime( '-1 month', $current_timestamp ) ) );
+		$last_month_end    = strtotime( gmdate( 'Y-m-t 23:59:59', strtotime( '-1 month', $current_timestamp ) ) );
+		$this_year_start   = strtotime( gmdate( 'Y-01-01 00:00:00', $current_timestamp ) );
+		$last_year_start   = strtotime( gmdate( 'Y-01-01 00:00:00', strtotime( '-1 year', $current_timestamp ) ) );
+		$last_year_end     = strtotime( gmdate( 'Y-12-31 23:59:59', strtotime( '-1 year', $current_timestamp ) ) );
+
+		if ( $yesterday_start <= $order_timestamp && $order_timestamp < $today_start ) {
+			$activity['yesterday']++;
+		}
+
+		if ( $today_start <= $order_timestamp && $order_timestamp <= $current_timestamp ) {
+			$activity['today']++;
+		}
+
+		if ( $last_7_days_start <= $order_timestamp && $order_timestamp <= $current_timestamp ) {
+			$activity['last_7_days']++;
+		}
+
+		if ( $this_month_start <= $order_timestamp && $order_timestamp <= $current_timestamp ) {
+			$activity['this_month']++;
+		}
+
+		if ( $last_month_start <= $order_timestamp && $order_timestamp <= $last_month_end ) {
+			$activity['last_month']++;
+		}
+
+		if ( $this_year_start <= $order_timestamp && $order_timestamp <= $current_timestamp ) {
+			$activity['this_year']++;
+		}
+
+		if ( $last_year_start <= $order_timestamp && $order_timestamp <= $last_year_end ) {
+			$activity['last_year']++;
+		}
+
+		return $activity;
+	}
+
+	/**
+	 * Sort analytics rows by purchase volume and label.
+	 *
+	 * @param array $rows Report rows.
+	 * @return array
+	 */
+	public function wps_mfw_sort_report_rows( $rows ) {
+
+		if ( empty( $rows ) || ! is_array( $rows ) ) {
+			return array();
+		}
+
+		usort(
+			$rows,
+			static function ( $first, $second ) {
+				$first_purchases  = isset( $first['membership_purchases'] ) ? (int) $first['membership_purchases'] : ( isset( $first['paid_purchases'] ) ? (int) $first['paid_purchases'] : 0 );
+				$second_purchases = isset( $second['membership_purchases'] ) ? (int) $second['membership_purchases'] : ( isset( $second['paid_purchases'] ) ? (int) $second['paid_purchases'] : 0 );
+
+				if ( $first_purchases === $second_purchases ) {
+					$first_revenue  = isset( $first['revenue'] ) ? (float) $first['revenue'] : 0;
+					$second_revenue = isset( $second['revenue'] ) ? (float) $second['revenue'] : 0;
+
+					if ( $first_revenue === $second_revenue ) {
+						$first_title  = isset( $first['title'] ) ? $first['title'] : '';
+						$second_title = isset( $second['title'] ) ? $second['title'] : '';
+						return strcasecmp( $first_title, $second_title );
+					}
+
+					return ( $second_revenue <=> $first_revenue );
+				}
+
+				return ( $second_purchases <=> $first_purchases );
+			}
+		);
+
+		return array_values( $rows );
+	}
+
+	/**
 	 * This function is used to build data for membership report export.
 	 *
 	 * @return array
 	 */
 	public function wps_mfw_build_membership_report_data() {
 
-		// 1) Total membership plans.
-		$total_membership_plans = 0;
-		$args = array(
-			'post_type'      => 'wps_cpt_membership',
-			'post_status'    => 'publish',
-			'posts_per_page' => -1,
-		);
-
-		$loop = new WP_Query( $args );
-		while ( $loop->have_posts() ) {
-			$loop->the_post();
-			$total_membership_plans++;
-		}
-		wp_reset_postdata();
-
-		// 2) Members status counts (same as your logic).
-		$total_members = 0;
-		$complete      = 0;
-		$pending       = 0;
-		$expired       = 0;
-
-		$member_ids = get_posts(
+		$current_timestamp = current_time( 'timestamp' );
+		$activity          = $this->wps_mfw_get_default_report_activity();
+		$member_ids        = get_posts(
 			array(
 				'post_type'   => 'wps_cpt_members',
-				'post_status' => 'publish',
+				'post_status' => array( 'publish', 'pending', 'draft', 'private', 'cancelled' ),
 				'numberposts' => -1,
 				'fields'      => 'ids',
 			)
 		);
 
-		$array_of_ids           = array(); // store related order ids.
-		$wps_store_member_ids   = array();
-
-		if ( ! empty( $member_ids ) && is_array( $member_ids ) ) {
-
-			foreach ( $member_ids as $member_post_id ) {
-
-				$wps_store_member_ids[] = $member_post_id;
-
-				$member_status = wps_membership_get_meta_data( $member_post_id, 'member_status', true );
-
-				// IMPORTANT: keep your existing assumption so export matches screen.
-				// (If you want, later we can replace this with a proper stored order-id meta.).
-				$order_id = $member_post_id - 1;
-
-				$order = wc_get_order( $order_id );
-				if ( ! $order ) {
-					continue;
-				}
-
-				$items = $order->get_items();
-				if ( empty( $items ) ) {
-					continue;
-				}
-
-				foreach ( $items as $item ) {
-
-					// FIX: never use get_meta_data()[1] — it’s not guaranteed.
-					$member_id_meta = $item->get_meta( '_member_id', true );
-
-					if ( empty( $member_id_meta ) ) {
-						continue;
-					}
-
-					// Same counters as your screen.
-					if ( 'complete' === $member_status ) {
-						$complete++;
-						if ( ! in_array( $order_id, $array_of_ids, true ) ) {
-							$array_of_ids[] = $order_id;
-						}
-					}
-
-					if ( 'pending' === $member_status ) {
-						$pending++;
-					}
-
-					if ( 'expired' === $member_status ) {
-						$expired++;
-						if ( ! in_array( $order_id, $array_of_ids, true ) ) {
-							$array_of_ids[] = $order_id;
-						}
-					}
-
-					$total_members++;
-				}
-			}
-		}
-
-		// 3) Last Activated Members (date buckets).
-		$today       = 0;
-		$yesterday   = 0;
-		$last_7_days = 0;
-		$this_month  = 0;
-		$last_month  = 0;
-		$this_year   = 0;
-		$last_year   = 0;
-
-		$today_timestamp = current_time( 'timestamp' );
-		$today_start     = strtotime( 'today', $today_timestamp );
-
-		$this_year_start = strtotime( gmdate( 'Y-01-01 00:00:00', $today_timestamp ) );
-		$last_year_start = strtotime( gmdate( 'Y-01-01 00:00:00', strtotime( '-1 year', $today_timestamp ) ) );
-		$last_year_end   = strtotime( gmdate( 'Y-12-31 23:59:59', strtotime( '-1 year', $today_timestamp ) ) );
-
-		$last_7_days_start = strtotime( '-7 days', $today_timestamp );
-		$yesterday_start   = strtotime( 'yesterday', $today_timestamp );
-
-		$this_month_start = strtotime( gmdate( 'Y-m-01 00:00:00', $today_timestamp ) );
-		$last_month_start = strtotime( gmdate( 'Y-m-01 00:00:00', strtotime( '-1 month', $today_timestamp ) ) );
-		$last_month_end   = strtotime( gmdate( 'Y-m-t 23:59:59', strtotime( '-1 month', $today_timestamp ) ) );
-
-		// Pull completed orders only (as you did).
-		$order_ids = get_posts(
-			array(
-				'post_type'   => 'shop_order',
-				'post_status' => 'wc-completed', // FIX: correct Woo status.
-				'numberposts' => -1,
-				'fields'      => 'ids',
-			)
-		);
-
-		if ( ! empty( $order_ids ) && is_array( $order_ids ) && ! empty( $array_of_ids ) ) {
-
-			foreach ( $order_ids as $oid ) {
-
-				// only orders we stored from membership loop.
-				if ( ! in_array( $oid, $array_of_ids, true ) ) {
-					continue;
-				}
-
-				$order = wc_get_order( $oid );
-				if ( ! $order ) {
-					continue;
-				}
-
-				// FIX: use order created date (stable) instead of first order note date.
-				$date_created = $order->get_date_created();
-				if ( ! $date_created ) {
-					continue;
-				}
-				$order_timestamp = $date_created->getTimestamp();
-
-				$items = $order->get_items();
-				if ( empty( $items ) ) {
-					continue;
-				}
-
-				foreach ( $items as $item ) {
-
-					if ( empty( $item->get_meta( '_member_id', true ) ) ) {
-						continue;
-					}
-
-					if ( $yesterday_start <= $order_timestamp && $order_timestamp < $today_start ) {
-						$yesterday++;
-					}
-
-					if ( $today_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-						$today++;
-					}
-
-					if ( $last_7_days_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-						$last_7_days++;
-					}
-
-					if ( $this_month_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-						$this_month++;
-					}
-
-					if ( $last_month_start <= $order_timestamp && $order_timestamp <= $last_month_end ) {
-						$last_month++;
-					}
-
-					if ( $last_year_start <= $order_timestamp && $order_timestamp <= $last_year_end ) {
-						$last_year++;
-					}
-
-					if ( $this_year_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-						$this_year++;
-					}
-				}
-			}
-		}
-
-		return array(
-			'total_membership_plans' => $total_membership_plans,
-			'total_members'          => $total_members,
-			'complete'               => $complete,
-			'pending'                => $pending,
-			'expired'                => $expired,
-			'wps_store_member_ids'   => $wps_store_member_ids,
-			'activity'               => array(
-				'today'       => $today,
-				'yesterday'   => $yesterday,
-				'last_7_days' => $last_7_days,
-				'this_month'  => $this_month,
-				'last_month'  => $last_month,
-				'this_year'   => $this_year,
-				'last_year'   => $last_year,
+		$membership_counts = wp_count_posts( 'wps_cpt_membership' );
+		$total_plans       = ! empty( $membership_counts->publish ) ? (int) $membership_counts->publish : 0;
+		$report            = array(
+			'generated_at'            => current_time( 'mysql' ),
+			'total_membership_plans'  => $total_plans,
+			'total_members'           => 0,
+			'complete'                => 0,
+			'pending'                 => 0,
+			'expired'                 => 0,
+			'cancelled'               => 0,
+			'paused'                  => 0,
+			'hold'                    => 0,
+			'paid_membership_orders'  => 0,
+			'membership_revenue'      => 0,
+			'average_order_value'     => 0,
+			'wps_store_member_ids'    => is_array( $member_ids ) ? $member_ids : array(),
+			'activity'                => $activity,
+			'top_memberships'         => array(),
+			'top_discount_products'   => array(),
+			'top_discount_categories' => array(),
+			'top_discount_tags'       => array(),
+			'payment_methods'         => array(),
+			'recent_memberships'      => array(),
+			'status_counts'           => array(
+				'complete'  => 0,
+				'pending'   => 0,
+				'expired'   => 0,
+				'cancelled' => 0,
+				'paused'    => 0,
+				'hold'      => 0,
 			),
 		);
+
+		if ( empty( $member_ids ) || ! is_array( $member_ids ) ) {
+			return $report;
+		}
+
+		$top_memberships         = array();
+		$top_discount_products   = array();
+		$top_discount_categories = array();
+		$top_discount_tags       = array();
+		$payment_methods         = array();
+		$recent_memberships      = array();
+
+		foreach ( $member_ids as $member_post_id ) {
+			$member_post_id = absint( $member_post_id );
+			if ( $member_post_id <= 0 ) {
+				continue;
+			}
+
+			$report['total_members']++;
+
+			$member_status = wps_membership_get_meta_data( $member_post_id, 'member_status', true );
+			$member_status = ! empty( $member_status ) ? sanitize_key( $member_status ) : 'pending';
+			if ( isset( $report['status_counts'][ $member_status ] ) ) {
+				$report['status_counts'][ $member_status ]++;
+				$report[ $member_status ]++;
+			}
+
+			$plan_obj   = wps_membership_get_meta_data( $member_post_id, 'plan_obj', true );
+			$plan_id    = ! empty( $plan_obj['ID'] ) ? absint( $plan_obj['ID'] ) : 0;
+			$plan_title = $plan_id ? get_the_title( $plan_id ) : get_the_title( $member_post_id );
+
+			if ( $plan_id > 0 ) {
+				if ( ! isset( $top_memberships[ $plan_id ] ) ) {
+					$top_memberships[ $plan_id ] = array(
+						'plan_id'           => $plan_id,
+						'title'             => $plan_title,
+						'total_members'     => 0,
+						'active_members'    => 0,
+						'paid_purchases'    => 0,
+						'revenue'           => 0,
+						'discount_products' => 0,
+					);
+				}
+
+				$top_memberships[ $plan_id ]['total_members']++;
+				if ( 'complete' === $member_status ) {
+					$top_memberships[ $plan_id ]['active_members']++;
+				}
+			}
+
+			$order_id = absint( wps_membership_get_meta_data( $member_post_id, 'member_order_id', true ) );
+			$order    = $order_id ? wc_get_order( $order_id ) : false;
+			if ( ! $order ) {
+				continue;
+			}
+
+			$membership_amount = $this->wps_mfw_get_membership_order_amount( $order, $member_post_id, $plan_id );
+			$is_paid_order     = method_exists( $order, 'is_paid' ) ? $order->is_paid() : in_array( 'wc-' . $order->get_status(), wc_get_is_paid_statuses(), true );
+			$order_date        = $order->get_date_created();
+
+			if ( ! $is_paid_order ) {
+				continue;
+			}
+
+			$report['paid_membership_orders']++;
+			$report['membership_revenue'] += $membership_amount;
+
+			$order_timestamp = 0;
+			if ( $order_date ) {
+				$order_timestamp    = $order_date->getTimestamp();
+				$report['activity'] = $this->wps_mfw_track_report_activity( $report['activity'], $order_timestamp, $current_timestamp );
+			}
+
+			if ( $plan_id > 0 && isset( $top_memberships[ $plan_id ] ) ) {
+				$top_memberships[ $plan_id ]['paid_purchases']++;
+				$top_memberships[ $plan_id ]['revenue'] += $membership_amount;
+			}
+
+			$payment_method_id    = $order->get_payment_method() ? $order->get_payment_method() : 'unknown';
+			$payment_method_title = $order->get_payment_method_title() ? $order->get_payment_method_title() : esc_html__( 'Unknown', 'membership-for-woocommerce' );
+			if ( ! isset( $payment_methods[ $payment_method_id ] ) ) {
+				$payment_methods[ $payment_method_id ] = array(
+					'method_id'            => $payment_method_id,
+					'title'                => $payment_method_title,
+					'membership_purchases' => 0,
+					'revenue'              => 0,
+				);
+			}
+
+			$payment_methods[ $payment_method_id ]['membership_purchases']++;
+			$payment_methods[ $payment_method_id ]['revenue'] += $membership_amount;
+
+			$discount_product_ids  = $this->wps_mfw_normalize_report_ids( isset( $plan_obj['wps_membership_plan_target_disc_ids'] ) ? $plan_obj['wps_membership_plan_target_disc_ids'] : array() );
+			$discount_category_ids = $this->wps_mfw_normalize_report_ids( isset( $plan_obj['wps_membership_plan_target_disc_categories'] ) ? $plan_obj['wps_membership_plan_target_disc_categories'] : array() );
+			$discount_tag_ids      = $this->wps_mfw_normalize_report_ids( isset( $plan_obj['wps_membership_plan_target_disc_tags'] ) ? $plan_obj['wps_membership_plan_target_disc_tags'] : array() );
+
+			if ( $plan_id > 0 && isset( $top_memberships[ $plan_id ] ) ) {
+				$top_memberships[ $plan_id ]['discount_products'] = count( $discount_product_ids );
+			}
+
+			foreach ( $discount_product_ids as $product_id ) {
+				if ( ! isset( $top_discount_products[ $product_id ] ) ) {
+					$top_discount_products[ $product_id ] = array(
+						'product_id'           => $product_id,
+						'title'                => $this->get_product_title( $product_id ),
+						'membership_purchases' => 0,
+						'plan_ids'             => array(),
+					);
+				}
+
+				$top_discount_products[ $product_id ]['membership_purchases']++;
+				if ( $plan_id > 0 ) {
+					$top_discount_products[ $product_id ]['plan_ids'][ $plan_id ] = $plan_id;
+				}
+			}
+
+			foreach ( $discount_category_ids as $term_id ) {
+				if ( ! isset( $top_discount_categories[ $term_id ] ) ) {
+					$top_discount_categories[ $term_id ] = array(
+						'term_id'              => $term_id,
+						'title'                => $this->wps_mfw_get_report_term_title( $term_id, 'product_cat' ),
+						'membership_purchases' => 0,
+						'plan_ids'             => array(),
+					);
+				}
+
+				$top_discount_categories[ $term_id ]['membership_purchases']++;
+				if ( $plan_id > 0 ) {
+					$top_discount_categories[ $term_id ]['plan_ids'][ $plan_id ] = $plan_id;
+				}
+			}
+
+			foreach ( $discount_tag_ids as $term_id ) {
+				if ( ! isset( $top_discount_tags[ $term_id ] ) ) {
+					$top_discount_tags[ $term_id ] = array(
+						'term_id'              => $term_id,
+						'title'                => $this->wps_mfw_get_report_term_title( $term_id, 'product_tag' ),
+						'membership_purchases' => 0,
+						'plan_ids'             => array(),
+					);
+				}
+
+				$top_discount_tags[ $term_id ]['membership_purchases']++;
+				if ( $plan_id > 0 ) {
+					$top_discount_tags[ $term_id ]['plan_ids'][ $plan_id ] = $plan_id;
+				}
+			}
+
+			$recent_memberships[] = array(
+				'member_id'    => $member_post_id,
+				'plan_id'      => $plan_id,
+				'plan_title'   => $plan_title,
+				'order_id'     => $order_id,
+				'status'       => $member_status,
+				'amount'       => $membership_amount,
+				'payment'      => $payment_method_title,
+				'created_at'   => $order_date ? $order_date->date_i18n( wc_date_format() . ' ' . wc_time_format() ) : '',
+				'created_time' => $order_timestamp,
+			);
+		}
+
+		foreach ( $top_discount_products as $product_id => $data ) {
+			$top_discount_products[ $product_id ]['plans_count'] = count( $data['plan_ids'] );
+		}
+
+		foreach ( $top_discount_categories as $term_id => $data ) {
+			$top_discount_categories[ $term_id ]['plans_count'] = count( $data['plan_ids'] );
+		}
+
+		foreach ( $top_discount_tags as $term_id => $data ) {
+			$top_discount_tags[ $term_id ]['plans_count'] = count( $data['plan_ids'] );
+		}
+
+		$report['average_order_value']     = $report['paid_membership_orders'] > 0 ? ( $report['membership_revenue'] / $report['paid_membership_orders'] ) : 0;
+		$report['top_memberships']         = $this->wps_mfw_sort_report_rows( array_values( $top_memberships ) );
+		$report['top_discount_products']   = $this->wps_mfw_sort_report_rows( array_values( $top_discount_products ) );
+		$report['top_discount_categories'] = $this->wps_mfw_sort_report_rows( array_values( $top_discount_categories ) );
+		$report['top_discount_tags']       = $this->wps_mfw_sort_report_rows( array_values( $top_discount_tags ) );
+		$report['payment_methods']         = $this->wps_mfw_sort_report_rows( array_values( $payment_methods ) );
+
+		usort(
+			$recent_memberships,
+			static function ( $first, $second ) {
+				return ( (int) $second['created_time'] <=> (int) $first['created_time'] );
+			}
+		);
+
+		$report['recent_memberships'] = array_slice( $recent_memberships, 0, 10 );
+
+		return $report;
 	}
 }

@@ -213,6 +213,8 @@ class Membership_For_Woocommerce {
 		// Saving tab settings for registration form.
 		$this->loader->add_action( 'wps_mfw_settings_saved_notice', $mfw_plugin_admin, 'mfw_admin_save_tab_settings_reg_form' );
 		$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership_registration', $mfw_plugin_admin, 'wps_membership_search_products_for_membership_registration' );
+		$this->loader->add_action( 'wp_ajax_wps_mfw_load_admin_tab_content', $mfw_plugin_admin, 'wps_mfw_load_admin_tab_content' );
+		$this->loader->add_action( 'wp_ajax_wps_mfw_load_admin_subtab_content', $mfw_plugin_admin, 'wps_mfw_load_admin_subtab_content' );
 
 		// Developer's Hook Listing.
 		$this->loader->add_action( 'mfw_developer_admin_hooks_array', $mfw_plugin_admin, 'wps_developer_admin_hooks_listing' );
@@ -410,14 +412,11 @@ class Membership_For_Woocommerce {
 			$this->loader->add_action( 'woocommerce_single_product_summary', $mfw_plugin_public, 'wps_membership_product_membership_purchase_html', 50 );
 			// Hide price of membership products on shop page.
 			$this->loader->add_action( 'woocommerce_get_price_html', $mfw_plugin_public, 'wps_membership_for_woo_hide_price_shop_page', 10, 2 );
-			// Display "Membership" tag for membership products on shop page.
-			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
-			$theme = wp_get_theme();
-
-			if ( 'Betheme' == $theme->name ) {
-
-				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 10 );
-			}
+			// Suppress hidden membership product warning content on the frontend.
+			$this->loader->add_filter( 'woocommerce_product_get_description', $mfw_plugin_public, 'wps_membership_hide_default_product_content', 10, 2 );
+			$this->loader->add_filter( 'woocommerce_product_get_short_description', $mfw_plugin_public, 'wps_membership_hide_default_product_content', 10, 2 );
+			// Display membership offer details below products on the shop loop.
+			$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'wps_membership_products_on_shop_page', 15 );
 			// Hide other shipping methods, if membership free shipping available.
 			$this->loader->add_filter( 'woocommerce_package_rates', $mfw_plugin_public, 'wps_membership_unset_shipping_if_membership_available', 10, 2 );
 
@@ -466,13 +465,7 @@ class Membership_For_Woocommerce {
 			// Login at thank you page.
 			$this->loader->add_action( 'woocommerce_thankyou', $mfw_plugin_public, 'wps_membership_login_thanku_page', 11, 1 );
 
-			$this->loader->add_action( 'woocommerce_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
-			$theme = wp_get_theme();
-
-			if ( 'Betheme' == $theme->name ) {
-
-				$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
-			}
+			$this->loader->add_action( 'woocommerce_after_shop_loop_item_title', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			$this->loader->add_action( 'woocommerce_before_add_to_cart_form', $mfw_plugin_public, 'mfw_membership_add_label', 20 );
 			$this->loader->add_action( 'woocommerce_init', $mfw_plugin_public, 'wps_mfw_registration_form_submission_callback' );
 			$this->loader->add_filter( 'woocommerce_checkout_fields', $mfw_plugin_public, 'wps_mfw_remove_billing_from_checkout', 10, 1 );

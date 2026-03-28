@@ -112,7 +112,7 @@ class Membership_For_Woocommerce_Activator {
 							 'post_type'    => 'product',
 							 'post_author'  => 1,
 							 'price'  => 1,
-							 'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
+							 'post_content' => '',
 						 );
 
 						 $wps_membership_product_id = wp_insert_post( $wps_membership_product );
@@ -208,7 +208,7 @@ class Membership_For_Woocommerce_Activator {
 					'post_title'   => 'Membership Product',
 					'post_type'    => 'product',
 					'post_author'  => 1,
-					'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
+					'post_content' => '',
 				);
 
 				$wps_membership_product_id = wp_insert_post( $wps_membership_product );

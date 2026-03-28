@@ -74,18 +74,57 @@ select#membership_billing_country:focus,
 }
 
 .mfw-product-meta-membership {
+    align-items: center;
+    background: #fffaf4;
+    border: 1px solid rgba(243, 126, 33, 0.18);
+    border-radius: 18px;
+    box-shadow: 0 12px 24px rgba(17, 17, 17, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0 auto;
+    max-width: 260px;
+    padding: 14px 16px;
     text-align: center;
+}
+
+.mfw-product-meta-membership__eyebrow {
+    color: #f37e21;
+    display: block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.mfw-product-meta-membership__title {
+    color: #171717;
+    display: block;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.mfw-product-meta-membership__plans {
+    color: #5f5570;
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.5;
 }
 
 .product-inner {
     position: relative;
 }
 
-.product-inner .mfw-product-meta-membership-wrap {
-    position: absolute;
-    top: 280px;
-    left: 0;
-    right: 0;
+.product-inner .mfw-product-meta-membership-wrap,
+.woocommerce ul.products li.product .mfw-product-meta-membership-wrap,
+.woocommerce-page ul.products li.product .mfw-product-meta-membership-wrap {
+    left: auto;
+    margin: 14px 0 0;
+    position: static;
+    right: auto;
+    top: auto;
 }
 
 .mfw-product-meta-membership-wrap {
@@ -95,7 +134,7 @@ select#membership_billing_country:focus,
 }
 
 .product-inner .woo-entry-image+.mfw-product-meta-membership-wrap+.woo-entry-inner li.image-wrap {
-    margin-bottom: 60px !important;
+    margin-bottom: 0 !important;
 }
 
 .wps_mfw_membership_tool_tip_wrapper {
@@ -2498,3 +2537,149 @@ input[type=email].wps_msfw_send_mail_to_comm_user {
     border-top: none;
 }
 
+
+
+/* Single product membership offer redesign */
+.single-product .mfw-single-product-membership {
+    background: linear-gradient(180deg, #fffdf9, #ffffff);
+    border: 1px solid rgba(225, 210, 189, 0.85);
+    border-radius: 28px;
+    box-shadow: 0 22px 50px rgba(22, 18, 33, 0.08);
+    display: grid;
+    gap: 24px;
+    margin: 24px 0 30px;
+    overflow: hidden;
+    padding: 26px;
+}
+
+.single-product .mfw-single-product-membership__intro {
+    display: grid;
+    gap: 10px;
+}
+
+.single-product .mfw-single-product-membership__eyebrow {
+    color: #f59e0b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.single-product .mfw-single-product-membership__intro h3 {
+    color: #171220;
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin: 0;
+}
+
+.single-product .mfw-single-product-membership__intro p {
+    color: #655b73;
+    font-size: 15px;
+    line-height: 1.75;
+    margin: 0;
+    max-width: 700px;
+}
+
+.single-product .mfw-single-product-membership__grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.single-product .mfw-single-product-membership__card {
+    background: #fffaf3;
+    border: 1px solid rgba(225, 210, 189, 0.9);
+    border-radius: 22px;
+    display: grid;
+    gap: 14px;
+    min-height: 100%;
+    padding: 22px 20px;
+    position: relative;
+}
+
+.single-product .mfw-single-product-membership__card::after {
+    background: radial-gradient(circle at center, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0));
+    content: '';
+    height: 120px;
+    pointer-events: none;
+    position: absolute;
+    right: -30px;
+    top: -24px;
+    width: 120px;
+}
+
+.single-product .mfw-single-product-membership__card-label {
+    color: #f59e0b;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    position: relative;
+    text-transform: uppercase;
+    z-index: 1;
+}
+
+.single-product .mfw-single-product-membership__card h4 {
+    color: #171220;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 1.02;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.single-product .mfw-single-product-membership__card p {
+    color: #5f556e;
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.single-product .mfw-single-product-membership__cta.button.alt.mfw-membership {
+    align-items: center;
+    background: #111111;
+    border: 1px solid #111111;
+    border-radius: 999px;
+    color: #ffffff;
+    display: inline-flex;
+    font-size: 14px;
+    font-weight: 700;
+    justify-content: center;
+    margin: 4px 0 0;
+    max-width: none;
+    min-height: 52px;
+    padding: 14px 22px;
+    position: relative;
+    width: 100%;
+    z-index: 1;
+}
+
+.single-product .mfw-single-product-membership__cta.button.alt.mfw-membership:hover {
+    background: #ffffff;
+    color: #111111 !important;
+}
+
+.single-product .product-meta.product-meta-review {
+    margin: 16px 0 12px;
+    max-width: 280px;
+}
+
+@media (max-width: 767px) {
+    .single-product .mfw-single-product-membership {
+        border-radius: 24px;
+        padding: 20px;
+    }
+
+    .single-product .mfw-single-product-membership__grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .single-product .mfw-single-product-membership__card h4 {
+        font-size: 24px;
+    }
+}

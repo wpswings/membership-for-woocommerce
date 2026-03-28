@@ -1,74 +1,65 @@
 jQuery( document ).ready( function( $ ){
 
-    jQuery(document).find('.wps_org_offer_plan_id').select2();
-    // Target products search.
-    jQuery( ".wc-membership-product-search" ).select2({
+    function wpsBuildMembershipSelect2Config( actionName ) {
+        return {
+            ajax: {
+                url: add_new_obj.ajax_url,
+                dataType: "json",
+                delay: 200,
+                data: function( params ) {
+                    return {
+                        q: params.term,
+                        action: actionName,
+                    };
+                },
+                processResults: function( data ) {
+                    var options = [];
 
-        ajax:{
+                    if ( data ) {
+                        $.each( data, function( index, text ) {
+                            text[1] += '( #' + text[0] + ')';
+                            options.push( { id: text[0], text: text[1] } );
+                        } );
+                    }
 
-            url: add_new_obj.ajax_url,
-            dataType: "json",
-            delay:    200,
-            data: function( params ) {
-                return {
-                    q: params.term,
-                    action: "wps_membership_search_products_for_membership",
-                };
+                    return {
+                        results: options
+                    };
+                },
+                cache: true
             },
-            processResults: function( data ) {
+            minimumInputLength: 3
+        };
+    }
 
-                var options = [];
-                if ( data ) {
+    function wpsInitMembershipPlanUi( root ) {
+        var $root = jQuery( root || document );
 
-                    $.each( data, function( index, text ) {
-                        text[1]+='( #'+text[0]+')';
-                        options.push( { id: text[0], text: text[1] } );
-                    });
-                }
-                return {
-                    results:options
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 3 // The minimum number of characters to input to perform a search.
-    });
+        if ( typeof $.fn.select2 === 'undefined' ) {
+            return;
+        }
 
+        $root.find( '.wps_org_offer_plan_id' ).filter( function() {
+            return ! jQuery( this ).hasClass( 'select2-hidden-accessible' );
+        } ).select2( {
+            width: '100%'
+        } );
 
-    // Target category search.
-    jQuery( ".wc-membership-product-category-search" ).select2({
+        $root.find( '.wc-membership-product-search' ).filter( function() {
+            return ! jQuery( this ).hasClass( 'select2-hidden-accessible' );
+        } ).select2( wpsBuildMembershipSelect2Config( 'wps_membership_search_products_for_membership' ) );
 
-        ajax:{
+        $root.find( '.wc-membership-product-category-search' ).filter( function() {
+            return ! jQuery( this ).hasClass( 'select2-hidden-accessible' );
+        } ).select2( wpsBuildMembershipSelect2Config( 'wps_membership_search_product_categories_for_membership' ) );
+    }
 
-            url: add_new_obj.ajax_url,
-            dataType: "json",
-            delay: 200,
-            data: function( params ) {
-                return {
-                    q: params.term,
-                    action: "wps_membership_search_product_categories_for_membership",
-                };
-            },
-            processResults: function( data ) {
-                var options = [];
-                if ( data ) {
+    window.wpsInitMembershipPlanUi = wpsInitMembershipPlanUi;
+    wpsInitMembershipPlanUi( document );
 
-                    $.each( data, function( index, text ) {
-
-                        text[1]+='( #'+text[0]+')';
-                        options.push( { id: text[0], text: text[1] } )
-
-                    });
-                }
-                return {
-                    results: options
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 3 // The minimum number of characters to input to perform a search.
-    });
-
+    jQuery( document ).on( 'mfw:panel-loaded mfw:subtab-loaded', function( event, root ) {
+        wpsInitMembershipPlanUi( root || document );
+    } );
 
     // set limit when fixed and discount type is selected in new plan price.
     jQuery(document).on('change', '#wps_membership_plan_for_discount_offer', function(){

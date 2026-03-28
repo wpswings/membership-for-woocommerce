@@ -11,157 +11,102 @@
  * @subpackage Membership_For_Woocommerce/admin/partials
  */
 
-// Exit is accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
-
 	exit;
 }
 
+$mfw_overview_icon = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw12.png';
+$mfw_feature_cards = array(
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw1.png',
+		'title' => __( 'Flexible plan creation', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Create pricing plans, set durations, and define access rules for the right customer segment.', 'membership-for-woocommerce' ),
+	),
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw5.png',
+		'title' => __( 'Content and product restriction', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Control who can purchase products, access pages, and unlock member-only benefits across the store.', 'membership-for-woocommerce' ),
+	),
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw10.png',
+		'title' => __( 'Member lifecycle tracking', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Review activity, expiry, and membership history to manage renewals and retention with less effort.', 'membership-for-woocommerce' ),
+	),
+);
+
+$mfw_benefit_cards = array(
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw14.png',
+		'title' => __( 'Exclusive pricing', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Offer plan-based discounts, shipping perks, and member-only purchase advantages.', 'membership-for-woocommerce' ),
+	),
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw16.png',
+		'title' => __( 'Custom member journeys', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Build different buying and onboarding flows for members, trial users, and restricted audiences.', 'membership-for-woocommerce' ),
+	),
+	array(
+		'icon'  => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/mfw18.png',
+		'title' => __( 'Operational visibility', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Use reports, exports, and member history views to keep operations predictable.', 'membership-for-woocommerce' ),
+	),
+);
+
 ?>
-<div class="wps-overview__wrapper">
-	<div class="wps-overview__banner">
-	<?php
-	if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
-		$check_licence = check_membership_pro_plugin_is_active();
-		if ( $check_licence ) {
-			?>
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Banner-pro.jpg' ); ?>" alt="banner-image">
-			<?php
-		}
-	} else {
-		?>
-		<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/resources/icons/org-banner.jpg' ); ?>" alt="banner-image">
-		<?php
-	}
-	?>
-	</div>
-	<div class="wps-overview__content">
-		<div class="wps-overview__content-description">
-			<h2><?php echo esc_html_e( 'What Is Membership For WooCommerce?', 'membership-for-woocommerce' ); ?></h2>
-			<p>
-				<?php
-				esc_html_e(
-					'Membership for WooCommerce allows you to create membership plans for a segment of customers, thereby
-					imposing limitations on your certain services or content. Memberships make it easy to create email
-					lists where you can offer users special coupons and discount updates.',
-					'membership-for-woocommerce'
-				);
-				?>
-			</p>
-			<h3><?php esc_html_e( 'With our Membership for WooCommerce plugin, as a store owner you get:', 'membership-for-woocommerce' ); ?></h3>
-			<ul class="wps-overview__features">
-				<li><?php esc_html_e( 'Control content access', 'membership-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'See complete customer history', 'membership-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Quick preview section for Membership plans on the plans listing page', 'membership-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'A different status selection like pending, on hold, or completed as per their payment and plan expiry', 'membership-for-woocommerce' ); ?></li>
-				<li><?php esc_html_e( 'Manual assignment of membership to a customer', 'membership-for-woocommerce' ); ?></li>
-				<?php
-				/**
-				 * Hook for li to overview.
-				 *
-				 * @since 1.0.0
-				 */
-				do_action( 'wps_membership_li_to_overview' );
-				?>
+<div class="mfw-overview-page">
+	<section class="mfw-overview-hero">
+		<div class="mfw-overview-hero__icon">
+			<img src="<?php echo esc_url( $mfw_overview_icon ); ?>" alt="<?php esc_attr_e( 'Membership icon', 'membership-for-woocommerce' ); ?>">
+		</div>
+		<h2><?php esc_html_e( 'Membership Management for WooCommerce', 'membership-for-woocommerce' ); ?></h2>
+		<p><?php esc_html_e( 'Design recurring membership experiences, protect premium content, and manage member journeys from one workflow-oriented dashboard.', 'membership-for-woocommerce' ); ?></p>
+	</section>
+
+	<section class="mfw-overview-feature-grid">
+		<?php foreach ( $mfw_feature_cards as $mfw_feature_card ) : ?>
+			<article class="mfw-overview-feature-card">
+				<img src="<?php echo esc_url( $mfw_feature_card['icon'] ); ?>" alt="">
+				<h3><?php echo esc_html( $mfw_feature_card['title'] ); ?></h3>
+				<p><?php echo esc_html( $mfw_feature_card['desc'] ); ?></p>
+			</article>
+		<?php endforeach; ?>
+	</section>
+
+	<section class="mfw-overview-support-strip">
+		<strong><?php esc_html_e( 'Facing issues?', 'membership-for-woocommerce' ); ?></strong>
+		<p><?php esc_html_e( 'We are ready to resolve your workflow and membership configuration problems.', 'membership-for-woocommerce' ); ?></p>
+		<a href="https://wpswings.com/woocommerce-services/?utm_source=wpswings-membership&utm_medium=membership-pro-backend&utm_campaign=services" target="_blank" rel="noreferrer"><?php esc_html_e( 'Hire Us', 'membership-for-woocommerce' ); ?></a>
+	</section>
+
+	<section class="mfw-overview-benefits">
+		<div class="mfw-overview-benefits__header">
+			<h3><?php esc_html_e( 'Why teams use this plugin', 'membership-for-woocommerce' ); ?></h3>
+			<p><?php esc_html_e( 'A few of the highest-impact capabilities available across the membership workflow.', 'membership-for-woocommerce' ); ?></p>
+		</div>
+		<div class="mfw-overview-benefits__grid">
+			<?php foreach ( $mfw_benefit_cards as $mfw_benefit_card ) : ?>
+				<article class="mfw-overview-benefit-card">
+					<img src="<?php echo esc_url( $mfw_benefit_card['icon'] ); ?>" alt="">
+					<h4><?php echo esc_html( $mfw_benefit_card['title'] ); ?></h4>
+					<p><?php echo esc_html( $mfw_benefit_card['desc'] ); ?></p>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</section>
+
+	<section class="mfw-overview-details">
+		<div class="mfw-overview-details__copy">
+			<h3><?php esc_html_e( 'Store owner outcomes', 'membership-for-woocommerce' ); ?></h3>
+			<ul>
+				<li><?php esc_html_e( 'Control content access and premium product visibility', 'membership-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Track complete customer history and membership lifecycle', 'membership-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Configure manual assignment, renewals, and role-based benefits', 'membership-for-woocommerce' ); ?></li>
+				<li><?php esc_html_e( 'Use reports and exports for operations and support workflows', 'membership-for-woocommerce' ); ?></li>
+				<?php do_action( 'wps_membership_li_to_overview' ); ?>
 			</ul>
-			<iframe width="100%" height="auto" src="https://www.youtube.com/embed/Yf0pa_Fgn5s" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" poster="" allowfullscreen class="mfw_overview-video"></iframe>
 		</div>
-		<h2> 
-		<?php
-		if ( function_exists( 'check_membership_pro_plugin_is_active' ) ) {
-			$check_licence = check_membership_pro_plugin_is_active();
-			if ( $check_licence ) {
-				esc_html_e( 'The Free And Pro Plugin Benefits', 'membership-for-woocommerce' );
-			}
-		} else {
-			esc_html_e( 'The Free Plugin Benefits', 'membership-for-woocommerce' );
-		}
-		?>
-		</h2>
-		<div class="wps-overview__keywords">
-			<div class="wps-overview__keywords-item">
-				<div class="wps-overview__keywords-card">
-					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-complete-customers-history.jpg' ); ?>" alt="Complete Customer History image">
-					</div>
-					<div class="wps-overview__keywords-text">
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Complete Customer History', 'membership-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e( 'Admin gets a quick preview section for Membership plans on the plans listing page. The users too can see their history in the ‘My Account’ section with entire details of their membership plans.', 'membership-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="wps-overview__keywords-item">
-				<div class="wps-overview__keywords-card">
-					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-memberships-details.jpg' ); ?>" alt="Membership Details image">
-					</div>
-					<div class="wps-overview__keywords-text">
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Membership Details', 'membership-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e( 'Admin can offer products/categories in a membership plan. Those products and categories can only be accessible to users if they have purchased the plan. Membership Details Tab on My Accounts Page has all the details of the plan.', 'membership-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="wps-overview__keywords-item">
-				<div class="wps-overview__keywords-card">
-					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-data-exports.jpg' ); ?>" alt="Data Export image">
-					</div>
-					<div class="wps-overview__keywords-text">
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Data Export', 'membership-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e( 'Admin can effortlessly export all the membership plans along with the user data and settings. He can also import the details of all members as a CSV file.', 'membership-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="wps-overview__keywords-item">
-				<div class="wps-overview__keywords-card">
-					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-perfectly-neat-shortcodes-for-customization.jpg' ); ?>" alt="Perfectly Neat Shortcodes For Customization image">
-					</div>
-					<div class="wps-overview__keywords-text">
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'Perfectly Neat Shortcodes For Customization', 'membership-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e( 'The admin is provided with a neat collection of shortcodes that work not only on the purchase of the default membership plan but also on the custom page. These shortcodes let admin to design their plan page at ease.', 'membership-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="wps-overview__keywords-item">
-				<div class="wps-overview__keywords-card">
-					<div class="wps-overview__keywords-image">
-						<img src="<?php echo esc_html( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/Icons-user-cart-total-discount.jpg' ); ?>" alt="User Cart Total Discount image">
-					</div>
-					<div class="wps-overview__keywords-text">
-						<h3 class="wps-overview__keywords-heading"><?php echo esc_html_e( 'User Cart Total Discount', 'membership-for-woocommerce' ); ?></h3>
-						<p class="wps-overview__keywords-description">
-							<?php
-							esc_html_e( "Admin can grant discounts to the customers on total cart value. Free shipping option is also available as per their membership plans. The discount can be a fixed amount or percentage discount based on the admin's choice.", 'membership-for-woocommerce' );
-							?>
-						</p>
-					</div>
-				</div>
-			</div>
-			<?php
-			/**
-			 * Action for add icons.
-			 *
-			 * @since 1.0.0
-			 */
-			do_action( 'wps_membership_add_icons_with_desc' );
-			?>
+		<div class="mfw-overview-details__media">
+			<iframe src="https://www.youtube.com/embed/Yf0pa_Fgn5s" title="<?php esc_attr_e( 'Membership video overview', 'membership-for-woocommerce' ); ?>" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 		</div>
-	</div>
+	</section>
 </div>
