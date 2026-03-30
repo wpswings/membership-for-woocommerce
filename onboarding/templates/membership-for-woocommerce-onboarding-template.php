@@ -18,12 +18,12 @@ global $mfw_wps_mfw_obj;
   ?>
 
   <?php if ( ! empty( $mfw_onboarding_form_fields ) ) : ?>
-        <div class="wps-mfw-onboarding-overlay">
+        <div class="wps-mfw-onboarding-overlay wps-mfw-hidden" aria-hidden="true">
                 <div class="wps-mfw-onboarding-card">
                         <div class="wps-mfw-onboarding-head">
                                 <h3><?php esc_html_e( 'Welcome to WP Swings', 'membership-
   for-woocommerce' ); ?></h3>
-                                <button class="wps-mfw-onboarding-close" aria-label="<?php
+                                <button type="button" class="wps-mfw-onboarding-close" aria-label="<?php
   esc_attr_e( 'Close onboarding', 'membership-for-
   woocommerce' ); ?>">
                                         <span class="material-icons">close</span>
@@ -36,7 +36,7 @@ global $mfw_wps_mfw_obj;
   awesome deals and a few special offers.', 'membership-for-
   woocommerce' ); ?></p>
 
-                        <form class="wps-mfw-onboarding-form" action="#"
+                        <form class="wps-mfw-onboarding-form wps-mfw-on-boarding-form" action="#"
   method="post">
                                 <?php
                                 $mfw_onboarding_html =
@@ -44,10 +44,10 @@ global $mfw_wps_mfw_obj;
                                 echo wp_kses_post( $mfw_onboarding_html );
                                 ?>
                                 <div class="wps-mfw-onboarding-actions">
-                                        <input type="submit" class="wps-mfw-onboarding-submit"
+                                        <input type="submit" class="wps-mfw-onboarding-submit wps-mfw-on-boarding-submit"
   value="<?php esc_attr_e( 'Send Us', 'membership-for-
   woocommerce' ); ?>">
-                                        <a class="wps-mfw-onboarding-skip" href="#" data-mdc-
+                                        <a class="wps-mfw-onboarding-skip wps-mfw-on-boarding-no_thanks" href="#" data-mdc-
   dialog-action="discard"><?php esc_html_e( 'Skip For Now',
   'membership-for-woocommerce' ); ?></a>
                                 </div>
@@ -55,5 +55,4 @@ global $mfw_wps_mfw_obj;
                 </div>
         </div>
   <?php endif; ?>
-
 

@@ -427,8 +427,16 @@
   padding-bottom: 18px;
 }
 
+.mfw-settings-card > .wps-form-group:first-of-type,
+.mfw-settings-card__header + .wps-form-group {
+  border-top: 0;
+  padding-top: 0;
+}
+
 .mfw-admin-panel__canvas .wps-mfw-gen-section-form,
-.mfw-admin-panel__canvas .wps-mfw-gen-section-form .mfw-secion-wrap {
+.mfw-admin-panel__canvas .wps-mfw-gen-section-form .mfw-secion-wrap,
+.mfw-admin-panel__canvas form.wps-mfw-gen-section-form > .mfw-secion-wrap,
+.mfw-admin-subtab-panel form.wps-mfw-gen-section-form > .mfw-secion-wrap {
   background: transparent;
   border: 0;
   box-shadow: none;
