@@ -467,3 +467,136 @@ input#s2id_autogen1 {
 
 
 /*=====  End of MEDIA QUERIES  ======*/
+
+
+
+  .wps-mfw-onboarding-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 15, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 9999;
+  }
+
+  .wps-mfw-onboarding-card {
+      width: min(613px, 100%);
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 32px 24px;
+      box-shadow: 0 30px 60px rgba(33, 13, 63, 0.19);
+      position: relative;
+      font-family: 'Poppins', 'Nunito', sans-serif;
+  }
+
+  .wps-mfw-onboarding-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+  .wps-mfw-onboarding-head h3 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 25px;
+      color: #2f2f2f;
+  }
+
+  .wps-mfw-onboarding-intro {
+      margin: 18px 0 30px;
+      color: #797979;
+      line-height: 1.5;
+      font-size: 14px;
+  }
+
+  .wps-mfw-onboarding-close {
+      background: #f4f4f4;
+      border: 0;
+      border-radius: 50%;
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #6b6b6b;
+  }
+
+  .wps-mfw-onboarding-form .mdc-text-field,
+  .wps-mfw-onboarding-form .mdc-select {
+      width: 100%;
+      background: #fff;
+  }
+
+  .wps-mfw-onboarding-form .mdc-text-field__input,
+  .wps-mfw-onboarding-form .mdc-select__selected-text {
+      border-radius: 14px;
+      border: 1px solid #c9b6f9;
+      padding: 14px 18px;
+      font-size: 16px;
+      color: #2a2a2a;
+  }
+
+  .wps-mfw-onboarding-form .mdc-text-field__input:focus,
+  .wps-mfw-onboarding-form .mdc-text-field__input:active {
+      border-color: #6f2fd9;
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(111, 47, 217, 0.15);
+  }
+
+  .wps-mfw-onboarding-form .mdc-form-field {
+      margin-bottom: 16px;
+  }
+
+  .wps-mfw-onboarding-form label {
+      font-weight: 600;
+      color: #4d2560;
+      margin-bottom: 4px;
+      display: block;
+      font-size: 14px;
+  }
+
+  .wps-mfw-onboarding-actions {
+      margin-top: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+  }
+
+  .wps-mfw-onboarding-submit {
+      flex: 1;
+      background: linear-gradient(135deg, #5923b4, #380c7a);
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      padding: 14px 0;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(89, 35, 180, 0.4);
+  }
+
+  .wps-mfw-onboarding-skip {
+      flex: 1;
+      text-align: center;
+      color: #2b0b54;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: #f7f4fc;
+      border-radius: 999px;
+      padding: 14px 0;
+      text-decoration: none;
+      border: 1px solid rgba(97, 28, 146, 0.2);
+  }
+
+  .mdc-dialog__scrim {
+      display: none;
+  }
+
+ 
