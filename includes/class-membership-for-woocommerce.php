@@ -12,6 +12,12 @@
  * @subpackage Membership_For_Woocommerce/includes
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 /**
  * The core plugin class.
  *

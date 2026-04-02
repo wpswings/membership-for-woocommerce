@@ -9,6 +9,12 @@
  * @subpackage Membership_For_Woocommerce/common
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 use Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
 use Automattic\WooCommerce\Admin\BlockTemplates\LayoutTemplateInterface;
 

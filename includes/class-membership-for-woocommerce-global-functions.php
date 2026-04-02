@@ -1296,7 +1296,7 @@ class Membership_For_Woocommerce_Global_Functions {
 
 							$welcome_email_body         = ! empty( get_option( 'wps_mfw_mail_welcome_body' ) ) ? get_option( 'wps_mfw_mail_welcome_body' ) : esc_html__( 'Welcome to the [Name] Membership! We are thrilled to have you as a part of our community. As a [Name] member, you now enjoy immediate access to a wide range of exclusive features and premium benefits designed just for you.', 'membership-for-woocommerce' );
 							$welcome_email_body         = str_replace( '[Name]', ucfirst( $memberships_plan_obj['post_name'] ), $welcome_email_body );
-							$welcome_image              = ! empty( get_option( 'wps_mfw_image_text_url' ) ) ? get_option( 'wps_mfw_image_text_url' ) : 'https://demo.wpswings.com/membership-for-woocommerce-pro/wp-content/uploads/2024/06/welcome.png';
+							$welcome_image              = ! empty( get_option( 'wps_mfw_image_text_url' ) ) ? get_option( 'wps_mfw_image_text_url' ) : MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/welcome.png';
 							$wps_mfw_welcome_email_temp = '
 								<body style="margin: 0; padding: 0;">
 									<center>

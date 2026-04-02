@@ -9,6 +9,12 @@
  * @subpackage Membership_For_Woocommerce/shortcode-widget/elementor
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 /**
  * The public-facing functionality of the plugin.
  *

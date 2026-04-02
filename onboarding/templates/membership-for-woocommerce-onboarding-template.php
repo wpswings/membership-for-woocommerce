@@ -11,6 +11,12 @@
  * @subpackage Membership_For_Woocommerce/onboarding
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 global $mfw_wps_mfw_obj;
 $mfw_onboarding_form_fields =
 

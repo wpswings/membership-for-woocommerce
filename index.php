@@ -11,4 +11,10 @@
  * @subpackage Membership_For_Woocommerce
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 esc_html_e( 'oops looks like nothing is here', 'membership-for-woocommerce' );
