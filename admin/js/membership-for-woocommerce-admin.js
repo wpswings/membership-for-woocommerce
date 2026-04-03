@@ -29,29 +29,15 @@
    * practising this, we should strive to set a better example in our own work.
    */
 
-function mfwIsProActive() {
-    if (typeof mfw_admin_param !== 'undefined' && String(mfw_admin_param.is_pro_active) === '1') {
-      return true;
-    }
-
-    if (typeof admin_ajax_obj !== 'undefined' && String(admin_ajax_obj.is_pro_active) === '1') {
-      return true;
-    }
-
-    return false;
-}
-
 jQuery(document).ready(function($) {
 
-    if (!mfwIsProActive()) {
-      // add pro tag in BuddyPress Dummy HTML.
-      jQuery('#wps_msfw_enable_to_add_dummy_members_in_buddy_group, #wps_msfw_members_dummy_buddy_groups').parents('.wps-form-group__control').addClass('wps_msfw_pro_settings_tag');
+    // add pro tag in BuddyPress Dummy HTML.
+    jQuery('#wps_msfw_enable_to_add_dummy_members_in_buddy_group, #wps_msfw_members_dummy_buddy_groups').parents('.wps-form-group__control').addClass('wps_msfw_pro_settings_tag');
 
-      jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
+    jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
 
-	      $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
-      });
-    }
+	    $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
+    });
 
     $('.wps_ubo_lite_go_pro_popup_close').on( 'click', function (e) {
 
@@ -482,139 +468,31 @@ jQuery(document).ready(function($) {
 
 
 
-function mfwSyncSwitchState(root) {
-    var scope = root || document;
-
-    $(scope).find('.mdc-switch').each(function() {
-      var $switch = $(this);
-      var $input = $switch.find('.mdc-switch__native-control');
-      var isChecked = $input.is(':checked');
-      var isDisabled = $input.is(':disabled');
-
-      $switch.toggleClass('mdc-switch--checked', isChecked);
-      $switch.toggleClass('mdc-switch--disabled', isDisabled);
-      $input.attr('aria-checked', isChecked ? 'true' : 'false');
-    });
-}
-
-function mfwApplyProAccess(scope) {
-    var $scope = $(scope || document);
-
-    if (!mfwIsProActive()) {
-      return;
-    }
-
-    $scope.find('.wps-membership__plan--pro-disabled').removeClass('wps-membership__plan--pro-disabled');
-    $scope.find('.wps_msfw_pro_settings_tag').removeClass('wps_msfw_pro_settings_tag');
-}
-
-function mfwBuildSelect2AjaxConfig(actionName) {
-    return {
-      ajax: {
-        url: add_new_obj.ajax_url,
-        dataType: 'json',
-        delay: 200,
-        data: function(params) {
-          return {
-            q: params.term,
-            action: actionName
-          };
-        },
-        processResults: function(data) {
-          var options = [];
-
-          if (data) {
-            $.each(data, function(index, text) {
-              text[1] += '( #' + text[0] + ')';
-              options.push({ id: text[0], text: text[1] });
-            });
-          }
-
-          return {
-            results: options
-          };
-        },
-        cache: true
-      },
-      minimumInputLength: 3
-    };
-}
-
-function mfwInitSelect2(scope) {
-    var $scope = $(scope || document);
-
-    if (typeof $.fn.select2 === 'undefined') {
-      return;
-    }
-
-    $scope.find('.wps_org_offer_plan_id').filter(function() {
-      return !$(this).hasClass('select2-hidden-accessible');
-    }).select2();
-
-    $scope.find('.wps-defaut-multiselect').filter(function() {
-      return !$(this).hasClass('select2-hidden-accessible');
-    }).select2();
-
-    if (typeof add_new_obj === 'undefined' || !add_new_obj.ajax_url) {
-      return;
-    }
-
-    $scope.find('.wc-membership-product-search').filter(function() {
-      return !$(this).hasClass('select2-hidden-accessible');
-    }).select2(mfwBuildSelect2AjaxConfig('wps_membership_search_products_for_membership'));
-
-    $scope.find('.wc-membership-product-category-search').filter(function() {
-      return !$(this).hasClass('select2-hidden-accessible');
-    }).select2(mfwBuildSelect2AjaxConfig('wps_membership_search_product_categories_for_membership'));
-}
-
-function mfwInitAdminUi(root) {
-    var scope = root || document;
-
-    if (typeof mdc !== 'undefined' && mdc.textField && mdc.textField.MDCTextField) {
-      var MDCText = mdc.textField.MDCTextField;
-      [].forEach.call(scope.querySelectorAll('.mdc-text-field'), function(el) {
-        if (!el.dataset.mfwMdcTextReady) {
-          new MDCText(el);
-          el.dataset.mfwMdcTextReady = '1';
-        }
-      });
-    }
-
-    if (typeof mdc !== 'undefined' && mdc.ripple && mdc.ripple.MDCRipple) {
-      var MDCRipple = mdc.ripple.MDCRipple;
-      [].forEach.call(scope.querySelectorAll('.mdc-button'), function(el) {
-        if (!el.dataset.mfwMdcRippleReady) {
-          new MDCRipple(el);
-          el.dataset.mfwMdcRippleReady = '1';
-        }
-      });
-    }
-
-    if (typeof mdc !== 'undefined' && mdc.switchControl && mdc.switchControl.MDCSwitch) {
-      var MDCSwitch = mdc.switchControl.MDCSwitch;
-      [].forEach.call(scope.querySelectorAll('.mdc-switch'), function(el) {
-        if (!el.dataset.mfwMdcSwitchReady) {
-          new MDCSwitch(el);
-          el.dataset.mfwMdcSwitchReady = '1';
-        }
-      });
-    }
-
-    mfwSyncSwitchState(scope);
-    mfwApplyProAccess(scope);
-    mfwInitSelect2(scope);
-}
-
-window.mfwInitAdminUi = mfwInitAdminUi;
-
 $(document).ready(function() {
-    mfwInitAdminUi(document);
+    const MDCText = mdc.textField.MDCTextField;
+    const textField = [].map.call(
+      document.querySelectorAll(".mdc-text-field"),
+      function(el) {
+        return new MDCText(el);
+      }
+    );
+    const MDCRipple = mdc.ripple.MDCRipple;
+    const buttonRipple = [].map.call(
+      document.querySelectorAll(".mdc-button"),
+      function(el) {
+        return new MDCRipple(el);
+      }
+    );
+    const MDCSwitch = mdc.switchControl.MDCSwitch;
+    const switchControl = [].map.call(
+      document.querySelectorAll(".mdc-switch"),
+      function(el) {
+        return new MDCSwitch(el);
+      }
+    );
 
-    $(document).on('change', '.mdc-switch__native-control', function() {
-      mfwSyncSwitchState($(this).closest('.mdc-switch').parent().length ? document : document);
-    });
-
+  
+   
     $(document).on('click','.wps-password-hidden',function() {
       if ($(".wps-form__password").attr("type") == "text") {
         $(".wps-form__password").attr("type", "password");

@@ -1,45 +1,28 @@
 jQuery(document).ready(function($) {
 
-    if (window.mdc && mdc.textField && mdc.textField.MDCTextField) {
-        const MDCText = mdc.textField.MDCTextField;
-        [].map.call(document.querySelectorAll('.mdc-text-field'), function(el) {
-            return new MDCText(el);
-        });
-    }
-
-    if (window.mdc && mdc.ripple && mdc.ripple.MDCRipple) {
-        const MDCRipple = mdc.ripple.MDCRipple;
-        [].map.call(document.querySelectorAll('.mdc-button'), function(el) {
-            return new MDCRipple(el);
-        });
-    }
-
-    if (window.mdc && mdc.switchControl && mdc.switchControl.MDCSwitch) {
-        const MDCSwitch = mdc.switchControl.MDCSwitch;
-        [].map.call(document.querySelectorAll('.mdc-switch'), function(el) {
-            return new MDCSwitch(el);
-        });
-    }
+    const MDCText = mdc.textField.MDCTextField;
+    const textField = [].map.call(document.querySelectorAll('.mdc-text-field'), function(el) {
+        return new MDCText(el);
+    });
+    const MDCRipple = mdc.ripple.MDCRipple;
+    const buttonRipple = [].map.call(document.querySelectorAll('.mdc-button'), function(el) {
+        return new MDCRipple(el);
+    });
+    const MDCSwitch = mdc.switchControl.MDCSwitch;
+    const switchControl = [].map.call(document.querySelectorAll('.mdc-switch'), function(el) {
+        return new MDCSwitch(el);
+    });
 
     var wps_deactivation_skip_button_id = wps_mfw_onboarding.mfw_current_supported_slug[0] + "-no_thanks_deactive";
     var wps_onboarding_popup_id = wps_mfw_onboarding.mfw_current_supported_slug[0] + "-onboarding_popup";
-    var onboarding_overlay = $('.wps-mfw-onboarding-overlay');
 
 
-    var dialog = null;
-    if (window.mdc && mdc.dialog && mdc.dialog.MDCDialog) {
-        if ('plugins.php' == wps_mfw_onboarding.mfw_current_screen) {
-            var deactivation_dialog = document.querySelector('#' + wps_onboarding_popup_id);
-
-            if (deactivation_dialog) {
-                dialog = mdc.dialog.MDCDialog.attachTo(deactivation_dialog);
-            }
-        } else {
-            var onboarding_dialog = document.querySelector('.' + wps_mfw_onboarding.mfw_current_supported_slug[0]);
-
-            if (onboarding_dialog && onboarding_dialog.classList.contains('mdc-dialog')) {
-                dialog = mdc.dialog.MDCDialog.attachTo(onboarding_dialog);
-            }
+    var dialog = "";
+    if ($('.membership-for-woocommerce').length > 0 ){
+        if ('admin.php' == wps_mfw_onboarding.mfw_current_screen) {
+            dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('.' + wps_mfw_onboarding.mfw_current_supported_slug[0]));
+        } else if ('plugins.php' == wps_mfw_onboarding.mfw_current_screen) {
+            dialog = mdc.dialog.MDCDialog.attachTo(document.querySelector('#' + wps_onboarding_popup_id));   
         }
     }
 
@@ -74,12 +57,12 @@ jQuery(document).ready(function($) {
     } else {
         // Show Popup after 1 second of entering into the WPS pagescreen.
         if (jQuery('#wps-mfw-show-counter').length > 0 && jQuery('#wps-mfw-show-counter').val() == 'not-sent') {
-            setTimeout(wps_mfw_show_onboard_popup, 1000);
+            setTimeout(wps_mfw_show_onboard_popup(), 1000);
         }
     }
 
     /* Close Button Click */
-    jQuery(document).on('click', '.wps-mfw-on-boarding-close-btn a, .wps-mfw-onboarding-close', function(e) {
+    jQuery(document).on('click', '.wps-mfw-on-boarding-close-btn a', function(e) {
         e.preventDefault();
         wps_mfw_hide_onboard_popup();
     });
@@ -92,8 +75,7 @@ jQuery(document).ready(function($) {
     });
 
     /* Skip For a day. */
-    jQuery(document).on('click', '.wps-mfw-on-boarding-no_thanks, .wps-mfw-onboarding-skip', function(e) {
-        e.preventDefault();
+    jQuery(document).on('click', '.wps-mfw-on-boarding-no_thanks', function(e) {
         jQuery.ajax({
             type: 'post',
             dataType: 'json',
@@ -110,10 +92,10 @@ jQuery(document).ready(function($) {
     });
 
     /* Submitting Form */
-    jQuery(document).on('submit', 'form.wps-mfw-on-boarding-form, form.wps-mfw-onboarding-form', function(e) {
+    jQuery(document).on('submit', 'form.wps-mfw-on-boarding-form', function(e) {
 
         e.preventDefault();
-        var form_data = JSON.stringify(jQuery(this).serializeArray());
+        var form_data = JSON.stringify(jQuery('form.wps-mfw-on-boarding-form').serializeArray());
 
         jQuery.ajax({
             type: 'post',
@@ -136,31 +118,17 @@ jQuery(document).ready(function($) {
 
     /* Open Popup */
     function wps_mfw_show_onboard_popup() {
-        if (dialog && 'function' === typeof dialog.open) {
-            dialog.open();
-        }
-
-        if (onboarding_overlay.length > 0) {
-            onboarding_overlay.removeClass('wps-mfw-hidden').attr('aria-hidden', 'false');
-        }
-
+        dialog.open();
         if (!jQuery('body').hasClass('mobile-device')) {
-            jQuery('body').addClass('wps-mfw-on-boarding-wrapper-control');
+            jQuery('body').addClass('wps-on-boarding-wrapper-control');
         }
     }
 
     /* Close Popup */
     function wps_mfw_hide_onboard_popup() {
-        if (dialog && 'function' === typeof dialog.close) {
-            dialog.close();
-        }
-
-        if (onboarding_overlay.length > 0) {
-            onboarding_overlay.addClass('wps-mfw-hidden').attr('aria-hidden', 'true');
-        }
-
+        dialog.close();
         if (!jQuery('body').hasClass('mobile-device')) {
-            jQuery('body').removeClass('wps-mfw-on-boarding-wrapper-control');
+            jQuery('body').removeClass('wps-on-boarding-wrapper-control');
         }
     }
 

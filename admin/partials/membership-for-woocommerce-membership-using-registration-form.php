@@ -22,31 +22,33 @@ global $mfw_wps_mfw_obj;
 	if ( class_exists( 'Membership_For_Woocommerce_Admin' ) ) {
 
 		$wps_mfw_sub_tabs_array = $mfw_wps_mfw_obj->wps_mfw_plug_config_sub_tabs();
-		$active_sub_tab         = isset( $_REQUEST['mfw_reg_sub_nav'] ) ? sanitize_key( wp_unslash( $_REQUEST['mfw_reg_sub_nav'] ) ) : 'membership-for-woocommerce-add-plans'; // phpcs:ignore
-		reset( $wps_mfw_sub_tabs_array );
-		$mfw_default_sub_tab = key( $wps_mfw_sub_tabs_array );
+		$active_sub_tab         = isset( $_GET['mfw_reg_sub_nav'] ) ? sanitize_key( $_GET['mfw_reg_sub_nav'] ) : '';// phpcs:ignore
+		if ( ! isset( $_GET['mfw_reg_sub_nav'] ) ) {// phpcs:ignore
 
-		if ( ! isset( $wps_mfw_sub_tabs_array[ $active_sub_tab ] ) ) {
-			$active_sub_tab = $mfw_default_sub_tab;
+			$active_sub_tab = 'membership-for-woocommerce-add-plans';
 		}
 		?>
-		<div class="mfw-admin-subtabs" data-default-subtab="<?php echo esc_attr( $active_sub_tab ); ?>" data-active-subtab="<?php echo esc_attr( $active_sub_tab ); ?>">
-			<div class="mfw-admin-subtabs__nav" role="tablist" aria-label="<?php esc_attr_e( 'Membership settings sections', 'membership-for-woocommerce' ); ?>">
-				<?php foreach ( $wps_mfw_sub_tabs_array as $mwb_sub_tab_title => $taxonomy_slug ) : ?>
-					<a
-						href="<?php echo esc_url( add_query_arg( array( 'page' => 'membership_for_woocommerce_menu', 'mfw_tab' => 'membership-for-woocommerce-membership-using-registration-form', 'mfw_reg_sub_nav' => $mwb_sub_tab_title ), admin_url( 'admin.php' ) ) ); ?>"
-						class="mfw-admin-subtab-link<?php echo $active_sub_tab === $mwb_sub_tab_title ? ' is-active' : ''; ?>"
-						data-subtab-target="<?php echo esc_attr( $mwb_sub_tab_title ); ?>"
-					>
-						<?php echo esc_html( $taxonomy_slug['title'] ); ?>
-					</a>
-				<?php endforeach; ?>
-			</div>
+		<h3 class="nav-tab-wrapper">
+		<?php
+		if ( ! empty( $wps_mfw_sub_tabs_array ) && is_array( $wps_mfw_sub_tabs_array ) ) {
+			foreach ( $wps_mfw_sub_tabs_array as $key => $taxonomy_slug ) {
 
-			<div class="mfw-admin-subtabs__content" data-subtab-content>
-				<?php $mfw_wps_mfw_obj->wps_mfw_plug_load_template( $wps_mfw_sub_tabs_array[ $active_sub_tab ]['file_path'] ); ?>
-			</div>
-		</div>
+				$mwb_sub_tab_title = $taxonomy_slug['name'];
+				$mwb_name          = $taxonomy_slug['title'];
+				echo "<a href='admin.php?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-membership-using-registration-form&mfw_reg_sub_nav=" . esc_attr( $mwb_sub_tab_title ) . "' class='nav-tab " . ( $active_sub_tab === $mwb_sub_tab_title ? 'nav-tab-active' : '' ) . " wps-mfw-nav-tab'>" . esc_attr( $mwb_name ) . '</a>';
+			}
+		}
+		?>
+		</h3>
+
+		<?php
+		if ( array_key_exists( $active_sub_tab, $wps_mfw_sub_tabs_array ) ) {
+			echo '<section class="wps-section">';
+			echo '<div>';
+			$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $wps_mfw_sub_tabs_array[ $active_sub_tab ]['file_path'] );
+			echo '</div></section>';
+		}
+		?>
 		<?php
 	}
 	?>

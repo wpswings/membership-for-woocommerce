@@ -11,6 +11,12 @@
  * @subpackage Membership_For_Woocommerce/public/partials
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 ?>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->

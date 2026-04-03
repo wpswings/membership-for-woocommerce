@@ -101,7 +101,6 @@ class Membership_For_Woocommerce_Admin {
 
 			wp_enqueue_style( 'wps-datatable-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'package/lib/datatables/media/css/jquery.dataTables.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 			wp_enqueue_style( 'wps-admin-min-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/wps-admin.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
-			wp_enqueue_style( 'wps-membership-admin-redesign-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-admin-redesign.css', array( 'wps-admin-min-css' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
 		}
 
 		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
@@ -190,18 +189,15 @@ class Membership_For_Woocommerce_Admin {
 				'mfw_admin_param',
 				array(
 					'ajaxurl' => admin_url( 'admin-ajax.php' ),
-					'tabs_nonce' => wp_create_nonce( 'mfw-admin-tabs' ),
 					'reloadurl' => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
 					'mfw_gen_tab_enable' => get_option( 'mfw_radio_switch_demo' ),
 					'mfw_admin_param_location' => ( admin_url( 'admin.php' ) . '?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-general' ),
-					'is_pro_active' => ( function_exists( 'check_membership_pro_plugin_is_active' ) && check_membership_pro_plugin_is_active() ) ? '1' : '0',
 				)
 			);
 
 			wp_enqueue_script( $this->plugin_name . 'admin-js' );
 			wp_enqueue_script( 'wps-admin-min-js', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/wps-admin.min.js', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 			wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
-			wp_enqueue_script( 'wps-membership-admin-tabs', plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-admin-tabs.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
 			wp_localize_script(
 				$this->plugin_name,
 				'admin_ajax_obj',
@@ -210,7 +206,6 @@ class Membership_For_Woocommerce_Admin {
 					'nonce'         => wp_create_nonce( 'plan-import-nonce' ),
 					'Plan'          => __( 'Plan ', 'membership-for-woocommerce' ),
 					'Plan_warning'  => __( 'Title field can\'t be empty ', 'membership-for-woocommerce' ),
-					'is_pro_active' => ( function_exists( 'check_membership_pro_plugin_is_active' ) && check_membership_pro_plugin_is_active() ) ? '1' : '0',
 				)
 			);
 
@@ -387,7 +382,7 @@ class Membership_For_Woocommerce_Admin {
 		global $submenu;
 
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 65 );
 
 			if ( wps_mfw_standard_check_multistep() ) {
 				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
@@ -2475,7 +2470,7 @@ class Membership_For_Woocommerce_Admin {
 								'post_title'   => 'Membership Product',
 								'post_type'    => 'product',
 								'post_author'  => 1,
-								'post_content' => '',
+								'post_content' => stripslashes( html_entity_decode( 'Auto generated product for membership please do not delete or update.', ENT_QUOTES, 'UTF-8' ) ),
 							);
 
 							$wps_membership_product_id = wp_insert_post( $wps_membership_product );
@@ -2610,6 +2605,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'post_type' => 'wps_cpt_membership',
 				'post_status' => 'publish',
+				'meta_key' => 'wps_membership_plan_target_ids',
 				'numberposts' => -1,
 				'fields'  => 'ids',
 
@@ -2707,6 +2703,7 @@ class Membership_For_Woocommerce_Admin {
 			array(
 				'post_type'   => 'wps_cpt_membership',
 				'post_status' => 'publish',
+				'meta_key'    => 'wps_membership_plan_target_ids',
 				'numberposts' => -1,
 			)
 		);
@@ -4251,7 +4248,7 @@ class Membership_For_Woocommerce_Admin {
 							),
 						);
 
-						$data = json_encode( $curl_data );
+						$data = wp_json_encode( $curl_data );
 
 						// LOAD THE WC LOGGER.
 						$logger = wc_get_logger();
@@ -4902,77 +4899,6 @@ class Membership_For_Woocommerce_Admin {
 	}
 
 	/**
-	 * Load tab content over AJAX for no-reload admin navigation.
-	 *
-	 * @return void
-	 */
-	public function wps_mfw_load_admin_tab_content() {
-
-		if ( ! check_ajax_referer( 'mfw-admin-tabs', 'nonce', false ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Invalid nonce.', 'membership-for-woocommerce' ) ), 403 );
-		}
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Unauthorized request.', 'membership-for-woocommerce' ) ), 403 );
-		}
-
-		global $mfw_wps_mfw_obj;
-		$tab = isset( $_POST['tab'] ) ? sanitize_key( wp_unslash( $_POST['tab'] ) ) : '';
-
-		if ( empty( $mfw_wps_mfw_obj ) || empty( $tab ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Invalid tab request.', 'membership-for-woocommerce' ) ), 400 );
-		}
-
-		$tabs = $mfw_wps_mfw_obj->wps_mfw_plug_default_tabs();
-		if ( ! isset( $tabs[ $tab ] ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Tab not found.', 'membership-for-woocommerce' ) ), 404 );
-		}
-
-		if ( isset( $_POST['mfw_reg_sub_nav'] ) ) {
-			$_REQUEST['mfw_reg_sub_nav'] = sanitize_key( wp_unslash( $_POST['mfw_reg_sub_nav'] ) );
-		}
-
-		ob_start();
-		$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $tabs[ $tab ]['file_path'] );
-		$html = ob_get_clean();
-
-		wp_send_json_success( array( 'html' => $html ) );
-	}
-
-	/**
-	 * Load membership sub tab content over AJAX for no-reload admin navigation.
-	 *
-	 * @return void
-	 */
-	public function wps_mfw_load_admin_subtab_content() {
-
-		if ( ! check_ajax_referer( 'mfw-admin-tabs', 'nonce', false ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Invalid nonce.', 'membership-for-woocommerce' ) ), 403 );
-		}
-
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Unauthorized request.', 'membership-for-woocommerce' ) ), 403 );
-		}
-
-		global $mfw_wps_mfw_obj;
-		$subtab = isset( $_POST['subtab'] ) ? sanitize_key( wp_unslash( $_POST['subtab'] ) ) : '';
-
-		if ( empty( $mfw_wps_mfw_obj ) || empty( $subtab ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Invalid sub tab request.', 'membership-for-woocommerce' ) ), 400 );
-		}
-
-		$subtabs = $mfw_wps_mfw_obj->wps_mfw_plug_config_sub_tabs();
-		if ( ! isset( $subtabs[ $subtab ] ) ) {
-			wp_send_json_error( array( 'message' => esc_html__( 'Sub tab not found.', 'membership-for-woocommerce' ) ), 404 );
-		}
-
-		ob_start();
-		$mfw_wps_mfw_obj->wps_mfw_plug_load_template( $subtabs[ $subtab ]['file_path'] );
-		$html = ob_get_clean();
-
-		wp_send_json_success( array( 'html' => $html ) );
-	}
-	/**
 	 * This function is used to export membership report in csv format.
 	 *
 	 * @return void
@@ -5000,90 +4926,19 @@ class Membership_For_Woocommerce_Admin {
 		$out = fopen( 'php://output', 'w' );
 
 		fputcsv( $out, array( 'Membership Report' ) );
-		fputcsv( $out, array( 'Generated At', $report['generated_at'] ) );
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Summary' ) );
-		fputcsv( $out, array( 'Metric', 'Value' ) );
+		fputcsv( $out, array( 'Metric', 'Count' ) );
 		fputcsv( $out, array( 'Membership Plans', $report['total_membership_plans'] ) );
 		fputcsv( $out, array( 'Total Members', $report['total_members'] ) );
 		fputcsv( $out, array( 'Active Members', $report['complete'] ) );
 		fputcsv( $out, array( 'Pending Members', $report['pending'] ) );
 		fputcsv( $out, array( 'Expired Members', $report['expired'] ) );
-		fputcsv( $out, array( 'Cancelled Members', $report['cancelled'] ) );
-		fputcsv( $out, array( 'Paused Members', $report['paused'] ) );
-		fputcsv( $out, array( 'On Hold Members', $report['hold'] ) );
-		fputcsv( $out, array( 'Paid Membership Purchases', $report['paid_membership_orders'] ) );
-		fputcsv( $out, array( 'Membership Revenue', number_format( (float) $report['membership_revenue'], 2, '.', '' ) ) );
-		fputcsv( $out, array( 'Average Order Value', number_format( (float) $report['average_order_value'], 2, '.', '' ) ) );
+
 		fputcsv( $out, array() );
 
-		fputcsv( $out, array( 'Purchase Activity' ) );
+		fputcsv( $out, array( 'Last Activated Members' ) );
 		fputcsv( $out, array( 'Period', 'Count' ) );
 		foreach ( $report['activity'] as $period => $count ) {
 			fputcsv( $out, array( ucwords( str_replace( '_', ' ', $period ) ), $count ) );
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Top Membership Purchases' ) );
-		fputcsv( $out, array( 'Membership', 'Paid Purchases', 'Revenue', 'Active Members', 'Total Members', 'Discount Products' ) );
-		foreach ( $report['top_memberships'] as $membership ) {
-			fputcsv(
-				$out,
-				array(
-					$membership['title'],
-					$membership['paid_purchases'],
-					number_format( (float) $membership['revenue'], 2, '.', '' ),
-					$membership['active_members'],
-					$membership['total_members'],
-					$membership['discount_products'],
-				)
-			);
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Top Discount Products' ) );
-		fputcsv( $out, array( 'Product', 'Exposure', 'Plans' ) );
-		foreach ( $report['top_discount_products'] as $product ) {
-			fputcsv( $out, array( $product['title'], $product['membership_purchases'], $product['plans_count'] ) );
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Top Discount Categories' ) );
-		fputcsv( $out, array( 'Category', 'Exposure', 'Plans' ) );
-		foreach ( $report['top_discount_categories'] as $term ) {
-			fputcsv( $out, array( $term['title'], $term['membership_purchases'], $term['plans_count'] ) );
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Top Discount Tags' ) );
-		fputcsv( $out, array( 'Tag', 'Exposure', 'Plans' ) );
-		foreach ( $report['top_discount_tags'] as $term ) {
-			fputcsv( $out, array( $term['title'], $term['membership_purchases'], $term['plans_count'] ) );
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Payment Methods' ) );
-		fputcsv( $out, array( 'Payment Method', 'Purchases', 'Revenue' ) );
-		foreach ( $report['payment_methods'] as $payment_method ) {
-			fputcsv( $out, array( $payment_method['title'], $payment_method['membership_purchases'], number_format( (float) $payment_method['revenue'], 2, '.', '' ) ) );
-		}
-		fputcsv( $out, array() );
-
-		fputcsv( $out, array( 'Recent Membership Purchases' ) );
-		fputcsv( $out, array( 'Date', 'Plan', 'Status', 'Payment', 'Amount', 'Order ID' ) );
-		foreach ( $report['recent_memberships'] as $recent ) {
-			fputcsv(
-				$out,
-				array(
-					$recent['created_at'],
-					$recent['plan_title'],
-					$recent['status'],
-					$recent['payment'],
-					number_format( (float) $recent['amount'], 2, '.', '' ),
-					$recent['order_id'],
-				)
-			);
 		}
 
 		fclose( $out );

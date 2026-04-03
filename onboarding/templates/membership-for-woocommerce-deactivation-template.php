@@ -11,6 +11,12 @@
  * @subpackage Membership_For_Woocommerce/onboarding
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 global $pagenow, $mfw_wps_mfw_obj;
 if ( empty( $pagenow ) || 'plugins.php' != $pagenow ) {
 	return false;

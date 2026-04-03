@@ -9,6 +9,12 @@
  * @subpackage Membership_For_Woocommerce/common
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 use Automattic\WooCommerce\Admin\BlockTemplates\BlockInterface;
 use Automattic\WooCommerce\Admin\BlockTemplates\LayoutTemplateInterface;
 
@@ -117,23 +123,14 @@ class Membership_For_Woocommerce_Common {
 		// Make sure a customer session cookie exists (critical for new users / first request).
 		WC()->session->set_customer_session_cookie( true );
 
-		// Persist plan selection in both legacy and WooCommerce session stores.
-		if ( isset( $wp_session ) && is_array( $wp_session ) ) {
-			$wp_session['plan_id']    = $plan_id;
-			$wp_session['plan_title'] = $plan_title;
-			$wp_session['plan_price'] = $plan_price;
-		}
-
+		// Write to Woo session.
 		WC()->session->set( 'plan_id', $plan_id );
 		WC()->session->set( 'plan_title', $plan_title );
 		WC()->session->set( 'plan_price', $plan_price );
 		WC()->session->set( 'product_id', (int) $wps_membership_default_product );
-		if ( is_object( WC()->session ) && method_exists( WC()->session, 'save_data' ) ) {
-			WC()->session->save_data();
-		}
 
-		add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
-		$redirect_url = wc_get_cart_url();
+		$cart_item_data = add_filter( 'woocommerce_add_cart_item_data', array( $this, 'add_membership_product_price_to_cart_item_data' ), 10, 2 );
+		$redirect_url   = wc_get_cart_url();
 		echo wp_json_encode( $redirect_url );
 		wp_die();
 	}
@@ -145,67 +142,28 @@ class Membership_For_Woocommerce_Common {
 	 * @param int   $product_id product id.
 	 * @return array
 	 */
-
 	public function add_membership_product_price_to_cart_item_data( $cart_item_data, $product_id ) {
+
 		global $wp_session;
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
 			return $cart_item_data;
 		}
 
-		$session_plan_price = ( null !== WC() && null !== WC()->session ) ? WC()->session->get( 'plan_price' ) : '';
-		$session_plan_title = ( null !== WC() && null !== WC()->session ) ? WC()->session->get( 'plan_title' ) : '';
-		$session_plan_id    = ( null !== WC() && null !== WC()->session ) ? WC()->session->get( 'plan_id' ) : '';
+		$product = wc_get_product( $product_id );
+		if ( $product ) {
 
-		if ( empty( $session_plan_price ) && isset( $wp_session['plan_price'] ) ) {
-			$session_plan_price = $wp_session['plan_price'];
-		}
-		if ( empty( $session_plan_title ) && isset( $wp_session['plan_title'] ) ) {
-			$session_plan_title = $wp_session['plan_title'];
-		}
-		if ( empty( $session_plan_id ) && isset( $wp_session['plan_id'] ) ) {
-			$session_plan_id = $wp_session['plan_id'];
-		}
-
-		if ( '' !== $session_plan_price && null !== $session_plan_price ) {
-			$cart_item_data['plan_price'] = $session_plan_price;
-		}
-		if ( '' !== $session_plan_title && null !== $session_plan_title ) {
-			$cart_item_data['plan_title'] = $session_plan_title;
-		}
-		if ( '' !== $session_plan_id && null !== $session_plan_id ) {
-			$cart_item_data['plan_id'] = $session_plan_id; // In case of subscription.
-		}
-
-		if ( null !== WC() && null !== WC()->session && WC()->session->__isset( 'form_submit' ) ) {
-
-			$cart_item_data['form_submit']  = 'yes';
-			$cart_item_data['wps_fname']    = WC()->session->get( 'wps_fname' );
-			$cart_item_data['wps_lname']    = WC()->session->get( 'wps_lname' );
-			$cart_item_data['wps_country']  = WC()->session->get( 'wps_country' );
-			$cart_item_data['wps_address1'] = WC()->session->get( 'wps_address1' );
-			$cart_item_data['wps_city']     = WC()->session->get( 'wps_city' );
-			$cart_item_data['wps_pincode']  = WC()->session->get( 'wps_pincode' );
-			$cart_item_data['wps_phone']    = WC()->session->get( 'wps_phone' );
-			$cart_item_data['wps_email']    = WC()->session->get( 'wps_email' );
-			$cart_item_data['wps_state']    = WC()->session->get( 'wps_state' );
-			WC()->session->__unset( 'wps_fname' );
-			WC()->session->__unset( 'wps_lname' );
-			WC()->session->__unset( 'wps_country' );
-			WC()->session->__unset( 'wps_address1' );
-			WC()->session->__unset( 'wps_city' );
-			WC()->session->__unset( 'wps_pincode' );
-			WC()->session->__unset( 'wps_phone' );
-			WC()->session->__unset( 'wps_email' );
-			WC()->session->__unset( 'wps_state' );
+			$cart_item_data['plan_price'] = $wp_session['plan_price'];
+			$cart_item_data['plan_title'] = $wp_session['plan_title'];
 		}
 
 		/**
-		 * Filter for cart item.
+		 * Filter for get cart items.
 		 *
 		 * @since 1.0.0
 		 */
 		$cart_item_data = apply_filters( 'add_membership_product_price_to_cart_item_data', $cart_item_data );
+		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
 		return $cart_item_data;
 	}
 

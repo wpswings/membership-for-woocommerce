@@ -1,9 +1,9 @@
 jQuery(document).ready(function ($) {
 	
-	if ('temp2' == membership_public_obj.plan_page_template) {
+	if ('temp2' == wps_msfw_public_obj.plan_page_template) {
 
 		jQuery('.wp-block-cover').addClass('wps-mfw-temp2');
-	} else if ( 'temp3' == membership_public_obj.plan_page_template ) {
+	} else if ( 'temp3' == wps_msfw_public_obj.plan_page_template ) {
 
 		jQuery('.wp-block-cover').addClass('wps-mfw-temp3');
 	} else {
@@ -12,7 +12,7 @@ jQuery(document).ready(function ($) {
 		jQuery('.wp-block-cover').removeClass('wps-mfw-temp3');
 	}
 
-	if ('yes' == membership_public_obj.single_plan) {
+	if ('yes' == wps_msfw_public_obj.single_plan) {
 		jQuery('.wps_mfw_membership_front_page').addClass('wps_mfw_membership_single_plan');
 		jQuery('.wps_membership_plan_content_price').parent().removeClass('wps_membership_plan_content_price');
 		jQuery('.wp-block-cover.wps-mfw-temp2').css('min-height','100vh');
@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
 	}
 	
 	
-	if ('on' == membership_public_obj.dark_mode) {
+	if ('on' == wps_msfw_public_obj.dark_mode) {
 		jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
 	} else {
 		jQuery('.wp-block-cover').removeClass('wps-mfw-dark-mode');
@@ -50,7 +50,7 @@ jQuery(document).ready(function ($) {
 		}
 	}
 
-	var button_text = membership_public_obj.buy_now_text;
+	var button_text = wps_msfw_public_obj.buy_now_text;
 	if( '' != button_text ) {
 		$('.wps_membership_buynow').val( button_text );
 	}
@@ -170,51 +170,34 @@ jQuery(document).ready(function ($) {
 
 	$('.wps_membership_buynow').on("click", function (e) {
 		e.preventDefault();
-
-		let $button = jQuery(this);
-		let $form = $button.closest('form');
-		let $scope = $form.length ? $form : $button.closest('.wps-mfw-plan-summary, .wps-mfw-plan-card, .wps_mfw_membership_front_page');
-		let plan_price = $scope.find('#wps_membership_plan_price').first().val();
-		let plan_id = $scope.find('#wps_membership_plan_id').first().val();
-		let plan_title = $scope.find('#wps_membership_title').first().val();
-
-		if ( ! plan_id ) {
-			return;
-		}
+		let plan_price = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_price')).val();
+		let plan_id = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_plan_id')).val();
+		let plan_title = jQuery(jQuery(jQuery(this).parent()).find('#wps_membership_title')).val();
 
 		$.ajax({
-			url: membership_public_obj.ajaxurl,
+			url: wps_msfw_public_obj.ajaxurl,
 			type: "POST",
 			data: {
 				action: "wps_membership_checkout",
 				plan_price: plan_price,
 				plan_id: plan_id,
 				plan_title: plan_title,
-				nonce: membership_public_obj.nonce,
+				nonce: wps_msfw_public_obj.nonce,
 			},
 
 			success: function (response) {
-				let redirectUrl = 'cart';
 
-				try {
-					if ( response ) {
-						redirectUrl = JSON.parse(response);
-					}
-				} catch (error) {
-					redirectUrl = response || redirectUrl;
-				}
-
-				window.location.replace(redirectUrl);
+				window.location.replace('cart');
 			}
 		});
 	});
 
 	// Membership Tab New layout js.
-	if ( 'on' == membership_public_obj.enable_new_layout ) {
+	if ( 'on' == wps_msfw_public_obj.enable_new_layout ) {
 
 		// change points tab layout color.
         var root = $(':root');
-        root.css('--wps-msfw-primary-color', membership_public_obj.new_layout_color );
+        root.css('--wps-msfw-primary-color', wps_msfw_public_obj.new_layout_color );
 
 		jQuery(document).find('.wps_msfw__new_layout').addClass('wps_msf_new_layout_dynamic_one');
 		jQuery(document).find('.wps_msfw__new_layout_billing').addClass('wps_msf_new_layout_dynamic_one');
@@ -222,7 +205,7 @@ jQuery(document).ready(function ($) {
 
 	jQuery(document).ready(function($){
 
-		var single_page = membership_public_obj.single_plan;
+		var single_page = wps_msfw_public_obj.single_plan;
 		if('yes' == single_page ){
 
 			jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
@@ -244,7 +227,7 @@ jQuery(document).ready(function ($) {
 
 	// add members dashboard color.
 	var root = jQuery(':root');
-	root.css('--wps-msfw-dashboard-primary', membership_public_obj.new_dashboard_color );
+	root.css('--wps-msfw-dashboard-primary', wps_msfw_public_obj.new_dashboard_color );
 
 	// show membership history on membership tabs.
 	jQuery(document).on('click','.wps-msfw_membership-history',function(){
@@ -331,11 +314,11 @@ jQuery(document).ready(function ($) {
 
 	// login and signup js.
 	// check login and signup override features is enable.
-	if ( 'on' === membership_public_obj.enable_login_and_signup ) {
+	if ( 'on' === wps_msfw_public_obj.enable_login_and_signup ) {
 
 		 // change points tab layout color.
 		 var root = $(':root');
-		 root.css('--wps-mfw_login-primary', membership_public_obj.account_page_colors );
+		 root.css('--wps-mfw_login-primary', wps_msfw_public_obj.account_page_colors );
 		// when click on signup, hold the signup page.
 		var wps_mfw_store_login_signup_value = localStorage.getItem( 'wps_mfw_store_login_signup_value' );
 		if ( 'signup' === wps_mfw_store_login_signup_value ) {
