@@ -9,6 +9,12 @@
  * @subpackage Membership_For_Woocommerce/public
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 /**
  * The public-facing functionality of the plugin.
  *
@@ -132,7 +138,7 @@ class Membership_For_Woocommerce_Public {
 		$wps_mfw_single_plan = isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ? 'yes' : '';
 		wp_localize_script(
 			$this->plugin_name,
-			'membership_public_obj',
+			'wps_msfw_public_obj',
 			array(
 				'ajaxurl'                 => admin_url( 'admin-ajax.php' ),
 				'nonce'                   => wp_create_nonce( 'auth_adv_nonce' ),
@@ -180,7 +186,7 @@ class Membership_For_Woocommerce_Public {
 
 			wp_localize_script(
 				'paypal-smart-buttons',
-				'paypal_sb_obj',
+				'wps_msfw_paypal_sb_obj',
 				array(
 					'ajax_url'  => admin_url( 'admin-ajax.php' ),
 					'settings'  => $settings,
@@ -5231,7 +5237,7 @@ class Membership_For_Woocommerce_Public {
 						// Get avatar URL or fallback to placeholder.
 						$img_url = get_avatar_url( $user_id );
 						if ( empty( $img_url ) ) {
-							$img_url = 'https://secure.gravatar.com/avatar/?s=96&d=mm&r=g';
+							$img_url = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/mem-profile.jpg';
 						}
 
 						// Get background image or default.

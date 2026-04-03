@@ -382,7 +382,7 @@ class Membership_For_Woocommerce_Admin {
 		global $submenu;
 
 		if ( empty( $GLOBALS['admin_page_hooks']['wps-plugins'] ) ) {
-			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 15 );
+			add_menu_page( 'WP Swings', 'WP Swings', 'manage_options', 'wps-plugins', array( $this, 'wps_plugins_listing_page' ), MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/wpswings_logo.png', 65 );
 
 			if ( wps_mfw_standard_check_multistep() ) {
 				add_submenu_page( 'wps-plugins', 'Home', 'Home', 'manage_options', 'home', array( $this, 'wpswings_welcome_callback_function' ), 1 );
@@ -4248,7 +4248,7 @@ class Membership_For_Woocommerce_Admin {
 							),
 						);
 
-						$data = json_encode( $curl_data );
+						$data = wp_json_encode( $curl_data );
 
 						// LOAD THE WC LOGGER.
 						$logger = wc_get_logger();
