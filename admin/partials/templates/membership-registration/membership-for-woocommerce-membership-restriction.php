@@ -16,53 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $mfw_plugins = get_option( 'active_plugins' );
-if ( ! in_array( 'membership-for-woocommerce-pro/membership-for-woocommerce-pro.php', $mfw_plugins ) ) {
-
-	wps_mfw_upgrade_pro_popup();
-}
-
-/**
- * Function for popup.
- *
- * @return void
- */
-function wps_mfw_upgrade_pro_popup() {
-	?>
-
-	<!-- Go pro popup wrap start. -->
-	<div class="wps_ubo_lite_go_pro_popup_wrap">
-		<!-- Go pro popup main start. -->
-		<div class="wps_ubo_lite_go_pro_popup">
-			<!-- Main heading. -->
-			<div class="wps_ubo_lite_go_pro_popup_head">
-				<h2><?php esc_html_e( 'Want More? Go Pro !!', 'membership-for-woocommerce' ); ?></h2>
-				<!-- Close button. -->
-				<a href="" class="wps_ubo_lite_go_pro_popup_close">
-					<span>&times;</span>
-				</a>
-			</div>  
-
-			<!-- Notice icon. -->
-			<div class="wps_ubo_lite_go_pro_popup_head"><img src="<?php echo esc_url( MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/image/pro.png' ); ?> ">
-			</div>
-
-			<!-- Notice. -->
-			<div class="wps_ubo_lite_go_pro_popup_content">
-				<p class="wps_ubo_lite_go_pro_popup_text">
-					<?php esc_html_e( 'A straightforward membership plugin that functions seamlessly on your eCommerce business will help you build your community of members with premium features which gives two Free Templates of Comparision and Simple, Create & sort plans, get revenue & detailed reports, give discounts, override access to posts, comments on your protected posts and many more.', 'membership-for-woocommerce' ); ?>
-				</p>
-			</div>
-
-			<!-- Go pro button. -->
-			<div class="wps_ubo_lite_go_pro_popup_button">
-				<a class="button wps_ubo_lite_overview_go_pro_button" target="_blank" href="https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-backend&utm_campaign=go-pro"><?php echo esc_html__( 'Upgrade to Premium', 'membership-for-woocommerce' ) . ' <span class="dashicons dashicons-arrow-right-alt"></span>'; ?></a>
-			</div>
-		</div>
-		<!-- Go pro popup main end. -->
-	</div>
-	<!-- Go pro popup wrap end. -->
-	<?php
-}
 
 $results = get_posts(
 	array(
@@ -164,30 +117,6 @@ $results = get_posts(
 						</div>
 					</div>
 					
-					<div class="wps-form-group wps-membership__plan--pro-disabled">
-						<div class="wps-form-group__label">
-						<label class="wps-form-label"><?php esc_html_e( 'Select Product tags to restrict from non-members for ', 'membership-for-woocommerce' ); ?><span style="color:red"><?php echo esc_html( $value->post_title ); ?></label>
-						</div>
-						<div class="wps-form-group__control">
-							<div class="wps-form-select">
-								<select id="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>" name="wps_membership_plan_target_tags_<?php echo esc_attr( $value->ID ); ?>[]" class="wc-membership-product-tag-search mdl-textfield__input" multiple="multiple"  data-placeholder="<?php esc_attr_e( 'Search for a tags&hellip;', 'membership-for-woocommerce' ); ?>">
-									<?php
-
-									$wps_membership_plan_target_product_ids = wps_membership_get_meta_data( $value->ID, 'wps_membership_plan_target_tags', true );
-									if ( is_array( $wps_membership_plan_target_product_ids ) && ! empty( $wps_membership_plan_target_product_ids ) ) {
-										foreach ( $wps_membership_plan_target_product_ids as $wps_membership_plan_single_target_product_ids ) {
-
-											$tagn = get_term_by( 'id', $wps_membership_plan_single_target_product_ids, 'product_tag' );
-											?>
-											<option value="<?php echo esc_html( $wps_membership_plan_single_target_product_ids ); ?>" <?php selected( in_array( $wps_membership_plan_single_target_product_ids, $wps_membership_plan_target_product_ids, true ) ); ?>><?php echo( esc_html( $tagn->name ) . '(#' . esc_html( $wps_membership_plan_single_target_product_ids ) . ')' ); ?></option>
-											<?php
-										}
-									}
-									?>
-								</select>
-							</div>
-						</div>
-					</div>
 				</div>
 				<?php
 			}

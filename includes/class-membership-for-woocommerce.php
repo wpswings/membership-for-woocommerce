@@ -83,7 +83,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.0.7';
+			$this->version = '3.0.8';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -706,16 +706,6 @@ class Membership_For_Woocommerce {
 			'title'       => esc_html__( 'Membership Restriction', 'membership-for-woocommerce' ),
 			'name'        => 'membership-for-woocommerce-membership-restriction',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-membership-restriction.php',
-		);
-		$mfw_default_sub_tabs['membership-for-woocommerce-purchasing-discount-offer'] = array(
-			'title'       => esc_html__( 'Purchasing Discount Offer', 'membership-for-woocommerce' ),
-			'name'        => 'membership-for-woocommerce-purchasing-discount-offer',
-			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-purchasing-discount-offer.php',
-		);
-		$mfw_default_sub_tabs['membership-for-woocommerce-content-restriction'] = array(
-			'title'       => esc_html__( 'Content Restriction', 'membership-for-woocommerce' ),
-			'name'        => 'membership-for-woocommerce-content-restriction',
-			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-content-restriction.php',
 		);
 		$mfw_default_sub_tabs['membership-for-woocommerce-add-member'] = array(
 			'title'       => esc_html__( 'Add Member', 'membership-for-woocommerce' ),

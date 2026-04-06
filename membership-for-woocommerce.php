@@ -15,7 +15,7 @@
  * Plugin Name:       Membership For WooCommerce
  * Plugin URI:        https://wordpress.org/plugins/membership-for-woocommerce/
  * Description:       <code><strong>Membership For WooCommerce</strong></code> plugin helps you to create membership plans & offers members-only discounts, send membership emails. <a href="https://wpswings.com/woocommerce-plugins/?utm_source=wpswings-membership-shop&utm_medium=membership-org-backend&utm_campaign=shop-page">Elevate your e-commerce store by exploring more on <strong>WP Swings</strong></a>
- * Version:           3.0.7
+ * Version:           3.0.8
  * Author:            WP Swings
  * Author URI:        https://wpswings.com/?utm_source=wpswings-official&utm_medium=membership-org-backend&utm_campaign=official
  * Text Domain:       membership-for-woocommerce
@@ -84,8 +84,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function define_membership_for_woocommerce_constants() {
-		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '3.0.7' );
+	function wps_msfw_define_membership_for_woocommerce_constants() {
+		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_VERSION', '3.0.8' );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL', plugin_dir_url( __FILE__ ) );
 		membership_for_woocommerce_constants( 'MEMBERSHIP_FOR_WOOCOMMERCE_SERVER_URL', 'https://wpswings.com/' );
@@ -97,7 +97,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function auto_update_membership_for_woocommerce() {
+	function wps_msfw_auto_update_membership_for_woocommerce() {
 		 $wps_mfw_license_key = get_option( 'wps_mfw_license_key', '' );
 		if ( ! defined( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY' ) ) {
 			define( 'MEMBERSHIP_FOR_WOOCOMMERCE_SPECIAL_SECRET_KEY', '59f32ad2f20102.74284991' );
@@ -176,7 +176,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * @param [type] $network_wide is for multiple sites.
 	 * @return void
 	 */
-	function activate_membership_for_woocommerce( $network_wide ) {
+	function wps_msfw_activate_membership_for_woocommerce( $network_wide ) {
 
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-activator.php';
 		Membership_For_Woocommerce_Activator::activate( $network_wide );
@@ -202,7 +202,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 * The code that runs during plugin deactivation.
 	 * This action is documented in includes/class-membership-for-woocommerce-deactivator.php
 	 */
-	function deactivate_membership_for_woocommerce() {
+	function wps_msfw_deactivate_membership_for_woocommerce() {
 		include_once plugin_dir_path( __FILE__ ) . 'includes/class-membership-for-woocommerce-deactivator.php';
 		Membership_For_Woocommerce_Deactivator::membership_for_woocommerce_deactivate();
 		$wps_mfw_deactive_plugin = get_option( 'wps_all_plugins_active', false );
@@ -216,8 +216,8 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		update_option( 'wps_all_plugins_active', $wps_mfw_deactive_plugin );
 	}
 
-	register_activation_hook( __FILE__, 'activate_membership_for_woocommerce' );
-	register_deactivation_hook( __FILE__, 'deactivate_membership_for_woocommerce' );
+	register_activation_hook( __FILE__, 'wps_msfw_activate_membership_for_woocommerce' );
+	register_deactivation_hook( __FILE__, 'wps_msfw_deactivate_membership_for_woocommerce' );
 
 	/**
 	 * The core plugin class that is used to define internationalization,
@@ -234,14 +234,14 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	 *
 	 * @since 1.0.0
 	 */
-	function run_membership_for_woocommerce() {
-		define_membership_for_woocommerce_constants();
-		auto_update_membership_for_woocommerce();
+	function wps_msfw_run_membership_for_woocommerce() {
+		wps_msfw_define_membership_for_woocommerce_constants();
+		wps_msfw_auto_update_membership_for_woocommerce();
 		$mfw_mfw_plugin_standard = new Membership_For_Woocommerce();
 		$mfw_mfw_plugin_standard->mfw_run();
 		$GLOBALS['mfw_wps_mfw_obj'] = $mfw_mfw_plugin_standard;
 	}
-	run_membership_for_woocommerce();
+	wps_msfw_run_membership_for_woocommerce();
 	add_action( 'admin_enqueue_scripts', 'mfw_admin_enqueue_styles' );
 
 	/**
@@ -320,10 +320,6 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 			'<a href="' . admin_url( 'admin.php?page=membership_for_woocommerce_menu' ) . '">' . __( 'Settings', 'membership-for-woocommerce' ) . '</a>',
 		);
 		$mfw_plugins = get_plugins();
-		if ( ! isset( $mfw_plugins['membership-for-woocommerce-pro/membership-for-woocommerce-pro.php'] ) ) {
-
-			$my_link['goPro'] = '<a class="wps-wpr-go-pro" target="_blank" href="https://wpswings.com/product/membership-for-woocommerce-pro/?utm_source=wpswings-membership-pro&utm_medium=membership-org-backend&utm_campaign=go-pro">' . esc_html__( 'GO PRO', 'membership-for-woocommerce' ) . '</a>';
-		}
 		return array_merge( $my_link, $links );
 	}
 
