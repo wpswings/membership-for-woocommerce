@@ -34,11 +34,6 @@ jQuery(document).ready(function($) {
     // add pro tag in BuddyPress Dummy HTML.
     jQuery('#wps_msfw_enable_to_add_dummy_members_in_buddy_group, #wps_msfw_members_dummy_buddy_groups').parents('.wps-form-group__control').addClass('wps_msfw_pro_settings_tag');
 
-    jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
-
-	    $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
-    });
-
     $('.wps_ubo_lite_go_pro_popup_close').on( 'click', function (e) {
 
         // Hide Go pro popup.

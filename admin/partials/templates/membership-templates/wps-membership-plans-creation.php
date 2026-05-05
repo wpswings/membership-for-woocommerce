@@ -47,6 +47,7 @@ $mfw_plugins = get_option( 'active_plugins' );
 			</td>
 		</tr>
 		<!-- Membership plan price end. -->
+		 <?php do_action( 'wps_msfw_extend_create_plan_settings', $settings_fields, $instance, $post ) ?>
 
 		<!-- Access Type start -->
 		<tr valign="top">
@@ -200,6 +201,7 @@ $mfw_plugins = get_option( 'active_plugins' );
 	<h1><?php esc_html_e( 'Membership Plan Offers', 'membership-for-woocommerce' ); ?></h1>
 </div>
 
+	<?php do_action( 'wps_msfw_add_offer_section', $settings_fields, $instance, $post ) ?>
 
 	<!-- Membership product section starts -->
 	<div class="membership-offers">
@@ -213,7 +215,7 @@ $mfw_plugins = get_option( 'active_plugins' );
 				<?php esc_html_e( 'In Include Section whatever the products, categories, tags you will choose, ONLY MEMBERS can buy these products and can access the pages.', 'membership-for-woocommerce' ); ?>
 			</h3>
 			<table>
-
+			<?php do_action( 'wps_msfw_extend_before_include_sections', $settings_fields, $instance, $post ); ?>
 			<!-- Offer Product section start -->
 			<tr>
 				<th scope="row" class="titledesc">
@@ -285,6 +287,7 @@ $mfw_plugins = get_option( 'active_plugins' );
 				</td>
 			</tr>
 			<!-- Offer categories section end. -->
+			<?php do_action( 'wps_msfw_extend_after_include_sections', $settings_fields, $instance, $post ); ?>
 		</table>
 	</div>
 
@@ -350,6 +353,8 @@ $mfw_plugins = get_option( 'active_plugins' );
 					</td>
 				</tr>
 				<!-- Free shiping section end. -->
+
+				<?php do_action( 'wps_msfw_extend_mem_features_sections', $settings_fields, $instance, $post ); ?>
 
 				 <!-- Restrict maximum product purchase limit. -->
 				<tr>

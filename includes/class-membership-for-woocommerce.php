@@ -707,6 +707,7 @@ class Membership_For_Woocommerce {
 			'name'        => 'membership-for-woocommerce-membership-restriction',
 			'file_path'   => MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/templates/membership-registration/membership-for-woocommerce-membership-restriction.php',
 		);
+		$mfw_default_sub_tabs = apply_filters( 'wps_msfw_extend_mem_settings_tabs', $mfw_default_sub_tabs );
 		$mfw_default_sub_tabs['membership-for-woocommerce-add-member'] = array(
 			'title'       => esc_html__( 'Add Member', 'membership-for-woocommerce' ),
 			'name'        => 'membership-for-woocommerce-add-member',

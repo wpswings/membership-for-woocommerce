@@ -116,7 +116,7 @@ $results = get_posts(
 							</div>
 						</div>
 					</div>
-					
+					<?php do_action( 'wps_msfw_extend_membership_restrictions', $value ); ?>
 				</div>
 				<?php
 			}
