@@ -111,7 +111,9 @@ class Membership_For_Woocommerce_Public {
 	public function mfw_public_enqueue_styles() {
 
 		wp_enqueue_style( $this->plugin_name, MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/membership-for-woocommerce-public.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
-		wp_enqueue_style( 'public-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/wps-public.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+		$wps_public_css_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'public/css/wps-public.css';
+		$wps_public_css_ver  = file_exists( $wps_public_css_path ) ? filemtime( $wps_public_css_path ) : MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
+		wp_enqueue_style( 'public-css', MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'public/css/wps-public.css', array(), $wps_public_css_ver, 'all' );
 
 		wp_enqueue_style( 'wp-jquery-ui-dialog' );
 
@@ -132,7 +134,9 @@ class Membership_For_Woocommerce_Public {
 		wp_localize_script( $this->plugin_name, 'mfw_public_param', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ) ) );
 		wp_enqueue_script( $this->plugin_name );
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, false );
+		$wps_public_js_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'public/js/membership-for-woocommerce-public.js';
+		$wps_public_js_ver  = file_exists( $wps_public_js_path ) ? filemtime( $wps_public_js_path ) : MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/membership-for-woocommerce-public.js', array( 'jquery' ), $wps_public_js_ver, false );
 
 		$button_text         = get_option( 'wps_membership_change_buy_now_text', '' );
 		$wps_mfw_single_plan = isset( $_GET['plan_id'] ) && isset( $_GET['prod_id'] ) ? 'yes' : '';
@@ -1763,8 +1767,10 @@ class Membership_For_Woocommerce_Public {
 					}
 
 					$mode         = $this->wps_membership_validate_mode();
-					$content      = esc_html__( 'Buy Now', 'membership-for-woocommerce' );
+					$content      = esc_html__( 'Choose Plan', 'membership-for-woocommerce' );
+					$description .= '<article class="wps_mfw_plan_card">';
 					$description .= '<div class="wps_all_plans_detail_wrapper">';
+					$description .= '<div class="wps_mfw_plan_card_tag">' . esc_html__( 'Membership', 'membership-for-woocommerce' ) . '</div>';
 					$description .= '<h2>' . esc_attr( $plan['post_title'] ) . '</h2>';
 					$description .= '<div class="wps_membership_plan_content_price">' . sprintf( '%s%s', esc_attr( $plan_currency ), esc_attr( $plan_price ) ) . '</div>';
 
@@ -1775,6 +1781,47 @@ class Membership_For_Woocommerce_Public {
 					$wps_membership_plan_duration_type         = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_duration_type', true );
 					$wps_membership_subscription_expiry        = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry', true );
 					$wps_membership_subscription_expiry_type   = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry_type', true );
+					$plan_duration_text                        = esc_html__( 'Lifetime', 'membership-for-woocommerce' );
+					$plan_target_products                      = maybe_unserialize( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) );
+					$plan_target_products                      = is_array( $plan_target_products ) ? array_filter( $plan_target_products ) : array();
+					$plan_products_count                       = count( $plan_target_products );
+
+					if ( 0 < $plan_products_count ) {
+
+						$plan_products_text = sprintf(
+							_n( '%d product', '%d products', $plan_products_count, 'membership-for-woocommerce' ),
+							$plan_products_count
+						);
+					} else {
+
+						$plan_products_text = esc_html__( 'No specific product', 'membership-for-woocommerce' );
+					}
+
+					if ( 'limited' === $wps_membership_plan_name_access_type && ! empty( $wps_membership_plan_duration ) ) {
+
+						$wps_mfw_duration_type = $wps_membership_plan_duration_type;
+						if ( 1 === absint( $wps_membership_plan_duration ) ) {
+
+							$wps_mfw_duration_type = rtrim( $wps_mfw_duration_type, 's' );
+						}
+						$plan_duration_text = sprintf(
+							'%u %s',
+							absint( $wps_membership_plan_duration ),
+							esc_html( $wps_mfw_duration_type )
+						);
+					} elseif ( 'date_ranged' === $wps_membership_plan_name_access_type ) {
+
+						$wps_mfw_plan_start = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_start', true );
+						$wps_mfw_plan_end   = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_end', true );
+						if ( ! empty( $wps_mfw_plan_start ) && ! empty( $wps_mfw_plan_end ) ) {
+
+							$plan_duration_text = sprintf(
+								'%s - %s',
+								esc_html( $wps_mfw_plan_start ),
+								esc_html( $wps_mfw_plan_end )
+							);
+						}
+					}
 
 					// show signup fee and free trial msg.
 					$wps_mfw_enable_free_trial_settings        = wps_membership_get_meta_data( $plan['ID'], 'wps_mfw_enable_free_trial_settings', true );
@@ -1862,7 +1909,10 @@ class Membership_For_Woocommerce_Public {
 
 						$description .= '<div class="wps_membership_plan_info">' . wp_kses_post( $plan_info ) . '</div>';
 					}
-					$description .= $this->get_plan_details( $plan['ID'] );
+					$description .= '<div class="wps_mfw_plan_meta_wrapper">';
+					$description .= '<div class="wps_mfw_plan_meta_duration">' . esc_html( $plan_duration_text ) . '</div>';
+					$description .= '<div class="wps_mfw_plan_meta_products"><span>' . esc_html__( 'Products', 'membership-for-woocommerce' ) . '</span><strong>' . esc_html( $plan_products_text ) . '</strong></div>';
+					$description .= '</div>';
 					$description .= '</div>';
 					$description .= '<form method="post" class="wps_membership_buy_now_btn">
 					<input type="hidden" id="wps_membership_plan_id" name="plan_id" value="' . esc_attr( $plan['ID'] ) . '">
@@ -1870,6 +1920,8 @@ class Membership_For_Woocommerce_Public {
 					<input type="hidden" name="membership_title" id="wps_membership_title" value="' . esc_attr( $plan['post_title'] ) . '">
 					<input type="button" data-mode="' . esc_attr( $mode ) . '" class="wps_membership_buynow" name="wps_membership_buynow" value="' . esc_attr( $content ) . '">
 					</form>';
+					$description .= $this->get_plan_details( $plan['ID'] );
+					$description .= '</article>';
 				}
 			} else {
 				$description .= esc_html__( 'Plans Not Available', 'membership-for-woocommerce' );

@@ -83,7 +83,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.0.8';
+			$this->version = '3.1.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -139,8 +139,9 @@ class Membership_For_Woocommerce {
 		if ( class_exists( 'Membership_For_Woocommerce_Onboarding_Steps' ) ) {
 			$mfw_onboard_steps = new Membership_For_Woocommerce_Onboarding_Steps();
 		}
-		// The class responsible for defining all actions that occur in the admin area.
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
+			// The class responsible for defining all actions that occur in the admin area.
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-membership-for-woocommerce-admin.php';
+			include_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-membership-for-woocommerce-talk-to-expert-form.php';
 
 			// The class responsible for defining all actions that occur in the public-facing side of the site.
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-membership-for-woocommerce-public.php';
@@ -203,6 +204,11 @@ class Membership_For_Woocommerce {
 	 */
 	private function membership_for_woocommerce_admin_hooks() {
 		$mfw_plugin_admin = new Membership_For_Woocommerce_Admin( $this->mfw_get_plugin_name(), $this->mfw_get_version() );
+		$mfw_talk_to_expert = null;
+
+		if ( is_admin() ) {
+			$mfw_talk_to_expert = new Membership_For_Woocommerce_Talk_To_Expert_Form();
+		}
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $mfw_plugin_admin, 'mfw_admin_enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $mfw_plugin_admin, 'mfw_admin_enqueue_scripts' );
@@ -256,11 +262,14 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'manage_wps_cpt_membership_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_woo_fill_columns_membership', 10, 2 );
 
 		// Admin side ajax.
-		$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership', $mfw_plugin_admin, 'wps_membership_search_products_for_membership' );
-		$this->loader->add_action( 'wp_ajax_wps_membership_search_product_categories_for_membership', $mfw_plugin_admin, 'wps_membership_search_product_categories_for_membership' );
-		$this->loader->add_action( 'wp_ajax_wps_membership_get_membership_content', $mfw_plugin_admin, 'wps_membership_get_membership_content' );
-		$this->loader->add_action( 'wp_ajax_wps_membership_get_states', $mfw_plugin_admin, 'wps_membership_get_states' );
-		$this->loader->add_action( 'wp_ajax_wps_membership_get_member_content', $mfw_plugin_admin, 'wps_membership_get_member_content' );
+			$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership', $mfw_plugin_admin, 'wps_membership_search_products_for_membership' );
+			$this->loader->add_action( 'wp_ajax_wps_membership_search_product_categories_for_membership', $mfw_plugin_admin, 'wps_membership_search_product_categories_for_membership' );
+			$this->loader->add_action( 'wp_ajax_wps_membership_get_membership_content', $mfw_plugin_admin, 'wps_membership_get_membership_content' );
+			$this->loader->add_action( 'wp_ajax_wps_membership_get_states', $mfw_plugin_admin, 'wps_membership_get_states' );
+			$this->loader->add_action( 'wp_ajax_wps_membership_get_member_content', $mfw_plugin_admin, 'wps_membership_get_member_content' );
+		if ( $mfw_talk_to_expert ) {
+			$this->loader->add_action( 'wp_ajax_' . Membership_For_Woocommerce_Talk_To_Expert_Form::AJAX_ACTION, $mfw_talk_to_expert, 'wps_mfw_handle_ajax_submission' );
+		}
 
 		// Download CSV.
 		$this->loader->add_action( 'init', $mfw_plugin_admin, 'wps_membership_for_woo_export_csv_members' );

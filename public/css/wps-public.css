@@ -146,3 +146,775 @@
   max-width: 200px;
   height: auto;
 }
+
+/* Membership template redesign */
+body.wps_mfw_template_v4_page {
+  margin: 0 !important;
+  background:
+    linear-gradient(90deg, #4a2b44 0%, #2f1a4c 22%, #2f1a4c 78%, #432741 100%) top / 100% 560px no-repeat,
+    #e8e2d8 !important;
+  color: #231b39;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+body.wps_mfw_template_layout_page {
+  margin: 0 !important;
+  background:
+    linear-gradient(90deg, #4a2b44 0%, #2f1a4c 22%, #2f1a4c 78%, #432741 100%) top / 100% 560px no-repeat,
+    #e8e2d8 !important;
+  color: #231b39;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+.wps_mfw_template_v4 {
+  background: transparent !important;
+  min-height: 100vh;
+  padding: 0 16px 56px;
+}
+
+.wps_mfw_template_layout {
+  background: transparent !important;
+  min-height: 100vh;
+  padding: 0 16px 56px;
+}
+
+.wps_mfw_template_v4_stage {
+  background: #e7e7eb;
+  border-radius: 4px;
+  margin: 92px auto 0;
+  max-width: 1140px;
+  padding: 20px 20px 22px;
+  position: relative;
+}
+
+body.wps_mfw_selected_temp1 .wps_mfw_template_v4_stage {
+  max-width: 800px;
+}
+
+body.wps_mfw_selected_temp1 .wps_mfw_template_v4_hero_grid {
+  align-items: flex-start;
+  column-gap: 28px;
+  grid-template-columns: minmax(0, 1fr) 298px;
+}
+
+body.wps_mfw_selected_temp1 .wps_mfw_template_v4_title {
+  font-size: 64px;
+  font-weight: 600;
+  letter-spacing: -0.9px;
+  line-height: 1.06;
+  max-width: 460px;
+}
+
+body.wps_mfw_selected_temp1 .wps_mfw_template_v4_desc {
+  max-width: 430px;
+}
+
+body.wps_mfw_selected_temp1 .wps_mfw_template_v4_stat {
+  align-self: flex-start;
+  min-height: 0;
+}
+
+.wps_mfw_template_v4_hero {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+.wps_mfw_template_v4_hero_icon {
+  color: #f7901e;
+  display: block;
+  font-size: 58px;
+  height: 58px;
+  margin: -58px auto 12px;
+  width: 58px;
+}
+
+.wps_mfw_template_v4_hero_card {
+  background: #ececef;
+  border: 1px solid #dcc8a8;
+  border-radius: 32px;
+  overflow: hidden;
+}
+
+.wps_mfw_template_v4_hero_grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1.42fr 1fr;
+  padding: 34px 34px 18px;
+}
+
+.wps_mfw_template_v4_eyebrow {
+  color: #f69a1e;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin: 0 0 14px;
+  text-transform: uppercase;
+}
+
+.wps_mfw_template_v4_title {
+  color: #07050e;
+  font-size: clamp(56px, 4.6vw, 72px);
+  font-weight: 700;
+  letter-spacing: -1.2px;
+  line-height: 0.96;
+  margin: 0;
+  max-width: 640px;
+}
+
+.wps_mfw_template_v4_desc {
+  color: #615b75;
+  font-size: 17px;
+  letter-spacing: 1px;
+  line-height: 1.7;
+  margin: 20px 0 0;
+  max-width: 700px;
+}
+
+.wps_mfw_template_v4_stat {
+  background: linear-gradient(180deg, #2b1746 0, #180b2f 100%);
+  border-radius: 30px;
+  color: #fff;
+  padding: 24px 24px 20px;
+}
+
+.wps_mfw_template_v4_stat_title {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+  margin: 0 0 14px;
+}
+
+.wps_mfw_template_v4_stat_title strong {
+  color: #f5c449;
+  font-size: clamp(56px, 4.4vw, 70px);
+  font-weight: 700;
+  line-height: 0.9;
+}
+
+.wps_mfw_template_v4_stat_title span {
+  color: #cfcad8;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.wps_mfw_template_v4_stat_desc {
+  color: #d2ccdc;
+  font-size: 16px;
+  letter-spacing: 1.1px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.wps_mfw_template_v4_actions {
+  align-items: center;
+  border-top: 1px solid #ddd3c2;
+  display: flex;
+  gap: 12px;
+  padding: 14px 34px 18px;
+}
+
+.wps_mfw_template_v4_actions a {
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 18px;
+  font-weight: 700;
+  justify-content: center;
+  letter-spacing: 1px;
+  min-height: 50px;
+  min-width: 164px;
+  padding: 10px 22px;
+  text-decoration: none;
+}
+
+.wps_mfw_template_v4_action_home {
+  background: #0a0a11;
+  border: 2px solid #0a0a11;
+  color: #fff;
+}
+
+.wps_mfw_template_v4_action_home:hover {
+  background: transparent;
+  color: #0a0a11;
+}
+
+.wps_mfw_template_v4_action_shop {
+  background: transparent;
+  border: 1px solid #2f2841;
+  color: #2f2841;
+}
+
+.wps_mfw_template_v4_action_shop:hover {
+  background: #2f2841;
+  color: #fff;
+}
+
+.wps_mfw_template_v4_content {
+  margin: 0 auto;
+  max-width: 100%;
+  padding: 30px 0 0;
+}
+
+.wps_mfw_template_v4 .wp-block-cover,
+.wps_mfw_template_v4 .wp-block-cover.wps-mfw-temp2,
+.wps_mfw_template_v4 .wp-block-cover.wps-mfw-temp3,
+.wps_mfw_template_v4 .wp-block-cover.wps-mfw-dark-mode {
+  align-items: flex-start !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  min-height: auto !important;
+  padding: 0 !important;
+}
+
+.wps_mfw_template_v4 .wp-block-cover .wp-block-cover__background,
+.wps_mfw_template_v4 .wp-block-cover .wp-block-cover__gradient-background {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+.wps_mfw_template_v4 .wp-block-cover .wp-block-cover__inner-container > h2,
+.wps_mfw_template_v4 .wp-block-cover .wp-block-cover__inner-container > .wp-block-heading {
+  display: none !important;
+}
+
+.wps_mfw_template_v4 .wp-block-cover .wp-block-group,
+.wps_mfw_template_v4 .wp-block-cover .wp-block-group__inner-container {
+  background: transparent !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.wps_mfw_template_v4 .wps_mfw_membership_front_page {
+  background: transparent !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  max-width: none !important;
+  min-height: auto !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+.wps_mfw_template_v4 .wps_mfw_membership_front_page .wps_mfw_membership_icon {
+  display: none !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_membership_front_page > .wps_membership_plan_content_title:empty,
+.wps_mfw_template_v4 .wps_mfw_membership_front_page > .wps_membership_plan_content_price:empty {
+  display: none !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_membership_front_page > .wps_membership_plan_content_desc {
+  background: transparent !important;
+  color: inherit !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card {
+  background: #efefef !important;
+  border: 1px solid #dcc8a8 !important;
+  border-radius: 30px !important;
+  box-shadow: none !important;
+  margin: 0 auto !important;
+  max-width: 360px !important;
+  padding: 24px 24px 24px !important;
+  width: 100% !important;
+}
+
+.wps_mfw_template_v4 .wps_all_plans_detail_wrapper {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card_tag {
+  color: #f69a1e !important;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2.2px;
+  margin: 0 0 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card h2 {
+  color: #161322 !important;
+  font-size: 48px;
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0;
+  text-align: center;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #161322 !important;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  margin: 8px 0 0;
+  padding: 0;
+  text-align: center;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_content_description,
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_info {
+  color: #605b75 !important;
+  font-size: 15px;
+  line-height: 1.8;
+  margin: 12px 0 0;
+  text-align: center;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_info {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_mfw_plan_meta_wrapper {
+  margin-top: 20px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_meta_duration {
+  border: 1px solid #d9be93 !important;
+  border-radius: 999px;
+  color: #8e5d18 !important;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_meta_products {
+  background: #e5e2dd !important;
+  border: 1px solid #dfd2bf !important;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 14px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_meta_products span {
+  color: #6a6482 !important;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.9px;
+  text-transform: uppercase;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_meta_products strong {
+  color: #221b38 !important;
+  font-size: 33px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_buy_now_btn {
+  margin: 18px 0 0;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #efeff0 !important;
+  border: 2px solid #f37e21 !important;
+  border-radius: 16px;
+  color: #f37e21 !important;
+  font-size: 18px !important;
+  font-weight: 700;
+  height: auto !important;
+  letter-spacing: 0.7px;
+  margin: 0;
+  min-height: 54px;
+  width: 100%;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #f37e21 !important;
+  color: #fff !important;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .members_plans_details {
+  border-top: 1px solid #d3cfc6;
+  margin-top: 26px;
+  padding-top: 18px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans {
+  background: transparent !important;
+  border-radius: 0;
+  padding: 0;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label {
+  align-items: center;
+  background: #efeff0 !important;
+  border: 1px solid #d7c4a7 !important;
+  border-radius: 20px !important;
+  color: #221b38 !important;
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  font-weight: 700;
+  justify-content: space-between;
+  letter-spacing: 0.8px;
+  margin: 0;
+  padding: 14px 20px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label span {
+  font-size: 0;
+  transform: none;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label span:before {
+  color: #f49a1f;
+  content: "+";
+  font-size: 29px;
+  line-height: 1;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper {
+  border: 1px solid #e2d6c4 !important;
+  border-radius: 14px;
+  margin-top: 12px;
+  padding: 14px;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper .form-table {
+  margin: 0;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li {
+  border-bottom: 1px dashed #ddd0be;
+  gap: 8px;
+  margin: 0;
+  max-width: none;
+  padding: 9px 0;
+  width: 100%;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li:last-child {
+  border-bottom: 0;
+}
+
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li span {
+  color: #5b5572 !important;
+  flex: 1;
+  font-size: 14px;
+  margin: 0;
+  text-align: left;
+}
+
+.wps_mfw_template_v4 .wps_mfw_membership_front_page > .wps_mfw_buy_button .wps_membership_no_thanks {
+  display: none !important;
+}
+
+@media (max-width: 1024px) {
+  .wps_mfw_template_v4_stage {
+    margin-top: 74px;
+  }
+
+  .wps_mfw_template_v4_hero_grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wps_mfw_template_v4_title {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .wps_mfw_template_v4 {
+    padding: 0 12px 38px;
+  }
+
+  .wps_mfw_template_layout {
+    padding: 0 12px 38px;
+  }
+
+  .wps_mfw_template_v4_stage {
+    margin-top: 62px;
+    padding: 16px 12px 16px;
+  }
+
+  .wps_mfw_template_v4_hero_icon {
+    font-size: 48px;
+    height: 48px;
+    margin-top: -48px;
+    width: 48px;
+  }
+
+  .wps_mfw_template_v4_hero_card {
+    border-radius: 24px;
+  }
+
+  .wps_mfw_template_v4_hero_grid {
+    gap: 18px;
+    padding: 20px 16px 16px;
+  }
+
+  .wps_mfw_template_v4_title {
+    font-size: 44px;
+    letter-spacing: -0.5px;
+  }
+
+  .wps_mfw_template_v4_desc {
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    line-height: 1.6;
+  }
+
+  .wps_mfw_template_v4_stat_title span {
+    font-size: 20px;
+  }
+
+  .wps_mfw_template_v4_actions {
+    flex-wrap: wrap;
+    padding: 14px 16px 16px;
+  }
+
+  .wps_mfw_template_v4_actions a {
+    min-height: 48px;
+    width: 100%;
+  }
+
+  .wps_mfw_template_v4 .wps_mfw_plan_card {
+    max-width: 100% !important;
+    padding: 20px !important;
+  }
+
+  .wps_mfw_template_v4 .wps_mfw_plan_card h2 {
+    font-size: 42px;
+  }
+
+  .wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_content_price {
+    font-size: 50px;
+  }
+
+  .wps_mfw_template_v4 .wps_mfw_plan_meta_products strong {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 1024px) {
+  body.wps_mfw_selected_temp1 .wps_mfw_template_v4_hero_grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.wps_mfw_selected_temp1 .wps_mfw_template_v4_title,
+  body.wps_mfw_selected_temp1 .wps_mfw_template_v4_desc {
+    max-width: none;
+  }
+}
+
+@media (max-width: 767px) {
+  body.wps_mfw_selected_temp1 .wps_mfw_template_v4_hero_grid {
+    column-gap: 18px;
+  }
+
+  body.wps_mfw_selected_temp1 .wps_mfw_template_v4_title {
+    font-size: 44px;
+    letter-spacing: -0.5px;
+  }
+}
+
+/* Final visual lock for membership template v4 */
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_stage,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_membership_front_page,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_membership_front_page > .wps_membership_plan_content_desc {
+  background: #e7e7eb !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_all_plans_detail_wrapper,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card h2,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_content_price,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_content_description,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_membership_plan_info,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_mfw_plan_meta_wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card {
+  background: #efefef !important;
+  border: 1px solid #dcc8a8 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_mfw_plan_meta_products {
+  background: #e5e2dd !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label {
+  background: #efeff0 !important;
+  border: 1px solid #d7c4a7 !important;
+  color: #221b38 !important;
+}
+
+/* Conflict reset: remove legacy block backgrounds leaking into v4 layout */
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover__inner-container,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-group,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-group__inner-container,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-columns,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-column {
+  background: #e7e7eb !important;
+  background-color: #e7e7eb !important;
+  box-shadow: none !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover:before,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover:after,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover .wp-block-cover__background,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wp-block-cover .wp-block-cover__gradient-background {
+  background: transparent !important;
+  display: none !important;
+  opacity: 0 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_membership_plan_content_desc {
+  align-items: center !important;
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card {
+  background: #efefef !important;
+  background-color: #efefef !important;
+  border: 1px solid #dcc8a8 !important;
+  border-radius: 30px !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_all_plans_detail_wrapper,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card h2,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_membership_plan_content_price,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_membership_plan_content_description,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_membership_plan_info,
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_template_v4_content .wps_mfw_plan_card .wps_mfw_plan_meta_wrapper {
+  background: transparent !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Exact details panel layout lock */
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .members_plans_details {
+  border-top: 1px solid #d1ccc2 !important;
+  margin-top: 24px !important;
+  padding-top: 18px !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans {
+  background: #ffffff !important;
+  border: 1px solid #d7c4a7 !important;
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label {
+  align-items: center !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #221b38 !important;
+  display: flex !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+  justify-content: space-between !important;
+  letter-spacing: 0.8px !important;
+  margin: 0 !important;
+  min-height: 60px !important;
+  padding: 14px 20px !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label span {
+  font-size: 0 !important;
+  line-height: 1 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans > label span:before {
+  color: #ef991f !important;
+  content: "+" !important;
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans.wps_mfw_details_open > label {
+  border-bottom: 1px solid #d7c4a7 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans.wps_mfw_details_open > label span:before {
+  content: "-" !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper {
+  background: #ffffff !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  margin-top: 0 !important;
+  padding: 6px 20px 10px !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper .form-table {
+  margin: 0 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li {
+  background: #ffffff !important;
+  border-bottom: 1px solid #d8d0c5 !important;
+  display: block !important;
+  margin: 0 !important;
+  max-width: none !important;
+  padding: 12px 0 !important;
+  width: 100% !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li:last-child {
+  border-bottom: 0 !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li label {
+  background: #ffffff !important;
+  color: #78718e !important;
+  display: block !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.8px !important;
+  margin: 0 0 6px !important;
+  text-transform: uppercase !important;
+}
+
+body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table_wrapper li span {
+  background: #ffffff !important;
+  color: #5f5876 !important;
+  display: block !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.7px !important;
+  line-height: 1.35 !important;
+  margin: 0 !important;
+  text-align: left !important;
+}

@@ -1,29 +1,40 @@
 jQuery(document).ready(function ($) {
-	
-	if ('temp2' == wps_msfw_public_obj.plan_page_template) {
+	var is_template_v4 = jQuery('body').hasClass('wps_mfw_template_v4_page');
 
-		jQuery('.wp-block-cover').addClass('wps-mfw-temp2');
-	} else if ( 'temp3' == wps_msfw_public_obj.plan_page_template ) {
+	if ( ! is_template_v4 ) {
+		if ('temp2' == wps_msfw_public_obj.plan_page_template) {
 
-		jQuery('.wp-block-cover').addClass('wps-mfw-temp3');
+			jQuery('.wp-block-cover').addClass('wps-mfw-temp2');
+		} else if ( 'temp3' == wps_msfw_public_obj.plan_page_template ) {
+
+			jQuery('.wp-block-cover').addClass('wps-mfw-temp3');
+		} else {
+
+			jQuery('.wp-block-cover').removeClass('wps-mfw-temp2');
+			jQuery('.wp-block-cover').removeClass('wps-mfw-temp3');
+		}
 	} else {
-
-		jQuery('.wp-block-cover').removeClass('wps-mfw-temp2');
-		jQuery('.wp-block-cover').removeClass('wps-mfw-temp3');
+		jQuery('.wp-block-cover').removeClass('wps-mfw-temp2 wps-mfw-temp3 wps-mfw-dark-mode');
 	}
 
 	if ('yes' == wps_msfw_public_obj.single_plan) {
 		jQuery('.wps_mfw_membership_front_page').addClass('wps_mfw_membership_single_plan');
-		jQuery('.wps_membership_plan_content_price').parent().removeClass('wps_membership_plan_content_price');
-		jQuery('.wp-block-cover.wps-mfw-temp2').css('min-height','100vh');
+		if ( ! is_template_v4 ) {
+			jQuery('.wps_membership_plan_content_price').parent().removeClass('wps_membership_plan_content_price');
+			jQuery('.wp-block-cover.wps-mfw-temp2').css('min-height','100vh');
+		}
 		
 	} else {
 		jQuery('.wps_mfw_membership_front_page').addClass('wps_mfw_membership_multiple_plan');
 	}
 	
 	
-	if ('on' == wps_msfw_public_obj.dark_mode) {
-		jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
+	if ( ! is_template_v4 ) {
+		if ('on' == wps_msfw_public_obj.dark_mode) {
+			jQuery('.wp-block-cover').addClass('wps-mfw-dark-mode');
+		} else {
+			jQuery('.wp-block-cover').removeClass('wps-mfw-dark-mode');
+		}
 	} else {
 		jQuery('.wp-block-cover').removeClass('wps-mfw-dark-mode');
 	}
@@ -206,7 +217,7 @@ jQuery(document).ready(function ($) {
 	jQuery(document).ready(function($){
 
 		var single_page = wps_msfw_public_obj.single_plan;
-		if('yes' == single_page ){
+		if('yes' == single_page && ! is_template_v4 ){
 
 			jQuery('.members_plans_details .wps_members_plans label').trigger('click') ;
 		}
@@ -214,14 +225,17 @@ jQuery(document).ready(function ($) {
 
 	jQuery(document).on('click', '.wps_members_plans label', function() {
 		var $currentElement = jQuery(this).next('.wps_table_wrapper');
+		var $detailsWrapper = jQuery(this).closest('.wps_members_plans');
 		
 		// Check if the current element already has the class
 		if ($currentElement.hasClass('show__membership_details')) {
 			// Remove the class only from the current element
 			$currentElement.removeClass('show__membership_details');
+			$detailsWrapper.removeClass('wps_mfw_details_open');
 		} else {
 			// Add the class to the current element
 			$currentElement.addClass('show__membership_details');
+			$detailsWrapper.addClass('wps_mfw_details_open');
 		}
 	});
 
