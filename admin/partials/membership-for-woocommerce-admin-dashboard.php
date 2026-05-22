@@ -227,7 +227,6 @@ $mfw_more_tab_active   = ! empty( $mfw_more_tabs ) && array_key_exists( $mfw_act
 							<h2 class="mfw-redesign-main__hero-title"><?php echo esc_html( $mfw_current_tab_title ); ?></h2>
 							<p class="mfw-redesign-main__hero-description"><?php echo esc_html( $mfw_current_tab_desc ); ?></p>
 						</div>
-						<a href="<?php echo esc_url( $mfw_doc_url ); ?>" class="mfw-redesign-main__hero-doc" target="_blank"><?php esc_html_e( 'Read Documentation', 'membership-for-woocommerce' ); ?></a>
 					</div>
 
 					<div class="mfw-redesign-main__tab-content">

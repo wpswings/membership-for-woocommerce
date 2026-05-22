@@ -1,0 +1,517 @@
+/**
+ * Membership plan editor redesign.
+ * Scope: Membership plan edit/create screen only.
+ */
+
+@font-face {
+    font-family: 'NunitoSans-ExtraBold';
+    src: url("../fonts/nunito-sans/NunitoSans-ExtraBold.ttf");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Bold';
+    src: url("../fonts/nunito-sans/NunitoSans-Bold.ttf");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-SemiBold';
+    src: url("../fonts/nunito-sans/NunitoSans-SemiBold.ttf");
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'NunitoSans-Regular';
+    src: url("../fonts/nunito-sans/NunitoSans-Regular.ttf");
+    font-style: normal;
+    font-display: swap;
+}
+
+body.post-type-wps_cpt_membership {
+    --mfw-plan-bg: #f3f1f8;
+    --mfw-card-bg: #fcfbff;
+    --mfw-border: #d9d4e8;
+    --mfw-border-soft: #e8e4f2;
+    --mfw-heading: #1f215b;
+    --mfw-text: #4f527a;
+    --mfw-text-soft: #8a8fb0;
+    --mfw-accent: #31205f;
+    --mfw-accent-soft: #f0ebfc;
+    --mfw-highlight: #f3a23f;
+    --mfw-cta: #050919;
+    --mfw-shadow: 0 14px 34px rgba(40, 26, 82, 0.08);
+    background: linear-gradient(180deg, #f5f3fa 0%, #f0edf7 100%);
+}
+
+body.post-type-wps_cpt_membership #wpbody-content {
+    color: var(--mfw-text);
+    font-family: "NunitoSans-Regular", sans-serif;
+}
+
+body.post-type-wps_cpt_membership #poststuff {
+    padding-top: 18px;
+}
+
+body.post-type-wps_cpt_membership #post-body-content {
+    background: var(--mfw-card-bg);
+    border: 1px solid var(--mfw-border);
+    border-radius: 16px;
+    box-shadow: var(--mfw-shadow);
+    margin-bottom: 18px;
+    overflow: hidden;
+    padding: 18px 20px 22px;
+}
+
+body.post-type-wps_cpt_membership .wrap > h1.wp-heading-inline,
+body.post-type-wps_cpt_membership .wrap h1.wp-heading-inline {
+    color: var(--mfw-heading);
+    font-family: "NunitoSans-ExtraBold", sans-serif;
+    font-size: 32px;
+    letter-spacing: 0.01em;
+}
+
+body.post-type-wps_cpt_membership .wrap .page-title-action {
+    background: transparent;
+    border: 1px solid var(--mfw-border);
+    border-radius: 999px;
+    color: var(--mfw-accent);
+    font-family: "NunitoSans-Bold", sans-serif;
+    margin-left: 10px;
+    padding: 4px 12px;
+    transition: all 0.2s ease;
+}
+
+body.post-type-wps_cpt_membership .wrap .page-title-action:hover,
+body.post-type-wps_cpt_membership .wrap .page-title-action:focus {
+    border-color: var(--mfw-highlight);
+    color: var(--mfw-heading);
+}
+
+body.post-type-wps_cpt_membership #post-body-content #titlewrap {
+    margin: 0 0 16px;
+}
+
+body.post-type-wps_cpt_membership #titlediv #title {
+    border: 1px solid var(--mfw-border);
+    border-radius: 10px;
+    color: var(--mfw-heading);
+    font-family: "NunitoSans-SemiBold", sans-serif;
+    font-size: 22px;
+    line-height: 1.3;
+    min-height: 48px;
+    padding: 8px 14px;
+}
+
+body.post-type-wps_cpt_membership #postdivrich {
+    border: 1px solid var(--mfw-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+body.post-type-wps_cpt_membership #postdivrich .wp-editor-tools {
+    background: #f7f5fc;
+    border-bottom: 1px solid var(--mfw-border-soft);
+    padding: 8px 12px 0;
+}
+
+body.post-type-wps_cpt_membership #postdivrich #wp-content-wrap {
+    border: 0;
+}
+
+body.post-type-wps_cpt_membership #postdivrich .quicktags-toolbar,
+body.post-type-wps_cpt_membership #postdivrich .mce-toolbar-grp {
+    border-color: var(--mfw-border-soft);
+}
+
+body.post-type-wps_cpt_membership #postbox-container-1 .postbox {
+    border: 1px solid var(--mfw-border);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(18, 50, 96, 0.09);
+    overflow: hidden;
+}
+
+body.post-type-wps_cpt_membership #postbox-container-1 .postbox-header {
+    background: #f7f4fc;
+    border-bottom: 1px solid var(--mfw-border-soft);
+}
+
+body.post-type-wps_cpt_membership #postbox-container-1 .postbox-header h2 {
+    color: var(--mfw-heading);
+    font-family: "NunitoSans-Bold", sans-serif;
+    font-size: 14px;
+}
+
+body.post-type-wps_cpt_membership #submitdiv.postbox .postbox-header {
+    background: linear-gradient(90deg, #2f1f5c 0%, #39286f 100%);
+}
+
+body.post-type-wps_cpt_membership #submitdiv.postbox .postbox-header h2,
+body.post-type-wps_cpt_membership #submitdiv.postbox .handle-order-higher,
+body.post-type-wps_cpt_membership #submitdiv.postbox .handle-order-lower,
+body.post-type-wps_cpt_membership #submitdiv.postbox .toggle-indicator {
+    color: #ffffff;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box.postbox {
+    border: 1px solid var(--mfw-border);
+    border-radius: 16px;
+    box-shadow: var(--mfw-shadow);
+    overflow: hidden;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .postbox-header {
+    background: linear-gradient(90deg, #2f1f5c 0%, #39286f 100%);
+    border-left: 0;
+    border-bottom: 0;
+    margin: 0;
+    padding: 10px 14px;
+    width: 100%;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .postbox-header h2 {
+    color: #ffffff;
+    font-family: "NunitoSans-Bold", sans-serif;
+    font-size: 15px !important;
+    letter-spacing: 0.02em;
+    margin: 0;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .handle-order-higher,
+body.post-type-wps_cpt_membership #members_meta_box .handle-order-lower,
+body.post-type-wps_cpt_membership #members_meta_box .toggle-indicator {
+    color: #ffffff;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .inside {
+    margin: 0;
+    padding: 22px;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting {
+    background: linear-gradient(180deg, #fcfbff 0%, #f8f5fd 100%);
+    border: 1px solid var(--mfw-border-soft);
+    border-collapse: separate;
+    border-radius: 14px;
+    display: block;
+    margin: 0;
+    padding: 18px 22px;
+    width: 100%;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting > tbody {
+    display: block;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting > tbody > tr {
+    align-items: start;
+    border-bottom: 1px solid var(--mfw-border-soft);
+    display: grid;
+    gap: 8px 24px;
+    grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+    margin: 0;
+    padding: 15px 0;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting > tbody > tr:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting tr th,
+body.post-type-wps_cpt_membership .wps_membership_offers table tr th {
+    max-width: none;
+    padding: 0;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting tr td,
+body.post-type-wps_cpt_membership .wps_membership_offers table tr td {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: none;
+    padding: 0;
+}
+
+body.post-type-wps_cpt_membership .postbox .inside table tr th label {
+    color: var(--mfw-heading);
+    font-family: "NunitoSans-Bold", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .woocommerce-help-tip {
+    color: var(--mfw-text-soft);
+    margin-right: 8px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="text"],
+body.post-type-wps_cpt_membership #members_meta_box input[type="email"],
+body.post-type-wps_cpt_membership #members_meta_box input[type="tel"],
+body.post-type-wps_cpt_membership #members_meta_box input[type="number"],
+body.post-type-wps_cpt_membership #members_meta_box select,
+body.post-type-wps_cpt_membership #members_meta_box textarea {
+    border: 1px solid var(--mfw-border);
+    border-radius: 10px;
+    color: var(--mfw-heading);
+    font-family: "NunitoSans-SemiBold", sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    max-width: 420px;
+    min-height: 40px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="text"]:focus,
+body.post-type-wps_cpt_membership #members_meta_box input[type="email"]:focus,
+body.post-type-wps_cpt_membership #members_meta_box input[type="tel"]:focus,
+body.post-type-wps_cpt_membership #members_meta_box input[type="number"]:focus,
+body.post-type-wps_cpt_membership #members_meta_box select:focus,
+body.post-type-wps_cpt_membership #members_meta_box textarea:focus {
+    border-color: var(--mfw-accent);
+    box-shadow: 0 0 0 2px var(--mfw-accent-soft);
+    outline: 0;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .select2-container {
+    max-width: 560px;
+    width: 100% !important;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .select2-container .select2-selection--multiple {
+    border: 1px solid var(--mfw-border);
+    border-radius: 10px;
+    min-height: 42px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .select2-container .select2-selection--multiple .select2-selection__rendered {
+    padding: 6px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-color: var(--mfw-accent);
+    box-shadow: 0 0 0 2px var(--mfw-accent-soft);
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wp-editor-wrap {
+    max-width: 560px;
+    width: 100%;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wp-editor-wrap .wp-editor-container {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_plan_products {
+    background: linear-gradient(95deg, #2f1f5c 0%, #3b2a72 100%);
+    border-radius: 14px;
+    margin: 22px 0 0;
+    padding: 16px 20px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_plan_products h1 {
+    color: #ffffff;
+    font-family: "NunitoSans-ExtraBold", sans-serif;
+    font-size: 24px !important;
+    justify-content: flex-start;
+    letter-spacing: 0.01em;
+    margin: 0;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .membership-offers {
+    display: grid;
+    gap: 18px;
+    margin-top: 18px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .membership-offers .new_created_offers {
+    background: #fefcff;
+    border: 1px solid var(--mfw-border-soft);
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(38, 24, 78, 0.06);
+    padding: 18px 20px 22px;
+}
+
+body.post-type-wps_cpt_membership #poststuff h2.wps_membership_offer_title {
+    background: #f6f2ff;
+    border: 1px solid #dfd3f7;
+    border-left: 4px solid var(--mfw-highlight);
+    border-radius: 10px;
+    color: var(--mfw-heading);
+    display: inline-flex;
+    font-family: "NunitoSans-Bold", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.11em;
+    margin: 0 0 10px;
+    max-width: none;
+    padding: 8px 12px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .new_created_offers h3 {
+    color: var(--mfw-text-soft);
+    font-family: "NunitoSans-SemiBold", sans-serif;
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0 0 12px;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table {
+    display: block;
+    width: 100%;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table tbody {
+    display: block;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table tr {
+    align-items: start;
+    border-bottom: 1px solid var(--mfw-border-soft);
+    display: grid;
+    gap: 8px 24px;
+    grid-template-columns: minmax(210px, 250px) minmax(0, 1fr);
+    margin: 0;
+    padding: 15px 0;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table tr:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+body.post-type-wps_cpt_membership #wps_membership_plan_offer_price_type_id,
+body.post-type-wps_cpt_membership #wps_membership_product_offer_price_type_id {
+    max-width: 170px;
+}
+
+body.post-type-wps_cpt_membership #wps_membership_plan_offer_price,
+body.post-type-wps_cpt_membership #wps_membership_product_offer_price {
+    max-width: 160px;
+}
+
+body.post-type-wps_cpt_membership #wps_membership_duration select,
+body.post-type-wps_cpt_membership #wps_membership_subscription_expiry_tr select,
+body.post-type-wps_cpt_membership #wps_membership_plan_time_duratin_display select {
+    max-width: 150px;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_free_shipping_link {
+    margin-top: 8px;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_free_shipping_link .button {
+    background: var(--mfw-cta);
+    border: 1px solid var(--mfw-cta);
+    border-radius: 9px;
+    color: #ffffff;
+    font-family: "NunitoSans-Bold", sans-serif;
+    min-height: 36px;
+    padding: 7px 14px;
+}
+
+body.post-type-wps_cpt_membership .wps_membership_free_shipping_link .button:hover,
+body.post-type-wps_cpt_membership .wps_membership_free_shipping_link .button:focus {
+    background: #ffffff;
+    border-color: var(--mfw-accent);
+    color: var(--mfw-accent);
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="checkbox"] {
+    background-color: #b9c3d5;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="checkbox"]:checked {
+    background-color: var(--mfw-accent);
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="checkbox"]:before {
+    box-shadow: 1px 0 3px rgba(44, 31, 89, 0.25);
+}
+
+body.post-type-wps_cpt_membership #publish,
+body.post-type-wps_cpt_membership .button-primary,
+body.post-type-wps_cpt_membership #save-post {
+    background: var(--mfw-cta);
+    border-color: var(--mfw-cta);
+    border-radius: 10px;
+    box-shadow: none;
+    color: #ffffff;
+    font-family: "NunitoSans-Bold", sans-serif;
+    min-height: 36px;
+    padding: 4px 14px;
+    text-shadow: none;
+}
+
+body.post-type-wps_cpt_membership #publish:hover,
+body.post-type-wps_cpt_membership #publish:focus,
+body.post-type-wps_cpt_membership .button-primary:hover,
+body.post-type-wps_cpt_membership .button-primary:focus,
+body.post-type-wps_cpt_membership #save-post:hover,
+body.post-type-wps_cpt_membership #save-post:focus {
+    background: var(--mfw-accent);
+    border-color: var(--mfw-accent);
+    color: #ffffff;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box input[type="radio"] {
+    margin-left: 0;
+}
+
+body.post-type-wps_cpt_membership #members_meta_box #wps_membership_plan_time_duratin_display {
+    margin: 0;
+}
+
+@media screen and (max-width: 1100px) {
+    body.post-type-wps_cpt_membership #post-body-content {
+        padding: 15px;
+    }
+
+    body.post-type-wps_cpt_membership #members_meta_box .inside {
+        padding: 16px;
+    }
+
+    body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting,
+    body.post-type-wps_cpt_membership #members_meta_box .membership-offers .new_created_offers {
+        padding: 15px;
+    }
+
+    body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting > tbody > tr,
+    body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table tr {
+        grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+    }
+}
+
+@media screen and (max-width: 782px) {
+    body.post-type-wps_cpt_membership #members_meta_box .inside {
+        padding: 14px;
+    }
+
+    body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting > tbody > tr,
+    body.post-type-wps_cpt_membership #members_meta_box .wps_membership_offers table tr {
+        border-bottom: 1px solid var(--mfw-border-soft);
+        display: block;
+        padding: 12px 0;
+    }
+
+    body.post-type-wps_cpt_membership .wps_membership_plans_creation_setting tr th,
+    body.post-type-wps_cpt_membership .wps_membership_offers table tr th {
+        margin-bottom: 8px;
+    }
+
+    body.post-type-wps_cpt_membership #members_meta_box input[type="text"],
+    body.post-type-wps_cpt_membership #members_meta_box input[type="email"],
+    body.post-type-wps_cpt_membership #members_meta_box input[type="tel"],
+    body.post-type-wps_cpt_membership #members_meta_box input[type="number"],
+    body.post-type-wps_cpt_membership #members_meta_box select,
+    body.post-type-wps_cpt_membership #members_meta_box textarea,
+    body.post-type-wps_cpt_membership #members_meta_box .select2-container,
+    body.post-type-wps_cpt_membership #members_meta_box .wp-editor-wrap {
+        max-width: 100%;
+    }
+}

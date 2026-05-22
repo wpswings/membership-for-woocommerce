@@ -49,7 +49,7 @@ $wps_mfw_template_class    = ! empty( $wps_mfw_selected_template ) ? sanitize_ht
 			wp_body_open();
 		}
 		?>
-			<div class="wps_mfw_template_layout wps_mfw_template_v4">
+				<div class="<?php echo esc_attr( 'wps_mfw_template_layout wps_mfw_template_v4 wps_mfw_selected_' . $wps_mfw_template_class ); ?>">
 				<div class="wps_mfw_template_v4_stage">
 					<section class="wps_mfw_template_v4_hero" aria-label="<?php esc_attr_e( 'Membership Plans Overview', 'membership-for-woocommerce' ); ?>">
 						<?php if ( 'temp1' === $wps_mfw_template_class ) : ?>

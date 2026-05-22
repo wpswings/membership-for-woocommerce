@@ -214,6 +214,21 @@ body.wps_mfw_selected_temp1 .wps_mfw_template_v4_stat {
   min-height: 0;
 }
 
+/* Keep visual separation between stacked plan cards on template 1/2 */
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1 .wps_mfw_plan_card,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2 .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp1 .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp2 .wps_mfw_plan_card {
+  margin-bottom: 16px !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1 .wps_mfw_plan_card:last-child,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2 .wps_mfw_plan_card:last-child,
+.wps_mfw_template_v4.wps_mfw_selected_temp1 .wps_mfw_plan_card:last-child,
+.wps_mfw_template_v4.wps_mfw_selected_temp2 .wps_mfw_plan_card:last-child {
+  margin-bottom: 0 !important;
+}
+
 .wps_mfw_template_v4_hero {
   margin: 0 auto;
   max-width: 100%;
@@ -917,4 +932,696 @@ body.wps_mfw_template_v4_page .wps_mfw_template_v4 .wps_mfw_plan_card .wps_table
   line-height: 1.35 !important;
   margin: 0 !important;
   text-align: left !important;
+}
+
+/* Template 3 specific layout for v4 page template */
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_stage {
+  background: #eff2f8 !important;
+  border-radius: 18px;
+  max-width: 1240px;
+  padding: 24px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_hero_card {
+  background: linear-gradient(125deg, #11162a 0%, #1f305a 100%);
+  border: 0;
+  border-radius: 22px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_hero_grid {
+  align-items: center;
+  gap: 24px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+  padding: 28px 28px 20px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_eyebrow {
+  color: #83b4ff;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_title {
+  color: #ffffff;
+  font-size: clamp(46px, 4vw, 64px);
+  line-height: 1.03;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_desc {
+  color: #cfdbf8;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  margin-top: 16px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_stat {
+  background: #f4f7ff;
+  border: 1px solid #d5dff7;
+  color: #1a2544;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_stat_title strong,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_stat_title span {
+  color: #1a2544;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_stat_desc {
+  color: #506189;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_actions {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_action_home {
+  background: #ffffff;
+  border-color: #ffffff;
+  color: #1b2850;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_action_shop {
+  border-color: #9ab4f3;
+  color: #dfe9ff;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_action_shop:hover {
+  background: #dfe9ff;
+  color: #1b2850;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_membership_front_page > .wps_membership_plan_content_desc {
+  display: grid !important;
+  gap: 22px !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card {
+  background: #ffffff !important;
+  border: 1px solid #d3ddf5 !important;
+  border-radius: 20px !important;
+  max-width: none !important;
+  padding: 20px !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card + .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp3 .wps_mfw_plan_card + .wps_mfw_plan_card {
+  margin-top: 26px !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card h2 {
+  color: #18254a !important;
+  font-size: 38px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #0f6cad !important;
+  font-size: 44px;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_meta_duration {
+  border-color: #b8caef !important;
+  color: #26417b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_meta_products {
+  background: #eef4ff !important;
+  border: 1px solid #d3dff6 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #18244a !important;
+  border-color: #18244a !important;
+  color: #ffffff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #0f6cad !important;
+  border-color: #0f6cad !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_members_plans {
+  border-color: #d3ddf5 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_members_plans > label {
+  color: #1d2f5b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_plan_card .wps_members_plans > label span:before {
+  color: #1d4c9f !important;
+}
+
+@media (max-width: 1024px) {
+  body.wps_mfw_template_v4_page.wps_mfw_selected_temp3 .wps_mfw_template_v4_hero_grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark mode for v4 membership templates (color-only overrides) */
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode {
+  background:
+    linear-gradient(90deg, #131629 0%, #1a2038 22%, #1a2038 78%, #151932 100%) top / 100% 560px no-repeat,
+    #0f1220 !important;
+  color: #e8ecf8;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_membership_front_page,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_membership_front_page,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_membership_front_page > .wps_membership_plan_content_desc,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_membership_front_page > .wps_membership_plan_content_desc {
+  background: #171b28 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card {
+  background: linear-gradient(125deg, #0d1225 0%, #1a2c5d 100%) !important;
+  border-color: #2b3555 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow {
+  color: #ffb257 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_title,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_title {
+  color: #f7f8ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_desc,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_desc {
+  color: #b8bfd6 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_stat,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_stat {
+  background: #11182d !important;
+  border-color: #2e3957 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_stat_title strong,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_stat_title span,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_stat_title strong,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_stat_title span {
+  color: #f2f5ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_stat_desc,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_stat_desc {
+  color: #a8b2cc !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_action_home,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_action_home {
+  background: #0a0d17 !important;
+  border-color: #2f3d63 !important;
+  color: #f3f5ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_action_home:hover,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_action_home:hover {
+  background: #f3f5ff !important;
+  color: #12152a !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_action_shop,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_action_shop {
+  border-color: #5e77ba !important;
+  color: #dbe5ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_action_shop:hover,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_action_shop:hover {
+  background: #2d3f71 !important;
+  color: #ffffff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card {
+  background: #101523 !important;
+  border-color: #2b3555 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card h2,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card h2 {
+  color: #eef3ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #7fc0ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_description,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_info,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_description,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_info {
+  color: #bbc6e4 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_meta_duration,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_meta_duration {
+  border-color: #495c8e !important;
+  color: #d7e0ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_meta_products,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_meta_products {
+  background: #1a2032 !important;
+  border-color: #2f3c5f !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_meta_products span,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_meta_products span {
+  color: #97a4cb !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong {
+  color: #f4f7ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #1f3b7e !important;
+  border-color: #1f3b7e !important;
+  color: #ffffff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #2a4a9a !important;
+  border-color: #2a4a9a !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans {
+  background: #141a2b !important;
+  border-color: #2f3c5f !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label {
+  color: #e8eeff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label span:before,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label span:before {
+  color: #8eb6ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li {
+  background: #141a2b !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li {
+  border-bottom-color: #2b3550 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label {
+  color: #97a4cb !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span {
+  color: #dae2ff !important;
+}
+
+/* Template 3 dark mode polish (color/typography only) */
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stage {
+  background: #151a2b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card {
+  background: linear-gradient(120deg, #0f162d 0%, #213a7b 100%) !important;
+  border-color: #31467c !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow {
+  color: #ffb766 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_title,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_title {
+  color: #f8fbff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_desc,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_desc {
+  color: #c1cce9 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stat,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stat {
+  background: #0f162b !important;
+  border-color: #30467b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card {
+  background: #0f1629 !important;
+  border-color: #2f4271 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card h2,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card h2 {
+  color: #f5f8ff !important;
+  font-weight: 600 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #7ec2ff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag {
+  color: #ffb766 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_description,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_info,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_msfw_free_trial_msg,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_description,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_info {
+  color: #c2cde9 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_duration,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_duration {
+  border-color: #4663aa !important;
+  color: #dbe5ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products {
+  background: #1a233a !important;
+  border-color: #334a7e !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products span,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products span {
+  color: #9db2e1 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong {
+  color: #f4f8ff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #2a468f !important;
+  border-color: #2a468f !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #3457af !important;
+  border-color: #3457af !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans {
+  background: #121a2e !important;
+  border-color: #2d4273 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label {
+  color: #edf3ff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label span:before,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label span:before {
+  color: #9fc0ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper,
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans .wps_table_wrapper,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li {
+  background: #121a2e !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li {
+  border-bottom-color: #2b3d67 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label {
+  color: #9db2e1 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span,
+.wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span {
+  color: #e2e9ff !important;
+}
+
+/* Template 1 dark mode polish (color/typography only) */
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_stage {
+  background: #151a2b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card {
+  background: linear-gradient(120deg, #10172e 0%, #27437a 100%) !important;
+  border-color: #334980 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow {
+  color: #ffbf72 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_title,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_title {
+  color: #f8fbff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_desc,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_desc {
+  color: #c7d2ed !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_stat,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_template_v4_stat {
+  background: #11192f !important;
+  border-color: #324a82 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card {
+  background: #10172a !important;
+  border-color: #32497e !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag {
+  color: #ffbf72 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card h2,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card h2 {
+  color: #f3f7ff !important;
+  font-weight: 600 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #84c7ff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_duration,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_duration {
+  border-color: #4b68b1 !important;
+  color: #dbe6ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products {
+  background: #19233a !important;
+  border-color: #354c82 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products span,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products span {
+  color: #9fb5e3 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong {
+  color: #f5f8ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #2b478f !important;
+  border-color: #2b478f !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #3659b0 !important;
+  border-color: #3659b0 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans {
+  background: #121a2e !important;
+  border-color: #2e4375 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label {
+  color: #edf3ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label {
+  color: #9fb5e3 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span,
+.wps_mfw_template_v4.wps_mfw_selected_temp1.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span {
+  color: #e3eaff !important;
+}
+
+/* Template 2 dark mode polish (color/typography only) */
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_stage {
+  background: #161b2a !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card {
+  background: linear-gradient(120deg, #121731 0%, #2a3f70 100%) !important;
+  border-color: #3a4f86 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_eyebrow {
+  color: #ffc57b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_title,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_title {
+  color: #f8fbff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_desc,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_desc {
+  color: #c9d4ee !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_stat,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_template_v4_stat {
+  background: #111a2f !important;
+  border-color: #3a4f87 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card {
+  background: #11182b !important;
+  border-color: #384e86 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_mfw_plan_card_tag {
+  color: #ffc57b !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card h2,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card h2 {
+  color: #f2f6ff !important;
+  font-weight: 600 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_plan_content_price {
+  color: #89caff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_duration,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_duration {
+  border-color: #5571bb !important;
+  color: #dce7ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products {
+  background: #1c263e !important;
+  border-color: #3c5289 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products span,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products span {
+  color: #a4bae8 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_meta_products strong {
+  color: #f5f9ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow {
+  background: #315099 !important;
+  border-color: #315099 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_membership_buy_now_btn .wps_membership_buynow:hover {
+  background: #3d61bb !important;
+  border-color: #3d61bb !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans {
+  background: #131c31 !important;
+  border-color: #344a7f !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_members_plans > label {
+  color: #edf3ff !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label {
+  color: #a4bae8 !important;
+}
+
+body.wps_mfw_template_v4_page.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span,
+.wps_mfw_template_v4.wps_mfw_selected_temp2.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span {
+  color: #e4eaff !important;
 }

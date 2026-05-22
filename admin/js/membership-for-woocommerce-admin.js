@@ -90,6 +90,28 @@ jQuery(document).ready(function($) {
         });
     };
 
+    var syncSwitchState = function($context) {
+        var $scope = $context && $context.length ? $context : $(document);
+        $scope.find('.mfw-redesign-main__tab-content .mdc-switch').each(function() {
+            var $switch = $(this);
+            var $control = $switch.find('.mdc-switch__native-control').first();
+            if (!$control.length) {
+                return;
+            }
+
+            var isChecked = $control.is(':checked');
+            var isDisabled = $control.is(':disabled');
+
+            $switch.toggleClass('mdc-switch--checked', isChecked);
+            $switch.toggleClass('mdc-switch--disabled', isDisabled);
+            $control.attr('aria-checked', isChecked ? 'true' : 'false');
+        });
+    };
+
+    var initializeDashboardControls = function($context) {
+        syncSwitchState($context);
+    };
+
     var closeMoreMenuPortal = function() {
         if (!moreMenuPortal.$menu || !moreMenuPortal.$owner || !moreMenuPortal.$placeholder) {
             $('.mfw-redesign-main__more').removeClass('open');
@@ -213,6 +235,7 @@ jQuery(document).ready(function($) {
         closeMoreMenuPortal();
         $currentShell.replaceWith($newShell);
         moveDashboardNotices($newShell);
+        initializeDashboardControls($newShell);
         return true;
     };
 
@@ -253,6 +276,7 @@ jQuery(document).ready(function($) {
     setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 100);
     setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 300);
     setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 600);
+    initializeDashboardControls($('.mfw-redesign-shell').first());
 
     $(document).on('click', '.mfw-redesign-main__more-toggle', function(e) {
         e.preventDefault();
@@ -321,6 +345,19 @@ jQuery(document).ready(function($) {
             return;
         }
         loadDashboardTab(window.location.href, false);
+    });
+
+    $(document).on('change', '.mfw-redesign-main__tab-content .mdc-switch .mdc-switch__native-control', function() {
+        syncSwitchState($(this).closest('.mfw-redesign-shell'));
+    });
+
+    $(document).on('click', '.mfw-redesign-main__tab-content .mdc-switch', function(e) {
+        var $control = $(this).find('.mdc-switch__native-control').first();
+        if (!$control.length || $control.is(':disabled') || $(e.target).is('.mdc-switch__native-control')) {
+            return;
+        }
+
+        $control.prop('checked', !$control.prop('checked')).trigger('change');
     });
 
     // add pro tag in BuddyPress Dummy HTML.

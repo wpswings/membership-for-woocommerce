@@ -111,16 +111,26 @@ class Membership_For_Woocommerce_Admin {
 				);
 			}
 
-		if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
+			if ( isset( $screen->id ) || isset( $screen->post_type ) ) {
 
-			$pagescreen_id   = $screen->id;
-			$pagescreen_post = $screen->post_type;
-			if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id || 'wps_cpt_members' == $pagescreen_post ) {
+				$pagescreen_id   = $screen->id;
+				$pagescreen_post = $screen->post_type;
+				if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id || 'wps_cpt_members' == $pagescreen_post ) {
 
-				wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
-				wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
-				wp_enqueue_style( 'wp-jquery-ui-dialog' );
-			}
+					wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-admin.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+					wp_enqueue_style( 'wps_membership_for_woo_select2', plugin_dir_url( __FILE__ ) . 'css/select2.min.css', array(), MEMBERSHIP_FOR_WOOCOMMERCE_VERSION, 'all' );
+					wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+					if ( 'wps_cpt_membership' === $pagescreen_post || 'wps_cpt_membership' === $pagescreen_id ) {
+						wp_enqueue_style(
+							$this->plugin_name . '-plan-editor-redesign',
+							plugin_dir_url( __FILE__ ) . 'css/membership-for-woocommerce-plan-editor.css',
+							array( $this->plugin_name ),
+							MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+							'all'
+						);
+					}
+				}
 
 			if ( isset( $_GET['tab'] ) && 'shipping' === $_GET['tab'] ) {
 
@@ -3565,13 +3575,17 @@ class Membership_For_Woocommerce_Admin {
 
 			$wps_mfw_gen_flag     = false;
 			$mfw_genaral_settings = apply_filters( 'mfw_api_settings_array', array() );
-			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ) );
-			if ( isset( $mfw_button_index ) && ( null == $mfw_button_index || '' == $mfw_button_index ) ) {
+			$mfw_button_index     = array_search( 'submit', array_column( $mfw_genaral_settings, 'type' ), true );
+			if ( false === $mfw_button_index ) {
 
-				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ) );
+				$mfw_button_index = array_search( 'simple-button', array_column( $mfw_genaral_settings, 'type' ), true );
+			}
+			if ( false === $mfw_button_index ) {
+
+				$mfw_button_index = array_search( 'multi-button', array_column( $mfw_genaral_settings, 'type' ), true );
 			}
 
-			if ( isset( $mfw_button_index ) && '' !== $mfw_button_index ) {
+			if ( false !== $mfw_button_index ) {
 
 				unset( $mfw_genaral_settings[ $mfw_button_index ] );
 				if ( is_array( $mfw_genaral_settings ) && ! empty( $mfw_genaral_settings ) ) {
