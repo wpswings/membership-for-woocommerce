@@ -38,6 +38,10 @@ if ( '' === $mfw_license_key && function_exists( 'get_option' ) ) {
 }
 $mfw_has_license_key        = '' !== trim( $mfw_license_key );
 $mfw_show_license_notice    = $pro_is_active && ! $mfw_has_license_key;
+if ( $pro_is_active && class_exists( 'Membership_For_Woocommerce_Pro' ) ) {
+	// Pro renders its own activation notice; suppress the duplicate dashboard notice.
+	$mfw_show_license_notice = false;
+}
 $mfw_license_activation_url = admin_url( 'admin.php?page=membership_for_woocommerce_menu&mfw_tab=membership-for-woocommerce-licence' );
 $mfw_status_badge           = $pro_is_active ? esc_html__( 'PRO ACTIVE', 'membership-for-woocommerce' ) : esc_html__( 'LITE ACTIVE', 'membership-for-woocommerce' );
 $mfw_status_plugin_label    = $pro_is_active ? esc_html__( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ) : esc_html__( 'Membership For WooCommerce', 'membership-for-woocommerce' );

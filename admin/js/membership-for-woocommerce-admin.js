@@ -110,6 +110,14 @@ jQuery(document).ready(function($) {
 
     var initializeDashboardControls = function($context) {
         syncSwitchState($context);
+        if (typeof mdc !== 'undefined' && mdc.textField && mdc.textField.MDCTextField) {
+            $context.find('.mdc-text-field').each(function() {
+                try { new mdc.textField.MDCTextField(this); } catch(e) {}
+            });
+        }
+        $context.find('.mdc-text-field__input').each(function() {
+            mfwUpdateFloatingLabel($(this));
+        });
     };
 
     var closeMoreMenuPortal = function() {
@@ -792,6 +800,29 @@ jQuery(document).ready(function($) {
 
 
 
+function mfwUpdateFloatingLabel($input) {
+    var $textField = $input.closest('.mdc-text-field');
+    var $label = $textField.find('.mdc-floating-label');
+    if (!$label.length) return;
+    var hasValue = $input.val() !== '';
+    var hasFocus = $input.is(':focus');
+    if (hasValue || hasFocus) {
+        $label.addClass('mdc-floating-label--float-above');
+        $textField.addClass('mdc-text-field--label-floating');
+    } else {
+        $label.removeClass('mdc-floating-label--float-above');
+        $textField.removeClass('mdc-text-field--label-floating');
+    }
+}
+
+$(document).on('input focus', '.mdc-text-field__input', function() {
+    mfwUpdateFloatingLabel($(this));
+});
+
+$(document).on('blur', '.mdc-text-field__input', function() {
+    mfwUpdateFloatingLabel($(this));
+});
+
 $(document).ready(function() {
     const MDCText = mdc.textField.MDCTextField;
     const textField = [].map.call(
@@ -800,6 +831,11 @@ $(document).ready(function() {
         return new MDCText(el);
       }
     );
+
+    // Check all existing inputs on load for pre-filled values
+    $('.mdc-text-field__input').each(function() {
+        mfwUpdateFloatingLabel($(this));
+    });
     const MDCRipple = mdc.ripple.MDCRipple;
     const buttonRipple = [].map.call(
       document.querySelectorAll(".mdc-button"),

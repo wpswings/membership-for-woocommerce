@@ -240,7 +240,7 @@ body.wps_mfw_template_v4_page.wps_mfw_selected_temp2 .wps_mfw_plan_card:last-chi
   display: block;
   font-size: 58px;
   height: 58px;
-  margin: -58px auto 12px;
+  margin: 8px auto 12px;
   width: 58px;
 }
 
@@ -671,7 +671,7 @@ body.wps_mfw_template_v4_page.wps_mfw_selected_temp2 .wps_mfw_plan_card:last-chi
   .wps_mfw_template_v4_hero_icon {
     font-size: 48px;
     height: 48px;
-    margin-top: -48px;
+    margin-top: 8px;
     width: 48px;
   }
 
@@ -1092,6 +1092,23 @@ body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_membership_front_page,
 body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_membership_front_page > .wps_membership_plan_content_desc,
 .wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_membership_front_page > .wps_membership_plan_content_desc {
   background: #171b28 !important;
+}
+
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-cover,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-cover__inner-container,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-group,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-group__inner-container,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-columns,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-column,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-cover,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-cover__inner-container,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-group,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-group__inner-container,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-columns,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_template_v4_content .wp-block-column {
+  background: #171b28 !important;
+  background-color: #171b28 !important;
+  box-shadow: none !important;
 }
 
 body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_template_v4_hero_card,
