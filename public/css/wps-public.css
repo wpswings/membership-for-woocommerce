@@ -1273,6 +1273,13 @@ body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wr
   color: #dae2ff !important;
 }
 
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+body.wps_mfw_template_v4_page.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li label,
+.wps_mfw_template_v4.wps-mfw-dark-mode .wps_mfw_plan_card .wps_table_wrapper li span {
+  background: transparent !important;
+}
+
 /* Template 3 dark mode polish (color/typography only) */
 body.wps_mfw_template_v4_page.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stage,
 .wps_mfw_template_v4.wps_mfw_selected_temp3.wps-mfw-dark-mode .wps_mfw_template_v4_stage {
