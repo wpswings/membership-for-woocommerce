@@ -268,7 +268,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 	public function wps_mfw_skip_onboarding_popup() {
 
 		$get_skipped_timstamp = update_option( 'wps_mfw_onboarding_data_skipped', time() );
-		echo json_encode( 'true' );
+		echo wp_json_encode( 'true' );
 		wp_die();
 	}
 
@@ -631,7 +631,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			}
 		} catch ( Exception $e ) {
 
-			echo json_encode( $e->getMessage() );
+			echo wp_json_encode( $e->getMessage() );
 			wp_die();
 		}
 
@@ -639,7 +639,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 			 $get_skipped_timstamp = update_option( 'wps_mfw_onboarding_data_sent', 'sent' );
 		}
 
-		echo json_encode( $formatted_data );
+		echo wp_json_encode( $formatted_data );
 		wp_die();
 	}
 
@@ -692,7 +692,7 @@ class Membership_For_Woocommerce_Onboarding_Steps {
 
 		$headers = 'Content-Type: application/json';
 
-		$form_data = json_encode(
+		$form_data = wp_json_encode(
 			array(
 				'fields' => $form_data,
 				'context'  => array(

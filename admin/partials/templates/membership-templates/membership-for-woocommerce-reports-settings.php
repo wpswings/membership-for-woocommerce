@@ -16,80 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$total_membership_plans = 0;
-$array_of_ids           = array();
-$args                   = array(
-	'post_type'      => 'wps_cpt_membership',
-	'post_status'    => 'publish',
-	'posts_per_page' => -1,
-);
-
-$loop = new WP_Query( $args );
-while ( $loop->have_posts() ) {
-	$loop->the_post();
-	$total_membership_plans ++;
-}
-
-$total_members = 0;
-$complete      = 0;
-$pending       = 0;
-$expired       = 0;
-$args          = get_posts(
-	array(
-		'post_type'   => 'wps_cpt_members',
-		'post_status' => 'publish',
-		'numberposts' => -1,
-		'fields'      => 'ids',
-	)
-);
-
-$wps_store_member_ids = array();
-if ( ! empty( $args ) && is_array( $args ) ) {
-	foreach ( $args as $key => $value ) {
-
-		array_push( $wps_store_member_ids, $value );
-
-		$member_status = wps_membership_get_meta_data( $value, 'member_status', true );
-		$mfw_id        = $value - 1;
-		$orders        = wc_get_order( $mfw_id );
-		if ( empty( $orders ) ) {
-			continue;
-		}
-
-		if ( ! empty( $orders ) && null != $orders->get_items() ) {
-			foreach ( $orders->get_items() as $item ) {
-
-				if ( ! empty( $item->get_meta_data()[1] ) ) {
-					if ( '_member_id' === $item->get_meta_data()[1]->key ) {
-
-						if ( 'complete' === $member_status ) {
-
-							$complete ++;
-							if ( ! in_array( $mfw_id, $array_of_ids ) ) {
-
-								$array_of_ids[] = $mfw_id;
-							}
-						}
-
-						if ( 'pending' === $member_status ) {
-							$pending ++;
-						}
-
-						if ( 'expired' === $member_status ) {
-
-							$expired ++;
-							if ( ! in_array( $mfw_id, $array_of_ids ) ) {
-
-								$array_of_ids[] = $mfw_id;
-							}
-						}
-						$total_members ++;
-					}
-				}
-			}
-		}
-	}
-}
+$report_data            = Membership_For_Woocommerce_Global_Functions::get()->wps_mfw_build_membership_report_data();
+$total_membership_plans = ! empty( $report_data['total_membership_plans'] ) ? absint( $report_data['total_membership_plans'] ) : 0;
+$total_members          = ! empty( $report_data['total_members'] ) ? absint( $report_data['total_members'] ) : 0;
+$complete               = ! empty( $report_data['complete'] ) ? absint( $report_data['complete'] ) : 0;
+$pending                = ! empty( $report_data['pending'] ) ? absint( $report_data['pending'] ) : 0;
+$expired                = ! empty( $report_data['expired'] ) ? absint( $report_data['expired'] ) : 0;
+$wps_store_member_ids   = ! empty( $report_data['wps_store_member_ids'] ) && is_array( $report_data['wps_store_member_ids'] ) ? $report_data['wps_store_member_ids'] : array();
+$activity               = ! empty( $report_data['activity'] ) && is_array( $report_data['activity'] ) ? $report_data['activity'] : array();
 
 ?>
 <form method="post" class="wps_msfw_membership_report_wrap">
@@ -132,96 +66,15 @@ if ( ! empty( $args ) && is_array( $args ) ) {
 				<?php do_action( 'wps_msfw_extend_report_section', $wps_store_member_ids ); ?>
 			</tbody>
 		</table>
-		<?php
-			$today                 = 0;
-			$yesterday             = 0;
-			$last_7_days           = 0;
-			$this_month            = 0;
-			$last_month            = 0;
-			$this_year             = 0;
-			$last_year             = 0;
-			$today_timestamp       = strtotime( 'now' );
-			$today_start           = strtotime( 'today' );
-			$this_year_timestamp   = strtotime( 'first day of january this year ' );
-			$last_year_start       = strtotime( 'first day of january previous year ' );
-			$last_year_end         = strtotime( 'last day of december previous year ' );
-			$last_7_days_timestamp = strtotime( 'today' ) - 7 * 86400;
-			$yesterday_timestamp   = strtotime( 'yesterday' );
-			$this_month_first      = strtotime( 'first day of this month ' );
-			$last_month_first      = strtotime( 'first day of previous month ' );
-			$last_month_last       = strtotime( 'last day of previous month ' );
-
-			$order_ids = get_posts(
-				array(
-					'post_type'      => 'shop_order',
-					'post_status'    => 'completed',
-					'numberposts' => -1,
-					'fields'   => 'ids',
-				)
-			);
-			$result    = array();
-			if ( ! empty( $order_ids ) && is_array( $order_ids ) ) {
-				foreach ( $order_ids as $key => $value ) {
-
-					$result[]['order_id'] = $value;
-				}
-			}
-
-			if ( ! empty( $result ) && is_array( $result ) ) {
-				foreach ( $result as $key => $value ) {
-
-					$notes = wc_get_order_notes( $value );
-					if ( empty( $notes ) ) {
-
-						continue;
-					}
-
-					$order_timestamp = strtotime( $notes[0]->date_created->date( 'Y-m-d H:i:s' ) );
-					if ( empty( wc_get_order( $value['order_id'] ) ) ) {
-
-						continue;
-					}
-
-					$items        = wc_get_order( $value['order_id'] )->get_items();
-					$array_of_ids = ! empty( $array_of_ids ) && is_array( $array_of_ids ) ? $array_of_ids : array();
-					if ( ! empty( $items ) && in_array( $value['order_id'], $array_of_ids ) ) {
-						foreach ( $items as $item ) {
-
-							if ( '_member_id' === $item->get_meta_data()[1]->key ) {
-
-								if ( $yesterday_timestamp <= $order_timestamp && $order_timestamp < $today_start ) {
-									$yesterday++;
-								}
-
-								if ( $today_start <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-									$today++;
-								}
-
-								if ( $last_7_days_timestamp <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-									$last_7_days++;
-								}
-
-								if ( $this_month_first <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-									$this_month++;
-								}
-
-								if ( $last_month_first <= $order_timestamp && $order_timestamp <= $last_month_last ) {
-									$last_month++;
-								}
-
-								if ( $last_year_start <= $order_timestamp && $order_timestamp <= $last_year_end ) {
-									$last_year++;
-								}
-
-								if ( $this_year_timestamp <= $order_timestamp && $order_timestamp <= $today_timestamp ) {
-									$this_year++;
-								}
-							}
-						}
-					}
-				}
-			}
-		?>
+			<?php
+			$today       = ! empty( $activity['today'] ) ? absint( $activity['today'] ) : 0;
+			$yesterday   = ! empty( $activity['yesterday'] ) ? absint( $activity['yesterday'] ) : 0;
+			$last_7_days = ! empty( $activity['last_7_days'] ) ? absint( $activity['last_7_days'] ) : 0;
+			$this_month  = ! empty( $activity['this_month'] ) ? absint( $activity['this_month'] ) : 0;
+			$last_month  = ! empty( $activity['last_month'] ) ? absint( $activity['last_month'] ) : 0;
+			$this_year   = ! empty( $activity['this_year'] ) ? absint( $activity['this_year'] ) : 0;
+			$last_year   = ! empty( $activity['last_year'] ) ? absint( $activity['last_year'] ) : 0;
+			?>
 		<div class="wps-last_actived-members" > 
 			<h4 style="margin-left:120px;font-family:Helvetica, sans-serif;color:black; font-weight:bolder "><?php esc_html_e( 'Last Actived Members', 'membership-for-woocommerce' ); ?></h4>
 			<table class="wps-mfwp-reports-table-membership">

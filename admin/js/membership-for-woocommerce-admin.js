@@ -31,13 +31,345 @@
 
 jQuery(document).ready(function($) {
 
+    var isLoadingTab = false;
+    var moreMenuPortal = {
+        $menu: null,
+        $owner: null,
+        $placeholder: null
+    };
+
+    var moveDashboardNotices = function($shellContext) {
+        var $shell = $shellContext && $shellContext.length ? $shellContext.first() : $('.mfw-redesign-shell').first();
+        if (!$shell.length) {
+            return;
+        }
+
+        var $topNotices = $shell.find('#mfw-redesign-top-notices').first();
+        var $licenseNotices = $shell.find('#mfw-redesign-license-notices').first();
+        if (!$topNotices.length || !$licenseNotices.length) {
+            return;
+        }
+
+        var isLicenseNoticeNode = function(node) {
+            var $node = $(node);
+            return $node.hasClass('thirty-days-notice') || (($node.attr('id') || '').indexOf('thirty-days-notify') !== -1);
+        };
+
+        $('#wpbody-content').children('.notice, .updated, .error').each(function() {
+            if ($(this).closest('.mfw-redesign-shell').length) {
+                return;
+            }
+
+            if (isLicenseNoticeNode(this)) {
+                if (!$licenseNotices.has(this).length) {
+                    $licenseNotices.append(this);
+                }
+                return;
+            }
+
+            if (!$topNotices.has(this).length) {
+                $topNotices.append(this);
+            }
+        });
+
+        $shell.find('.notice, .updated, .error').each(function() {
+            if ($(this).closest('#mfw-redesign-top-notices, #mfw-redesign-license-notices').length) {
+                return;
+            }
+
+            if (isLicenseNoticeNode(this)) {
+                if (!$licenseNotices.has(this).length) {
+                    $licenseNotices.append(this);
+                }
+                return;
+            }
+
+            if (!$topNotices.has(this).length) {
+                $topNotices.append(this);
+            }
+        });
+    };
+
+    var syncSwitchState = function($context) {
+        var $scope = $context && $context.length ? $context : $(document);
+        $scope.find('.mfw-redesign-main__tab-content .mdc-switch').each(function() {
+            var $switch = $(this);
+            var $control = $switch.find('.mdc-switch__native-control').first();
+            if (!$control.length) {
+                return;
+            }
+
+            var isChecked = $control.is(':checked');
+            var isDisabled = $control.is(':disabled');
+
+            $switch.toggleClass('mdc-switch--checked', isChecked);
+            $switch.toggleClass('mdc-switch--disabled', isDisabled);
+            $control.attr('aria-checked', isChecked ? 'true' : 'false');
+        });
+    };
+
+    var initializeDashboardControls = function($context) {
+        syncSwitchState($context);
+        if (typeof mdc !== 'undefined' && mdc.textField && mdc.textField.MDCTextField) {
+            $context.find('.mdc-text-field').each(function() {
+                try { new mdc.textField.MDCTextField(this); } catch(e) {}
+            });
+        }
+        $context.find('.mdc-text-field__input').each(function() {
+            mfwUpdateFloatingLabel($(this));
+        });
+    };
+
+    var closeMoreMenuPortal = function() {
+        if (!moreMenuPortal.$menu || !moreMenuPortal.$owner || !moreMenuPortal.$placeholder) {
+            $('.mfw-redesign-main__more').removeClass('open');
+            return;
+        }
+
+        moreMenuPortal.$owner.removeClass('open');
+        moreMenuPortal.$menu.removeClass('mfw-redesign-main__more-menu--portal');
+        moreMenuPortal.$menu.removeAttr('style');
+        moreMenuPortal.$menu.insertBefore(moreMenuPortal.$placeholder);
+        moreMenuPortal.$placeholder.remove();
+        moreMenuPortal.$menu = null;
+        moreMenuPortal.$owner = null;
+        moreMenuPortal.$placeholder = null;
+    };
+
+    var openMoreMenuPortal = function($moreItem) {
+        var $toggle = $moreItem.find('.mfw-redesign-main__more-toggle');
+        var $menu = $moreItem.children('.mfw-redesign-main__more-menu');
+
+        if (!$toggle.length || !$menu.length) {
+            return;
+        }
+
+        closeMoreMenuPortal();
+
+        var toggleRect = $toggle[0].getBoundingClientRect();
+        var menuWidth = Math.max($menu.outerWidth(), 220);
+        var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+        var left = toggleRect.left + (toggleRect.width / 2) - (menuWidth / 2);
+
+        if (left < 12) {
+            left = 12;
+        }
+
+        if (left + menuWidth > viewportWidth - 12) {
+            left = viewportWidth - menuWidth - 12;
+        }
+
+        moreMenuPortal.$owner = $moreItem;
+        moreMenuPortal.$menu = $menu;
+        moreMenuPortal.$placeholder = $('<span class="mfw-redesign-main__more-menu-anchor" style="display:none;"></span>');
+        $menu.before(moreMenuPortal.$placeholder);
+        $('body').append($menu);
+        $moreItem.addClass('open');
+
+        $menu
+            .addClass('mfw-redesign-main__more-menu--portal')
+            .css({
+                display: 'block',
+                visibility: 'visible',
+                opacity: 1,
+                pointerEvents: 'auto',
+                position: 'fixed',
+                top: Math.round(toggleRect.bottom + 8) + 'px',
+                left: Math.round(left) + 'px',
+                right: 'auto',
+                transform: 'none',
+                zIndex: 999999
+            });
+    };
+
+    var positionMoreDropdown = function($moreItem) {
+        if (!moreMenuPortal.$menu || !moreMenuPortal.$owner || !$moreItem || !$moreItem.length || !$moreItem.hasClass('open')) {
+            return;
+        }
+
+        var $toggle = $moreItem.find('.mfw-redesign-main__more-toggle');
+        var $menu = moreMenuPortal.$menu;
+
+        if (!$toggle.length || !$menu.length) {
+            return;
+        }
+
+        var toggleRect = $toggle[0].getBoundingClientRect();
+        var menuWidth = Math.max($menu.outerWidth(), 220);
+        var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
+        var left = toggleRect.left + (toggleRect.width / 2) - (menuWidth / 2);
+
+        if (left < 12) {
+            left = 12;
+        }
+
+        if (left + menuWidth > viewportWidth - 12) {
+            left = viewportWidth - menuWidth - 12;
+        }
+
+        $menu.css({
+            top: Math.round(toggleRect.bottom + 8) + 'px',
+            left: Math.round(left) + 'px',
+            right: 'auto',
+            transform: 'none',
+            zIndex: 999999
+        });
+    };
+
+    var updateMoreDropdownState = function() {
+        var $navbar = $('.mfw-redesign-main__navbar');
+        var $allMore = $('.mfw-redesign-main__more');
+        var $openMore = $allMore.filter('.open');
+        var hasOpenMore = $openMore.length > 0;
+        $navbar.toggleClass('mfw-redesign-main__navbar--more-open', hasOpenMore);
+        $allMore.find('.mfw-redesign-main__more-toggle').attr('aria-expanded', 'false');
+        $openMore.find('.mfw-redesign-main__more-toggle').attr('aria-expanded', 'true');
+        if (!hasOpenMore && moreMenuPortal.$menu) {
+            closeMoreMenuPortal();
+        } else if (hasOpenMore) {
+            positionMoreDropdown($openMore.first());
+        }
+    };
+
+    var swapDashboardShell = function(html) {
+        var $response = $('<div>').append($.parseHTML(html));
+        var $newShell = $response.find('.mfw-redesign-shell').first();
+        var $currentShell = $('.mfw-redesign-shell').first();
+
+        if (!$newShell.length || !$currentShell.length) {
+            return false;
+        }
+
+        closeMoreMenuPortal();
+        $currentShell.replaceWith($newShell);
+        moveDashboardNotices($newShell);
+        initializeDashboardControls($newShell);
+        return true;
+    };
+
+    var shouldBypassAjaxNav = function(e) {
+        return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.which === 2;
+    };
+
+    var loadDashboardTab = function(url, pushState) {
+        if (!url || isLoadingTab) {
+            return;
+        }
+
+        isLoadingTab = true;
+        $.get(url)
+            .done(function(response) {
+                if (swapDashboardShell(response)) {
+                    if (pushState) {
+                        window.history.pushState({ mfwTabNav: true, url: url }, '', url);
+                    }
+                } else {
+                    window.location.href = url;
+                }
+            })
+            .fail(function() {
+                window.location.href = url;
+            })
+            .always(function() {
+                isLoadingTab = false;
+            });
+    };
+
+    $(document).on('click', '.mfw-redesign-shell__announcement-dismiss', function(e) {
+        e.preventDefault();
+        $(this).closest('.mfw-redesign-shell__announcement').slideUp(180);
+    });
+
+    moveDashboardNotices($('.mfw-redesign-shell').first());
+    setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 100);
+    setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 300);
+    setTimeout(function() { moveDashboardNotices($('.mfw-redesign-shell').first()); }, 600);
+    initializeDashboardControls($('.mfw-redesign-shell').first());
+
+    $(document).on('click', '.mfw-redesign-main__more-toggle', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var $parent = $(this).closest('.mfw-redesign-main__more');
+        var isSameOpen = moreMenuPortal.$owner && moreMenuPortal.$owner[0] === $parent[0];
+
+        if (isSameOpen) {
+            closeMoreMenuPortal();
+            updateMoreDropdownState();
+            return;
+        }
+
+        $('.mfw-redesign-main__more').removeClass('open');
+        openMoreMenuPortal($parent);
+        updateMoreDropdownState();
+    });
+
+    $(document).on('click', '.mfw-redesign-main__navbar .wps-navbar__items a.wps-link', function(e) {
+        if (shouldBypassAjaxNav(e)) {
+            return;
+        }
+
+        var targetUrl = $(this).attr('href');
+        if (!targetUrl || targetUrl === window.location.href) {
+            e.preventDefault();
+            return;
+        }
+
+        e.preventDefault();
+        loadDashboardTab(targetUrl, true);
+    });
+
+    
+
+    $(window).on('resize scroll', function() {
+        var $openMore = moreMenuPortal.$owner && moreMenuPortal.$owner.length ? moreMenuPortal.$owner : $('.mfw-redesign-main__more.open').first();
+        if ($openMore.length) {
+            positionMoreDropdown($openMore);
+        }
+    });
+
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.mfw-redesign-main__more').length && !$(e.target).closest('.mfw-redesign-main__more-menu--portal').length) {
+            closeMoreMenuPortal();
+            updateMoreDropdownState();
+        }
+    });
+
+    $(document).on('click', '.mfw-redesign-main__more-menu', function(e) {
+        e.stopPropagation();
+    });
+
+    $(document).on('click', '.mfw-redesign-main__more-menu a', function() {
+        var targetUrl = $(this).attr('href');
+        if (!targetUrl) {
+            return;
+        }
+        closeMoreMenuPortal();
+        updateMoreDropdownState();
+        loadDashboardTab(targetUrl, true);
+    });
+
+    $(window).on('popstate', function() {
+        if (window.location.href.indexOf('page=membership_for_woocommerce_menu') === -1) {
+            return;
+        }
+        loadDashboardTab(window.location.href, false);
+    });
+
+    $(document).on('change', '.mfw-redesign-main__tab-content .mdc-switch .mdc-switch__native-control', function() {
+        syncSwitchState($(this).closest('.mfw-redesign-shell'));
+    });
+
+    $(document).on('click', '.mfw-redesign-main__tab-content .mdc-switch', function(e) {
+        var $control = $(this).find('.mdc-switch__native-control').first();
+        if (!$control.length || $control.is(':disabled') || $(e.target).is('.mdc-switch__native-control')) {
+            return;
+        }
+
+        $control.prop('checked', !$control.prop('checked')).trigger('change');
+    });
+
     // add pro tag in BuddyPress Dummy HTML.
     jQuery('#wps_msfw_enable_to_add_dummy_members_in_buddy_group, #wps_msfw_members_dummy_buddy_groups').parents('.wps-form-group__control').addClass('wps_msfw_pro_settings_tag');
-
-    jQuery('.wps-membership__plan--pro-disabled').on('click', function(){
-
-	    $( '.wps_ubo_lite_go_pro_popup_wrap' ).addClass( 'wps_ubo_lite_go_pro_popup_show' );
-    });
 
     $('.wps_ubo_lite_go_pro_popup_close').on( 'click', function (e) {
 
@@ -468,6 +800,29 @@ jQuery(document).ready(function($) {
 
 
 
+function mfwUpdateFloatingLabel($input) {
+    var $textField = $input.closest('.mdc-text-field');
+    var $label = $textField.find('.mdc-floating-label');
+    if (!$label.length) return;
+    var hasValue = $input.val() !== '';
+    var hasFocus = $input.is(':focus');
+    if (hasValue || hasFocus) {
+        $label.addClass('mdc-floating-label--float-above');
+        $textField.addClass('mdc-text-field--label-floating');
+    } else {
+        $label.removeClass('mdc-floating-label--float-above');
+        $textField.removeClass('mdc-text-field--label-floating');
+    }
+}
+
+$(document).on('input focus', '.mdc-text-field__input', function() {
+    mfwUpdateFloatingLabel($(this));
+});
+
+$(document).on('blur', '.mdc-text-field__input', function() {
+    mfwUpdateFloatingLabel($(this));
+});
+
 $(document).ready(function() {
     const MDCText = mdc.textField.MDCTextField;
     const textField = [].map.call(
@@ -476,6 +831,11 @@ $(document).ready(function() {
         return new MDCText(el);
       }
     );
+
+    // Check all existing inputs on load for pre-filled values
+    $('.mdc-text-field__input').each(function() {
+        mfwUpdateFloatingLabel($(this));
+    });
     const MDCRipple = mdc.ripple.MDCRipple;
     const buttonRipple = [].map.call(
       document.querySelectorAll(".mdc-button"),

@@ -1,8 +1,8 @@
 jQuery( document ).ready( function( $ ) {
 
     // Getting the localized payapl settings object.
-    var paypal_settings = paypal_sb_obj.settings;
-    var plan_data       = paypal_sb_obj.plan_data;
+    var paypal_settings = wps_msfw_paypal_sb_obj.settings;
+    var plan_data       = wps_msfw_paypal_sb_obj.plan_data;
     var firstname;
     var lastname;
     var ad_line_1;
@@ -98,10 +98,10 @@ jQuery( document ).ready( function( $ ) {
         const response = await jQuery.ajax(
             {
                 type : 'POST',
-                url  : paypal_sb_obj.ajax_url,
+                url  : wps_msfw_paypal_sb_obj.ajax_url,
                 data : {
                     action : 'wps_membership_save_transaction',
-                    nonce : paypal_sb_obj.nonce,
+                    nonce : wps_msfw_paypal_sb_obj.nonce,
                     details : tr_details,
                 },
                 dataType : 'json',

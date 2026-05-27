@@ -9,6 +9,12 @@
  * @subpackage Membership_For_Woocommerce/includes
  */
 
+// Exit is accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+
+	exit;
+}
+
 /**
  * Registers a new shipping method for memberships.
  *
