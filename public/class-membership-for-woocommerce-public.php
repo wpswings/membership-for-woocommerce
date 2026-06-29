@@ -2214,9 +2214,22 @@ class Membership_For_Woocommerce_Public {
 	 * @since 1.0.0
 	 */
 	public function wps_membership_remove_current_receipt() {
+		// Verify user is authenticated.
+		if ( ! is_user_logged_in() ) {
+			wp_send_json_error( array( 'message' => 'Authentication required.' ) );
+			wp_die();
+		}
+
+		// Check user capabilities.
+		if ( ! current_user_can( 'upload_files' ) ) {
+			wp_send_json_error( array( 'message' => 'Insufficient permissions.' ) );
+			wp_die();
+		}
+
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
-			return;
+			wp_send_json_error( array( 'message' => 'User is blocked.' ) );
+			wp_die();
 		}
 
 		// Verify nonce.
@@ -2226,26 +2239,73 @@ class Membership_For_Woocommerce_Public {
 		$file_path = ! empty( $_POST['path'] ) ? sanitize_text_field( wp_unslash( $_POST['path'] ) ) : ''; // phpcs:ignore
 		// phpcs:enable
 
-		if ( ! empty( $file_path ) ) {
-			// Check file or not.
-			if ( file_exists( $file_path ) ) {
-				// Remove file.
-				unlink( $file_path );
-				echo wp_json_encode(
-					array(
-						'result' => 'success',
-					)
-				);
-			} else {
-
-				echo wp_json_encode(
-					array(
-						'result' => 'failure',
-					)
-				);
-			}
+		if ( empty( $file_path ) ) {
+			wp_send_json_error( array( 'message' => 'No file path provided.' ) );
 			wp_die();
 		}
+
+		// Get WordPress upload directory.
+		$upload_dir = wp_upload_dir();
+		$upload_path = $upload_dir['basedir'];
+
+		// Resolve real path to prevent path traversal.
+		$real_file_path = realpath( $file_path );
+
+		// Security validations.
+		if ( false === $real_file_path ) {
+			wp_send_json_error( array( 'message' => 'Invalid file path.' ) );
+			wp_die();
+		}
+
+		// Ensure file is within upload directory.
+		if ( 0 !== strpos( $real_file_path, $upload_path ) ) {
+			wp_send_json_error( array( 'message' => 'File must be within upload directory.' ) );
+			wp_die();
+		}
+
+		// Define allowed file extensions for receipts.
+		$allowed_extensions = array( 'jpg', 'jpeg', 'png', 'gif', 'pdf', 'webp' );
+		$file_extension = strtolower( pathinfo( $real_file_path, PATHINFO_EXTENSION ) );
+
+		if ( ! in_array( $file_extension, $allowed_extensions, true ) ) {
+			wp_send_json_error( array( 'message' => 'File type not allowed.' ) );
+			wp_die();
+		}
+
+		// Check if file exists.
+		if ( ! file_exists( $real_file_path ) || ! is_file( $real_file_path ) ) {
+			wp_send_json_error( array( 'message' => 'File does not exist.' ) );
+			wp_die();
+		}
+
+		// Verify file ownership - check if file path contains user ID or is associated with current user.
+		$current_user_id = get_current_user_id();
+		$file_dir = dirname( $real_file_path );
+
+		// Check if the file is in a user-specific directory or validate ownership via metadata.
+		$is_owner = false;
+		if ( false !== strpos( $file_dir, '/' . $current_user_id . '/' ) ||
+		     false !== strpos( $file_dir, '/user_' . $current_user_id . '/' ) ||
+		     false !== strpos( $file_dir, '/membership-receipts/' ) ) {
+			$is_owner = true;
+		}
+
+		// Apply filter to allow additional ownership validation.
+		$is_owner = apply_filters( 'wps_membership_verify_receipt_ownership', $is_owner, $real_file_path, $current_user_id );
+
+		if ( ! $is_owner ) {
+			wp_send_json_error( array( 'message' => 'You do not have permission to delete this file.' ) );
+			wp_die();
+		}
+
+		// Attempt to remove file.
+		if ( wp_delete_file( $real_file_path ) || @unlink( $real_file_path ) ) {
+			wp_send_json_success( array( 'message' => 'File deleted successfully.' ) );
+		} else {
+			wp_send_json_error( array( 'message' => 'Failed to delete file.' ) );
+		}
+
+		wp_die();
 	}
 
 	/**

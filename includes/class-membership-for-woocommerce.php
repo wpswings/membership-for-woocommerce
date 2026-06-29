@@ -83,7 +83,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.1.0';
+			$this->version = '3.1.1';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -438,7 +438,6 @@ class Membership_For_Woocommerce {
 
 			// AJAX handlers for receipt removal.
 			$this->loader->add_action( 'wp_ajax_wps_membership_remove_current_receipt', $mfw_plugin_public, 'wps_membership_remove_current_receipt' );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_remove_current_receipt', $mfw_plugin_public, 'wps_membership_remove_current_receipt' );
 			// AJAX handlers for get states.
 			$this->loader->add_action( 'wp_ajax_wps_membership_get_states_public', $mfw_plugin_public, 'wps_membership_get_states_public' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_get_states_public', $mfw_plugin_public, 'wps_membership_get_states_public' );
