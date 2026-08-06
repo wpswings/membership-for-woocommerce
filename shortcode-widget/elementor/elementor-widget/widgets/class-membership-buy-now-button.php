@@ -113,7 +113,7 @@ class MEMBERSHIP_BUY_NOW_BUTTON extends Widget_Base {
 	 *
 	 * Adds different input fields to allow the user to change and customize the widget settings.
 	 *
-	 * @since 3.1.1
+	 * @since 3.1.2
 	 * @access protected
 	 */
 	protected function register_controls() {

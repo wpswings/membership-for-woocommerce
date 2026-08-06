@@ -6,7 +6,7 @@ Requires at least: 6.7.0
 Tested up to: 7.0
 WC requires at least: 6.5.0
 WC tested up to: 10.9.1
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -460,7 +460,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 3.1.1 - Released on 29 June 2026 =
+= 3.1.2 - Released on 29 June 2026 =
 * Security: Fixed a vulnerability that could allow unauthorized file deletion.
 * Security: Improved validation and access control for AJAX file operations.
 * New: Compatibility with latest WC ( 10.9.1 ) and WP ( 7.0 )
@@ -720,7 +720,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.1.1 - Released on 29 June 2026 =
+= 3.1.2 - Released on 29 June 2026 =
 * Security: Fixed a vulnerability that could allow unauthorized file deletion.
 * Security: Improved validation and access control for AJAX file operations.
 * New: Compatibility with latest WC ( 10.9.1 ) and WP ( 7.0 )
