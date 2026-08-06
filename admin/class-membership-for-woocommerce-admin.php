@@ -904,11 +904,13 @@ class Membership_For_Woocommerce_Admin {
 		$labels = array(
 			'name'               => esc_html__( 'Members', 'membership-for-woocommerce' ),
 			'singular_name'      => esc_html__( 'Member', 'membership-for-woocommerce' ),
+			'add_new'            => esc_html__( 'Add Member', 'membership-for-woocommerce' ),
+			'add_new_item'       => esc_html__( 'Add New Member', 'membership-for-woocommerce' ),
 			'all_items'          => esc_html__( 'All Members', 'membership-for-woocommerce' ),
 			'edit_item'          => esc_html__( 'Edit Member', 'membership-for-woocommerce' ),
 			'new_item'           => esc_html__( 'New Member', 'membership-for-woocommerce' ),
 			'view_item'          => esc_html__( 'View Member', 'membership-for-woocommerce' ),
-			'search_item'        => esc_html__( 'Search Member', 'membership-for-woocommerce' ),
+			'search_items'       => esc_html__( 'Search Members', 'membership-for-woocommerce' ),
 			'not_found'          => esc_html__( 'No Members Found', 'membership-for-woocommerce' ),
 			'not_found_in_trash' => esc_html__( 'No Members Found In Trash', 'membership-for-woocommerce' ),
 		);
@@ -1556,6 +1558,164 @@ class Membership_For_Woocommerce_Admin {
 				}
 				break;
 		}
+	}
+
+	/**
+	 * Enable search for members by user name - Optimized for large datasets.
+	 *
+	 * @param string $join The JOIN clause of the query.
+	 * @return string Modified JOIN clause.
+	 * @since 1.0.0
+	 */
+	public function wps_membership_members_search_join( $join ) {
+		global $wpdb, $pagenow;
+
+		// Only apply on members post type admin screen when searching.
+		if ( ! is_admin() || 'edit.php' !== $pagenow || ! isset( $_GET['post_type'] ) || 'wps_cpt_members' !== $_GET['post_type'] || ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+			return $join;
+		}
+
+		// Optimized JOIN with indexed columns for better performance.
+		// Using INNER JOIN as we expect wps_member_user meta to exist for all members.
+		$join .= " INNER JOIN {$wpdb->postmeta} AS pm ON ({$wpdb->posts}.ID = pm.post_id AND pm.meta_key = 'wps_member_user')";
+		$join .= " INNER JOIN {$wpdb->users} AS u ON CAST(pm.meta_value AS UNSIGNED) = u.ID";
+
+		return $join;
+	}
+
+	/**
+	 * Modify search query to include user fields and membership ID - Optimized.
+	 *
+	 * @param string $where The WHERE clause of the query.
+	 * @return string Modified WHERE clause.
+	 * @since 1.0.0
+	 */
+	public function wps_membership_members_search_where( $where ) {
+		global $wpdb, $pagenow;
+
+		// Only apply on members post type admin screen when searching.
+		if ( ! is_admin() || 'edit.php' !== $pagenow || ! isset( $_GET['post_type'] ) || 'wps_cpt_members' !== $_GET['post_type'] || ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+			return $where;
+		}
+
+		$search_term = sanitize_text_field( wp_unslash( $_GET['s'] ) );
+
+		// For numeric searches (membership ID), prioritize exact match for better performance.
+		if ( is_numeric( $search_term ) ) {
+			$member_id = absint( $search_term );
+			$where .= $wpdb->prepare( " OR {$wpdb->posts}.ID = %d", $member_id );
+		} else {
+			// For text searches, use indexed columns efficiently.
+			$search_term_like = $wpdb->esc_like( $search_term );
+			$search_term_like = '%' . $search_term_like . '%';
+
+			// Prioritize user_login and user_email as they're more commonly indexed.
+			$search_conditions = $wpdb->prepare(
+				"(u.user_login LIKE %s OR u.user_email LIKE %s OR u.display_name LIKE %s OR u.user_nicename LIKE %s)",
+				$search_term_like,
+				$search_term_like,
+				$search_term_like,
+				$search_term_like
+			);
+
+			$where .= " OR {$search_conditions}";
+		}
+
+		return $where;
+	}
+
+	/**
+	 * Prevent duplicate results in members search - Optimized.
+	 *
+	 * @param string $groupby The GROUP BY clause of the query.
+	 * @return string Modified GROUP BY clause.
+	 * @since 1.0.0
+	 */
+	public function wps_membership_members_search_groupby( $groupby ) {
+		global $wpdb, $pagenow;
+
+		// Only apply on members post type admin screen when searching.
+		if ( ! is_admin() || 'edit.php' !== $pagenow || ! isset( $_GET['post_type'] ) || 'wps_cpt_members' !== $_GET['post_type'] || ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+			return $groupby;
+		}
+
+		// Group by post ID to prevent duplicates from JOIN operations.
+		// Only set if not already set to avoid conflicts.
+		if ( empty( $groupby ) || false === strpos( $groupby, $wpdb->posts . '.ID' ) ) {
+			$groupby = "{$wpdb->posts}.ID";
+		}
+
+		return $groupby;
+	}
+
+	/**
+	 * Add DISTINCT to members search query for better performance.
+	 *
+	 * @param string $fields The SELECT fields clause.
+	 * @return string Modified SELECT clause.
+	 * @since 1.0.0
+	 */
+	public function wps_membership_members_search_distinct( $fields ) {
+		global $pagenow;
+
+		// Only apply on members post type admin screen when searching.
+		if ( ! is_admin() || 'edit.php' !== $pagenow || ! isset( $_GET['post_type'] ) || 'wps_cpt_members' !== $_GET['post_type'] || ! isset( $_GET['s'] ) || empty( $_GET['s'] ) ) {
+			return $fields;
+		}
+
+		return 'DISTINCT ' . $fields;
+	}
+
+	/**
+	 * Create database indexes for optimized member search.
+	 * Called once on admin_init to ensure indexes exist.
+	 *
+	 * @since 1.0.0
+	 */
+	public function wps_membership_create_search_indexes() {
+		// Check if indexes have already been created using an option flag.
+		$indexes_created = get_option( 'wps_membership_search_indexes_created', false );
+
+		if ( $indexes_created ) {
+			return; // Indexes already created, skip.
+		}
+
+		global $wpdb;
+
+		// Suppress errors temporarily to avoid display issues.
+		$wpdb->suppress_errors();
+
+		// Check if composite index already exists on postmeta.
+		$index_check = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COUNT(1) FROM INFORMATION_SCHEMA.STATISTICS
+				WHERE table_schema = %s
+				AND table_name = %s
+				AND index_name = %s",
+				DB_NAME,
+				$wpdb->postmeta,
+				'wps_member_user_meta_idx'
+			)
+		);
+
+		// Create composite index on postmeta for wps_member_user lookups.
+		if ( ! $index_check ) {
+			$result = $wpdb->query(
+				"ALTER TABLE {$wpdb->postmeta}
+				ADD INDEX wps_member_user_meta_idx (meta_key(20), meta_value(20), post_id)"
+			);
+
+			// Log if index creation fails.
+			if ( false === $result && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'WPS Membership: Failed to create postmeta index - ' . $wpdb->last_error );
+			}
+		}
+
+		// Mark indexes as created to prevent re-running.
+		update_option( 'wps_membership_search_indexes_created', true, false );
+
+		// Re-enable error display.
+		$wpdb->show_errors();
 	}
 
 	/**

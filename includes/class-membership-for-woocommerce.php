@@ -261,6 +261,15 @@ class Membership_For_Woocommerce {
 		$this->loader->add_action( 'manage_wps_cpt_members_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_woo_fill_columns_members', 10, 2 );
 		$this->loader->add_action( 'manage_wps_cpt_membership_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_woo_fill_columns_membership', 10, 2 );
 
+		// Enable optimized search by member name.
+		$this->loader->add_filter( 'posts_join', $mfw_plugin_admin, 'wps_membership_members_search_join' );
+		$this->loader->add_filter( 'posts_where', $mfw_plugin_admin, 'wps_membership_members_search_where' );
+		$this->loader->add_filter( 'posts_groupby', $mfw_plugin_admin, 'wps_membership_members_search_groupby' );
+		$this->loader->add_filter( 'posts_distinct', $mfw_plugin_admin, 'wps_membership_members_search_distinct' );
+
+		// Create database indexes for search optimization (runs once).
+		$this->loader->add_action( 'admin_init', $mfw_plugin_admin, 'wps_membership_create_search_indexes' );
+
 		// Admin side ajax.
 			$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership', $mfw_plugin_admin, 'wps_membership_search_products_for_membership' );
 			$this->loader->add_action( 'wp_ajax_wps_membership_search_product_categories_for_membership', $mfw_plugin_admin, 'wps_membership_search_product_categories_for_membership' );
