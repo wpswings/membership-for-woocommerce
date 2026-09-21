@@ -111,9 +111,16 @@ class Membership_For_Woocommerce_Common {
 
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 
-		$plan_id                        = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
-		$plan_price                     = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
-		$plan_title                     = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
+		$plan_id = isset( $_POST['plan_id'] ) ? absint( wp_unslash( $_POST['plan_id'] ) ) : 0;
+
+		// The plan's identity, price and title are always read from the stored plan record,
+		// never trusted from the request, and the plan must be published.
+		if ( ! $plan_id || 'wps_cpt_membership' !== get_post_type( $plan_id ) || 'publish' !== get_post_status( $plan_id ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Invalid membership plan.', 'membership-for-woocommerce' ) ) );
+		}
+
+		$plan_price                     = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
+		$plan_title                     = get_the_title( $plan_id );
 		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
 		// Ensure Woo session/cart are initialized in this custom AJAX request.
 		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {

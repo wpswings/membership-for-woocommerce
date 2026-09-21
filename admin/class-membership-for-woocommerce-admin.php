@@ -2445,18 +2445,21 @@ class Membership_For_Woocommerce_Admin {
 		if ( ! empty( $this->get_plans_default_value() ) && is_array( $this->get_plans_default_value() ) ) {
 			foreach ( $this->get_plans_default_value() as $field => $value ) {
 
-				$default   = ! empty( $value['default'] ) ? $value['default'] : '';
-				$post_data = '';
+				$default       = ! empty( $value['default'] ) ? $value['default'] : '';
+				$expects_array = is_array( $value['default'] );
+				$post_data     = $expects_array ? array() : $default;
 				if ( ! empty( $_POST[ $field ] ) ) {
 					if ( is_array( $_POST[ $field ] ) ) {
 
-						$post_data = ! empty( $_POST[ $field ] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) ) : $default;
+						$post_data = array_map( 'sanitize_text_field', wp_unslash( $_POST[ $field ] ) );
 
-					} else {
+					} elseif ( ! $expects_array ) {
 
-						$post_data = ! empty( $_POST[ $field ] ) ? sanitize_text_field( wp_unslash( $_POST[ $field ] ) ) : $default;
+						$post_data = sanitize_text_field( wp_unslash( $_POST[ $field ] ) );
 
 					}
+					// A scalar submitted for a field that stores an array of identifiers is
+					// dropped rather than stored, so it can never reach unserialize() later.
 				}
 
 				wps_membership_update_meta_data( $post_id, $field, $post_data );
