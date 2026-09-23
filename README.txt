@@ -6,7 +6,7 @@ Requires at least: 6.7.0
 Tested up to: 7.0
 WC requires at least: 6.5.0
 WC tested up to: 11.0.0
-Stable tag: 3.1.3
+Stable tag: 3.2.0
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -460,6 +460,9 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
+= 3.2.0 - Released on 22 Sep 2026 =
+* New: Role-Based Membership Mode — an alternative, capability/role-driven membership flow alongside the existing purchase-based flow. Choose a mode at activation or switch later from Membership Mode settings; switching keeps all existing data intact.
+
 = 3.1.3 - Released on 21 Sep 2026 =
 * Security: Fixed a payment bypass vulnerability that let an unauthenticated visitor obtain a membership for free by tampering with the checkout request; plan price, title and status are now always read from the stored plan record. Reported by Alessandro Greco (Aleff) and Giovanbattista Ianni of the University of Calabria.
 * Security: Fixed a PHP object injection vulnerability reachable through membership plan settings. Reported by sungbyeongchan.
@@ -728,6 +731,9 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * First version
 
 == Upgrade Notice ==
+
+= 3.2.0 - Released on 22 Sep 2026 =
+* New optional Role-Based Membership Mode. Existing purchase-based installs are unaffected — the new mode is opt-in and switching later does not delete any data.
 
 = 3.1.3 - Released on 21 Sep 2026 =
 * Security: Fixed a payment bypass vulnerability and a PHP object injection vulnerability

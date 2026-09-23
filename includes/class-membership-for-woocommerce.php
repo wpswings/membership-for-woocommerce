@@ -83,10 +83,16 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.1.3';
+			$this->version = '3.2.0';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
+
+		// WPS-7875: boots the dual-flow (purchase-based / role-based) mode architecture.
+		// Everything it loads lives under includes/mode/ and includes/role-based/ and is
+		// additive — it does not alter the dependency loading or hooks below.
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/mode/class-mfw-mode-controller.php';
+		Mfw_Mode_Controller::init();
 
 		$this->membership_for_woocommerce_dependencies();
 		$this->membership_for_woocommerce_locale();
