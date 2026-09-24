@@ -1,0 +1,520 @@
+/**
+ * Supplementary admin styling for the Membership Mode / Role-Based Membership pages.
+ *
+ * This deliberately does NOT redefine the WP Swings design system — it is loaded
+ * alongside the plugin's own admin/css/wps-admin.css (same blue #2196f3 accent, same
+ * NunitoSans typography, same light-blue body background) and only adds the handful of
+ * components that stylesheet doesn't already provide.
+ */
+
+.mfw-card {
+	background: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0px 2px 5px rgba(63, 71, 86, 0.1);
+	padding: 24px 32px;
+	margin: 20px 20px 20px 0;
+}
+
+.mfw-card + .mfw-card {
+	margin-top: 0;
+}
+
+.mfw-card h2 {
+	font-family: "NunitoSans-ExtraBold", sans-serif;
+	font-size: 16px;
+	color: #1a1a1a;
+	margin-bottom: 16px;
+}
+
+.mfw-mode-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	margin-top: 8px;
+}
+
+.mfw-mode-card {
+	flex: 1 1 260px;
+	background: #ffffff;
+	border: 1px solid rgba(63, 71, 86, 0.15);
+	border-radius: 8px;
+	padding: 24px;
+	box-shadow: 0px 2px 5px rgba(63, 71, 86, 0.08);
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mfw-mode-card:hover {
+	border-color: #2196f3;
+	box-shadow: 0px 4px 12px rgba(33, 150, 243, 0.15);
+}
+
+.mfw-mode-card h2 {
+	font-family: "NunitoSans-ExtraBold", sans-serif;
+	font-size: 16px;
+	color: #2196f3;
+	margin-bottom: 8px;
+}
+
+.mfw-mode-card p {
+	font-family: "NunitoSans-Regular", sans-serif;
+	color: #4b4b4b;
+	margin-bottom: 16px;
+}
+
+/* Buttons: mirrors .wps-btn.wps-btn__filled so we don't depend on class order/specificity
+   from the shared stylesheet loading first. */
+.mfw-btn {
+	display: inline-block;
+	border-radius: 30px;
+	border: 1px solid #2196f3;
+	background-color: #2196f3;
+	color: #ffffff !important;
+	cursor: pointer;
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 14px;
+	min-width: 140px;
+	outline: 0;
+	padding: 12px 28px;
+	text-align: center;
+	text-transform: capitalize;
+}
+
+.mfw-btn:hover,
+.mfw-btn:focus,
+.mfw-btn:active {
+	color: #ffffff !important;
+	opacity: 0.92;
+}
+
+.mfw-btn.mfw-btn__outline {
+	background-color: transparent;
+	color: #2196f3 !important;
+}
+
+/* Compact variant for utility/action rows (Import/Export, etc.) where the default
+   min-width:140px + generous padding reads as oversized once several sit side by side. */
+.mfw-btn.mfw-btn--sm {
+	min-width: 0;
+	padding: 8px 18px;
+	font-size: 13px;
+}
+
+/* A flex row for grouping buttons/inputs that belong together (e.g. a file picker and its
+   submit button) so they align on a shared baseline instead of however inline elements
+   happen to wrap. */
+.mfw-btn-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 10px;
+	margin: 8px 0;
+}
+
+/* Native <input type="file"> ships as a bare, browser-chrome grey control that clashes
+   with everything else on this page — restyle its container and the file-picker button
+   portion (::file-selector-button is the modern standard; -webkit-file-upload-button
+   covers older WebKit) to match the brand instead of leaving it default grey. */
+.mfw-file-input {
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 13px;
+	color: #4b4b4b;
+	border: 1px solid rgba(63, 71, 86, 0.25);
+	border-radius: 30px;
+	padding: 6px 14px 6px 6px;
+	background: #ffffff;
+}
+
+.mfw-file-input::file-selector-button,
+.mfw-file-input::-webkit-file-upload-button {
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 13px;
+	border: none;
+	border-radius: 24px;
+	background-color: #2196f3;
+	color: #ffffff;
+	padding: 7px 16px;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.mfw-file-input:hover::file-selector-button,
+.mfw-file-input:hover::-webkit-file-upload-button {
+	opacity: 0.92;
+}
+
+/* Pure-CSS toggle switch (no Material Components JS dependency) in the brand blue. */
+.mfw-toggle {
+	position: relative;
+	display: inline-block;
+	width: 44px;
+	height: 24px;
+	vertical-align: middle;
+}
+
+.mfw-toggle input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.mfw-toggle .mfw-toggle__slider {
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	background-color: #cfd8dc;
+	transition: 0.2s;
+	border-radius: 24px;
+}
+
+.mfw-toggle .mfw-toggle__slider:before {
+	position: absolute;
+	content: "";
+	height: 18px;
+	width: 18px;
+	left: 3px;
+	bottom: 3px;
+	background-color: #ffffff;
+	transition: 0.2s;
+	border-radius: 50%;
+}
+
+.mfw-toggle input:checked + .mfw-toggle__slider {
+	background-color: #2196f3;
+}
+
+.mfw-toggle input:checked + .mfw-toggle__slider:before {
+	transform: translateX(20px);
+}
+
+.mfw-table-wrap {
+	background: #ffffff;
+	box-shadow: 0px 2px 5px rgba(63, 71, 86, 0.1);
+	border-radius: 8px;
+	padding: 16px;
+	margin-bottom: 24px;
+	overflow-x: auto;
+}
+
+.mfw-table-wrap table {
+	border: none;
+}
+
+.mfw-modal-backdrop {
+	display: none;
+	position: fixed;
+	inset: 0;
+	background: rgba(20, 30, 40, 0.5);
+	z-index: 100000;
+}
+
+.mfw-modal {
+	background: #ffffff;
+	max-width: 420px;
+	margin: 12% auto;
+	padding: 28px;
+	border-radius: 8px;
+}
+
+.mfw-tabs-navbar {
+	background: #ffffff;
+	margin: 20px 20px 0 0;
+	border-radius: 8px 8px 0 0;
+}
+
+.mfw-tab-link {
+	display: inline-block;
+	padding: 18px 0;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+	border-bottom: 2px solid transparent;
+}
+
+.mfw-tab-link.active,
+.mfw-tab-link:hover {
+	color: #2196f3;
+	border-bottom-color: #2196f3;
+}
+
+.mfw-tab-panel .mfw-card:first-child {
+	margin-top: 0;
+	border-radius: 0 0 8px 8px;
+}
+
+/* Reports: KPI stat tiles */
+.mfw-stat-tiles {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+	margin-bottom: 28px;
+}
+
+.mfw-stat-tile {
+	flex: 1 1 140px;
+	background: #f7fafd;
+	border: 1px solid rgba(63, 71, 86, 0.1);
+	border-radius: 8px;
+	padding: 16px 18px;
+}
+
+.mfw-stat-tile__value {
+	display: block;
+	font-family: "NunitoSans-ExtraBold", sans-serif;
+	font-size: 26px;
+	line-height: 1.2;
+	color: #1a1a1a;
+}
+
+.mfw-stat-tile__label {
+	display: block;
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 12px;
+	color: #6b7280;
+	margin-top: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.4px;
+}
+
+/* Reports: chart section headers */
+.mfw-chart-section {
+	margin-bottom: 28px;
+}
+
+.mfw-chart-section:last-child {
+	margin-bottom: 0;
+}
+
+.mfw-chart-section__header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 12px;
+}
+
+.mfw-chart-section__title {
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 14px;
+	color: #1a1a1a;
+}
+
+.mfw-chart-section__summary {
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 12px;
+	color: #6b7280;
+}
+
+/* Reports: level-distribution bar chart */
+.mfw-bar-chart__row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 5px 4px;
+	border-radius: 4px;
+}
+
+.mfw-bar-chart__row:hover {
+	background: #f7fafd;
+}
+
+.mfw-bar-chart__label {
+	flex: 0 0 150px;
+	font-size: 13px;
+	color: #333333;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mfw-bar-chart__track {
+	flex: 1 1 auto;
+	background: #eef1f4;
+	border-radius: 8px;
+	height: 16px;
+	overflow: hidden;
+}
+
+.mfw-bar-chart__fill {
+	display: block;
+	height: 100%;
+	min-width: 4px;
+	background: #2196f3;
+	border-radius: 8px;
+	transition: width 0.3s ease;
+}
+
+.mfw-bar-chart__value {
+	flex: 0 0 34px;
+	text-align: right;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 13px;
+	color: #1a1a1a;
+}
+
+/* Reports: signups sparkline */
+.mfw-sparkline-wrap {
+	position: relative;
+}
+
+.mfw-sparkline {
+	display: flex;
+	align-items: flex-end;
+	gap: 3px;
+	height: 72px;
+}
+
+.mfw-sparkline__col {
+	flex: 1 1 auto;
+	display: flex;
+	align-items: flex-end;
+	height: 100%;
+	cursor: default;
+}
+
+.mfw-sparkline__bar {
+	width: 100%;
+	background: #90caf9;
+	min-height: 2px;
+	border-radius: 2px 2px 0 0;
+	transition: background-color 0.15s ease;
+}
+
+.mfw-sparkline__col:hover .mfw-sparkline__bar {
+	background: #2196f3;
+}
+
+.mfw-sparkline__axis {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 6px;
+	font-size: 11px;
+	color: #9aa1a9;
+}
+
+.mfw-chart-tooltip {
+	display: none;
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 6px;
+	background: #1a1a1a;
+	color: #ffffff;
+	font-size: 11px;
+	white-space: nowrap;
+	padding: 4px 8px;
+	border-radius: 4px;
+	pointer-events: none;
+	z-index: 10;
+}
+
+.mfw-sparkline__col:hover .mfw-chart-tooltip {
+	display: block;
+}
+
+/* Tabbed + searchable capability picker (Roles tab), mirroring the reference plugin's
+   dedicated Add/Edit Role screen instead of one long flat checkbox list. */
+.mfw-cap-picker {
+	border: 1px solid rgba(63, 71, 86, 0.15);
+	border-radius: 8px;
+	overflow: hidden;
+	margin-bottom: 16px;
+}
+
+.mfw-cap-picker__search {
+	padding: 10px 14px;
+	background: #f7fafd;
+	border-bottom: 1px solid rgba(63, 71, 86, 0.1);
+}
+
+.mfw-cap-picker__search input[type="search"] {
+	width: 100%;
+	max-width: 320px;
+}
+
+.mfw-cap-picker__layout {
+	display: flex;
+	min-height: 260px;
+}
+
+.mfw-cap-picker__tabs {
+	flex: 0 0 170px;
+	background: #f7fafd;
+	border-right: 1px solid rgba(63, 71, 86, 0.1);
+	display: flex;
+	flex-direction: column;
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.mfw-cap-picker__tab {
+	display: block;
+	width: 100%;
+	text-align: left;
+	background: none;
+	border: none;
+	border-left: 3px solid transparent;
+	padding: 10px 14px;
+	font-family: "NunitoSans-Regular", sans-serif;
+	font-size: 13px;
+	color: #333333;
+	cursor: pointer;
+}
+
+.mfw-cap-picker__tab:hover {
+	background: #eef4fa;
+}
+
+.mfw-cap-picker__tab.active {
+	background: #ffffff;
+	border-left-color: #2196f3;
+	color: #2196f3;
+	font-family: "NunitoSans-Bold", sans-serif;
+}
+
+.mfw-cap-picker__panels {
+	flex: 1 1 auto;
+	padding: 14px 16px;
+	max-height: 400px;
+	overflow-y: auto;
+}
+
+.mfw-cap-picker__panel {
+	display: none;
+}
+
+.mfw-cap-picker__panel.active {
+	display: block;
+}
+
+.mfw-cap-picker__select-all,
+.mfw-cap-picker__deselect-all {
+	background: none;
+	border: none;
+	color: #2196f3;
+	cursor: pointer;
+	padding: 0;
+	font-size: 12px;
+	text-decoration: underline;
+}
+
+.mfw-cap-picker__item {
+	display: block;
+	padding: 4px 0;
+	font-size: 13px;
+}
+
+.mfw-cap-picker__item code {
+	color: #9aa1a9;
+	margin-left: 4px;
+}
+
+.mfw-cap-picker__item.mfw-cap-picker__item--hidden {
+	display: none;
+}
+
+.mfw-cap-picker__no-match {
+	color: #6b7280;
+	font-size: 13px;
+	font-style: italic;
+}
