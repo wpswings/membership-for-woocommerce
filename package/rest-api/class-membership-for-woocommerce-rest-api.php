@@ -99,7 +99,7 @@ class Membership_For_Woocommerce_Rest_Api {
 				array(
 					'methods'             => WP_REST_Server::CREATABLE,
 					'callback'            => array( $this, 'wps_mfw_get_user_membership' ),
-					'permission_callback' => array( $this, 'wps_mfw_default_permission_check' ),
+					'permission_callback' => array( $this, 'wps_mfw_user_membership_permission_check' ),
 				),
 			);
 		}
@@ -146,16 +146,74 @@ class Membership_For_Woocommerce_Rest_Api {
 	 */
 	public function wps_mfw_default_permission_check( $request ) {
 
-		$result                                  = false;
-		$request_response                        = $request->get_params();
-		$consumer_secret                         = ! empty( $request_response['consumer_secret'] ) ? trim( $request_response['consumer_secret'] ) : '';
-		$wps_membership_api_consumer_secret_keys = ! empty( get_option( 'wps_membership_api_consumer_secret_keys' ) ) ? trim( get_option( 'wps_membership_api_consumer_secret_keys' ) ) : '';
+		$result           = false;
+		$request_response = $request->get_params();
 
-		if ( $consumer_secret === $wps_membership_api_consumer_secret_keys ) {
+		// Get the stored consumer secret from options.
+		$wps_membership_api_consumer_secret_keys = get_option( 'wps_membership_api_consumer_secret_keys', false );
 
+		// Reject the request if no consumer secret has been configured.
+		// This prevents authentication bypass when the secret hasn't been generated.
+		if ( empty( $wps_membership_api_consumer_secret_keys ) ) {
+			return false;
+		}
+
+		// Get the consumer secret from the request.
+		$consumer_secret = isset( $request_response['consumer_secret'] ) ? trim( $request_response['consumer_secret'] ) : '';
+
+		// Reject the request if no consumer secret was provided.
+		if ( empty( $consumer_secret ) ) {
+			return false;
+		}
+
+		// Use hash_equals() for constant-time comparison to prevent timing attacks.
+		// Both strings must be trimmed and non-empty at this point.
+		$wps_membership_api_consumer_secret_keys = trim( $wps_membership_api_consumer_secret_keys );
+
+		if ( hash_equals( $wps_membership_api_consumer_secret_keys, $consumer_secret ) ) {
 			$result = true;
 		}
+
 		return $result;
+	}
+
+	/**
+	 * Permission check for user membership endpoint with authorization verification.
+	 *
+	 * This function verifies both the consumer secret AND checks if the requesting
+	 * user has authorization to view the requested user_id's membership data.
+	 * This prevents Insecure Direct Object Reference (IDOR) vulnerabilities.
+	 *
+	 * @param   object $request    All information related with the api request.
+	 * @return  bool   Whether the request is authorized.
+	 * @since    1.0.0
+	 */
+	public function wps_mfw_user_membership_permission_check( $request ) {
+
+		// First, verify the consumer secret (same security checks as default).
+		if ( ! $this->wps_mfw_default_permission_check( $request ) ) {
+			return false;
+		}
+
+		// Get the requested user_id from the request.
+		$request_response = $request->get_params();
+		$requested_user_id = isset( $request_response['user_id'] ) ? absint( $request_response['user_id'] ) : 0;
+
+		// Get the current user (if authenticated).
+		$current_user_id = get_current_user_id();
+
+		// Allow if the current user is an administrator.
+		if ( current_user_can( 'manage_options' ) ) {
+			return true;
+		}
+
+		// Allow if the authenticated user is requesting their own data.
+		if ( $current_user_id > 0 && $current_user_id === $requested_user_id ) {
+			return true;
+		}
+
+		// Otherwise, deny access to prevent IDOR attacks.
+		return false;
 	}
 
 	/**
