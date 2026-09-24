@@ -21,7 +21,7 @@ class Mfw_Role_Based_Public {
 	const ACCOUNT_ENDPOINT = 'role-membership';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -53,14 +53,14 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function register_account_endpoint() {
 		add_rewrite_endpoint( self::ACCOUNT_ENDPOINT, EP_ROOT | EP_PAGES );
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $items Existing My Account menu items.
 	 * @return array
 	 */
@@ -71,7 +71,7 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function render_account_tab() {
 
@@ -113,7 +113,7 @@ class Mfw_Role_Based_Public {
 	 * `mfw_role_membership_restricted_message`, falling back to a site-wide default option
 	 * `mfw_role_based_default_restricted_message`.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $content Original content/excerpt.
 	 * @return string
 	 */
@@ -202,7 +202,7 @@ class Mfw_Role_Based_Public {
 	 * Taxonomy term archive restriction (WPS-7880/7881 gap-analysis item 4). Term archives
 	 * have no single "content" to filter, so this blocks the page outright.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function enforce_term_restriction() {
 
@@ -231,7 +231,7 @@ class Mfw_Role_Based_Public {
 	 * active, logged-out visitors are redirected to the login screen for every front-end
 	 * request except the login/registration/password-reset pages themselves.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function enforce_private_site() {
 
@@ -270,7 +270,7 @@ class Mfw_Role_Based_Public {
 	 * Product-purchasability gating, independent of
 	 * wps_membership_make_membership_product_purchasable() in the purchase-based flow.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param bool       $is_purchasable Current purchasable state.
 	 * @param WC_Product $product        Product being checked.
 	 * @return bool
@@ -295,7 +295,7 @@ class Mfw_Role_Based_Public {
 	 * "REST/Gutenberg hiding"). Collection/list endpoints are not filtered in this pass —
 	 * documented as a known limitation.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param mixed           $response Response to replace, or empty to continue.
 	 * @param array           $handler  Route handler.
 	 * @param WP_REST_Request $request  Request.
@@ -333,7 +333,7 @@ class Mfw_Role_Based_Public {
 	 * [wps_role_membership_restricted level_id="1"]...[/wps_role_membership_restricted]
 	 * Omitting level_id shows the content to any member holding at least one active level.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array  $atts    Shortcode attributes.
 	 * @param string $content Wrapped content.
 	 * @return string
@@ -358,7 +358,7 @@ class Mfw_Role_Based_Public {
 	/**
 	 * [wps_role_membership_level_name] — outputs the current user's highest-rank level name.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string
 	 */
 	public static function shortcode_level_name() {

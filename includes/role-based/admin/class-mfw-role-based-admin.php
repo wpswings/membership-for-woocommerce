@@ -39,7 +39,7 @@ class Mfw_Role_Based_Admin {
 	 * curated list below (a custom post type capability, another plugin's capability, etc.)
 	 * — so nothing on the site is ever invisible to this editor.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return array<string, array<string,string>> Group label => [cap slug => cap label].
 	 */
 	public static function capability_groups() {
@@ -153,7 +153,7 @@ class Mfw_Role_Based_Admin {
 	 * added by another plugin. Keeps the editor "full" without hand-maintaining every
 	 * possible site-specific capability.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $curated_groups The groups already defined in capability_groups().
 	 * @return array<string,string> Cap slug => cap label (a humanized version of the slug).
 	 */
@@ -180,7 +180,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string[] Every capability slug across every group (curated + discovered).
 	 */
 	public static function all_known_capabilities() {
@@ -199,7 +199,7 @@ class Mfw_Role_Based_Admin {
 	 * existing role in the level form can tick the matching checkboxes — a clear, live
 	 * preview of what that role already grants, rather than the admin guessing.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return array<string, string[]> Role slug => capability slugs.
 	 */
 	public static function role_capabilities_map() {
@@ -215,7 +215,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -247,7 +247,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string[] Public, non-attachment taxonomy names.
 	 */
 	public static function restrictable_taxonomies() {
@@ -255,7 +255,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return bool
 	 */
 	public static function is_private_site_enabled() {
@@ -263,7 +263,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string Custom heading shown above the membership login form, or ''.
 	 */
 	public static function get_login_heading() {
@@ -271,7 +271,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string Admin-designed notice HTML shown on the membership login page, or ''.
 	 */
 	public static function get_login_notice() {
@@ -279,7 +279,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return bool Whether the notice should be shown at all.
 	 */
 	public static function is_login_notice_enabled() {
@@ -287,7 +287,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $menus Existing menu entries.
 	 * @return array
 	 */
@@ -309,7 +309,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function render_page() {
 
@@ -345,7 +345,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function register_restriction_metabox() {
 
@@ -367,7 +367,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param WP_Post $post Current post.
 	 */
 	public static function render_restriction_metabox( $post ) {
@@ -384,7 +384,7 @@ class Mfw_Role_Based_Admin {
 	/**
 	 * Restriction UI on taxonomy term edit screens (WPS-7880 gap-analysis item 4).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param WP_Term $term Current term.
 	 */
 	public static function render_term_restriction_field( $term ) {
@@ -401,7 +401,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $term_id Term id.
 	 */
 	public static function save_term_restriction( $term_id ) {
@@ -420,7 +420,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_save_level() {
 
@@ -457,7 +457,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_delete_level() {
 
@@ -474,7 +474,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_save_restriction() {
 
@@ -507,7 +507,7 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_save_general_settings() {
 
@@ -528,7 +528,7 @@ class Mfw_Role_Based_Admin {
 	 * rich-text notice (TinyMCE, via wp_editor() on the settings page — this is the "design"
 	 * control, letting the admin format/link/style the notice rather than only plain text).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_save_login_design() {
 
@@ -613,7 +613,7 @@ class Mfw_Role_Based_Admin {
 	 * Downloads all levels as a JSON file. Our own simple format — not a copy of any
 	 * other plugin's export schema.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function export_levels() {
 
@@ -632,7 +632,7 @@ class Mfw_Role_Based_Admin {
 	/**
 	 * Imports levels from an uploaded JSON file in the same format export_levels() produces.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function import_levels() {
 
@@ -668,7 +668,7 @@ class Mfw_Role_Based_Admin {
 	 * before this request, and so a slow send (many recipients) isn't constrained by a
 	 * fetch()'s own timeout expectations.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function handle_send_campaign() {
 

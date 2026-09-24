@@ -26,7 +26,7 @@ class Mfw_Role_Based_Login {
 	const SHORTCODE = 'wps_role_membership_login';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 		add_shortcode( self::SHORTCODE, array( __CLASS__, 'render_login_shortcode' ) );
@@ -39,7 +39,7 @@ class Mfw_Role_Based_Login {
 	 * "Role-Based Membership". Only recorded for users who actually hold a role-membership
 	 * level — a plain admin/staff login isn't "membership" activity.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string  $user_login Unused.
 	 * @param WP_User $user       The user who just logged in.
 	 */
@@ -54,7 +54,7 @@ class Mfw_Role_Based_Login {
 	 * (called from Mfw_Mode_Controller::set_mode()). Re-creates it if the stored page id
 	 * was since trashed/deleted, but never duplicates it otherwise.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function maybe_create_login_page() {
 
@@ -79,7 +79,7 @@ class Mfw_Role_Based_Login {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string The membership login page URL, or wp_login_url() if it doesn't exist yet.
 	 */
 	public static function get_login_page_url() {
@@ -94,7 +94,7 @@ class Mfw_Role_Based_Login {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $page_id The membership login page id.
 	 * @return bool
 	 */
@@ -110,7 +110,7 @@ class Mfw_Role_Based_Login {
 	 * Site sends visitors here with their originally-requested URL attached), falling back
 	 * to the role-membership My Account tab.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $atts Shortcode attributes.
 	 * @return string
 	 */
@@ -207,7 +207,7 @@ class Mfw_Role_Based_Login {
 	 * logins attempted directly on wp-login.php/wp-admin, so the default admin login is
 	 * completely unaffected.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function redirect_back_on_failure() {
 

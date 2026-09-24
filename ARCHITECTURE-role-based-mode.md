@@ -330,7 +330,7 @@ solved with a more complex query, consistent with the scale caveat above.
 
 ## Advanced features (v3.3.0)
 
-Everything below implements `ADVANCED-FEATURES-ROADMAP.md`, on top of the v3.2.0 foundation
+Everything below implements `ADVANCED-FEATURES-ROADMAP.md`, on top of the v3.1.3 foundation
 above. Two roadmap items were deliberately **not** built — see "Explicitly deferred" at the
 end of this section — and every other schema/behavior change described here is additive to
 what already existed; nothing above this section had to change its own public contract.
@@ -371,12 +371,12 @@ CSV export) reads the map directly.
   long. Checked against the earliest-qualifying matching level's real `assigned_at`.
 - **Category-scoped discounts**: a level's `discount_percent` can be limited to specific
   WooCommerce product categories via `discount_category_ids` (empty = every product, the
-  original v3.2.0 behavior, unchanged).
+  original v3.1.3 behavior, unchanged).
 - **WPML string registration**: the login heading/notice are registered with WPML's String
   Translation (`wpml_register_single_string`) when saved, if WPML is active — a no-op
   otherwise. This plugin already ships a `wpml-config.xml`, so multilingual sites are a real
   audience for this admin-authored copy.
-- **Existing-role capability preview** (this shipped in v3.2.0, listed here for completeness
+- **Existing-role capability preview** (this shipped in v3.1.3, listed here for completeness
   since it's easy to miss): selecting an existing role in the level form ticks the matching
   checkboxes live.
 
@@ -392,7 +392,7 @@ CSV export) reads the map directly.
   Account tab. Both write the same `mfw_role_membership_campaign_opt_out` user meta, checked
   before every send.
 - **Scheduled & drip campaigns**: `Mfw_Role_Based_Campaigns::submit()` supports `now`
-  (unchanged v3.2.0 behavior), `scheduled` (books a `wp_schedule_single_event()` for the
+  (unchanged v3.1.3 behavior), `scheduled` (books a `wp_schedule_single_event()` for the
   requested time), and `drip` (triggered per-recipient by
   `mfw_role_based_after_assign_level`, with a configurable delay — the campaign's own
   "Send To" audience is ignored for drip, since it always targets whoever gets the trigger

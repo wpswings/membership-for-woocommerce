@@ -39,7 +39,7 @@ class Mfw_Mode_Controller {
 	/**
 	 * Require the new-module files and boot the mode-aware pieces.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -70,7 +70,7 @@ class Mfw_Mode_Controller {
 	/**
 	 * Require every file that makes up the new dual-flow architecture.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	private static function load_files() {
 
@@ -110,7 +110,7 @@ class Mfw_Mode_Controller {
 	/**
 	 * Get the active mode, defaulting new/upgrading installs to purchase mode.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string self::MODE_PURCHASE|self::MODE_ROLE
 	 */
 	public static function get_mode() {
@@ -127,7 +127,7 @@ class Mfw_Mode_Controller {
 	/**
 	 * Whether the admin has ever explicitly chosen a mode (activation wizard or settings).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return bool
 	 */
 	public static function is_mode_selected() {
@@ -135,7 +135,7 @@ class Mfw_Mode_Controller {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return bool
 	 */
 	public static function is_purchase_mode() {
@@ -143,7 +143,7 @@ class Mfw_Mode_Controller {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return bool
 	 */
 	public static function is_role_mode() {
@@ -155,7 +155,7 @@ class Mfw_Mode_Controller {
 	 * switching is intentionally non-destructive: it only changes which admin
 	 * configuration surfaces are shown and which module's hooks run.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $mode self::MODE_PURCHASE|self::MODE_ROLE.
 	 * @return bool
 	 */
@@ -173,7 +173,7 @@ class Mfw_Mode_Controller {
 			/**
 			 * Fires right after the active membership mode changes.
 			 *
-			 * @since 3.2.0
+			 * @since 3.1.3
 			 * @param string $mode          The newly active mode.
 			 * @param string $previous_mode The mode that was active before the switch.
 			 */

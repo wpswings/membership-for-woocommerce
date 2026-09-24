@@ -6,7 +6,7 @@ description of what each one does. For implementation details see
 
 All new code lives under `includes/mode/` and `includes/role-based/`. The existing
 purchase-based flow is unchanged: the only edit to existing code is a two-line bootstrap in
-`includes/class-membership-for-woocommerce.php`, plus the version bump to **3.2.0**.
+`includes/class-membership-for-woocommerce.php`, plus the version bump to **3.1.3**.
 
 ---
 

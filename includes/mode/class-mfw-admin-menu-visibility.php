@@ -31,7 +31,7 @@ class Mfw_Admin_Menu_Visibility {
 	const PURCHASE_PLANS_MENU_SLUG = 'edit.php?post_type=wps_cpt_membership';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'hide_inactive_mode_menus' ), 999 );
@@ -42,7 +42,7 @@ class Mfw_Admin_Menu_Visibility {
 	/**
 	 * Runs late on admin_menu so every plugin/CPT has already registered its menu items.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function hide_inactive_mode_menus() {
 

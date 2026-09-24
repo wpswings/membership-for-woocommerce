@@ -24,7 +24,7 @@ class Mfw_Role_Based_Db {
 	const DB_VERSION = '1.9.0';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string
 	 */
 	public static function levels_table() {
@@ -33,7 +33,7 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string
 	 */
 	public static function restrictions_table() {
@@ -42,7 +42,7 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string
 	 */
 	public static function user_log_table() {
@@ -51,7 +51,7 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string
 	 */
 	public static function campaigns_table() {
@@ -73,7 +73,7 @@ class Mfw_Role_Based_Db {
 	 * is behind DB_VERSION. Safe to call on every admin_init — dbDelta() itself is
 	 * idempotent, and the version check keeps this cheap in the common case.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function maybe_install() {
 
@@ -194,7 +194,7 @@ class Mfw_Role_Based_Db {
 	 * Drops the role-based module's own tables. Only ever called from an explicit,
 	 * opt-in uninstall path — never from mode switching (switching is non-destructive).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function drop_tables() {
 		global $wpdb;

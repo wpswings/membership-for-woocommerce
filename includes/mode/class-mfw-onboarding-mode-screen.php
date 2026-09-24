@@ -25,7 +25,7 @@ class Mfw_Onboarding_Mode_Screen {
 	const NONCE_ACTION = 'mfw_save_membership_mode';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -38,7 +38,7 @@ class Mfw_Onboarding_Mode_Screen {
 	 * Hooked to the plugin's existing `wps_add_plugins_menus_array` filter so the page
 	 * is added by the plugin's own (unmodified) admin_menu callback.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $menus Existing menu entries.
 	 * @return array
 	 */
@@ -59,7 +59,7 @@ class Mfw_Onboarding_Mode_Screen {
 	 * A dismissible-free nudge pointing admins at the mode screen until a mode is chosen.
 	 * Never blocks or redirects — the plugin keeps working in default purchase mode either way.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function maybe_render_first_run_notice() {
 
@@ -85,7 +85,7 @@ class Mfw_Onboarding_Mode_Screen {
 	 * Renders the admin page: the initial chooser if no mode is set yet, otherwise
 	 * defers to whatever hooks into the switch-UI action (Mfw_Role_Based_Mode_Switch).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function render_page() {
 
@@ -104,7 +104,7 @@ class Mfw_Onboarding_Mode_Screen {
 			 * Fires on the Membership Mode page once a mode has already been chosen,
 			 * so the mode-switch UI (WPS-7883) can render itself here.
 			 *
-			 * @since 3.2.0
+			 * @since 3.1.3
 			 */
 			do_action( 'mfw_render_mode_switch_ui' );
 		}
@@ -116,7 +116,7 @@ class Mfw_Onboarding_Mode_Screen {
 	/**
 	 * The first-run "purchase vs role" chooser.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	private static function render_chooser() {
 
@@ -161,7 +161,7 @@ class Mfw_Onboarding_Mode_Screen {
 	/**
 	 * AJAX handler for the initial (activation-time) mode choice.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function ajax_save_initial_mode() {
 

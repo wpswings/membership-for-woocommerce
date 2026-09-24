@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Loader {
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 

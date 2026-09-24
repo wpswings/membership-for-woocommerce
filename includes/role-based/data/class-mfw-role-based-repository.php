@@ -41,7 +41,7 @@ class Mfw_Role_Based_Repository {
 	const BYPASS_CAPABILITY = 'mfw_restrict_content';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return array[] All levels, highest rank first.
 	 */
 	public static function get_levels() {
@@ -51,7 +51,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $level_id Level id.
 	 * @return array|null
 	 */
@@ -66,7 +66,7 @@ class Mfw_Role_Based_Repository {
 	 * registered WordPress role, it is created on the fly with the chosen capabilities —
 	 * this is our equivalent of a dedicated "create custom role" screen.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $data {
 	 *     @type int    $id           Optional. Omit/zero to create.
 	 *     @type string $name         Level name.
@@ -197,7 +197,7 @@ class Mfw_Role_Based_Repository {
 	 * capabilities. sync_role_capabilities() runs right after this on every save (create
 	 * or edit), so it is the actual source of truth for an existing role's capabilities.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $role_slug    Role slug.
 	 * @param string $display_name Role display name, used only when creating.
 	 * @param array  $capabilities Capability slugs to grant when creating.
@@ -226,7 +226,7 @@ class Mfw_Role_Based_Repository {
 	 * or from another plugin) is never touched, so mapping a level onto e.g. `editor` never
 	 * strips editor's normal abilities.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string   $role_slug          Role slug.
 	 * @param string[] $desired_capabilities Capability slugs that should be granted.
 	 * @param string[] $known_capabilities   Every capability slug the admin UI can toggle.
@@ -250,7 +250,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $level_id Level id.
 	 * @return int Rows affected.
 	 */
@@ -270,7 +270,7 @@ class Mfw_Role_Based_Repository {
 	 * Exports every level as a plain array, suitable for wp_json_encode() (WPS-7885-style
 	 * import/export, independent re-implementation — not a copy of any other plugin's format).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return array[]
 	 */
 	public static function export_levels() {
@@ -301,7 +301,7 @@ class Mfw_Role_Based_Repository {
 	 * Imports levels from an array shaped like export_levels()'s output. Always creates
 	 * new rows (never overwrites by id), so importing is safe to re-run.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $levels Array of level definitions.
 	 * @return int Number of levels imported.
 	 */
@@ -347,7 +347,7 @@ class Mfw_Role_Based_Repository {
 	 * logs the event. A user may hold more than one level at once. Fires
 	 * `mfw_role_based_after_assign_level` for the notifications module to hook into.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id  User id.
 	 * @param int $level_id Level id.
 	 * @param int $actor_id User id performing the assignment (0 for system/automated).
@@ -385,7 +385,7 @@ class Mfw_Role_Based_Repository {
 		/**
 		 * Fires after a user is assigned a role-membership level.
 		 *
-		 * @since 3.2.0
+		 * @since 3.1.3
 		 * @param int   $user_id User id.
 		 * @param array $level   The level row.
 		 */
@@ -399,7 +399,7 @@ class Mfw_Role_Based_Repository {
 	 * are only removed if no other level still assigned to the user also grants them, so
 	 * revoking one of several held levels never strips access granted by another.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id  User id.
 	 * @param int $level_id Level id.
 	 * @param int $actor_id User id performing the revocation (0 for system/automated).
@@ -444,7 +444,7 @@ class Mfw_Role_Based_Repository {
 		/**
 		 * Fires after a user's role-membership level is revoked.
 		 *
-		 * @since 3.2.0
+		 * @since 3.1.3
 		 * @param int   $user_id User id.
 		 * @param array $level   The level row that was revoked.
 		 */
@@ -493,7 +493,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return int[] Level ids currently assigned to the user.
 	 */
@@ -529,7 +529,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return array[] The user's currently assigned level rows.
 	 */
@@ -540,7 +540,7 @@ class Mfw_Role_Based_Repository {
 	/**
 	 * Backward-compatible single-level accessor: returns the user's highest-rank level.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return array|null
 	 */
@@ -554,7 +554,7 @@ class Mfw_Role_Based_Repository {
 	 * intentionally not shared with
 	 * Membership_For_Woocommerce_Global_Functions::wps_mfw_check_user_has_active_membership().
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return bool
 	 */
@@ -568,7 +568,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return int Highest rank among the user's active levels, 0 if none.
 	 */
@@ -695,7 +695,7 @@ class Mfw_Role_Based_Repository {
 	 * behavior predictable for admins. A level's `discount_category_ids` scopes its
 	 * discount to specific product categories; an empty list means "all products".
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int      $user_id    User id.
 	 * @param int|null $product_id Product id, or null to ignore category scoping (the
 	 *                             highest discount_percent across all active levels).
@@ -730,7 +730,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $object_type 'post'|'page'|'product'|'term'.
 	 * @param int    $object_id   Object id.
 	 * @return array|null {level_ids: int[], min_rank: int|null, drip_days: int} or null if unrestricted.
@@ -774,7 +774,7 @@ class Mfw_Role_Based_Repository {
 	/**
 	 * Backward-compatible accessor used by existing metabox UI.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $object_type Object type.
 	 * @param int    $object_id   Object id.
 	 * @return int[]
@@ -788,7 +788,7 @@ class Mfw_Role_Based_Repository {
 	 * Replaces the restriction rule for a given object: either an explicit list of level
 	 * ids, or a minimum-rank threshold (mutually exclusive), or neither to clear it.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string   $object_type 'post'|'page'|'product'|'term'.
 	 * @param int      $object_id   Object id.
 	 * @param int[]    $level_ids   Explicit level ids allowed to access this object.
@@ -817,7 +817,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int    $user_id     User id.
 	 * @param string $object_type 'post'|'page'|'product'|'term'.
 	 * @param int    $object_id   Object id.
@@ -889,7 +889,7 @@ class Mfw_Role_Based_Repository {
 	 * who can edit that specific object, and anyone holding the bypass capability always
 	 * see restricted content regardless of level.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int    $user_id     User id.
 	 * @param string $object_type Object type.
 	 * @param int    $object_id   Object id.
@@ -918,7 +918,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int    $user_id  User id.
 	 * @param int    $level_id Level id.
 	 * @param string $action   'assigned'|'revoked'.
@@ -943,7 +943,7 @@ class Mfw_Role_Based_Repository {
 	 * table as assign/revoke (action = 'login') rather than a dedicated table, since this is
 	 * conceptually the same "event in a member's membership history."
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 */
 	public static function record_login( $user_id ) {
@@ -952,7 +952,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $limit Max rows.
 	 * @return array[] Rows: {user_id, level_id, created_at}, most recent first.
 	 */
@@ -1031,7 +1031,7 @@ class Mfw_Role_Based_Repository {
 	 * campaign audience targeting). WP_User_Query only confirms the meta key exists, not
 	 * that it holds a non-empty array, so results are filtered in PHP afterward.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return int[]
 	 */
 	public static function get_member_user_ids() {
@@ -1059,7 +1059,7 @@ class Mfw_Role_Based_Repository {
 	 * Every registered user id NOT currently holding any role-membership level
 	 * ("non-members", for campaign audience targeting).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return int[]
 	 */
 	public static function get_non_member_user_ids() {
@@ -1117,7 +1117,7 @@ class Mfw_Role_Based_Repository {
 	 * Members holding at least one of the given levels ("specific levels", for campaign
 	 * audience targeting).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int[] $level_ids Level ids.
 	 * @return int[]
 	 */
@@ -1138,7 +1138,7 @@ class Mfw_Role_Based_Repository {
 	/**
 	 * Records a sent campaign in the campaign history table.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $data {
 	 *     @type string $name             Campaign name (for the admin's own reference).
 	 *     @type string $subject          Email subject.
@@ -1180,7 +1180,7 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $limit Max rows.
 	 * @return array[] Rows, most recent first.
 	 */

@@ -21,7 +21,7 @@ class Mfw_Role_Based_User_Assignment {
 	const NONCE_ACTION = 'mfw_role_based_user_levels';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -40,7 +40,7 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param WP_User $user The user being edited.
 	 */
 	public static function render_profile_fields( $user ) {
@@ -81,7 +81,7 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int $user_id The user being saved.
 	 */
 	public static function save_profile_fields( $user_id ) {
@@ -115,7 +115,7 @@ class Mfw_Role_Based_User_Assignment {
 	 * Adds one "Assign: <level>" and one "Revoke: <level>" bulk action per level, since
 	 * WordPress bulk actions can't take a runtime parameter from the dropdown itself.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $actions Existing bulk actions.
 	 * @return array
 	 */
@@ -132,7 +132,7 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $redirect_to Redirect URL.
 	 * @param string $doaction    The bulk action being performed.
 	 * @param int[]  $user_ids    Selected user ids.
@@ -167,7 +167,7 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function render_bulk_action_notice() {
 

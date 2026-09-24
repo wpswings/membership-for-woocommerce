@@ -41,7 +41,7 @@ class Mfw_Role_Based_Campaigns {
 	const UNSUBSCRIBE_QUERY_VAR = 'mfw_campaign_unsubscribe';
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 		add_action( self::SCHEDULED_SEND_CRON_HOOK, array( __CLASS__, 'send_scheduled_campaign' ) );
@@ -51,7 +51,7 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @return string[] Valid audience keys.
 	 */
 	public static function audiences() {
@@ -59,7 +59,7 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $audience  One of self::audiences().
 	 * @param int[]  $level_ids Level ids, only used when $audience is AUDIENCE_LEVELS.
 	 * @return int[] User ids.
@@ -89,7 +89,7 @@ class Mfw_Role_Based_Campaigns {
 	 * per-recipient, from maybe_schedule_drip_campaigns() whenever someone is assigned the
 	 * trigger level.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param array $args {
 	 *     @type string $name            Campaign name (admin's own reference).
 	 *     @type string $subject         Email subject.
@@ -248,7 +248,7 @@ class Mfw_Role_Based_Campaigns {
 	 * supports {display_name}, {user_email}, {site_name} placeholders, replaced per-recipient.
 	 * Skips any user who has opted out of campaign emails.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $name      Campaign name (admin's own reference, not shown to recipients).
 	 * @param string $subject   Email subject.
 	 * @param string $message   Email body (HTML).

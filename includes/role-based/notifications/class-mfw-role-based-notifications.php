@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Notifications {
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 
@@ -34,7 +34,7 @@ class Mfw_Role_Based_Notifications {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.
 	 */
@@ -68,7 +68,7 @@ class Mfw_Role_Based_Notifications {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.
 	 */
@@ -100,7 +100,7 @@ class Mfw_Role_Based_Notifications {
 	 * Sends the email and gives other channels (SMS/WhatsApp, once the scope decision
 	 * is made) a chance to act on the same event.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string $to      Recipient email.
 	 * @param string $subject Email subject.
 	 * @param string $message Email body.
@@ -119,7 +119,7 @@ class Mfw_Role_Based_Notifications {
 		 * Extension point for additional notification channels (SMS, WhatsApp, etc.).
 		 * No channel is registered by default — the epic leaves this scope decision open.
 		 *
-		 * @since 3.2.0
+		 * @since 3.1.3
 		 * @param int    $user_id User id.
 		 * @param array  $level   Level row.
 		 * @param string $subject Subject/short message used for email.

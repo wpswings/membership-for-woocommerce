@@ -151,7 +151,7 @@ Switch to role mode via the "Membership Mode" page (initial chooser or later swi
       since their `assigned_at` (verify via a backdated test assignment).
 - [ ] A level's discount scoped to specific product categories only discounts products in
       those categories, not the whole catalog; leaving categories unchecked still discounts
-      everything (unchanged v3.2.0 behavior).
+      everything (unchanged v3.1.3 behavior).
 - [ ] With WPML active, the login heading/notice strings appear in WPML's String Translation
       screen after being saved; with WPML inactive, saving them causes no errors.
 

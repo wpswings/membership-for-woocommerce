@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Pricing {
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 */
 	public static function init() {
 		add_filter( 'woocommerce_get_price_html', array( __CLASS__, 'price_html' ), 10, 2 );
@@ -27,7 +27,7 @@ class Mfw_Role_Based_Pricing {
 	}
 
 	/**
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param int      $user_id    User id.
 	 * @param int|null $product_id Product id, for category-scoped discounts.
 	 * @return float 0-100.
@@ -44,7 +44,7 @@ class Mfw_Role_Based_Pricing {
 	 * through, discounted price, and a small badge — the same visual language WooCommerce
 	 * already uses for sale prices (wc_format_sale_price()).
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param string     $price_html Existing price HTML.
 	 * @param WC_Product $product    Product being displayed.
 	 * @return string
@@ -82,7 +82,7 @@ class Mfw_Role_Based_Pricing {
 	 * safe to run more than once per request — a well-known WooCommerce quirk — without the
 	 * discount compounding.
 	 *
-	 * @since 3.2.0
+	 * @since 3.1.3
 	 * @param WC_Cart $cart Cart instance.
 	 */
 	public static function apply_cart_discount( $cart ) {
