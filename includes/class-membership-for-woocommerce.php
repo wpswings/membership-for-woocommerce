@@ -83,7 +83,7 @@ class Membership_For_Woocommerce {
 			$this->version = MEMBERSHIP_FOR_WOOCOMMERCE_VERSION;
 		} else {
 
-			$this->version = '3.1.0';
+			$this->version = '3.1.2';
 		}
 
 		$this->plugin_name = 'membership-for-woocommerce';
@@ -260,6 +260,15 @@ class Membership_For_Woocommerce {
 		// Populating columns.
 		$this->loader->add_action( 'manage_wps_cpt_members_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_woo_fill_columns_members', 10, 2 );
 		$this->loader->add_action( 'manage_wps_cpt_membership_posts_custom_column', $mfw_plugin_admin, 'wps_membership_for_woo_fill_columns_membership', 10, 2 );
+
+		// Enable optimized search by member name.
+		$this->loader->add_filter( 'posts_join', $mfw_plugin_admin, 'wps_membership_members_search_join' );
+		$this->loader->add_filter( 'posts_where', $mfw_plugin_admin, 'wps_membership_members_search_where' );
+		$this->loader->add_filter( 'posts_groupby', $mfw_plugin_admin, 'wps_membership_members_search_groupby' );
+		$this->loader->add_filter( 'posts_distinct', $mfw_plugin_admin, 'wps_membership_members_search_distinct' );
+
+		// Create database indexes for search optimization (runs once).
+		$this->loader->add_action( 'admin_init', $mfw_plugin_admin, 'wps_membership_create_search_indexes' );
 
 		// Admin side ajax.
 			$this->loader->add_action( 'wp_ajax_wps_membership_search_products_for_membership', $mfw_plugin_admin, 'wps_membership_search_products_for_membership' );
@@ -438,7 +447,6 @@ class Membership_For_Woocommerce {
 
 			// AJAX handlers for receipt removal.
 			$this->loader->add_action( 'wp_ajax_wps_membership_remove_current_receipt', $mfw_plugin_public, 'wps_membership_remove_current_receipt' );
-			$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_remove_current_receipt', $mfw_plugin_public, 'wps_membership_remove_current_receipt' );
 			// AJAX handlers for get states.
 			$this->loader->add_action( 'wp_ajax_wps_membership_get_states_public', $mfw_plugin_public, 'wps_membership_get_states_public' );
 			$this->loader->add_action( 'wp_ajax_nopriv_wps_membership_get_states_public', $mfw_plugin_public, 'wps_membership_get_states_public' );
