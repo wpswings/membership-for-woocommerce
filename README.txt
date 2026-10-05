@@ -460,7 +460,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 3.1.3 - Released on 21 Sep 2026 =
+= 3.1.3 - Released on  05 Oct 2026 =
 * Security: Fixed a payment bypass vulnerability that let an unauthenticated visitor obtain a membership for free by tampering with the checkout request; plan price, title and status are now always read from the stored plan record. Reported by Alessandro Greco (Aleff) and Giovanbattista Ianni of the University of Calabria.
 * Security: Fixed a PHP object injection vulnerability reachable through membership plan settings. Reported by sungbyeongchan.
 
@@ -729,5 +729,5 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.1.3 - Released on 21 Sep 2026 =
+= 3.1.3 - Released on 05 Oct 2026 =
 * Security: Fixed a payment bypass vulnerability and a PHP object injection vulnerability
