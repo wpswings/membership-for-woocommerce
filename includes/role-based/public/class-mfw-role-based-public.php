@@ -66,7 +66,15 @@ class Mfw_Role_Based_Public {
 	 */
 	public static function add_account_menu_item( $items ) {
 
+		// Placing the tab just above the logout tab.
+		$logout = isset( $items['customer-logout'] ) ? $items['customer-logout'] : null;
+		unset( $items['customer-logout'] );
+
 		$items[ self::ACCOUNT_ENDPOINT ] = __( 'Membership', 'membership-for-woocommerce' );
+
+		if ( null !== $logout ) {
+			$items['customer-logout'] = $logout;
+		}
 		return $items;
 	}
 
@@ -79,6 +87,18 @@ class Mfw_Role_Based_Public {
 		$levels  = Mfw_Role_Based_Repository::get_user_levels( $user_id );
 
 		include dirname( __FILE__ ) . '/partials/myaccount-role-tab.php';
+	}
+
+	/**
+	 * Renders what a level gives the member — discount, access length and the members-only
+	 * content it unlocks — so the My Account tab explains why a level is worth having.
+	 *
+	 * @since 3.4.0
+	 * @param array $level Level row.
+	 */
+	public static function render_level_benefits( $level ) {
+
+		include dirname( __FILE__ ) . '/partials/myaccount-level-benefits.php';
 	}
 
 	/**

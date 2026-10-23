@@ -119,6 +119,11 @@ class Mfw_Role_Based_Repository {
 			return false;
 		}
 
+		// Never map a level onto a built-in role — the capability sync below would strip it.
+		if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $row['wp_role'] ) ) {
+			return false;
+		}
+
 		self::ensure_wp_role_exists( $row['wp_role'], $row['name'], $capabilities );
 		self::sync_role_capabilities( $row['wp_role'], $capabilities, $known_capabilities );
 
@@ -365,7 +370,10 @@ class Mfw_Role_Based_Repository {
 			return false;
 		}
 
-		$user->add_role( $level['wp_role'] );
+		// A level saved before built-in roles were locked must not hand out e.g. administrator.
+		if ( ! Mfw_Role_Based_Roles_Manager::is_role_locked( $level['wp_role'] ) ) {
+			$user->add_role( $level['wp_role'] );
+		}
 
 		foreach ( json_decode( $level['capabilities'], true ) ?: array() as $cap ) { // phpcs:ignore WordPress.PHP.DisallowShortTernary
 			$user->add_cap( $cap );
@@ -429,7 +437,8 @@ class Mfw_Role_Based_Repository {
 			$still_granted_caps = array_merge( $still_granted_caps, (array) ( json_decode( $remaining_level['capabilities'], true ) ?: array() ) ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
 		}
 
-		if ( ! in_array( $level['wp_role'], $still_granted_roles, true ) ) {
+		// Revoking a level must never take a built-in role (e.g. administrator) away from the user.
+		if ( ! in_array( $level['wp_role'], $still_granted_roles, true ) && ! Mfw_Role_Based_Roles_Manager::is_role_locked( $level['wp_role'] ) ) {
 			$user->remove_role( $level['wp_role'] );
 		}
 
@@ -782,6 +791,28 @@ class Mfw_Role_Based_Repository {
 	public static function get_restriction_level_ids( $object_type, $object_id ) {
 		$restriction = self::get_restriction( $object_type, $object_id );
 		return $restriction ? $restriction['level_ids'] : array();
+	}
+
+	/**
+	 * Every restricted object a level unlocks — rules that name the level directly, plus
+	 * minimum-rank rules the level's rank satisfies. Used to show members what a level gives.
+	 *
+	 * @since 3.4.0
+	 * @param array $level Level row.
+	 * @return array[] Each {object_type: string, object_id: int}.
+	 */
+	public static function get_level_unlocked_objects( $level ) {
+		global $wpdb;
+		$table = Mfw_Role_Based_Db::restrictions_table();
+
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT DISTINCT object_type, object_id FROM {$table} WHERE level_id = %d OR ( min_rank IS NOT NULL AND min_rank <= %d ) ORDER BY id DESC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				absint( $level['id'] ),
+				absint( $level['level_rank'] )
+			),
+			ARRAY_A
+		);
 	}
 
 	/**

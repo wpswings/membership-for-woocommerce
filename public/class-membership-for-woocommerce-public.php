@@ -283,7 +283,10 @@ class Membership_For_Woocommerce_Public {
 			return $items;
 		}
 
-		if ( 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'off' ) ) {
+		// Role-based mode has its own "Membership" tab, so hide the purchase-based details tab.
+		$is_role_mode = class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode();
+
+		if ( ! $is_role_mode && 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'off' ) ) {
 
 			$logout = $items['customer-logout'];
 			unset( $items['customer-logout'] );
@@ -336,6 +339,10 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_populate_tab() {
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
+		// Purchase-based details are not shown in role-based mode.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
 			return;
 		}
 		$user       = get_current_user_id();

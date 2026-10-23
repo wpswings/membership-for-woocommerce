@@ -447,6 +447,10 @@ class Mfw_Role_Based_Admin {
 			'status'                => isset( $_POST['status'] ) ? sanitize_key( wp_unslash( $_POST['status'] ) ) : 'active',
 		);
 
+		if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $data['wp_role'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'A level can\'t use a built-in WordPress or WooCommerce role. Pick a custom role or type a new role slug.', 'membership-for-woocommerce' ) ) );
+		}
+
 		$level_id = Mfw_Role_Based_Repository::save_level( $data, self::all_known_capabilities() );
 
 		if ( false === $level_id ) {
