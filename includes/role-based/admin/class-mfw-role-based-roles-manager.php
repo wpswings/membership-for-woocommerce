@@ -31,6 +31,13 @@ class Mfw_Role_Based_Roles_Manager {
 	const PROTECTED_ROLES = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber' );
 
 	/**
+	 * Roles whose capabilities this module must never rewrite and that can't be mapped to a
+	 * level. Syncing a level's (often empty) capability list onto one of these strips the
+	 * whole site's access — e.g. a level mapped to `administrator` locks every admin out.
+	 */
+	const LOCKED_ROLES = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'shop_manager', 'customer' );
+
+	/**
 	 * @since 3.4.0
 	 */
 	public static function init() {
@@ -46,6 +53,22 @@ class Mfw_Role_Based_Roles_Manager {
 	public static function get_role_user_counts() {
 		$counts = count_users();
 		return isset( $counts['avail_roles'] ) ? $counts['avail_roles'] : array();
+	}
+
+	/**
+	 * @since 3.4.0
+	 * @param string $slug Role slug.
+	 * @return bool
+	 */
+	public static function is_role_locked( $slug ) {
+		/**
+		 * Filters the roles that can't be edited here or mapped to a level.
+		 *
+		 * @since 3.4.0
+		 * @param string[] $roles Role slugs.
+		 */
+		$locked = (array) apply_filters( 'mfw_role_based_locked_roles', self::LOCKED_ROLES );
+		return in_array( $slug, $locked, true );
 	}
 
 	/**
@@ -78,6 +101,10 @@ class Mfw_Role_Based_Roles_Manager {
 
 		if ( ! $slug || ! $name ) {
 			wp_send_json_error( array( 'message' => __( 'Please provide a role name.', 'membership-for-woocommerce' ) ) );
+		}
+
+		if ( self::is_role_locked( $slug ) ) {
+			wp_send_json_error( array( 'message' => __( 'Built-in WordPress and WooCommerce roles can\'t be edited here. Clone the role and edit the copy instead.', 'membership-for-woocommerce' ) ) );
 		}
 
 		$caps = array( 'read' => true );

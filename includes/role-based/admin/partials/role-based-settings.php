@@ -34,11 +34,46 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 ?>
-<div class="mfw-role-based-settings">
-	<div class="wps-header-container">
-		<span class="wps-header-title"><?php esc_html_e( 'Role-Based Membership', 'membership-for-woocommerce' ); ?></span>
-	</div>
+<?php
+$mfw_pro_is_active = function_exists( 'check_membership_pro_plugin_is_active' ) && check_membership_pro_plugin_is_active();
 
+// Per-tab hero title and description.
+$mfw_role_tabs = array(
+	'general'       => array(
+		'title' => __( 'General Settings', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Control site access for role-based membership: private-site mode and how visitors reach your membership.', 'membership-for-woocommerce' ),
+	),
+	'login-page'    => array(
+		'title' => __( 'Login Page', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Customise the membership login page heading and an optional notice shown above the login form.', 'membership-for-woocommerce' ),
+	),
+	'roles'         => array(
+		'title' => __( 'Roles', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Create, clone and manage the WordPress roles your membership levels can grant.', 'membership-for-woocommerce' ),
+	),
+	'levels'        => array(
+		'title' => __( 'Levels & Capabilities', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Define membership levels with their discounts, pricing, expiry, tier ladder and the capabilities each one grants.', 'membership-for-woocommerce' ),
+	),
+	'campaigns'     => array(
+		'title' => __( 'Campaigns', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Email members or non-members now or on a schedule, and track opens and clicks.', 'membership-for-woocommerce' ),
+	),
+	'activity'      => array(
+		'title' => __( 'Login Activity', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Review the most recent logins by members holding a role-based level.', 'membership-for-woocommerce' ),
+	),
+	'advanced'      => array(
+		'title' => __( 'Advanced', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Reports, email template branding, webhooks and REST API details for integrations.', 'membership-for-woocommerce' ),
+	),
+	'import-export' => array(
+		'title' => __( 'Import / Export', 'membership-for-woocommerce' ),
+		'desc'  => __( 'Move level definitions between sites and bulk-assign members from a CSV file.', 'membership-for-woocommerce' ),
+	),
+);
+?>
+<div class="mfw-redesign-shell mfw-role-based-settings">
 	<?php if ( ! Mfw_Mode_Controller::is_role_mode() ) : ?>
 		<div class="notice notice-warning">
 			<p>
@@ -72,22 +107,40 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	<?php endif; ?>
 
-	<div class="wps-navbar mfw-tabs-navbar">
-		<ul class="wps-navbar__items">
-			<li><a href="#general" class="mfw-tab-link" data-tab="general"><?php esc_html_e( 'General Settings', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#login-page" class="mfw-tab-link" data-tab="login-page"><?php esc_html_e( 'Login Page', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#roles" class="mfw-tab-link" data-tab="roles"><?php esc_html_e( 'Roles', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#levels" class="mfw-tab-link" data-tab="levels"><?php esc_html_e( 'Levels & Capabilities', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#campaigns" class="mfw-tab-link" data-tab="campaigns"><?php esc_html_e( 'Campaigns', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#activity" class="mfw-tab-link" data-tab="activity"><?php esc_html_e( 'Login Activity', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#advanced" class="mfw-tab-link" data-tab="advanced"><?php esc_html_e( 'Advanced', 'membership-for-woocommerce' ); ?></a></li>
-			<li><a href="#import-export" class="mfw-tab-link" data-tab="import-export"><?php esc_html_e( 'Import / Export', 'membership-for-woocommerce' ); ?></a></li>
-		</ul>
+	<div class="mfw-redesign-shell__status-strip">
+		<span class="mfw-redesign-shell__status-badge"><?php echo $mfw_pro_is_active ? esc_html__( 'PRO ACTIVE', 'membership-for-woocommerce' ) : esc_html__( 'LITE ACTIVE', 'membership-for-woocommerce' ); ?></span>
+		<span class="mfw-redesign-shell__status-text"><?php echo $mfw_pro_is_active ? esc_html__( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ) : esc_html__( 'Membership For WooCommerce', 'membership-for-woocommerce' ); ?> &middot; <?php esc_html_e( 'Role-Based Membership', 'membership-for-woocommerce' ); ?></span>
+		<span class="mfw-redesign-shell__status-version"><?php echo esc_html( 'v' . MEMBERSHIP_FOR_WOOCOMMERCE_VERSION ); ?></span>
 	</div>
 
+	<main class="wps-main wps-bg-white wps-r-8 mfw-redesign-main">
+		<div class="mfw-redesign-main__tabs-wrap">
+			<nav class="wps-navbar mfw-redesign-main__navbar">
+				<ul class="wps-navbar__items">
+					<?php foreach ( $mfw_role_tabs as $mfw_tab_key => $mfw_tab ) : ?>
+						<li>
+							<a href="#<?php echo esc_attr( $mfw_tab_key ); ?>" class="wps-link mfw-tab-link" data-tab="<?php echo esc_attr( $mfw_tab_key ); ?>" data-title="<?php echo esc_attr( $mfw_tab['title'] ); ?>" data-desc="<?php echo esc_attr( $mfw_tab['desc'] ); ?>"><?php echo esc_html( $mfw_tab['title'] ); ?></a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+			</nav>
+		</div>
+
+		<section class="wps-section mfw-redesign-main__section">
+			<div class="mfw-redesign-main__content-wrap">
+				<div class="mfw-redesign-main__content-col">
+					<div class="mfw-redesign-main__hero">
+						<div class="mfw-redesign-main__hero-copy">
+							<p class="mfw-redesign-main__hero-eyebrow"><?php esc_html_e( 'Settings', 'membership-for-woocommerce' ); ?></p>
+							<h2 class="mfw-redesign-main__hero-title" id="mfw-role-hero-title"><?php echo esc_html( $mfw_role_tabs['general']['title'] ); ?></h2>
+							<p class="mfw-redesign-main__hero-description" id="mfw-role-hero-desc"><?php echo esc_html( $mfw_role_tabs['general']['desc'] ); ?></p>
+						</div>
+					</div>
+
+					<div class="mfw-redesign-main__tab-content">
 	<div class="mfw-tab-panel" data-tab-panel="general">
 	<div class="mfw-card">
-		<h2><?php esc_html_e( 'General Settings', 'membership-for-woocommerce' ); ?></h2>
+		<h2><?php esc_html_e( 'Site Access', 'membership-for-woocommerce' ); ?></h2>
 		<table class="form-table">
 			<tr>
 				<th><?php esc_html_e( 'Private Site', 'membership-for-woocommerce' ); ?></th>
@@ -176,14 +229,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<td><code><?php echo esc_html( $role_slug ); ?></code></td>
 							<td><?php echo esc_html( $role_user_counts[ $role_slug ] ?? 0 ); ?></td>
 							<td>
-								<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-edit-role" data-slug="<?php echo esc_attr( $role_slug ); ?>">
-									<?php esc_html_e( 'Edit', 'membership-for-woocommerce' ); ?>
-								</button>
+								<?php if ( ! Mfw_Role_Based_Roles_Manager::is_role_locked( $role_slug ) ) : ?>
+									<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-edit-role" data-slug="<?php echo esc_attr( $role_slug ); ?>">
+										<?php esc_html_e( 'Edit', 'membership-for-woocommerce' ); ?>
+									</button>
+								<?php endif; ?>
 								<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-clone-role" data-slug="<?php echo esc_attr( $role_slug ); ?>">
 									<?php esc_html_e( 'Clone', 'membership-for-woocommerce' ); ?>
 								</button>
 								<?php if ( Mfw_Role_Based_Roles_Manager::is_role_deletable( $role_slug ) ) : ?>
-									<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-delete-role" data-slug="<?php echo esc_attr( $role_slug ); ?>">
+									<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-btn--danger mfw-delete-role" data-slug="<?php echo esc_attr( $role_slug ); ?>">
 										<?php esc_html_e( 'Delete', 'membership-for-woocommerce' ); ?>
 									</button>
 								<?php endif; ?>
@@ -193,7 +248,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</tbody>
 			</table>
 		</div>
-
+	</div>
+	<div class="mfw-card">
 		<h2 id="mfw-role-form-title"><?php esc_html_e( 'Add Role', 'membership-for-woocommerce' ); ?></h2>
 		<input type="hidden" id="mfw-role-slug" value="" />
 		<table class="form-table">
@@ -222,9 +278,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="mfw-cap-picker__panels">
 					<?php foreach ( $capability_groups as $group_label => $caps ) : ?>
 						<div class="mfw-cap-picker__panel<?php echo 0 === array_search( $group_label, array_keys( $capability_groups ), true ) ? ' active' : ''; ?>" data-cap-panel="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>">
-							<p>
+							<p class="mfw-cap-picker__toolbar">
 								<button type="button" class="mfw-cap-picker__select-all" data-target="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>"><?php esc_html_e( 'Select All', 'membership-for-woocommerce' ); ?></button>
-								&nbsp;|&nbsp;
 								<button type="button" class="mfw-cap-picker__deselect-all" data-target="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>"><?php esc_html_e( 'Deselect All', 'membership-for-woocommerce' ); ?></button>
 							</p>
 							<?php foreach ( $caps as $cap_slug => $cap_label ) : ?>
@@ -286,8 +341,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 								'capabilities'     => json_decode( $level['capabilities'], true ),
 							) ) ); ?>"
 						>
-							<td><?php echo esc_html( $level['name'] ); ?></td>
-							<td><?php echo esc_html( $level['wp_role'] ); ?></td>
+							<td><strong class="mfw-level-name"><?php echo esc_html( $level['name'] ); ?></strong></td>
+							<td><code><?php echo esc_html( $level['wp_role'] ); ?></code></td>
 							<td><?php echo esc_html( $level['level_rank'] ); ?></td>
 							<td><?php echo esc_html( $level['discount_percent'] ); ?>%</td>
 							<td>
@@ -309,12 +364,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 									&mdash;
 								<?php endif; ?>
 							</td>
-							<td><?php echo esc_html( $level['status'] ); ?></td>
 							<td>
-								<button type="button" class="mfw-btn mfw-btn__outline mfw-edit-level" data-id="<?php echo esc_attr( $level['id'] ); ?>">
+								<span class="mfw-status-badge mfw-status-badge--<?php echo esc_attr( $level['status'] ); ?>">
+									<?php echo 'active' === $level['status'] ? esc_html__( 'Active', 'membership-for-woocommerce' ) : esc_html__( 'Inactive', 'membership-for-woocommerce' ); ?>
+								</span>
+							</td>
+							<td>
+								<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-edit-level" data-id="<?php echo esc_attr( $level['id'] ); ?>">
 									<?php esc_html_e( 'Edit', 'membership-for-woocommerce' ); ?>
 								</button>
-								<button type="button" class="mfw-btn mfw-btn__outline mfw-delete-level" data-id="<?php echo esc_attr( $level['id'] ); ?>">
+								<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-btn--danger mfw-delete-level" data-id="<?php echo esc_attr( $level['id'] ); ?>">
 									<?php esc_html_e( 'Delete', 'membership-for-woocommerce' ); ?>
 								</button>
 							</td>
@@ -340,13 +399,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endif; ?>
 
 		<?php if ( Mfw_Role_Based_Repository::get_tier_ladder_levels() ) : ?>
-			<p>
-				<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-recalculate-tiers"><?php esc_html_e( 'Recalculate Tiers Now', 'membership-for-woocommerce' ); ?></button>
-				<span id="mfw-recalculate-tiers-result" aria-live="polite"></span>
-			</p>
-			<p class="description"><?php esc_html_e( 'Members are checked automatically whenever an order is paid. Use this after setting up or changing the ladder, so members who already spent enough are moved up now.', 'membership-for-woocommerce' ); ?></p>
+			<div class="mfw-inline-panel">
+				<div class="mfw-inline-panel__text">
+					<strong><?php esc_html_e( 'Tier ladder', 'membership-for-woocommerce' ); ?></strong>
+					<p class="description"><?php esc_html_e( 'Members are checked automatically whenever an order is paid. Use this after setting up or changing the ladder, so members who already spent enough are moved up now.', 'membership-for-woocommerce' ); ?></p>
+					<span id="mfw-recalculate-tiers-result" class="mfw-inline-panel__result" aria-live="polite"></span>
+				</div>
+				<button type="button" class="mfw-btn mfw-btn__outline mfw-btn--sm" id="mfw-recalculate-tiers"><?php esc_html_e( 'Recalculate Tiers Now', 'membership-for-woocommerce' ); ?></button>
+			</div>
 		<?php endif; ?>
 
+	</div>
+	<div class="mfw-card">
 		<h2 id="mfw-level-form-title"><?php esc_html_e( 'Add Level', 'membership-for-woocommerce' ); ?></h2>
 		<input type="hidden" id="mfw-level-id" value="0" />
 		<table class="form-table">
@@ -366,6 +430,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<td>
 				<select id="mfw-level-role">
 					<?php foreach ( $wp_roles->roles as $role_slug => $role ) : ?>
+						<?php
+						if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $role_slug ) ) {
+							continue;
+						}
+						?>
 						<option value="<?php echo esc_attr( $role_slug ); ?>"><?php echo esc_html( $role['name'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
@@ -387,15 +456,43 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<input type="number" min="0" max="100" step="0.01" id="mfw-level-discount" value="0" style="width:80px;" />%
 				<p class="description"><?php esc_html_e( 'Percentage off every WooCommerce product for members holding this level. If a user holds multiple levels, the highest discount applies (never stacked).', 'membership-for-woocommerce' ); ?></p>
 				<?php if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) : ?>
-					<p class="description"><?php esc_html_e( 'Limit the discount to specific product categories (leave all unchecked for every product):', 'membership-for-woocommerce' ); ?></p>
-					<div style="max-height:120px;overflow-y:auto;">
-						<?php foreach ( $product_categories as $category ) : ?>
-							<label style="display:block;">
-								<input type="checkbox" class="mfw-level-discount-category" value="<?php echo esc_attr( $category->term_id ); ?>" />
-								<?php echo esc_html( $category->name ); ?>
-							</label>
-						<?php endforeach; ?>
+					<div class="mfw-cat-picker" id="mfw-level-discount-categories">
+						<div class="mfw-cat-picker__head">
+							<div>
+								<strong class="mfw-cat-picker__title"><?php esc_html_e( 'Discount applies to', 'membership-for-woocommerce' ); ?></strong>
+								<span class="mfw-cat-picker__summary" id="mfw-cat-picker-summary"></span>
+							</div>
+							<div class="mfw-cat-picker__tools">
+								<?php if ( count( $product_categories ) > 8 ) : ?>
+									<input type="search" class="mfw-cat-picker__search" id="mfw-cat-picker-search" placeholder="<?php esc_attr_e( 'Search categories…', 'membership-for-woocommerce' ); ?>" />
+								<?php endif; ?>
+								<button type="button" class="mfw-link-btn" id="mfw-cat-picker-select-all"><?php esc_html_e( 'Select all', 'membership-for-woocommerce' ); ?></button>
+								<button type="button" class="mfw-link-btn" id="mfw-cat-picker-clear"><?php esc_html_e( 'Clear', 'membership-for-woocommerce' ); ?></button>
+							</div>
+						</div>
+						<div class="mfw-cat-picker__grid">
+							<?php foreach ( $product_categories as $category ) : ?>
+								<?php $parent = $category->parent ? get_term( $category->parent, 'product_cat' ) : null; ?>
+								<label class="mfw-cat-chip" data-name="<?php echo esc_attr( strtolower( $category->name ) ); ?>">
+									<input type="checkbox" class="mfw-level-discount-category" value="<?php echo esc_attr( $category->term_id ); ?>" />
+									<span class="mfw-cat-chip__text">
+										<span class="mfw-cat-chip__name"><?php echo esc_html( $category->name ); ?></span>
+										<span class="mfw-cat-chip__meta">
+											<?php
+											if ( $parent && ! is_wp_error( $parent ) ) {
+												echo esc_html( $parent->name ) . ' &middot; ';
+											}
+											/* translators: %d: number of products in the category. */
+											echo esc_html( sprintf( _n( '%d product', '%d products', $category->count, 'membership-for-woocommerce' ), $category->count ) );
+											?>
+										</span>
+									</span>
+								</label>
+							<?php endforeach; ?>
+						</div>
+						<p class="mfw-cat-picker__no-match" id="mfw-cat-picker-no-match" hidden><?php esc_html_e( 'No categories match your search.', 'membership-for-woocommerce' ); ?></p>
 					</div>
+					<p class="description"><?php esc_html_e( 'Leave every category unticked to apply the discount to all products.', 'membership-for-woocommerce' ); ?></p>
 				<?php endif; ?>
 			</td>
 		</tr>
@@ -460,26 +557,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<th><?php esc_html_e( 'Capabilities', 'membership-for-woocommerce' ); ?></th>
 			<td>
 				<p class="description"><?php esc_html_e( 'These become the WordPress role\'s actual capabilities — unchecking one removes it from the role.', 'membership-for-woocommerce' ); ?></p>
-				<p>
-					<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-select-all-capabilities"><?php esc_html_e( 'Select All', 'membership-for-woocommerce' ); ?></button>
-					<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-deselect-all-capabilities"><?php esc_html_e( 'Deselect All', 'membership-for-woocommerce' ); ?></button>
-				</p>
-				<div style="max-height:400px;overflow-y:auto;border:1px solid rgba(63,71,86,0.15);padding:12px;border-radius:4px;">
-					<?php foreach ( $capability_groups as $group_label => $caps ) : ?>
-						<p>
-							<label>
-								<input type="checkbox" class="mfw-select-all-group" data-group="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>" />
-								<strong><?php echo esc_html( $group_label ); ?></strong>
-							</label>
-						</p>
-						<?php foreach ( $caps as $cap_slug => $cap_label ) : ?>
-							<label style="display:block;">
-								<input type="checkbox" class="mfw-level-capability" data-group="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>" value="<?php echo esc_attr( $cap_slug ); ?>" />
-								<?php echo esc_html( $cap_label ); ?>
-								<code style="color:#888;"><?php echo esc_html( $cap_slug ); ?></code>
-							</label>
+				<div class="mfw-cat-picker mfw-level-caps">
+					<div class="mfw-cat-picker__head">
+						<div>
+							<strong class="mfw-cat-picker__title"><?php esc_html_e( 'Granted capabilities', 'membership-for-woocommerce' ); ?></strong>
+							<span class="mfw-cat-picker__summary" id="mfw-level-caps-summary"></span>
+						</div>
+						<div class="mfw-cat-picker__tools">
+							<button type="button" class="mfw-link-btn" id="mfw-select-all-capabilities"><?php esc_html_e( 'Select all', 'membership-for-woocommerce' ); ?></button>
+							<button type="button" class="mfw-link-btn" id="mfw-deselect-all-capabilities"><?php esc_html_e( 'Deselect all', 'membership-for-woocommerce' ); ?></button>
+						</div>
+					</div>
+					<div class="mfw-level-caps__body">
+						<?php foreach ( $capability_groups as $group_label => $caps ) : ?>
+							<div class="mfw-level-caps__group">
+								<label class="mfw-level-caps__group-title">
+									<input type="checkbox" class="mfw-select-all-group" data-group="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>" />
+									<?php echo esc_html( $group_label ); ?>
+								</label>
+								<div class="mfw-level-caps__items">
+									<?php foreach ( $caps as $cap_slug => $cap_label ) : ?>
+										<label class="mfw-level-caps__item">
+											<input type="checkbox" class="mfw-level-capability" data-group="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>" value="<?php echo esc_attr( $cap_slug ); ?>" />
+											<span>
+												<?php echo esc_html( $cap_label ); ?>
+												<code><?php echo esc_html( $cap_slug ); ?></code>
+											</span>
+										</label>
+									<?php endforeach; ?>
+								</div>
+							</div>
 						<?php endforeach; ?>
-					<?php endforeach; ?>
+					</div>
 				</div>
 			</td>
 		</tr>
@@ -948,7 +1057,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</form>
 	</div>
 	</div>
+					</div>
+				</div>
+
+				<?php require MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-admin-sidebar.php'; ?>
+			</div>
+		</section>
+	</main>
 </div>
+<?php
+if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
+	Membership_For_Woocommerce_Talk_To_Expert_Form::wps_mfw_render_modal();
+}
+?>
 <script>
 ( function () {
 	var nonce = <?php echo wp_json_encode( $nonce ); ?>;
@@ -1033,6 +1154,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			groupBox.checked       = total > 0 && checked === total;
 			groupBox.indeterminate = checked > 0 && checked < total;
 		} );
+
+		var capSummary = document.getElementById( 'mfw-level-caps-summary' );
+		if ( capSummary ) {
+			var allCaps     = document.querySelectorAll( '.mfw-level-capability' );
+			var checkedCaps = document.querySelectorAll( '.mfw-level-capability:checked' ).length;
+			/* translators: 1: number of selected capabilities, 2: total capabilities. */
+			capSummary.textContent = <?php echo wp_json_encode( __( '%1$d of %2$d selected', 'membership-for-woocommerce' ) ); ?>.replace( '%1$d', checkedCaps ).replace( '%2$d', allCaps.length );
+			capSummary.closest( '.mfw-cat-picker' ).classList.toggle( 'has-selection', checkedCaps > 0 );
+		}
 	}
 
 	function resetForm() {
@@ -1051,10 +1181,75 @@ if ( ! defined( 'ABSPATH' ) ) {
 		statusField.value = 'active';
 		document.querySelectorAll( '.mfw-level-capability' ).forEach( function ( el ) { el.checked = false; } );
 		document.querySelectorAll( '.mfw-level-discount-category' ).forEach( function ( el ) { el.checked = false; } );
+		syncCategoryPicker();
 		syncGroupCheckboxes();
 		formTitle.textContent = <?php echo wp_json_encode( __( 'Add Level', 'membership-for-woocommerce' ) ); ?>;
 		addButton.textContent = <?php echo wp_json_encode( __( 'Add Level', 'membership-for-woocommerce' ) ); ?>;
 		cancelButton.style.display = 'none';
+	}
+
+	// Discount category picker: highlight ticked chips and summarise what the discount covers.
+	var categoryPicker = document.getElementById( 'mfw-level-discount-categories' );
+
+	function syncCategoryPicker() {
+		if ( ! categoryPicker ) {
+			return;
+		}
+		var boxes   = categoryPicker.querySelectorAll( '.mfw-level-discount-category' );
+		var checked = 0;
+		boxes.forEach( function ( el ) {
+			el.closest( '.mfw-cat-chip' ).classList.toggle( 'is-checked', el.checked );
+			if ( el.checked ) {
+				checked++;
+			}
+		} );
+		var summary = document.getElementById( 'mfw-cat-picker-summary' );
+		if ( 0 === checked ) {
+			summary.textContent = <?php echo wp_json_encode( __( 'All products', 'membership-for-woocommerce' ) ); ?>;
+		} else if ( 1 === checked ) {
+			summary.textContent = <?php echo wp_json_encode( __( '1 category selected', 'membership-for-woocommerce' ) ); ?>;
+		} else {
+			/* translators: %d: number of selected categories. */
+			summary.textContent = <?php echo wp_json_encode( __( '%d categories selected', 'membership-for-woocommerce' ) ); ?>.replace( '%d', checked );
+		}
+		categoryPicker.classList.toggle( 'has-selection', checked > 0 );
+	}
+
+	if ( categoryPicker ) {
+		categoryPicker.addEventListener( 'change', function ( event ) {
+			if ( event.target.classList.contains( 'mfw-level-discount-category' ) ) {
+				syncCategoryPicker();
+			}
+		} );
+
+		function setAllCategories( checked ) {
+			categoryPicker.querySelectorAll( '.mfw-cat-chip' ).forEach( function ( chip ) {
+				if ( ! chip.hidden ) {
+					chip.querySelector( 'input' ).checked = checked;
+				}
+			} );
+			syncCategoryPicker();
+		}
+
+		document.getElementById( 'mfw-cat-picker-select-all' ).addEventListener( 'click', function () { setAllCategories( true ); } );
+		document.getElementById( 'mfw-cat-picker-clear' ).addEventListener( 'click', function () { setAllCategories( false ); } );
+
+		var categorySearch = document.getElementById( 'mfw-cat-picker-search' );
+		if ( categorySearch ) {
+			categorySearch.addEventListener( 'input', function () {
+				var term    = categorySearch.value.trim().toLowerCase();
+				var visible = 0;
+				categoryPicker.querySelectorAll( '.mfw-cat-chip' ).forEach( function ( chip ) {
+					chip.hidden = term && chip.getAttribute( 'data-name' ).indexOf( term ) === -1;
+					if ( ! chip.hidden ) {
+						visible++;
+					}
+				} );
+				document.getElementById( 'mfw-cat-picker-no-match' ).hidden = visible > 0;
+			} );
+		}
+
+		syncCategoryPicker();
 	}
 
 	function populateForm( level ) {
@@ -1080,6 +1275,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		document.querySelectorAll( '.mfw-level-discount-category' ).forEach( function ( el ) {
 			el.checked = discountCats.indexOf( parseInt( el.value, 10 ) ) !== -1;
 		} );
+		syncCategoryPicker();
 		syncGroupCheckboxes();
 		formTitle.textContent = <?php echo wp_json_encode( __( 'Edit Level', 'membership-for-woocommerce' ) ); ?>;
 		addButton.textContent = <?php echo wp_json_encode( __( 'Update Level', 'membership-for-woocommerce' ) ); ?>;
@@ -1109,6 +1305,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	document.querySelectorAll( '.mfw-level-capability' ).forEach( function ( el ) {
 		el.addEventListener( 'change', syncGroupCheckboxes );
 	} );
+	syncGroupCheckboxes();
 
 	addButton.addEventListener( 'click', function () {
 		var name    = nameField.value;
@@ -1388,9 +1585,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	var tabLinks  = document.querySelectorAll( '.mfw-tab-link' );
 	var tabPanels = document.querySelectorAll( '.mfw-tab-panel' );
 
+	var heroTitle = document.getElementById( 'mfw-role-hero-title' );
+	var heroDesc  = document.getElementById( 'mfw-role-hero-desc' );
+
 	function activateTab( tabKey ) {
 		tabLinks.forEach( function ( link ) {
-			link.classList.toggle( 'active', link.getAttribute( 'data-tab' ) === tabKey );
+			var isActive = link.getAttribute( 'data-tab' ) === tabKey;
+			link.classList.toggle( 'active', isActive );
+			if ( isActive ) {
+				heroTitle.textContent = link.getAttribute( 'data-title' );
+				heroDesc.textContent  = link.getAttribute( 'data-desc' );
+			}
 		} );
 		tabPanels.forEach( function ( panel ) {
 			panel.style.display = panel.getAttribute( 'data-tab-panel' ) === tabKey ? '' : 'none';

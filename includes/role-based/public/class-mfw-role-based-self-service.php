@@ -233,38 +233,44 @@ class Mfw_Role_Based_Self_Service {
 
 		$nonce = wp_create_nonce( self::NONCE_ACTION );
 		?>
-		<h3><?php esc_html_e( 'Switch Membership Level', 'membership-for-woocommerce' ); ?></h3>
-		<ul class="mfw-role-level-list">
-			<?php foreach ( $available as $level ) : ?>
-				<li>
-					<span class="mfw-role-level-name"><?php echo esc_html( $level['name'] ); ?></span>
-					<?php if ( Mfw_Role_Based_Paid_Access::is_purchasable( $level ) ) : ?>
-						<span class="mfw-role-price-badge"><?php echo esc_html( wp_strip_all_tags( wc_price( $level['price'] ) ) ); ?></span>
-						<?php if ( ! empty( $level['description'] ) ) : ?>
-							<p class="mfw-role-level-description"><?php echo esc_html( $level['description'] ); ?></p>
-						<?php endif; ?>
-						<div>
-							<a class="mfw-role-btn" href="<?php echo esc_url( Mfw_Role_Based_Paid_Access::get_buy_url( $level['id'] ) ); ?>">
-								<?php esc_html_e( 'Buy Access', 'membership-for-woocommerce' ); ?>
-							</a>
+		<div class="mfw-role-account-section">
+			<h3><?php echo empty( $current_ids ) ? esc_html__( 'Choose a plan', 'membership-for-woocommerce' ) : esc_html__( 'Other plans', 'membership-for-woocommerce' ); ?></h3>
+			<div class="mfw-role-plan-grid">
+				<?php foreach ( $available as $level ) : ?>
+					<?php $is_purchasable = Mfw_Role_Based_Paid_Access::is_purchasable( $level ); ?>
+					<section class="mfw-role-plan mfw-role-plan--option">
+						<div class="mfw-role-plan__head">
+							<h4 class="mfw-role-plan__name mfw-role-level-title"><?php echo esc_html( $level['name'] ); ?></h4>
+							<?php if ( $is_purchasable ) : ?>
+								<span class="mfw-role-price-badge"><?php echo esc_html( wp_strip_all_tags( wc_price( $level['price'] ) ) ); ?></span>
+							<?php else : ?>
+								<span class="mfw-role-price-badge mfw-role-price-badge--free"><?php esc_html_e( 'Free', 'membership-for-woocommerce' ); ?></span>
+							<?php endif; ?>
 						</div>
-					<?php else : ?>
-						<span class="mfw-role-price-badge mfw-role-price-badge--free"><?php esc_html_e( 'Free', 'membership-for-woocommerce' ); ?></span>
 						<?php if ( ! empty( $level['description'] ) ) : ?>
-							<p class="mfw-role-level-description"><?php echo esc_html( $level['description'] ); ?></p>
+							<p class="mfw-role-plan__description"><?php echo esc_html( $level['description'] ); ?></p>
 						<?php endif; ?>
-						<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-							<input type="hidden" name="action" value="mfw_role_based_switch_level" />
-							<input type="hidden" name="mfw_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
-							<input type="hidden" name="level_id" value="<?php echo esc_attr( $level['id'] ); ?>" />
-							<button type="submit" class="mfw-role-btn mfw-role-btn--outline">
-								<?php esc_html_e( 'Switch', 'membership-for-woocommerce' ); ?>
-							</button>
-						</form>
-					<?php endif; ?>
-				</li>
-			<?php endforeach; ?>
-		</ul>
+						<?php Mfw_Role_Based_Public::render_level_benefits( $level ); ?>
+						<div class="mfw-role-plan__actions">
+							<?php if ( $is_purchasable ) : ?>
+								<a class="mfw-role-btn" href="<?php echo esc_url( Mfw_Role_Based_Paid_Access::get_buy_url( $level['id'] ) ); ?>">
+									<?php esc_html_e( 'Buy Access', 'membership-for-woocommerce' ); ?>
+								</a>
+							<?php else : ?>
+								<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+									<input type="hidden" name="action" value="mfw_role_based_switch_level" />
+									<input type="hidden" name="mfw_nonce" value="<?php echo esc_attr( $nonce ); ?>" />
+									<input type="hidden" name="level_id" value="<?php echo esc_attr( $level['id'] ); ?>" />
+									<button type="submit" class="mfw-role-btn">
+										<?php echo empty( $current_ids ) ? esc_html__( 'Join', 'membership-for-woocommerce' ) : esc_html__( 'Switch', 'membership-for-woocommerce' ); ?>
+									</button>
+								</form>
+							<?php endif; ?>
+						</div>
+					</section>
+				<?php endforeach; ?>
+			</div>
+		</div>
 		<?php
 	}
 

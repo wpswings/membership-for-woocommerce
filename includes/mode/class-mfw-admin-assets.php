@@ -61,10 +61,51 @@ class Mfw_Admin_Assets {
 			'all'
 		);
 
+		$role_css_deps = array( 'wps-admin-shared-css' );
+
+		if ( Mfw_Role_Based_Admin::PAGE_SLUG === $page ) {
+			// Same dashboard chrome as the product-based settings page (status strip, tabs,
+			// hero, help sidebar, "Talk to an Expert" modal).
+			wp_enqueue_style(
+				'membership-for-woocommerce-admin-redesign',
+				MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-redesign.css',
+				array( 'wps-admin-shared-css' ),
+				MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+				'all'
+			);
+			wp_enqueue_style(
+				'membership-for-woocommerce-talk-to-expert',
+				MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/css/membership-for-woocommerce-talk-to-expert.css',
+				array( 'membership-for-woocommerce-admin-redesign' ),
+				MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+				'all'
+			);
+			$role_css_deps[] = 'membership-for-woocommerce-admin-redesign';
+
+			if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
+				wp_enqueue_script(
+					'membership-for-woocommerce-talk-to-expert',
+					MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'admin/js/membership-for-woocommerce-talk-to-expert.js',
+					array( 'jquery' ),
+					MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
+					false
+				);
+				wp_localize_script(
+					'membership-for-woocommerce-talk-to-expert',
+					'mfw_admin_param',
+					array(
+						'ajaxurl'           => admin_url( 'admin-ajax.php' ),
+						'mfw_expert_action' => Membership_For_Woocommerce_Talk_To_Expert_Form::AJAX_ACTION,
+						'mfw_expert_nonce'  => wp_create_nonce( Membership_For_Woocommerce_Talk_To_Expert_Form::NONCE_ACTION ),
+					)
+				);
+			}
+		}
+
 		wp_enqueue_style(
 			'mfw-role-based-admin-css',
 			MEMBERSHIP_FOR_WOOCOMMERCE_DIR_URL . 'includes/role-based/assets/css/mfw-role-based-admin.css',
-			array( 'wps-admin-shared-css' ),
+			$role_css_deps,
 			MEMBERSHIP_FOR_WOOCOMMERCE_VERSION,
 			'all'
 		);

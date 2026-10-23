@@ -487,15 +487,32 @@
 	display: block;
 }
 
+/* Per-group Select all / Deselect all on the Roles tab — same compact text buttons as .mfw-link-btn. */
+.mfw-cap-picker__toolbar {
+	display: flex;
+	gap: 4px;
+	margin: 0 0 8px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid rgba(63, 71, 86, 0.08);
+}
+
 .mfw-cap-picker__select-all,
 .mfw-cap-picker__deselect-all {
 	background: none;
-	border: none;
+	border: 0;
+	border-radius: 4px;
+	padding: 4px 8px;
 	color: #2196f3;
-	cursor: pointer;
-	padding: 0;
 	font-size: 12px;
-	text-decoration: underline;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+}
+
+.mfw-cap-picker__select-all:hover,
+.mfw-cap-picker__deselect-all:hover {
+	background: #e8f1fe;
+	color: #1565c0;
 }
 
 .mfw-cap-picker__item {
@@ -517,4 +534,579 @@
 	color: #6b7280;
 	font-size: 13px;
 	font-style: italic;
+}
+
+/* Level form: discount category picker */
+.mfw-cat-picker {
+	border: 1px solid rgba(63, 71, 86, 0.15);
+	border-radius: 8px;
+	overflow: hidden;
+	margin: 12px 0 6px;
+	max-width: 760px;
+	background: #ffffff;
+}
+
+.mfw-cat-picker__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px 16px;
+	padding: 10px 14px;
+	background: #f7fafd;
+	border-bottom: 1px solid rgba(63, 71, 86, 0.1);
+}
+
+.mfw-cat-picker__title {
+	font-size: 13px;
+	color: #1d2327;
+	margin-right: 8px;
+}
+
+.mfw-cat-picker__summary {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	background: #e9ecf1;
+	color: #50575e;
+	font-size: 12px;
+	font-weight: 600;
+}
+
+.mfw-cat-picker.has-selection .mfw-cat-picker__summary {
+	background: #e3f0fd;
+	color: #1565c0;
+}
+
+.mfw-cat-picker__tools {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.mfw-cat-picker__tools input[type="search"] {
+	width: 200px;
+	min-height: 30px;
+	font-size: 13px;
+}
+
+.mfw-cat-picker__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+	gap: 8px;
+	padding: 14px;
+	max-height: 320px;
+	overflow-y: auto;
+}
+
+.mfw-cat-chip {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 9px 10px;
+	border: 1px solid #dcdfe6;
+	border-radius: 6px;
+	background: #ffffff;
+	cursor: pointer;
+	transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.mfw-cat-chip[hidden] {
+	display: none;
+}
+
+.mfw-cat-chip:hover {
+	border-color: #90c2f5;
+}
+
+.mfw-cat-chip.is-checked {
+	border-color: #2196f3;
+	background: #f0f7ff;
+	box-shadow: inset 0 0 0 1px #2196f3;
+}
+
+.mfw-cat-chip input[type="checkbox"] {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.mfw-cat-chip__text {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.mfw-cat-chip__name {
+	font-size: 13px;
+	font-weight: 600;
+	color: #1d2327;
+	line-height: 1.35;
+	overflow-wrap: anywhere;
+}
+
+.mfw-cat-chip__meta {
+	font-size: 11px;
+	color: #787c82;
+	line-height: 1.4;
+}
+
+.mfw-cat-picker__no-match {
+	margin: 0;
+	padding: 0 14px 14px;
+	color: #6b7280;
+	font-size: 13px;
+	font-style: italic;
+}
+
+/* Compact text actions in picker header bars (Select all / Clear / Deselect all). */
+.mfw-link-btn {
+	background: none;
+	border: 0;
+	border-radius: 4px;
+	padding: 4px 8px;
+	color: #2196f3;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+	cursor: pointer;
+	white-space: nowrap;
+}
+
+.mfw-link-btn:hover {
+	background: #e8f1fe;
+	color: #1565c0;
+}
+
+.mfw-link-btn:focus-visible {
+	outline: 2px solid #2196f3;
+	outline-offset: 1px;
+}
+
+.mfw-cat-picker__tools .mfw-link-btn + .mfw-link-btn {
+	position: relative;
+	margin-left: 1px;
+}
+
+.mfw-cat-picker__tools .mfw-link-btn + .mfw-link-btn::before {
+	content: "";
+	position: absolute;
+	left: -7px;
+	top: 25%;
+	height: 50%;
+	border-left: 1px solid #dcdfe6;
+}
+
+/* Level form: capabilities list, grouped. */
+.mfw-level-caps {
+	margin-top: 10px;
+}
+
+.mfw-level-caps__body {
+	max-height: 420px;
+	overflow-y: auto;
+}
+
+.mfw-level-caps__group + .mfw-level-caps__group {
+	border-top: 1px solid rgba(63, 71, 86, 0.1);
+}
+
+.mfw-level-caps__group-title {
+	position: sticky;
+	top: 0;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 9px 14px;
+	background: #ffffff;
+	font-size: 13px;
+	font-weight: 700;
+	color: #1d2327;
+	cursor: pointer;
+}
+
+.mfw-level-caps__group-title input[type="checkbox"] {
+	margin: 0;
+}
+
+.mfw-level-caps__items {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 2px 16px;
+	padding: 0 14px 12px 36px;
+}
+
+.mfw-level-caps__item {
+	display: flex;
+	align-items: flex-start;
+	gap: 8px;
+	padding: 4px 0;
+	font-size: 13px;
+	color: #3c434a;
+	cursor: pointer;
+}
+
+.mfw-level-caps__item input[type="checkbox"] {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.mfw-level-caps__item code {
+	display: inline-block;
+	margin-left: 4px;
+	padding: 0 5px;
+	background: #f3f4f6;
+	border-radius: 3px;
+	color: #8a9099;
+	font-size: 11px;
+}
+
+/* Destructive action buttons (Delete). */
+.mfw-btn.mfw-btn__outline.mfw-btn--danger {
+	border-color: #d63638;
+	color: #d63638 !important;
+}
+
+.mfw-btn.mfw-btn__outline.mfw-btn--danger:hover {
+	background-color: #fcf0f1;
+	opacity: 1;
+}
+
+/* Table row actions: keep buttons on one line with a consistent gap. */
+#mfw-role-levels-table td:last-child,
+.mfw-table-wrap td:last-child {
+	white-space: nowrap;
+}
+
+.mfw-table-wrap td .mfw-btn--sm + .mfw-btn--sm {
+	margin-left: 6px;
+}
+
+.mfw-table-wrap td {
+	vertical-align: middle;
+}
+
+.mfw-level-name {
+	text-transform: capitalize;
+	color: #1d2327;
+}
+
+.mfw-status-badge {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	background: #f0f0f1;
+	color: #50575e;
+}
+
+.mfw-status-badge--active {
+	background: #e7f7ee;
+	color: #18794e;
+}
+
+/* Inline tool panel (e.g. Recalculate Tiers) under a table. */
+.mfw-inline-panel {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px 24px;
+	flex-wrap: wrap;
+	margin-top: 16px;
+	padding: 14px 18px;
+	background: #f7fafd;
+	border: 1px solid rgba(63, 71, 86, 0.1);
+	border-radius: 8px;
+}
+
+.mfw-inline-panel__text {
+	flex: 1 1 360px;
+}
+
+.mfw-inline-panel__text .description {
+	margin: 4px 0 0;
+}
+
+.mfw-inline-panel__result:not(:empty) {
+	display: inline-block;
+	margin-top: 6px;
+	font-weight: 600;
+	color: #1565c0;
+}
+
+/* Selects in settings forms were too narrow for their labels (text ran into the arrow). */
+.mfw-card .form-table select {
+	min-width: 220px;
+	max-width: 100%;
+}
+
+/* ==========================================================================
+   Role-Based Membership page inside the shared dashboard shell
+   (admin/css/membership-for-woocommerce-redesign.css). Brings this page's own
+   components in line with the product-based settings dashboard: soft bordered
+   cards, dark pill primary buttons, orange accent and toggles.
+   ========================================================================== */
+
+/* The shared redesign stylesheet scopes its palette + page background to the product
+   settings screen's body class; mirror them for this screen so every var(--mfw-*) resolves. */
+.wp-swings_page_mfw_role_based_membership {
+	--mfw-bg: #f5f4fb;
+	--mfw-panel: #ffffff;
+	--mfw-panel-soft: #fbfbff;
+	--mfw-border: #e8e4f2;
+	--mfw-row-border: #ece8f5;
+	--mfw-text: #201a45;
+	--mfw-muted: #8c86a4;
+	--mfw-accent: #f1a640;
+	--mfw-dark: #09090f;
+}
+
+.wp-swings_page_mfw_role_based_membership #wpbody,
+.wp-swings_page_mfw_role_based_membership #wpcontent,
+.wp-swings_page_mfw_role_based_membership #wpbody-content {
+	background: var(--mfw-bg) !important;
+}
+
+.wp-swings_page_mfw_role_based_membership #wpbody-content > .notice,
+.wp-swings_page_mfw_role_based_membership #wpbody-content > .error,
+.wp-swings_page_mfw_role_based_membership #wpbody-content > .updated {
+	margin: 14px 15px 0 0;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .mfw-card {
+	background: #ffffff;
+	border: 1px solid #ebe8f5;
+	border-radius: 16px;
+	box-shadow: none;
+	margin: 0 0 14px;
+	padding: 22px 24px;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .mfw-card h2 {
+	color: #23184b;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 18px;
+	margin: 0 0 14px;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .description,
+.mfw-role-based-settings .mfw-redesign-main__tab-content p.description {
+	color: #8f89a8;
+	font-size: 12px;
+	line-height: 1.6;
+}
+
+/* Settings rows: label column + control column with soft dividers, like .wps-form-group. */
+.mfw-role-based-settings .mfw-redesign-main__tab-content .form-table {
+	margin-top: 0;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .form-table th {
+	color: #1f1840;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 14px;
+	padding: 20px 20px 20px 0;
+	width: 30%;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .form-table td {
+	color: #4a4566;
+	padding: 20px 0;
+}
+
+.mfw-role-based-settings .mfw-redesign-main__tab-content .form-table tr + tr th,
+.mfw-role-based-settings .mfw-redesign-main__tab-content .form-table tr + tr td {
+	border-top: 1px solid #ece9f6;
+}
+
+/* Buttons: filled = dark uppercase pill (as "Save Settings"), outline = light pill. */
+.mfw-role-based-settings .mfw-btn {
+	background: #07070d;
+	border: 0;
+	border-radius: 999px;
+	box-shadow: 0 8px 20px rgba(7, 7, 13, 0.2);
+	color: #ffffff !important;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	line-height: 1;
+	min-width: 0;
+	padding: 13px 18px;
+	text-transform: uppercase;
+}
+
+.mfw-role-based-settings .mfw-btn:hover,
+.mfw-role-based-settings .mfw-btn:focus {
+	opacity: 0.88;
+}
+
+.mfw-role-based-settings .mfw-btn.mfw-btn__outline {
+	background: #ffffff;
+	border: 1px solid #e4e0f0;
+	box-shadow: none;
+	color: #23184b !important;
+	letter-spacing: 0;
+	text-transform: none;
+}
+
+.mfw-role-based-settings .mfw-btn.mfw-btn__outline:hover {
+	border-color: #f3a43c;
+	opacity: 1;
+}
+
+.mfw-role-based-settings .mfw-btn.mfw-btn--sm {
+	font-size: 12px;
+	padding: 8px 14px;
+}
+
+.mfw-role-based-settings .mfw-btn.mfw-btn__outline.mfw-btn--danger {
+	border-color: #f3c4c5;
+	color: #d63638 !important;
+}
+
+.mfw-role-based-settings .mfw-btn.mfw-btn__outline.mfw-btn--danger:hover {
+	background: #fcf0f1;
+	border-color: #d63638;
+}
+
+/* Toggle: orange, as the product dashboard's switches. */
+.mfw-role-based-settings .mfw-toggle {
+	height: 32px;
+	margin-right: 10px;
+	width: 58px;
+}
+
+.mfw-role-based-settings .mfw-toggle .mfw-toggle__slider {
+	background: #ffffff;
+	border: 2px solid #b8c2d1;
+}
+
+.mfw-role-based-settings .mfw-toggle .mfw-toggle__slider:before {
+	background: #8f9db2;
+	bottom: 2px;
+	height: 24px;
+	left: 2px;
+	width: 24px;
+}
+
+.mfw-role-based-settings .mfw-toggle input:checked + .mfw-toggle__slider {
+	background: #ffffff;
+	border-color: #f39b02;
+}
+
+.mfw-role-based-settings .mfw-toggle input:checked + .mfw-toggle__slider:before {
+	background: #f39b02;
+	transform: translateX(26px);
+}
+
+/* Tables. */
+.mfw-role-based-settings .mfw-table-wrap {
+	border: 1px solid #ebe8f5;
+	border-radius: 14px;
+	box-shadow: none;
+	padding: 6px 12px;
+}
+
+.mfw-role-based-settings .mfw-table-wrap thead th {
+	color: #8f89a8;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 12px;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+.mfw-role-based-settings .mfw-table-wrap .widefat td,
+.mfw-role-based-settings .mfw-table-wrap .widefat th {
+	border-color: #ece9f6;
+}
+
+.mfw-role-based-settings .mfw-table-wrap .striped > tbody > :nth-child(odd) {
+	background: #faf9fd;
+}
+
+/* Pickers, panels and badges switch from blue to the dashboard's orange accent. */
+.mfw-role-based-settings .mfw-cat-picker,
+.mfw-role-based-settings .mfw-cap-picker {
+	border-color: #ebe8f5;
+	border-radius: 12px;
+}
+
+.mfw-role-based-settings .mfw-cat-picker__head,
+.mfw-role-based-settings .mfw-cap-picker__search,
+.mfw-role-based-settings .mfw-cap-picker__tabs,
+.mfw-role-based-settings .mfw-inline-panel {
+	background: #faf9fd;
+	border-color: #ebe8f5;
+}
+
+.mfw-role-based-settings .mfw-cat-picker.has-selection .mfw-cat-picker__summary {
+	background: #fff4e3;
+	color: #b86e00;
+}
+
+.mfw-role-based-settings .mfw-link-btn,
+.mfw-role-based-settings .mfw-cap-picker__select-all,
+.mfw-role-based-settings .mfw-cap-picker__deselect-all {
+	color: #c27400;
+}
+
+.mfw-role-based-settings .mfw-link-btn:hover,
+.mfw-role-based-settings .mfw-cap-picker__select-all:hover,
+.mfw-role-based-settings .mfw-cap-picker__deselect-all:hover {
+	background: #fff4e3;
+	color: #9a5c00;
+}
+
+.mfw-role-based-settings .mfw-cat-chip {
+	border-color: #e4e0f0;
+}
+
+.mfw-role-based-settings .mfw-cat-chip:hover {
+	border-color: #f6c784;
+}
+
+.mfw-role-based-settings .mfw-cat-chip.is-checked {
+	background: #fffaf2;
+	border-color: #f39b02;
+	box-shadow: inset 0 0 0 1px #f39b02;
+}
+
+.mfw-role-based-settings .mfw-cap-picker__tab:hover {
+	background: #f3f1fa;
+}
+
+.mfw-role-based-settings .mfw-cap-picker__tab.active {
+	border-left-color: #f39b02;
+	color: #23184b;
+}
+
+.mfw-role-based-settings input[type="checkbox"]:checked {
+	accent-color: #f39b02;
+}
+
+.mfw-role-based-settings .mfw-inline-panel__result:not(:empty) {
+	color: #b86e00;
+}
+
+.mfw-role-based-settings .mfw-file-input::file-selector-button,
+.mfw-role-based-settings .mfw-file-input::-webkit-file-upload-button {
+	background-color: #23184b;
+}
+
+.mfw-role-based-settings .mfw-bar-chart__fill {
+	background: var(--mfw-accent);
+}
+
+.mfw-role-based-settings .mfw-sparkline__bar {
+	background: #f8d3a0;
+}
+
+.mfw-role-based-settings .mfw-sparkline__col:hover .mfw-sparkline__bar {
+	background: var(--mfw-accent);
+}
+
+/* Tabs use the shared dashboard's hover colour, not the old blue link hover. */
+.mfw-role-based-settings .mfw-redesign-main__navbar .mfw-tab-link:hover {
+	color: #23184b !important;
 }
