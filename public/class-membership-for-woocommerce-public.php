@@ -466,7 +466,7 @@ class Membership_For_Woocommerce_Public {
 				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 					// If non logged in or not a member.
-					if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+					if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat', $product->get_id() ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag', $product->get_id() ) ) {
 
 						$is_purchasable = false;
 					}
@@ -956,12 +956,9 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		if ( empty( $product ) ) {
-
-			$product = $_product;
-		}
-
-		$product_id         = is_object( $product ) ? $product->get_id() : get_the_ID();
+		// Prefer the explicitly passed product; fall back to the loop's global product.
+		$current_product = is_object( $_product ) ? $_product : $product;
+		$product_id      = is_object( $current_product ) ? $current_product->get_id() : get_the_ID();
 		$is_product_exclude = false;
 		if ( $this->global_class->plans_exist_check() == true ) {
 
@@ -1005,7 +1002,7 @@ class Membership_For_Woocommerce_Public {
 					$target_tag_ids  = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true );
 					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-						if ( in_array( get_the_ID(), $target_ids ) ) {
+						if ( in_array( $product_id, $target_ids ) ) {
 
 							$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 						}
@@ -3735,7 +3732,7 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 
-					if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) ) {
+					if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat', $product->get_id() ) ) ) {
 						array_push( $existing_plan_product, $product->get_id() );
 					}
 				}
@@ -3803,7 +3800,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) ) {
+						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat', $product->get_id() ) ) ) {
 
 							$existing_plan_product = ! empty( $existing_plan_product ) && is_array( $existing_plan_product ) ? $existing_plan_product : array();
 							if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
