@@ -131,7 +131,8 @@ class Mfw_Role_Based_Privacy {
 		$removed = false;
 
 		foreach ( Mfw_Role_Based_Repository::get_user_level_ids( $user->ID ) as $level_id ) {
-			Mfw_Role_Based_Repository::revoke_level_from_user( $user->ID, $level_id, 0 );
+			// Silent: an erasure request must not email the user an "access ended" notice or fire the revoke webhook.
+			Mfw_Role_Based_Repository::revoke_level_from_user( $user->ID, $level_id, 0, true );
 			$removed = true;
 		}
 

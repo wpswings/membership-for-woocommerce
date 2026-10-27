@@ -51,28 +51,99 @@ class Mfw_Role_Based_Pricing {
 	 */
 	public static function price_html( $price_html, $product ) {
 
-		$discount = self::discount_for( get_current_user_id(), $product->get_id() );
+		$user_id = get_current_user_id();
 
-		if ( $discount <= 0 || ! $product->is_purchasable() ) {
+		if ( ! $user_id || ! $product->is_purchasable() ) {
 			return $price_html;
 		}
 
-		$regular_price = (float) $product->get_price();
-		if ( $regular_price <= 0 ) {
+		if ( $product->is_type( 'variable' ) ) {
+			return self::variable_price_html( $price_html, $product, $user_id );
+		}
+
+		$discount = self::discount_for( $user_id, $product->get_id() );
+
+		if ( $discount <= 0 ) {
 			return $price_html;
 		}
 
-		$discounted_price = $regular_price - ( $regular_price * $discount / 100 );
+		$current_price = (float) $product->get_price();
+		if ( $current_price <= 0 ) {
+			return $price_html;
+		}
+
+		// The discount applies to the current (possibly sale) price, but the struck-through
+		// "original" shown is the regular price, as WooCommerce does for sales.
+		$regular_price    = max( $current_price, (float) $product->get_regular_price() );
+		$discounted_price = $current_price - ( $current_price * $discount / 100 );
 
 		$html  = wc_format_sale_price(
 			wc_get_price_to_display( $product, array( 'price' => $regular_price ) ),
 			wc_get_price_to_display( $product, array( 'price' => $discounted_price ) )
 		);
-		$html .= '<span class="mfw-role-membership-discount-badge">';
+
+		return $html . self::discount_badge( $discount );
+	}
+
+	/**
+	 * A variable product shows a price range; each variation may get a different discount
+	 * (category scoping is resolved through the parent), so discount every variation and
+	 * show the resulting range rather than collapsing it to the minimum.
+	 *
+	 * @since 3.5.0
+	 * @param string              $price_html Existing price HTML.
+	 * @param WC_Product_Variable $product    Variable product.
+	 * @param int                 $user_id    User id.
+	 * @return string
+	 */
+	private static function variable_price_html( $price_html, $product, $user_id ) {
+
+		$prices = $product->get_variation_prices( true );
+		if ( empty( $prices['price'] ) ) {
+			return $price_html;
+		}
+
+		$original   = array();
+		$discounted = array();
+		$best       = 0.0;
+
+		foreach ( $prices['price'] as $variation_id => $price ) {
+			$price    = (float) $price;
+			$regular  = max( $price, (float) ( $prices['regular_price'][ $variation_id ] ?? $price ) );
+			$discount = self::discount_for( $user_id, $variation_id );
+
+			$original[]   = $regular;
+			$discounted[] = $price - ( $price * $discount / 100 );
+			$best         = max( $best, $discount );
+		}
+
+		if ( $best <= 0 ) {
+			return $price_html;
+		}
+
+		$min_original   = min( $original );
+		$max_original   = max( $original );
+		$min_discounted = min( $discounted );
+		$max_discounted = max( $discounted );
+
+		$original_html   = $min_original === $max_original ? wc_price( $min_original ) : wc_format_price_range( $min_original, $max_original );
+		$discounted_html = $min_discounted === $max_discounted ? wc_price( $min_discounted ) : wc_format_price_range( $min_discounted, $max_discounted );
+
+		$html = '<del aria-hidden="true">' . $original_html . '</del> <ins>' . $discounted_html . '</ins>';
+
+		return $html . self::discount_badge( $best );
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param float $discount Discount percent.
+	 * @return string
+	 */
+	private static function discount_badge( $discount ) {
+		$html  = '<span class="mfw-role-membership-discount-badge">';
 		/* translators: %s: discount percentage. */
 		$html .= sprintf( esc_html__( '%s%% member discount', 'membership-for-woocommerce' ), rtrim( rtrim( number_format( $discount, 2 ), '0' ), '.' ) );
 		$html .= '</span>';
-
 		return $html;
 	}
 

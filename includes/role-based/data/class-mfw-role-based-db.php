@@ -21,7 +21,7 @@ class Mfw_Role_Based_Db {
 
 	const DB_VERSION_OPTION = 'mfw_role_based_db_version';
 
-	const DB_VERSION = '1.9.0';
+	const DB_VERSION = '1.10.0';
 
 	/**
 	 * @since 3.1.3
@@ -187,7 +187,78 @@ class Mfw_Role_Based_Db {
 			$wpdb->query( "UPDATE {$levels_table} SET tier_ladder = 1 WHERE upgrade_spend_threshold > 0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 
+		if ( $installed_version && version_compare( $installed_version, '1.10.0', '<' ) ) {
+			self::migrate_level_capabilities_to_roles();
+		}
+
 		update_option( self::DB_VERSION_OPTION, self::DB_VERSION );
+	}
+
+	/**
+	 * 1.10.0: level capabilities are granted through the level's WP role only. Older
+	 * versions also stored them directly on each member, so they survived the level being
+	 * edited, deactivated or deleted. Strip those per-user copies (the role still grants
+	 * them while the level is held), drop map entries and restriction rules that point at
+	 * levels that were deleted, and take inactive levels' roles away from their members.
+	 *
+	 * @since 3.5.0
+	 */
+	private static function migrate_level_capabilities_to_roles() {
+
+		global $wpdb;
+
+		$levels      = Mfw_Role_Based_Repository::get_levels();
+		$levels_by_id = array();
+		$level_caps  = array();
+		foreach ( $levels as $level ) {
+			$levels_by_id[ (int) $level['id'] ] = $level;
+			$level_caps = array_merge( $level_caps, (array) ( json_decode( $level['capabilities'], true ) ?: array() ) ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
+		}
+		$level_caps = array_unique( $level_caps );
+		$role_names = array_keys( wp_roles()->roles );
+
+		$user_ids = get_users(
+			array(
+				'meta_key' => Mfw_Role_Based_Repository::USER_LEVELS_META_KEY, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+				'fields'   => 'ID',
+			)
+		);
+
+		foreach ( $user_ids as $user_id ) {
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				continue;
+			}
+
+			foreach ( array_keys( (array) $user->caps ) as $cap ) {
+				if ( in_array( $cap, $level_caps, true ) && ! in_array( $cap, $role_names, true ) ) {
+					$user->remove_cap( $cap );
+				}
+			}
+
+			$map     = Mfw_Role_Based_Repository::get_user_level_map( $user_id );
+			$cleaned = array_intersect_key( $map, $levels_by_id );
+			if ( count( $cleaned ) !== count( $map ) ) {
+				update_user_meta( $user_id, Mfw_Role_Based_Repository::USER_LEVELS_META_KEY, $cleaned );
+			}
+
+			$active_roles = array();
+			foreach ( array_keys( $cleaned ) as $level_id ) {
+				if ( 'active' === $levels_by_id[ $level_id ]['status'] ) {
+					$active_roles[] = $levels_by_id[ $level_id ]['wp_role'];
+				}
+			}
+			foreach ( array_keys( $cleaned ) as $level_id ) {
+				$role = $levels_by_id[ $level_id ]['wp_role'];
+				if ( 'inactive' === $levels_by_id[ $level_id ]['status'] && ! in_array( $role, $active_roles, true ) && ! Mfw_Role_Based_Roles_Manager::is_role_locked( $role ) ) {
+					$user->remove_role( $role );
+				}
+			}
+		}
+
+		$restrictions_table = self::restrictions_table();
+		$levels_table       = self::levels_table();
+		$wpdb->query( "DELETE r FROM {$restrictions_table} r LEFT JOIN {$levels_table} l ON l.id = r.level_id WHERE r.level_id > 0 AND l.id IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**

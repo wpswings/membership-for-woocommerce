@@ -173,7 +173,7 @@ class Mfw_Role_Based_Self_Service {
 
 		$level = Mfw_Role_Based_Repository::get_level( $level_id );
 
-		if ( ! $username || ! is_email( $email ) || ! $level || empty( $level['self_signup_enabled'] ) || username_exists( $username ) || email_exists( $email ) ) {
+		if ( ! $username || ! is_email( $email ) || ! $level || 'active' !== $level['status'] || empty( $level['self_signup_enabled'] ) || Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $level ) || username_exists( $username ) || email_exists( $email ) ) {
 			wp_safe_redirect( add_query_arg( 'mfw_register', 'failed', $referer ) );
 			exit;
 		}
@@ -192,13 +192,11 @@ class Mfw_Role_Based_Self_Service {
 		wp_set_auth_cookie( $user_id );
 
 		// A paid level: the account exists, but access is granted only once payment
-		// completes (Mfw_Role_Based_Paid_Access::grant_access_from_order()) — send them
-		// straight to checkout with the level's product in the cart instead of assigning
-		// it now. A free level: unchanged, assign immediately.
+		// completes (Mfw_Role_Based_Paid_Access::grant_access_from_order()). The cart isn't
+		// loaded on admin-post.php, so hand off to the frontend "Buy Access" link, which
+		// fills the cart and goes to checkout. A free level: unchanged, assign immediately.
 		if ( Mfw_Role_Based_Paid_Access::is_purchasable( $level ) ) {
-			WC()->cart->empty_cart();
-			WC()->cart->add_to_cart( $level['wc_product_id'] );
-			wp_safe_redirect( wc_get_checkout_url() );
+			wp_safe_redirect( Mfw_Role_Based_Paid_Access::get_buy_url( $level_id ) );
 			exit;
 		}
 
@@ -276,8 +274,9 @@ class Mfw_Role_Based_Self_Service {
 
 	/**
 	 * A logged-in member switches to a different self-signup-enabled level: their current
-	 * self-signup levels are revoked (admin-assigned levels are left untouched — a member
-	 * can't self-revoke something an admin gave them) and the new one is assigned.
+	 * free self-signup levels are revoked (admin-assigned and paid levels are left
+	 * untouched — a member can't self-revoke something an admin gave them, and never loses a
+	 * purchase by switching) and the new one is assigned.
 	 *
 	 * @since 3.3.0
 	 */
@@ -295,7 +294,7 @@ class Mfw_Role_Based_Self_Service {
 		$new_level_id = isset( $_POST['level_id'] ) ? absint( $_POST['level_id'] ) : 0;
 		$new_level   = Mfw_Role_Based_Repository::get_level( $new_level_id );
 
-		if ( ! $new_level || empty( $new_level['self_signup_enabled'] ) ) {
+		if ( ! $new_level || 'active' !== $new_level['status'] || empty( $new_level['self_signup_enabled'] ) || Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $new_level ) ) {
 			wp_die( esc_html__( 'That level is not available for self-service switching.', 'membership-for-woocommerce' ) );
 		}
 
@@ -308,9 +307,16 @@ class Mfw_Role_Based_Self_Service {
 			exit;
 		}
 
-		$self_signup_ids = wp_list_pluck( Mfw_Role_Based_Repository::get_self_signup_levels(), 'id' );
+		// Only free self-signup levels are swapped out. A level the member paid for is never
+		// silently revoked by switching to a free one — that would throw away a purchase.
+		$switchable_ids = array();
+		foreach ( Mfw_Role_Based_Repository::get_self_signup_levels() as $self_signup_level ) {
+			if ( ! Mfw_Role_Based_Paid_Access::is_purchasable( $self_signup_level ) ) {
+				$switchable_ids[] = (int) $self_signup_level['id'];
+			}
+		}
 
-		foreach ( array_intersect( Mfw_Role_Based_Repository::get_user_level_ids( $user_id ), array_map( 'absint', $self_signup_ids ) ) as $old_level_id ) {
+		foreach ( array_intersect( Mfw_Role_Based_Repository::get_user_level_ids( $user_id ), $switchable_ids ) as $old_level_id ) {
 			Mfw_Role_Based_Repository::revoke_level_from_user( $user_id, $old_level_id, $user_id );
 		}
 

@@ -24,21 +24,35 @@ class Mfw_Role_Based_Paid_Access {
 	const BUY_QUERY_VAR = 'mfw_buy_level';
 
 	/**
+	 * Order meta key: level ids this order actually assigned, so a refund/cancellation
+	 * revokes exactly those (never a level the customer already held some other way).
+	 */
+	const GRANTED_LEVELS_META_KEY = '_mfw_role_based_granted_level_ids';
+
+	/**
 	 * @since 3.4.0
 	 */
 	public static function init() {
 		add_action( 'template_redirect', array( __CLASS__, 'maybe_handle_buy_click' ) );
 		add_action( 'woocommerce_order_status_completed', array( __CLASS__, 'grant_access_from_order' ) );
 		add_action( 'woocommerce_order_status_processing', array( __CLASS__, 'grant_access_from_order' ) );
+		add_action( 'woocommerce_order_status_refunded', array( __CLASS__, 'revoke_access_from_order' ) );
+		add_action( 'woocommerce_order_status_cancelled', array( __CLASS__, 'revoke_access_from_order' ) );
+		add_action( 'woocommerce_order_status_failed', array( __CLASS__, 'revoke_access_from_order' ) );
 	}
 
 	/**
+	 * Inactive levels, and levels granting admin-level capabilities, are never purchasable,
+	 * so they can't be bought via a Buy Access link.
+	 *
 	 * @since 3.4.0
 	 * @param array $level Level row.
 	 * @return bool
 	 */
 	public static function is_purchasable( $level ) {
-		return (float) $level['price'] > 0 && ! empty( $level['wc_product_id'] ) && get_post( $level['wc_product_id'] );
+		return 'active' === ( $level['status'] ?? 'active' )
+			&& ! Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $level )
+			&& (float) $level['price'] > 0 && ! empty( $level['wc_product_id'] ) && 'publish' === get_post_status( $level['wc_product_id'] );
 	}
 
 	/**
@@ -111,21 +125,7 @@ class Mfw_Role_Based_Paid_Access {
 			return;
 		}
 
-		$product_ids = array();
-		foreach ( $order->get_items() as $item ) {
-			$product_ids[] = $item->get_product_id();
-		}
-
-		if ( empty( $product_ids ) ) {
-			return;
-		}
-
-		$matched_levels = array_filter(
-			Mfw_Role_Based_Repository::get_levels(),
-			function ( $level ) use ( $product_ids ) {
-				return ! empty( $level['wc_product_id'] ) && in_array( (int) $level['wc_product_id'], $product_ids, true );
-			}
-		);
+		$matched_levels = self::get_order_levels( $order );
 
 		if ( empty( $matched_levels ) ) {
 			return;
@@ -153,10 +153,85 @@ class Mfw_Role_Based_Paid_Access {
 			return; // No email to work with — can't assign access to nobody.
 		}
 
+		$granted = array_map( 'absint', (array) $order->get_meta( self::GRANTED_LEVELS_META_KEY ) );
+
 		foreach ( $matched_levels as $level ) {
+			// The access product is reachable via ?add-to-cart= too, so re-check here.
+			if ( Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $level ) ) {
+				continue;
+			}
 			if ( ! in_array( (int) $level['id'], Mfw_Role_Based_Repository::get_user_level_ids( $user_id ), true ) ) {
-				Mfw_Role_Based_Repository::assign_level_to_user( $user_id, $level['id'], 0 );
+				if ( Mfw_Role_Based_Repository::assign_level_to_user( $user_id, $level['id'], 0 ) ) {
+					$granted[] = (int) $level['id'];
+				}
 			}
 		}
+
+		$order->update_meta_data( self::GRANTED_LEVELS_META_KEY, array_values( array_unique( array_filter( $granted ) ) ) );
+		$order->save();
+	}
+
+	/**
+	 * Takes paid access back when its order is refunded, cancelled or fails. Only the
+	 * levels this order granted are revoked; orders from before that was recorded fall back
+	 * to every level whose product is in the order.
+	 *
+	 * @since 3.5.0
+	 * @param int $order_id Order id.
+	 */
+	public static function revoke_access_from_order( $order_id ) {
+
+		$order = wc_get_order( $order_id );
+		if ( ! $order ) {
+			return;
+		}
+
+		$user_id = $order->get_customer_id();
+		if ( ! $user_id ) {
+			return;
+		}
+
+		$granted = $order->get_meta( self::GRANTED_LEVELS_META_KEY );
+
+		if ( is_array( $granted ) ) {
+			$level_ids = array_map( 'absint', $granted );
+		} else {
+			$level_ids = array_map( 'absint', wp_list_pluck( self::get_order_levels( $order ), 'id' ) );
+		}
+
+		$held = Mfw_Role_Based_Repository::get_user_level_ids( $user_id );
+
+		foreach ( $level_ids as $level_id ) {
+			if ( in_array( $level_id, $held, true ) ) {
+				Mfw_Role_Based_Repository::revoke_level_from_user( $user_id, $level_id, 0 );
+			}
+		}
+
+		$order->update_meta_data( self::GRANTED_LEVELS_META_KEY, array() );
+		$order->save();
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param WC_Order $order Order.
+	 * @return array[] Levels whose linked access product is in the order.
+	 */
+	private static function get_order_levels( $order ) {
+
+		$product_ids = array();
+		foreach ( $order->get_items() as $item ) {
+			$product_ids[] = (int) $item->get_product_id();
+		}
+
+		if ( empty( $product_ids ) ) {
+			return array();
+		}
+
+		return array_filter(
+			Mfw_Role_Based_Repository::get_levels(),
+			function ( $level ) use ( $product_ids ) {
+				return ! empty( $level['wc_product_id'] ) && in_array( (int) $level['wc_product_id'], $product_ids, true );
+			}
+		);
 	}
 }

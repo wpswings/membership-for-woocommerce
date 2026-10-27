@@ -34,14 +34,22 @@ class Mfw_Role_Based_Public {
 		// whole page — friendlier UX, and lets a restricted page still appear in listings.
 		add_filter( 'the_content', array( __CLASS__, 'filter_restricted_content' ), 8 );
 		add_filter( 'the_excerpt', array( __CLASS__, 'filter_restricted_content' ), 8 );
+		add_filter( 'the_content_feed', array( __CLASS__, 'filter_restricted_content' ), 8 );
+		add_filter( 'the_excerpt_rss', array( __CLASS__, 'filter_restricted_content' ), 8 );
+		add_filter( 'get_the_excerpt', array( __CLASS__, 'filter_restricted_excerpt' ), 8, 2 );
 
 		// Taxonomy term archive restriction has no "content" to swap, so it blocks the page.
 		add_action( 'template_redirect', array( __CLASS__, 'enforce_term_restriction' ) );
 		add_action( 'template_redirect', array( __CLASS__, 'enforce_private_site' ), 0 );
 
 		add_filter( 'woocommerce_is_purchasable', array( __CLASS__, 'enforce_product_restriction' ), 20, 2 );
+		add_filter( 'woocommerce_variation_is_purchasable', array( __CLASS__, 'enforce_product_restriction' ), 20, 2 );
 
 		add_filter( 'rest_request_before_callbacks', array( __CLASS__, 'enforce_rest_restriction' ), 10, 3 );
+		add_filter( 'rest_authentication_errors', array( __CLASS__, 'enforce_private_site_rest' ), 99 );
+		foreach ( array( 'post', 'page', 'product' ) as $rest_post_type ) {
+			add_filter( "rest_prepare_{$rest_post_type}", array( __CLASS__, 'filter_rest_post_response' ), 10, 2 );
+		}
 
 		add_shortcode( 'wps_role_membership_restricted', array( __CLASS__, 'shortcode_restricted_content' ) );
 		add_shortcode( 'wps_role_membership_level_name', array( __CLASS__, 'shortcode_level_name' ) );
@@ -139,10 +147,8 @@ class Mfw_Role_Based_Public {
 	 */
 	public static function filter_restricted_content( $content ) {
 
-		if ( ! is_singular() || ! in_the_loop() || ! is_main_query() ) {
-			return $content;
-		}
-
+		// Applies in every context the content is rendered — single views, archives, search
+		// results, feeds and REST responses — not only the singular main loop.
 		$post_id = get_the_ID();
 		if ( ! $post_id ) {
 			return $content;
@@ -154,6 +160,97 @@ class Mfw_Role_Based_Public {
 			return $content;
 		}
 
+		$output  = '<p class="mfw-role-membership-restricted">' . esc_html( self::get_restricted_message( $post_id ) ) . '</p>';
+		$output .= self::buy_access_links( get_post_type( $post_id ), $post_id );
+
+		return $output;
+	}
+
+	/**
+	 * get_the_excerpt() builds an excerpt straight from the raw post_content when no manual
+	 * excerpt exists (feeds, search results, REST `excerpt`), bypassing the_content — so the
+	 * restricted body would leak through it.
+	 *
+	 * @since 3.5.0
+	 * @param string       $excerpt Excerpt.
+	 * @param WP_Post|null $post    Post.
+	 * @return string
+	 */
+	public static function filter_restricted_excerpt( $excerpt, $post = null ) {
+
+		$post = get_post( $post );
+		if ( ! $post || Mfw_Role_Based_Repository::user_can_access_object( get_current_user_id(), $post->post_type, $post->ID ) ) {
+			return $excerpt;
+		}
+
+		return self::get_restricted_message( $post->ID );
+	}
+
+	/**
+	 * REST collection routes (/wp/v2/posts, ?include=, search…) don't go through the
+	 * single-item check in enforce_rest_restriction(), so replace the restricted body in
+	 * every prepared post response.
+	 *
+	 * @since 3.5.0
+	 * @param WP_REST_Response $response Response.
+	 * @param WP_Post          $post     Post.
+	 * @return WP_REST_Response
+	 */
+	public static function filter_rest_post_response( $response, $post ) {
+
+		if ( ! Mfw_Mode_Controller::is_role_mode() || Mfw_Role_Based_Repository::user_can_access_object( get_current_user_id(), $post->post_type, $post->ID ) ) {
+			return $response;
+		}
+
+		$data    = $response->get_data();
+		$message = '<p class="mfw-role-membership-restricted">' . esc_html( self::get_restricted_message( $post->ID ) ) . '</p>';
+
+		foreach ( array( 'content', 'excerpt' ) as $field ) {
+			if ( isset( $data[ $field ] ) && is_array( $data[ $field ] ) ) {
+				$data[ $field ]['rendered'] = $message;
+				if ( isset( $data[ $field ]['raw'] ) ) {
+					$data[ $field ]['raw'] = '';
+				}
+			}
+		}
+
+		$response->set_data( $data );
+
+		return $response;
+	}
+
+	/**
+	 * Private Site also covers the REST API — template_redirect never runs for REST, so
+	 * without this a guest could read every post through /wp-json/wp/v2/posts.
+	 *
+	 * @since 3.5.0
+	 * @param WP_Error|null|true $result Current authentication result.
+	 * @return WP_Error|null|true
+	 */
+	public static function enforce_private_site_rest( $result ) {
+
+		if ( ! empty( $result ) || is_user_logged_in() ) {
+			return $result;
+		}
+
+		if ( ! Mfw_Mode_Controller::is_role_mode() || ! Mfw_Role_Based_Admin::is_private_site_enabled() ) {
+			return $result;
+		}
+
+		return new WP_Error(
+			'mfw_role_membership_private_site',
+			__( 'This site is private. Please log in.', 'membership-for-woocommerce' ),
+			array( 'status' => rest_authorization_required_code() )
+		);
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param int $post_id Post id.
+	 * @return string The per-post restricted message, or the site-wide default.
+	 */
+	private static function get_restricted_message( $post_id ) {
+
 		$message = get_post_meta( $post_id, 'mfw_role_membership_restricted_message', true );
 
 		if ( ! $message ) {
@@ -163,10 +260,7 @@ class Mfw_Role_Based_Public {
 			);
 		}
 
-		$output  = '<p class="mfw-role-membership-restricted">' . esc_html( $message ) . '</p>';
-		$output .= self::buy_access_links( get_post_type( $post_id ), $post_id );
-
-		return $output;
+		return $message;
 	}
 
 	/**
@@ -307,13 +401,19 @@ class Mfw_Role_Based_Public {
 			return false;
 		}
 
+		// A variation has its own id; the restriction is set on its parent product.
+		$parent_id = $product->get_parent_id();
+		if ( $parent_id && ! Mfw_Role_Based_Repository::user_can_access_object( $user_id, 'product', $parent_id ) ) {
+			return false;
+		}
+
 		return $is_purchasable;
 	}
 
 	/**
 	 * Hides restricted posts from single-item REST reads (WPS-7880/7881 gap-analysis item
-	 * "REST/Gutenberg hiding"). Collection/list endpoints are not filtered in this pass —
-	 * documented as a known limitation.
+	 * "REST/Gutenberg hiding"). Collection/list endpoints are covered separately by
+	 * filter_rest_post_response(), which swaps the restricted body for the message.
 	 *
 	 * @since 3.1.3
 	 * @param mixed           $response Response to replace, or empty to continue.
@@ -362,13 +462,16 @@ class Mfw_Role_Based_Public {
 
 		$atts = shortcode_atts( array( 'level_id' => 0 ), $atts, 'wps_role_membership_restricted' );
 
-		$user_levels = Mfw_Role_Based_Repository::get_user_levels( get_current_user_id() );
+		$user_id     = get_current_user_id();
+		$user_levels = Mfw_Role_Based_Repository::get_user_active_levels( $user_id );
 
 		if ( empty( $user_levels ) ) {
 			return '';
 		}
 
-		if ( absint( $atts['level_id'] ) && ! in_array( absint( $atts['level_id'] ), wp_list_pluck( $user_levels, 'id' ), true ) ) {
+		$active_ids = array_map( 'absint', wp_list_pluck( $user_levels, 'id' ) );
+
+		if ( absint( $atts['level_id'] ) && ! in_array( absint( $atts['level_id'] ), $active_ids, true ) ) {
 			return '';
 		}
 
