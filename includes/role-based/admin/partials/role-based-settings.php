@@ -287,6 +287,9 @@ $mfw_role_tabs = array(
 									<input type="checkbox" class="mfw-role-capability" data-group="<?php echo esc_attr( sanitize_title( $group_label ) ); ?>" value="<?php echo esc_attr( $cap_slug ); ?>" />
 									<?php echo esc_html( $cap_label ); ?>
 									<code><?php echo esc_html( $cap_slug ); ?></code>
+									<?php if ( in_array( $cap_slug, Mfw_Role_Based_Repository::DANGEROUS_CAPABILITIES, true ) ) : ?>
+										<span class="description" title="<?php esc_attr_e( 'Admin-level capability. Not allowed on levels with self-signup or a price.', 'membership-for-woocommerce' ); ?>">&#9888;</span>
+									<?php endif; ?>
 								</label>
 							<?php endforeach; ?>
 						</div>
@@ -346,7 +349,7 @@ $mfw_role_tabs = array(
 							<td><?php echo esc_html( $level['level_rank'] ); ?></td>
 							<td><?php echo esc_html( $level['discount_percent'] ); ?>%</td>
 							<td>
-								<?php if ( Mfw_Role_Based_Paid_Access::is_purchasable( $level ) ) : ?>
+								<?php if ( (float) $level['price'] > 0 && ! empty( $level['wc_product_id'] ) ) : ?>
 									<?php echo wp_kses_post( wc_price( $level['price'] ) ); ?>
 									<?php if ( $level['wc_product_id'] ) : ?>
 										<a href="<?php echo esc_url( get_edit_post_link( $level['wc_product_id'] ) ); ?>" target="_blank" rel="noopener noreferrer">↗</a>

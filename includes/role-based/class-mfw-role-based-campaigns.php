@@ -133,7 +133,8 @@ class Mfw_Role_Based_Campaigns {
 		);
 
 		if ( $campaign_id && self::SEND_MODE_SCHEDULED === $send_mode && ! empty( $args['scheduled_at'] ) ) {
-			$timestamp = strtotime( $args['scheduled_at'] );
+			// scheduled_at is the site-local time the admin picked; WP-Cron wants a UTC timestamp.
+			$timestamp = strtotime( get_gmt_from_date( $args['scheduled_at'] ) );
 			if ( $timestamp ) {
 				wp_schedule_single_event( $timestamp, self::SCHEDULED_SEND_CRON_HOOK, array( $campaign_id ) );
 			}
@@ -199,7 +200,7 @@ class Mfw_Role_Based_Campaigns {
 			}
 
 			$delay_days = max( 0, (int) $campaign['drip_delay_days'] );
-			$timestamp  = strtotime( "+{$delay_days} days", current_time( 'timestamp' ) ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+			$timestamp  = time() + $delay_days * DAY_IN_SECONDS; // WP-Cron timestamps are UTC.
 
 			wp_schedule_single_event( $timestamp, self::DRIP_SEND_CRON_HOOK, array( $campaign['id'], $user_id ) );
 		}
@@ -221,6 +222,11 @@ class Mfw_Role_Based_Campaigns {
 			return;
 		}
 
+		// The member may have left the trigger level between being scheduled and now.
+		if ( ! in_array( (int) $campaign['drip_level_id'], Mfw_Role_Based_Repository::get_user_level_ids( $user_id ), true ) ) {
+			return;
+		}
+
 		self::send_to_user( $user, $campaign_id, $campaign['subject'], $campaign['message'] );
 
 		Mfw_Role_Based_Repository::log_campaign(
@@ -233,7 +239,10 @@ class Mfw_Role_Based_Campaigns {
 				'level_ids'       => json_decode( $campaign['level_ids'], true ) ?: array(), // phpcs:ignore WordPress.PHP.DisallowShortTernary
 				'recipient_count' => (int) $campaign['recipient_count'] + 1,
 				'actor_id'        => $campaign['actor_id'],
-				'status'          => 'sent', // A drip campaign shows as 'sent' once at least one recipient has received it.
+				// A drip campaign stays 'scheduled' for as long as it exists — every later member
+				// assigned the trigger level still needs it. Flipping it to 'sent' after the first
+				// delivery stopped maybe_schedule_drip_campaigns() from ever seeing it again.
+				'status'          => $campaign['status'],
 				'send_mode'       => $campaign['send_mode'],
 				'drip_level_id'   => $campaign['drip_level_id'],
 				'drip_delay_days' => $campaign['drip_delay_days'],

@@ -41,6 +41,82 @@ class Mfw_Role_Based_Repository {
 	const BYPASS_CAPABILITY = 'mfw_restrict_content';
 
 	/**
+	 * Capabilities that amount to site-admin power. A level open to self-signup or
+	 * purchase must never grant these — otherwise any anonymous visitor could register
+	 * straight into an administrator-equivalent account.
+	 */
+	const DANGEROUS_CAPABILITIES = array(
+		'manage_options',
+		'promote_users',
+		'edit_users',
+		'create_users',
+		'delete_users',
+		'remove_users',
+		'activate_plugins',
+		'install_plugins',
+		'update_plugins',
+		'delete_plugins',
+		'edit_plugins',
+		'switch_themes',
+		'install_themes',
+		'update_themes',
+		'delete_themes',
+		'edit_themes',
+		'edit_theme_options',
+		'edit_files',
+		'update_core',
+		'unfiltered_html',
+		'unfiltered_upload',
+		'import',
+		'export',
+		'delete_site',
+		'customize',
+		'manage_woocommerce',
+	);
+
+	/**
+	 * @since 3.5.0
+	 * @param string[] $capabilities Capability slugs.
+	 * @return string[] The ones that are in DANGEROUS_CAPABILITIES.
+	 */
+	public static function get_dangerous_capabilities( $capabilities ) {
+		return array_values( array_intersect( (array) $capabilities, self::DANGEROUS_CAPABILITIES ) );
+	}
+
+	/**
+	 * Whether a level row can be entered by a user on their own (self-signup or purchase).
+	 *
+	 * @since 3.5.0
+	 * @param array $level Level row (or save_level() data with `price`).
+	 * @return bool
+	 */
+	public static function is_level_publicly_joinable( $level ) {
+		return ! empty( $level['self_signup_enabled'] ) || (float) ( $level['price'] ?? 0 ) > 0;
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param array $level Level row.
+	 * @return bool True if the level is publicly joinable AND grants an admin-level capability.
+	 */
+	public static function level_has_unsafe_public_capabilities( $level ) {
+		$capabilities = json_decode( $level['capabilities'] ?? '[]', true );
+		return self::is_level_publicly_joinable( $level ) && ! empty( self::get_dangerous_capabilities( (array) $capabilities ) );
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param string $name     Level name.
+	 * @param int    $exclude_id Level id to ignore (the one being edited).
+	 * @return bool
+	 */
+	public static function level_name_exists( $name, $exclude_id = 0 ) {
+		global $wpdb;
+		$table = Mfw_Role_Based_Db::levels_table();
+		return (bool) $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE name = %s AND id != %d LIMIT 1", $name, absint( $exclude_id ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	}
+
+	/**
 	 * @since 3.1.3
 	 * @return array[] All levels, highest rank first.
 	 */
@@ -104,7 +180,7 @@ class Mfw_Role_Based_Repository {
 			'description'           => sanitize_textarea_field( $data['description'] ?? '' ),
 			'wp_role'               => sanitize_key( $data['wp_role'] ?? '' ),
 			'capabilities'          => wp_json_encode( $capabilities ),
-			'level_rank'            => absint( $data['rank'] ?? 0 ),
+			'level_rank'            => max( 0, (int) ( $data['rank'] ?? 0 ) ),
 			'discount_percent'      => min( 100, max( 0, (float) ( $data['discount_percent'] ?? 0 ) ) ),
 			'discount_category_ids' => wp_json_encode( array_map( 'absint', (array) ( $data['discount_category_ids'] ?? array() ) ) ),
 			'expiry_days'           => absint( $data['expiry_days'] ?? 0 ),
@@ -112,10 +188,28 @@ class Mfw_Role_Based_Repository {
 			'price'                 => max( 0, (float) ( $data['price'] ?? 0 ) ),
 			'upgrade_spend_threshold' => max( 0, (float) ( $data['upgrade_spend_threshold'] ?? 0 ) ),
 			'tier_ladder'           => empty( $data['tier_ladder'] ) ? 0 : 1,
-			'status'                => in_array( $data['status'] ?? 'active', array( 'active', 'inactive' ), true ) ? $data['status'] : 'active',
+			'status'                => in_array( $data['status'] ?? 'active', array( 'active', 'inactive' ), true ) ? ( $data['status'] ?? 'active' ) : 'active',
 		);
 
 		if ( '' === $row['name'] || '' === $row['wp_role'] ) {
+			return false;
+		}
+
+		// Negative ranks can't be stored (the column is unsigned) — refuse rather than silently flip the sign.
+		if ( (int) ( $data['rank'] ?? 0 ) < 0 ) {
+			return false;
+		}
+
+		$level_id       = isset( $data['id'] ) ? absint( $data['id'] ) : 0;
+		$existing_level = $level_id > 0 ? self::get_level( $level_id ) : null;
+
+		// Level names must be unique — CSV import resolves levels by name.
+		if ( self::level_name_exists( $row['name'], $level_id ) ) {
+			return false;
+		}
+
+		// A self-signup or purchasable level must never hand out admin-level capabilities.
+		if ( self::is_level_publicly_joinable( $row ) && ! empty( self::get_dangerous_capabilities( $capabilities ) ) ) {
 			return false;
 		}
 
@@ -127,8 +221,6 @@ class Mfw_Role_Based_Repository {
 		self::ensure_wp_role_exists( $row['wp_role'], $row['name'], $capabilities );
 		self::sync_role_capabilities( $row['wp_role'], $capabilities, $known_capabilities );
 
-		$level_id         = isset( $data['id'] ) ? absint( $data['id'] ) : 0;
-		$existing_level    = $level_id > 0 ? self::get_level( $level_id ) : null;
 		$row['wc_product_id'] = self::sync_level_product(
 			$existing_level ? (int) $existing_level['wc_product_id'] : 0,
 			$row['name'],
@@ -137,11 +229,85 @@ class Mfw_Role_Based_Repository {
 
 		if ( $level_id > 0 ) {
 			$updated = $wpdb->update( $table, $row, array( 'id' => $level_id ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
-			return false === $updated ? false : $level_id;
+			if ( false === $updated ) {
+				return false;
+			}
+			if ( $existing_level ) {
+				self::sync_members_after_level_change( $existing_level, self::get_level( $level_id ) );
+			}
+			return $level_id;
 		}
 
 		$inserted = $wpdb->insert( $table, $row ); // phpcs:ignore WordPress.DB.SlowDBQuery
 		return $inserted ? (int) $wpdb->insert_id : false;
+	}
+
+	/**
+	 * Keeps existing members' WP roles in line with a level after it's edited: a changed
+	 * wp_role moves members from the old role to the new one, and an inactive level stops
+	 * granting its role (re-activating it gives the role back). Capabilities live only on
+	 * the role, so this is all that's needed for members' effective capabilities to follow
+	 * the level's current state.
+	 *
+	 * @since 3.5.0
+	 * @param array $old_level Level row before the save.
+	 * @param array $new_level Level row after the save.
+	 */
+	private static function sync_members_after_level_change( $old_level, $new_level ) {
+
+		if ( ! $new_level ) {
+			return;
+		}
+
+		$role_changed   = $old_level['wp_role'] !== $new_level['wp_role'];
+		$status_changed = $old_level['status'] !== $new_level['status'];
+
+		if ( ! $role_changed && ! $status_changed ) {
+			return;
+		}
+
+		foreach ( self::get_user_ids_for_levels( array( (int) $new_level['id'] ) ) as $user_id ) {
+			$user = get_user_by( 'id', $user_id );
+			if ( ! $user ) {
+				continue;
+			}
+
+			if ( $role_changed ) {
+				self::maybe_remove_level_role( $user, $old_level['wp_role'], (int) $new_level['id'] );
+			}
+
+			if ( 'active' === $new_level['status'] ) {
+				if ( ! Mfw_Role_Based_Roles_Manager::is_role_locked( $new_level['wp_role'] ) ) {
+					$user->add_role( $new_level['wp_role'] );
+				}
+			} else {
+				self::maybe_remove_level_role( $user, $new_level['wp_role'], (int) $new_level['id'] );
+			}
+		}
+	}
+
+	/**
+	 * Removes a level's WP role from a user unless another active level they hold also
+	 * maps to it, and never a built-in role.
+	 *
+	 * @since 3.5.0
+	 * @param WP_User $user             User.
+	 * @param string  $role             Role slug.
+	 * @param int     $ignore_level_id  The level the role is being taken away for.
+	 */
+	private static function maybe_remove_level_role( $user, $role, $ignore_level_id ) {
+
+		if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $role ) ) {
+			return;
+		}
+
+		foreach ( self::get_user_levels( $user->ID ) as $held_level ) {
+			if ( (int) $held_level['id'] !== $ignore_level_id && 'active' === $held_level['status'] && $held_level['wp_role'] === $role ) {
+				return;
+			}
+		}
+
+		$user->remove_role( $role );
 	}
 
 	/**
@@ -159,25 +325,36 @@ class Mfw_Role_Based_Repository {
 	 * @param int    $existing_product_id Currently linked product id, 0 if none yet.
 	 * @param string $level_name          Level name, used as the product title.
 	 * @param float  $price               0 = no product needed.
-	 * @return int|null The linked product id, or null if there isn't one (price is 0 and
-	 *                  none existed before).
+	 * @return int|null The linked product id (possibly trashed, when the price is 0), or
+	 *                  null if there isn't one (price is 0 and none existed before).
 	 */
 	private static function sync_level_product( $existing_product_id, $level_name, $price ) {
 
 		if ( $price <= 0 ) {
-			if ( $existing_product_id && get_post( $existing_product_id ) ) {
+			if ( ! $existing_product_id || ! get_post( $existing_product_id ) ) {
+				return null;
+			}
+			if ( 'trash' !== get_post_status( $existing_product_id ) ) {
 				wp_trash_post( $existing_product_id );
 			}
-			return null;
+			// Keep the link to the trashed product so giving the level a price again
+			// restores it instead of creating a duplicate access product.
+			return $existing_product_id;
 		}
 
 		/* translators: %s: level name. */
 		$title = sprintf( __( 'Membership Access: %s', 'membership-for-woocommerce' ), $level_name );
 
-		if ( $existing_product_id && ( $product = wc_get_product( $existing_product_id ) ) ) { // phpcs:ignore Squiz.PHP.DisallowMultipleAssignments, Generic.CodeAnalysis.AssignmentInCondition
+		if ( $existing_product_id && get_post( $existing_product_id ) ) {
 			if ( 'trash' === get_post_status( $existing_product_id ) ) {
 				wp_untrash_post( $existing_product_id );
+				// wp_untrash_post() restores to draft since WP 5.6 — the access product must be live.
+				wp_update_post( array( 'ID' => $existing_product_id, 'post_status' => 'publish' ) );
 			}
+			$product = wc_get_product( $existing_product_id );
+		}
+
+		if ( ! empty( $product ) ) {
 			$product->set_name( $title );
 			$product->set_regular_price( $price );
 			$product->set_price( $price );
@@ -263,12 +440,25 @@ class Mfw_Role_Based_Repository {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::levels_table();
 
-		$level = self::get_level( $level_id );
+		$level_id = absint( $level_id );
+		$level    = self::get_level( $level_id );
 		if ( $level && ! empty( $level['wc_product_id'] ) && get_post( $level['wc_product_id'] ) ) {
 			wp_trash_post( $level['wc_product_id'] ); // Trashed, not deleted — recoverable if the level was removed by mistake.
 		}
 
-		return (int) $wpdb->delete( $table, array( 'id' => absint( $level_id ) ) );
+		// Take the level away from every member first (role, meta, log) without emailing
+		// them, so nothing keeps pointing at a level that no longer exists.
+		if ( $level ) {
+			foreach ( self::get_user_ids_for_levels( array( $level_id ) ) as $user_id ) {
+				self::revoke_level_from_user( $user_id, $level_id, get_current_user_id(), true );
+			}
+		}
+
+		// Drop restriction rules naming this level. Any object restricted to this level
+		// alone becomes unrestricted rather than locked for every non-admin forever.
+		$wpdb->delete( Mfw_Role_Based_Db::restrictions_table(), array( 'level_id' => $level_id ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+
+		return (int) $wpdb->delete( $table, array( 'id' => $level_id ) );
 	}
 
 	/**
@@ -348,7 +538,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * Assigns a user to a role-membership level: adds the WP role + its capabilities, and
+	 * Assigns a user to a role-membership level: adds the WP role (which carries the
+	 * level's capabilities), and
 	 * logs the event. A user may hold more than one level at once. Fires
 	 * `mfw_role_based_after_assign_level` for the notifications module to hook into.
 	 *
@@ -371,12 +562,10 @@ class Mfw_Role_Based_Repository {
 		}
 
 		// A level saved before built-in roles were locked must not hand out e.g. administrator.
-		if ( ! Mfw_Role_Based_Roles_Manager::is_role_locked( $level['wp_role'] ) ) {
+		// Capabilities are granted through the role only (never stored on the user), so
+		// editing, deactivating or deleting the level changes what members can do.
+		if ( 'active' === $level['status'] && ! Mfw_Role_Based_Roles_Manager::is_role_locked( $level['wp_role'] ) ) {
 			$user->add_role( $level['wp_role'] );
-		}
-
-		foreach ( json_decode( $level['capabilities'], true ) ?: array() as $cap ) { // phpcs:ignore WordPress.PHP.DisallowShortTernary
-			$user->add_cap( $cap );
 		}
 
 		$map                    = self::get_user_level_map( $user_id );
@@ -403,17 +592,19 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
-	 * Revokes a single role-membership level from a user. The mapped WP role/capabilities
-	 * are only removed if no other level still assigned to the user also grants them, so
+	 * Revokes a single role-membership level from a user. The mapped WP role is only
+	 * removed if no other level still assigned to the user also grants it, so
 	 * revoking one of several held levels never strips access granted by another.
 	 *
 	 * @since 3.1.3
-	 * @param int $user_id  User id.
-	 * @param int $level_id Level id.
-	 * @param int $actor_id User id performing the revocation (0 for system/automated).
+	 * @param int  $user_id  User id.
+	 * @param int  $level_id Level id.
+	 * @param int  $actor_id User id performing the revocation (0 for system/automated).
+	 * @param bool $silent   True to skip the after-revoke action (no "access ended" email or
+	 *                       webhook) — for privacy erasure and level deletion.
 	 * @return bool
 	 */
-	public static function revoke_level_from_user( $user_id, $level_id, $actor_id = 0 ) {
+	public static function revoke_level_from_user( $user_id, $level_id, $actor_id = 0, $silent = false ) {
 
 		$level = self::get_level( $level_id );
 		if ( ! $level ) {
@@ -429,26 +620,16 @@ class Mfw_Role_Based_Repository {
 		unset( $map[ absint( $level_id ) ] );
 		update_user_meta( $user_id, self::USER_LEVELS_META_KEY, $map );
 
-		$remaining_ids       = array_map( 'absint', array_keys( $map ) );
-		$remaining_levels    = array_filter( array_map( array( __CLASS__, 'get_level' ), $remaining_ids ) );
-		$still_granted_roles = wp_list_pluck( $remaining_levels, 'wp_role' );
-		$still_granted_caps  = array();
-		foreach ( $remaining_levels as $remaining_level ) {
-			$still_granted_caps = array_merge( $still_granted_caps, (array) ( json_decode( $remaining_level['capabilities'], true ) ?: array() ) ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
-		}
-
-		// Revoking a level must never take a built-in role (e.g. administrator) away from the user.
-		if ( ! in_array( $level['wp_role'], $still_granted_roles, true ) && ! Mfw_Role_Based_Roles_Manager::is_role_locked( $level['wp_role'] ) ) {
-			$user->remove_role( $level['wp_role'] );
-		}
-
-		foreach ( json_decode( $level['capabilities'], true ) ?: array() as $cap ) { // phpcs:ignore WordPress.PHP.DisallowShortTernary
-			if ( ! in_array( $cap, $still_granted_caps, true ) ) {
-				$user->remove_cap( $cap );
-			}
-		}
+		// Revoking a level must never take a built-in role (e.g. administrator) away from
+		// the user. Capabilities come from the role, so nothing is stripped from the user
+		// directly — a capability they held on their own before joining stays with them.
+		self::maybe_remove_level_role( $user, $level['wp_role'], (int) $level_id );
 
 		self::log_event( $user_id, $level_id, 'revoked', $actor_id );
+
+		if ( $silent ) {
+			return true;
+		}
 
 		/**
 		 * Fires after a user's role-membership level is revoked.
@@ -554,8 +735,46 @@ class Mfw_Role_Based_Repository {
 	 * @return array|null
 	 */
 	public static function get_user_level( $user_id ) {
-		$levels = self::get_user_levels( $user_id );
-		return $levels ? $levels[0] : null; // get_levels()/get_user_levels() are already rank-sorted desc.
+		$levels = self::get_user_active_levels( $user_id );
+		if ( ! $levels ) {
+			$levels = self::get_user_levels( $user_id );
+		}
+		usort(
+			$levels,
+			function ( $a, $b ) {
+				return ( (int) $b['level_rank'] <=> (int) $a['level_rank'] ) ?: ( (int) $b['id'] <=> (int) $a['id'] ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
+			}
+		);
+		return $levels ? $levels[0] : null;
+	}
+
+	/**
+	 * The user's levels that currently grant access: the level is active and this user's
+	 * assignment hasn't passed its expires_at. Checked live, so access ends at the expiry
+	 * moment rather than whenever the daily expiry cron next runs.
+	 *
+	 * @since 3.5.0
+	 * @param int $user_id User id.
+	 * @return array[]
+	 */
+	public static function get_user_active_levels( $user_id ) {
+
+		$map    = self::get_user_level_map( $user_id );
+		$now    = current_time( 'timestamp' ); // phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+		$active = array();
+
+		foreach ( self::get_user_levels( $user_id ) as $level ) {
+			if ( 'active' !== $level['status'] ) {
+				continue;
+			}
+			$expires_at = $map[ (int) $level['id'] ]['expires_at'] ?? null;
+			if ( $expires_at && strtotime( $expires_at ) && strtotime( $expires_at ) <= $now ) {
+				continue;
+			}
+			$active[] = $level;
+		}
+
+		return $active;
 	}
 
 	/**
@@ -568,12 +787,7 @@ class Mfw_Role_Based_Repository {
 	 * @return bool
 	 */
 	public static function user_has_role_access( $user_id ) {
-		foreach ( self::get_user_levels( $user_id ) as $level ) {
-			if ( 'active' === $level['status'] ) {
-				return true;
-			}
-		}
-		return false;
+		return ! empty( self::get_user_active_levels( $user_id ) );
 	}
 
 	/**
@@ -583,10 +797,8 @@ class Mfw_Role_Based_Repository {
 	 */
 	public static function get_user_max_rank( $user_id ) {
 		$max = 0;
-		foreach ( self::get_user_levels( $user_id ) as $level ) {
-			if ( 'active' === $level['status'] ) {
-				$max = max( $max, (int) $level['level_rank'] );
-			}
+		foreach ( self::get_user_active_levels( $user_id ) as $level ) {
+			$max = max( $max, (int) $level['level_rank'] );
 		}
 		return $max;
 	}
@@ -619,8 +831,8 @@ class Mfw_Role_Based_Repository {
 	 */
 	public static function get_user_ladder_rank( $user_id ) {
 		$rank = -1;
-		foreach ( self::get_user_levels( $user_id ) as $level ) {
-			if ( 'active' === $level['status'] && ! empty( $level['tier_ladder'] ) ) {
+		foreach ( self::get_user_active_levels( $user_id ) as $level ) {
+			if ( ! empty( $level['tier_ladder'] ) ) {
 				$rank = max( $rank, (int) $level['level_rank'] );
 			}
 		}
@@ -714,16 +926,15 @@ class Mfw_Role_Based_Repository {
 
 		$product_category_ids = null;
 		if ( null !== $product_id && function_exists( 'wc_get_product_term_ids' ) ) {
-			$product_category_ids = wc_get_product_term_ids( $product_id, 'product_cat' );
+			// Variations carry no product_cat terms of their own — use the parent's.
+			$parent_id            = (int) wp_get_post_parent_id( $product_id );
+			$category_source_id   = ( $parent_id && 'product_variation' === get_post_type( $product_id ) ) ? $parent_id : $product_id;
+			$product_category_ids = wc_get_product_term_ids( $category_source_id, 'product_cat' );
 		}
 
 		$max = 0.0;
 
-		foreach ( self::get_user_levels( $user_id ) as $level ) {
-
-			if ( 'active' !== $level['status'] ) {
-				continue;
-			}
+		foreach ( self::get_user_active_levels( $user_id ) as $level ) {
 
 			if ( null !== $product_category_ids ) {
 				$scope = json_decode( $level['discount_category_ids'] ?? '', true );
@@ -867,7 +1078,8 @@ class Mfw_Role_Based_Repository {
 		}
 
 		if ( null !== $restriction['min_rank'] ) {
-			return self::get_user_max_rank( $user_id ) >= $restriction['min_rank'];
+			// A rank rule always needs an active level — a rank of 0 must not let guests in.
+			return self::user_has_role_access( $user_id ) && self::get_user_max_rank( $user_id ) >= $restriction['min_rank'];
 		}
 
 		if ( empty( $restriction['level_ids'] ) ) {
@@ -878,7 +1090,7 @@ class Mfw_Role_Based_Repository {
 			return false;
 		}
 
-		$user_level_ids   = array_map( 'absint', wp_list_pluck( self::get_user_levels( $user_id ), 'id' ) );
+		$user_level_ids     = array_map( 'absint', wp_list_pluck( self::get_user_active_levels( $user_id ), 'id' ) );
 		$matching_level_ids = array_intersect( $user_level_ids, $restriction['level_ids'] );
 
 		if ( empty( $matching_level_ids ) ) {
@@ -941,7 +1153,7 @@ class Mfw_Role_Based_Repository {
 			return false;
 		}
 
-		if ( (int) $post->post_author === (int) $user_id ) {
+		if ( (int) $user_id > 0 && (int) $post->post_author === (int) $user_id ) {
 			return true;
 		}
 
@@ -1108,7 +1320,8 @@ class Mfw_Role_Based_Repository {
 			array_filter(
 				self::get_levels(),
 				function ( $level ) {
-					return 'active' === $level['status'] && ! empty( $level['self_signup_enabled'] );
+					// A level saved before admin-level capabilities were blocked on public levels is never offered.
+					return 'active' === $level['status'] && ! empty( $level['self_signup_enabled'] ) && ! self::level_has_unsafe_public_capabilities( $level );
 				}
 			)
 		);

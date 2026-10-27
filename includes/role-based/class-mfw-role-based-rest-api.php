@@ -53,7 +53,7 @@ class Mfw_Role_Based_Rest_Api {
 				'callback'            => array( __CLASS__, 'get_member' ),
 				'permission_callback' => array( __CLASS__, 'can_manage' ),
 				'args'                => array(
-					'user_id' => array( 'validate_callback' => 'is_numeric' ),
+					'user_id' => array( 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
 				),
 			)
 		);
@@ -66,8 +66,8 @@ class Mfw_Role_Based_Rest_Api {
 				'callback'            => array( __CLASS__, 'assign' ),
 				'permission_callback' => array( __CLASS__, 'can_manage' ),
 				'args'                => array(
-					'user_id'  => array( 'validate_callback' => 'is_numeric' ),
-					'level_id' => array( 'required' => true, 'validate_callback' => 'is_numeric' ),
+					'user_id'  => array( 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
+					'level_id' => array( 'required' => true, 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
 				),
 			)
 		);
@@ -80,11 +80,23 @@ class Mfw_Role_Based_Rest_Api {
 				'callback'            => array( __CLASS__, 'revoke' ),
 				'permission_callback' => array( __CLASS__, 'can_manage' ),
 				'args'                => array(
-					'user_id'  => array( 'validate_callback' => 'is_numeric' ),
-					'level_id' => array( 'required' => true, 'validate_callback' => 'is_numeric' ),
+					'user_id'  => array( 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
+					'level_id' => array( 'required' => true, 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
 				),
 			)
 		);
+	}
+
+	/**
+	 * WordPress passes ($value, $request, $param) to a validate_callback, and PHP 8 internal
+	 * functions like is_numeric() reject the extra arguments — so wrap it.
+	 *
+	 * @since 3.5.0
+	 * @param mixed $value Param value.
+	 * @return bool
+	 */
+	public static function validate_numeric( $value ) {
+		return is_numeric( $value );
 	}
 
 	/**

@@ -436,7 +436,7 @@ class Mfw_Role_Based_Admin {
 			'description'           => isset( $_POST['description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['description'] ) ) : '',
 			'wp_role'               => isset( $_POST['wp_role'] ) ? sanitize_key( wp_unslash( $_POST['wp_role'] ) ) : '',
 			'capabilities'          => isset( $_POST['capabilities'] ) ? array_map( 'sanitize_key', (array) wp_unslash( $_POST['capabilities'] ) ) : array(),
-			'rank'                  => isset( $_POST['rank'] ) ? absint( $_POST['rank'] ) : 0,
+			'rank'                  => isset( $_POST['rank'] ) ? (int) $_POST['rank'] : 0,
 			'discount_percent'      => isset( $_POST['discount_percent'] ) ? (float) $_POST['discount_percent'] : 0,
 			'discount_category_ids' => isset( $_POST['discount_category_ids'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['discount_category_ids'] ) ) : array(),
 			'expiry_days'           => isset( $_POST['expiry_days'] ) ? absint( $_POST['expiry_days'] ) : 0,
@@ -449,6 +449,27 @@ class Mfw_Role_Based_Admin {
 
 		if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $data['wp_role'] ) ) {
 			wp_send_json_error( array( 'message' => __( 'A level can\'t use a built-in WordPress or WooCommerce role. Pick a custom role or type a new role slug.', 'membership-for-woocommerce' ) ) );
+		}
+
+		if ( $data['rank'] < 0 ) {
+			wp_send_json_error( array( 'message' => __( 'Rank can\'t be negative.', 'membership-for-woocommerce' ) ) );
+		}
+
+		if ( '' !== $data['name'] && Mfw_Role_Based_Repository::level_name_exists( $data['name'], $data['id'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Another level already uses this name. Please choose a unique name.', 'membership-for-woocommerce' ) ) );
+		}
+
+		$dangerous = Mfw_Role_Based_Repository::get_dangerous_capabilities( $data['capabilities'] );
+		if ( ! empty( $dangerous ) && Mfw_Role_Based_Repository::is_level_publicly_joinable( $data ) ) {
+			wp_send_json_error(
+				array(
+					'message' => sprintf(
+						/* translators: %s: comma-separated capability slugs. */
+						__( 'A level with self-signup or a price can\'t grant admin-level capabilities, because anyone could join it: %s. Remove these capabilities, or turn off self-signup and set the price to 0.', 'membership-for-woocommerce' ),
+						implode( ', ', $dangerous )
+					),
+				)
+			);
 		}
 
 		$level_id = Mfw_Role_Based_Repository::save_level( $data, self::all_known_capabilities() );
@@ -496,6 +517,13 @@ class Mfw_Role_Based_Admin {
 		$message     = isset( $_POST['restricted_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['restricted_message'] ) ) : '';
 
 		if ( ! $object_type || ! $object_id || ! current_user_can( 'edit_post', $object_id ) ) {
+			wp_send_json_error( array( 'message' => __( 'Missing object reference.', 'membership-for-woocommerce' ) ) );
+		}
+
+		// This endpoint only restricts posts — and only as the post's own type. Terms are
+		// saved from the term edit screen (save_term_restriction(), manage_categories), so
+		// an author can't pass object_type=term with their own post id to lock a term.
+		if ( get_post_type( $object_id ) !== $object_type ) {
 			wp_send_json_error( array( 'message' => __( 'Missing object reference.', 'membership-for-woocommerce' ) ) );
 		}
 
@@ -705,7 +733,11 @@ class Mfw_Role_Based_Admin {
 		);
 
 		if ( Mfw_Role_Based_Campaigns::SEND_MODE_SCHEDULED === $send_mode ) {
-			$args['scheduled_at'] = isset( $_POST['campaign_scheduled_at'] ) ? gmdate( 'Y-m-d H:i:s', strtotime( sanitize_text_field( wp_unslash( $_POST['campaign_scheduled_at'] ) ) ) ) : null;
+			$scheduled_input      = isset( $_POST['campaign_scheduled_at'] ) ? sanitize_text_field( wp_unslash( $_POST['campaign_scheduled_at'] ) ) : '';
+			$scheduled_timestamp  = '' !== $scheduled_input ? strtotime( $scheduled_input ) : false;
+			// An unparseable date must be rejected — gmdate( false ) would store 1970-01-01
+			// and the campaign would go to the whole audience at the next cron run.
+			$args['scheduled_at'] = $scheduled_timestamp ? gmdate( 'Y-m-d H:i:s', $scheduled_timestamp ) : null;
 			if ( ! $args['scheduled_at'] ) {
 				wp_safe_redirect( add_query_arg( 'mfw_campaign', 'invalid', $redirect ) );
 				exit;

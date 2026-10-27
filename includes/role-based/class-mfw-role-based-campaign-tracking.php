@@ -174,15 +174,64 @@ class Mfw_Role_Based_Campaign_Tracking {
 			exit;
 		}
 
-		if ( $campaign_id && $user_id && hash_equals( self::token( $campaign_id, $user_id ), $token ) ) {
-			Mfw_Role_Based_Repository::record_campaign_event( $campaign_id, $user_id, 'click', $original_url );
+		$valid_token = $campaign_id && $user_id && hash_equals( self::token( $campaign_id, $user_id ), $token );
+
+		// Only follow an off-site URL when the token is valid AND the URL is one of the
+		// campaign's own links — otherwise the click endpoint is an open redirect anyone
+		// could use to front phishing links with this site's domain.
+		if ( ! $valid_token || ! self::campaign_contains_url( $campaign_id, $user_id, $original_url ) ) {
+			wp_safe_redirect( wp_validate_redirect( $original_url, home_url( '/' ) ) );
+			exit;
 		}
 
-		// wp_safe_redirect() would silently refuse an off-site URL (falling back to
-		// wp-admin) — a campaign message legitimately can link off-site, and its content
-		// already went through wp_kses_post() when the campaign was composed by an admin,
-		// so a plain wp_redirect() to the already-sanitized URL is appropriate here.
+		Mfw_Role_Based_Repository::record_campaign_event( $campaign_id, $user_id, 'click', $original_url );
+
+		// wp_safe_redirect() would silently refuse an off-site URL — a campaign message
+		// legitimately can link off-site, and this URL is verified above to be one the
+		// admin put in the campaign, so a plain wp_redirect() is appropriate here.
 		wp_redirect( $original_url ); // phpcs:ignore WordPress.Security.SafeRedirect
 		exit;
+	}
+
+	/**
+	 * @since 3.5.0
+	 * @param int    $campaign_id Campaign id.
+	 * @param int    $user_id     Recipient id, used to fill {placeholders} inside links.
+	 * @param string $url         Destination URL from the click link.
+	 * @return bool Whether the campaign's message actually links to $url.
+	 */
+	private static function campaign_contains_url( $campaign_id, $user_id, $url ) {
+
+		$campaign = Mfw_Role_Based_Repository::get_campaign( $campaign_id );
+		if ( ! $campaign ) {
+			return false;
+		}
+
+		$message = (string) $campaign['message'];
+		$user    = get_user_by( 'id', $user_id );
+		if ( $user ) {
+			$message = strtr(
+				$message,
+				array(
+					'{display_name}' => $user->display_name,
+					'{user_email}'   => $user->user_email,
+					'{site_name}'    => get_bloginfo( 'name' ),
+				)
+			);
+		}
+
+		$url = html_entity_decode( $url, ENT_QUOTES );
+
+		if ( ! preg_match_all( '/href=["\'](https?:\/\/[^"\']+)["\']/i', $message, $matches ) ) {
+			return false;
+		}
+
+		foreach ( $matches[1] as $href ) {
+			if ( html_entity_decode( esc_url_raw( html_entity_decode( $href, ENT_QUOTES ) ), ENT_QUOTES ) === $url ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
