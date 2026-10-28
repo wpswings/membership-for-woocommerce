@@ -477,21 +477,18 @@ class Membership_For_Woocommerce_Public {
 
 						$is_purchasable = false;
 					}
-				} else {
-					// Check if current product is accessible by any activated membership id.
-					if ( true == $this->is_accessible_to_member( $product ) ) {
+				} elseif ( true == $this->is_accessible_to_member( $product ) ) {
+					// Current product is accessible by an activated membership.
+					$is_purchasable = true;
 
-						$is_purchasable = true;
+					if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
 
-						if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
-
-							$is_purchasable = false;
-						}
-					} elseif ( $this->global_class->plans_exist_check() == true ) {
-							$is_purchasable = true;
-					} else {
 						$is_purchasable = false;
 					}
+				} elseif ( $this->global_class->plans_exist_check() == true ) {
+					$is_purchasable = true;
+				} else {
+					$is_purchasable = false;
 				}
 			} else {
 
@@ -1793,6 +1790,7 @@ class Membership_For_Woocommerce_Public {
 					if ( 0 < $plan_products_count ) {
 
 						$plan_products_text = sprintf(
+							/* translators: %d: number of products in the plan. */
 							_n( '%d product', '%d products', $plan_products_count, 'membership-for-woocommerce' ),
 							$plan_products_count
 						);
@@ -2289,8 +2287,8 @@ class Membership_For_Woocommerce_Public {
 		// Check if the file is in a user-specific directory or validate ownership via metadata.
 		$is_owner = false;
 		if ( false !== strpos( $file_dir, '/' . $current_user_id . '/' ) ||
-		     false !== strpos( $file_dir, '/user_' . $current_user_id . '/' ) ||
-		     false !== strpos( $file_dir, '/membership-receipts/' ) ) {
+			false !== strpos( $file_dir, '/user_' . $current_user_id . '/' ) ||
+			false !== strpos( $file_dir, '/membership-receipts/' ) ) {
 			$is_owner = true;
 		}
 
@@ -5365,13 +5363,12 @@ class Membership_For_Woocommerce_Public {
 					}
 
 					// Fetch the user data in a single query.
-					$id_list    = implode( ',', array_map( 'intval', $user_ids ) );
+					$user_ids   = array_map( 'intval', $user_ids );
 					$users_data = $wpdb->get_results(
-						"
-						SELECT ID, display_name, user_email 
-						FROM $wpdb->users 
-						WHERE ID IN ($id_list)
-					",
+						$wpdb->prepare(
+							"SELECT ID, display_name, user_email FROM {$wpdb->users} WHERE ID IN (" . implode( ', ', array_fill( 0, count( $user_ids ), '%d' ) ) . ')',
+							$user_ids
+						),
 						ARRAY_A
 					);
 

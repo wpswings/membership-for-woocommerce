@@ -17,6 +17,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Dashboard_Widget {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -29,6 +31,8 @@ class Mfw_Role_Based_Dashboard_Widget {
 	}
 
 	/**
+	 * Register widget.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function register_widget() {
@@ -45,6 +49,8 @@ class Mfw_Role_Based_Dashboard_Widget {
 	}
 
 	/**
+	 * Render the screen.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function render() {

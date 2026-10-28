@@ -31,6 +31,8 @@ class Mfw_Admin_Menu_Visibility {
 	const PURCHASE_PLANS_MENU_SLUG = 'edit.php?post_type=wps_cpt_membership';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {

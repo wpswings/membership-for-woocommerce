@@ -27,6 +27,8 @@ class Mfw_Role_Based_Webhooks {
 	const EVENT_CAMPAIGN_SENT  = 'campaign_sent';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -35,6 +37,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Lifecycle events that can trigger a webhook.
+	 *
 	 * @since 3.3.0
 	 * @return string[] Valid event keys.
 	 */
@@ -43,6 +47,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Get webhooks.
+	 *
 	 * @since 3.3.0
 	 * @return array<string,string> event key => webhook URL (only configured ones).
 	 */
@@ -52,6 +58,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Save webhooks.
+	 *
 	 * @since 3.3.0
 	 * @param array<string,string> $webhooks event key => webhook URL.
 	 */
@@ -66,6 +74,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Fire.
+	 *
 	 * @since 3.3.0
 	 * @param string $event   One of self::events().
 	 * @param array  $payload Data to send as the webhook's JSON body.
@@ -95,6 +105,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Handle a level being assigned to a user.
+	 *
 	 * @since 3.3.0
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.
@@ -111,6 +123,8 @@ class Mfw_Role_Based_Webhooks {
 	}
 
 	/**
+	 * Handle a level being revoked from a user.
+	 *
 	 * @since 3.3.0
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.

@@ -26,6 +26,8 @@ class Mfw_Role_Based_Expiry {
 	const REMINDER_DAYS_BEFORE = 3;
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -90,6 +92,8 @@ class Mfw_Role_Based_Expiry {
 	}
 
 	/**
+	 * Send reminder.
+	 *
 	 * @since 3.3.0
 	 * @param int    $user_id    User id.
 	 * @param int    $level_id   Level id.
@@ -107,8 +111,8 @@ class Mfw_Role_Based_Expiry {
 		/* translators: %s: level name. */
 		$subject = sprintf( __( 'Your %s membership is expiring soon', 'membership-for-woocommerce' ), $level['name'] );
 
-		/* translators: 1: display name, 2: level name, 3: expiry date. */
 		$message = sprintf(
+			/* translators: 1: display name, 2: level name, 3: expiry date. */
 			__( 'Hi %1$s, your "%2$s" membership level is set to expire on %3$s. Contact us if you\'d like it renewed.', 'membership-for-woocommerce' ),
 			$user->display_name,
 			$level['name'],

@@ -21,6 +21,8 @@ class Mfw_Role_Based_User_Assignment {
 	const NONCE_ACTION = 'mfw_role_based_user_levels';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -40,6 +42,8 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
+	 * Render profile fields.
+	 *
 	 * @since 3.1.3
 	 * @param WP_User $user The user being edited.
 	 */
@@ -81,6 +85,8 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
+	 * Save profile fields.
+	 *
 	 * @since 3.1.3
 	 * @param int $user_id The user being saved.
 	 */
@@ -132,6 +138,8 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
+	 * Handle bulk actions.
+	 *
 	 * @since 3.1.3
 	 * @param string $redirect_to Redirect URL.
 	 * @param string $doaction    The bulk action being performed.
@@ -167,6 +175,8 @@ class Mfw_Role_Based_User_Assignment {
 	}
 
 	/**
+	 * Render bulk action notice.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function render_bulk_action_notice() {

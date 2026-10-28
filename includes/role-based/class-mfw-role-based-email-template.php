@@ -22,6 +22,8 @@ class Mfw_Role_Based_Email_Template {
 	const FOOTER_TEXT_OPTION = 'mfw_role_based_email_footer_text';
 
 	/**
+	 * Get header color.
+	 *
 	 * @since 3.3.0
 	 * @return string
 	 */
@@ -31,6 +33,8 @@ class Mfw_Role_Based_Email_Template {
 	}
 
 	/**
+	 * Get footer text.
+	 *
 	 * @since 3.3.0
 	 * @return string
 	 */
@@ -39,6 +43,8 @@ class Mfw_Role_Based_Email_Template {
 	}
 
 	/**
+	 * Save settings.
+	 *
 	 * @since 3.3.0
 	 * @param string $header_color Hex color, e.g. '#2196f3'.
 	 * @param string $footer_text  Plain text or simple HTML footer.
@@ -85,7 +91,7 @@ class Mfw_Role_Based_Email_Template {
 					</tr>
 					<tr>
 						<td style="padding:32px;color:#333333;font-size:14px;line-height:1.6;">
-							<?php echo $body_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php echo wp_kses_post( $body_html ); ?>
 						</td>
 					</tr>
 					<?php if ( $footer_text || $footnote ) : ?>
@@ -111,6 +117,8 @@ class Mfw_Role_Based_Email_Template {
 	}
 
 	/**
+	 * Content type for HTML emails.
+	 *
 	 * @since 3.3.0
 	 * @return string
 	 */

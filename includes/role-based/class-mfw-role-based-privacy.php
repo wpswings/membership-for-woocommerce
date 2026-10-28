@@ -18,6 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Privacy {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -26,6 +28,8 @@ class Mfw_Role_Based_Privacy {
 	}
 
 	/**
+	 * Register exporter.
+	 *
 	 * @since 3.3.0
 	 * @param array $exporters Existing exporters.
 	 * @return array
@@ -39,6 +43,8 @@ class Mfw_Role_Based_Privacy {
 	}
 
 	/**
+	 * Register eraser.
+	 *
 	 * @since 3.3.0
 	 * @param array $erasers Existing erasers.
 	 * @return array
@@ -52,6 +58,8 @@ class Mfw_Role_Based_Privacy {
 	}
 
 	/**
+	 * Export data as a download.
+	 *
 	 * @since 3.3.0
 	 * @param string $email_address The requester's email.
 	 * @param int    $page          Page number (unused — this user's data is always small
@@ -62,7 +70,10 @@ class Mfw_Role_Based_Privacy {
 
 		$user = get_user_by( 'email', $email_address );
 		if ( ! $user ) {
-			return array( 'data' => array(), 'done' => true );
+			return array(
+				'data' => array(),
+				'done' => true,
+			);
 		}
 
 		$items = array();
@@ -74,9 +85,18 @@ class Mfw_Role_Based_Privacy {
 				'group_label' => __( 'Role-Based Membership', 'membership-for-woocommerce' ),
 				'item_id'     => 'mfw-level-' . $level['id'],
 				'data'        => array(
-					array( 'name' => __( 'Level', 'membership-for-woocommerce' ), 'value' => $level['name'] ),
-					array( 'name' => __( 'Assigned', 'membership-for-woocommerce' ), 'value' => $assignment['assigned_at'] ?? '' ),
-					array( 'name' => __( 'Expires', 'membership-for-woocommerce' ), 'value' => $assignment['expires_at'] ?? __( 'Never', 'membership-for-woocommerce' ) ),
+					array(
+						'name' => __( 'Level', 'membership-for-woocommerce' ),
+						'value' => $level['name'],
+					),
+					array(
+						'name' => __( 'Assigned', 'membership-for-woocommerce' ),
+						'value' => $assignment['assigned_at'] ?? '',
+					),
+					array(
+						'name' => __( 'Expires', 'membership-for-woocommerce' ),
+						'value' => $assignment['expires_at'] ?? __( 'Never', 'membership-for-woocommerce' ),
+					),
 				),
 			);
 		}
@@ -88,7 +108,10 @@ class Mfw_Role_Based_Privacy {
 					'group_label' => __( 'Role-Based Membership Login History', 'membership-for-woocommerce' ),
 					'item_id'     => 'mfw-login-' . $entry['created_at'],
 					'data'        => array(
-						array( 'name' => __( 'Logged in at', 'membership-for-woocommerce' ), 'value' => $entry['created_at'] ),
+						array(
+							'name' => __( 'Logged in at', 'membership-for-woocommerce' ),
+							'value' => $entry['created_at'],
+						),
 					),
 				);
 			}
@@ -100,7 +123,10 @@ class Mfw_Role_Based_Privacy {
 				'group_label' => __( 'Role-Based Membership', 'membership-for-woocommerce' ),
 				'item_id'     => 'mfw-campaign-preference',
 				'data'        => array(
-					array( 'name' => __( 'Campaign emails', 'membership-for-woocommerce' ), 'value' => __( 'Opted out', 'membership-for-woocommerce' ) ),
+					array(
+						'name' => __( 'Campaign emails', 'membership-for-woocommerce' ),
+						'value' => __( 'Opted out', 'membership-for-woocommerce' ),
+					),
 				),
 			);
 		}
@@ -125,7 +151,12 @@ class Mfw_Role_Based_Privacy {
 
 		$user = get_user_by( 'email', $email_address );
 		if ( ! $user ) {
-			return array( 'items_removed' => false, 'items_retained' => false, 'messages' => array(), 'done' => true );
+			return array(
+				'items_removed' => false,
+				'items_retained' => false,
+				'messages' => array(),
+				'done' => true,
+			);
 		}
 
 		$removed = false;

@@ -23,6 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Admin_Assets {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -31,6 +33,8 @@ class Mfw_Admin_Assets {
 	}
 
 	/**
+	 * Enqueue when requested.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function maybe_enqueue() {

@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Loader {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {

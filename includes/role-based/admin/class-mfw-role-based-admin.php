@@ -180,6 +180,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Every capability the level editor offers.
+	 *
 	 * @since 3.1.3
 	 * @return string[] Every capability slug across every group (curated + discovered).
 	 */
@@ -215,6 +217,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -248,6 +252,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Restrictable taxonomies.
+	 *
 	 * @since 3.1.3
 	 * @return string[] Public, non-attachment taxonomy names.
 	 */
@@ -256,6 +262,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Whether Private Site mode is enabled.
+	 *
 	 * @since 3.1.3
 	 * @return bool
 	 */
@@ -264,6 +272,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Get login heading.
+	 *
 	 * @since 3.1.3
 	 * @return string Custom heading shown above the membership login form, or ''.
 	 */
@@ -272,6 +282,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Get login notice.
+	 *
 	 * @since 3.1.3
 	 * @return string Admin-designed notice HTML shown on the membership login page, or ''.
 	 */
@@ -280,6 +292,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Whether the login page notice is shown.
+	 *
 	 * @since 3.1.3
 	 * @return bool Whether the notice should be shown at all.
 	 */
@@ -288,6 +302,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Register menu.
+	 *
 	 * @since 3.1.3
 	 * @param array $menus Existing menu entries.
 	 * @return array
@@ -310,6 +326,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Render page.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function render_page() {
@@ -335,17 +353,24 @@ class Mfw_Role_Based_Admin {
 		$email_header_color   = Mfw_Role_Based_Email_Template::get_header_color();
 		$email_footer_text    = Mfw_Role_Based_Email_Template::get_footer_text();
 		$webhooks             = Mfw_Role_Based_Webhooks::get_webhooks();
-		$product_categories   = taxonomy_exists( 'product_cat' ) ? get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false ) ) : array();
+		$product_categories   = taxonomy_exists( 'product_cat' ) ? get_terms(
+			array(
+				'taxonomy' => 'product_cat',
+				'hide_empty' => false,
+			)
+		) : array();
 		$level_distribution   = Mfw_Role_Based_Repository::get_level_distribution();
 		$signups_per_day      = Mfw_Role_Based_Repository::get_signups_per_day( 30 );
 		$total_campaign_stats = Mfw_Role_Based_Repository::get_total_campaign_stats();
 		$campaign_count       = count( $campaigns );
 		$role_user_counts     = Mfw_Role_Based_Roles_Manager::get_role_user_counts();
 
-		include dirname( __FILE__ ) . '/partials/role-based-settings.php';
+		include __DIR__ . '/partials/role-based-settings.php';
 	}
 
 	/**
+	 * Register restriction metabox.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function register_restriction_metabox() {
@@ -368,6 +393,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * Render restriction metabox.
+	 *
 	 * @since 3.1.3
 	 * @param WP_Post $post Current post.
 	 */
@@ -379,7 +406,7 @@ class Mfw_Role_Based_Admin {
 		$restricted_message = get_post_meta( $post->ID, 'mfw_role_membership_restricted_message', true );
 		$nonce             = wp_create_nonce( self::NONCE_ACTION );
 
-		include dirname( __FILE__ ) . '/partials/role-based-restriction-metabox.php';
+		include __DIR__ . '/partials/role-based-restriction-metabox.php';
 	}
 
 	/**
@@ -442,10 +469,12 @@ class Mfw_Role_Based_Admin {
 		$restriction = Mfw_Role_Based_Repository::get_restriction( 'term', $term->term_id );
 		$nonce       = wp_create_nonce( self::NONCE_ACTION );
 
-		include dirname( __FILE__ ) . '/partials/role-based-term-restriction.php';
+		include __DIR__ . '/partials/role-based-term-restriction.php';
 	}
 
 	/**
+	 * Save term restriction.
+	 *
 	 * @since 3.1.3
 	 * @param int $term_id Term id.
 	 */
@@ -465,6 +494,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: save level.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function ajax_save_level() {
@@ -527,6 +558,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: delete level.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function ajax_delete_level() {
@@ -544,6 +577,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: save restriction.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function ajax_save_restriction() {
@@ -584,6 +619,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: save general settings.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function ajax_save_general_settings() {
@@ -647,6 +684,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: save email template.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function ajax_save_email_template() {
@@ -666,6 +705,8 @@ class Mfw_Role_Based_Admin {
 	}
 
 	/**
+	 * AJAX handler: save webhooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function ajax_save_webhooks() {

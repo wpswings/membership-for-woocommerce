@@ -20,6 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Csv {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -29,6 +31,8 @@ class Mfw_Role_Based_Csv {
 	}
 
 	/**
+	 * Send download headers for an export file.
+	 *
 	 * @since 3.3.0
 	 * @param string $filename Download filename.
 	 */
@@ -39,6 +43,8 @@ class Mfw_Role_Based_Csv {
 	}
 
 	/**
+	 * Export members.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function export_members() {
@@ -78,6 +84,8 @@ class Mfw_Role_Based_Csv {
 	}
 
 	/**
+	 * Export campaigns.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function export_campaigns() {

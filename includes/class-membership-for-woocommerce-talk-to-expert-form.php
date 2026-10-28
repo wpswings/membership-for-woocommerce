@@ -260,8 +260,9 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 			);
 		}
 
-		$form_data = isset( $_POST['form_data'] ) ? wp_unslash( $_POST['form_data'] ) : '';
-		$form_data = is_string( $form_data ) ? json_decode( $form_data, true ) : array();
+		// The payload is a JSON string; each field is sanitized again in wps_mfw_sanitize_submission().
+		$form_data = isset( $_POST['form_data'] ) ? sanitize_textarea_field( wp_unslash( $_POST['form_data'] ) ) : '';
+		$form_data = '' !== $form_data ? json_decode( $form_data, true ) : array();
 
 		if ( ! is_array( $form_data ) ) {
 			wp_send_json_error(
@@ -335,7 +336,7 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 
 			$submitted_services = array_filter(
 				array_map( 'sanitize_text_field', $raw_services ),
-				static function( $service ) {
+				static function ( $service ) {
 					return '' !== $service;
 				}
 			);
@@ -438,7 +439,7 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 				array_values(
 					array_filter(
 						array_map( 'strval', $field_value ),
-						static function( $value ) {
+						static function ( $value ) {
 							return '' !== $value;
 						}
 					)
@@ -633,9 +634,7 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 			return false;
 		}
 
-		$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name );
-
-		return $table_name === (string) $wpdb->get_var( $query );
+		return $table_name === (string) $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $table_name ) );
 	}
 
 	/**
@@ -651,13 +650,14 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 		}
 
 		$paid_statuses = self::wps_mfw_get_paid_status_values();
-		$placeholders  = implode( ', ', array_fill( 0, count( $paid_statuses ), '%s' ) );
 		$start_date    = gmdate( 'Y-m-d H:i:s', strtotime( '-12 months' ) );
-		$sql           = "SELECT COALESCE(SUM(total_sales), 0) FROM {$table_name} WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid != '0000-00-00 00:00:00' AND date_paid >= %s AND status IN ({$placeholders})";
-		$args          = array_merge( array( $sql, $start_date ), $paid_statuses );
-		$query         = call_user_func_array( array( $wpdb, 'prepare' ), $args );
 
-		return (float) $wpdb->get_var( $query );
+		return (float) $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT COALESCE(SUM(total_sales), 0) FROM %i WHERE parent_id = 0 AND date_paid IS NOT NULL AND date_paid != '0000-00-00 00:00:00' AND date_paid >= %s AND status IN (" . implode( ', ', array_fill( 0, count( $paid_statuses ), '%s' ) ) . ')',
+				array_merge( array( $table_name, $start_date ), $paid_statuses )
+			)
+		);
 	}
 
 	/**
@@ -670,7 +670,7 @@ class Membership_For_Woocommerce_Talk_To_Expert_Form {
 			return 0.0;
 		}
 
-		$cutoff_timestamp = strtotime( '-12 months', current_time( 'timestamp', true ) );
+		$cutoff_timestamp = strtotime( '-12 months', time() );
 		$orders           = wc_get_orders(
 			array(
 				'limit'   => -1,
