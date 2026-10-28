@@ -508,3 +508,8 @@
 .mfw-role-membership-buy-access:hover {
 	opacity: 0.92;
 }
+
+/* Login page: login / register panels. */
+.mfw-role-auth-panel[hidden] {
+	display: none !important;
+}

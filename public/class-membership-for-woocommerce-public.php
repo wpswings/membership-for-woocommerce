@@ -3670,6 +3670,13 @@ class Membership_For_Woocommerce_Public {
 	 * @return boolean
 	 */
 	public function wps_membership_make_membership_product_purchasable( $is_purchasable, $product ) {
+		// Role-based mode restricts products through its own rules
+		// (Mfw_Role_Based_Public::enforce_product_restriction()); purchase-based plans left
+		// over from purchase mode must not lock products there.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return $is_purchasable;
+		}
+
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
 			return $is_purchasable;
@@ -5738,6 +5745,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
+		// Purchase limits are a purchase-based membership feature; role-based mode has no
+		// purchase-based plans, so it must not limit (or empty) role members' carts.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return $passed;
+		}
+
 		// restrict user based on his membership.
 		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
@@ -5800,6 +5813,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_restrict_purchase_quantity_by_membership() {
 
+		// Purchase limits are a purchase-based membership feature; role-based mode has no
+		// purchase-based plans, so it must not limit (or empty) role members' carts.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return;
+		}
+
 		// restrict user based on his membership.
 		$membership_ids      = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		static $notice_added = false; // Prevent duplicate notices.
@@ -5851,6 +5870,12 @@ class Membership_For_Woocommerce_Public {
 		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
 
 			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+
+			// 0 (or empty) means no limit, as in wps_msfw_validate_quantity_before_add() —
+			// otherwise set_quantity( 0 ) silently removes every item from the cart.
+			if ( $wps_msfw_global_product_purchase_limit_qty <= 0 ) {
+				return;
+			}
 
 			// Enforce limit in cart.
 			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {

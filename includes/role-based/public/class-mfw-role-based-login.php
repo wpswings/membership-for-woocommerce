@@ -157,10 +157,6 @@ class Mfw_Role_Based_Login {
 			return ob_get_clean();
 		}
 
-		if ( isset( $_GET['login'] ) && 'failed' === $_GET['login'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-			echo '<p class="mfw-role-error">' . esc_html__( 'Incorrect username or password.', 'membership-for-woocommerce' ) . '</p>';
-		}
-
 		$requested_redirect = isset( $_GET['redirect_to'] ) ? esc_url_raw( wp_unslash( $_GET['redirect_to'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( $requested_redirect ) {
@@ -173,27 +169,71 @@ class Mfw_Role_Based_Login {
 			$redirect = home_url( '/' );
 		}
 
-		wp_login_form(
-			array(
-				'redirect'       => $redirect,
-				'form_id'        => 'mfw-role-membership-loginform',
-				'label_username' => __( 'Username or Email', 'membership-for-woocommerce' ),
-				'label_password' => __( 'Password', 'membership-for-woocommerce' ),
-				'label_remember' => __( 'Remember Me', 'membership-for-woocommerce' ),
-				'label_log_in'   => __( 'Log In', 'membership-for-woocommerce' ),
-				'remember'       => true,
-			)
-		);
-
-		echo '<p class="mfw-role-links"><a href="' . esc_url( wp_lostpassword_url( get_permalink() ) ) . '">' . esc_html__( 'Lost your password?', 'membership-for-woocommerce' ) . '</a></p>';
-
 		// Not every visitor hitting this page already has an account — most obviously under
-		// Private Site, where this is the *only* page a logged-out visitor can reach at all.
-		// Without this, a brand-new visitor has a username/password form and no way forward.
-		$register_url = Mfw_Role_Based_Self_Service::get_register_page_url();
-		if ( $register_url ) {
-			echo '<p class="mfw-role-links">' . esc_html__( 'New here?', 'membership-for-woocommerce' ) . ' <a href="' . esc_url( $register_url ) . '">' . esc_html__( 'Join Membership', 'membership-for-woocommerce' ) . '</a></p>';
-		}
+		// Private Site, where this is the *only* page a logged-out visitor can reach at all,
+		// or after clicking a Buy Access link. So registration lives right here too.
+		$show_register = isset( $_GET['mfw_register'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		?>
+		<div class="mfw-role-auth-panel" id="mfw-role-login-panel" <?php echo $show_register ? 'hidden' : ''; ?>>
+			<?php
+			if ( isset( $_GET['login'] ) && 'failed' === $_GET['login'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				echo '<p class="mfw-role-error">' . esc_html__( 'Incorrect username or password.', 'membership-for-woocommerce' ) . '</p>';
+			}
+
+			wp_login_form(
+				array(
+					'redirect'       => $redirect,
+					'form_id'        => 'mfw-role-membership-loginform',
+					'label_username' => __( 'Username or Email', 'membership-for-woocommerce' ),
+					'label_password' => __( 'Password', 'membership-for-woocommerce' ),
+					'label_remember' => __( 'Remember Me', 'membership-for-woocommerce' ),
+					'label_log_in'   => __( 'Log In', 'membership-for-woocommerce' ),
+					'remember'       => true,
+				)
+			);
+			?>
+			<p class="mfw-role-links"><a href="<?php echo esc_url( wp_lostpassword_url( get_permalink() ) ); ?>"><?php esc_html_e( 'Lost your password?', 'membership-for-woocommerce' ); ?></a></p>
+			<p class="mfw-role-links">
+				<?php esc_html_e( 'Don\'t have an account?', 'membership-for-woocommerce' ); ?>
+				<a href="#mfw-role-register-panel" data-mfw-auth-show="mfw-role-register-panel"><?php esc_html_e( 'Register', 'membership-for-woocommerce' ); ?></a>
+			</p>
+		</div>
+
+		<div class="mfw-role-auth-panel" id="mfw-role-register-panel" <?php echo $show_register ? '' : 'hidden'; ?>>
+			<h3><?php esc_html_e( 'Create an account', 'membership-for-woocommerce' ); ?></h3>
+			<?php
+			echo Mfw_Role_Based_Self_Service::render_register_form( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+				array(
+					'level_optional' => true,
+					'redirect_to'    => $redirect,
+				)
+			);
+			?>
+			<p class="mfw-role-links">
+				<?php esc_html_e( 'Already have an account?', 'membership-for-woocommerce' ); ?>
+				<a href="#mfw-role-login-panel" data-mfw-auth-show="mfw-role-login-panel"><?php esc_html_e( 'Log in', 'membership-for-woocommerce' ); ?></a>
+			</p>
+		</div>
+		<script>
+		( function () {
+			document.addEventListener( 'click', function ( e ) {
+				var link = e.target.closest( '[data-mfw-auth-show]' );
+				if ( ! link ) {
+					return;
+				}
+				e.preventDefault();
+				var target = link.getAttribute( 'data-mfw-auth-show' );
+				document.querySelectorAll( '.mfw-role-auth-panel' ).forEach( function ( panel ) {
+					panel.hidden = panel.id !== target;
+				} );
+			} );
+			if ( '#mfw-role-register-panel' === window.location.hash ) {
+				document.getElementById( 'mfw-role-login-panel' ).hidden    = true;
+				document.getElementById( 'mfw-role-register-panel' ).hidden = false;
+			}
+		} )();
+		</script>
+		<?php
 
 		echo '</div>';
 
