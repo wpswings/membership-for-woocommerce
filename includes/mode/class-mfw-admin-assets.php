@@ -63,7 +63,7 @@ class Mfw_Admin_Assets {
 
 		$role_css_deps = array( 'wps-admin-shared-css' );
 
-		if ( Mfw_Role_Based_Admin::PAGE_SLUG === $page ) {
+		if ( in_array( $page, $our_pages, true ) ) {
 			// Same dashboard chrome as the product-based settings page (status strip, tabs,
 			// hero, help sidebar, "Talk to an Expert" modal).
 			wp_enqueue_style(

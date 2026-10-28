@@ -40,33 +40,57 @@ class Mfw_Role_Based_Mode_Switch {
 	public static function render() {
 
 		$current_mode = Mfw_Mode_Controller::get_mode();
+		$target_mode  = Mfw_Mode_Controller::MODE_PURCHASE === $current_mode ? Mfw_Mode_Controller::MODE_ROLE : Mfw_Mode_Controller::MODE_PURCHASE;
+		$modes        = Mfw_Onboarding_Mode_Screen::get_mode_details();
 		$nonce        = wp_create_nonce( self::NONCE_ACTION );
 		?>
-		<p>
-			<?php
-			printf(
-				/* translators: %s: current mode label. */
-				esc_html__( 'Current mode: %s', 'membership-for-woocommerce' ),
-				'<strong>' . ( Mfw_Mode_Controller::MODE_PURCHASE === $current_mode
-					? esc_html__( 'Purchase-based', 'membership-for-woocommerce' )
-					: esc_html__( 'Role-based', 'membership-for-woocommerce' ) ) . '</strong>'
-			);
-			?>
-		</p>
-		<p><?php esc_html_e( 'Switching does not delete any data — plans, members, roles, and levels from both modes are kept, and access already granted stays intact.', 'membership-for-woocommerce' ); ?></p>
-		<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-switch-mode-btn" data-target-mode="<?php echo esc_attr( Mfw_Mode_Controller::MODE_PURCHASE === $current_mode ? Mfw_Mode_Controller::MODE_ROLE : Mfw_Mode_Controller::MODE_PURCHASE ); ?>">
-			<?php
-			echo Mfw_Mode_Controller::MODE_PURCHASE === $current_mode
-				? esc_html__( 'Switch to role-based mode', 'membership-for-woocommerce' )
-				: esc_html__( 'Switch to purchase-based mode', 'membership-for-woocommerce' );
-			?>
-		</button>
+		<div class="mfw-card">
+			<h2><?php esc_html_e( 'Active membership mode', 'membership-for-woocommerce' ); ?></h2>
+			<div class="mfw-mode-cards">
+				<?php
+				foreach ( $modes as $mode => $details ) {
+					if ( $mode === $current_mode ) {
+						$actions = sprintf(
+							'<a class="mfw-btn" href="%1$s">%2$s</a>',
+							esc_url( $details['url'] ),
+							esc_html__( 'Open settings', 'membership-for-woocommerce' )
+						);
+					} else {
+						$actions = sprintf(
+							'<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-switch-mode-btn" data-target-mode="%1$s">%2$s</button>',
+							esc_attr( $mode ),
+							/* translators: %s: mode name. */
+							esc_html( sprintf( __( 'Switch to %s mode', 'membership-for-woocommerce' ), strtolower( $details['title'] ) ) )
+						);
+					}
+					Mfw_Onboarding_Mode_Screen::render_mode_card( $mode, $details, $mode === $current_mode, $actions );
+				}
+				?>
+			</div>
+		</div>
 
-		<div id="mfw-switch-mode-modal" class="mfw-modal-backdrop">
+		<div class="mfw-card mfw-mode-safe-note">
+			<span class="dashicons dashicons-shield" aria-hidden="true"></span>
+			<div>
+				<h2><?php esc_html_e( 'Switching is safe', 'membership-for-woocommerce' ); ?></h2>
+				<p class="description"><?php esc_html_e( 'Switching does not delete any data — plans, members, roles, and levels from both modes are kept, and access already granted stays intact. Only the active settings menus and storefront behaviour change.', 'membership-for-woocommerce' ); ?></p>
+			</div>
+		</div>
+
+		<div id="mfw-switch-mode-modal" class="mfw-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="mfw-switch-mode-title">
 			<div class="mfw-modal">
+				<h2 id="mfw-switch-mode-title">
+					<?php
+					/* translators: %s: mode name. */
+					echo esc_html( sprintf( __( 'Switch to %s mode?', 'membership-for-woocommerce' ), strtolower( $modes[ $target_mode ]['title'] ) ) );
+					?>
+				</h2>
 				<p><?php esc_html_e( 'Are you sure you want to switch membership modes? This does not delete any data and can be reversed at any time.', 'membership-for-woocommerce' ); ?></p>
-				<button type="button" class="mfw-btn" id="mfw-confirm-switch-mode"><?php esc_html_e( 'Confirm switch', 'membership-for-woocommerce' ); ?></button>
-				<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-cancel-switch-mode"><?php esc_html_e( 'Cancel', 'membership-for-woocommerce' ); ?></button>
+				<p class="mfw-modal__error" id="mfw-switch-mode-error" role="alert"></p>
+				<div class="mfw-modal__actions">
+					<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-cancel-switch-mode"><?php esc_html_e( 'Cancel', 'membership-for-woocommerce' ); ?></button>
+					<button type="button" class="mfw-btn" id="mfw-confirm-switch-mode"><?php esc_html_e( 'Confirm switch', 'membership-for-woocommerce' ); ?></button>
+				</div>
 			</div>
 		</div>
 		<script>
@@ -75,17 +99,58 @@ class Mfw_Role_Based_Mode_Switch {
 			var modal      = document.getElementById( 'mfw-switch-mode-modal' );
 			var confirmBtn = document.getElementById( 'mfw-confirm-switch-mode' );
 			var cancelBtn  = document.getElementById( 'mfw-cancel-switch-mode' );
+			var errorBox   = document.getElementById( 'mfw-switch-mode-error' );
+			var failText   = <?php echo wp_json_encode( __( 'Could not switch modes. Please try again.', 'membership-for-woocommerce' ) ); ?>;
 
-			openBtn.addEventListener( 'click', function () { modal.style.display = 'block'; } );
-			cancelBtn.addEventListener( 'click', function () { modal.style.display = 'none'; } );
+			function closeModal() {
+				if ( ! confirmBtn.disabled ) {
+					modal.style.display = 'none';
+				}
+			}
+
+			openBtn.addEventListener( 'click', function () {
+				errorBox.textContent = '';
+				modal.style.display = 'block';
+				confirmBtn.focus();
+			} );
+			cancelBtn.addEventListener( 'click', closeModal );
+			modal.addEventListener( 'click', function ( e ) {
+				if ( e.target === modal ) {
+					closeModal();
+				}
+			} );
+			document.addEventListener( 'keydown', function ( e ) {
+				if ( 'Escape' === e.key && 'block' === modal.style.display ) {
+					closeModal();
+				}
+			} );
 
 			confirmBtn.addEventListener( 'click', function () {
 				var data = new FormData();
 				data.append( 'action', 'mfw_switch_membership_mode' );
 				data.append( 'nonce', <?php echo wp_json_encode( $nonce ); ?> );
 				data.append( 'mode', openBtn.getAttribute( 'data-target-mode' ) );
+
+				confirmBtn.classList.add( 'is-loading' );
+				confirmBtn.disabled = true;
+				cancelBtn.disabled  = true;
+				errorBox.textContent = '';
+
 				fetch( ajaxurl, { method: 'POST', credentials: 'same-origin', body: data } )
-					.then( function () { window.location.reload(); } );
+					.then( function ( response ) { return response.json(); } )
+					.then( function ( json ) {
+						if ( json && json.success ) {
+							window.location.reload();
+							return;
+						}
+						throw { mfwMessage: json && json.data && json.data.message ? json.data.message : failText };
+					} )
+					.catch( function ( err ) {
+						confirmBtn.classList.remove( 'is-loading' );
+						confirmBtn.disabled = false;
+						cancelBtn.disabled  = false;
+						errorBox.textContent = err && err.mfwMessage ? err.mfwMessage : failText;
+					} );
 			} );
 		} )();
 		</script>

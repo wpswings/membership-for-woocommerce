@@ -93,24 +93,124 @@ class Mfw_Onboarding_Mode_Screen {
 			return;
 		}
 
-		echo '<div class="mfw-membership-mode-page">';
-		echo '<div class="wps-header-container"><span class="wps-header-title">' . esc_html__( 'Membership Mode', 'membership-for-woocommerce' ) . '</span></div>';
-		echo '<div class="mfw-card">';
+		$mfw_pro_is_active = function_exists( 'check_membership_pro_plugin_is_active' ) && check_membership_pro_plugin_is_active();
+		$mode_selected     = Mfw_Mode_Controller::is_mode_selected();
+		?>
+		<div class="mfw-redesign-shell mfw-role-based-settings mfw-membership-mode-page">
+			<div class="mfw-redesign-shell__status-strip">
+				<span class="mfw-redesign-shell__status-badge"><?php echo $mfw_pro_is_active ? esc_html__( 'PRO ACTIVE', 'membership-for-woocommerce' ) : esc_html__( 'LITE ACTIVE', 'membership-for-woocommerce' ); ?></span>
+				<span class="mfw-redesign-shell__status-text"><?php echo $mfw_pro_is_active ? esc_html__( 'Membership For WooCommerce Pro', 'membership-for-woocommerce' ) : esc_html__( 'Membership For WooCommerce', 'membership-for-woocommerce' ); ?> &middot; <?php esc_html_e( 'Membership Mode', 'membership-for-woocommerce' ); ?></span>
+				<span class="mfw-redesign-shell__status-version"><?php echo esc_html( 'v' . MEMBERSHIP_FOR_WOOCOMMERCE_VERSION ); ?></span>
+			</div>
 
-		if ( ! Mfw_Mode_Controller::is_mode_selected() ) {
-			self::render_chooser();
-		} else {
-			/**
-			 * Fires on the Membership Mode page once a mode has already been chosen,
-			 * so the mode-switch UI (WPS-7883) can render itself here.
-			 *
-			 * @since 3.1.3
-			 */
-			do_action( 'mfw_render_mode_switch_ui' );
+			<main class="wps-main wps-bg-white wps-r-8 mfw-redesign-main">
+				<section class="wps-section mfw-redesign-main__section">
+					<div class="mfw-redesign-main__content-wrap">
+						<div class="mfw-redesign-main__content-col">
+							<div class="mfw-redesign-main__hero">
+								<div class="mfw-redesign-main__hero-copy">
+									<p class="mfw-redesign-main__hero-eyebrow"><?php esc_html_e( 'Settings', 'membership-for-woocommerce' ); ?></p>
+									<h2 class="mfw-redesign-main__hero-title"><?php esc_html_e( 'Membership Mode', 'membership-for-woocommerce' ); ?></h2>
+									<p class="mfw-redesign-main__hero-description">
+										<?php
+										echo $mode_selected
+											? esc_html__( 'Choose how customers get membership access on this site. You can switch at any time — no plans, members, roles or levels are ever deleted.', 'membership-for-woocommerce' )
+											: esc_html__( 'Pick how memberships work on this site. This is a one-time choice you can change later from this same page.', 'membership-for-woocommerce' );
+										?>
+									</p>
+								</div>
+							</div>
+
+							<div class="mfw-redesign-main__tab-content">
+								<?php
+								if ( ! $mode_selected ) {
+									self::render_chooser();
+								} else {
+									/**
+									 * Fires on the Membership Mode page once a mode has already been chosen,
+									 * so the mode-switch UI (WPS-7883) can render itself here.
+									 *
+									 * @since 3.1.3
+									 */
+									do_action( 'mfw_render_mode_switch_ui' );
+								}
+								?>
+							</div>
+						</div>
+
+						<?php require MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'admin/partials/membership-for-woocommerce-admin-sidebar.php'; ?>
+					</div>
+				</section>
+			</main>
+		</div>
+		<?php
+		if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
+			Membership_For_Woocommerce_Talk_To_Expert_Form::wps_mfw_render_modal();
 		}
+	}
 
-		echo '</div>';
-		echo '</div>';
+	/**
+	 * Feature list shown on each mode card, shared by the first-run chooser and the switch UI.
+	 *
+	 * @since 3.1.3
+	 * @return array[] Keyed by mode: title, tagline, features, url (the mode's settings page).
+	 */
+	public static function get_mode_details() {
+
+		return array(
+			Mfw_Mode_Controller::MODE_PURCHASE => array(
+				'title'    => __( 'Purchase-based', 'membership-for-woocommerce' ),
+				'tagline'  => __( 'Customers buy a membership plan to gain access.', 'membership-for-woocommerce' ),
+				'features' => array(
+					__( 'Sell membership plans as WooCommerce products', 'membership-for-woocommerce' ),
+					__( 'Plan-based discounts, free shipping and product access', 'membership-for-woocommerce' ),
+					__( 'Membership duration, renewals and plan pages', 'membership-for-woocommerce' ),
+				),
+				'url'      => admin_url( 'admin.php?page=membership_for_woocommerce_menu' ),
+			),
+			Mfw_Mode_Controller::MODE_ROLE     => array(
+				'title'    => __( 'Role-based', 'membership-for-woocommerce' ),
+				'tagline'  => __( 'Access is granted by WordPress role and membership level.', 'membership-for-woocommerce' ),
+				'features' => array(
+					__( 'Levels mapped to WordPress roles and capabilities', 'membership-for-woocommerce' ),
+					__( 'Free self-signup, paid levels and spend-based tier ladder', 'membership-for-woocommerce' ),
+					__( 'Content restriction, private site, campaigns and reports', 'membership-for-woocommerce' ),
+				),
+				'url'      => admin_url( 'admin.php?page=' . Mfw_Role_Based_Admin::PAGE_SLUG ),
+			),
+		);
+	}
+
+	/**
+	 * Renders one mode card.
+	 *
+	 * @since 3.1.3
+	 * @param string $mode    Mode key.
+	 * @param array  $details One entry from get_mode_details().
+	 * @param bool   $current Whether this is the active mode.
+	 * @param string $actions Pre-escaped HTML for the card's action area.
+	 */
+	public static function render_mode_card( $mode, $details, $current, $actions ) {
+		?>
+		<div class="mfw-mode-card<?php echo $current ? ' is-current' : ''; ?>" data-mode="<?php echo esc_attr( $mode ); ?>">
+			<div class="mfw-mode-card__head">
+				<span class="mfw-mode-card__icon dashicons <?php echo Mfw_Mode_Controller::MODE_ROLE === $mode ? 'dashicons-groups' : 'dashicons-cart'; ?>" aria-hidden="true"></span>
+				<?php if ( $current ) : ?>
+					<span class="mfw-mode-card__badge"><?php esc_html_e( 'Current mode', 'membership-for-woocommerce' ); ?></span>
+				<?php endif; ?>
+			</div>
+			<h3 class="mfw-mode-card__title"><?php echo esc_html( $details['title'] ); ?></h3>
+			<p class="mfw-mode-card__tagline"><?php echo esc_html( $details['tagline'] ); ?></p>
+			<ul class="mfw-mode-card__features">
+				<?php foreach ( $details['features'] as $feature ) : ?>
+					<li><span class="dashicons dashicons-yes" aria-hidden="true"></span><?php echo esc_html( $feature ); ?></li>
+				<?php endforeach; ?>
+			</ul>
+			<div class="mfw-mode-card__actions">
+				<?php echo $actions; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from escaped parts by the caller. ?>
+			</div>
+		</div>
+		<?php
 	}
 
 	/**
@@ -122,21 +222,20 @@ class Mfw_Onboarding_Mode_Screen {
 
 		$nonce = wp_create_nonce( self::NONCE_ACTION );
 		?>
-		<p><?php esc_html_e( 'This is a one-time choice you can change later from this same page.', 'membership-for-woocommerce' ); ?></p>
-		<div class="mfw-mode-cards">
-			<div class="mfw-mode-card">
-				<h2><?php esc_html_e( 'Purchase-based', 'membership-for-woocommerce' ); ?></h2>
-				<p><?php esc_html_e( 'Customers buy a membership plan/product to gain access. This is the existing behavior.', 'membership-for-woocommerce' ); ?></p>
-				<button type="button" class="mfw-btn mfw-choose-mode" data-mode="<?php echo esc_attr( Mfw_Mode_Controller::MODE_PURCHASE ); ?>">
-					<?php esc_html_e( 'Use purchase-based mode', 'membership-for-woocommerce' ); ?>
-				</button>
-			</div>
-			<div class="mfw-mode-card">
-				<h2><?php esc_html_e( 'Role-based', 'membership-for-woocommerce' ); ?></h2>
-				<p><?php esc_html_e( 'Access is granted by WordPress role/capability instead of purchase — no checkout required.', 'membership-for-woocommerce' ); ?></p>
-				<button type="button" class="mfw-btn mfw-choose-mode" data-mode="<?php echo esc_attr( Mfw_Mode_Controller::MODE_ROLE ); ?>">
-					<?php esc_html_e( 'Use role-based mode', 'membership-for-woocommerce' ); ?>
-				</button>
+		<div class="mfw-card">
+			<h2><?php esc_html_e( 'Choose your membership mode', 'membership-for-woocommerce' ); ?></h2>
+			<div class="mfw-mode-cards">
+				<?php
+				foreach ( self::get_mode_details() as $mode => $details ) {
+					$actions = sprintf(
+						'<button type="button" class="mfw-btn mfw-choose-mode" data-mode="%1$s">%2$s</button>',
+						esc_attr( $mode ),
+						/* translators: %s: mode name. */
+						esc_html( sprintf( __( 'Use %s mode', 'membership-for-woocommerce' ), strtolower( $details['title'] ) ) )
+					);
+					self::render_mode_card( $mode, $details, false, $actions );
+				}
+				?>
 			</div>
 		</div>
 		<script>
@@ -145,6 +244,8 @@ class Mfw_Onboarding_Mode_Screen {
 			for ( var i = 0; i < buttons.length; i++ ) {
 				buttons[ i ].addEventListener( 'click', function ( e ) {
 					var mode = e.currentTarget.getAttribute( 'data-mode' );
+					e.currentTarget.classList.add( 'is-loading' );
+					e.currentTarget.disabled = true;
 					var data = new FormData();
 					data.append( 'action', 'mfw_save_membership_mode_initial' );
 					data.append( 'mode', mode );

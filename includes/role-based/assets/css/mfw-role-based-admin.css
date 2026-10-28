@@ -850,7 +850,8 @@
 
 /* The shared redesign stylesheet scopes its palette + page background to the product
    settings screen's body class; mirror them for this screen so every var(--mfw-*) resolves. */
-.wp-swings_page_mfw_role_based_membership {
+.wp-swings_page_mfw_role_based_membership,
+.wp-swings_page_mfw_choose_membership_mode {
 	--mfw-bg: #f5f4fb;
 	--mfw-panel: #ffffff;
 	--mfw-panel-soft: #fbfbff;
@@ -864,7 +865,10 @@
 
 .wp-swings_page_mfw_role_based_membership #wpbody,
 .wp-swings_page_mfw_role_based_membership #wpcontent,
-.wp-swings_page_mfw_role_based_membership #wpbody-content {
+.wp-swings_page_mfw_role_based_membership #wpbody-content,
+.wp-swings_page_mfw_choose_membership_mode #wpbody,
+.wp-swings_page_mfw_choose_membership_mode #wpcontent,
+.wp-swings_page_mfw_choose_membership_mode #wpbody-content {
 	background: var(--mfw-bg) !important;
 }
 
@@ -1208,4 +1212,182 @@
 	display: inline-block;
 	margin-top: 2px;
 	word-break: break-all;
+}
+
+/* ---------- Membership Mode page (same dashboard chrome as Role-Based Membership) ---------- */
+.wp-swings_page_mfw_choose_membership_mode #wpbody-content > .notice,
+.wp-swings_page_mfw_choose_membership_mode #wpbody-content > .error,
+.wp-swings_page_mfw_choose_membership_mode #wpbody-content > .updated {
+	margin: 14px 15px 0 0;
+}
+
+.mfw-membership-mode-page .mfw-mode-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 14px;
+	margin-top: 0;
+}
+
+.mfw-membership-mode-page .mfw-mode-card {
+	display: flex;
+	flex-direction: column;
+	background: #fbfbff;
+	border: 1px solid #ebe8f5;
+	border-radius: 16px;
+	box-shadow: none;
+	padding: 22px;
+}
+
+.mfw-membership-mode-page .mfw-mode-card:hover {
+	border-color: #f3a43c;
+	box-shadow: 0 8px 20px rgba(35, 24, 75, 0.06);
+}
+
+.mfw-membership-mode-page .mfw-mode-card.is-current {
+	background: #fff9f0;
+	border-color: #f3a43c;
+}
+
+.mfw-mode-card__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 14px;
+}
+
+.mfw-mode-card__icon.dashicons {
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: #f1eefb;
+	color: #23184b;
+	font-size: 22px;
+	line-height: 44px;
+	text-align: center;
+}
+
+.mfw-mode-card.is-current .mfw-mode-card__icon.dashicons {
+	background: #f3a43c;
+	color: #ffffff;
+}
+
+.mfw-mode-card__badge {
+	background: #e7f6ec;
+	border-radius: 999px;
+	color: #1a7f37;
+	font-family: "NunitoSans-Bold", sans-serif;
+	font-size: 11px;
+	letter-spacing: 0.04em;
+	padding: 5px 12px;
+	text-transform: uppercase;
+}
+
+.mfw-membership-mode-page .mfw-mode-card .mfw-mode-card__title {
+	color: #23184b;
+	font-family: "NunitoSans-ExtraBold", sans-serif;
+	font-size: 20px;
+	margin: 0 0 6px;
+}
+
+.mfw-membership-mode-page .mfw-mode-card .mfw-mode-card__tagline {
+	color: #6f6987;
+	font-size: 13px;
+	line-height: 1.6;
+	margin: 0 0 14px;
+}
+
+.mfw-mode-card__features {
+	flex: 1;
+	margin: 0 0 18px;
+	padding: 0;
+	list-style: none;
+}
+
+.mfw-mode-card__features li {
+	display: flex;
+	align-items: flex-start;
+	gap: 6px;
+	color: #4a4566;
+	font-size: 13px;
+	line-height: 1.5;
+	margin-bottom: 8px;
+}
+
+.mfw-mode-card__features .dashicons {
+	color: #f3a43c;
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+	flex: 0 0 18px;
+}
+
+.mfw-mode-card__actions .mfw-btn {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.mfw-membership-mode-page .mfw-mode-safe-note {
+	display: flex;
+	align-items: flex-start;
+	gap: 14px;
+}
+
+.mfw-membership-mode-page .mfw-redesign-main__tab-content .mfw-mode-safe-note h2 {
+	font-size: 15px;
+	margin: 0 0 4px;
+}
+
+.mfw-membership-mode-page .mfw-redesign-main__tab-content .mfw-mode-safe-note p.description {
+	margin: 0;
+}
+
+.mfw-mode-safe-note > .dashicons {
+	flex: 0 0 auto;
+	width: 40px;
+	height: 40px;
+	border-radius: 12px;
+	background: #e7f6ec;
+	color: #1a7f37;
+	font-size: 20px;
+	line-height: 40px;
+	text-align: center;
+}
+
+.mfw-membership-mode-page .mfw-modal {
+	border-radius: 16px;
+	box-shadow: 0 20px 50px rgba(20, 15, 45, 0.25);
+	max-width: 440px;
+	padding: 28px;
+}
+
+.mfw-membership-mode-page .mfw-modal h2 {
+	color: #23184b;
+	font-family: "NunitoSans-ExtraBold", sans-serif;
+	font-size: 20px;
+	margin: 0 0 10px;
+}
+
+.mfw-membership-mode-page .mfw-modal p {
+	color: #6f6987;
+	line-height: 1.6;
+}
+
+.mfw-modal__error:empty {
+	display: none;
+}
+
+.mfw-membership-mode-page .mfw-modal .mfw-modal__error {
+	color: #d63638;
+}
+
+.mfw-modal__actions {
+	display: flex;
+	justify-content: flex-end;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.mfw-membership-mode-page .mfw-btn.is-loading::before {
+	border-color: rgba(255, 255, 255, 0.45);
+	border-top-color: #ffffff;
 }
