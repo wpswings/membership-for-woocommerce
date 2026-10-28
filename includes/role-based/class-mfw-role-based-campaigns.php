@@ -41,6 +41,8 @@ class Mfw_Role_Based_Campaigns {
 	const UNSUBSCRIBE_QUERY_VAR = 'mfw_campaign_unsubscribe';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -51,6 +53,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Campaign audiences the admin can choose from.
+	 *
 	 * @since 3.1.3
 	 * @return string[] Valid audience keys.
 	 */
@@ -59,6 +63,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Resolve audience user ids.
+	 *
 	 * @since 3.1.3
 	 * @param string $audience  One of self::audiences().
 	 * @param int[]  $level_ids Level ids, only used when $audience is AUDIENCE_LEVELS.
@@ -90,18 +96,11 @@ class Mfw_Role_Based_Campaigns {
 	 * trigger level.
 	 *
 	 * @since 3.1.3
-	 * @param array $args {
-	 *     @type string $name            Campaign name (admin's own reference).
-	 *     @type string $subject         Email subject.
-	 *     @type string $message         Email body (HTML).
-	 *     @type string $audience        One of self::audiences().
-	 *     @type int[]  $level_ids       Level ids, only used when $audience is AUDIENCE_LEVELS.
-	 *     @type int    $actor_id        User id composing the campaign.
-	 *     @type string $send_mode       One of self::SEND_MODE_*.
-	 *     @type string $scheduled_at    MySQL datetime, only used when send_mode is 'scheduled'.
-	 *     @type int    $drip_level_id   Trigger level id, only used when send_mode is 'drip'.
-	 *     @type int    $drip_delay_days Days after assignment to send, only used when send_mode is 'drip'.
-	 * }
+	 * @param array $args Campaign fields: 'name' (admin's own reference), 'subject', 'message'
+	 *                    (HTML body), 'audience' (one of self::audiences()), 'level_ids' (used
+	 *                    when audience is AUDIENCE_LEVELS), 'actor_id' (user composing it),
+	 *                    'send_mode' (one of self::SEND_MODE_*), 'scheduled_at' (MySQL datetime
+	 *                    for 'scheduled'), 'drip_level_id' and 'drip_delay_days' (for 'drip').
 	 * @return int|false Recipient count for an immediate send, the campaign id for a
 	 *                    scheduled/drip campaign, or false on failure.
 	 */
@@ -161,7 +160,7 @@ class Mfw_Role_Based_Campaigns {
 			$campaign['subject'],
 			$campaign['message'],
 			$campaign['audience'],
-			json_decode( $campaign['level_ids'], true ) ?: array(), // phpcs:ignore WordPress.PHP.DisallowShortTernary
+			(array) json_decode( $campaign['level_ids'], true ),
 			$campaign_id // Reuse this campaign's own row — tracking links must point at it.
 		);
 
@@ -172,7 +171,7 @@ class Mfw_Role_Based_Campaigns {
 				'subject'         => $campaign['subject'],
 				'message'         => $campaign['message'],
 				'audience'        => $campaign['audience'],
-				'level_ids'       => json_decode( $campaign['level_ids'], true ) ?: array(), // phpcs:ignore WordPress.PHP.DisallowShortTernary
+				'level_ids'       => (array) json_decode( $campaign['level_ids'], true ),
 				'recipient_count' => $result['sent'],
 				'actor_id'        => $campaign['actor_id'],
 				'status'          => 'sent',
@@ -236,7 +235,7 @@ class Mfw_Role_Based_Campaigns {
 				'subject'         => $campaign['subject'],
 				'message'         => $campaign['message'],
 				'audience'        => $campaign['audience'],
-				'level_ids'       => json_decode( $campaign['level_ids'], true ) ?: array(), // phpcs:ignore WordPress.PHP.DisallowShortTernary
+				'level_ids'       => (array) json_decode( $campaign['level_ids'], true ),
 				'recipient_count' => (int) $campaign['recipient_count'] + 1,
 				'actor_id'        => $campaign['actor_id'],
 				// A drip campaign stays 'scheduled' for as long as it exists — every later member
@@ -295,9 +294,9 @@ class Mfw_Role_Based_Campaigns {
 	 * between the two call sites, so it isn't done here).
 	 *
 	 * @since 3.3.0
-	 * @param string $name      Campaign name.
-	 * @param string $subject   Email subject.
-	 * @param string $message   Email body (HTML).
+	 * @param string   $name      Campaign name.
+	 * @param string   $subject   Email subject.
+	 * @param string   $message   Email body (HTML).
 	 * @param string   $audience    One of self::audiences().
 	 * @param int[]    $level_ids   Level ids, only used when $audience is AUDIENCE_LEVELS.
 	 * @param int|null $campaign_id An existing campaign row's id to attribute tracking/
@@ -348,6 +347,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Send to user.
+	 *
 	 * @since 3.3.0
 	 * @param WP_User $user        Recipient.
 	 * @param int     $campaign_id Campaign id (for tracking/unsubscribe), 0 if not yet known.
@@ -386,6 +387,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Unsubscribe link markup for campaign emails.
+	 *
 	 * @since 3.3.0
 	 * @param int $user_id User id.
 	 * @return string A ready-to-embed "unsubscribe" link.
@@ -396,6 +399,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Unsubscribe URL for a user.
+	 *
 	 * @since 3.3.0
 	 * @param int $user_id User id.
 	 * @return string
@@ -426,6 +431,8 @@ class Mfw_Role_Based_Campaigns {
 	}
 
 	/**
+	 * Handle unsubscribe when requested.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function maybe_handle_unsubscribe() {

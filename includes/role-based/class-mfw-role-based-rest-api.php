@@ -24,6 +24,8 @@ class Mfw_Role_Based_Rest_Api {
 	const NAMESPACE_KEY = 'mfw-role-based/v1';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -31,6 +33,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Register the REST API routes.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function register_routes() {
@@ -67,7 +71,10 @@ class Mfw_Role_Based_Rest_Api {
 				'permission_callback' => array( __CLASS__, 'can_manage' ),
 				'args'                => array(
 					'user_id'  => array( 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
-					'level_id' => array( 'required' => true, 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
+					'level_id' => array(
+						'required' => true,
+						'validate_callback' => array( __CLASS__, 'validate_numeric' ),
+					),
 				),
 			)
 		);
@@ -81,7 +88,10 @@ class Mfw_Role_Based_Rest_Api {
 				'permission_callback' => array( __CLASS__, 'can_manage' ),
 				'args'                => array(
 					'user_id'  => array( 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
-					'level_id' => array( 'required' => true, 'validate_callback' => array( __CLASS__, 'validate_numeric' ) ),
+					'level_id' => array(
+						'required' => true,
+						'validate_callback' => array( __CLASS__, 'validate_numeric' ),
+					),
 				),
 			)
 		);
@@ -100,6 +110,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Whether the current user can manage role-based membership.
+	 *
 	 * @since 3.3.0
 	 * @return bool
 	 */
@@ -108,6 +120,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Get levels.
+	 *
 	 * @since 3.3.0
 	 * @return WP_REST_Response
 	 */
@@ -132,6 +146,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Get member.
+	 *
 	 * @since 3.3.0
 	 * @param WP_REST_Request $request Request.
 	 * @return WP_REST_Response|WP_Error
@@ -167,6 +183,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Assign a level to a user.
+	 *
 	 * @since 3.3.0
 	 * @param WP_REST_Request $request Request.
 	 * @return WP_REST_Response|WP_Error
@@ -184,6 +202,8 @@ class Mfw_Role_Based_Rest_Api {
 	}
 
 	/**
+	 * Revoke a level from a user.
+	 *
 	 * @since 3.3.0
 	 * @param WP_REST_Request $request Request.
 	 * @return WP_REST_Response|WP_Error

@@ -24,6 +24,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	const CLICK_QUERY_VAR = 'mfw_campaign_click';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -32,6 +34,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	}
 
 	/**
+	 * Signed token for a campaign/user pair.
+	 *
 	 * @since 3.3.0
 	 * @param int $campaign_id Campaign id.
 	 * @param int $user_id     Recipient id.
@@ -42,6 +46,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	}
 
 	/**
+	 * Open pixel url.
+	 *
 	 * @since 3.3.0
 	 * @param int $campaign_id Campaign id.
 	 * @param int $user_id     Recipient id.
@@ -85,6 +91,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	}
 
 	/**
+	 * Serve open pixel when requested.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function maybe_serve_open_pixel() {
@@ -103,8 +111,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 
 		nocache_headers();
 		header( 'Content-Type: image/gif' );
-		// A minimal valid 1x1 transparent GIF, base64-decoded.
-		echo base64_decode( 'R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBTAA7' ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_decode
+		// A minimal valid 1x1 transparent GIF.
+		readfile( __DIR__ . '/assets/images/tracking-pixel.gif' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
 		exit;
 	}
 
@@ -156,6 +164,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	}
 
 	/**
+	 * Handle click when requested.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function maybe_handle_click() {
@@ -167,7 +177,7 @@ class Mfw_Role_Based_Campaign_Tracking {
 		$campaign_id  = absint( $_GET['c'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$user_id      = absint( $_GET['u'] ?? 0 ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$token        = sanitize_text_field( wp_unslash( $_GET['t'] ?? '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$original_url = isset( $_GET['url'] ) ? esc_url_raw( rawurldecode( wp_unslash( $_GET['url'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$original_url = isset( $_GET['url'] ) ? esc_url_raw( wp_unslash( $_GET['url'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if ( ! $original_url ) {
 			wp_safe_redirect( home_url( '/' ) );
@@ -194,6 +204,8 @@ class Mfw_Role_Based_Campaign_Tracking {
 	}
 
 	/**
+	 * Campaign contains url.
+	 *
 	 * @since 3.5.0
 	 * @param int    $campaign_id Campaign id.
 	 * @param int    $user_id     Recipient id, used to fill {placeholders} inside links.

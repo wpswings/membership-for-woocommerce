@@ -26,6 +26,8 @@ class Mfw_Role_Based_Login {
 	const SHORTCODE = 'wps_role_membership_login';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -79,6 +81,8 @@ class Mfw_Role_Based_Login {
 	}
 
 	/**
+	 * Get login page url.
+	 *
 	 * @since 3.1.3
 	 * @return string The membership login page URL, or wp_login_url() if it doesn't exist yet.
 	 */
@@ -94,6 +98,8 @@ class Mfw_Role_Based_Login {
 	}
 
 	/**
+	 * Whether the current request is the membership login page.
+	 *
 	 * @since 3.1.3
 	 * @param int $page_id The membership login page id.
 	 * @return bool
@@ -202,7 +208,7 @@ class Mfw_Role_Based_Login {
 		<div class="mfw-role-auth-panel" id="mfw-role-register-panel" <?php echo $show_register ? '' : 'hidden'; ?>>
 			<h3><?php esc_html_e( 'Create an account', 'membership-for-woocommerce' ); ?></h3>
 			<?php
-			echo Mfw_Role_Based_Self_Service::render_register_form( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped inside.
+			Mfw_Role_Based_Self_Service::print_register_form(
 				array(
 					'level_optional' => true,
 					'redirect_to'    => $redirect,

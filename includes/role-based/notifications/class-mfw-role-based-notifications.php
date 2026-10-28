@@ -21,6 +21,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Notifications {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -34,6 +36,8 @@ class Mfw_Role_Based_Notifications {
 	}
 
 	/**
+	 * Notify level assigned.
+	 *
 	 * @since 3.1.3
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.
@@ -56,8 +60,8 @@ class Mfw_Role_Based_Notifications {
 		} else {
 			/* translators: %s: role-membership level name. */
 			$subject = sprintf( __( 'You now have %s access', 'membership-for-woocommerce' ), $level['name'] );
-			/* translators: 1: display name, 2: role-membership level name. */
 			$message = sprintf(
+				/* translators: 1: display name, 2: role-membership level name. */
 				__( 'Hi %1$s, you have been granted the "%2$s" membership level.', 'membership-for-woocommerce' ),
 				$user->display_name,
 				$level['name']
@@ -68,6 +72,8 @@ class Mfw_Role_Based_Notifications {
 	}
 
 	/**
+	 * Notify level revoked.
+	 *
 	 * @since 3.1.3
 	 * @param int   $user_id User id.
 	 * @param array $level   Level row.
@@ -86,8 +92,8 @@ class Mfw_Role_Based_Notifications {
 
 		/* translators: %s: role-membership level name. */
 		$subject = sprintf( __( 'Your %s access has ended', 'membership-for-woocommerce' ), $level['name'] );
-		/* translators: 1: display name, 2: role-membership level name. */
 		$message = sprintf(
+			/* translators: 1: display name, 2: role-membership level name. */
 			__( 'Hi %1$s, your "%2$s" membership level has been removed.', 'membership-for-woocommerce' ),
 			$user->display_name,
 			$level['name']

@@ -159,7 +159,12 @@ class Membership_For_Woocommerce_Admin {
 			if ( ! wps_mfw_standard_check_multistep() ) {
 				// js for the multistep from.
 				$script_path      = '../../build/index.js';
+				// Shipped as index-asset.php (WordPress file-naming standard); a fresh `wp-scripts build`
+				// writes index.asset.php, which takes precedence when present.
 				$script_asset_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'build/index.asset.php';
+				if ( ! file_exists( $script_asset_path ) ) {
+					$script_asset_path = MEMBERSHIP_FOR_WOOCOMMERCE_DIR_PATH . 'build/index-asset.php';
+				}
 				$script_asset      = file_exists( $script_asset_path )
 					? require $script_asset_path
 					: array(

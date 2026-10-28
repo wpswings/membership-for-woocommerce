@@ -30,6 +30,8 @@ class Mfw_Role_Based_Paid_Access {
 	const GRANTED_LEVELS_META_KEY = '_mfw_role_based_granted_level_ids';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function init() {
@@ -70,6 +72,8 @@ class Mfw_Role_Based_Paid_Access {
 	}
 
 	/**
+	 * Handle buy click when requested.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function maybe_handle_buy_click() {
@@ -212,6 +216,8 @@ class Mfw_Role_Based_Paid_Access {
 	}
 
 	/**
+	 * Get order levels.
+	 *
 	 * @since 3.5.0
 	 * @param WC_Order $order Order.
 	 * @return array[] Levels whose linked access product is in the order.

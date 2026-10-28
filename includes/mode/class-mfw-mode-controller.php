@@ -80,7 +80,7 @@ class Mfw_Mode_Controller {
 		require_once $mode_dir . 'class-mfw-onboarding-mode-screen.php';
 		require_once $mode_dir . 'class-mfw-admin-assets.php';
 
-		$role_based_dir = plugin_dir_path( dirname( __FILE__ ) ) . 'role-based/';
+		$role_based_dir = plugin_dir_path( __DIR__ ) . 'role-based/';
 
 		require_once $role_based_dir . 'data/class-mfw-role-based-db.php';
 		require_once $role_based_dir . 'data/class-mfw-role-based-repository.php';
@@ -135,6 +135,8 @@ class Mfw_Mode_Controller {
 	}
 
 	/**
+	 * Whether purchase-based mode is active.
+	 *
 	 * @since 3.1.3
 	 * @return bool
 	 */
@@ -143,6 +145,8 @@ class Mfw_Mode_Controller {
 	}
 
 	/**
+	 * Whether role-based mode is active.
+	 *
 	 * @since 3.1.3
 	 * @return bool
 	 */
@@ -189,5 +193,93 @@ class Mfw_Mode_Controller {
 		}
 
 		return $updated;
+	}
+
+	/**
+	 * Allowed HTML for plugin markup that contains forms (registration, buy-now and
+	 * admin action buttons): everything wp_kses_post() allows plus form controls.
+	 *
+	 * @since 3.1.3
+	 * @return array Allowed tags for wp_kses().
+	 */
+	public static function get_allowed_form_html() {
+
+		$allowed       = wp_kses_allowed_html( 'post' );
+		$common_fields = array(
+			'id'           => true,
+			'class'        => true,
+			'name'         => true,
+			'value'        => true,
+			'type'         => true,
+			'disabled'     => true,
+			'required'     => true,
+			'placeholder'  => true,
+			'autocomplete' => true,
+			'readonly'     => true,
+			'style'        => true,
+			'form'         => true,
+			'aria-label'   => true,
+			'data-*'       => true,
+		);
+
+		$allowed['form']     = array(
+			'id'      => true,
+			'class'   => true,
+			'action'  => true,
+			'method'  => true,
+			'enctype' => true,
+			'name'    => true,
+			'target'  => true,
+			'style'   => true,
+			'data-*'  => true,
+		);
+		$allowed['input']    = array_merge(
+			$common_fields,
+			array(
+				'checked'   => true,
+				'min'       => true,
+				'max'       => true,
+				'step'      => true,
+				'minlength' => true,
+				'maxlength' => true,
+				'pattern'   => true,
+				'size'      => true,
+			)
+		);
+		$allowed['select']   = array_merge( $common_fields, array( 'multiple' => true ) );
+		$allowed['option']   = array(
+			'value'    => true,
+			'selected' => true,
+			'disabled' => true,
+			'class'    => true,
+		);
+		$allowed['optgroup'] = array(
+			'label'    => true,
+			'disabled' => true,
+		);
+		$allowed['textarea'] = array_merge(
+			$common_fields,
+			array(
+				'rows'      => true,
+				'cols'      => true,
+				'maxlength' => true,
+			)
+		);
+		$allowed['button']   = array_merge( $common_fields, array( 'aria-busy' => true ) );
+		$allowed['label']    = array(
+			'for'   => true,
+			'class' => true,
+			'id'    => true,
+			'style' => true,
+		);
+		$allowed['fieldset'] = array(
+			'class' => true,
+			'id'    => true,
+		);
+		$allowed['legend']   = array(
+			'class' => true,
+		);
+
+		return $allowed;
 	}
 }

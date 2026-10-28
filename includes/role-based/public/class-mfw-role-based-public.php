@@ -21,6 +21,8 @@ class Mfw_Role_Based_Public {
 	const ACCOUNT_ENDPOINT = 'role-membership';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -61,6 +63,8 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
+	 * Register account endpoint.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function register_account_endpoint() {
@@ -68,6 +72,8 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
+	 * Add account menu item.
+	 *
 	 * @since 3.1.3
 	 * @param array $items Existing My Account menu items.
 	 * @return array
@@ -87,6 +93,8 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
+	 * Render account tab.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function render_account_tab() {
@@ -94,7 +102,7 @@ class Mfw_Role_Based_Public {
 		$user_id = get_current_user_id();
 		$levels  = Mfw_Role_Based_Repository::get_user_levels( $user_id );
 
-		include dirname( __FILE__ ) . '/partials/myaccount-role-tab.php';
+		include __DIR__ . '/partials/myaccount-role-tab.php';
 	}
 
 	/**
@@ -106,7 +114,7 @@ class Mfw_Role_Based_Public {
 	 */
 	public static function render_level_benefits( $level ) {
 
-		include dirname( __FILE__ ) . '/partials/myaccount-level-benefits.php';
+		include __DIR__ . '/partials/myaccount-level-benefits.php';
 	}
 
 	/**
@@ -167,7 +175,7 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
-	 * get_the_excerpt() builds an excerpt straight from the raw post_content when no manual
+	 * WordPress's get_the_excerpt() builds an excerpt straight from the raw post_content when no manual
 	 * excerpt exists (feeds, search results, REST `excerpt`), bypassing the_content — so the
 	 * restricted body would leak through it.
 	 *
@@ -245,6 +253,8 @@ class Mfw_Role_Based_Public {
 	}
 
 	/**
+	 * Get restricted message.
+	 *
 	 * @since 3.5.0
 	 * @param int $post_id Post id.
 	 * @return string The per-post restricted message, or the site-wide default.

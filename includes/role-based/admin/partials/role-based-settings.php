@@ -216,16 +216,19 @@ $mfw_role_tabs = array(
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach ( $wp_roles->roles as $role_slug => $role ) : ?>
+					<?php foreach ( $wp_roles->roles as $role_slug => $mfw_role ) : ?>
 						<tr
 							data-slug="<?php echo esc_attr( $role_slug ); ?>"
-							data-role="<?php echo esc_attr( wp_json_encode( array(
+							<?php
+							$mfw_role_data = array(
 								'slug'         => $role_slug,
-								'name'         => $role['name'],
-								'capabilities' => array_keys( array_filter( $role['capabilities'] ) ),
-							) ) ); ?>"
+								'name'         => $mfw_role['name'],
+								'capabilities' => array_keys( array_filter( $mfw_role['capabilities'] ) ),
+							);
+							?>
+							data-role="<?php echo esc_attr( wp_json_encode( $mfw_role_data ) ); ?>"
 						>
-							<td><?php echo esc_html( $role['name'] ); ?></td>
+							<td><?php echo esc_html( $mfw_role['name'] ); ?></td>
 							<td><code><?php echo esc_html( $role_slug ); ?></code></td>
 							<td><?php echo esc_html( $role_user_counts[ $role_slug ] ?? 0 ); ?></td>
 							<td>
@@ -327,22 +330,25 @@ $mfw_role_tabs = array(
 					<?php foreach ( (array) $levels as $level ) : ?>
 						<tr
 							data-id="<?php echo esc_attr( $level['id'] ); ?>"
-							data-level="<?php echo esc_attr( wp_json_encode( array(
-								'id'               => (int) $level['id'],
-								'name'             => $level['name'],
-								'description'      => $level['description'] ?? '',
-								'wp_role'          => $level['wp_role'],
-								'rank'             => (int) $level['level_rank'],
-								'discount_percent' => (float) $level['discount_percent'],
-								'discount_category_ids' => json_decode( $level['discount_category_ids'], true ),
-								'expiry_days'      => (int) $level['expiry_days'],
-								'self_signup_enabled' => (bool) $level['self_signup_enabled'],
-								'price'            => (float) $level['price'],
+							<?php
+							$mfw_level_data = array(
+								'id'                      => (int) $level['id'],
+								'name'                    => $level['name'],
+								'description'             => $level['description'] ?? '',
+								'wp_role'                 => $level['wp_role'],
+								'rank'                    => (int) $level['level_rank'],
+								'discount_percent'        => (float) $level['discount_percent'],
+								'discount_category_ids'   => json_decode( $level['discount_category_ids'], true ),
+								'expiry_days'             => (int) $level['expiry_days'],
+								'self_signup_enabled'     => (bool) $level['self_signup_enabled'],
+								'price'                   => (float) $level['price'],
 								'upgrade_spend_threshold' => (float) ( $level['upgrade_spend_threshold'] ?? 0 ),
-								'tier_ladder'      => ! empty( $level['tier_ladder'] ),
-								'status'           => $level['status'],
-								'capabilities'     => json_decode( $level['capabilities'], true ),
-							) ) ); ?>"
+								'tier_ladder'             => ! empty( $level['tier_ladder'] ),
+								'status'                  => $level['status'],
+								'capabilities'            => json_decode( $level['capabilities'], true ),
+							);
+							?>
+							data-level="<?php echo esc_attr( wp_json_encode( $mfw_level_data ) ); ?>"
 						>
 							<td><strong class="mfw-level-name"><?php echo esc_html( $level['name'] ); ?></strong></td>
 							<td><code><?php echo esc_html( $level['wp_role'] ); ?></code></td>
@@ -585,13 +591,13 @@ $mfw_role_tabs = array(
 			<th><label for="mfw-level-role"><?php esc_html_e( 'WordPress Role', 'membership-for-woocommerce' ); ?></label></th>
 			<td>
 				<select id="mfw-level-role">
-					<?php foreach ( $wp_roles->roles as $role_slug => $role ) : ?>
+					<?php foreach ( $wp_roles->roles as $role_slug => $mfw_role ) : ?>
 						<?php
 						if ( Mfw_Role_Based_Roles_Manager::is_role_locked( $role_slug ) ) {
 							continue;
 						}
 						?>
-						<option value="<?php echo esc_attr( $role_slug ); ?>"><?php echo esc_html( $role['name'] ); ?></option>
+						<option value="<?php echo esc_attr( $role_slug ); ?>"><?php echo esc_html( $mfw_role['name'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
 				<p class="description"><?php esc_html_e( 'Selecting an existing role ticks its current capabilities below, so you can see exactly what it already grants.', 'membership-for-woocommerce' ); ?></p>
@@ -1316,8 +1322,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 		if ( capSummary ) {
 			var allCaps     = document.querySelectorAll( '.mfw-level-capability' );
 			var checkedCaps = document.querySelectorAll( '.mfw-level-capability:checked' ).length;
-			/* translators: 1: number of selected capabilities, 2: total capabilities. */
-			capSummary.textContent = <?php echo wp_json_encode( __( '%1$d of %2$d selected', 'membership-for-woocommerce' ) ); ?>.replace( '%1$d', checkedCaps ).replace( '%2$d', allCaps.length );
+			capSummary.textContent = <?php /* translators: 1: number of selected capabilities, 2: total capabilities. */ echo wp_json_encode( __( '%1$d of %2$d selected', 'membership-for-woocommerce' ) ); ?>.replace( '%1$d', checkedCaps ).replace( '%2$d', allCaps.length );
 			capSummary.closest( '.mfw-cat-picker' ).classList.toggle( 'has-selection', checkedCaps > 0 );
 		}
 	}
@@ -1367,8 +1372,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 		} else if ( 1 === checked ) {
 			summary.textContent = <?php echo wp_json_encode( __( '1 category selected', 'membership-for-woocommerce' ) ); ?>;
 		} else {
-			/* translators: %d: number of selected categories. */
-			summary.textContent = <?php echo wp_json_encode( __( '%d categories selected', 'membership-for-woocommerce' ) ); ?>.replace( '%d', checked );
+			summary.textContent = <?php /* translators: %d: number of selected categories. */ echo wp_json_encode( __( '%d categories selected', 'membership-for-woocommerce' ) ); ?>.replace( '%d', checked );
 		}
 		categoryPicker.classList.toggle( 'has-selection', checked > 0 );
 	}

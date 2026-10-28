@@ -75,6 +75,8 @@ class Mfw_Role_Based_Repository {
 	);
 
 	/**
+	 * Get the capabilities a public level must never grant.
+	 *
 	 * @since 3.5.0
 	 * @param string[] $capabilities Capability slugs.
 	 * @return string[] The ones that are in DANGEROUS_CAPABILITIES.
@@ -95,6 +97,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Whether a public level grants dangerous capabilities.
+	 *
 	 * @since 3.5.0
 	 * @param array $level Level row.
 	 * @return bool True if the level is publicly joinable AND grants an admin-level capability.
@@ -105,6 +109,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Whether another level already uses this name.
+	 *
 	 * @since 3.5.0
 	 * @param string $name     Level name.
 	 * @param int    $exclude_id Level id to ignore (the one being edited).
@@ -113,20 +119,24 @@ class Mfw_Role_Based_Repository {
 	public static function level_name_exists( $name, $exclude_id = 0 ) {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::levels_table();
-		return (bool) $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE name = %s AND id != %d LIMIT 1", $name, absint( $exclude_id ) ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return (bool) $wpdb->get_var( $wpdb->prepare( 'SELECT id FROM %i WHERE name = %s AND id != %d LIMIT 1', $table, $name, absint( $exclude_id ) ) );
 	}
 
 	/**
+	 * Get levels.
+	 *
 	 * @since 3.1.3
 	 * @return array[] All levels, highest rank first.
 	 */
 	public static function get_levels() {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::levels_table();
-		return $wpdb->get_results( "SELECT * FROM {$table} ORDER BY level_rank DESC, id DESC", ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i ORDER BY level_rank DESC, id DESC', $table ), ARRAY_A );
 	}
 
 	/**
+	 * Get level.
+	 *
 	 * @since 3.1.3
 	 * @param int $level_id Level id.
 	 * @return array|null
@@ -134,7 +144,7 @@ class Mfw_Role_Based_Repository {
 	public static function get_level( $level_id ) {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::levels_table();
-		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id = %d", $level_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE id = %d', $table, $level_id ), ARRAY_A );
 	}
 
 	/**
@@ -143,25 +153,15 @@ class Mfw_Role_Based_Repository {
 	 * this is our equivalent of a dedicated "create custom role" screen.
 	 *
 	 * @since 3.1.3
-	 * @param array $data {
-	 *     @type int    $id           Optional. Omit/zero to create.
-	 *     @type string $name         Level name.
-	 *     @type string $description  What a member gets — shown to customers before they buy/join
-	 *                                 (self-signup form, My Account switch-level list, Buy Access links).
-	 *     @type string $wp_role      WP role slug this level maps to.
-	 *     @type array  $capabilities Capability slugs granted by this level.
-	 *     @type int    $rank                   Numeric rank used for "minimum rank" restrictions; higher = more access.
-	 *     @type float  $discount_percent       Member discount (0-100) applied to WooCommerce product prices for this level.
-	 *     @type int[]  $discount_category_ids  Product category ids the discount is restricted to; empty = all products.
-	 *     @type int    $expiry_days            Days after assignment this level auto-expires; 0 = never.
-	 *     @type bool   $self_signup_enabled    Whether this level can be self-selected via the registration/upgrade flow.
-	 *     @type float  $price                  Price to charge for self-signup access, via WooCommerce checkout. 0 = free.
-	 *     @type float  $upgrade_spend_threshold Lifetime order total (via wc_get_customer_total_spent())
-	 *                                           at which an existing member is auto-upgraded into this
-	 *                                           level. Only used when $tier_ladder is set; 0 = base tier.
-	 *     @type bool   $tier_ladder            Whether this level is part of the auto-upgrade tier ladder.
-	 *     @type string $status                 'active'|'inactive'.
-	 * }
+	 * @param array    $data               Level fields: 'id' (omit/zero to create), 'name',
+	 *                                     'description' (shown to customers before they join),
+	 *                                     'wp_role' (role slug the level maps to), 'capabilities',
+	 *                                     'rank' (higher = more access), 'discount_percent' (0-100),
+	 *                                     'discount_category_ids' (empty = all products),
+	 *                                     'expiry_days' (0 = never), 'self_signup_enabled', 'price'
+	 *                                     (0 = free), 'upgrade_spend_threshold' (lifetime spend that
+	 *                                     moves a ladder member up; 0 = base tier), 'tier_ladder'
+	 *                                     and 'status' ('active'|'inactive').
 	 * @param string[] $known_capabilities Every capability slug the admin UI's capability
 	 *                                     picker knows about (Mfw_Role_Based_Admin::all_known_capabilities()).
 	 *                                     Only capabilities in this list are ever added/removed
@@ -349,7 +349,12 @@ class Mfw_Role_Based_Repository {
 			if ( 'trash' === get_post_status( $existing_product_id ) ) {
 				wp_untrash_post( $existing_product_id );
 				// wp_untrash_post() restores to draft since WP 5.6 — the access product must be live.
-				wp_update_post( array( 'ID' => $existing_product_id, 'post_status' => 'publish' ) );
+				wp_update_post(
+					array(
+						'ID' => $existing_product_id,
+						'post_status' => 'publish',
+					)
+				);
 			}
 			$product = wc_get_product( $existing_product_id );
 		}
@@ -432,6 +437,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Delete level.
+	 *
 	 * @since 3.1.3
 	 * @param int $level_id Level id.
 	 * @return int Rows affected.
@@ -497,7 +504,8 @@ class Mfw_Role_Based_Repository {
 	 * new rows (never overwrites by id), so importing is safe to re-run.
 	 *
 	 * @since 3.1.3
-	 * @param array $levels Array of level definitions.
+	 * @param array $levels             Array of level definitions.
+	 * @param array $known_capabilities Capabilities offered by the settings screen, passed on to save_level().
 	 * @return int Number of levels imported.
 	 */
 	public static function import_levels( $levels, $known_capabilities = array() ) {
@@ -683,6 +691,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get user level ids.
+	 *
 	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return int[] Level ids currently assigned to the user.
@@ -692,6 +702,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get user level assignment.
+	 *
 	 * @since 3.3.0
 	 * @param int $user_id  User id.
 	 * @param int $level_id Level id.
@@ -719,6 +731,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get user levels.
+	 *
 	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return array[] The user's currently assigned level rows.
@@ -742,7 +756,8 @@ class Mfw_Role_Based_Repository {
 		usort(
 			$levels,
 			function ( $a, $b ) {
-				return ( (int) $b['level_rank'] <=> (int) $a['level_rank'] ) ?: ( (int) $b['id'] <=> (int) $a['id'] ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
+				$by_rank = (int) $b['level_rank'] <=> (int) $a['level_rank'];
+				return 0 !== $by_rank ? $by_rank : ( (int) $b['id'] <=> (int) $a['id'] );
 			}
 		);
 		return $levels ? $levels[0] : null;
@@ -791,6 +806,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get user max rank.
+	 *
 	 * @since 3.1.3
 	 * @param int $user_id User id.
 	 * @return int Highest rank among the user's active levels, 0 if none.
@@ -814,8 +831,11 @@ class Mfw_Role_Based_Repository {
 	public static function get_tier_ladder_levels() {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::levels_table();
-		return $wpdb->get_results( // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			"SELECT * FROM {$table} WHERE status = 'active' AND tier_ladder = 1 ORDER BY level_rank ASC, upgrade_spend_threshold ASC",
+		return $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT * FROM %i WHERE status = 'active' AND tier_ladder = 1 ORDER BY level_rank ASC, upgrade_spend_threshold ASC",
+				$table
+			),
 			ARRAY_A
 		);
 	}
@@ -950,6 +970,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get restriction.
+	 *
 	 * @since 3.1.3
 	 * @param string $object_type 'post'|'page'|'product'|'term'.
 	 * @param int    $object_id   Object id.
@@ -960,7 +982,8 @@ class Mfw_Role_Based_Repository {
 		$table = Mfw_Role_Based_Db::restrictions_table();
 		$rows  = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT level_id, min_rank, drip_days FROM {$table} WHERE object_type = %s AND object_id = %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				'SELECT level_id, min_rank, drip_days FROM %i WHERE object_type = %s AND object_id = %d',
+				$table,
 				$object_type,
 				$object_id
 			),
@@ -1018,7 +1041,8 @@ class Mfw_Role_Based_Repository {
 
 		return $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT DISTINCT object_type, object_id FROM {$table} WHERE level_id = %d OR ( min_rank IS NOT NULL AND min_rank <= %d ) ORDER BY id DESC", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				'SELECT DISTINCT object_type, object_id FROM %i WHERE level_id = %d OR ( min_rank IS NOT NULL AND min_rank <= %d ) ORDER BY id DESC',
+				$table,
 				absint( $level['id'] ),
 				absint( $level['level_rank'] )
 			),
@@ -1044,21 +1068,47 @@ class Mfw_Role_Based_Repository {
 		$table     = Mfw_Role_Based_Db::restrictions_table();
 		$drip_days = absint( $drip_days );
 
-		$wpdb->delete( $table, array( 'object_type' => $object_type, 'object_id' => $object_id ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+		$wpdb->delete(
+			$table,
+			array(
+				'object_type' => $object_type,
+				'object_id' => $object_id,
+			)
+		); // phpcs:ignore WordPress.DB.SlowDBQuery
 
 		if ( null !== $min_rank ) {
-			$wpdb->insert( $table, array( 'level_id' => 0, 'object_type' => $object_type, 'object_id' => $object_id, 'min_rank' => absint( $min_rank ), 'drip_days' => 0 ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+			$wpdb->insert(
+				$table,
+				array(
+					'level_id' => 0,
+					'object_type' => $object_type,
+					'object_id' => $object_id,
+					'min_rank' => absint( $min_rank ),
+					'drip_days' => 0,
+				)
+			); // phpcs:ignore WordPress.DB.SlowDBQuery
 			return;
 		}
 
 		foreach ( array_map( 'absint', (array) $level_ids ) as $level_id ) {
 			if ( $level_id > 0 ) {
-				$wpdb->insert( $table, array( 'level_id' => $level_id, 'object_type' => $object_type, 'object_id' => $object_id, 'min_rank' => null, 'drip_days' => $drip_days ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+				$wpdb->insert(
+					$table,
+					array(
+						'level_id' => $level_id,
+						'object_type' => $object_type,
+						'object_id' => $object_id,
+						'min_rank' => null,
+						'drip_days' => $drip_days,
+					)
+				); // phpcs:ignore WordPress.DB.SlowDBQuery
 			}
 		}
 	}
 
 	/**
+	 * Whether a user can access a restricted object.
+	 *
 	 * @since 3.1.3
 	 * @param int    $user_id     User id.
 	 * @param string $object_type 'post'|'page'|'product'|'term'.
@@ -1114,6 +1164,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Has drip period elapsed.
+	 *
 	 * @since 3.3.0
 	 * @param string $assigned_at MySQL datetime the level was assigned.
 	 * @param int    $drip_days   Days that must have elapsed.
@@ -1161,6 +1213,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Log event.
+	 *
 	 * @since 3.1.3
 	 * @param int    $user_id  User id.
 	 * @param int    $level_id Level id.
@@ -1195,6 +1249,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get login log.
+	 *
 	 * @since 3.1.3
 	 * @param int $limit Max rows.
 	 * @return array[] Rows: {user_id, level_id, created_at}, most recent first.
@@ -1204,7 +1260,8 @@ class Mfw_Role_Based_Repository {
 		$table = Mfw_Role_Based_Db::user_log_table();
 		return $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT user_id, level_id, created_at FROM {$table} WHERE action = 'login' ORDER BY created_at DESC LIMIT %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT user_id, level_id, created_at FROM %i WHERE action = 'login' ORDER BY created_at DESC LIMIT %d",
+				$table,
 				$limit
 			),
 			ARRAY_A
@@ -1238,6 +1295,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get signups per day.
+	 *
 	 * @since 3.3.0
 	 * @param int $days How many trailing days to include.
 	 * @return array<string,int> 'Y-m-d' => number of level assignments that day.
@@ -1249,7 +1308,8 @@ class Mfw_Role_Based_Repository {
 
 		$rows = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT DATE(created_at) AS day, COUNT(*) AS total FROM {$table} WHERE action = 'assigned' AND created_at >= %s GROUP BY DATE(created_at)", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				"SELECT DATE(created_at) AS day, COUNT(*) AS total FROM %i WHERE action = 'assigned' AND created_at >= %s GROUP BY DATE(created_at)",
+				$table,
 				gmdate( 'Y-m-d 00:00:00', strtotime( "-{$days} days" ) )
 			),
 			ARRAY_A
@@ -1312,6 +1372,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get self signup levels.
+	 *
 	 * @since 3.3.0
 	 * @return array[] Active levels with self_signup_enabled = 1.
 	 */
@@ -1383,15 +1445,10 @@ class Mfw_Role_Based_Repository {
 	 * Records a sent campaign in the campaign history table.
 	 *
 	 * @since 3.1.3
-	 * @param array $data {
-	 *     @type string $name             Campaign name (for the admin's own reference).
-	 *     @type string $subject          Email subject.
-	 *     @type string $message          Email body (HTML).
-	 *     @type string $audience         'members'|'non_members'|'levels'|'all'.
-	 *     @type int[]  $level_ids        Level ids, when audience is 'levels'.
-	 *     @type int    $recipient_count  Number of emails actually sent.
-	 *     @type int    $actor_id         User id who sent the campaign.
-	 * }
+	 * @param array $data Campaign fields: 'name' (admin's own reference), 'subject', 'message'
+	 *                    (HTML body), 'audience' ('members'|'non_members'|'levels'|'all'),
+	 *                    'level_ids' (when audience is 'levels'), 'recipient_count' (emails
+	 *                    actually sent) and 'actor_id' (user who sent the campaign).
 	 * @return int|false Campaign id on success, false on failure.
 	 */
 	public static function log_campaign( $data ) {
@@ -1424,6 +1481,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get campaigns.
+	 *
 	 * @since 3.1.3
 	 * @param int $limit Max rows.
 	 * @return array[] Rows, most recent first.
@@ -1433,7 +1492,8 @@ class Mfw_Role_Based_Repository {
 		$table = Mfw_Role_Based_Db::campaigns_table();
 		return $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT * FROM {$table} ORDER BY created_at DESC LIMIT %d", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+				'SELECT * FROM %i ORDER BY created_at DESC LIMIT %d',
+				$table,
 				$limit
 			),
 			ARRAY_A
@@ -1441,6 +1501,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get campaign.
+	 *
 	 * @since 3.3.0
 	 * @param int $campaign_id Campaign id.
 	 * @return array|null
@@ -1448,10 +1510,12 @@ class Mfw_Role_Based_Repository {
 	public static function get_campaign( $campaign_id ) {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::campaigns_table();
-		return $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$table} WHERE id = %d", $campaign_id ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->get_row( $wpdb->prepare( 'SELECT * FROM %i WHERE id = %d', $table, $campaign_id ), ARRAY_A );
 	}
 
 	/**
+	 * Get campaigns by status.
+	 *
 	 * @since 3.3.0
 	 * @param string $status 'draft'|'scheduled'|'sent'.
 	 * @return array[]
@@ -1459,10 +1523,12 @@ class Mfw_Role_Based_Repository {
 	public static function get_campaigns_by_status( $status ) {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::campaigns_table();
-		return $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$table} WHERE status = %s", $status ), ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->get_results( $wpdb->prepare( 'SELECT * FROM %i WHERE status = %s', $table, $status ), ARRAY_A );
 	}
 
 	/**
+	 * Record campaign event.
+	 *
 	 * @since 3.3.0
 	 * @param int    $campaign_id Campaign id.
 	 * @param int    $user_id     User id the event belongs to (0 if unknown, e.g. a click
@@ -1485,6 +1551,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Get campaign stats.
+	 *
 	 * @since 3.3.0
 	 * @param int $campaign_id Campaign id.
 	 * @return array{opens:int, unique_opens:int, clicks:int, unique_clicks:int}
@@ -1493,10 +1561,10 @@ class Mfw_Role_Based_Repository {
 		global $wpdb;
 		$table = Mfw_Role_Based_Db::campaign_events_table();
 
-		$opens  = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE campaign_id = %d AND event_type = 'open'", $campaign_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$uopens = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM {$table} WHERE campaign_id = %d AND event_type = 'open'", $campaign_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$clicks = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE campaign_id = %d AND event_type = 'click'", $campaign_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-		$uclicks = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM {$table} WHERE campaign_id = %d AND event_type = 'click'", $campaign_id ) ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$opens  = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE campaign_id = %d AND event_type = 'open'", $table, $campaign_id ) );
+		$uopens = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM %i WHERE campaign_id = %d AND event_type = 'open'", $table, $campaign_id ) );
+		$clicks = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE campaign_id = %d AND event_type = 'click'", $table, $campaign_id ) );
+		$uclicks = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM %i WHERE campaign_id = %d AND event_type = 'click'", $table, $campaign_id ) );
 
 		return array(
 			'opens'         => $opens,
@@ -1518,12 +1586,14 @@ class Mfw_Role_Based_Repository {
 		$table = Mfw_Role_Based_Db::campaign_events_table();
 
 		return array(
-			'opens'  => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE event_type = 'open'" ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-			'clicks' => (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} WHERE event_type = 'click'" ), // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			'opens'  => (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE event_type = 'open'", $table ) ),
+			'clicks' => (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM %i WHERE event_type = 'click'", $table ) ),
 		);
 	}
 
 	/**
+	 * Whether a user has unsubscribed from campaigns.
+	 *
 	 * @since 3.3.0
 	 * @param int $user_id User id.
 	 * @return bool
@@ -1533,6 +1603,8 @@ class Mfw_Role_Based_Repository {
 	}
 
 	/**
+	 * Set user campaign opt out.
+	 *
 	 * @since 3.3.0
 	 * @param int  $user_id  User id.
 	 * @param bool $opted_out True to opt out, false to opt back in.

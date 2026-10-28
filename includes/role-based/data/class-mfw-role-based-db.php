@@ -24,6 +24,8 @@ class Mfw_Role_Based_Db {
 	const DB_VERSION = '1.10.0';
 
 	/**
+	 * Full name of the levels table.
+	 *
 	 * @since 3.1.3
 	 * @return string
 	 */
@@ -33,6 +35,8 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
+	 * Full name of the restrictions table.
+	 *
 	 * @since 3.1.3
 	 * @return string
 	 */
@@ -42,6 +46,8 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
+	 * Full name of the user log table.
+	 *
 	 * @since 3.1.3
 	 * @return string
 	 */
@@ -51,6 +57,8 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
+	 * Full name of the campaigns table.
+	 *
 	 * @since 3.1.3
 	 * @return string
 	 */
@@ -60,6 +68,8 @@ class Mfw_Role_Based_Db {
 	}
 
 	/**
+	 * Full name of the campaign events table.
+	 *
 	 * @since 3.3.0
 	 * @return string
 	 */
@@ -79,7 +89,7 @@ class Mfw_Role_Based_Db {
 
 		$installed_version = get_option( self::DB_VERSION_OPTION );
 
-		if ( $installed_version === self::DB_VERSION ) {
+		if ( self::DB_VERSION === $installed_version ) {
 			return;
 		}
 
@@ -184,7 +194,7 @@ class Mfw_Role_Based_Db {
 		// ₹0 base tier can be part of the ladder. Levels that were on the ladder under the old
 		// rule stay on it.
 		if ( $installed_version && version_compare( $installed_version, '1.9.0', '<' ) ) {
-			$wpdb->query( "UPDATE {$levels_table} SET tier_ladder = 1 WHERE upgrade_spend_threshold > 0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$wpdb->query( $wpdb->prepare( 'UPDATE %i SET tier_ladder = 1 WHERE upgrade_spend_threshold > 0', $levels_table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 		}
 
 		// maybe_install() runs while plugins are still loading, before pluggable functions
@@ -218,7 +228,8 @@ class Mfw_Role_Based_Db {
 		$level_caps  = array();
 		foreach ( $levels as $level ) {
 			$levels_by_id[ (int) $level['id'] ] = $level;
-			$level_caps = array_merge( $level_caps, (array) ( json_decode( $level['capabilities'], true ) ?: array() ) ); // phpcs:ignore WordPress.PHP.DisallowShortTernary
+			$decoded    = json_decode( $level['capabilities'], true );
+			$level_caps = array_merge( $level_caps, is_array( $decoded ) ? $decoded : array() );
 		}
 		$level_caps = array_unique( $level_caps );
 		$role_names = array_keys( wp_roles()->roles );
@@ -264,7 +275,7 @@ class Mfw_Role_Based_Db {
 
 		$restrictions_table = self::restrictions_table();
 		$levels_table       = self::levels_table();
-		$wpdb->query( "DELETE r FROM {$restrictions_table} r LEFT JOIN {$levels_table} l ON l.id = r.level_id WHERE r.level_id > 0 AND l.id IS NULL" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $wpdb->prepare( 'DELETE r FROM %i r LEFT JOIN %i l ON l.id = r.level_id WHERE r.level_id > 0 AND l.id IS NULL', $restrictions_table, $levels_table ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
 	}
 
 	/**
@@ -275,11 +286,11 @@ class Mfw_Role_Based_Db {
 	 */
 	public static function drop_tables() {
 		global $wpdb;
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . self::campaign_events_table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . self::campaigns_table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . self::user_log_table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . self::restrictions_table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . self::levels_table() ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::campaign_events_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::campaigns_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::user_log_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::restrictions_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
+		$wpdb->query( $wpdb->prepare( 'DROP TABLE IF EXISTS %i', self::levels_table() ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		delete_option( self::DB_VERSION_OPTION );
 	}
 }

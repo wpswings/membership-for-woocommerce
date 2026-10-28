@@ -32,6 +32,8 @@ class Mfw_Role_Based_Tiers {
 	private static $upgrading = false;
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.5.0
 	 */
 	public static function init() {
@@ -41,6 +43,8 @@ class Mfw_Role_Based_Tiers {
 	}
 
 	/**
+	 * Whether a tier upgrade is currently running.
+	 *
 	 * @since 3.5.0
 	 * @return bool
 	 */
@@ -173,6 +177,8 @@ class Mfw_Role_Based_Tiers {
 	}
 
 	/**
+	 * AJAX handler: recalculate tiers.
+	 *
 	 * @since 3.5.0
 	 */
 	public static function ajax_recalculate_tiers() {

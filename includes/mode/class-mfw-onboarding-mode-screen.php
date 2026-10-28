@@ -25,6 +25,8 @@ class Mfw_Onboarding_Mode_Screen {
 	const NONCE_ACTION = 'mfw_save_membership_mode';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -207,7 +209,7 @@ class Mfw_Onboarding_Mode_Screen {
 				<?php endforeach; ?>
 			</ul>
 			<div class="mfw-mode-card__actions">
-				<?php echo $actions; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from escaped parts by the caller. ?>
+				<?php echo wp_kses( $actions, Mfw_Mode_Controller::get_allowed_form_html() ); ?>
 			</div>
 		</div>
 		<?php

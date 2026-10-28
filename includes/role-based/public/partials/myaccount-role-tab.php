@@ -19,15 +19,15 @@ $date_format = get_option( 'date_format' );
 	<h2><?php esc_html_e( 'Your Membership', 'membership-for-woocommerce' ); ?></h2>
 
 	<?php if ( ! empty( $levels ) ) : ?>
-		<?php foreach ( $levels as $user_level ) : ?>
-			<?php $assignment = Mfw_Role_Based_Repository::get_user_level_assignment( $user_id, $user_level['id'] ); ?>
+		<?php foreach ( $levels as $mfw_user_level ) : ?>
+			<?php $assignment = Mfw_Role_Based_Repository::get_user_level_assignment( $user_id, $mfw_user_level['id'] ); ?>
 			<section class="mfw-role-plan mfw-role-plan--current">
 				<div class="mfw-role-plan__head">
 					<span class="mfw-role-plan__eyebrow"><?php esc_html_e( 'Current plan', 'membership-for-woocommerce' ); ?></span>
 					<span class="mfw-role-status"><?php esc_html_e( 'Active', 'membership-for-woocommerce' ); ?></span>
 				</div>
 
-				<h3 class="mfw-role-plan__name mfw-role-level-title"><?php echo esc_html( $user_level['name'] ); ?></h3>
+				<h3 class="mfw-role-plan__name mfw-role-level-title"><?php echo esc_html( $mfw_user_level['name'] ); ?></h3>
 
 				<?php if ( $assignment && ( ! empty( $assignment['assigned_at'] ) || ! empty( $assignment['expires_at'] ) ) ) : ?>
 					<p class="mfw-role-plan__meta">
@@ -41,17 +41,17 @@ $date_format = get_option( 'date_format' );
 							/* translators: %s: expiry date. */
 							$meta_parts[] = sprintf( esc_html__( 'Expires %s', 'membership-for-woocommerce' ), esc_html( date_i18n( $date_format, strtotime( $assignment['expires_at'] ) ) ) );
 						}
-						echo implode( ' &middot; ', $meta_parts ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- parts escaped above.
+						echo wp_kses_post( implode( ' &middot; ', $meta_parts ) );
 						?>
 					</p>
 				<?php endif; ?>
 
-				<?php if ( ! empty( $user_level['description'] ) ) : ?>
-					<p class="mfw-role-plan__description"><?php echo esc_html( $user_level['description'] ); ?></p>
+				<?php if ( ! empty( $mfw_user_level['description'] ) ) : ?>
+					<p class="mfw-role-plan__description"><?php echo esc_html( $mfw_user_level['description'] ); ?></p>
 				<?php endif; ?>
 
 				<p class="mfw-role-plan__label"><?php esc_html_e( 'Your benefits', 'membership-for-woocommerce' ); ?></p>
-				<?php Mfw_Role_Based_Public::render_level_benefits( $user_level ); ?>
+				<?php Mfw_Role_Based_Public::render_level_benefits( $mfw_user_level ); ?>
 			</section>
 		<?php endforeach; ?>
 

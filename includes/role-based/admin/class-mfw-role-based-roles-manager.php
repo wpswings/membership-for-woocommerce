@@ -38,6 +38,8 @@ class Mfw_Role_Based_Roles_Manager {
 	const LOCKED_ROLES = array( 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'shop_manager', 'customer' );
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function init() {
@@ -47,6 +49,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * Get role user counts.
+	 *
 	 * @since 3.4.0
 	 * @return array<string,int> Role slug => number of users currently holding it.
 	 */
@@ -56,6 +60,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * Whether a role is a built-in role that levels must not use.
+	 *
 	 * @since 3.4.0
 	 * @param string $slug Role slug.
 	 * @return bool
@@ -72,6 +78,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * Whether a role can be deleted from the Roles tab.
+	 *
 	 * @since 3.4.0
 	 * @param string $slug Role slug.
 	 * @return bool
@@ -85,6 +93,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * AJAX handler: save role.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function ajax_save_role() {
@@ -137,6 +147,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * AJAX handler: clone role.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function ajax_clone_role() {
@@ -173,6 +185,8 @@ class Mfw_Role_Based_Roles_Manager {
 	}
 
 	/**
+	 * AJAX handler: delete role.
+	 *
 	 * @since 3.4.0
 	 */
 	public static function ajax_delete_role() {

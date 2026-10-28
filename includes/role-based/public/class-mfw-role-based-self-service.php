@@ -22,6 +22,8 @@ class Mfw_Role_Based_Self_Service {
 	const NONCE_ACTION = 'mfw_role_based_self_service';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function init() {
@@ -87,16 +89,27 @@ class Mfw_Role_Based_Self_Service {
 	 * membership login page (so a visitor without an account can sign up right there).
 	 *
 	 * @since 3.5.0
-	 * @param array $args {
-	 *     @type bool   $level_optional Offer "just create an account" instead of requiring a
-	 *                                  level — the form then renders even with no
-	 *                                  self-signup levels configured.
-	 *     @type string $redirect_to    Where to send the new user afterwards (e.g. back to a
-	 *                                  Buy Access link). Must be on this site.
-	 * }
+	 * @param array $args Supported keys: 'level_optional' (bool) offers "just create an account"
+	 *                    instead of requiring a level, so the form renders even with no
+	 *                    self-signup levels; 'redirect_to' (string) is where to send the new
+	 *                    user afterwards (e.g. back to a Buy Access link) and must be on this site.
 	 * @return string Empty string if there's nothing to register for.
 	 */
 	public static function render_register_form( $args = array() ) {
+
+		ob_start();
+		self::print_register_form( $args );
+		return ob_get_clean();
+	}
+
+	/**
+	 * Output the registration form directly (see render_register_form() for the arguments).
+	 *
+	 * @since 3.5.0
+	 * @param array $args See render_register_form().
+	 * @return bool False if there's nothing to register for (nothing is printed).
+	 */
+	public static function print_register_form( $args = array() ) {
 
 		$args = wp_parse_args(
 			$args,
@@ -108,7 +121,7 @@ class Mfw_Role_Based_Self_Service {
 
 		$levels = Mfw_Role_Based_Repository::get_self_signup_levels();
 		if ( empty( $levels ) && ! $args['level_optional'] ) {
-			return '';
+			return false;
 		}
 
 		$errors = array(
@@ -118,7 +131,6 @@ class Mfw_Role_Based_Self_Service {
 		);
 		$error  = isset( $_GET['mfw_register'] ) ? sanitize_key( wp_unslash( $_GET['mfw_register'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
-		ob_start();
 		?>
 		<?php if ( isset( $errors[ $error ] ) ) : ?>
 			<p class="mfw-role-error"><?php echo esc_html( $errors[ $error ] ); ?></p>
@@ -194,10 +206,12 @@ class Mfw_Role_Based_Self_Service {
 		} )();
 		</script>
 		<?php
-		return ob_get_clean();
+		return true;
 	}
 
 	/**
+	 * Handle register.
+	 *
 	 * @since 3.3.0
 	 */
 	public static function handle_register() {
@@ -217,7 +231,8 @@ class Mfw_Role_Based_Self_Service {
 
 		$username = isset( $_POST['user_login'] ) ? sanitize_user( wp_unslash( $_POST['user_login'] ) ) : '';
 		$email    = isset( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
-		$password = isset( $_POST['user_pass'] ) ? (string) wp_unslash( $_POST['user_pass'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- passwords must not be altered.
+		// Passwords must reach wp_insert_user() exactly as typed, so read the raw (unslashed) request value.
+		$password = (string) filter_input( INPUT_POST, 'user_pass', FILTER_UNSAFE_RAW );
 		$level_id = isset( $_POST['level_id'] ) ? absint( $_POST['level_id'] ) : 0;
 
 		// Only ever an on-site destination (e.g. back to the Buy Access link that sent them here).

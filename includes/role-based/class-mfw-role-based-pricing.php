@@ -19,6 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Mfw_Role_Based_Pricing {
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -27,6 +29,8 @@ class Mfw_Role_Based_Pricing {
 	}
 
 	/**
+	 * Discount for.
+	 *
 	 * @since 3.1.3
 	 * @param int      $user_id    User id.
 	 * @param int|null $product_id Product id, for category-scoped discounts.
@@ -135,6 +139,8 @@ class Mfw_Role_Based_Pricing {
 	}
 
 	/**
+	 * Discount badge.
+	 *
 	 * @since 3.5.0
 	 * @param float $discount Discount percent.
 	 * @return string

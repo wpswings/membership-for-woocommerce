@@ -26,6 +26,8 @@ class Mfw_Role_Based_Mode_Switch {
 	const NONCE_ACTION = 'mfw_switch_membership_mode';
 
 	/**
+	 * Register hooks.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function init() {
@@ -35,6 +37,8 @@ class Mfw_Role_Based_Mode_Switch {
 	}
 
 	/**
+	 * Render the screen.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function render() {
@@ -158,6 +162,8 @@ class Mfw_Role_Based_Mode_Switch {
 	}
 
 	/**
+	 * AJAX handler: switch mode.
+	 *
 	 * @since 3.1.3
 	 */
 	public static function ajax_switch_mode() {

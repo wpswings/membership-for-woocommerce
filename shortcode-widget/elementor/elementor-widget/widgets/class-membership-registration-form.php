@@ -153,7 +153,7 @@ class MEMBERSHIP_REGISTRATION_FORM extends Widget_Base {
 
 		$shortcode = do_shortcode( shortcode_unautop( $shortcode ) );
 		?>
-		<div class="elementor-shortcode"><?php echo $shortcode; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+		<div class="elementor-shortcode"><?php echo wp_kses( $shortcode, Mfw_Mode_Controller::get_allowed_form_html() ); ?></div>
 		<?php
 	}
 
