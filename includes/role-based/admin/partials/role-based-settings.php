@@ -413,6 +413,159 @@ $mfw_role_tabs = array(
 		<?php endif; ?>
 
 	</div>
+	<?php
+	// A worked example of a well-built three-tier setup. Each example can be loaded into the
+	// form below; nothing is saved until the admin reviews it and clicks "Add Level".
+	$mfw_example_levels = array(
+		array(
+			'key'         => 'bronze',
+			'name'        => __( 'Bronze', 'membership-for-woocommerce' ),
+			'description' => __( 'Free membership: 5% off every order and access to members-only articles. Spend more to unlock Gold automatically.', 'membership-for-woocommerce' ),
+			'wp_role'     => 'mfw_bronze_member',
+			'rank'        => 1,
+			'discount'    => 5,
+			'expiry_days' => 0,
+			'self_signup' => 1,
+			'price'       => 0,
+			'tier_ladder' => 1,
+			'threshold'   => 0,
+			'how'         => __( 'Free — visitors join from the registration form', 'membership-for-woocommerce' ),
+		),
+		array(
+			'key'         => 'silver',
+			'name'        => __( 'Silver', 'membership-for-woocommerce' ),
+			'description' => __( 'Paid yearly membership: 15% off every order, all members-only content and early access to sales. Renews every 365 days.', 'membership-for-woocommerce' ),
+			'wp_role'     => 'mfw_silver_member',
+			'rank'        => 2,
+			'discount'    => 15,
+			'expiry_days' => 365,
+			'self_signup' => 1,
+			'price'       => 999,
+			'tier_ladder' => 0,
+			'threshold'   => 0,
+			'how'         => __( 'Paid — customers buy it at WooCommerce checkout', 'membership-for-woocommerce' ),
+		),
+		array(
+			'key'         => 'gold',
+			'name'        => __( 'Gold', 'membership-for-woocommerce' ),
+			'description' => __( 'Our best customers: 25% off every order and every piece of members-only content. Earned automatically once you spend 10,000 in our store.', 'membership-for-woocommerce' ),
+			'wp_role'     => 'mfw_gold_member',
+			'rank'        => 3,
+			'discount'    => 25,
+			'expiry_days' => 0,
+			'self_signup' => 0,
+			'price'       => 0,
+			'tier_ladder' => 1,
+			'threshold'   => 10000,
+			'how'         => __( 'Earned — Bronze members are moved up automatically', 'membership-for-woocommerce' ),
+		),
+	);
+	$mfw_currency = get_woocommerce_currency_symbol();
+	?>
+	<div class="mfw-card mfw-level-example">
+		<details <?php echo empty( $levels ) ? 'open' : ''; ?>>
+			<summary>
+				<h2><?php esc_html_e( 'Example: how to build a perfect level-based membership', 'membership-for-woocommerce' ); ?></h2>
+				<span class="mfw-level-example__toggle"><?php esc_html_e( 'Show / hide', 'membership-for-woocommerce' ); ?></span>
+			</summary>
+
+			<p class="description">
+				<?php esc_html_e( 'A proven setup uses three levels: a free entry level to grow your member list, a paid level for steady revenue, and a top level customers earn by spending. Click "Use this example" to copy a level into the form below, adjust it, then click "Add Level".', 'membership-for-woocommerce' ); ?>
+			</p>
+
+			<div class="mfw-table-wrap">
+				<table class="widefat striped mfw-level-example__table">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Level', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'New role slug', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Rank', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Discount', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Price', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Expiry', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'Tier ladder', 'membership-for-woocommerce' ); ?></th>
+							<th><?php esc_html_e( 'How members get it', 'membership-for-woocommerce' ); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ( $mfw_example_levels as $mfw_example ) : ?>
+							<tr>
+								<td><strong><?php echo esc_html( $mfw_example['name'] ); ?></strong></td>
+								<td><code><?php echo esc_html( $mfw_example['wp_role'] ); ?></code></td>
+								<td><?php echo esc_html( $mfw_example['rank'] ); ?></td>
+								<td><?php echo esc_html( $mfw_example['discount'] ); ?>%</td>
+								<td><?php echo $mfw_example['price'] > 0 ? esc_html( $mfw_currency . number_format_i18n( $mfw_example['price'] ) ) : esc_html__( 'Free', 'membership-for-woocommerce' ); ?></td>
+								<td>
+									<?php
+									echo $mfw_example['expiry_days'] > 0
+										/* translators: %d: number of days. */
+										? esc_html( sprintf( __( '%d days', 'membership-for-woocommerce' ), $mfw_example['expiry_days'] ) )
+										: esc_html__( 'Never', 'membership-for-woocommerce' );
+									?>
+								</td>
+								<td>
+									<?php
+									if ( $mfw_example['tier_ladder'] ) {
+										echo $mfw_example['threshold'] > 0
+											/* translators: %s: spend amount with currency. */
+											? esc_html( sprintf( __( 'Yes — at %s spent', 'membership-for-woocommerce' ), $mfw_currency . number_format_i18n( $mfw_example['threshold'] ) ) )
+											: esc_html__( 'Yes — base tier', 'membership-for-woocommerce' );
+									} else {
+										esc_html_e( 'No', 'membership-for-woocommerce' );
+									}
+									?>
+								</td>
+								<td><?php echo esc_html( $mfw_example['how'] ); ?></td>
+								<td>
+									<button
+										type="button"
+										class="mfw-btn mfw-btn__outline mfw-btn--sm mfw-use-level-example"
+										data-example="<?php echo esc_attr( wp_json_encode( $mfw_example ) ); ?>"
+									><?php esc_html_e( 'Use this example', 'membership-for-woocommerce' ); ?></button>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="mfw-level-example__columns">
+				<div>
+					<h3><?php esc_html_e( 'Checklist for every level', 'membership-for-woocommerce' ); ?></h3>
+					<ol>
+						<li><?php esc_html_e( 'Give it a unique, customer-friendly name (Bronze, Silver, Gold).', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Write a description that says exactly what members get — customers see it before they join or pay.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Type a new role slug (e.g. mfw_gold_member) so each level has its own role. Never use Administrator, Shop Manager, Editor or Customer.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Give each level a higher rank than the one below it (1, 2, 3…). "Minimum rank" restrictions rely on this.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Only tick the "Read" capability. Levels customers can join or buy must never get admin capabilities such as editing posts, managing options or managing WooCommerce.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'For a paid level, tick Self-Signup and set a price — access is granted when the order is paid and removed if it is refunded or cancelled.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'For a tier ladder, use a spend of 0 on the base level and a higher spend on each level above it.', 'membership-for-woocommerce' ); ?></li>
+						<li><?php esc_html_e( 'Set the status to Inactive while you are still preparing a level; members are only given its role once it is Active.', 'membership-for-woocommerce' ); ?></li>
+					</ol>
+				</div>
+				<div>
+					<h3><?php esc_html_e( 'After creating your levels', 'membership-for-woocommerce' ); ?></h3>
+					<ol>
+						<li>
+							<?php esc_html_e( 'Create a "Join" page and add the registration form:', 'membership-for-woocommerce' ); ?>
+							<code>[wps_role_membership_register]</code>
+						</li>
+						<li>
+							<?php esc_html_e( 'Create a login page (it also lets new visitors register):', 'membership-for-woocommerce' ); ?>
+							<code>[wps_role_membership_login]</code>
+						</li>
+						<li><?php esc_html_e( 'Open any page, post or product and use the "Role-Based Membership Restriction" box to choose which levels (or minimum rank) can see it.', 'membership-for-woocommerce' ); ?></li>
+						<li>
+							<?php esc_html_e( 'Hide part of a page for one level only (replace 3 with the level\'s ID):', 'membership-for-woocommerce' ); ?>
+							<code>[wps_role_membership_restricted level_id="3"]…[/wps_role_membership_restricted]</code>
+						</li>
+						<li><?php esc_html_e( 'Test with a customer account: sign up for Bronze, check the discount in the cart, then buy Silver and confirm the access changes.', 'membership-for-woocommerce' ); ?></li>
+					</ol>
+				</div>
+			</div>
+		</details>
+	</div>
 	<div class="mfw-card">
 		<h2 id="mfw-level-form-title"><?php esc_html_e( 'Add Level', 'membership-for-woocommerce' ); ?></h2>
 		<input type="hidden" id="mfw-level-id" value="0" />
@@ -599,6 +752,7 @@ $mfw_role_tabs = array(
 	<p>
 		<button type="button" class="mfw-btn" id="mfw-add-level"><?php esc_html_e( 'Add Level', 'membership-for-woocommerce' ); ?></button>
 		<button type="button" class="mfw-btn mfw-btn__outline" id="mfw-cancel-edit-level" style="display:none;"><?php esc_html_e( 'Cancel', 'membership-for-woocommerce' ); ?></button>
+		<span class="mfw-level-save-message" id="mfw-level-save-message" role="status" aria-live="polite"></span>
 	</p>
 	</div>
 	</div>
@@ -1189,6 +1343,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 		formTitle.textContent = <?php echo wp_json_encode( __( 'Add Level', 'membership-for-woocommerce' ) ); ?>;
 		addButton.textContent = <?php echo wp_json_encode( __( 'Add Level', 'membership-for-woocommerce' ) ); ?>;
 		cancelButton.style.display = 'none';
+		document.getElementById( 'mfw-level-save-message' ).textContent = '';
 	}
 
 	// Discount category picker: highlight ticked chips and summarise what the discount covers.
@@ -1283,6 +1438,7 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 		formTitle.textContent = <?php echo wp_json_encode( __( 'Edit Level', 'membership-for-woocommerce' ) ); ?>;
 		addButton.textContent = <?php echo wp_json_encode( __( 'Update Level', 'membership-for-woocommerce' ) ); ?>;
 		cancelButton.style.display = '';
+		document.getElementById( 'mfw-level-save-message' ).textContent = '';
 		formTitle.scrollIntoView( { behavior: 'smooth' } );
 	}
 
@@ -1323,9 +1479,36 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 		var caps          = Array.prototype.slice.call( document.querySelectorAll( '.mfw-level-capability:checked' ) ).map( function ( el ) { return el.value; } );
 		var discountCats  = Array.prototype.slice.call( document.querySelectorAll( '.mfw-level-discount-category:checked' ) ).map( function ( el ) { return el.value; } );
 
+		var saveMessage   = document.getElementById( 'mfw-level-save-message' );
+		var buttonLabel   = addButton.textContent;
+
 		if ( ! name ) {
+			saveMessage.classList.remove( 'is-success' );
+			saveMessage.textContent = <?php echo wp_json_encode( __( 'Please enter a level name.', 'membership-for-woocommerce' ) ); ?>;
+			nameField.focus();
 			return;
 		}
+
+		if ( addButton.classList.contains( 'is-loading' ) ) {
+			return;
+		}
+
+		function stopLoading( message ) {
+			addButton.classList.remove( 'is-loading' );
+			addButton.disabled = false;
+			addButton.removeAttribute( 'aria-busy' );
+			addButton.textContent = buttonLabel;
+			cancelButton.disabled = false;
+			saveMessage.classList.remove( 'is-success' );
+			saveMessage.textContent = message;
+		}
+
+		addButton.classList.add( 'is-loading' );
+		addButton.disabled = true;
+		addButton.setAttribute( 'aria-busy', 'true' );
+		addButton.textContent = <?php echo wp_json_encode( __( 'Saving…', 'membership-for-woocommerce' ) ); ?>;
+		cancelButton.disabled = true;
+		saveMessage.textContent = '';
 
 		post( 'mfw_role_based_save_level', {
 			id: idField.value,
@@ -1342,10 +1525,53 @@ if ( class_exists( 'Membership_For_Woocommerce_Talk_To_Expert_Form' ) ) {
 			tier_ladder: tierLadderField.checked ? 1 : 0,
 			status: status,
 			capabilities: caps,
-		} ).then( function () { window.location.reload(); } );
+		} )
+			.then( function ( response ) { return response.json(); } )
+			.then( function ( json ) {
+				if ( json && json.success ) {
+					// Keep the loader running until the page reloads with the saved level.
+					saveMessage.classList.add( 'is-success' );
+					saveMessage.textContent = <?php echo wp_json_encode( __( 'Level saved.', 'membership-for-woocommerce' ) ); ?>;
+					window.location.reload();
+					return;
+				}
+				stopLoading( json && json.data && json.data.message ? json.data.message : <?php echo wp_json_encode( __( 'Something went wrong.', 'membership-for-woocommerce' ) ); ?> );
+			} )
+			.catch( function () {
+				stopLoading( <?php echo wp_json_encode( __( 'Something went wrong.', 'membership-for-woocommerce' ) ); ?> );
+			} );
 	} );
 
 	cancelButton.addEventListener( 'click', resetForm );
+
+	// "Use this example" copies a worked example into the Add Level form for review.
+	document.querySelectorAll( '.mfw-use-level-example' ).forEach( function ( button ) {
+		button.addEventListener( 'click', function ( e ) {
+			var example = JSON.parse( e.currentTarget.getAttribute( 'data-example' ) );
+			resetForm();
+			nameField.value = example.name;
+			descriptionField.value = example.description;
+			roleField.value = '';
+			newRoleField.value = example.wp_role;
+			rankField.value = example.rank;
+			discountField.value = example.discount;
+			expiryDaysField.value = example.expiry_days;
+			selfSignupField.checked = !! example.self_signup;
+			priceField.value = example.price;
+			tierLadderField.checked = !! example.tier_ladder;
+			upgradeThresholdField.value = example.threshold;
+			syncTierFields();
+			document.querySelectorAll( '.mfw-level-capability' ).forEach( function ( el ) {
+				el.checked = 'read' === el.value;
+			} );
+			syncGroupCheckboxes();
+			var saveMessage = document.getElementById( 'mfw-level-save-message' );
+			saveMessage.classList.add( 'is-success' );
+			saveMessage.textContent = <?php echo wp_json_encode( __( 'Example loaded — review the fields, then click "Add Level".', 'membership-for-woocommerce' ) ); ?>;
+			formTitle.scrollIntoView( { behavior: 'smooth' } );
+			nameField.focus( { preventScroll: true } );
+		} );
+	} );
 
 	document.querySelectorAll( '.mfw-edit-level' ).forEach( function ( button ) {
 		button.addEventListener( 'click', function ( e ) {

@@ -1110,3 +1110,102 @@
 .mfw-role-based-settings .mfw-redesign-main__navbar .mfw-tab-link:hover {
 	color: #23184b !important;
 }
+
+/* Loading state for buttons that save over AJAX (e.g. Add / Update Level). */
+.mfw-btn.is-loading {
+	cursor: wait;
+	opacity: 0.75;
+	pointer-events: none;
+}
+
+.mfw-btn.is-loading::before {
+	content: "";
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin-right: 8px;
+	vertical-align: -2px;
+	border: 2px solid rgba(255, 255, 255, 0.45);
+	border-top-color: #ffffff;
+	border-radius: 50%;
+	animation: mfw-btn-spin 0.7s linear infinite;
+}
+
+@keyframes mfw-btn-spin {
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.mfw-level-save-message {
+	display: inline-block;
+	margin-left: 12px;
+	color: #d63638;
+}
+
+.mfw-level-save-message.is-success {
+	color: #00a32a;
+}
+
+/* "Example: how to build a perfect level-based membership" guide on the Levels tab. */
+.mfw-level-example summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	cursor: pointer;
+	list-style: none;
+}
+
+.mfw-level-example summary::-webkit-details-marker {
+	display: none;
+}
+
+.mfw-level-example summary h2 {
+	margin: 0;
+}
+
+.mfw-level-example__toggle {
+	color: #2196f3;
+	font-size: 13px;
+	white-space: nowrap;
+}
+
+.mfw-level-example details[open] summary {
+	margin-bottom: 12px;
+}
+
+.mfw-level-example__table td {
+	vertical-align: middle;
+}
+
+.mfw-level-example__table .mfw-btn--sm {
+	white-space: nowrap;
+}
+
+.mfw-level-example__columns {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 8px 32px;
+	margin-top: 20px;
+}
+
+.mfw-level-example__columns h3 {
+	font-size: 14px;
+	margin: 0 0 8px;
+}
+
+.mfw-level-example__columns ol {
+	margin: 0 0 0 18px;
+}
+
+.mfw-level-example__columns li {
+	margin-bottom: 6px;
+	line-height: 1.5;
+}
+
+.mfw-level-example__columns code {
+	display: inline-block;
+	margin-top: 2px;
+	word-break: break-all;
+}
