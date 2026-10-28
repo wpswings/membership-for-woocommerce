@@ -236,6 +236,7 @@ class Mfw_Role_Based_Admin {
 		add_action( 'admin_post_mfw_role_based_send_campaign', array( __CLASS__, 'handle_send_campaign' ) );
 
 		add_action( 'add_meta_boxes', array( __CLASS__, 'register_restriction_metabox' ) );
+		add_action( 'save_post', array( __CLASS__, 'save_restriction_metabox' ), 10, 2 );
 
 		foreach ( self::restrictable_taxonomies() as $taxonomy ) {
 			add_action( "{$taxonomy}_edit_form_fields", array( __CLASS__, 'render_term_restriction_field' ) );
@@ -379,6 +380,50 @@ class Mfw_Role_Based_Admin {
 		$nonce             = wp_create_nonce( self::NONCE_ACTION );
 
 		include dirname( __FILE__ ) . '/partials/role-based-restriction-metabox.php';
+	}
+
+	/**
+	 * Saves the restriction metabox together with the post itself — the page's own
+	 * Save/Update button (classic editor form submit, or the block editor's meta-box
+	 * request), not only the metabox's separate "Save Restriction" button.
+	 *
+	 * @since 3.5.0
+	 * @param int     $post_id Post id.
+	 * @param WP_Post $post    Post.
+	 */
+	public static function save_restriction_metabox( $post_id, $post ) {
+
+		if ( ! isset( $_POST['mfw_role_based_restriction_nonce'] )
+			|| ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mfw_role_based_restriction_nonce'] ) ), self::NONCE_ACTION ) ) {
+			return;
+		}
+
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || wp_is_post_revision( $post_id ) || ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
+		}
+
+		if ( ! in_array( $post->post_type, array( 'post', 'page', 'product' ), true ) ) {
+			return;
+		}
+
+		$mode = isset( $_POST['mfw-restriction-mode'] ) ? sanitize_key( wp_unslash( $_POST['mfw-restriction-mode'] ) ) : 'levels';
+
+		if ( 'rank' === $mode ) {
+			$min_rank = isset( $_POST['mfw_role_membership_min_rank'] ) ? absint( $_POST['mfw_role_membership_min_rank'] ) : 0;
+			Mfw_Role_Based_Repository::set_restriction( $post->post_type, $post_id, array(), $min_rank );
+		} else {
+			$level_ids = isset( $_POST['mfw_role_membership_level_ids'] ) ? array_map( 'absint', (array) wp_unslash( $_POST['mfw_role_membership_level_ids'] ) ) : array();
+			$drip_days = isset( $_POST['mfw_role_membership_drip_days'] ) ? absint( $_POST['mfw_role_membership_drip_days'] ) : 0;
+			Mfw_Role_Based_Repository::set_restriction( $post->post_type, $post_id, $level_ids, null, $drip_days );
+		}
+
+		$message = isset( $_POST['mfw_role_membership_restricted_message'] ) ? sanitize_textarea_field( wp_unslash( $_POST['mfw_role_membership_restricted_message'] ) ) : '';
+
+		if ( '' === $message ) {
+			delete_post_meta( $post_id, 'mfw_role_membership_restricted_message' );
+		} else {
+			update_post_meta( $post_id, 'mfw_role_membership_restricted_message', $message );
+		}
 	}
 
 	/**

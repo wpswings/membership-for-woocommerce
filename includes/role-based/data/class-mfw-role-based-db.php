@@ -187,8 +187,14 @@ class Mfw_Role_Based_Db {
 			$wpdb->query( "UPDATE {$levels_table} SET tier_ladder = 1 WHERE upgrade_spend_threshold > 0" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 
+		// maybe_install() runs while plugins are still loading, before pluggable functions
+		// (get_user_by() etc.) exist — so the user/role migration waits for init.
 		if ( $installed_version && version_compare( $installed_version, '1.10.0', '<' ) ) {
-			self::migrate_level_capabilities_to_roles();
+			if ( did_action( 'init' ) ) {
+				self::migrate_level_capabilities_to_roles();
+			} else {
+				add_action( 'init', array( __CLASS__, 'migrate_level_capabilities_to_roles' ), 20 );
+			}
 		}
 
 		update_option( self::DB_VERSION_OPTION, self::DB_VERSION );
@@ -203,7 +209,7 @@ class Mfw_Role_Based_Db {
 	 *
 	 * @since 3.5.0
 	 */
-	private static function migrate_level_capabilities_to_roles() {
+	public static function migrate_level_capabilities_to_roles() {
 
 		global $wpdb;
 

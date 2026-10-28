@@ -74,32 +74,80 @@ class Mfw_Role_Based_Self_Service {
 			return '<div class="mfw-role-card"><p>' . esc_html__( 'You are already logged in.', 'membership-for-woocommerce' ) . '</p></div>';
 		}
 
-		$levels = Mfw_Role_Based_Repository::get_self_signup_levels();
-		if ( empty( $levels ) ) {
+		$form = self::render_register_form();
+		if ( '' === $form ) {
 			return '';
 		}
 
+		return '<div class="mfw-role-card"><h2>' . esc_html__( 'Join Membership', 'membership-for-woocommerce' ) . '</h2>' . $form . '</div>';
+	}
+
+	/**
+	 * The registration form itself, shared by [wps_role_membership_register] and the
+	 * membership login page (so a visitor without an account can sign up right there).
+	 *
+	 * @since 3.5.0
+	 * @param array $args {
+	 *     @type bool   $level_optional Offer "just create an account" instead of requiring a
+	 *                                  level — the form then renders even with no
+	 *                                  self-signup levels configured.
+	 *     @type string $redirect_to    Where to send the new user afterwards (e.g. back to a
+	 *                                  Buy Access link). Must be on this site.
+	 * }
+	 * @return string Empty string if there's nothing to register for.
+	 */
+	public static function render_register_form( $args = array() ) {
+
+		$args = wp_parse_args(
+			$args,
+			array(
+				'level_optional' => false,
+				'redirect_to'    => '',
+			)
+		);
+
+		$levels = Mfw_Role_Based_Repository::get_self_signup_levels();
+		if ( empty( $levels ) && ! $args['level_optional'] ) {
+			return '';
+		}
+
+		$errors = array(
+			'exists'   => __( 'That username or email is already registered. Please log in instead.', 'membership-for-woocommerce' ),
+			'password' => __( 'Please choose a password of at least 6 characters.', 'membership-for-woocommerce' ),
+			'failed'   => __( 'That username or email is already in use, or a required field was missing.', 'membership-for-woocommerce' ),
+		);
+		$error  = isset( $_GET['mfw_register'] ) ? sanitize_key( wp_unslash( $_GET['mfw_register'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
 		ob_start();
 		?>
-		<div class="mfw-role-card">
-			<h2><?php esc_html_e( 'Join Membership', 'membership-for-woocommerce' ); ?></h2>
-			<?php if ( isset( $_GET['mfw_register'] ) && 'failed' === $_GET['mfw_register'] ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
-				<p class="mfw-role-error"><?php esc_html_e( 'That username or email is already in use, or a required field was missing.', 'membership-for-woocommerce' ); ?></p>
+		<?php if ( isset( $errors[ $error ] ) ) : ?>
+			<p class="mfw-role-error"><?php echo esc_html( $errors[ $error ] ); ?></p>
+		<?php endif; ?>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="mfw-role-register-form">
+			<input type="hidden" name="action" value="mfw_role_based_register" />
+			<input type="hidden" name="mfw_nonce" value="<?php echo esc_attr( wp_create_nonce( self::NONCE_ACTION ) ); ?>" />
+			<?php if ( $args['redirect_to'] ) : ?>
+				<input type="hidden" name="redirect_to" value="<?php echo esc_attr( $args['redirect_to'] ); ?>" />
 			<?php endif; ?>
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="mfw-role-register-form">
-				<input type="hidden" name="action" value="mfw_role_based_register" />
-				<input type="hidden" name="mfw_nonce" value="<?php echo esc_attr( wp_create_nonce( self::NONCE_ACTION ) ); ?>" />
-				<div class="mfw-role-field">
-					<label for="mfw-register-username"><?php esc_html_e( 'Username', 'membership-for-woocommerce' ); ?></label>
-					<input type="text" id="mfw-register-username" name="user_login" required />
-				</div>
-				<div class="mfw-role-field">
-					<label for="mfw-register-email"><?php esc_html_e( 'Email', 'membership-for-woocommerce' ); ?></label>
-					<input type="email" id="mfw-register-email" name="user_email" required />
-				</div>
+			<div class="mfw-role-field">
+				<label for="mfw-register-username"><?php esc_html_e( 'Username', 'membership-for-woocommerce' ); ?></label>
+				<input type="text" id="mfw-register-username" name="user_login" autocomplete="username" required />
+			</div>
+			<div class="mfw-role-field">
+				<label for="mfw-register-email"><?php esc_html_e( 'Email', 'membership-for-woocommerce' ); ?></label>
+				<input type="email" id="mfw-register-email" name="user_email" autocomplete="email" required />
+			</div>
+			<div class="mfw-role-field">
+				<label for="mfw-register-password"><?php esc_html_e( 'Password', 'membership-for-woocommerce' ); ?></label>
+				<input type="password" id="mfw-register-password" name="user_pass" autocomplete="new-password" minlength="6" required />
+			</div>
+			<?php if ( ! empty( $levels ) ) : ?>
 				<div class="mfw-role-field">
 					<label for="mfw-register-level"><?php esc_html_e( 'Membership Level', 'membership-for-woocommerce' ); ?></label>
-					<select name="level_id" id="mfw-register-level" required>
+					<select name="level_id" id="mfw-register-level" <?php echo $args['level_optional'] ? '' : 'required'; ?>>
+						<?php if ( $args['level_optional'] ) : ?>
+							<option value="0" data-description=""><?php esc_html_e( 'No plan for now — just create my account', 'membership-for-woocommerce' ); ?></option>
+						<?php endif; ?>
 						<?php foreach ( $levels as $level ) : ?>
 							<option value="<?php echo esc_attr( $level['id'] ); ?>" data-description="<?php echo esc_attr( $level['description'] ?? '' ); ?>">
 								<?php
@@ -120,15 +168,15 @@ class Mfw_Role_Based_Self_Service {
 					<p id="mfw-register-level-description" class="mfw-role-level-description"></p>
 					<p class="mfw-role-level-description"><?php esc_html_e( 'Choosing a paid level takes you to checkout after registering; access is granted once payment completes.', 'membership-for-woocommerce' ); ?></p>
 				</div>
-				<p style="position:absolute;left:-9999px;" aria-hidden="true">
-					<label>
-						<?php esc_html_e( 'Leave this field empty', 'membership-for-woocommerce' ); ?>
-						<input type="text" name="mfw_hp" tabindex="-1" autocomplete="off" />
-					</label>
-				</p>
-				<button type="submit" class="mfw-role-btn"><?php esc_html_e( 'Register', 'membership-for-woocommerce' ); ?></button>
-			</form>
-		</div>
+			<?php endif; ?>
+			<p style="position:absolute;left:-9999px;" aria-hidden="true">
+				<label>
+					<?php esc_html_e( 'Leave this field empty', 'membership-for-woocommerce' ); ?>
+					<input type="text" name="mfw_hp" tabindex="-1" autocomplete="off" />
+				</label>
+			</p>
+			<button type="submit" class="mfw-role-btn"><?php esc_html_e( 'Register', 'membership-for-woocommerce' ); ?></button>
+		</form>
 		<script>
 		( function () {
 			var select = document.getElementById( 'mfw-register-level' );
@@ -154,7 +202,7 @@ class Mfw_Role_Based_Self_Service {
 	 */
 	public static function handle_register() {
 
-		$referer = wp_get_referer() ? wp_get_referer() : home_url( '/' );
+		$referer = wp_get_referer() ? remove_query_arg( 'mfw_register', wp_get_referer() ) : home_url( '/' );
 
 		if ( ! isset( $_POST['mfw_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['mfw_nonce'] ) ), self::NONCE_ACTION ) ) {
 			wp_safe_redirect( add_query_arg( 'mfw_register', 'failed', $referer ) );
@@ -169,41 +217,69 @@ class Mfw_Role_Based_Self_Service {
 
 		$username = isset( $_POST['user_login'] ) ? sanitize_user( wp_unslash( $_POST['user_login'] ) ) : '';
 		$email    = isset( $_POST['user_email'] ) ? sanitize_email( wp_unslash( $_POST['user_email'] ) ) : '';
+		$password = isset( $_POST['user_pass'] ) ? (string) wp_unslash( $_POST['user_pass'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- passwords must not be altered.
 		$level_id = isset( $_POST['level_id'] ) ? absint( $_POST['level_id'] ) : 0;
 
-		$level = Mfw_Role_Based_Repository::get_level( $level_id );
+		// Only ever an on-site destination (e.g. back to the Buy Access link that sent them here).
+		$redirect_to = isset( $_POST['redirect_to'] ) ? wp_validate_redirect( esc_url_raw( wp_unslash( $_POST['redirect_to'] ) ), '' ) : '';
 
-		if ( ! $username || ! is_email( $email ) || ! $level || 'active' !== $level['status'] || empty( $level['self_signup_enabled'] ) || Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $level ) || username_exists( $username ) || email_exists( $email ) ) {
+		if ( ! $username || ! is_email( $email ) ) {
 			wp_safe_redirect( add_query_arg( 'mfw_register', 'failed', $referer ) );
 			exit;
 		}
 
-		$password = wp_generate_password();
-		$user_id  = wp_create_user( $username, $password, $email );
+		if ( username_exists( $username ) || email_exists( $email ) ) {
+			wp_safe_redirect( add_query_arg( 'mfw_register', 'exists', $referer ) );
+			exit;
+		}
+
+		if ( '' !== $password && strlen( $password ) < 6 ) {
+			wp_safe_redirect( add_query_arg( 'mfw_register', 'password', $referer ) );
+			exit;
+		}
+
+		// A level is optional (plain account registration from the login page), but if one
+		// was picked it must really be open for self-signup.
+		$level = null;
+		if ( $level_id ) {
+			$level = Mfw_Role_Based_Repository::get_level( $level_id );
+			if ( ! $level || 'active' !== $level['status'] || empty( $level['self_signup_enabled'] ) || Mfw_Role_Based_Repository::level_has_unsafe_public_capabilities( $level ) ) {
+				wp_safe_redirect( add_query_arg( 'mfw_register', 'failed', $referer ) );
+				exit;
+			}
+		}
+
+		$chose_password = '' !== $password;
+		$user_id        = wp_create_user( $username, $chose_password ? $password : wp_generate_password(), $email );
 
 		if ( is_wp_error( $user_id ) ) {
 			wp_safe_redirect( add_query_arg( 'mfw_register', 'failed', $referer ) );
 			exit;
 		}
 
-		wp_new_user_notification( $user_id, null, 'user' ); // Core's own "here's how to set your password" email.
+		// The visitor picked their own password: just tell the admin. Otherwise send core's
+		// "here's how to set your password" email so they can log in again later.
+		wp_new_user_notification( $user_id, null, $chose_password ? 'admin' : 'user' );
 
 		wp_set_current_user( $user_id );
 		wp_set_auth_cookie( $user_id );
 
+		$account_url = function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'role-membership' ) : home_url( '/' );
+
 		// A paid level: the account exists, but access is granted only once payment
 		// completes (Mfw_Role_Based_Paid_Access::grant_access_from_order()). The cart isn't
 		// loaded on admin-post.php, so hand off to the frontend "Buy Access" link, which
-		// fills the cart and goes to checkout. A free level: unchanged, assign immediately.
-		if ( Mfw_Role_Based_Paid_Access::is_purchasable( $level ) ) {
+		// fills the cart and goes to checkout. A free level: assign immediately.
+		if ( $level && Mfw_Role_Based_Paid_Access::is_purchasable( $level ) ) {
 			wp_safe_redirect( Mfw_Role_Based_Paid_Access::get_buy_url( $level_id ) );
 			exit;
 		}
 
-		Mfw_Role_Based_Repository::assign_level_to_user( $user_id, $level_id, $user_id );
+		if ( $level ) {
+			Mfw_Role_Based_Repository::assign_level_to_user( $user_id, $level_id, $user_id );
+		}
 
-		$redirect = function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'role-membership' ) : home_url( '/' );
-		wp_safe_redirect( $redirect );
+		wp_safe_redirect( $redirect_to ? $redirect_to : $account_url );
 		exit;
 	}
 
