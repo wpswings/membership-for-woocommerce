@@ -1,0 +1,515 @@
+/**
+ * Front-end styling for the role-based module's own pages/sections: the login page, the
+ * self-signup form, the My Account "Membership" tab, and restricted-content notices.
+ *
+ * Scoped entirely to .mfw-role-* classes so it never touches theme or WooCommerce markup —
+ * only enqueued on requests that can render one of our shortcodes/hooks (see
+ * Mfw_Admin_Assets::maybe_enqueue_public_assets()).
+ */
+
+.mfw-role-card {
+	background: #ffffff;
+	border-radius: 16px;
+	box-shadow: 0 4px 24px rgba(20, 30, 60, 0.08);
+	padding: 36px 40px;
+	max-width: 480px;
+	margin: 24px auto;
+}
+
+/* Rendered inside WooCommerce's My Account content column, which is already its own
+   constrained container — let it fill that width instead of adding a second, narrower one. */
+.mfw-role-card--account {
+	max-width: 100%;
+	margin: 0;
+}
+
+.mfw-role-card h2,
+.mfw-role-card h3 {
+	margin-top: 0;
+	font-weight: 700;
+	color: #1a1a2e;
+}
+
+.mfw-role-card h3 {
+	font-size: 16px;
+	margin-bottom: 14px;
+}
+
+.mfw-role-field {
+	margin-bottom: 20px;
+}
+
+.mfw-role-field label {
+	display: block;
+	font-weight: 600;
+	font-size: 13px;
+	color: #4a4a68;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.mfw-role-card input[type="text"],
+.mfw-role-card input[type="email"],
+.mfw-role-card input[type="password"],
+.mfw-role-card select {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 11px 14px;
+	border: 1px solid #dcdfe6;
+	border-radius: 10px;
+	font-size: 14px;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mfw-role-card input[type="text"]:focus,
+.mfw-role-card input[type="email"]:focus,
+.mfw-role-card input[type="password"]:focus,
+.mfw-role-card select:focus {
+	outline: none;
+	border-color: #2196f3;
+	box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.15);
+}
+
+.mfw-role-card label input[type="checkbox"] {
+	margin-right: 6px;
+}
+
+.mfw-role-btn,
+.mfw-role-card button[type="submit"],
+.mfw-role-card input[type="submit"] {
+	display: inline-block;
+	background: linear-gradient(135deg, #2196f3 0%, #6a4cf2 100%);
+	color: #ffffff !important;
+	border: none;
+	border-radius: 999px;
+	padding: 12px 28px;
+	font-size: 14px;
+	font-weight: 700;
+	cursor: pointer;
+	text-decoration: none;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+	box-shadow: 0 6px 16px rgba(33, 150, 243, 0.28);
+}
+
+.mfw-role-btn:hover,
+.mfw-role-card button[type="submit"]:hover,
+.mfw-role-card input[type="submit"]:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 8px 20px rgba(33, 150, 243, 0.36);
+	color: #ffffff;
+}
+
+.mfw-role-btn--outline {
+	background: #ffffff;
+	color: #2196f3 !important;
+	border: 1.5px solid #2196f3;
+	box-shadow: none;
+}
+
+.mfw-role-price-badge {
+	display: inline-block;
+	background: linear-gradient(135deg, #2196f3 0%, #6a4cf2 100%);
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 12px;
+	padding: 3px 12px;
+	border-radius: 999px;
+	margin-left: 8px;
+	vertical-align: middle;
+}
+
+.mfw-role-price-badge--free {
+	background: #eef2f7;
+	color: #4a4a68;
+}
+
+.mfw-role-level-description {
+	display: block;
+	font-style: normal;
+	color: #6b7280;
+	font-size: 13px;
+	line-height: 1.5;
+	margin: 6px 0 0;
+}
+
+.mfw-role-notice {
+	background: #eef6fc;
+	border-left: 4px solid #2196f3;
+	border-radius: 8px;
+	padding: 14px 18px;
+	margin-bottom: 18px;
+	font-size: 14px;
+}
+
+.mfw-role-error {
+	background: #fdeeee;
+	border-left: 4px solid #d63638;
+	border-radius: 8px;
+	padding: 12px 16px;
+	margin-bottom: 16px;
+	color: #8a1f1f;
+	font-size: 14px;
+}
+
+.mfw-role-links {
+	margin-top: 16px;
+	font-size: 13px;
+}
+
+.mfw-role-links a {
+	color: #2196f3;
+	text-decoration: none;
+}
+
+.mfw-role-links a:hover {
+	text-decoration: underline;
+}
+
+/* wp_login_form() core markup, rendered inside .mfw-role-card */
+.mfw-role-card #mfw-role-membership-loginform p {
+	margin-bottom: 18px;
+}
+
+.mfw-role-card #mfw-role-membership-loginform label {
+	display: block;
+	font-weight: 600;
+	font-size: 13px;
+	color: #4a4a68;
+	margin-bottom: 6px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.mfw-role-card #mfw-role-membership-loginform input[type="text"],
+.mfw-role-card #mfw-role-membership-loginform input[type="password"] {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 11px 14px;
+	border: 1px solid #dcdfe6;
+	border-radius: 10px;
+	font-size: 14px;
+}
+
+.mfw-role-card #mfw-role-membership-loginform .login-remember label {
+	display: inline;
+	text-transform: none;
+	font-weight: 400;
+	letter-spacing: normal;
+}
+
+/* My Account "Membership" tab: plan cards */
+.mfw-role-plan {
+	position: relative;
+	background: #ffffff;
+	border: 1px solid #e6e9f0;
+	border-radius: 14px;
+	padding: 22px 24px;
+	margin-bottom: 16px;
+}
+
+.mfw-role-plan__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 6px;
+}
+
+.mfw-role-plan__eyebrow {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #6a4cf2;
+}
+
+.mfw-role-card .mfw-role-plan__name {
+	margin: 0;
+	font-size: 22px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: #1a1a2e;
+}
+
+/* Level names are admin-entered and often lowercase ("silver"). */
+.mfw-role-level-title {
+	text-transform: capitalize;
+}
+
+.mfw-role-plan__meta {
+	margin: 4px 0 0;
+	font-size: 13px;
+	color: #6b7280;
+}
+
+.mfw-role-plan__description {
+	margin: 10px 0 0;
+	font-size: 14px;
+	line-height: 1.55;
+	color: #4a4a68;
+}
+
+.mfw-role-plan__label {
+	margin: 18px 0 8px;
+	font-size: 12px;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: #1a1a2e;
+}
+
+.mfw-role-plan__actions {
+	margin-top: 18px;
+}
+
+.mfw-role-plan__actions form {
+	margin: 0;
+}
+
+.mfw-role-plan .mfw-role-btn,
+.mfw-role-plan button[type="submit"] {
+	padding: 10px 22px;
+	font-size: 13px;
+}
+
+.mfw-role-plan .mfw-role-btn:hover,
+.mfw-role-plan button[type="submit"]:hover {
+	margin-left: 0;
+}
+
+/* Current plan: highlighted with the brand gradient as border + soft tinted background. */
+.mfw-role-plan--current {
+	border: 2px solid transparent;
+	background:
+		linear-gradient(180deg, #f5f8ff 0%, #ffffff 70%) padding-box,
+		linear-gradient(135deg, #2196f3 0%, #6a4cf2 100%) border-box;
+	box-shadow: 0 8px 24px rgba(106, 76, 242, 0.12);
+}
+
+/* Next tier / upgrade. */
+.mfw-role-plan--upgrade {
+	background: #fbfbfe;
+	border-style: dashed;
+	border-color: #c9c2f5;
+}
+
+.mfw-role-plan--upgrade .mfw-role-plan__name {
+	font-size: 18px;
+}
+
+.mfw-role-plan--empty {
+	background: #f9fafc;
+	text-align: center;
+	padding: 28px 24px;
+}
+
+.mfw-role-plan--empty .mfw-role-plan__name {
+	font-size: 18px;
+}
+
+.mfw-role-status {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 3px 10px;
+	border-radius: 999px;
+	background: #e7f7ee;
+	color: #18794e;
+	font-size: 12px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.mfw-role-status::before {
+	content: "";
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: currentColor;
+}
+
+.mfw-role-status--muted {
+	background: #efeefe;
+	color: #5b45d6;
+}
+
+/* Other plans grid. */
+.mfw-role-plan-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 16px;
+}
+
+.mfw-role-plan--option {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.mfw-role-plan--option:hover {
+	border-color: #c9c2f5;
+	box-shadow: 0 6px 20px rgba(20, 30, 60, 0.08);
+}
+
+.mfw-role-plan--option .mfw-role-plan__name {
+	font-size: 17px;
+}
+
+.mfw-role-plan--option .mfw-role-price-badge {
+	margin-left: 0;
+}
+
+/* Push the button to the bottom so cards of different heights line up. */
+.mfw-role-plan--option .mfw-role-plan__actions {
+	margin-top: auto;
+	padding-top: 18px;
+}
+
+.mfw-role-plan--option .mfw-role-btn,
+.mfw-role-plan--option button[type="submit"] {
+	display: block;
+	width: 100%;
+	text-align: center;
+	box-sizing: border-box;
+}
+
+/* Benefit checklist. */
+.mfw-role-level-benefits {
+	list-style: none;
+	margin: 12px 0 0;
+	padding: 0;
+}
+
+.mfw-role-plan__label + .mfw-role-level-benefits {
+	margin-top: 0;
+}
+
+.mfw-role-level-benefits li {
+	position: relative;
+	padding: 0 0 0 26px;
+	margin: 0 0 8px;
+	color: #3d3d56;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.mfw-role-level-benefits li::before {
+	content: "\2713";
+	position: absolute;
+	left: 0;
+	top: 1px;
+	width: 18px;
+	height: 18px;
+	border-radius: 50%;
+	background: #e8f1fe;
+	color: #2196f3;
+	font-size: 11px;
+	font-weight: 700;
+	line-height: 18px;
+	text-align: center;
+}
+
+.mfw-role-level-benefits a {
+	color: #2196f3;
+}
+
+/* Secondary action (e.g. Save Preference): outline, not the primary gradient. */
+.mfw-role-card button.mfw-role-btn--outline {
+	background: #ffffff;
+	color: #2196f3 !important;
+	border: 1.5px solid #2196f3;
+	box-shadow: none;
+	padding: 9px 22px;
+	font-size: 13px;
+}
+
+.mfw-role-card button.mfw-role-btn--outline:hover {
+	background: #f2f8ff;
+	box-shadow: none;
+	margin-left: 0;
+}
+
+/* Sections below the plans (other plans, email preferences). */
+.mfw-role-account-section {
+	border-top: 1px solid #eef0f4;
+	margin-top: 28px;
+	padding-top: 24px;
+}
+
+/* Tiered membership: upgrade progress */
+.mfw-role-progress {
+	margin-top: 16px;
+}
+
+.mfw-role-progress-bar {
+	background: #e9ecf3;
+	border-radius: 999px;
+	height: 10px;
+	overflow: hidden;
+}
+
+.mfw-role-progress-bar__fill {
+	background: linear-gradient(135deg, #2196f3 0%, #6a4cf2 100%);
+	height: 100%;
+	min-width: 10px;
+	border-radius: 999px;
+	transition: width 0.3s ease;
+}
+
+.mfw-role-progress__legend {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	margin-top: 8px;
+	font-size: 13px;
+	color: #6b7280;
+}
+
+@media (max-width: 600px) {
+	.mfw-role-plan {
+		padding: 18px;
+	}
+
+	.mfw-role-card .mfw-role-plan__name {
+		font-size: 19px;
+	}
+}
+
+/* Restricted-content notice (shown in place of gated content) */
+.mfw-role-membership-restricted {
+	background: #f9fafc;
+	border: 1px solid #eef0f4;
+	border-left: 4px solid #6a4cf2;
+	border-radius: 10px;
+	padding: 18px 22px;
+	font-size: 15px;
+	color: #1a1a2e;
+	margin: 20px 0 10px;
+}
+
+.mfw-role-membership-buy-access-list {
+	margin: 0 0 24px;
+}
+
+.mfw-role-membership-buy-access {
+	display: inline-block;
+	background: linear-gradient(135deg, #2196f3 0%, #6a4cf2 100%);
+	color: #ffffff !important;
+	border-radius: 999px;
+	padding: 10px 22px;
+	font-size: 13px;
+	font-weight: 700;
+	text-decoration: none;
+	margin: 0 8px 8px 0;
+}
+
+.mfw-role-membership-buy-access:hover {
+	opacity: 0.92;
+}
+
+/* Login page: login / register panels. */
+.mfw-role-auth-panel[hidden] {
+	display: none !important;
+}

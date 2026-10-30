@@ -283,7 +283,10 @@ class Membership_For_Woocommerce_Public {
 			return $items;
 		}
 
-		if ( 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'off' ) ) {
+		// Role-based mode has its own "Membership" tab, so hide the purchase-based details tab.
+		$is_role_mode = class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode();
+
+		if ( ! $is_role_mode && 'on' === get_option( 'wps_msfw_enable_members_dashboard', 'off' ) ) {
 
 			$logout = $items['customer-logout'];
 			unset( $items['customer-logout'] );
@@ -336,6 +339,10 @@ class Membership_For_Woocommerce_Public {
 	public function wps_membership_populate_tab() {
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
+			return;
+		}
+		// Purchase-based details are not shown in role-based mode.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
 			return;
 		}
 		$user       = get_current_user_id();
@@ -466,25 +473,22 @@ class Membership_For_Woocommerce_Public {
 				if ( ! is_user_logged_in() && ! in_array( 'member', (array) $is_member_meta ) ) {
 
 					// If non logged in or not a member.
-					if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat' ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag' ) ) {
+					if ( ( in_array( $product->get_id(), $this->global_class->plans_products_ids() ) || has_term( $this->global_class->plans_cat_ids(), 'product_cat', $product->get_id() ) ) || has_term( $this->global_class->plans_tag_ids(), 'product_tag', $product->get_id() ) ) {
 
 						$is_purchasable = false;
 					}
+				} elseif ( true == $this->is_accessible_to_member( $product ) ) {
+					// Current product is accessible by an activated membership.
+					$is_purchasable = true;
+
+					if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
+
+						$is_purchasable = false;
+					}
+				} elseif ( $this->global_class->plans_exist_check() == true ) {
+					$is_purchasable = true;
 				} else {
-					// Check if current product is accessible by any activated membership id.
-					if ( true == $this->is_accessible_to_member( $product ) ) {
-
-						$is_purchasable = true;
-
-						if ( ! empty( $this->under_review_products ) && in_array( $product->get_id(), $this->under_review_products ) ) {
-
-							$is_purchasable = false;
-						}
-					} elseif ( $this->global_class->plans_exist_check() == true ) {
-							$is_purchasable = true;
-					} else {
-						$is_purchasable = false;
-					}
+					$is_purchasable = false;
 				}
 			} else {
 
@@ -956,12 +960,9 @@ class Membership_For_Woocommerce_Public {
 			return;
 		}
 
-		if ( empty( $product ) ) {
-
-			$product = $_product;
-		}
-
-		$product_id         = is_object( $product ) ? $product->get_id() : get_the_ID();
+		// Prefer the explicitly passed product; fall back to the loop's global product.
+		$current_product = is_object( $_product ) ? $_product : $product;
+		$product_id      = is_object( $current_product ) ? $current_product->get_id() : get_the_ID();
 		$is_product_exclude = false;
 		if ( $this->global_class->plans_exist_check() == true ) {
 
@@ -1005,7 +1006,7 @@ class Membership_For_Woocommerce_Public {
 					$target_tag_ids  = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_tags', true );
 					if ( ! empty( $target_ids ) && is_array( $target_ids ) ) {
 
-						if ( in_array( get_the_ID(), $target_ids ) ) {
+						if ( in_array( $product_id, $target_ids ) ) {
 
 							$output .= esc_html( get_the_title( $plan['ID'] ) ) . ' | ';
 						}
@@ -1789,6 +1790,7 @@ class Membership_For_Woocommerce_Public {
 					if ( 0 < $plan_products_count ) {
 
 						$plan_products_text = sprintf(
+							/* translators: %d: number of products in the plan. */
 							_n( '%d product', '%d products', $plan_products_count, 'membership-for-woocommerce' ),
 							$plan_products_count
 						);
@@ -2285,8 +2287,8 @@ class Membership_For_Woocommerce_Public {
 		// Check if the file is in a user-specific directory or validate ownership via metadata.
 		$is_owner = false;
 		if ( false !== strpos( $file_dir, '/' . $current_user_id . '/' ) ||
-		     false !== strpos( $file_dir, '/user_' . $current_user_id . '/' ) ||
-		     false !== strpos( $file_dir, '/membership-receipts/' ) ) {
+			false !== strpos( $file_dir, '/user_' . $current_user_id . '/' ) ||
+			false !== strpos( $file_dir, '/membership-receipts/' ) ) {
 			$is_owner = true;
 		}
 
@@ -2337,6 +2339,28 @@ class Membership_For_Woocommerce_Public {
 	}
 
 	/**
+	 * Safely decode a value expected to be an array of identifiers.
+	 *
+	 * Never passes attacker-controlled data through a raw unserialize(); class
+	 * instantiation is disabled and the result is discarded unless it is an array.
+	 *
+	 * @param mixed $value value that may be a serialized array of identifiers.
+	 * @return array
+	 */
+	private function wps_mfw_safe_unserialize_array( $value ) {
+		if ( is_array( $value ) ) {
+			return $value;
+		}
+
+		if ( ! is_string( $value ) || '' === $value ) {
+			return array();
+		}
+
+		$unserialized = @unserialize( $value, array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
+		return is_array( $unserialized ) ? $unserialized : array();
+	}
+
+	/**
 	 * Assign Club membership.
 	 *
 	 * @param [type] $plan_id is the id of current plan.
@@ -2357,7 +2381,7 @@ class Membership_For_Woocommerce_Public {
 				$product_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_ids', true );
 				if ( ! empty( $product_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_ids'] = ! empty( $plan_obj['wps_membership_plan_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_target_ids'] ) : array();
+					$plan_obj['wps_membership_plan_target_ids'] = ! empty( $plan_obj['wps_membership_plan_target_ids'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_target_ids'] = array_merge( $plan_obj['wps_membership_plan_target_ids'], $product_ids );
 					$plan_obj['wps_membership_plan_target_ids'] = serialize( $plan_obj['wps_membership_plan_target_ids'] );
 				}
@@ -2365,7 +2389,7 @@ class Membership_For_Woocommerce_Public {
 				$product_disc_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_ids', true );
 				if ( ! empty( $product_disc_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_disc_ids'] = ! empty( $plan_obj['wps_membership_plan_target_disc_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_ids'] ) : array();
+					$plan_obj['wps_membership_plan_target_disc_ids'] = ! empty( $plan_obj['wps_membership_plan_target_disc_ids'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_disc_ids'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_ids'] = array_merge( $plan_obj['wps_membership_plan_target_disc_ids'], $product_disc_ids );
 					$plan_obj['wps_membership_plan_target_disc_ids'] = serialize( $plan_obj['wps_membership_plan_target_disc_ids'] );
 				}
@@ -2373,7 +2397,7 @@ class Membership_For_Woocommerce_Public {
 				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_post_target_ids', true );
 				if ( ! empty( $post_ids ) ) {
 
-					$plan_obj['wps_membership_plan_post_target_ids'] = ! empty( $plan_obj['wps_membership_plan_post_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_post_target_ids'] ) : array();
+					$plan_obj['wps_membership_plan_post_target_ids'] = ! empty( $plan_obj['wps_membership_plan_post_target_ids'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_post_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_post_target_ids'] = array_merge( $plan_obj['wps_membership_plan_post_target_ids'], $post_ids );
 					$plan_obj['wps_membership_plan_post_target_ids'] = serialize( $plan_obj['wps_membership_plan_post_target_ids'] );
 				}
@@ -2381,7 +2405,7 @@ class Membership_For_Woocommerce_Public {
 				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_page_target_ids', true );
 				if ( ! empty( $post_ids ) ) {
 
-					$plan_obj['wps_membership_plan_page_target_ids'] = ! empty( $plan_obj['wps_membership_plan_page_target_ids'] ) ? unserialize( $plan_obj['wps_membership_plan_page_target_ids'] ) : array();
+					$plan_obj['wps_membership_plan_page_target_ids'] = ! empty( $plan_obj['wps_membership_plan_page_target_ids'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_page_target_ids'] ) : array();
 					$plan_obj['wps_membership_plan_page_target_ids'] = array_merge( $plan_obj['wps_membership_plan_page_target_ids'], $post_ids );
 					$plan_obj['wps_membership_plan_page_target_ids'] = serialize( $plan_obj['wps_membership_plan_page_target_ids'] );
 				}
@@ -2389,7 +2413,7 @@ class Membership_For_Woocommerce_Public {
 				$cat_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_categories', true );
 				if ( ! empty( $cat_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_categories'] = ! empty( $plan_obj['wps_membership_plan_target_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_categories'] ) : array();
+					$plan_obj['wps_membership_plan_target_categories'] = ! empty( $plan_obj['wps_membership_plan_target_categories'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_categories'] = array_merge( $plan_obj['wps_membership_plan_target_categories'], $cat_ids );
 					$plan_obj['wps_membership_plan_target_categories'] = serialize( $plan_obj['wps_membership_plan_target_categories'] );
 				}
@@ -2397,7 +2421,7 @@ class Membership_For_Woocommerce_Public {
 				$cat_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_categories', true );
 				if ( ! empty( $cat_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_disc_categories'] = ! empty( $plan_obj['wps_membership_plan_target_disc_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_categories'] ) : array();
+					$plan_obj['wps_membership_plan_target_disc_categories'] = ! empty( $plan_obj['wps_membership_plan_target_disc_categories'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_disc_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_categories'] = array_merge( $plan_obj['wps_membership_plan_target_disc_categories'], $cat_ids );
 					$plan_obj['wps_membership_plan_target_disc_categories'] = serialize( $plan_obj['wps_membership_plan_target_disc_categories'] );
 				}
@@ -2405,7 +2429,7 @@ class Membership_For_Woocommerce_Public {
 				$tag_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_tags', true );
 				if ( ! empty( $tag_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_tags'] = ! empty( $plan_obj['wps_membership_plan_target_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_tags'] ) : array();
+					$plan_obj['wps_membership_plan_target_tags'] = ! empty( $plan_obj['wps_membership_plan_target_tags'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_tags'] = array_merge( $plan_obj['wps_membership_plan_target_tags'], $tag_ids );
 					$plan_obj['wps_membership_plan_target_tags'] = serialize( $plan_obj['wps_membership_plan_target_tags'] );
 				}
@@ -2413,7 +2437,7 @@ class Membership_For_Woocommerce_Public {
 				$post_ids = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_disc_tags', true );
 				if ( ! empty( $post_ids ) ) {
 
-					$plan_obj['wps_membership_plan_target_disc_tags'] = ! empty( $plan_obj['wps_membership_plan_target_disc_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_disc_tags'] ) : array();
+					$plan_obj['wps_membership_plan_target_disc_tags'] = ! empty( $plan_obj['wps_membership_plan_target_disc_tags'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_disc_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_disc_tags'] = array_merge( $plan_obj['wps_membership_plan_target_disc_tags'], $post_ids );
 					$plan_obj['wps_membership_plan_target_disc_tags'] = serialize( $plan_obj['wps_membership_plan_target_disc_tags'] );
 				}
@@ -2421,7 +2445,7 @@ class Membership_For_Woocommerce_Public {
 				$ptags = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_post_tags', true );
 				if ( ! empty( $ptags ) ) {
 
-					$plan_obj['wps_membership_plan_target_post_tags'] = ! empty( $plan_obj['wps_membership_plan_target_post_tags'] ) ? unserialize( $plan_obj['wps_membership_plan_target_post_tags'] ) : array();
+					$plan_obj['wps_membership_plan_target_post_tags'] = ! empty( $plan_obj['wps_membership_plan_target_post_tags'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_post_tags'] ) : array();
 					$plan_obj['wps_membership_plan_target_post_tags'] = array_merge( $plan_obj['wps_membership_plan_target_post_tags'], $ptags );
 					$plan_obj['wps_membership_plan_target_post_tags'] = serialize( $plan_obj['wps_membership_plan_target_post_tags'] );
 				}
@@ -2429,7 +2453,7 @@ class Membership_For_Woocommerce_Public {
 				$pcats = wps_membership_get_meta_data( $mem_ids, 'wps_membership_plan_target_post_categories', true );
 				if ( ! empty( $pcats ) ) {
 
-					$plan_obj['wps_membership_plan_target_post_categories'] = ! empty( $plan_obj['wps_membership_plan_target_post_categories'] ) ? unserialize( $plan_obj['wps_membership_plan_target_post_categories'] ) : array();
+					$plan_obj['wps_membership_plan_target_post_categories'] = ! empty( $plan_obj['wps_membership_plan_target_post_categories'] ) ? $this->wps_mfw_safe_unserialize_array( $plan_obj['wps_membership_plan_target_post_categories'] ) : array();
 					$plan_obj['wps_membership_plan_target_post_categories'] = array_merge( $plan_obj['wps_membership_plan_target_post_categories'], $pcats );
 					$plan_obj['wps_membership_plan_target_post_categories'] = serialize( $plan_obj['wps_membership_plan_target_post_categories'] );
 				}
@@ -3276,10 +3300,16 @@ class Membership_For_Woocommerce_Public {
 
 		check_ajax_referer( 'auth_adv_nonce', 'nonce' );
 
-		$plan_id                        = isset( $_POST['plan_id'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_id'] ) ) : '';
-		$plan_price                     = isset( $_POST['plan_price'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_price'] ) ) : '';
-		$plan_title                     = isset( $_POST['plan_title'] ) ? sanitize_text_field( wp_unslash( $_POST['plan_title'] ) ) : '';
-		$wps_membership_default_product = get_option( 'wps_membership_default_product', '' );
+		$plan_id = isset( $_POST['plan_id'] ) ? absint( wp_unslash( $_POST['plan_id'] ) ) : 0;
+
+		// The plan's identity, price and title are always read from the stored plan record,
+		// never trusted from the request, and the plan must be published.
+		if ( ! $plan_id || 'wps_cpt_membership' !== get_post_type( $plan_id ) || 'publish' !== get_post_status( $plan_id ) ) {
+			wp_send_json_error( array( 'message' => esc_html__( 'Invalid membership plan.', 'membership-for-woocommerce' ) ) );
+		}
+
+		$plan_price                     = wps_membership_get_meta_data( $plan_id, 'wps_membership_plan_price', true );
+		$plan_title                     = get_the_title( $plan_id );
 		$wps_membership_default_product = absint( get_option( 'wps_membership_default_product', '' ) );
 		// Ensure Woo session/cart are initialized in this custom AJAX request.
 		if ( function_exists( 'wc_load_cart' ) && ( ! WC()->cart ) ) {
@@ -3638,6 +3668,13 @@ class Membership_For_Woocommerce_Public {
 	 * @return boolean
 	 */
 	public function wps_membership_make_membership_product_purchasable( $is_purchasable, $product ) {
+		// Role-based mode restricts products through its own rules
+		// (Mfw_Role_Based_Public::enforce_product_restriction()); purchase-based plans left
+		// over from purchase mode must not lock products there.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return $is_purchasable;
+		}
+
 		// user is blocked.
 		if ( ! $this->global_class->wps_mfw_is_user_block() ) {
 			return $is_purchasable;
@@ -3707,7 +3744,7 @@ class Membership_For_Woocommerce_Public {
 						}
 					}
 
-					if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) ) {
+					if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat', $product->get_id() ) ) ) {
 						array_push( $existing_plan_product, $product->get_id() );
 					}
 				}
@@ -3775,7 +3812,7 @@ class Membership_For_Woocommerce_Public {
 							}
 						}
 
-						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat' ) ) ) {
+						if ( in_array( $product->get_id(), $target_ids ) || ( ! empty( $target_cat_ids ) && has_term( $target_cat_ids, 'product_cat', $product->get_id() ) ) ) {
 
 							$existing_plan_product = ! empty( $existing_plan_product ) && is_array( $existing_plan_product ) ? $existing_plan_product : array();
 							if ( ! in_array( $product->get_id(), $existing_plan_product ) ) {
@@ -5326,13 +5363,12 @@ class Membership_For_Woocommerce_Public {
 					}
 
 					// Fetch the user data in a single query.
-					$id_list    = implode( ',', array_map( 'intval', $user_ids ) );
+					$user_ids   = array_map( 'intval', $user_ids );
 					$users_data = $wpdb->get_results(
-						"
-						SELECT ID, display_name, user_email 
-						FROM $wpdb->users 
-						WHERE ID IN ($id_list)
-					",
+						$wpdb->prepare(
+							"SELECT ID, display_name, user_email FROM {$wpdb->users} WHERE ID IN (" . implode( ', ', array_fill( 0, count( $user_ids ), '%d' ) ) . ')',
+							$user_ids
+						),
 						ARRAY_A
 					);
 
@@ -5706,6 +5742,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_validate_quantity_before_add( $passed, $product_id, $quantity ) {
 
+		// Purchase limits are a purchase-based membership feature; role-based mode has no
+		// purchase-based plans, so it must not limit (or empty) role members' carts.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return $passed;
+		}
+
 		// restrict user based on his membership.
 		$membership_ids = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		if ( ! empty( $membership_ids ) && is_array( $membership_ids ) ) {
@@ -5768,6 +5810,12 @@ class Membership_For_Woocommerce_Public {
 	 */
 	public function wps_msfw_restrict_purchase_quantity_by_membership() {
 
+		// Purchase limits are a purchase-based membership feature; role-based mode has no
+		// purchase-based plans, so it must not limit (or empty) role members' carts.
+		if ( class_exists( 'Mfw_Mode_Controller' ) && Mfw_Mode_Controller::is_role_mode() ) {
+			return;
+		}
+
 		// restrict user based on his membership.
 		$membership_ids      = $this->global_class->wps_msfw_check_membership_id_is_valid( get_current_user_id() );
 		static $notice_added = false; // Prevent duplicate notices.
@@ -5819,6 +5867,12 @@ class Membership_For_Woocommerce_Public {
 		} elseif ( 'on' === get_option( 'wps_msfw_enable_product_limit_restriction_globally', '' ) ) {
 
 			$wps_msfw_global_product_purchase_limit_qty = (int) get_option( 'wps_msfw_global_product_purchase_limit_qty', 0 );
+
+			// 0 (or empty) means no limit, as in wps_msfw_validate_quantity_before_add() —
+			// otherwise set_quantity( 0 ) silently removes every item from the cart.
+			if ( $wps_msfw_global_product_purchase_limit_qty <= 0 ) {
+				return;
+			}
 
 			// Enforce limit in cart.
 			foreach ( WC()->cart->get_cart() as $cart_item_key => $cart_item ) {
