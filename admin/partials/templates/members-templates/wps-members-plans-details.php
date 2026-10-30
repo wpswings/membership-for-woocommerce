@@ -208,7 +208,7 @@ $existing_plans = get_posts( $args );
 					<th><label><?php esc_html_e( 'Offered Products', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php
-						$prod_ids = maybe_unserialize( $products );
+						$prod_ids = wps_membership_safe_unserialize_array( $products );
 						if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 							foreach ( $prod_ids as $ids ) {
 								echo( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -222,7 +222,7 @@ $existing_plans = get_posts( $args );
 					<th><label><?php esc_html_e( 'Offered Categories', 'membership-for-woocommerce' ); ?></label></th>
 					<td>
 						<?php
-						$cat_ids = maybe_unserialize( $categories );
+						$cat_ids = wps_membership_safe_unserialize_array( $categories );
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 							foreach ( $cat_ids as $ids ) {
 								echo( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -244,7 +244,7 @@ $existing_plans = get_posts( $args );
 							<th><label><?php esc_html_e( 'Offered Product Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 							<td>
 								<?php
-								$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_tags'] ) ? $plan['wps_membership_plan_target_tags'] : array() );
+								$tag_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_tags'] ) ? $plan['wps_membership_plan_target_tags'] : array() );
 
 								if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 									foreach ( $tag_ids as $ids ) {
@@ -264,7 +264,7 @@ $existing_plans = get_posts( $args );
 						
 							<td>
 								<?php
-								$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_post_target_ids'] ) ? $plan['wps_membership_plan_post_target_ids'] : array() );
+								$post_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_post_target_ids'] ) ? $plan['wps_membership_plan_post_target_ids'] : array() );
 
 								if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 									foreach ( $post_ids as $ids ) {
@@ -281,7 +281,7 @@ $existing_plans = get_posts( $args );
 							<th><label><?php esc_html_e( 'Offered Posts Categories: ', 'membership-for-woocommerce' ); ?></label></th>
 							<td>
 								<?php
-								$cat_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_post_categories'] ) ? $plan['wps_membership_plan_target_post_categories'] : array() );
+								$cat_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_post_categories'] ) ? $plan['wps_membership_plan_target_post_categories'] : array() );
 
 								if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 									foreach ( $cat_ids as $ids ) {
@@ -297,7 +297,7 @@ $existing_plans = get_posts( $args );
 							<th><label><?php esc_html_e( 'Offered Post Tags: ', 'membership-for-woocommerce' ); ?></label></th>
 							<td>
 								<?php
-								$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_post_tags'] ) ? $plan['wps_membership_plan_target_post_tags'] : array() );
+								$tag_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_post_tags'] ) ? $plan['wps_membership_plan_target_post_tags'] : array() );
 
 								if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 									foreach ( $tag_ids as $ids ) {
@@ -317,7 +317,7 @@ $existing_plans = get_posts( $args );
 							<td>
 								<?php
 
-								$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_page_target_ids'] ) ? $plan['wps_membership_plan_page_target_ids'] : array() );
+								$post_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_page_target_ids'] ) ? $plan['wps_membership_plan_page_target_ids'] : array() );
 
 								if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 									foreach ( $post_ids as $ids ) {
@@ -336,7 +336,7 @@ $existing_plans = get_posts( $args );
 							<td>
 								<?php
 
-								$post_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_ids'] ) ? $plan['wps_membership_plan_target_disc_ids'] : array() );
+								$post_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_disc_ids'] ) ? $plan['wps_membership_plan_target_disc_ids'] : array() );
 
 								if ( ! empty( $post_ids ) && is_array( $post_ids ) ) {
 									foreach ( $post_ids as $ids ) {
@@ -356,7 +356,7 @@ $existing_plans = get_posts( $args );
 							<td>
 								<?php
 
-								$cat_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_categories'] ) ? $plan['wps_membership_plan_target_disc_categories'] : array() );
+								$cat_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_disc_categories'] ) ? $plan['wps_membership_plan_target_disc_categories'] : array() );
 
 								if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 									foreach ( $cat_ids as $ids ) {
@@ -374,7 +374,7 @@ $existing_plans = get_posts( $args );
 							<td>
 								<?php
 
-								$tag_ids = maybe_unserialize( ! empty( $plan['wps_membership_plan_target_disc_tags'] ) ? $plan['wps_membership_plan_target_disc_tags'] : array() );
+								$tag_ids = wps_membership_safe_unserialize_array( ! empty( $plan['wps_membership_plan_target_disc_tags'] ) ? $plan['wps_membership_plan_target_disc_tags'] : array() );
 
 								if ( ! empty( $tag_ids ) && is_array( $tag_ids ) ) {
 									foreach ( $tag_ids as $ids ) {
