@@ -3,9 +3,9 @@ Contributors: wpswings
 Donate link:  https://wpswings.com/
 Tags: membership, user registration, content restriction, member, community
 Requires at least: 6.7.0
-Tested up to: 7.0
+Tested up to: 7.1
 WC requires at least: 6.5.0
-WC tested up to: 11.0.0
+WC tested up to: 11.2.1
 Stable tag: 3.1.3
 Requires PHP: 7.4
 License: GPLv3 or later 
@@ -460,9 +460,27 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Changelog ==
 
-= 3.1.3 - Released on  05 Oct 2026 =
-* Security: Fixed a payment bypass vulnerability that let an unauthenticated visitor obtain a membership for free by tampering with the checkout request; plan price, title and status are now always read from the stored plan record. Reported by Alessandro Greco (Aleff) and Giovanbattista Ianni of the University of Calabria.
-* Security: Fixed a PHP object injection vulnerability reachable through membership plan settings. Reported by sungbyeongchan.
+= 3.1.3 - Released on 30 Oct 2026 =
+* New : Role-Based Membership Mode: a separate role/capability-based membership flow alongside the existing purchase-based flow.
+* New : Onboarding wizard to choose membership mode at activation; mode can be switched later from Settings (with confirmation prompt).
+* New : Non-destructive mode switching: data from both modes is kept when switching.
+* New : Role & capability manager, role-mode settings, and content restriction metabox.
+* New : My Account membership tab, restriction enforcement, and shortcodes for role mode.
+* New : Membership Login page, member self-signup, and level descriptions.
+* New : Paid membership levels with tiered auto-upgrade and upgrade progress bar.
+* New : Member discounts: level-based percentage and category-scoped discounts.
+* New : Membership lifecycle: auto-expiry and expiry reminder emails.
+* New : Email notifications for role-based memberships.
+* New : Broadcast campaigns: scheduled/drip emails, open/click tracking, and unsubscribe.
+* New : Advanced access control: REST API content hiding, content drip, and Private Site mode.
+* New : Level JSON export/import and bulk user assignment (bulk actions + CSV).
+* New : Audit log and Recent Member Logins (Login Activity tab).
+* New : Reporting: dashboard widget, reports/charts, and CSV exports.
+* New : REST API endpoints, webhooks, WPML compatibility, and developer hooks.
+* New : GDPR support (personal data export/erase) for role-mode data.
+* New : Compatibility with latest WC ( 11.2.1 ) and WP ( 7.1 )
+* Fix : Member discounts not applying on AJAX cart updates.
+* Tweak : Existing purchase-based membership code moved into a separate legacy module; no change in behavior.
 
 = 3.1.2 - Released on 10 Aug 2026 =
 * Security: Fixed a security issue that could allow unauthorized file deletion.
@@ -729,5 +747,24 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 
 == Upgrade Notice ==
 
-= 3.1.3 - Released on 05 Oct 2026 =
-* Security: Fixed a payment bypass vulnerability and a PHP object injection vulnerability
+= 3.1.3 - Released on 30 Oct 2026 =
+* New : Role-Based Membership Mode: a separate role/capability-based membership flow alongside the existing purchase-based flow.
+* New : Onboarding wizard to choose membership mode at activation; mode can be switched later from Settings (with confirmation prompt).
+* New : Non-destructive mode switching: data from both modes is kept when switching.
+* New : Role & capability manager, role-mode settings, and content restriction metabox.
+* New : My Account membership tab, restriction enforcement, and shortcodes for role mode.
+* New : Membership Login page, member self-signup, and level descriptions.
+* New : Paid membership levels with tiered auto-upgrade and upgrade progress bar.
+* New : Member discounts: level-based percentage and category-scoped discounts.
+* New : Membership lifecycle: auto-expiry and expiry reminder emails.
+* New : Email notifications for role-based memberships.
+* New : Broadcast campaigns: scheduled/drip emails, open/click tracking, and unsubscribe.
+* New : Advanced access control: REST API content hiding, content drip, and Private Site mode.
+* New : Level JSON export/import and bulk user assignment (bulk actions + CSV).
+* New : Audit log and Recent Member Logins (Login Activity tab).
+* New : Reporting: dashboard widget, reports/charts, and CSV exports.
+* New : REST API endpoints, webhooks, WPML compatibility, and developer hooks.
+* New : GDPR support (personal data export/erase) for role-mode data.
+* New : Compatibility with latest WC ( 11.2.1 ) and WP ( 7.1 )
+* Fix : Member discounts not applying on AJAX cart updates.
+* Tweak : Existing purchase-based membership code moved into a separate legacy module; no change in behavior.
