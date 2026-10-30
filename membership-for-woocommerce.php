@@ -403,6 +403,49 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 		}
 	}
 
+	if ( ! function_exists( 'wps_membership_safe_unserialize_array' ) ) {
+
+		/**
+		 * Safely decode a stored value that is expected to be an array of identifiers.
+		 *
+		 * Plan settings meta is untrusted: it can be written outside the plugin's own save
+		 * handler. Class instantiation is always disabled and anything that does not decode
+		 * to an array is discarded.
+		 *
+		 * @param mixed $value raw meta value, serialized string or array.
+		 * @return array
+		 */
+		function wps_membership_safe_unserialize_array( $value ) {
+			if ( is_array( $value ) ) {
+				return $value;
+			}
+
+			if ( ! is_string( $value ) || '' === $value || ! is_serialized( $value ) ) {
+				return array();
+			}
+
+			$unserialized = @unserialize( trim( $value ), array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize, WordPress.PHP.NoSilencedErrors.Discouraged
+			return is_array( $unserialized ) ? $unserialized : array();
+		}
+	}
+
+	add_filter( 'is_protected_meta', 'wps_membership_protect_plan_meta', 10, 2 );
+
+	/**
+	 * Mark plan settings meta as protected so it cannot be written through the core
+	 * custom fields UI, the add-meta AJAX action or the REST API.
+	 *
+	 * @param bool   $protected whether the key is protected.
+	 * @param string $meta_key  meta key.
+	 * @return bool
+	 */
+	function wps_membership_protect_plan_meta( $protected, $meta_key ) {
+		if ( 'plan_obj' === $meta_key || 0 === strpos( (string) $meta_key, 'wps_membership_' ) || 0 === strpos( (string) $meta_key, 'wps_memebership_' ) ) {
+			return true;
+		}
+		return $protected;
+	}
+
 	add_action( 'admin_init', 'wps_mfw_set_cron_for_plugin_notification' );
 	add_action( 'wps_wgm_check_for_notification_update', 'wps_mfw_save_notice_message' );
 	add_action( 'wp_ajax_wps_mfw_dismiss_notice_banner', 'wps_mfw_dismiss_notice_banner_callback' );

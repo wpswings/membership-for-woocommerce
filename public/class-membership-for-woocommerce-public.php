@@ -1519,7 +1519,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '<li><label>';
 						$description .= __( 'Include Membership', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
-						$prod_ids = maybe_unserialize( $products );
+						$prod_ids = wps_membership_safe_unserialize_array( $products );
 						if ( ! empty( $club_membership ) && is_array( $club_membership ) ) {
 							foreach ( $club_membership as $ids ) {
 								$description .= get_the_title( $ids );
@@ -1535,7 +1535,7 @@ class Membership_For_Woocommerce_Public {
 					$description .= '<li><label>';
 					$description .= __( 'Include Products', 'membership-for-woocommerce' );
 					$description .= '</label><span>';
-					$prod_ids     = maybe_unserialize( $products );
+					$prod_ids     = wps_membership_safe_unserialize_array( $products );
 					if ( ! empty( $prod_ids ) && is_array( $prod_ids ) ) {
 						foreach ( $prod_ids as $ids ) {
 							$description .= ( esc_html( $instance->get_product_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -1543,14 +1543,14 @@ class Membership_For_Woocommerce_Public {
 					}
 
 					$description .= '</span></li>';
-					$cat_ids      = maybe_unserialize( $categories );
+					$cat_ids      = wps_membership_safe_unserialize_array( $categories );
 					if ( ! empty( $cat_ids ) ) {
 
 						$description .= '<li><label>';
 						$description .= __( 'Offered Categories', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
 
-						$cat_ids = maybe_unserialize( $categories );
+						$cat_ids = wps_membership_safe_unserialize_array( $categories );
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 							foreach ( $cat_ids as $ids ) {
 								$description .= ( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -1560,7 +1560,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$tag_ids = maybe_unserialize( $plan['wps_membership_plan_target_tags'] );
+					$tag_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_tags'] );
 					if ( ! empty( $tag_ids ) ) {
 
 						$description .= '<li><label>';
@@ -1577,7 +1577,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$post_ids = maybe_unserialize( $plan['wps_membership_plan_post_target_ids'] );
+					$post_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_post_target_ids'] );
 					if ( ! empty( $post_ids ) ) {
 
 						$description .= '<li><label>';
@@ -1593,7 +1593,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$cat_ids = maybe_unserialize( $plan['wps_membership_plan_target_post_categories'] );
+					$cat_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_post_categories'] );
 					if ( ! empty( $cat_ids ) ) {
 
 						$description .= '<li><label>';
@@ -1608,7 +1608,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$tag_ids = maybe_unserialize( $plan['wps_membership_plan_target_post_tags'] );
+					$tag_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_post_tags'] );
 					if ( ! empty( $tag_ids ) ) {
 
 						$description .= '<li><label>';
@@ -1625,13 +1625,13 @@ class Membership_For_Woocommerce_Public {
 
 					}
 
-					$page_ids = maybe_unserialize( $plan['wps_membership_plan_page_target_ids'] );
+					$page_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_page_target_ids'] );
 					if ( ! empty( $page_ids ) ) {
 
 						$description .= '<li><label>';
 						$description .= __( 'Offered Pages', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
-						$page_ids = maybe_unserialize( $plan['wps_membership_plan_page_target_ids'] );
+						$page_ids = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_page_target_ids'] );
 
 						if ( ! empty( $page_ids ) && is_array( $page_ids ) ) {
 							foreach ( $page_ids as $ids ) {
@@ -1642,13 +1642,13 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$product_ids_discount = maybe_unserialize( $plan['wps_membership_plan_target_disc_ids'] );
+					$product_ids_discount = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_disc_ids'] );
 					if ( ! empty( $product_ids_discount ) ) {
 
 						$description .= '<li><label>';
 						$description .= __( 'Offered Product (under Product Discount)', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
-						$product_ids_discount = maybe_unserialize( $plan['wps_membership_plan_target_disc_ids'] );
+						$product_ids_discount = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_disc_ids'] );
 
 						if ( ! empty( $product_ids_discount ) && is_array( $product_ids_discount ) ) {
 							foreach ( $product_ids_discount as $ids ) {
@@ -1659,14 +1659,14 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$product_cat_discount = maybe_unserialize( $plan['wps_membership_plan_target_disc_categories'] );
+					$product_cat_discount = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_disc_categories'] );
 					if ( ! empty( $product_cat_discount ) ) {
 
 						$description .= '<li><label>';
 						$description .= __( 'Offered Product Categories (under Product Discount)', 'membership-for-woocommerce' );
 						$description .= '</label><span>';
 
-						$cat_ids = maybe_unserialize( $product_cat_discount );
+						$cat_ids = wps_membership_safe_unserialize_array( $product_cat_discount );
 						if ( ! empty( $cat_ids ) && is_array( $cat_ids ) ) {
 							foreach ( $cat_ids as $ids ) {
 								$description .= ( esc_html( $instance->get_category_title( $ids ) ) . '(#' . esc_html( $ids ) . ') ' );
@@ -1675,7 +1675,7 @@ class Membership_For_Woocommerce_Public {
 						$description .= '</span></li>';
 					}
 
-					$product_tags_discount = maybe_unserialize( $plan['wps_membership_plan_target_disc_tags'] );
+					$product_tags_discount = wps_membership_safe_unserialize_array( $plan['wps_membership_plan_target_disc_tags'] );
 					if ( ! empty( $product_tags_discount ) ) {
 
 						$description .= '<li><label>';
@@ -1783,7 +1783,7 @@ class Membership_For_Woocommerce_Public {
 					$wps_membership_subscription_expiry        = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry', true );
 					$wps_membership_subscription_expiry_type   = wps_membership_get_meta_data( $plan['ID'], 'wps_membership_subscription_expiry_type', true );
 					$plan_duration_text                        = esc_html__( 'Lifetime', 'membership-for-woocommerce' );
-					$plan_target_products                      = maybe_unserialize( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) );
+					$plan_target_products                      = wps_membership_safe_unserialize_array( wps_membership_get_meta_data( $plan['ID'], 'wps_membership_plan_target_ids', true ) );
 					$plan_target_products                      = is_array( $plan_target_products ) ? array_filter( $plan_target_products ) : array();
 					$plan_products_count                       = count( $plan_target_products );
 
@@ -2348,16 +2348,7 @@ class Membership_For_Woocommerce_Public {
 	 * @return array
 	 */
 	private function wps_mfw_safe_unserialize_array( $value ) {
-		if ( is_array( $value ) ) {
-			return $value;
-		}
-
-		if ( ! is_string( $value ) || '' === $value ) {
-			return array();
-		}
-
-		$unserialized = @unserialize( $value, array( 'allowed_classes' => false ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.serialize_unserialize
-		return is_array( $unserialized ) ? $unserialized : array();
+		return wps_membership_safe_unserialize_array( $value );
 	}
 
 	/**
@@ -2804,9 +2795,9 @@ class Membership_For_Woocommerce_Public {
 						}
 
 						$membership_status = wps_membership_get_meta_data( $membership_id, 'member_status', true );
-						$accessible_prod   = ! empty( $membership_plan['wps_membership_plan_target_ids'] ) ? maybe_unserialize( $membership_plan['wps_membership_plan_target_ids'] ) : array();
-						$accessible_cat    = ! empty( $membership_plan['wps_membership_plan_target_categories'] ) ? maybe_unserialize( $membership_plan['wps_membership_plan_target_categories'] ) : array();
-						$accessible_tag    = ! empty( $membership_plan['wps_membership_plan_target_tags'] ) ? maybe_unserialize( $membership_plan['wps_membership_plan_target_tags'] ) : array();
+						$accessible_prod   = ! empty( $membership_plan['wps_membership_plan_target_ids'] ) ? wps_membership_safe_unserialize_array( $membership_plan['wps_membership_plan_target_ids'] ) : array();
+						$accessible_cat    = ! empty( $membership_plan['wps_membership_plan_target_categories'] ) ? wps_membership_safe_unserialize_array( $membership_plan['wps_membership_plan_target_categories'] ) : array();
+						$accessible_tag    = ! empty( $membership_plan['wps_membership_plan_target_tags'] ) ? wps_membership_safe_unserialize_array( $membership_plan['wps_membership_plan_target_tags'] ) : array();
 						if ( in_array( $product->get_id(), $accessible_prod ) || ( ! empty( $accessible_cat ) && has_term( $accessible_cat, 'product_cat' ) ) || ( ! empty( $accessible_tag ) && has_term( $accessible_tag, 'product_tag' ) ) ) {
 
 							$access = true;
@@ -2871,9 +2862,9 @@ class Membership_For_Woocommerce_Public {
 
 								if ( ! in_array( $single_plan->ID, (array) $all_member_plans ) ) {
 
-									$all_plan_accessible_prod = $single_plan->wps_membership_plan_target_ids ? maybe_unserialize( $single_plan->wps_membership_plan_target_ids ) : array();
-									$all_plan_accessible_cat  = $single_plan->wps_membership_plan_target_categories ? maybe_unserialize( $single_plan->wps_membership_plan_target_categories ) : array();
-									$all_plan_accessible_tag  = $single_plan->wps_membership_plan_target_tags ? maybe_unserialize( $single_plan->wps_membership_plan_target_tags ) : array();
+									$all_plan_accessible_prod = $single_plan->wps_membership_plan_target_ids ? wps_membership_safe_unserialize_array( $single_plan->wps_membership_plan_target_ids ) : array();
+									$all_plan_accessible_cat  = $single_plan->wps_membership_plan_target_categories ? wps_membership_safe_unserialize_array( $single_plan->wps_membership_plan_target_categories ) : array();
+									$all_plan_accessible_tag  = $single_plan->wps_membership_plan_target_tags ? wps_membership_safe_unserialize_array( $single_plan->wps_membership_plan_target_tags ) : array();
 								}
 							}
 						}
@@ -5312,7 +5303,7 @@ class Membership_For_Woocommerce_Public {
 				foreach ( $results as $row ) {
 
 					$user_id = (int) $row['user_id'];
-					$membership_ids = @unserialize( $row['meta_value'] );
+					$membership_ids = wps_membership_safe_unserialize_array( $row['meta_value'] );
 
 					if ( ! is_array( $membership_ids ) ) {
 						continue;
