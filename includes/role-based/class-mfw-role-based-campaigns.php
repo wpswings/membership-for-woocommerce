@@ -47,7 +47,7 @@ class Mfw_Role_Based_Campaigns {
 	 */
 	public static function init() {
 		add_action( self::SCHEDULED_SEND_CRON_HOOK, array( __CLASS__, 'send_scheduled_campaign' ) );
-		add_action( self::DRIP_SEND_CRON_HOOK, array( __CLASS__, 'send_drip_campaign' ) );
+		add_action( self::DRIP_SEND_CRON_HOOK, array( __CLASS__, 'send_drip_campaign' ), 10, 2 );
 		add_action( 'mfw_role_based_after_assign_level', array( __CLASS__, 'maybe_schedule_drip_campaigns' ), 10, 2 );
 		add_action( 'init', array( __CLASS__, 'maybe_handle_unsubscribe' ) );
 	}
