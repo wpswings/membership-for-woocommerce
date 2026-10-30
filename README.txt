@@ -478,6 +478,7 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * New : Reporting: dashboard widget, reports/charts, and CSV exports.
 * New : REST API endpoints, webhooks, WPML compatibility, and developer hooks.
 * New : GDPR support (personal data export/erase) for role-mode data.
+* New : Compatibility with latest WC ( 11.2.1 ) and WP ( 7.1 )
 * Fix : Member discounts not applying on AJAX cart updates.
 * Tweak : Existing purchase-based membership code moved into a separate legacy module; no change in behavior.
 
@@ -764,5 +765,6 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 * New : Reporting: dashboard widget, reports/charts, and CSV exports.
 * New : REST API endpoints, webhooks, WPML compatibility, and developer hooks.
 * New : GDPR support (personal data export/erase) for role-mode data.
+* New : Compatibility with latest WC ( 11.2.1 ) and WP ( 7.1 )
 * Fix : Member discounts not applying on AJAX cart updates.
 * Tweak : Existing purchase-based membership code moved into a separate legacy module; no change in behavior.
