@@ -5,8 +5,8 @@ Tags: membership, user registration, content restriction, member, community
 Requires at least: 6.7.0
 Tested up to: 7.1
 WC requires at least: 6.5.0
-WC tested up to: 11.2.1
-Stable tag: 3.1.3
+WC tested up to: 11.3.1
+Stable tag: 3.1.4
 Requires PHP: 7.4
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -755,6 +755,8 @@ Please visit the [**WP Swings Knowledgebase**](https://support.wpswings.com/word
 == Upgrade Notice ==
 
 = 3.1.4 - Released on 20 Nov 2026 =
-* Security : Fixed a payment bypass vulnerability and a PHP object injection vulnerability.
-* Security : Hardened decoding of stored plan settings meta.
-* Fix : Elementor Buy Now Button and Registration Form widget fatal error.
+* Fix : Fixed a payment bypass vulnerability that let an unauthenticated visitor obtain a membership for free by tampering with the checkout request; plan price, title and status are now always read from the stored plan record. Reported by Alessandro Greco (Aleff) and Giovanbattista Ianni of the University of Calabria.
+* Fix : Fixed a PHP object injection vulnerability reachable through membership plan settings. Reported by sungbyeongchan.
+* Fix : Hardened decoding of stored plan settings meta and marked plan meta keys as protected.
+* Fix : Fatal error in the Elementor Buy Now Button and Registration Form widgets caused by an unresolved Mfw_Mode_Controller class.
+* New : Compatibility with latest WC ( 11.3.1 ) and WP ( 7.1 )
