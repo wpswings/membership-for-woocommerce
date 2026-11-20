@@ -28,6 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
+use Mfw_Mode_Controller;
 
 /**
  * Elementor shortcode widget.
