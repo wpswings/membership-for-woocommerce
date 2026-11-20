@@ -535,7 +535,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 	add_action( 'admin_notices', 'wps_banner_notification_plugin_html' );
 	if ( ! function_exists( 'wps_banner_notification_plugin_html' ) ) {
 		/**
-		 * Common Function To show banner image on Wordpress dashboard, plugin page and plugin home page.
+		 * Common Function To show banner image on plugin page and plugin home page.
 		 *
 		 * @return void
 		 */
@@ -546,7 +546,7 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 				return;
 			}
 
-			$target_screens = array( 'plugins', 'dashboard', 'wp-swings_page_home' );
+			$target_screens = array( 'plugins', 'wp-swings_page_home' );
 			if ( in_array( $screen->id, $target_screens, true ) ) {
 
 				$banner_id = get_option( 'wps_wgm_notify_new_banner_id', false );
@@ -558,9 +558,9 @@ if ( true === $wps_membership_plugin_activation['status'] ) {
 					if ( $hidden_banner_id < $banner_id && ! empty( $banner_image ) && ! empty( $banner_url ) ) {
 
 						?>
-							<div class="wps-offer-notice notice notice-warning is-dismissible">
+							<div class="wps-offer-notice notice notice-warning is-dismissible" style="padding: 0; border: none; overflow: hidden;">
 								<div class="notice-container">
-									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards"/></a>
+									<a href="<?php echo esc_url( $banner_url ); ?>" target="_blank"><img src="<?php echo esc_url( $banner_image ); ?>" alt="Subscription cards" style="display: block; width: 100%; max-width: 100%; height: auto;"/></a>
 								</div>
 								<button type="button" class="notice-dismiss dismiss_banner" id="dismiss-banner"><span class="screen-reader-text">Dismiss this notice.</span></button>
 							</div>
